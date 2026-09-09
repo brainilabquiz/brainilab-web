@@ -1,3 +1,9 @@
+# Current production workflow
+
+Source of truth: this Git repository, oriolsarda/brainilab-web. Cloudflare deploys main automatically to https://brainilabgames.com. Supabase stores accounts, content, progress and rankings.
+
+V41.9 adds automatic guest rankings. See [deployment and validation](SUPABASE_STEP28_GUEST_RANKINGS_SETUP.md). The historical notes below describe earlier versions.
+
 # BrainiLab static site prototype
 
 Entry point: `index.html`

@@ -130,7 +130,7 @@ window.BrainiIcons=(function(){
 /* ===== build.js ===== */
 
 /* BrainiLab build identity — V41 Stable V1. */
-window.BRAINI_BUILD="41.8.0";
+window.BRAINI_BUILD="41.9.0";
 window.BRAINI_ENABLE_SW=
   window.BRAINI_ENABLE_SW===true;
 
@@ -1370,6 +1370,9 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function syncExternalAuthUser(user,provider="email"){
     if(!user?.id) throw new Error("Missing authenticated user.");
+    if(state.auth?.user?.id && state.auth.user.id!==user.id){
+      resetPlayerIdentity();
+    }
 
     const previousAnon=state.auth?.anonymousPlayerId || makeAnonId();
     const existingLeaderboard=state.auth?.leaderboard || {enabled:false,displayName:null};
@@ -1413,6 +1416,30 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     window.dispatchEvent(new CustomEvent("brainilab:authchange",{detail:{status:"authenticated",provider,source:"supabase"}}));
     window.dispatchEvent(new CustomEvent("brainilab:datachange",{detail:{type:"auth"}}));
     return accountSnapshot();
+  }
+
+  function resetPlayerIdentity(){
+    state=clone(defaultState);
+    state.daily.key=todayKey();
+    state.daily.number=dailyNumber();
+    state.auth.anonymousPlayerId=makeAnonId();
+  }
+
+  function syncExternalGuestUser(user){
+    if(!user?.id || !user.is_anonymous) throw new Error("Invalid guest player.");
+    if(state.auth?.status==="authenticated") resetPlayerIdentity();
+    if(state.auth?.guestUserId===user.id) return authState();
+    state.auth={...state.auth,status:"guest",user:null,provider:null,
+      guestUserId:user.id,cloudSync:true};
+    save();
+    window.dispatchEvent(new CustomEvent("brainilab:authchange",{detail:{status:"guest",source:"supabase"}}));
+    return authState();
+  }
+
+  function completeGuestClaim(claim){
+    const skipped=new Set(claim.skipped_client_result_ids||[]);
+    state.recentResults=state.recentResults.filter(r=>!skipped.has(r.clientResultId));
+    save();
   }
 
 
@@ -1622,6 +1649,9 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function clearExternalAuthUser(){
     const previous=state.auth?.user?.id||null;
+    // Signing out must not upload the previous account's local history as a
+    // fresh guest on a shared device. Its canonical results remain in Supabase.
+    resetPlayerIdentity();
     state.auth={
       status:"guest",
       anonymousPlayerId:state.auth?.anonymousPlayerId || makeAnonId(),
@@ -1659,6 +1689,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   // Future-compatible async repository surface.
   const api = {
+    syncExternalGuestUser:async user=>syncExternalGuestUser(user),
+    completeGuestClaim:async claim=>completeGuestClaim(claim),
     getAnytimeHistory: async scope => anytimeHistory(scope),
     getAnytimePlayedIds: async scope => anytimePlayedIds(scope),
     recordAnytimeHistory: async (scope,ids) => recordAnytimeHistory(scope,ids),

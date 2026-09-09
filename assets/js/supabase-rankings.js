@@ -1,7 +1,7 @@
 /*
   BrainiLab Final Rankings — Step 10
   ---------------------------------
-  Real Individual public opt-in leaderboard adapter.
+  Real Individual rankings for registered and anonymous players.
 */
 window.BrainiRankingsCloud=(function(){
   let lastError=null;
@@ -32,6 +32,8 @@ window.BrainiRankingsCloud=(function(){
 
   async function individual(filters={}){
     if(!configured()) return null;
+    await BrainiBackendAuth.init();
+    await BrainiBackendAuth.getSession();
 
     const auth=BrainiData.authState();
     const country=(

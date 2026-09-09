@@ -1,7 +1,7 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, unquote
-import subprocess, tempfile, json, re, csv, itertools, gzip, hashlib
+import sys, subprocess, tempfile, json, re, csv, itertools, gzip, hashlib
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -252,12 +252,12 @@ if 'brainilab_block_deprecated_game_sessions' not in step24 or "new.game_id='map
 
 # Build/cache/version markers
 pkg=json.loads((ROOT/'package.json').read_text())
-if pkg.get('version')!='41.8.0': err('package version not 41.8.0')
-if '41.8.0' not in (ROOT/'assets/js/build.js').read_text(): err('BRAINI_BUILD not 41.8.0')
-if 'brainilab-static-v41-8-0' not in (ROOT/'sw.js').read_text(): err('Service worker cache version not V41.8.0')
+if pkg.get('version')!='41.9.0': err('package version not 41.9.0')
+if '41.9.0' not in (ROOT/'assets/js/build.js').read_text(): err('BRAINI_BUILD not 41.9.0')
+if 'brainilab-static-v41-9-0' not in (ROOT/'sw.js').read_text(): err('Service worker cache version not V41.9.0')
 if 'max-age=31536000' not in (ROOT/'_headers').read_text(): warn('Long-lived static asset cache headers missing')
 # Production bundles generated from source by checking exact concatenation via rebuild helper, but do not mutate here.
-r=subprocess.run(['python3',str(ROOT/'tools/rebuild-bundles.py')],cwd=ROOT,capture_output=True,text=True)
+r=subprocess.run([sys.executable,str(ROOT/'tools/rebuild-bundles.py')],cwd=ROOT,capture_output=True,text=True)
 if r.returncode: err(f'Bundle rebuild failed: {r.stderr}')
 # re-check bundles after rebuild
 for name in ['shell.bundle.js','cloud.bundle.js','quiz.bundle.js','daily.bundle.js','daily-overview.bundle.js','home.bundle.js','games.bundle.js']:

@@ -118,7 +118,7 @@ window.BrainiAuth = (function(){
       </form>
 
       <button type="button" class="auth-not-now" data-auth-not-now>Not now</button>
-      <p class="auth-prototype-note">Your account is secured by Supabase. Guest progress stays on this device until you sign in.</p>
+      <p class="auth-prototype-note">Completed guest games appear in rankings under a generated alias. Sign in to keep your progress across devices.</p>
     `;
   }
 
@@ -377,7 +377,7 @@ window.BrainiAuth = (function(){
         <div>
           <div class="auth-kicker">You’re playing as a guest</div>
           <h1>Your progress already exists.</h1>
-          <p>BrainiLab is saving this progress on this browser. Create a free account to establish your BrainiLab identity; cloud game-history syncing is added in the next backend steps.</p>
+          <p>Completed games are saved to your guest player and appear in rankings under a generated alias. Create a free account to keep your progress across devices.</p>
           <button type="button" class="btn" data-profile-save>Save my progress</button>
           <button type="button" class="btn-light" data-profile-continue>Keep playing as guest</button>
         </div>
@@ -474,10 +474,10 @@ window.BrainiAuth = (function(){
           <div>
             <label>Rankings visibility</label>
             <div class="profile-leaderboard-setting">
-              <span>${lb.enabled ? `Visible as <strong>${lb.displayName}</strong>` : "Private by default"}</span>
+              <span>${lb.enabled ? `Visible as <strong>${String(lb.displayName||"Player").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
               <button type="button" data-leaderboard-toggle>${lb.enabled ? "Leave rankings" : "Join rankings"}</button>
             </div>
-            <small class="profile-field-help">Public rankings show only your chosen ranking name and country. Your email is never shown.</small>
+            <small class="profile-field-help">Completed games appear automatically under a public player name. You can hide your ranking at any time. Your email is never shown.</small>
           </div>
         </div>
 
@@ -694,15 +694,14 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProfiles &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProfiles.sync();
       }
 
       if(
         window.BrainiCloudGames &&
-        window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        window.BrainiBackendAuth?.isConfigured?.()
       ){
         await BrainiCloudGames.syncPendingResults();
       }
@@ -710,7 +709,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiContent &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiContent.syncPendingVerifications();
       }
@@ -718,7 +717,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDaily &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDaily.syncPendingVerifications();
       }
@@ -726,7 +725,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -734,7 +733,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }
@@ -765,15 +764,14 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProfiles &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProfiles.sync();
       }
 
       if(
         window.BrainiCloudGames &&
-        window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        window.BrainiBackendAuth?.isConfigured?.()
       ){
         await BrainiCloudGames.syncPendingResults();
       }
@@ -781,7 +779,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiContent &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiContent.syncPendingVerifications();
       }
@@ -789,7 +787,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDaily &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDaily.syncPendingVerifications();
       }
@@ -797,7 +795,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -805,7 +803,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }
@@ -844,7 +842,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -852,7 +850,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }
