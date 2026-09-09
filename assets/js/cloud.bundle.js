@@ -35,6 +35,65 @@ window.BrainiBackendAuth = (function(){
   let client=null;
   let initialized=false;
   let listenerSubscription=null;
+  let playerSessionPromise=null;
+  let claimPromise=null;
+  const guestClaimKey="brainilab_guest_claim_v1";
+
+  function readGuestClaim(){
+    try{return JSON.parse(localStorage.getItem(guestClaimKey)||"null");}catch{return null;}
+  }
+
+  async function prepareGuestClaim(){
+    const sb=getClient();
+    const {data,error}=await sb.auth.getSession();
+    if(error) throw error;
+    const user=data?.session?.user;
+    if(!user?.is_anonymous) return;
+    let claim=readGuestClaim();
+    if(claim?.guestId!==user.id){
+      const bytes=crypto.getRandomValues(new Uint8Array(32));
+      claim={guestId:user.id,token:Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")};
+    }
+    // Persist BEFORE leaving this origin for OAuth/email confirmation.
+    localStorage.setItem(guestClaimKey,JSON.stringify(claim));
+    const result=await sb.rpc("prepare_brainilab_guest_claim",{p_token:claim.token});
+    if(result.error) throw result.error;
+  }
+
+  async function claimGuestProgress(session){
+    if(!session?.user || session.user.is_anonymous || !readGuestClaim()) return;
+    if(claimPromise) return claimPromise;
+    claimPromise=(async()=>{
+      const claim=readGuestClaim();
+      const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
+      if(error) throw error;
+      await BrainiData.api.completeGuestClaim?.(data||{});
+      localStorage.removeItem(guestClaimKey);
+    })();
+    try{await claimPromise;}finally{claimPromise=null;}
+  }
+
+  async function ensurePlayerSession(){
+    if(playerSessionPromise) return playerSessionPromise;
+    const create=async()=>{
+      const existing=await getSession();
+      if(existing?.user) return existing;
+      const {data,error}=await getClient().auth.signInAnonymously();
+      if(error) throw error;
+      await syncSession(data?.session);
+      return data?.session||null;
+    };
+    // Two tabs completing a first game must share one guest identity.
+    playerSessionPromise=globalThis.navigator?.locks?.request
+      ? navigator.locks.request("brainilab-guest-session",create)
+      : create();
+    try{return await playerSessionPromise;}finally{playerSessionPromise=null;}
+  }
+
+  function hasPlayerSession(){
+    const auth=BrainiData.authState();
+    return !!(auth.guestUserId || (auth.status==="authenticated" && auth.user));
+  }
 
   function config(){
     return window.BRAINI_SUPABASE || {};
@@ -133,11 +192,14 @@ window.BrainiBackendAuth = (function(){
   }
 
   async function syncSession(session){
-    if(session?.user){
+    if(session?.user?.is_anonymous){
+      await BrainiData.api.syncExternalGuestUser(session.user);
+    }else if(session?.user){
+      await claimGuestProgress(session);
       await BrainiData.api.syncExternalAuthUser(session.user,providerFromUser(session.user));
     }else{
       const local=BrainiData.authState();
-      if(local?.status==="authenticated"){
+      if(local?.status==="authenticated" || local?.guestUserId){
         await BrainiData.api.clearExternalAuthUser();
       }
     }
@@ -170,6 +232,7 @@ window.BrainiBackendAuth = (function(){
   async function signInWithGoogle(){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
 
     try{
       sessionStorage.setItem(
@@ -194,6 +257,7 @@ window.BrainiBackendAuth = (function(){
   async function signUpWithEmail(email,password){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
     const {data,error}=await sb.auth.signUp({
       email:(email||"").trim().toLowerCase(),
       password,
@@ -207,6 +271,7 @@ window.BrainiBackendAuth = (function(){
   async function signInWithEmail(email,password){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
     const {data,error}=await sb.auth.signInWithPassword({
       email:(email||"").trim().toLowerCase(),
       password
@@ -243,6 +308,7 @@ window.BrainiBackendAuth = (function(){
     }
     const {error}=await sb.auth.signOut();
     if(error) throw error;
+    localStorage.removeItem(guestClaimKey);
     await BrainiData.api.clearExternalAuthUser();
   }
 
@@ -251,6 +317,7 @@ window.BrainiBackendAuth = (function(){
     if(!sb) return null;
     const {data,error}=await sb.auth.getSession();
     if(error) throw error;
+    await claimGuestProgress(data?.session);
     return data?.session||null;
   }
 
@@ -262,7 +329,7 @@ window.BrainiBackendAuth = (function(){
   }
 
   return {
-    init,isConfigured,getClient,getSession,
+    init,isConfigured,getClient,getSession,ensurePlayerSession,hasPlayerSession,
     signInWithGoogle,signUpWithEmail,signInWithEmail,
     requestPasswordReset,updatePassword,signOut,
     profileRedirectUrl,passwordResetRedirectUrl,destroy
@@ -530,10 +597,14 @@ window.BrainiProfiles = (function(){
   }
 
   async function setRankingVisibility(enabled,displayName=null){
-    return updateMyProfile({
-      leaderboardEnabled:enabled,
-      leaderboardDisplayName:enabled ? displayName : null
+    const {data,error}=await client().rpc("set_brainilab_ranking_visibility",{
+      p_enabled:!!enabled,p_display_name:displayName
     });
+    if(error) throw error;
+    currentProfile=data;
+    await BrainiData.api.syncCloudProfile(data);
+    window.dispatchEvent(new CustomEvent("brainilab:profilechange",{detail:{profile:data}}));
+    return data;
   }
 
   function getCached(){
@@ -567,12 +638,13 @@ window.BrainiProfiles = (function(){
   Guest/offline behavior:
   - BrainiData records the result locally first.
   - Results created in Step 3 carry a stable clientResultId.
-  - If no authenticated Supabase session exists, the result stays pending.
-  - After sign-in, syncPendingResults() uploads those same results idempotently.
+  - A completed scored game lazily creates an anonymous Supabase player.
+  - Offline results stay pending and retry idempotently; sign-in claims guest progress.
 */
 window.BrainiCloudGames = (function(){
   let syncing=false;
   let lastError=null;
+  const pendingSaves=new Map();
 
   function configured(){
     return !!window.BrainiBackendAuth?.isConfigured?.();
@@ -639,10 +711,22 @@ window.BrainiCloudGames = (function(){
   }
 
   async function saveCompletedResult(gameId,result){
+    const key=result?.clientResultId;
+    if(key && pendingSaves.has(key)) return pendingSaves.get(key);
+    const saving=persistCompletedResult(gameId,result);
+    if(key) pendingSaves.set(key,saving);
+    try{return await saving;}finally{if(key) pendingSaves.delete(key);}
+  }
+
+  async function persistCompletedResult(gameId,result){
     lastError=null;
 
     if(!configured()) return {saved:false,reason:"not_configured"};
-    const user=await currentUser();
+    if(result?.practice || result?.tryFirst){
+      return {saved:false,reason:"practice"};
+    }
+    const session=await BrainiBackendAuth.ensurePlayerSession();
+    const user=session?.user;
     if(!user) return {saved:false,reason:"not_authenticated"};
 
     if(!result?.clientResultId){
@@ -697,6 +781,8 @@ window.BrainiCloudGames = (function(){
     };
 
     await BrainiData.api.markResultCloudSynced(result.clientResultId,cloud);
+    // Automatic enrollment may have just changed an older account's profile.
+    await window.BrainiProfiles?.sync?.();
 
     window.dispatchEvent(new CustomEvent("brainilab:cloudgame",{
       detail:{type:"result_synced",gameId,clientResultId:result.clientResultId,cloud}
@@ -707,9 +793,6 @@ window.BrainiCloudGames = (function(){
 
   async function syncPendingResults(){
     if(syncing || !configured()) return {synced:0,failed:0};
-    const user=await currentUser();
-    if(!user) return {synced:0,failed:0};
-
     syncing=true;
     let synced=0;
     let failed=0;
@@ -1423,7 +1506,7 @@ window.BrainiAuth = (function(){
       </form>
 
       <button type="button" class="auth-not-now" data-auth-not-now>Not now</button>
-      <p class="auth-prototype-note">Your account is secured by Supabase. Guest progress stays on this device until you sign in.</p>
+      <p class="auth-prototype-note">Completed guest games appear in rankings under a generated alias. Sign in to keep your progress across devices.</p>
     `;
   }
 
@@ -1682,7 +1765,7 @@ window.BrainiAuth = (function(){
         <div>
           <div class="auth-kicker">You’re playing as a guest</div>
           <h1>Your progress already exists.</h1>
-          <p>BrainiLab is saving this progress on this browser. Create a free account to establish your BrainiLab identity; cloud game-history syncing is added in the next backend steps.</p>
+          <p>Completed games are saved to your guest player and appear in rankings under a generated alias. Create a free account to keep your progress across devices.</p>
           <button type="button" class="btn" data-profile-save>Save my progress</button>
           <button type="button" class="btn-light" data-profile-continue>Keep playing as guest</button>
         </div>
@@ -1779,10 +1862,10 @@ window.BrainiAuth = (function(){
           <div>
             <label>Rankings visibility</label>
             <div class="profile-leaderboard-setting">
-              <span>${lb.enabled ? `Visible as <strong>${lb.displayName}</strong>` : "Private by default"}</span>
+              <span>${lb.enabled ? `Visible as <strong>${String(lb.displayName||"Player").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
               <button type="button" data-leaderboard-toggle>${lb.enabled ? "Leave rankings" : "Join rankings"}</button>
             </div>
-            <small class="profile-field-help">Public rankings show only your chosen ranking name and country. Your email is never shown.</small>
+            <small class="profile-field-help">Completed games appear automatically under a public player name. You can hide your ranking at any time. Your email is never shown.</small>
           </div>
         </div>
 
@@ -1999,15 +2082,14 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProfiles &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProfiles.sync();
       }
 
       if(
         window.BrainiCloudGames &&
-        window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        window.BrainiBackendAuth?.isConfigured?.()
       ){
         await BrainiCloudGames.syncPendingResults();
       }
@@ -2015,7 +2097,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiContent &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiContent.syncPendingVerifications();
       }
@@ -2023,7 +2105,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDaily &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDaily.syncPendingVerifications();
       }
@@ -2031,7 +2113,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -2039,7 +2121,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }
@@ -2070,15 +2152,14 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProfiles &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProfiles.sync();
       }
 
       if(
         window.BrainiCloudGames &&
-        window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        window.BrainiBackendAuth?.isConfigured?.()
       ){
         await BrainiCloudGames.syncPendingResults();
       }
@@ -2086,7 +2167,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiContent &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiContent.syncPendingVerifications();
       }
@@ -2094,7 +2175,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDaily &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDaily.syncPendingVerifications();
       }
@@ -2102,7 +2183,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -2110,7 +2191,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }
@@ -2149,7 +2230,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiDailyGames &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiDailyGames.syncPendingVerifications();
       }
@@ -2157,7 +2238,7 @@ window.BrainiAuth = (function(){
       if(
         window.BrainiProgression &&
         window.BrainiBackendAuth?.isConfigured?.() &&
-        BrainiData.isAuthenticated()
+        BrainiBackendAuth.hasPlayerSession()
       ){
         await BrainiProgression.sync();
       }

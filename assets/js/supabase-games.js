@@ -6,12 +6,13 @@
   Guest/offline behavior:
   - BrainiData records the result locally first.
   - Results created in Step 3 carry a stable clientResultId.
-  - If no authenticated Supabase session exists, the result stays pending.
-  - After sign-in, syncPendingResults() uploads those same results idempotently.
+  - A completed scored game lazily creates an anonymous Supabase player.
+  - Offline results stay pending and retry idempotently; sign-in claims guest progress.
 */
 window.BrainiCloudGames = (function(){
   let syncing=false;
   let lastError=null;
+  const pendingSaves=new Map();
 
   function configured(){
     return !!window.BrainiBackendAuth?.isConfigured?.();
@@ -78,10 +79,22 @@ window.BrainiCloudGames = (function(){
   }
 
   async function saveCompletedResult(gameId,result){
+    const key=result?.clientResultId;
+    if(key && pendingSaves.has(key)) return pendingSaves.get(key);
+    const saving=persistCompletedResult(gameId,result);
+    if(key) pendingSaves.set(key,saving);
+    try{return await saving;}finally{if(key) pendingSaves.delete(key);}
+  }
+
+  async function persistCompletedResult(gameId,result){
     lastError=null;
 
     if(!configured()) return {saved:false,reason:"not_configured"};
-    const user=await currentUser();
+    if(result?.practice || result?.tryFirst){
+      return {saved:false,reason:"practice"};
+    }
+    const session=await BrainiBackendAuth.ensurePlayerSession();
+    const user=session?.user;
     if(!user) return {saved:false,reason:"not_authenticated"};
 
     if(!result?.clientResultId){
@@ -136,6 +149,8 @@ window.BrainiCloudGames = (function(){
     };
 
     await BrainiData.api.markResultCloudSynced(result.clientResultId,cloud);
+    // Automatic enrollment may have just changed an older account's profile.
+    await window.BrainiProfiles?.sync?.();
 
     window.dispatchEvent(new CustomEvent("brainilab:cloudgame",{
       detail:{type:"result_synced",gameId,clientResultId:result.clientResultId,cloud}
@@ -146,9 +161,6 @@ window.BrainiCloudGames = (function(){
 
   async function syncPendingResults(){
     if(syncing || !configured()) return {synced:0,failed:0};
-    const user=await currentUser();
-    if(!user) return {synced:0,failed:0};
-
     syncing=true;
     let synced=0;
     let failed=0;

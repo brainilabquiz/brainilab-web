@@ -606,7 +606,7 @@ window.BrainiGroups=(function(){
 /*
   BrainiLab Final Rankings — Step 10
   ---------------------------------
-  Real Individual public opt-in leaderboard adapter.
+  Real Individual rankings for registered and anonymous players.
 */
 window.BrainiRankingsCloud=(function(){
   let lastError=null;
@@ -637,6 +637,8 @@ window.BrainiRankingsCloud=(function(){
 
   async function individual(filters={}){
     if(!configured()) return null;
+    await BrainiBackendAuth.init();
+    await BrainiBackendAuth.getSession();
 
     const auth=BrainiData.authState();
     const country=(
@@ -707,6 +709,7 @@ window.BrainiRankings=(function(){
   };
 
   const $=s=>document.querySelector(s);
+  const escapeText=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   let renderToken=0;
 
   function authState(){
@@ -871,7 +874,7 @@ window.BrainiRankings=(function(){
 
       ${avatar}
 
-      <strong class="podium-name">${row.name}</strong>
+      <strong class="podium-name">${escapeText(row.name)}</strong>
 
       <span class="podium-country">
         ${countryFlag(row.country)} ${row.country||""}
@@ -890,7 +893,7 @@ window.BrainiRankings=(function(){
     const identity=state.mode==="group"
       ? `${crestHtml(row.crest)}
          <div>
-           <strong>${row.name}</strong>
+           <strong>${escapeText(row.name)}</strong>
            <small>
              ${countryFlag(row.country)} ${row.country||""}
              · ${row.members||0}/5 members
@@ -898,7 +901,7 @@ window.BrainiRankings=(function(){
          </div>`
       : `${playerAvatar(row,true)}
          <div>
-           <strong>${row.name}</strong>
+           <strong>${escapeText(row.name)}</strong>
            <small>
              ${countryFlag(row.country)} ${row.country||""}
              ${row.level?` · ${BrainiProgressUI?.tier?.(row.level)?.name||"Level"} Lv ${row.level}`:""}
@@ -920,7 +923,6 @@ window.BrainiRankings=(function(){
     const auth=authState();
 
     if(state.mode==="individual"){
-      if(auth.status!=="authenticated") return "";
       if(!data?.leaderboardEnabled) return "";
 
       if(!user){
@@ -965,7 +967,7 @@ window.BrainiRankings=(function(){
             ? crestHtml(user.crest)
             : playerAvatar(user,true)
           }
-          <b>${user.name}</b>
+          <b>${escapeText(user.name)}</b>
         </div>
 
         <span class="your-rank-score">
@@ -1043,16 +1045,10 @@ window.BrainiRankings=(function(){
     if(auth.status!=="authenticated"){
       return `<div class="ranking-privacy-card guest">
         <div>
-          <strong>Public rankings are opt-in</strong>
-          <span>
-            You can browse rankings as a guest. Sign in only if
-            you want your own public ranking profile.
-          </span>
+          <strong>${escapeText(data?.leaderboardDisplayName||"Guests compete too")}</strong>
+          <span>Completed games appear automatically under your guest name. Sign in to keep your progress across devices.</span>
         </div>
-
-        <button class="ranking-privacy-action" data-ranking-signin>
-          Sign in to compete
-        </button>
+        <button class="ranking-privacy-action" data-ranking-signin>Save my progress</button>
       </div>`;
     }
 
@@ -1061,13 +1057,12 @@ window.BrainiRankings=(function(){
         <div>
           <strong>Your ranking profile is private</strong>
           <span>
-            Join only when you want to appear publicly. Rankings
-            show your chosen ranking name and country — never your email.
+            Your ranking is hidden. Show it again whenever you want; your email is never public.
           </span>
         </div>
 
         <button class="ranking-privacy-action primary" data-ranking-join>
-          Join rankings
+          Show my ranking
         </button>
       </div>`;
     }
@@ -1075,7 +1070,7 @@ window.BrainiRankings=(function(){
     return `<div class="ranking-privacy-card public">
       <div>
         <strong>
-          Public as ${data.leaderboardDisplayName||"Braini Player"}
+          Public as ${escapeText(data.leaderboardDisplayName||"Braini Player")}
         </strong>
         <span>
           ${data.userEligible
@@ -1603,6 +1598,7 @@ window.BrainiRankings=(function(){
             "leaderboard",
             "profile",
             "game_result",
+            "cloud_result_synced",
             "groups_cloud",
             "friends_cloud"
           ].includes(e.detail?.type)

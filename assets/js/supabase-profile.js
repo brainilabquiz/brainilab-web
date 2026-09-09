@@ -257,10 +257,14 @@ window.BrainiProfiles = (function(){
   }
 
   async function setRankingVisibility(enabled,displayName=null){
-    return updateMyProfile({
-      leaderboardEnabled:enabled,
-      leaderboardDisplayName:enabled ? displayName : null
+    const {data,error}=await client().rpc("set_brainilab_ranking_visibility",{
+      p_enabled:!!enabled,p_display_name:displayName
     });
+    if(error) throw error;
+    currentProfile=data;
+    await BrainiData.api.syncCloudProfile(data);
+    window.dispatchEvent(new CustomEvent("brainilab:profilechange",{detail:{profile:data}}));
+    return data;
   }
 
   function getCached(){

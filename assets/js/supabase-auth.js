@@ -15,6 +15,65 @@ window.BrainiBackendAuth = (function(){
   let client=null;
   let initialized=false;
   let listenerSubscription=null;
+  let playerSessionPromise=null;
+  let claimPromise=null;
+  const guestClaimKey="brainilab_guest_claim_v1";
+
+  function readGuestClaim(){
+    try{return JSON.parse(localStorage.getItem(guestClaimKey)||"null");}catch{return null;}
+  }
+
+  async function prepareGuestClaim(){
+    const sb=getClient();
+    const {data,error}=await sb.auth.getSession();
+    if(error) throw error;
+    const user=data?.session?.user;
+    if(!user?.is_anonymous) return;
+    let claim=readGuestClaim();
+    if(claim?.guestId!==user.id){
+      const bytes=crypto.getRandomValues(new Uint8Array(32));
+      claim={guestId:user.id,token:Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")};
+    }
+    // Persist BEFORE leaving this origin for OAuth/email confirmation.
+    localStorage.setItem(guestClaimKey,JSON.stringify(claim));
+    const result=await sb.rpc("prepare_brainilab_guest_claim",{p_token:claim.token});
+    if(result.error) throw result.error;
+  }
+
+  async function claimGuestProgress(session){
+    if(!session?.user || session.user.is_anonymous || !readGuestClaim()) return;
+    if(claimPromise) return claimPromise;
+    claimPromise=(async()=>{
+      const claim=readGuestClaim();
+      const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
+      if(error) throw error;
+      await BrainiData.api.completeGuestClaim?.(data||{});
+      localStorage.removeItem(guestClaimKey);
+    })();
+    try{await claimPromise;}finally{claimPromise=null;}
+  }
+
+  async function ensurePlayerSession(){
+    if(playerSessionPromise) return playerSessionPromise;
+    const create=async()=>{
+      const existing=await getSession();
+      if(existing?.user) return existing;
+      const {data,error}=await getClient().auth.signInAnonymously();
+      if(error) throw error;
+      await syncSession(data?.session);
+      return data?.session||null;
+    };
+    // Two tabs completing a first game must share one guest identity.
+    playerSessionPromise=globalThis.navigator?.locks?.request
+      ? navigator.locks.request("brainilab-guest-session",create)
+      : create();
+    try{return await playerSessionPromise;}finally{playerSessionPromise=null;}
+  }
+
+  function hasPlayerSession(){
+    const auth=BrainiData.authState();
+    return !!(auth.guestUserId || (auth.status==="authenticated" && auth.user));
+  }
 
   function config(){
     return window.BRAINI_SUPABASE || {};
@@ -113,11 +172,14 @@ window.BrainiBackendAuth = (function(){
   }
 
   async function syncSession(session){
-    if(session?.user){
+    if(session?.user?.is_anonymous){
+      await BrainiData.api.syncExternalGuestUser(session.user);
+    }else if(session?.user){
+      await claimGuestProgress(session);
       await BrainiData.api.syncExternalAuthUser(session.user,providerFromUser(session.user));
     }else{
       const local=BrainiData.authState();
-      if(local?.status==="authenticated"){
+      if(local?.status==="authenticated" || local?.guestUserId){
         await BrainiData.api.clearExternalAuthUser();
       }
     }
@@ -150,6 +212,7 @@ window.BrainiBackendAuth = (function(){
   async function signInWithGoogle(){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
 
     try{
       sessionStorage.setItem(
@@ -174,6 +237,7 @@ window.BrainiBackendAuth = (function(){
   async function signUpWithEmail(email,password){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
     const {data,error}=await sb.auth.signUp({
       email:(email||"").trim().toLowerCase(),
       password,
@@ -187,6 +251,7 @@ window.BrainiBackendAuth = (function(){
   async function signInWithEmail(email,password){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
+    await prepareGuestClaim();
     const {data,error}=await sb.auth.signInWithPassword({
       email:(email||"").trim().toLowerCase(),
       password
@@ -223,6 +288,7 @@ window.BrainiBackendAuth = (function(){
     }
     const {error}=await sb.auth.signOut();
     if(error) throw error;
+    localStorage.removeItem(guestClaimKey);
     await BrainiData.api.clearExternalAuthUser();
   }
 
@@ -231,6 +297,7 @@ window.BrainiBackendAuth = (function(){
     if(!sb) return null;
     const {data,error}=await sb.auth.getSession();
     if(error) throw error;
+    await claimGuestProgress(data?.session);
     return data?.session||null;
   }
 
@@ -242,7 +309,7 @@ window.BrainiBackendAuth = (function(){
   }
 
   return {
-    init,isConfigured,getClient,getSession,
+    init,isConfigured,getClient,getSession,ensurePlayerSession,hasPlayerSession,
     signInWithGoogle,signUpWithEmail,signInWithEmail,
     requestPasswordReset,updatePassword,signOut,
     profileRedirectUrl,passwordResetRedirectUrl,destroy
