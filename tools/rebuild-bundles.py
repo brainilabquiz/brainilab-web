@@ -2,7 +2,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 JS=ROOT/'assets/js'
 BUNDLES={
- 'shell.bundle.js':['icon-system.js','build.js','data.js','try-first-runtime.js','daily-completion-guard.js','ui.js','progression-ui.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js'],
+ 'shell.bundle.js':['icon-system.js','build.js','data.js','try-first-runtime.js','daily-completion-guard.js','ui.js','progression-ui.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','meta-pixel.js'],
  'cloud.bundle.js':['supabase-config.js','supabase-auth.js','supabase-profile.js','supabase-games.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
  'quiz.bundle.js':['share.js','supabase-content.js','quiz.js'],
  'daily.bundle.js':['share.js','supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
