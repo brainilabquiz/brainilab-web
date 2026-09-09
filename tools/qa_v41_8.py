@@ -252,9 +252,9 @@ if 'brainilab_block_deprecated_game_sessions' not in step24 or "new.game_id='map
 
 # Build/cache/version markers
 pkg=json.loads((ROOT/'package.json').read_text())
-if pkg.get('version')!='41.9.1': err('package version not 41.9.1')
-if '41.9.1' not in (ROOT/'assets/js/build.js').read_text(): err('BRAINI_BUILD not 41.9.1')
-if 'brainilab-static-v41-9-1' not in (ROOT/'sw.js').read_text(): err('Service worker cache version not V41.9.1')
+if pkg.get('version')!='41.10.0': err('package version not 41.10.0')
+if '41.10.0' not in (ROOT/'assets/js/build.js').read_text(): err('BRAINI_BUILD not 41.10.0')
+if 'brainilab-static-v41-10-0' not in (ROOT/'sw.js').read_text(): err('Service worker cache version not V41.10.0')
 if 'max-age=31536000' not in (ROOT/'_headers').read_text(): warn('Long-lived static asset cache headers missing')
 # Production bundles generated from source by checking exact concatenation via rebuild helper, but do not mutate here.
 r=subprocess.run([sys.executable,str(ROOT/'tools/rebuild-bundles.py')],cwd=ROOT,capture_output=True,text=True)

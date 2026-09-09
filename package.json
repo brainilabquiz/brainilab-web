@@ -1,7 +1,7 @@
 {
   "name": "brainilab-web",
   "private": true,
-  "version": "41.9.1",
+  "version": "41.10.0",
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 8000",
