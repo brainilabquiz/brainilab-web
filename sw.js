@@ -1,4 +1,4 @@
-const CACHE="brainilab-static-v41-9-0";
+const CACHE="brainilab-static-v41-9-1";
 const STATIC_EXT=/\.(?:css|js|png|jpg|jpeg|webp|svg|ico)$/i;
 
 self.addEventListener("install",event=>{

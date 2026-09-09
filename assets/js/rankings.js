@@ -432,8 +432,8 @@ window.BrainiRankings=(function(){
         <div class="ranking-friends-empty-icon">🏆</div>
         <h2>No ranked scores here yet</h2>
         <p>
-          Only players who explicitly join public rankings and have
-          a score in this selection appear here.
+          Complete a scored game to appear automatically in its ranking.
+          Daily Brain Score includes today’s Daily games.
         </p>
       </div>`;
     }

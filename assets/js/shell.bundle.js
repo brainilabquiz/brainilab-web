@@ -130,7 +130,7 @@ window.BrainiIcons=(function(){
 /* ===== build.js ===== */
 
 /* BrainiLab build identity — V41 Stable V1. */
-window.BRAINI_BUILD="41.9.0";
+window.BRAINI_BUILD="41.9.1";
 window.BRAINI_ENABLE_SW=
   window.BRAINI_ENABLE_SW===true;
 
@@ -2254,7 +2254,7 @@ window.BrainiPerf=(function(){
 
     cloudPromise=(async()=>{
       await ensureSupabase();
-      await loadScript(new URL("cloud.bundle.js?v=41.8.0",jsBase).href);
+      await loadScript(new URL(`cloud.bundle.js?v=${window.BRAINI_BUILD||"41.9.1"}`,jsBase).href);
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
     })();

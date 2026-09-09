@@ -12,7 +12,7 @@ Guest progress is claimed on login using a random, hashed, expiring claim token.
 2. Enable Supabase Authentication > Sign In / Providers > Allow anonymous sign-ins.
 3. Regenerate bundles with UTF-8 Python: `python tools/rebuild-bundles.py`.
 4. Push reviewed code to GitHub main. Cloudflare Worker brainilab-web automatically deploys using `npx wrangler deploy` and assets from the repository root. The optional dist minification build is not the configured deployment input.
-5. Verify version 41.9.0, guest completion/ranking, reload persistence and registered Daily auto-enrollment.
+5. Verify version 41.9.1, guest completion/ranking, reload persistence and registered Daily auto-enrollment.
 
 Steps 1 and 2 were applied and verified on 2026-09-09 in project wvgcdlxebbybthyuajgb. Three new triggers and the true profile default were confirmed. Keep the existing email confirmation and manual-linking settings unchanged.
 
