@@ -5764,3 +5764,7 @@ main > section.section,
 .marketing-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:10000;max-width:920px;margin:auto;padding:20px 24px;background:#fff;color:#17212b;border:2px solid #17212b;border-radius:16px;box-shadow:0 8px 32px #0003;display:flex;gap:24px;align-items:center;font:15px/1.5 system-ui,sans-serif}
 .marketing-consent strong{font-size:18px}.marketing-consent p{margin:6px 0 0}.marketing-consent a{color:#17212b;text-decoration:underline}.marketing-consent-actions{display:flex;gap:10px;flex-shrink:0}.marketing-consent button{border:1px solid #17212b;border-radius:9px;background:#fff;color:#17212b;padding:11px 14px;min-height:44px;font:600 14px system-ui;cursor:pointer}.marketing-consent button:hover{background:#fff2bb}.marketing-consent button:focus-visible{outline:3px solid #2463eb;outline-offset:3px}
 @media(max-width:760px){.marketing-consent{left:10px;right:10px;bottom:10px;padding:16px;display:block;max-height:70vh;overflow:auto}.marketing-consent-actions{margin-top:14px;display:grid;grid-template-columns:1fr 1fr}.marketing-consent button{padding:10px}}
+
+/* Static learning guides and contact route. */
+.play-guide .seo-copy{max-width:860px}.play-guide p,.legal-copy p{line-height:1.75}.play-guide h3{margin-top:24px}.guide-note{border-top:1px solid #ddd;padding-top:16px;font-size:.94rem}.footer-contact{padding-top:16px;padding-bottom:18px;font-size:.9rem}.footer-contact a{text-decoration:underline}
+

@@ -1592,12 +1592,15 @@ window.BrainiAdmin=(function(){
       }
     }
 
+    if(quoted) throw new Error("CSV has an unclosed quoted field. Check the exported file.");
     row.push(cell);
     if(row.some(v=>v.trim()!=="")) rows.push(row);
     if(!rows.length) return [];
 
-    const headers=rows[0].map(h=>h.trim().toLowerCase());
-    return rows.slice(1).map(cols=>{
+    const headers=rows[0].map(h=>h.replace(/^\uFEFF/," ").trim().toLowerCase());
+    if(headers.some(h=>!h)||new Set(headers).size!==headers.length) throw new Error("CSV headers must be non-empty and unique.");
+    return rows.slice(1).map((cols,index)=>{
+      if(cols.length!==headers.length) throw new Error(`CSV row ${index+2}: expected ${headers.length} columns, found ${cols.length}. Keep empty clue columns and quote commas inside text.`);
       const obj={};
       headers.forEach((h,i)=>obj[h]=(cols[i]||"").trim());
       return obj;
@@ -1660,7 +1663,8 @@ window.BrainiAdmin=(function(){
       if(!file) return;
 
       const raw=await file.text();
-      const parsed=parseCSV(raw).map(importRowFromCSV);
+      let parsed;
+      try{parsed=parseCSV(raw).map(importRowFromCSV);}catch(err){$("#qiPreview").innerHTML=`<div class="admin-note admin-danger-note">${esc(cleanError(err))}</div>`;return;}
 
       if(parsed.length>500){
         $("#qiPreview").innerHTML=`<div class="admin-note admin-danger-note">This file has ${num(parsed.length)} rows. Split it into batches of at most 500.</div>`;
@@ -2058,7 +2062,11 @@ window.BrainiAdmin=(function(){
           row={external_key:key,category:(r.category||"general").toLowerCase(),prompt:r.prompt||"What connects these?",clues,correct_connection:r.correct_connection||"",distractors,explanation:r.explanation||""};
           if(!key) issues.push("external_key required");
           if(clues.length<4||clues.length>8) issues.push("4–8 clues required");
-          if(!row.correct_connection) issues.push("correct_connection required");
+          if(!row.correct_connection.trim()) issues.push("correct_connection required");
+          if(!row.explanation.trim()) issues.push("explanation required; check for shifted CSV columns");
+          const answers=[row.correct_connection,...distractors].map(x=>x.trim().toLowerCase());
+          if(new Set(answers).size!==4) issues.push("all four connection choices must be different");
+          if(clues.some(x=>answers.includes(x.toLowerCase()))) issues.push("a clue must not state a connection choice");
           if(distractors.length!==3) issues.push("exactly 3 distractors required");
         }
         if(type==="oddoneout"){
@@ -2113,7 +2121,8 @@ window.BrainiAdmin=(function(){
 
     $("#poolImportFile").onchange=async e=>{
       const file=e.target.files?.[0]; if(!file) return;
-      const parsed=parseCSV(await file.text());
+      let parsed;
+      try{parsed=parseCSV(await file.text());}catch(err){$("#poolImportPreview").innerHTML=`<div class="admin-note admin-danger-note">${esc(cleanError(err))}</div>`;return;}
       const checked=normalizePoolImport(type,parsed);
       const valid=checked.filter(x=>x.valid);
       const holder=$("#poolImportPreview");

@@ -130,7 +130,7 @@ window.BrainiIcons=(function(){
 /* ===== build.js ===== */
 
 /* BrainiLab build identity — V41 Stable V1. */
-window.BRAINI_BUILD="41.10.0";
+window.BRAINI_BUILD="41.11.0";
 window.BRAINI_ENABLE_SW=
   window.BRAINI_ENABLE_SW===true;
 
@@ -2436,9 +2436,9 @@ window.BRAINI_MONETIZATION_CONFIG={
   ads:{
     provider:"adsense",
 
-    // Add after AdSense approval:
+    // Public account identifier; ad slots remain disabled until configured:
     // publisherId:"ca-pub-1234567890123456"
-    publisherId:"",
+    publisherId:"ca-pub-8834009700620116",
 
     slots:{
       home_after_play:"",
@@ -3456,6 +3456,7 @@ window.BrainiAds=(function(){
       window.BrainiMonetization;
 
     if(debugMode()) return true;
+    if(!/^(?:\/(?:index\.html)?|\/games\/(?:index\.html)?|\/daily-quiz\/(?:index\.html)?|\/about\/(?:index\.html)?|\/(?:general-knowledge|geography|science|history|sports)\/[^/]+\/(?:index\.html)?)$/.test(location.pathname)) return false;
 
     if(!monetization) return false;
     if(!monetization.canDecideAds()) return false;

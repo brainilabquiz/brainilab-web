@@ -8,9 +8,9 @@ window.BRAINI_MONETIZATION_CONFIG={
   ads:{
     provider:"adsense",
 
-    // Add after AdSense approval:
+    // Public account identifier; ad slots remain disabled until configured:
     // publisherId:"ca-pub-1234567890123456"
-    publisherId:"",
+    publisherId:"ca-pub-8834009700620116",
 
     slots:{
       home_after_play:"",
