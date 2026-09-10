@@ -91,6 +91,7 @@ window.BrainiAds=(function(){
       window.BrainiMonetization;
 
     if(debugMode()) return true;
+    if(!/^(?:\/(?:index\.html)?|\/games\/(?:index\.html)?|\/daily-quiz\/(?:index\.html)?|\/about\/(?:index\.html)?|\/(?:general-knowledge|geography|science|history|sports)\/[^/]+\/(?:index\.html)?)$/.test(location.pathname)) return false;
 
     if(!monetization) return false;
     if(!monetization.canDecideAds()) return false;
