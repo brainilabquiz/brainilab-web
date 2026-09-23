@@ -359,6 +359,11 @@ window.BrainiQuiz = (function(){
     skip?.addEventListener("click",doSkip);
 
     document.addEventListener("keydown",e=>{
+      // Game shortcuts must not consume typing or navigation elsewhere on the page.
+      if(completed || !el.isConnected) return;
+      const target=e.target;
+      if(target?.closest?.('input,textarea,select,[contenteditable="true"]')) return;
+      if(target!==document.body && !el.contains(target)) return;
       if(["1","2","3","4"].includes(e.key)&&!locked){
         e.preventDefault();
         const b=answers.children[Number(e.key)-1];
@@ -366,7 +371,7 @@ window.BrainiQuiz = (function(){
         return;
       }
 
-      if(e.key==="Enter"){
+      if(e.key==="Enter" && readyForNext){
         // A focused <button> also treats Enter as a click by default. Preventing
         // that native activation avoids a stale answer click after render().
         e.preventDefault();

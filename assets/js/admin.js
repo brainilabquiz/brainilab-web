@@ -12,11 +12,16 @@ window.BrainiAdmin=(function(){
     currentView:"dashboard",
     topics:[],
     questionRows:[],
+    questionPage:0,
+    questionRequest:0,
+    rendering:false,
+    pendingView:null,
     poolTab:"brainiword",
     poolHealthSort:"default",
     questionHealthSort:"default",
     analyticsHealthSort:"health_asc",
     contentHealthMap:new Map(),
+    questionHealthMap:new Map(),
     lastDailyDate:new Date().toISOString().slice(0,10)
   };
 
@@ -105,10 +110,12 @@ window.BrainiAdmin=(function(){
     if(!mode || mode==="default") return rows.slice();
     const dir=mode==="health_desc"?-1:1;
     return rows.slice().sort((a,b)=>{
-      const ah=healthFor(type,a.question_version_id||a.id)?.health_score;
-      const bh=healthFor(type,b.question_version_id||b.id)?.health_score;
-      const av=Number.isFinite(Number(ah))?Number(ah):-1;
-      const bv=Number.isFinite(Number(bh))?Number(bh):-1;
+      const ah=type==="question" ? state.questionHealthMap.get(a.question_version_id)?.score : healthFor(type,a.id)?.health_score;
+      const bh=type==="question" ? state.questionHealthMap.get(b.question_version_id)?.score : healthFor(type,b.id)?.health_score;
+      const av=ah==null?null:Number(ah), bv=bh==null?null:Number(bh);
+      // Missing samples are always last, never treated as unhealthy zeroes.
+      if(av===null || !Number.isFinite(av)) return bv===null || !Number.isFinite(bv)?0:1;
+      if(bv===null || !Number.isFinite(bv)) return -1;
       return (av-bv)*dir;
     });
   }
@@ -228,16 +235,34 @@ window.BrainiAdmin=(function(){
     return data;
   }
 
+  let drawerReturnFocus=null;
+  function safeAction(action){
+    return (...args)=>Promise.resolve().then(()=>action(...args)).catch(error=>{
+      console.error(error);
+      toast(cleanError(error));
+    });
+  }
+
   function openDrawer(html){
+    if($("#adminDrawerBackdrop").hidden) drawerReturnFocus=document.activeElement;
     $("#adminDrawerContent").innerHTML=html;
     $("#adminDrawerBackdrop").hidden=false;
     document.body.style.overflow="hidden";
+    $("#adminDrawer").scrollTop=0;
+    $("#adminDrawer").focus({preventScroll:true});
+    $("#adminDrawerContent").querySelectorAll('.admin-field').forEach(field=>{
+      const label=field.querySelector('label');
+      const control=field.querySelector('input[id],textarea[id],select[id]');
+      if(label && control) label.htmlFor=control.id;
+    });
   }
 
   function closeDrawer(){
     $("#adminDrawerBackdrop").hidden=true;
     $("#adminDrawerContent").innerHTML="";
     document.body.style.overflow="";
+    if(drawerReturnFocus?.isConnected) drawerReturnFocus.focus();
+    drawerReturnFocus=null;
   }
 
   function copyText(text){
@@ -343,6 +368,12 @@ window.BrainiAdmin=(function(){
   }
 
   function configureNavigation(){
+    const mobile=$("#adminMobileView");
+    mobile.innerHTML=Object.entries(titles).filter(([key])=>has(viewPermission[key])).map(([key,value])=>`<option value="${key}">${esc(value[1])}</option>`).join("");
+    mobile.value=state.currentView;
+    mobile.onchange=()=>navigate(mobile.value);
+    $("#adminQuickQuestion").hidden=!canEditContent();
+    $("#adminQuickQuestion").onclick=safeAction(()=>openQuestionEditor());
     document.querySelectorAll("[data-admin-view]").forEach(btn=>{
       const permission=viewPermission[btn.dataset.adminView];
       btn.hidden=!has(permission);
@@ -351,11 +382,13 @@ window.BrainiAdmin=(function(){
   }
 
   function navigate(view,{replace=false}={}){
+    if(state.rendering){state.pendingView={view,replace};return;}
     if(!titles[view] || !has(viewPermission[view])){
       view="dashboard";
     }
 
     state.currentView=view;
+    if($("#adminMobileView")) $("#adminMobileView").value=view;
 
     if(replace){
       history.replaceState(null,"",`#${view}`);
@@ -374,6 +407,8 @@ window.BrainiAdmin=(function(){
     $("#adminPageEyebrow").textContent=eyebrow;
     $("#adminPageTitle").textContent=title;
 
+    state.rendering=true;
+    $("#adminContent").setAttribute("aria-busy","true");
     renderView(view).catch(err=>{
       console.error(err);
       $("#adminContent").innerHTML=`
@@ -383,6 +418,10 @@ window.BrainiAdmin=(function(){
           <button class="admin-button" data-retry>Retry</button>
         </div>`;
       $("#adminContent [data-retry]").onclick=()=>navigate(view,{replace:true});
+    }).finally(()=>{
+      state.rendering=false;
+      $("#adminContent").setAttribute("aria-busy","false");
+      if(state.pendingView){const pending=state.pendingView;state.pendingView=null;navigate(pending.view,{replace:pending.replace});}
     });
   }
 
@@ -905,7 +944,7 @@ window.BrainiAdmin=(function(){
     await ensureTopics();
 
     $("#adminContent").innerHTML=`
-      <div class="admin-note" style="margin-bottom:12px"><strong>Normal Question Bank:</strong> use this area for standard 4-option multiple-choice questions. Published questions feed the normal Play Anytime quizzes, Brain Mix and Survival. Connections, Odd One Out, Higher or Lower, Order Up, Topic Rush and BrainiWord belong in <strong>Content Pools</strong>. <button class="admin-button" id="qContentPools" style="margin-left:8px">Open Content Pools</button></div>
+      <div class="admin-question-heading"><p>Four-option quizzes for Brain Mix, Anytime and Survival.</p><button class="admin-button" id="qContentPools">Other game content →</button></div>
       <div class="admin-toolbar">
         <div class="admin-field grow">
           <label>Search</label>
@@ -946,33 +985,43 @@ window.BrainiAdmin=(function(){
           </select>
         </div>
         <button class="admin-button" id="qFilter">Filter</button>
-        <button class="admin-button" id="qQuality">Question Quality</button>
-        <button class="admin-button" id="qPacks">Quiz Packs</button>
-        ${canEditContent()?`
-          <button class="admin-button" id="qImport">Import normal questions CSV</button>
-          <button class="admin-button primary" id="qNew">+ New question</button>
-        `:""}
+        <button class="admin-button" id="qReset">Reset</button>
+        <details class="admin-tools"><summary>More tools</summary><div>
+          <button class="admin-button" id="qQuality">Legacy quality report</button>
+          <button class="admin-button" id="qPacks">Quiz packs</button>
+          ${canEditContent()?`<button class="admin-button" id="qImport">Import questions CSV</button>`:""}
+        </div></details>
       </div>
 
       <div id="questionTable">${loading()}</div>
     `;
 
     $("#qContentPools").onclick=()=>navigate("content");
-    $("#qPacks").onclick=openQuizPacks;
-    $("#qQuality").onclick=openQuestionQualityDashboard;
-    $("#qFilter").onclick=loadQuestionTable;
-    $("#qHealthSort").onchange=e=>{state.questionHealthSort=e.target.value;loadQuestionTable();};
-    $("#qSearch").onkeydown=e=>{
-      if(e.key==="Enter") loadQuestionTable();
-    };
+    $("#qPacks").onclick=safeAction(openQuizPacks);
+    $("#qQuality").onclick=safeAction(openQuestionQualityDashboard);
+    const filter=safeAction(()=>{state.questionPage=0;return loadQuestionTable();});
+    $("#qFilter").onclick=filter;
+    $("#qReset").onclick=safeAction(()=>{
+      ['qSearch','qStatus','qDifficulty','qTopic'].forEach(id=>$("#"+id).value='');
+      state.questionPage=0;return loadQuestionTable();
+    });
+    $("#qHealthSort").onchange=safeAction(e=>{state.questionHealthSort=e.target.value;return loadQuestionTable();});
+    $("#qSearch").onkeydown=e=>{if(e.key==="Enter")filter();};
+    ['qStatus','qDifficulty','qTopic'].forEach(id=>$("#"+id).onchange=filter);
+    $("#adminContent").querySelectorAll('.admin-field').forEach(field=>{
+      const label=field.querySelector('label'),control=field.querySelector('input[id],select[id]');
+      if(label&&control)label.htmlFor=control.id;
+    });
     $("#qNew")?.addEventListener("click",()=>openQuestionEditor());
-    $("#qImport")?.addEventListener("click",openQuestionImport);
+    $("#qImport")?.addEventListener("click",safeAction(openQuestionImport));
 
     await loadQuestionTable();
   }
 
   async function loadQuestionTable(){
     const holder=$("#questionTable");
+    if(!holder) return;
+    const request=++state.questionRequest;
     holder.innerHTML=loading();
 
     const filters={
@@ -982,14 +1031,15 @@ window.BrainiAdmin=(function(){
       topic:$("#qTopic")?.value||null
     };
 
+    try{
     const [data,quality,health]=await Promise.all([
       rpc("admin_list_questions",{
         p_search:filters.search,
         p_status:filters.status,
         p_difficulty:filters.difficulty,
         p_topic_slug:filters.topic,
-        p_limit:100,
-        p_offset:0
+        p_limit:50,
+        p_offset:state.questionPage*50
       }),
 
       rpc("admin_question_quality_overview",{
@@ -1007,14 +1057,19 @@ window.BrainiAdmin=(function(){
       })
     ]);
 
+    if(request!==state.questionRequest || !holder.isConnected) return;
     (health?.rows||[]).forEach(row=>state.contentHealthMap.set(`${row.content_type}:${row.content_id}`,row));
-    const rows=sortByHealth(data?.rows||[],"question",state.questionHealthSort);
     const qualityMap=new Map(
       (quality?.rows||[]).map(
         row=>[row.question_version_id,row]
       )
     );
 
+    state.questionHealthMap=new Map((data?.rows||[]).map(q=>[
+      q.question_version_id,
+      BrainiQuestionHealth.assess(qualityMap.get(q.question_version_id),healthFor("question",q.question_version_id))
+    ]));
+    const rows=sortByHealth(data?.rows||[],"question",state.questionHealthSort);
     state.questionRows=rows;
 
     holder.innerHTML=`
@@ -1022,8 +1077,8 @@ window.BrainiAdmin=(function(){
         <div>
           <h2>${num(data?.total)} question versions</h2>
           <p>
-            Showing up to 100. Published versions are immutable.
-            Quality labels use verified player answers only.
+            Showing ${data?.total?state.questionPage*50+1:0}–${Math.min((state.questionPage+1)*50,Number(data?.total||0))}. Published versions are read-only. Health sorting applies to this page.
+            Health v2 uses verified answers and difficulty-aware screening. Expand a score for reasons and next steps. Samples under 30 answered attempts are not scored.
           </p>
         </div>
       </div>
@@ -1038,7 +1093,7 @@ window.BrainiAdmin=(function(){
               <th>Difficulty</th>
               <th>Usage</th>
               <th>Health</th>
-              <th>Quality</th>
+              <th>Verified history</th>
             </tr>
           </thead>
           <tbody>
@@ -1076,15 +1131,12 @@ window.BrainiAdmin=(function(){
                     ${num(q.used_pack_count)} packs
                   </td>
 
-                  <td>${healthBadge(healthFor("question",q.question_version_id))}</td>
+                  <td>${BrainiQuestionHealth.render(state.questionHealthMap.get(q.question_version_id))}</td>
 
                   <td>
                     <div class="admin-quality-cell">
-                      ${qualityRow
-                        ? qualityBadge(qualityRow.quality_state)
-                        : badge("No sample","info")
-                      }
                       <small>${analytics}</small>
+                      <small>All time · this accuracy includes skips</small>
                     </div>
                   </td>
                 </tr>`;
@@ -1099,9 +1151,26 @@ window.BrainiAdmin=(function(){
       </div>
     `;
 
-    holder.querySelectorAll("[data-qv]").forEach(row=>{
-      row.onclick=()=>openQuestionEditor(row.dataset.qv);
+    const pagination=document.createElement('div');
+    pagination.className='admin-pagination';
+    pagination.innerHTML=`<button class="admin-button" data-q-prev ${state.questionPage===0?'disabled':''}>← Previous</button><span>Page ${state.questionPage+1} of ${Math.max(1,Math.ceil(Number(data?.total||0)/50))}</span><button class="admin-button" data-q-next ${(state.questionPage+1)*50>=Number(data?.total||0)?'disabled':''}>Next →</button>`;
+    holder.append(pagination);
+    pagination.querySelector('[data-q-prev]').onclick=safeAction(()=>{state.questionPage=Math.max(0,state.questionPage-1);return loadQuestionTable();});
+    pagination.querySelector('[data-q-next]').onclick=safeAction(()=>{state.questionPage++;return loadQuestionTable();});
+    holder.querySelectorAll(".admin-question-health").forEach(details=>{
+      details.addEventListener("click",event=>event.stopPropagation());
     });
+    holder.querySelectorAll("[data-qv]").forEach(row=>{
+      row.tabIndex=0;
+      row.setAttribute('aria-label','Open question: '+(row.querySelector('td:nth-child(2) strong')?.textContent||''));
+      row.onclick=safeAction(()=>openQuestionEditor(row.dataset.qv));
+      row.onkeydown=e=>{if(e.target===row && (e.key==='Enter'||e.key===' ')){e.preventDefault();row.onclick();}};
+    });    }catch(error){
+      if(request!==state.questionRequest || !holder.isConnected)return;
+      holder.innerHTML=`<div class="admin-form-errors" role="alert"><strong>Could not load questions</strong><p>${esc(cleanError(error))}</p><button class="admin-button" data-q-retry>Try again</button></div>`;
+      holder.querySelector('[data-q-retry]').onclick=safeAction(loadQuestionTable);
+    }
+
   }
 
   async function openQuestionQualityDashboard(){
@@ -1280,15 +1349,12 @@ window.BrainiAdmin=(function(){
         </div>
       `:""}
 
+      <div id="qeErrors" class="admin-form-errors" role="alert" hidden></div>
       <div class="admin-form-grid" style="margin-top:14px">
-        <div class="admin-field full">
-          <label>External key ${q?"":"(optional)"}</label>
-          <input class="admin-input" id="qeExternal" value="${esc(q?.external_key||"")}" ${q||immutable?"disabled":""} placeholder="e.g. geo-rivers-001">
-        </div>
 
         <div class="admin-field full">
           <label>Prompt</label>
-          <textarea class="admin-textarea" id="qePrompt" ${immutable?"disabled":""}>${esc(q?.prompt||"")}</textarea>
+          <textarea class="admin-textarea" id="qePrompt" maxlength="1000" placeholder="Write one clear question…" ${immutable?"disabled":""}>${esc(q?.prompt||"")}</textarea>
         </div>
 
         <div class="admin-field">
@@ -1307,20 +1373,25 @@ window.BrainiAdmin=(function(){
 
         <div class="admin-field full">
           <label>Explanation</label>
-          <textarea class="admin-textarea" id="qeExplanation" ${immutable?"disabled":""}>${esc(q?.explanation||"")}</textarea>
+          <textarea class="admin-textarea" id="qeExplanation" maxlength="3000" placeholder="Explain why the correct answer is right…" ${immutable?"disabled":""}>${esc(q?.explanation||"")}</textarea>
         </div>
 
         <div class="admin-field full">
           <label>Options · select the correct answer</label>
-          <div class="admin-options-editor">
+          <div class="admin-options-editor" id="qeOptions" tabindex="-1">
             ${options.map((o,i)=>`
               <label class="admin-option-edit">
-                <input type="radio" name="qeCorrect" value="${i}" ${o.is_correct?"checked":""} ${immutable?"disabled":""}>
-                <input class="admin-input" data-qe-option="${i}" value="${esc(o.text||"")}" ${immutable?"disabled":""} placeholder="Option ${i+1}">
+                <input type="radio" name="qeCorrect" aria-label="Mark option ${i+1} correct" value="${i}" ${o.is_correct?"checked":""} ${immutable?"disabled":""}>
+                <input class="admin-input" aria-label="Answer option ${i+1}" data-qe-option="${i}" value="${esc(o.text||"")}" ${immutable?"disabled":""} placeholder="Option ${i+1}">
               </label>`).join("")}
           </div>
         </div>
 
+
+        <details class="admin-optional full"><summary>Optional details: tags, source &amp; reference</summary><div class="admin-form-grid">        <div class="admin-field full">
+          <label>External key ${q?"":"(optional)"}</label>
+          <input class="admin-input" id="qeExternal" value="${esc(q?.external_key||"")}" ${q||immutable?"disabled":""} placeholder="e.g. geo-rivers-001">
+        </div>
         <div class="admin-field full">
           <label>Subcategory tags</label>
           <input
@@ -1345,7 +1416,7 @@ window.BrainiAdmin=(function(){
           <label>Source URL · optional internal reference</label>
           <input class="admin-input" id="qeSource" value="${esc(q?.source_url||"")}" ${immutable?"disabled":""}>
         </div>
-
+</div></details>
         ${!immutable?`
           <div class="admin-field">
             <label>Save as</label>
@@ -1426,7 +1497,13 @@ window.BrainiAdmin=(function(){
       ()=>openQuestionAnalytics(q.question_version_id,q.prompt)
     );
 
-    $("#qeSave")?.addEventListener("click",async()=>{
+    const saveButton=$("#qeSave");
+    const saveLabel=()=>{if(saveButton)saveButton.textContent=({draft:'Save draft',review:'Send to review',published:'Publish question'})[$('#qeStatus').value];};
+    $('#qeStatus')?.addEventListener('change',saveLabel);
+    saveLabel();
+    let saving=false;
+    saveButton?.addEventListener("click",async()=>{
+      if(saving)return;
       const optionEls=[...document.querySelectorAll("[data-qe-option]")];
       const correct=Number(
         document.querySelector('input[name="qeCorrect"]:checked')?.value
@@ -1435,29 +1512,40 @@ window.BrainiAdmin=(function(){
       const payload={
         p_question_version_id:q?.question_version_id||null,
         p_external_key:$("#qeExternal").value||null,
-        p_prompt:$("#qePrompt").value,
-        p_explanation:$("#qeExplanation").value,
+        p_prompt:$("#qePrompt").value.trim(),
+        p_explanation:$("#qeExplanation").value.trim(),
         p_difficulty:$("#qeDifficulty").value,
         p_topic_slug:$("#qeTopic").value,
         p_options:optionEls.map((el,i)=>({
-          text:el.value,
+          text:el.value.trim(),
           is_correct:i===correct
         })),
         p_tags:$("#qeTags").value
           .split(",")
           .map(x=>x.trim())
           .filter(Boolean),
-        p_source_url:$("#qeSource").value||null,
+        p_source_url:$("#qeSource").value.trim()||null,
         p_status:$("#qeStatus").value
       };
 
+      const errors=BrainiQuestionForm.validate(payload);
+      const errorBox=$('#qeErrors');
+      $('#adminDrawerContent').querySelectorAll('[aria-invalid]').forEach(el=>el.removeAttribute('aria-invalid'));
+      errorBox.hidden=!errors.length;
+      errorBox.innerHTML=errors.length?`<strong>Check before saving</strong><ul>${errors.map(e=>`<li>${esc(e.message)}</li>`).join('')}</ul>`:'';
+      if(errors.length){errors.forEach(e=>{const field=$('#'+e.field);field?.setAttribute('aria-invalid','true');const details=field?.closest('details');if(details)details.open=true;});$('#'+errors[0].field)?.focus();return;}
+      saving=true;saveButton.disabled=true;saveButton.textContent='Saving…';
       try{
         const saved=await rpc("admin_save_question",payload);
         toast(saved.status==="published"?"Question published":"Question saved");
         closeDrawer();
         if(state.currentView==="questions") await loadQuestionTable();
       }catch(err){
+        errorBox.hidden=false;errorBox.textContent=cleanError(err);
         toast(cleanError(err));
+      }finally{
+        saving=false;
+        if(saveButton.isConnected){saveButton.disabled=false;saveLabel();}
       }
     });
   }
@@ -3481,6 +3569,15 @@ window.BrainiAdmin=(function(){
     );
 
     $("#adminDrawerClose").onclick=closeDrawer;
+    document.addEventListener('keydown',event=>{
+      if($("#adminDrawerBackdrop").hidden)return;
+      if(event.key==='Escape'){event.preventDefault();closeDrawer();return;}
+      if(event.key!=='Tab')return;
+      const focusable=[...$('#adminDrawer').querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,[tabindex="0"]')].filter(el=>el.getClientRects().length);
+      const first=focusable[0],last=focusable.at(-1);
+      if(event.shiftKey && (document.activeElement===first || document.activeElement===$('#adminDrawer'))){event.preventDefault();last?.focus();}
+      else if(!event.shiftKey && (document.activeElement===last || document.activeElement===$('#adminDrawer'))){event.preventDefault();first?.focus();}
+    });
     $("#adminDrawerBackdrop").onclick=e=>{
       if(e.target===$("#adminDrawerBackdrop")) closeDrawer();
     };

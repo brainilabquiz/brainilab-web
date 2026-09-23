@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const ctx={window:{},URL};
+vm.runInNewContext(fs.readFileSync(new URL('../assets/js/admin-question-form.js',import.meta.url),'utf8'),ctx);
+const {validate}=ctx.window.BrainiQuestionForm;
+const base={p_prompt:'Which option is correct?',p_explanation:'The first option is correct.',p_difficulty:'easy',p_status:'draft',p_topic_slug:'general-knowledge',p_options:['A','B','C','D'].map((text,i)=>({text,is_correct:i===0}))};
+assert.equal(validate(base).length,0);
+assert.equal(validate({...base,p_status:'published'}).length,0);
+assert.equal(validate({...base,p_explanation:''}).length,0);
+for(const patch of [{p_prompt:''},{p_prompt:'x'.repeat(1001)},{p_status:'published',p_explanation:''},{p_difficulty:'invalid'},{p_topic_slug:''},{p_status:'retired'},{p_source_url:'javascript:alert(1)'},{p_external_key:'x'},{p_options:base.p_options.slice(1)},{p_options:base.p_options.map(o=>({...o,is_correct:false}))},{p_options:base.p_options.map(o=>({...o,is_correct:true}))},{p_options:base.p_options.map(o=>({...o,text:'same'}))}])assert.ok(validate({...base,...patch}).length>0);
+assert.equal(validate({...base,p_source_url:'https://example.org/reference'}).length,0);
+console.log('Admin question validation: 16 cases passed.');
