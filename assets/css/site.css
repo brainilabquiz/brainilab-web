@@ -5768,3 +5768,5 @@ main > section.section,
 /* Static learning guides and contact route. */
 .play-guide .seo-copy{max-width:860px}.play-guide p,.legal-copy p{line-height:1.75}.play-guide h3{margin-top:24px}.guide-note{border-top:1px solid #ddd;padding-top:16px;font-size:.94rem}.footer-contact{padding-top:16px;padding-bottom:18px;font-size:.9rem}.footer-contact a{text-decoration:underline}
 
+
+.cookie-settings{font-size:12px;margin-top:8px}.cookie-settings summary{cursor:pointer;font-weight:650;color:var(--navy)}.cookie-settings label{display:flex;align-items:center;gap:8px;margin:10px 0}.cookie-settings input{width:18px;height:18px}.cookie-settings button{border:1px solid #c8c1b7;background:white;border-radius:7px;padding:8px 12px;cursor:pointer}

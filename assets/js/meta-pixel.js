@@ -64,8 +64,9 @@ window.BrainiMarketing = (function(){
     }
   }
 
-  function choose(allowed){
+  function choose(allowed,statistics=allowed){
     choice=allowed===true;
+    window.BrainiSiteAnalytics?.setConsent(statistics===true);
     try{localStorage.setItem(consentKey,JSON.stringify({allowed:choice,at:Date.now()}));}catch{}
     if(choice) activate(); else revoke();
     if(panel){panel.remove();panel=null;}
@@ -76,7 +77,10 @@ window.BrainiMarketing = (function(){
     panel=document.createElement("aside");
     panel.className="marketing-consent";
     panel.setAttribute("aria-label","Optional cookie choices");
-    panel.innerHTML='<div><strong>Your cookie choices</strong><p>BrainiLab uses optional Meta (Facebook) cookies to measure visits and games played after our ads. You can play either way and change your choice in Manage privacy. <a href="/cookies/#privacy-choices">Cookie details</a></p></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
+    panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
+    panel.querySelector('[data-statistics-choice]').checked=window.BrainiSiteAnalytics?.isAllowed()===true;
+    panel.querySelector('[data-ad-choice]').checked=choice===true;
+    panel.querySelector('[data-save-cookie-choices]').onclick=()=>choose(panel.querySelector('[data-ad-choice]').checked,panel.querySelector('[data-statistics-choice]').checked);
     panel.querySelector("[data-marketing-reject]").onclick=()=>choose(false);
     panel.querySelector("[data-marketing-accept]").onclick=()=>choose(true);
     document.body.appendChild(panel);
@@ -109,7 +113,7 @@ window.BrainiMarketing = (function(){
       event.preventDefault(); showPreferences();
     });
     if(choice===true) activate();
-    if(choice===null && safePage()) showPreferences();
+    if((choice===null || window.BrainiSiteAnalytics?.needsConsent()) && safePage()) showPreferences();
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true});
   else boot();

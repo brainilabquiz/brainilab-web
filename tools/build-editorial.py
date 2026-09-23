@@ -69,10 +69,10 @@ def page(path, title, description, body, schema, cover=None):
 <meta property="og:image" content="{BASE}{escape(cover['src'])}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
-<link rel="stylesheet" href="/assets/css/site.css?v=41.14.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/editorial.css?v=41.14.0"/>
-<script defer src="/assets/js/shell.bundle.js?v=41.14.0"></script>
-{'<script defer src="/assets/js/learn-library.js?v=41.14.0"></script>' if path == '/learn/' else ''}
+<link rel="stylesheet" href="/assets/css/site.css?v=41.15.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
+<link rel="stylesheet" href="/assets/css/editorial.css?v=41.15.0"/>
+<script defer src="/assets/js/shell.bundle.js?v=41.15.0"></script>
+{'<script defer src="/assets/js/learn-library.js?v=41.15.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
 {header}<main id="main-content">{body}</main>{footer}<div class="toast" role="status"></div></body></html>'''
@@ -81,14 +81,21 @@ def page(path, title, description, body, schema, cover=None):
     target.write_text(content, encoding='utf-8')
 
 topics = sorted({a['topic'] for a in articles})
-library = ''.join(card(a,i<3) for i,a in enumerate(articles))
+latest_by_topic={}
+for a in sorted(articles,key=lambda a:a.get("publishedAt",""),reverse=True):
+    latest_by_topic.setdefault(a["topic"],a["slug"])
+library_parts=[]
+for i,a in enumerate(articles):
+    latest=latest_by_topic[a['topic']]==a['slug']
+    library_parts.append(card(a,i<3).replace('class="learn-card"', 'class="learn-card" data-latest-topic' if latest else 'class="learn-card" hidden', 1))
+library=''.join(library_parts)
 page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geography, history, numbers and word puzzles. Short reads with worked examples, a quick question and a related game.', f'''
 <div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Learn</span></nav>
 <header class="learn-hero"><div><h1>A little more to discover.</h1><p>Curious questions, clear answers and a few things to try.</p></div>
 <label class="learn-search" hidden>Find an article<input type="search" id="learn-search" placeholder="Try Moon, flags, numbers…" autocomplete="off" aria-controls="learn-articles"/></label></header>
-<nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="" aria-pressed="true">All articles</button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)}</button>' for t in topics)}</nav>
-<p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(articles)} articles</p>
-<div class="learn-grid library-grid" id="learn-articles">{library}</div>
+<nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="__latest" aria-pressed="true">Latest by topic</button><button type="button" data-topic-filter="" aria-pressed="false">All articles</button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)}</button>' for t in topics)}</nav>
+<p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(topics)} articles · latest in each topic</p>
+<noscript><style>.library-grid .learn-card[hidden]{{display:flex!important}}</style><p>All articles are shown below. Enable JavaScript to use search and topic filters.</p></noscript><div class="learn-grid library-grid" id="learn-articles">{library}</div>
 <div class="learn-empty" hidden><h2>No articles found</h2><p>Try another word or browse all topics.</p><button type="button" data-clear-filters>Show all articles</button></div>
 <p class="learn-footer-link">In the mood to play? <a href="/games/">Browse the games →</a></p></div>''', {'@type':'CollectionPage','name':'BrainiLab Learn','url':BASE+'/learn/','description':'Short reads on science, geography, history and puzzles','hasPart':[{'@type':'Article','headline':a['title'],'url':BASE+'/learn/'+a['slug']+'/','image':BASE+a['cover']['src']} for a in articles]})
 
