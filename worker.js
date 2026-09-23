@@ -1,3 +1,4 @@
+import {serveLearn} from './lib/learn-worker.js';
 // Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
 const CHANNEL='UCy35EdjSpdYufOLJBybevsA';
 const PLAYLIST='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4';
@@ -43,6 +44,15 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch){
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
+    if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml'].includes(url.pathname)){
+      const response=await serveLearn(request,env,ctx,caches.default);
+      const secured=new Response(response.body,response);
+      secured.headers.set('X-Content-Type-Options','nosniff');
+      secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
+      secured.headers.set('X-Frame-Options','DENY');
+      secured.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=()');
+      return secured;
+    }
     if(url.pathname.startsWith('/api/')){
       if(request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET'}});
       if(url.pathname==='/api/latest-video')return latestVideo(request,ctx,caches.default);

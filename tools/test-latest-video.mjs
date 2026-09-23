@@ -29,5 +29,5 @@ response=await latestVideo(request,ctx,cache,async()=>{throw new Error('Network 
 response=await latestVideo(request,ctx,{match:async()=>null},async()=>new Response('',{status:503}));assert.equal(response.status,503);
 response=await worker.fetch(new Request(key,{method:'POST'}),{},ctx);assert.equal(response.status,405);
 response=await worker.fetch(new Request('https://brainilabgames.com/api/youtube-thumbnail/invalid'),{},ctx);assert.equal(response.status,404);
-response=await worker.fetch(new Request('https://brainilabgames.com/learn/'),{ASSETS:{fetch:async()=>new Response('static')}},ctx);assert.equal(await response.text(),'static');
+response=await worker.fetch(new Request('https://brainilabgames.com/games/'),{ASSETS:{fetch:async()=>new Response('static')}},ctx);assert.equal(await response.text(),'static');
 console.log('YouTube: newest playlist entry, XML decoding, ID/channel/playlist validation, scoped cache, stale fallback, upstream failure, methods and static routing passed.');

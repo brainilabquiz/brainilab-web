@@ -5,6 +5,7 @@ import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 
 const root=path.resolve('.');
+await build({entryPoints:['editor/admin-articles.js'],outfile:'assets/js/admin-articles.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const output=path.resolve(root,'dist');
 if(path.relative(root,output)!=='dist') throw new Error('Unsafe build output');
 const previous=await lstat(output).catch(error=>{if(error.code!=='ENOENT')throw error;return null;});
@@ -22,7 +23,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set([...files.filter(file=>file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file)),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['assets/js/admin-articles.bundle.js',...files.filter(file=>file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file)),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.

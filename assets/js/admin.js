@@ -30,6 +30,7 @@ window.BrainiAdmin=(function(){
     daily:["Daily operations","Daily"],
     questions:["Content","Question Bank"],
     content:["Content","Content Pools"],
+    articles:["Content","Articles"],
     analytics:["Gameplay","Game Analytics"],
     users:["Accounts","Users"],
     rankings:["Competition","Rankings"],
@@ -144,6 +145,7 @@ window.BrainiAdmin=(function(){
     daily:"daily",
     questions:"questions",
     content:"content",
+    articles:"content",
     analytics:"results",
     users:"users",
     rankings:"rankings",
@@ -382,6 +384,7 @@ window.BrainiAdmin=(function(){
   }
 
   function navigate(view,{replace=false}={}){
+    if(state.currentView==='articles' && window.BrainiArticles){if(!window.BrainiArticles.canLeave())return;window.BrainiArticles.reset();}
     if(state.rendering){state.pendingView={view,replace};return;}
     if(!titles[view] || !has(viewPermission[view])){
       view="dashboard";
@@ -433,6 +436,7 @@ window.BrainiAdmin=(function(){
       daily:renderDaily,
       questions:renderQuestions,
       content:renderContent,
+      articles:()=>window.BrainiArticles.render({sb:state.sb,rpc,root:$('#adminContent'),toast}),
       analytics:renderAnalytics,
       users:renderUsers,
       rankings:renderRankings,
