@@ -1,6 +1,7 @@
-// Public channel feed only. No visitor data, credentials or user-supplied upstream URLs.
+// Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
 const CHANNEL='UCy35EdjSpdYufOLJBybevsA';
-const CHANNEL_URL='https://www.youtube.com/@BrainiLab';
+const PLAYLIST='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4';
+const PLAYLIST_URL='https://www.youtube.com/playlist?list='+PLAYLIST;
 const FRESH_MS=15*60*1000;
 const decodeXML=value=>value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi,(_,entity)=>{
   if(entity[0]==='#'){
@@ -10,32 +11,33 @@ const decodeXML=value=>value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace
   return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'"}[entity.toLowerCase()];
 });
 export function parseFeed(xml){
+  if(!xml.includes('<yt:playlistId>'+PLAYLIST+'</yt:playlistId>'))throw new Error('Unexpected playlist');
   const entries=[...xml.matchAll(/<entry\b[^>]*>([\s\S]*?)<\/entry>/g)].map(([,entry])=>{
     const tag=name=>entry.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)<\\/${name}>`))?.[1];
     const id=tag('yt:videoId'),channel=tag('yt:channelId'),title=decodeXML(tag('title')||'').trim(),published=tag('published');
     if(channel!==CHANNEL||!/^[-\w]{11}$/.test(id||'')||!title||!Number.isFinite(Date.parse(published)))return null;
-    return {id,title:title.slice(0,250),published,url:'https://www.youtube.com/watch?v='+id,thumbnail:'/api/youtube-thumbnail/'+id};
+    return {id,title:title.slice(0,250),published,url:'https://www.youtube.com/watch?v='+id+'&list='+PLAYLIST,thumbnail:'/api/youtube-thumbnail/'+id};
   }).filter(Boolean).sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));
   if(!entries.length)throw new Error('No public channel videos');
   return entries[0];
 }
 function json(body,status=200,maxAge=60){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':`public, max-age=${maxAge}`,'X-Content-Type-Options':'nosniff'}});}
 export async function latestVideo(request,ctx,cache,fetcher=fetch){
-  const key=new Request(new URL('/api/latest-video',request.url));
+  const key=new Request(new URL('/api/latest-video?playlist='+PLAYLIST,request.url));
   const cached=await cache.match(key);
   const saved=cached?await cached.json().catch(()=>null):null;
   if(saved&&Date.now()-saved.checkedAt<FRESH_MS)return json(saved,200,60);
   try{
-    const response=await fetcher('https://www.youtube.com/feeds/videos.xml?channel_id='+CHANNEL,{signal:AbortSignal.timeout(7000),headers:{Accept:'application/atom+xml'}});
+    const response=await fetcher('https://www.youtube.com/feeds/videos.xml?playlist_id='+PLAYLIST,{signal:AbortSignal.timeout(7000),headers:{Accept:'application/atom+xml'}});
     if(!response.ok)throw new Error('Feed unavailable');
     const xml=await response.text();
     if(xml.length>500000)throw new Error('Oversized feed');
-    const data={...parseFeed(xml),channelUrl:CHANNEL_URL,checkedAt:Date.now(),stale:false};
+    const data={...parseFeed(xml),playlistId:PLAYLIST,playlistUrl:PLAYLIST_URL,checkedAt:Date.now(),stale:false};
     ctx.waitUntil(cache.put(key,json(data,200,7*86400)));
     return json(data,200,60);
   }catch{
     if(saved)return json({...saved,stale:true},200,60);
-    return json({channelUrl:CHANNEL_URL,unavailable:true},503,60);
+    return json({playlistUrl:PLAYLIST_URL,unavailable:true},503,60);
   }
 }
 export default {
