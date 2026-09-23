@@ -1,0 +1,49 @@
+{
+  "slug": "why-greenland-looks-so-big",
+  "status": "published",
+  "topic": "Geography",
+  "title": "Why does Greenland look so big on a map?",
+  "description": "The map on your wall makes a trade-off. Here’s how to spot it before comparing countries.",
+  "game": {
+    "name": "World Capitals Quiz",
+    "url": "/geography/world-capitals-quiz/"
+  },
+  "hub": {
+    "name": "Geography",
+    "url": "/geography/"
+  },
+  "sections": [
+    {
+      "id": "the-map-trick",
+      "title": "The map is stretching something",
+      "html": "<p>Put your finger on Greenland on a familiar rectangular world map. Now look towards the equator. The sizes can feel obvious: surely a bigger patch of paper means a bigger place? That is the trap.</p><p>A globe can represent Earth’s curved surface. A flat map has to distort it. On a Mercator map, the stretching becomes greater towards the poles, so Greenland looks unusually large. The projection is useful for some tasks, but comparing the area of countries is not one of its strengths.</p><p>The US Geological Survey makes a helpful point: there is no single best projection. The useful question is what the map needs to preserve.</p>"
+    },
+    {
+      "id": "choose-the-tool",
+      "title": "Choose the map for the question",
+      "html": "<p>For area comparisons, try a globe or an equal-area map. Equal-area projections preserve relative areas, while allowing shapes to change. If coastlines look unfamiliar, that does not automatically mean the map is inaccurate.</p><p>Think of two different questions: ‘How much space does this country occupy?’ and ‘What does this local coastline look like?’ They ask different things of the map. Before answering a geography question, check whether the image is evidence for the thing you are comparing.</p>"
+    },
+    {
+      "id": "try-a-comparison",
+      "title": "Try a two-map comparison",
+      "html": "<p>Choose one place near the equator and one farther north. Find both on a globe, then on a rectangular world map. Ignore the labels for a moment and describe what changed. Did the northern place spread sideways? Did both places keep the same proportions?</p><p>Write one sentence beginning ‘This map is useful for…’ rather than declaring one map good and the other bad. That habit also helps with charts: what a picture makes easy to see matters.</p><details class=\"practice-answer\"><summary>Would an equal-area map have to preserve every country’s shape?</summary><p>No. Preserving relative area and preserving local shape are different properties. A flat world map cannot preserve everything at once.</p></details>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "US Geological Survey — Map projections",
+      "url": "https://www.usgs.gov/publications/map-projections"
+    }
+  ],
+  "related": [
+    "why-time-zones-get-messy",
+    "how-to-learn-world-flags"
+  ],
+  "practice": "Try the World Capitals quiz, then find one unfamiliar country on a globe. The quiz is about places, rather than map projections.",
+  "cover": {
+    "src": "/assets/images/learn/why-greenland-looks-so-big.webp",
+    "alt": "A globe, folded map and compass on a desk",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 6
+}

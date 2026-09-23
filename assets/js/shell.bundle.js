@@ -4390,8 +4390,8 @@ window.BrainiMarketing = (function(){
     if(panel) return;
     panel=document.createElement("aside");
     panel.className="marketing-consent";
-    panel.setAttribute("aria-label","Marketing cookie choices");
-    panel.innerHTML='<div><strong>Marketing cookies</strong><p>With your permission, we use Meta cookies to measure visits and completed games from our ads. You can play without accepting and change your choice through Manage privacy. <a href="/cookies/#privacy-choices">Details</a></p></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject marketing</button><button type="button" data-marketing-accept>Accept marketing</button></div>';
+    panel.setAttribute("aria-label","Optional cookie choices");
+    panel.innerHTML='<div><strong>Your cookie choices</strong><p>BrainiLab uses optional Meta (Facebook) cookies to measure visits and games played after our ads. You can play either way and change your choice in Manage privacy. <a href="/cookies/#privacy-choices">Cookie details</a></p></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
     panel.querySelector("[data-marketing-reject]").onclick=()=>choose(false);
     panel.querySelector("[data-marketing-accept]").onclick=()=>choose(true);
     document.body.appendChild(panel);

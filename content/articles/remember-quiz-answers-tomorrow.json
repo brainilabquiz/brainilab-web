@@ -1,0 +1,54 @@
+{
+  "slug": "remember-quiz-answers-tomorrow",
+  "status": "published",
+  "topic": "Learning",
+  "title": "How to remember a quiz answer after the quiz is over",
+  "description": "Pick one surprising answer, close the explanation and see whether you can bring it back yourself.",
+  "game": {
+    "name": "General Knowledge Quiz",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "General knowledge",
+    "url": "/general-knowledge/"
+  },
+  "sections": [
+    {
+      "id": "familiar",
+      "title": "“I knew that” is not quite the same as remembering",
+      "html": "<p>You read an answer explanation and it seems obvious. A day later, the same question leaves you staring at the options. The explanation may have felt familiar without being easy to retrieve on your own.</p><p>Research on retrieval practice distinguishes reading information again from trying to recall it. In the studies discussed by Roediger and Karpicke, testing could support later retention even when repeated study felt more fluent in the moment. That does not make every quiz a complete learning programme; what you do with the answer still matters.</p>"
+    },
+    {
+      "id": "one-answer",
+      "title": "Choose one answer worth keeping",
+      "html": "<p>After a round, choose a fact you actually care about. Write a question on one side of a card and the answer, with a short explanation, on the other. ‘How many hearts does an octopus have, and what do they do?’ is more useful than a card containing only the word ‘octopus’.</p><p>Close the feedback before answering your own question. Say what you remember, then check. Correct a mistake immediately in your note so that you do not keep practising a confident error.</p>"
+    },
+    {
+      "id": "later",
+      "title": "Try again after a gap",
+      "html": "<p>Put the card aside. On a later day, try it before turning it over. If you remember the idea easily, make the question slightly different: explain why, give an example or contrast it with a common mistake. If you cannot recall it, shorten the question and check the explanation again.</p><p>This is a small routine to try, not a universal schedule. The useful difficulty depends on what you already know and how long you want to retain it. One honest attempt is better than pretending that recognising the printed answer counts as recall.</p><details class=\"practice-answer\"><summary>Which checks recall more directly: rereading an answer or covering it and explaining it yourself?</summary><p>Covering it and explaining it yourself. Afterwards, check the original so that mistakes do not go uncorrected.</p></details>"
+    },
+    {
+      "id": "keep-it-small",
+      "title": "Keep the pile small enough to use",
+      "html": "<p>You do not need a card for every mistake. Start with three questions that interested you. Remove or rewrite cards that are vague, and include an explanation when a bare fact keeps slipping away.</p><p>After your next quiz, compare one confident answer with one guess. Both may have earned the same points, but only one tells you that the idea was readily available. Let that distinction guide what you practise.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Roediger & Karpicke — The power of testing memory (research review)",
+      "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_Review.pdf"
+    }
+  ],
+  "related": [
+    "why-octopuses-have-three-hearts",
+    "how-to-learn-world-flags"
+  ],
+  "practice": "Play a General Knowledge round and choose just one answer to explain from memory after reading the feedback.",
+  "cover": {
+    "src": "/assets/images/learn/remember-quiz-answers-tomorrow.webp",
+    "alt": "Index cards, a notebook and a pencil ready for practice",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 7
+}

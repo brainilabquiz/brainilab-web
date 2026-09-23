@@ -1,10 +1,13 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "brainilab-web",
+  "main": "worker.js",
   "compatibility_date": "2026-08-30",
   "previews": {},
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
     "not_found_handling": "404-page"
   }
 }

@@ -1,0 +1,54 @@
+{
+  "slug": "why-the-moon-changes-shape",
+  "status": "published",
+  "topic": "Science & nature",
+  "title": "Why does the Moon change shape?",
+  "description": "A crescent is a change in our view of sunlight, not a bite taken out of the Moon.",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "sections": [
+    {
+      "id": "same-moon",
+      "title": "Same Moon, different view",
+      "html": "<p>A thin crescent above the rooftops can look like a completely different object from a full Moon. Nothing has been sliced away. We are seeing a different portion of the Moon’s sunlit half as it travels around Earth.</p><p>The Sun normally illuminates roughly half the Moon. The changing angle between the Sun, Moon and Earth determines how much of that bright half faces us. Earth’s shadow causes a lunar eclipse, not the ordinary monthly phases.</p>"
+    },
+    {
+      "id": "quarter",
+      "title": "Why a half-lit Moon is called a quarter",
+      "html": "<p>‘First quarter’ sounds wrong when half the visible disc is bright. The name refers to the Moon’s progress through its cycle, rather than the fraction of the disc that looks lit. Waxing means the illuminated portion we see is growing; waning means it is shrinking.</p><p>Do not rely on a universal ‘left means this’ shortcut. The Moon’s apparent orientation depends on where and how you view it. Follow the change across several nights instead.</p>"
+    },
+    {
+      "id": "notebook",
+      "title": "Make a three-evening Moon note",
+      "html": "<p>On three clear evenings, sketch the bright shape and note the time. A rough outline is enough. Add a nearby landmark, such as a chimney or tree, so you can describe where you looked. If the Moon is not visible, record that rather than inventing a missing observation.</p><p>Before checking an explanation, ask: is the bright part growing or shrinking? That prediction gives you something to test. This is an observation exercise, not a promise that the Moon will be in the same patch of sky every evening.</p><details class=\"practice-answer\"><summary>A normal crescent Moon appears because Earth blocks part of the sunlight. True or false?</summary><p>False. The ordinary phase comes from our viewing angle on the sunlit half. Earth’s shadow is involved in a lunar eclipse.</p></details>"
+    },
+    {
+      "id": "say-it",
+      "title": "Explain it without the phase names",
+      "html": "<p>Try telling someone what changes using only ‘Sun’, ‘Moon’, ‘Earth’ and ‘view’. If you can explain the geometry before listing the vocabulary, the names have something to attach to. Then test whether you remember what waxing means without scrolling back up.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "NASA Science — Moon phases",
+      "url": "https://science.nasa.gov/moon/moon-phases/"
+    }
+  ],
+  "related": [
+    "what-really-causes-seasons",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "practice": "Try a Science Quiz round. When an astronomy question surprises you, explain the answer in one sentence before moving on.",
+  "cover": {
+    "src": "/assets/images/learn/why-the-moon-changes-shape.webp",
+    "alt": "A crescent Moon above silhouetted branches",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 0
+}

@@ -1,0 +1,58 @@
+{
+  "slug": "why-time-zones-get-messy",
+  "status": "published",
+  "topic": "Geography",
+  "title": "Why time zones don’t follow tidy lines",
+  "description": "Earth turns steadily. Our clocks follow borders, shared routines and decisions that can change.",
+  "game": {
+    "name": "World Capitals Quiz",
+    "url": "/geography/world-capitals-quiz/"
+  },
+  "hub": {
+    "name": "Geography",
+    "url": "/geography/"
+  },
+  "sections": [
+    {
+      "id": "simple-idea",
+      "title": "A simple idea meets a complicated world",
+      "html": "<p>You arrange a call with a friend abroad, confidently add an hour, and still get it wrong. The arithmetic may be fine. The assumption behind it is usually the problem.</p><p>As Earth rotates, different places face the Sun at different times. Dividing 360 degrees by 24 hours gives 15 degrees per hour: a useful starting picture. Civil time, however, is set by people. Time-zone borders and clock changes do not have to follow evenly spaced lines of longitude.</p>"
+    },
+    {
+      "id": "offset-is-not-zone",
+      "title": "A UTC offset is not the whole story",
+      "html": "<p>An offset tells you how far a clock is ahead of or behind UTC at a particular moment. A time zone also contains rules about when that offset changes. IANA’s time-zone database is updated to reflect political decisions about boundaries, offsets and daylight-saving rules.</p><p>That is why ‘five hours behind me’ is a fragile contact note. Save a city and a date when planning a meeting. A calendar that knows both locations can account for the applicable rules. Do not assume that two places change their clocks on the same weekend.</p>"
+    },
+    {
+      "id": "clock-arithmetic",
+      "title": "Practise with fixed offsets first",
+      "html": "<p>Here is a made-up scheduling example with the offsets already supplied. City A is UTC+2 and City B is UTC−3. If it is 14:00 in A, subtract two hours to find UTC: 12:00. Then subtract three more for B: 09:00.</p><p>Writing the intermediate UTC step is less error-prone than juggling ‘ahead’ and ‘behind’ in your head. Near midnight, write the date too.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p>20:00 on Monday. First go back two hours to 23:00 Monday UTC, then back three more hours.</p></details>"
+    },
+    {
+      "id": "quiz-clue",
+      "title": "Keep geography and clock rules separate",
+      "html": "<p>Knowing where a city is helps you picture the journey, but longitude alone does not tell you its current legal time. In a quiz, read whether the question supplies an offset or asks about a specific place and date. Those are different kinds of problem.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "IANA — Time-zone database and civil-time changes",
+      "url": "https://www.iana.org/time-zones/tz-link"
+    },
+    {
+      "name": "Royal Museums Greenwich — Local time and the railways",
+      "url": "https://www.rmg.co.uk/stories/time/time-greenwich-mean-time-confusing-case-travellers-watch"
+    }
+  ],
+  "related": [
+    "why-greenland-looks-so-big",
+    "mental-percentages-without-a-calculator"
+  ],
+  "practice": "Explore World Capitals to connect city names with places. For an actual call or journey, check the date-specific local time.",
+  "cover": {
+    "src": "/assets/images/learn/why-time-zones-get-messy.webp",
+    "alt": "Three clocks showing different times",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 11
+}
