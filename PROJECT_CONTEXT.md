@@ -10,7 +10,7 @@ Read this first; load the specialist notes below only when the task needs them.
 - Home: a neutral loading card while Daily/progress resolve; returning visitors get a compact completed-state card in the same layout. Full result view appears only after explicit play. Do not auto-start the timer.
 - Public writing: never expose retention, conversion, monetisation or other internal growth goals as visitor copy. Keep headings short and describe what people can read or play. Warm editorial surfaces are being introduced through Home and Learn.
 - Learn: 14 articles, each with its own WebP cover and thumbnail, honest image credit, concrete examples and relevant practice. Search/topic filtering enhances a complete static library. The generator requires covers for future published articles.
-- YouTube: homepage uses /api/latest-video, a public channel feed cached for 15 minutes; includes Shorts, no embedded player. See YOUTUBE_FEED.md. Instagram and TikTok links are official profiles; no automatic Instagram/TikTok feed is configured.
+- YouTube: homepage uses /api/latest-video, the public General Knowledge playlist feed cached for 15 minutes, no embedded player. See YOUTUBE_FEED.md. Instagram and TikTok links are official profiles; no automatic Instagram/TikTok feed is configured.
 - Plus: €2.99/month or €24.99/year; supporter value while ads are disabled. Preserve current billing and entitlement logic.
 - Health: question review heuristic, at least 30 non-skipped answers, difficulty-aware bands. Counts are attempts, not unique players; estimated exits do not lower the score. Game/pool legacy health is separate.
 - Pending: real privileged admin save needs an active admin browser session. Read-only database checks and local fixture tests are not an end-to-end authenticated save. Supabase advisor findings need their own reviewed changes.
@@ -27,3 +27,5 @@ Read this first; load the specialist notes below only when the task needs them.
 | Historical migrations and QA | BRAINILAB_STEP*, SUPABASE_STEP*, UX_QA*; read only for the relevant feature, not as a current release checklist |
 
 Historical SQL is retained because it explains the live database. Obsolete generated QA result snapshots and the unreferenced retired Daily runner were removed; recover them through Git history if needed.
+
+Homepage YouTube source: General Knowledge playlist `PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4`, newest public publication from its feed. See YOUTUBE_FEED.md.
