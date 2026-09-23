@@ -23,15 +23,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     root.dataset.contentSource = daily.source;
     root.dataset.challengeNumber = daily.dailyNumber;
     if (previousStatus.games.brainmix.completed) {
-      await BrainiHomeDaily.render(stage, previousStatus);
+      await BrainiHomeDaily.render(stage, previousStatus, {compact:true});
+      root.removeAttribute('data-home-loading');
+      root.setAttribute('aria-busy','false');
       return;
     }
     const questions = daily.questions;
     const usingCloud = daily.source === "supabase";
     const button = stage.querySelector("[data-home-start]");
-    stage.querySelector("[data-home-ready]").textContent = `Daily #${daily.dailyNumber} is ready. Your timer starts when you do.`;
     button.textContent = "Start today’s quiz";
     button.disabled = false;
+    root.removeAttribute('data-home-loading');
+    root.setAttribute('aria-busy','false');
     button.addEventListener("click", () => {
       stage.replaceChildren(template.content.cloneNode(true));
       stage.querySelector("[data-home-title]").textContent = `Daily Brain Challenge · #${daily.dailyNumber}`;
@@ -87,6 +90,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     clearTimeout(timeout);
     console.error("BrainiLab Home Daily:", error);
     if (!stage.isConnected) return;
+    root.removeAttribute('data-home-loading');
+    root.setAttribute('aria-busy','false');
     stage.innerHTML = `<div class="daily-load-error" role="status">
       <h2>Today’s challenge is taking longer to load.</h2>
       <p>Try again, or choose another game while we reconnect.</p>

@@ -1,6 +1,8 @@
 # Current production workflow
 
-Source of truth: this Git repository, oriolsarda/brainilab-web. Cloudflare deploys main automatically to https://brainilabgames.com. Supabase stores accounts, content, progress and rankings.
+Start with [the compact project context](PROJECT_CONTEXT.md). Source of truth: brainilabquiz/brainilab-web. Cloudflare deploys main automatically to https://brainilabgames.com. Supabase stores accounts, content, progress and rankings.
+
+`npm run build` now creates the complete public site in `dist/`, including minified JavaScript and CSS. Wrangler publishes that directory. Validate it with `python tools/check-build.py`; historical build notes below describe older arrangements.
 
 V41.9 adds automatic guest rankings. See [deployment and validation](SUPABASE_STEP28_GUEST_RANKINGS_SETUP.md). The historical notes below describe earlier versions.
 

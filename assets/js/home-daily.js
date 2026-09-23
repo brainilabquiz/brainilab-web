@@ -14,6 +14,22 @@ window.BrainiHomeDaily=(function(){
     const complete=status.completedCount===4;
     const brainScore=Number(status.brainScore||0).toLocaleString();
 
+    // Returning visitors keep the same homepage layout. The full result view
+    // is only shown after a game they explicitly started in this visit.
+    if(options.compact){
+      container.classList.add('home-start');
+      container.innerHTML=`
+        <span class="challenge-pill">Daily #${Number(status.dailyNumber)} · ${Number(status.completedCount)}/4 complete</span>
+        <h2>${complete?'You’re caught up for today!':'Brain Mix complete. What’s next?'}</h2>
+        <p>${complete?'Come back tomorrow for a fresh Daily, or explore another game.':`Your Daily Brain Score is ${brainScore} / 10,000. Continue with today’s remaining challenges.`}</p>
+        <div class="home-start-actions">
+          <a class="btn" href="${complete?'/games/':'/daily-quiz/'}">${complete?'Explore all games':'Continue Daily'}</a>
+          <a class="btn-light" href="/profile/?section=progress">See my progress</a>
+        </div>
+        <p class="home-ready">${complete?'Today’s four challenges are complete.':'Your completed Brain Mix is saved.'}</p>`;
+      return;
+    }
+
     container.innerHTML=`
       <div class="home-daily-state ${complete?"is-caught-up":""}">
         <div class="home-daily-state-top">
