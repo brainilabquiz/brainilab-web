@@ -7,7 +7,7 @@ BUNDLES={
  'quiz.bundle.js':['share.js','supabase-content.js','quiz.js'],
  'daily.bundle.js':['share.js','supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
  'daily-overview.bundle.js':['supabase-daily.js','daily-hub.js','daily-countdown.js','daily-games.js','daily-journey.js','daily-overview.js','anytime-browser.js'],
- 'home.bundle.js':['share.js','supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','anytime-browser.js','quiz.js','home-entry.js'],
+ 'home.bundle.js':['share.js','supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','quiz.js','home-entry.js'],
  'games.bundle.js':['games-library.js'],
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],

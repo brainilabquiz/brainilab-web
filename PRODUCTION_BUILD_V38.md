@@ -1,5 +1,7 @@
 # BrainiLab V38 — Production Build Scaffold
 
+Historical reference. The current build publishes a clean `dist/` directory; see [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
+
 V38 keeps the current browser-ready static site intact.
 
 It also adds a low-risk path toward a real asset build:

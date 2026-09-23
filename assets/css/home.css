@@ -1,7 +1,4 @@
 /* Home-only presentation; shared game and navigation styles stay in site.css. */
-.home-intro{padding-top:28px;text-align:center}
-.home-intro h1{margin:0;font-size:clamp(28px,4vw,44px);line-height:1.12;color:var(--navy)}
-.home-intro p{margin:12px auto 0;max-width:650px;font-size:16px;line-height:1.6;color:#56556a}
 .home-start h2{font-size:clamp(26px,4vw,44px);line-height:1.15;margin:18px auto;max-width:700px}
 .home-start p{max-width:650px;margin:12px auto;line-height:1.6;color:#e8e6ff;font-size:16px}
 .home-start-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:24px auto 12px}
@@ -45,20 +42,24 @@
 .home-start-actions{flex-direction:column;margin:24px auto 16px;max-width:350px;gap:10px}
 .home-start-actions .btn-light{background:transparent;color:white;border:1px solid #ffffff55}
 .home-start .home-ready{font-size:12px;color:#e8e6ff;margin-bottom:0}
-.home-path{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:30px 0 40px;border-bottom:1px solid var(--line)}
-.home-path>div{position:relative;padding-left:44px}.home-path span{position:absolute;left:0;top:2px;color:#76728e;font-size:12px;font-weight:700}.home-path strong{font-size:16px;color:var(--navy)}.home-path p{font-size:14px;line-height:1.6;color:#626174;margin:8px 0 0}
 .home-page .section{padding-top:48px;padding-bottom:18px}.home-page .section-heading .eyebrow{margin:0 0 12px}.home-page .section-heading>a{white-space:nowrap}
 .home-game-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .home-game-card{display:flex;flex-direction:column;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;transition:transform .18s,border-color .18s}
 .home-game-card:hover{transform:translateY(-3px);border-color:#bbb6db}.home-game-card img{width:56px;height:56px}.home-game-card h3{font-size:22px;margin:24px 0 12px;line-height:1.2}.home-game-card p{font-size:15px;line-height:1.7;color:#626174;margin:0 0 24px}.home-game-card>span{margin-top:auto;font-size:14px;color:var(--navy);font-weight:800}
-.home-page .home-learning{padding-bottom:24px}.home-page .brain-score-section{padding-top:30px}.home-page .brain-score-panel{background:#f0eff8;border:1px solid #dfdcea;box-shadow:none}
 .home-page .seo-copy{padding:30px}.home-page .seo-copy>p{font-size:16px;line-height:1.8;color:#626174}.home-page .inline-links{gap:10px}.home-page .inline-links a{font-size:14px;padding:10px 14px}
 .home-page .home-faq{padding-bottom:64px}.home-faq .seo-copy{max-width:900px;background:transparent;border:0;padding:0}.home-faq h2{font-size:34px;margin:0 0 28px}.home-faq summary{min-height:32px}.home-faq details{padding:18px 0}
-.home-hero:has(.answers .answer){grid-template-columns:1fr;max-width:1000px;gap:24px}.home-hero:has(.answers .answer) .home-intro{display:none}
+.home-hero:has(.answers .answer){grid-template-columns:1fr;max-width:1000px;gap:24px}
 /* Keep a stable accessible page heading during play without crowding the quiz. */
 .home-hero:has(.answers .answer) .home-intro{display:block}.home-hero:has(.answers .answer) .home-intro h1{font-size:24px}.home-hero:has(.answers .answer) .home-intro h1 br{display:none}.home-hero:has(.answers .answer) .home-intro>:not(h1){display:none}
 .home-hero:has(.home-daily-state){grid-template-columns:1fr;gap:24px}.home-hero:has(.home-daily-state) .home-intro h1{font-size:32px}.home-hero:has(.home-daily-state) .home-intro h1 br{display:none}.home-hero:has(.home-daily-state) .home-intro>:not(h1){display:none}
 @media(max-width:950px){.home-hero{gap:26px;padding-top:40px}.home-game-grid{grid-template-columns:repeat(2,1fr)}.home-start h2{font-size:27px}.home-hero .challenge-inner{padding:26px 22px}}
-@media(max-width:700px){.home-page .wrap{width:calc(100% - 32px)}.home-hero{grid-template-columns:1fr;gap:28px;padding-top:28px;padding-bottom:16px}.home-intro h1{font-size:42px}.home-intro .eyebrow{font-size:10px;margin-bottom:14px}.home-intro>p:not(.eyebrow){font-size:16px;margin-top:16px}.home-intro-links{margin-top:14px;gap:12px}.home-intro-links span{display:none}.home-hero .challenge{min-height:0}.home-start h2{font-size:26px;margin:16px auto}.home-path{grid-template-columns:1fr;gap:22px;padding-top:26px;padding-bottom:32px}.home-page .section{padding-top:32px}.home-page .section-heading{flex-wrap:wrap;gap:16px}.home-page .section-heading h2{font-size:29px}.home-page .seo-copy{padding:22px}.home-faq .seo-copy{padding:0}.home-game-card{padding:20px}.home-game-card h3{font-size:20px;margin-top:18px}.home-game-card p{font-size:14px}.home-page .home-faq{padding-bottom:40px}}
+@media(max-width:700px){.home-page .wrap{width:calc(100% - 32px)}.home-hero{grid-template-columns:1fr;gap:28px;padding-top:28px;padding-bottom:16px}.home-intro h1{font-size:42px}.home-intro .eyebrow{font-size:10px;margin-bottom:14px}.home-intro>p:not(.eyebrow){font-size:16px;margin-top:16px}.home-intro-links{margin-top:14px;gap:12px}.home-intro-links span{display:none}.home-hero .challenge{min-height:0}.home-start h2{font-size:26px;margin:16px auto}.home-page .section{padding-top:32px}.home-page .section-heading{flex-wrap:wrap;gap:16px}.home-page .section-heading h2{font-size:29px}.home-page .seo-copy{padding:22px}.home-faq .seo-copy{padding:0}.home-game-card{padding:20px}.home-game-card h3{font-size:20px;margin-top:18px}.home-game-card p{font-size:14px}.home-page .home-faq{padding-bottom:40px}}
 @media(max-width:370px){.home-game-grid{grid-template-columns:1fr}.home-intro h1{font-size:37px}}
 @media(prefers-reduced-motion:reduce){.home-game-card{transition:none}}
+
+/* A neutral, reserved card prevents the unplayed state flashing before progress loads. */
+.home-loading{display:none}
+#homeQuiz{position:relative;min-height:450px}
+#homeQuiz[data-home-loading]>.home-loading{display:grid;position:absolute;inset:0;place-items:center;padding:28px;color:#e8e6ff;text-align:center;font-size:16px}
+#homeQuiz[data-home-loading]>.challenge-inner{visibility:hidden;pointer-events:none}
+@media(max-width:370px){#homeQuiz{min-height:520px}}

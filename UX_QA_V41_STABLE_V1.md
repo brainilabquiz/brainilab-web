@@ -33,7 +33,7 @@ This build closes the first production-readiness block without activating live b
 - Ads remain launch-gated. Deliberate local `?ads_test=1` tooling is retained but cannot activate on a public hostname.
 
 ## QA performed
-Automated static JS syntax, internal-link, asset and HTML contract checks pass with zero errors. Headless Chromium navigation is blocked by this execution environment, so the final visual desktop/mobile pass is kept as a short manual browser checklist before production deployment. See `QA_V41_RESULTS.json`.
+Historical V41 result: static syntax, internal-link, asset and HTML contract checks passed. The generated QA JSON snapshots have since been removed; their original versions remain in Git history. For current deployment validation use `node tools/test-home-entry.mjs`, `python tools/check-editorial.py` and `python tools/check-build.py` after building.
 
 ## Not part of Step 1
 - Production domain/hosting
