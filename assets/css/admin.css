@@ -296,3 +296,14 @@ button{cursor:pointer}
 .admin-analytics-signal{display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;font-size:8px;font-weight:900}.admin-analytics-signal.top{background:#e6f6e4;color:#23771d}.admin-analytics-signal.mid{background:#f3f1ff;color:#3b3482}.admin-analytics-signal.low{background:#fff2d6;color:#9a5b00}
 @media(max-width:900px){.content-import-hub{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.content-import-hub{grid-template-columns:1fr}}
+
+/* Question review health v2: keyboard-readable reasons, not colour alone. */
+.admin-question-health{min-width:210px;max-width:330px;font-size:12px;white-space:normal}
+.admin-question-health summary{cursor:pointer;line-height:1.6;padding:8px;border-radius:10px;background:#f4f3f8}
+.admin-question-health summary strong,.admin-question-health summary span{display:block}
+.admin-question-health meter{width:100%;height:12px;display:block;margin:6px 0}
+.admin-question-health.ok summary{border-left:4px solid #27833c}.admin-question-health.warn summary{border-left:4px solid #ac6400}.admin-question-health.bad summary{border-left:4px solid #bf2525}
+.admin-question-health .health-disclosure{font-size:11px;text-decoration:underline;color:#403a82}
+.admin-question-health .health-explanation{padding:12px;background:white;border:1px solid #dedce9;border-radius:10px;line-height:1.65}
+.health-explanation p{margin:0 0 12px}.health-explanation ul{padding-left:18px}.health-explanation li{margin-bottom:12px}
+.admin-question-health summary:focus-visible{outline:3px solid #e6680c;outline-offset:3px}

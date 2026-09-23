@@ -517,7 +517,7 @@ window.BrainiMonetization=(function(){
                 <span>BrainiLab+</span>
                 <strong>Coming soon</strong>
                 <p>
-                  The ad-free membership is prepared
+                  The optional supporter membership is prepared
                   but not available yet.
                 </p>
               </div>
@@ -530,10 +530,10 @@ window.BrainiMonetization=(function(){
           <div class="plus-account-card">
             <div>
               <span>BrainiLab+</span>
-              <strong>Play without ads</strong>
+              <strong>Support the games you enjoy</strong>
               <p>
-                Upgrade for an ad-free BrainiLab
-                experience.
+                Support new questions, Daily games and improvements.
+                See what membership includes today.
               </p>
             </div>
 
@@ -598,7 +598,7 @@ window.BrainiMonetization=(function(){
           <span>YOUR MEMBERSHIP</span>
           <h2>BrainiLab+ is active</h2>
           <p>
-            You are playing without ads.
+            Thank you for supporting BrainiLab. Your ad-free entitlement remains active.
             ${scheduledToCancel()
               ? (
                   dateText(cancellationDate())
@@ -665,19 +665,23 @@ window.BrainiMonetization=(function(){
     root.innerHTML=`
       <section class="plus-hero">
         <span>BrainiLab+</span>
-        <h1>A cleaner way to play.</h1>
+        <h1>Support your daily dose of curiosity.</h1>
         <p>
-          Remove advertising everywhere in BrainiLab
-          and support the games you play.
+          BrainiLab+ is an optional membership that helps fund new questions,
+          Daily games and improvements. The games remain free to play.
         </p>
       </section>
 
+      ${window.BrainiRuntime?.has?.("ads_enabled") && !adsEnabled()
+        ? `<div class="plus-fineprint"><strong>Before you subscribe</strong><span>Ads are currently switched off for everyone. Plus supports BrainiLab today; it will also keep your play free of display ads if advertising is enabled while your membership is active.</span></div>`
+        : ""}
+
       <div class="plus-benefits">
         <article>
-          <strong>No ads</strong>
+          <strong>Ad-free when ads are enabled</strong>
           <p>
-            No display ads across BrainiLab while
-            your membership is active.
+            If display advertising is enabled, an active Plus membership
+            keeps it out of your games.
           </p>
         </article>
 
@@ -713,7 +717,8 @@ window.BrainiMonetization=(function(){
         <strong>Simple membership.</strong>
         <span>
           Monthly: ${monthly}. Annual: ${yearly}.
-          Billing is managed securely by Stripe.
+          Subscriptions renew until cancelled. Manage your subscription
+          through your account; billing is handled by Stripe.
         </span>
       </div>
     `;

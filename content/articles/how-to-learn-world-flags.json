@@ -1,0 +1,52 @@
+{
+  "slug": "how-to-learn-world-flags",
+  "status": "published",
+  "topic": "Geography",
+  "title": "How to learn world flags: look for one useful clue",
+  "description": "A practical way to study flags: describe the pattern, compare confusing pairs and turn quiz mistakes into a small practice list.",
+  "icon": "world-flags",
+  "game": {
+    "name": "World Flags Quiz",
+    "url": "/geography/world-flags-quiz/?difficulty=easy&set=1"
+  },
+  "hub": {
+    "name": "Flags learning hub",
+    "url": "/geography/flags/"
+  },
+  "sections": [
+    {
+      "id": "start-small",
+      "title": "Start with a small set",
+      "html": "<p>A page full of flags can quickly become a blur of stripes, stars and familiar colours. Give yourself a smaller task: choose five flags, describe each one, then try to name them without looking at the labels. Keep the list short enough that you can explain each design without rushing.</p><p>Before you begin a quiz, decide what you want to practise. You might focus on vertical stripes, flags with a central symbol, or a handful of countries you keep mixing up. A specific question such as ‘Which colour is next to the flagpole?’ gives you something concrete to check when you get an answer wrong.</p>"
+    },
+    {
+      "id": "describe",
+      "title": "Describe the design before naming the country",
+      "html": "<p>Use the same short checklist each time. First look at the layout: horizontal bands, vertical bands, a cross, or a single background. Next identify the colours in order. Finally look for a symbol and where it sits.</p><ul><li><strong>Layout:</strong> which shapes divide the flag?</li><li><strong>Order:</strong> what comes first, next and last?</li><li><strong>Detail:</strong> is there an emblem, star or other mark?</li></ul><p>Be precise about direction. The hoist is the edge attached to the flagpole. In a standard front-facing illustration with the pole on the left, read vertical bands from left to right. Do not assume a mirrored photograph has the same orientation.</p>"
+    },
+    {
+      "id": "worked-example",
+      "title": "A worked example: Italy",
+      "html": "<div class=\"flag-example\"><div class=\"italy-flag\" role=\"img\" aria-label=\"Illustration of Italy’s flag: equal vertical bands of green, white and red\"></div><p><strong>Italy:</strong> three equal vertical bands, green, white and red, starting at the hoist. This description is set out in Article 12 of the Italian Constitution, reproduced by the Italian Presidency.</p></div><p>Try saying the distinguishing clue before the country: ‘Vertical stripes, green at the hoist, white in the middle, red at the outer edge.’ That is more useful for checking a mistake than ‘the red and green one’. The illustration is a simplified study aid, not a specification for manufacturing a flag.</p><details class=\"practice-answer\"><summary>Quick check: which colour is at the hoist of Italy’s flag?</summary><p><strong>Green.</strong> The full order is green, white, red. If you answered red, check whether you reversed the direction rather than confusing the country.</p></details>"
+    },
+    {
+      "id": "compare",
+      "title": "Compare the pair you actually confused",
+      "html": "<p>When two flags look similar to you, place their labelled illustrations side by side. Write down one difference that you can point to: the order of the bands, the presence of an emblem, or the position of a shape. Then cover the names and explain the difference in your own words.</p><p>Avoid relying on a subtle colour shade in a small quiz image. Screens, image files and lighting can change how a colour appears. If the distinction depends on official proportions or a precise shade, consult an authoritative reference rather than inventing a visual rule from two thumbnails.</p>"
+    },
+    {
+      "id": "review",
+      "title": "Turn a result into your next practice list",
+      "html": "<p>Play a round of World Flags, then use the answer feedback to make a short list. For each uncertain answer, note the country, what you chose and the detail you missed. Include correct guesses too: a correct answer does not always mean you recognised the flag confidently.</p><p>On your next visit, try describing those flags before starting another round. If the same confusion comes up, change your note from a vague label to an observable difference. Keep the note for your next visit. A list of three specific mistakes is easier to use than starting again with a page full of flags.</p><p>Once you are comfortable, try another difficulty or connect your flag practice with the World Capitals quiz. You do not need to memorise every flag before exploring another geography topic.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Italian Presidency — The Italian Tricolour Flag",
+      "url": "https://www.quirinale.it/it/pagine/italian-tricolour-flag"
+    }
+  ],
+  "related": [
+    "daily-or-anytime"
+  ]
+}

@@ -22,10 +22,10 @@ window.BrainiHomeDaily=(function(){
         </div>
 
         <div class="home-daily-state-copy">
-          <h1>${complete
+          <h2>${complete
             ? "You’re caught up for today!"
             : "Brain Mix complete. Keep your Daily going."
-          }</h1>
+          }</h2>
 
           <p>${complete
             ? "All four Daily challenges are done. Want to keep testing yourself?"
