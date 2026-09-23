@@ -2438,7 +2438,7 @@ window.BRAINI_MONETIZATION_CONFIG={
 
     // Public account identifier; ad slots remain disabled until configured:
     // publisherId:"ca-pub-1234567890123456"
-    publisherId:"ca-pub-8834009700620116",
+    publisherId:"ca-pub-5613536700850101",
 
     slots:{
       home_after_play:"",
