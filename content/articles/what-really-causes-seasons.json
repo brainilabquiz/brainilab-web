@@ -1,0 +1,54 @@
+{
+  "slug": "what-really-causes-seasons",
+  "status": "published",
+  "topic": "Science & nature",
+  "title": "Summer isn’t caused by being closer to the Sun",
+  "description": "The useful clue is Earth’s tilt—and the opposite seasons on either side of the equator.",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "sections": [
+    {
+      "id": "tempting-answer",
+      "title": "The tempting answer does not fit",
+      "html": "<p>Stand nearer a heater and you feel warmer. It is an appealing explanation for summer: perhaps Earth has simply moved closer to the Sun. But it cannot explain why June is summer in the Northern Hemisphere and winter in the Southern Hemisphere.</p><p>Earth’s tilted axis is the main cause of the seasons. As Earth orbits the Sun, a hemisphere tilted towards it receives more direct sunlight and longer days. Six months later, the other hemisphere has that advantage.</p>"
+    },
+    {
+      "id": "light-and-time",
+      "title": "Both the angle and the hours matter",
+      "html": "<p>Think about sunlight striking a surface head-on compared with arriving at a low angle. At a low angle, the light is spread across more surface. Add fewer hours of daylight and the heating changes again.</p><p>NASA points out a useful check on the distance explanation: Earth is closest to the Sun in January, during Northern Hemisphere winter. The orbit is not a perfect circle, but its changing distance is not what produces Earth’s familiar seasonal pattern.</p>"
+    },
+    {
+      "id": "test-explanation",
+      "title": "Use the opposite-season test",
+      "html": "<p>Write down the proposed explanation ‘The whole planet is warmer because it is closer.’ Now ask what that would predict for both hemispheres at the same time. Compare it with the opposite-season pattern. A good explanation must account for both observations.</p><p>This is a useful quiz habit: rather than asking whether an answer sounds familiar, ask what else would have to be true if it were correct. One counterexample can be more helpful than repeating a definition.</p><details class=\"practice-answer\"><summary>When the Northern Hemisphere tilts towards the Sun, which hemisphere receives more direct sunlight?</summary><p>The Northern Hemisphere. The Southern Hemisphere is tilted away.</p></details>"
+    },
+    {
+      "id": "next-walk",
+      "title": "Notice one local change",
+      "html": "<p>Pick a familiar afternoon walk and notice where the shadows fall. Return at roughly the same clock time a few weeks later and compare, allowing for any clock change. You are collecting a small observation, not measuring the entire climate. Weather on a single day can be unusual; a seasonal pattern is broader than that.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "NASA Space Place — What causes the seasons?",
+      "url": "https://spaceplace.nasa.gov/seasons/en/"
+    }
+  ],
+  "related": [
+    "why-the-moon-changes-shape",
+    "counting-seconds-after-lightning"
+  ],
+  "practice": "Play Science Quiz and look for the explanation behind each answer, rather than trying to memorise a list of disconnected facts.",
+  "cover": {
+    "src": "/assets/images/learn/what-really-causes-seasons.webp",
+    "alt": "Sunlight through autumn leaves on a woodland path",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 8
+}

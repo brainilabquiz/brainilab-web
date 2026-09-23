@@ -5761,8 +5761,8 @@ main > section.section,
 
 
 /* Optional Meta marketing consent, independent of Google advertising consent. */
-.marketing-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:10000;max-width:920px;margin:auto;padding:20px 24px;background:#fff;color:#17212b;border:2px solid #17212b;border-radius:16px;box-shadow:0 8px 32px #0003;display:flex;gap:24px;align-items:center;font:15px/1.5 system-ui,sans-serif}
-.marketing-consent strong{font-size:18px}.marketing-consent p{margin:6px 0 0}.marketing-consent a{color:#17212b;text-decoration:underline}.marketing-consent-actions{display:flex;gap:10px;flex-shrink:0}.marketing-consent button{border:1px solid #17212b;border-radius:9px;background:#fff;color:#17212b;padding:11px 14px;min-height:44px;font:600 14px system-ui;cursor:pointer}.marketing-consent button:hover{background:#fff2bb}.marketing-consent button:focus-visible{outline:3px solid #2463eb;outline-offset:3px}
+.marketing-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:10000;max-width:1040px;margin:auto;padding:18px 22px;background:#fffdf8;color:#393732;border:1px solid #cfc6b8;border-radius:16px;box-shadow:0 6px 28px #42362220;display:flex;gap:22px;align-items:center;font:13px/1.5 system-ui,sans-serif}
+.marketing-consent strong{font-size:16px}.marketing-consent p{margin:5px 0 0}.marketing-consent a{color:#332866;text-decoration:underline}.marketing-consent-actions{display:flex;gap:10px;flex-shrink:0}.marketing-consent button{border:1px solid #9a90b0;border-radius:9px;background:#fffdf8;color:#332866;padding:11px 13px;min-height:44px;font:600 13px system-ui;cursor:pointer}.marketing-consent button:hover{background:#eee9f5}.marketing-consent button:focus-visible{outline:3px solid #2463eb;outline-offset:3px}
 @media(max-width:760px){.marketing-consent{left:10px;right:10px;bottom:10px;padding:16px;display:block;max-height:70vh;overflow:auto}.marketing-consent-actions{margin-top:14px;display:grid;grid-template-columns:1fr 1fr}.marketing-consent button{padding:10px}}
 
 /* Static learning guides and contact route. */

@@ -1,0 +1,54 @@
+{
+  "slug": "why-octopuses-have-three-hearts",
+  "status": "published",
+  "topic": "Science & nature",
+  "title": "Three hearts, eight arms: making sense of an octopus",
+  "description": "A strange-sounding fact becomes easier to remember when you know what each heart does.",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "sections": [
+    {
+      "id": "three-jobs",
+      "title": "Three hearts with different jobs",
+      "html": "<p>‘An octopus has three hearts’ is excellent quiz material. It is also the sort of fact that gets mixed up with another number five minutes later. Give the number a job to do.</p><p>Two hearts pump blood past the gills, where it picks up oxygen. The other pumps it around the body. That two-plus-one arrangement is much easier to reconstruct than an isolated flashcard saying ‘octopus = 3’.</p>"
+    },
+    {
+      "id": "blue-blood",
+      "title": "The blue blood belongs in the same story",
+      "html": "<p>Octopuses use an oxygen-carrying protein called haemocyanin, which contains copper. Oxygenated blood therefore appears blue. Human haemoglobin uses iron. The Natural History Museum explains both the colour and the separate roles of the three hearts.</p><p>Keep the connections narrow: hearts move blood, and a protein carries oxygen. ‘Copper’ does not mean there are bits of metal floating around like glitter. It is part of the chemistry of the protein.</p>"
+    },
+    {
+      "id": "rebuild",
+      "title": "Rebuild the fact from the function",
+      "html": "<p>Close the explanation and draw three small circles. Label two ‘gills’ and one ‘body’. Now say the total. Next to the sketch, add one word that reminds you why the blood is blue. You have made a tiny map of the idea rather than a page of notes.</p><p>Later, cover the labels and see whether you can restore them. If you remember ‘three’ but cannot explain the split, reread the first section. If you remember the jobs but hesitate over the total, count them from the sketch.</p><details class=\"practice-answer\"><summary>Which is the better explanation: three hearts all do the same job, or two serve the gills and one serves the body?</summary><p>Two serve the gills and one serves the body. The division of work is the detail that makes the number meaningful.</p></details>"
+    },
+    {
+      "id": "avoid-number-soup",
+      "title": "Avoid a soup of animal numbers",
+      "html": "<p>When a quiz offers several numbers, pause to identify what is being counted: arms, hearts, chambers or something else. You may know the animal perfectly well and still answer the wrong question. Read the noun before choosing the number.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Natural History Museum — Octopuses keep surprising us",
+      "url": "https://www.nhm.ac.uk/discover/octopuses-keep-surprising-us-here-are-eight-examples-how.html"
+    }
+  ],
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "why-the-moon-changes-shape"
+  ],
+  "practice": "Try Science Quiz, then choose one animal fact from the feedback and connect it to a function or behaviour.",
+  "cover": {
+    "src": "/assets/images/learn/why-octopuses-have-three-hearts.webp",
+    "alt": "An octopus resting among underwater rocks",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 3
+}

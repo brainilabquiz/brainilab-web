@@ -4,7 +4,6 @@
   "topic": "Geography",
   "title": "How to learn world flags: look for one useful clue",
   "description": "A practical way to study flags: describe the pattern, compare confusing pairs and turn quiz mistakes into a small practice list.",
-  "icon": "world-flags",
   "game": {
     "name": "World Flags Quiz",
     "url": "/geography/world-flags-quiz/?difficulty=easy&set=1"
@@ -48,5 +47,12 @@
   ],
   "related": [
     "daily-or-anytime"
-  ]
+  ],
+  "cover": {
+    "src": "/assets/images/learn/how-to-learn-world-flags.webp",
+    "alt": "Table flags of Japan, Italy and Sweden beside a notebook",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 1,
+  "practice": "Try World Flags. For each uncertain answer, look for the stripe, shape or symbol that distinguishes it."
 }

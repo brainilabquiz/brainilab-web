@@ -1,0 +1,58 @@
+{
+  "slug": "counting-seconds-after-lightning",
+  "status": "published",
+  "topic": "Science & nature",
+  "title": "What the gap between lightning and thunder tells you",
+  "description": "A flash, a pause, a rumble: use the delay to understand how sound travels.",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "sections": [
+    {
+      "id": "one-event",
+      "title": "One event arrives in two ways",
+      "html": "<p>You see the flash through the window. A few seconds later, the room fills with a rumble. The light and sound belong to the same lightning event, but they do not reach you at the same speed.</p><p>Light arrives so quickly over these distances that its travel time is negligible for this estimate. Sound takes roughly three seconds to travel a kilometre, or five seconds to travel a mile. The delay gives a rough distance to the lightning, not a precise location for the whole storm.</p>"
+    },
+    {
+      "id": "work-it-out",
+      "title": "Work through a nine-second gap",
+      "html": "<p>If you count nine seconds, divide by three for an estimate in kilometres: about three kilometres. For miles, divide the same nine seconds by five: about 1.8 miles. Those answers describe roughly the same distance in different units.</p><p>Do not multiply just because the numbers feel familiar. Write the relationship first: more seconds should mean farther away. Then label the result. ‘Three’ on its own could be a time, a distance or the wrong unit.</p>"
+    },
+    {
+      "id": "safe-observation",
+      "title": "An estimate is not a safety test",
+      "html": "<p>If you hear thunder, lightning is close enough to be a danger. Go indoors; do not stand outside to improve the measurement. The US National Weather Service advises staying in safe shelter for at least 30 minutes after the last thunder. Use a worked example like the one here to practise the arithmetic.</p><details class=\"practice-answer\"><summary>In a worked example, the delay is 15 seconds. About how far away is the lightning in kilometres?</summary><p>About five kilometres: 15 ÷ 3. This is a rough estimate and does not establish that an outdoor location is safe.</p></details>"
+    },
+    {
+      "id": "one-more-check",
+      "title": "Check the direction of your answer",
+      "html": "<p>Imagine another flash with half the delay. Without calculating, predict whether it was nearer or farther away. Then do the calculation. Building this quick reasonableness check into a quiz helps catch errors that a perfectly tidy calculation can hide.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "NOAA — Determining distance to a thunderstorm",
+      "url": "https://www.noaa.gov/jetstream/lightning/sound-of-thunder/learning-lesson-determining-distance-to-thunderstorm"
+    },
+    {
+      "name": "National Weather Service — Lightning safety",
+      "url": "https://www.weather.gov/safety/lightning-tips"
+    }
+  ],
+  "related": [
+    "what-really-causes-seasons",
+    "mental-percentages-without-a-calculator"
+  ],
+  "practice": "Try Science Quiz for more everyday science. This reading exercise does not require observing a storm outdoors.",
+  "cover": {
+    "src": "/assets/images/learn/counting-seconds-after-lightning.webp",
+    "alt": "Distant lightning seen through a rain-covered window",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 12
+}

@@ -1,0 +1,54 @@
+{
+  "slug": "which-century-is-that-year",
+  "status": "published",
+  "topic": "History",
+  "title": "Is 1900 in the 19th or 20th century?",
+  "description": "Century names are a counting problem. The boundary years are where the confusion starts.",
+  "game": {
+    "name": "History Quiz",
+    "url": "/history/history-quiz/"
+  },
+  "hub": {
+    "name": "History",
+    "url": "/history/"
+  },
+  "sections": [
+    {
+      "id": "boundary",
+      "title": "1900 is the last year of the 19th century",
+      "html": "<p>The first two digits look persuasive. A year beginning ‘19’ must belong to the 20th century, surely? Usually—but the round number at the boundary needs special care.</p><p>In the conventional AD/CE calendar, the first century covers years 1 through 100. The second covers 101 through 200. Continue that count and the 19th century covers 1801–1900; the 20th covers 1901–2000. The US Naval Observatory uses this convention when explaining why the 21st century began in 2001.</p>"
+    },
+    {
+      "id": "shelf",
+      "title": "Picture shelves that hold 100 years",
+      "html": "<p>Imagine placing year cards on shelves. Shelf one takes cards 1 to 100. Card 101 must go on shelf two. A full shelf ends with the hundredth card, rather than beginning with it.</p><p>This picture is useful because you can rebuild the rule instead of memorising another exception. It also shows why ‘the 1900s’ and ‘the 20th century’ are not identical date ranges. The former commonly describes 1900–1999; the latter uses the numbered-century convention.</p>"
+    },
+    {
+      "id": "shortcut",
+      "title": "A shortcut for positive CE years",
+      "html": "<p>For a year that does not end in 00, take the hundreds part and add one: 1789 belongs to the 18th century. If the year ends in 00, do not add one: 1800 is still in the 18th.</p><p>In formula form, subtract one from the year, divide by 100, discard the remainder and add one. For 2000, that is 1999 ÷ 100 → 19, then +1 → 20. This shortcut is for positive CE years; do not casually apply it to a BCE date.</p><details class=\"practice-answer\"><summary>Which centuries contain 1600, 1601 and 1999?</summary><p>1600 is in the 16th century; 1601 is in the 17th; 1999 is in the 20th.</p></details>"
+    },
+    {
+      "id": "reading-dates",
+      "title": "Read the question’s wording",
+      "html": "<p>Underline ‘century’, ‘decade’ or ‘year’ before calculating. A history question may be testing a period name rather than a date conversion. If the answer seems one century out, check the boundary convention before deciding that you have forgotten the historical event.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "US Naval Observatory — The 21st century and 3rd millennium",
+      "url": "https://aa.usno.navy.mil/faq/millennium"
+    }
+  ],
+  "related": [
+    "how-to-read-roman-numerals",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "practice": "Try History Quiz and practise separating the historical fact from the date or century the question asks for.",
+  "cover": {
+    "src": "/assets/images/learn/which-century-is-that-year.webp",
+    "alt": "An open history book and magnifying glass in a library",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 4
+}

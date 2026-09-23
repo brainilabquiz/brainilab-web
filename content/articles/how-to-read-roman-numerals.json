@@ -1,0 +1,58 @@
+{
+  "slug": "how-to-read-roman-numerals",
+  "status": "published",
+  "topic": "History",
+  "title": "Roman numerals: read the small pieces first",
+  "description": "Turn a string like MCMXLIV into manageable parts, with a short practice set to check yourself.",
+  "game": {
+    "name": "History Quiz",
+    "url": "/history/history-quiz/"
+  },
+  "hub": {
+    "name": "History",
+    "url": "/history/"
+  },
+  "sections": [
+    {
+      "id": "start-seven",
+      "title": "Seven symbols are enough to begin",
+      "html": "<p>A date carved over a doorway can look forbidding until you stop reading it as one long word. Roman numerals use a small set of symbols. For the common forms you meet in quizzes, start here:</p><p class=\"number-example\">I = 1 · V = 5 · X = 10 · L = 50<br/>C = 100 · D = 500 · M = 1,000</p><p>Read VI as five plus one: six. Read VIII as five plus three: eight. Build a little confidence with those before tackling a building date.</p>"
+    },
+    {
+      "id": "pairs",
+      "title": "Look for the subtraction pairs",
+      "html": "<p>In standard modern notation, a smaller symbol before an appropriate larger one can form a subtraction pair. The familiar pairs are IV (4), IX (9), XL (40), XC (90), CD (400) and CM (900).</p><p>This is not permission to put any small symbol before any large one. Write 49 as XLIX: forty plus nine. IL is not the standard form. Historical inscriptions and clock faces can use variants, including IIII for four, so a real object may not follow a school exercise exactly.</p>"
+    },
+    {
+      "id": "doorway-date",
+      "title": "A doorway date, one chunk at a time",
+      "html": "<p>Try MCMXLIV. Separate it into M | CM | XL | IV. You now have 1,000 + 900 + 40 + 4, which gives 1944. Each chunk is easier to check than a hurried running total.</p><p>For a second pass, go backwards: build 1944 from thousands, hundreds, tens and units. If the pieces match, you have checked the reading without merely repeating the same mental step.</p><details class=\"practice-answer\"><summary>What is MMXXVI?</summary><p>2026: MM is 2,000, XX is 20 and VI is 6. There are no subtraction pairs in this example.</p></details>"
+    },
+    {
+      "id": "practice",
+      "title": "Three small checks",
+      "html": "<p>On paper, try XIV, XLII and XC. Before opening the answers, circle any subtraction pair. Then read the remaining symbols normally.</p><details class=\"practice-answer\"><summary>Show the three answers</summary><p>XIV = 14; XLII = 42; XC = 90. In XIV, only IV is the subtraction pair: the initial X still contributes ten.</p></details><p>Next time a quiz includes a Roman numeral, look for a familiar pair first. You do not need to hold the whole string in memory.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Wolfram MathWorld — Roman numerals",
+      "url": "https://mathworld.wolfram.com/RomanNumerals.html"
+    },
+    {
+      "name": "University of Cambridge NRICH — Roman numerals",
+      "url": "https://nrich.maths.org/problems/roman-numerals?tab=teacher"
+    }
+  ],
+  "related": [
+    "which-century-is-that-year",
+    "number-sequences-look-at-the-gaps"
+  ],
+  "practice": "Try History Quiz. For dates written in Roman numerals, split the symbols into chunks before choosing an answer.",
+  "cover": {
+    "src": "/assets/images/learn/how-to-read-roman-numerals.webp",
+    "alt": "A stone clock face with Roman numerals",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 10
+}

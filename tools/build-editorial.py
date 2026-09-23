@@ -3,6 +3,7 @@ from pathlib import Path
 from html import escape
 from urllib.parse import urlsplit
 import json
+import math
 import re
 import xml.etree.ElementTree as ET
 
@@ -24,29 +25,35 @@ for a in all_articles:
     assert a['slug'] not in slugs, 'Duplicate slug'
     slugs.add(a['slug'])
     assert a['status'] in ('draft', 'published'), 'Invalid status'
-articles = [a for a in all_articles if a['status'] == 'published']
+articles = sorted([a for a in all_articles if a['status'] == 'published'], key=lambda a:(a.get('order',999),a['slug']))
 by_slug = {a['slug']: a for a in articles}
 for a in articles:
-    for key in ('title', 'description', 'topic', 'sections', 'sources', 'game', 'hub'):
+    for key in ('title', 'description', 'topic', 'sections', 'sources', 'game', 'hub', 'cover', 'practice'):
         assert a.get(key), f"Missing {key} in {a['slug']}"
+    cover=a['cover']
+    assert cover.get('alt') and cover.get('credit'), f"Missing cover description/credit in {a['slug']}"
+    assert cover['src'].startswith('/assets/images/learn/') and '..' not in cover['src'] and cover['src'].endswith('.webp')
+    for image in (cover['src'],cover['src'].replace('.webp','-small.webp')):
+        assert (ROOT/image.lstrip('/')).is_file(), f'Missing cover: {image}'
     ids = [section['id'] for section in a['sections']]
     assert len(ids) == len(set(ids)) and all(re.fullmatch(r'[a-z0-9-]+', i) for i in ids)
     for link in (a['game'], a['hub']):
         target = ROOT/urlsplit(link['url']).path.strip('/')/'index.html'
         assert target.is_file(), f'Missing destination: {target}'
     words = len(re.sub('<[^>]+>', ' ', ' '.join(s['html'] for s in a['sections'])).split())
-    a['minutes'] = max(1, round(words/200))
+    a['minutes'] = max(1, math.ceil(words/200))
 
-def card(a):
-    return f'''<article class="learn-card">
-      <div class="learn-card-art"><img src="/assets/icons/categories/{escape(a['icon'])}.svg" alt="" width="80" height="80" loading="lazy"/></div>
+def card(a, eager=False):
+    return f'''<article class="learn-card" data-topic="{escape(a['topic'], quote=True)}">
+      <div class="learn-card-art"><img src="{escape(a['cover']['src'].replace('.webp','-small.webp'))}" alt="{escape(a['cover']['alt'], quote=True)}" width="480" height="320" loading="{'eager' if eager else 'lazy'}" decoding="async"/></div>
       <div class="learn-card-copy"><p class="eyebrow">{escape(a['topic'])} <span>· {a['minutes']} min read</span></p>
       <h3><a href="/learn/{a['slug']}/">{escape(a['title'])}</a></h3>
       <p>{escape(a['description'])}</p><span class="learn-card-label" aria-hidden="true">Read the guide ↗</span></div>
     </article>'''
 
-def page(path, title, description, body, schema):
+def page(path, title, description, body, schema, cover=None):
     url = BASE + path
+    cover=cover or {'src':'/assets/brand/og-card.png','alt':'BrainiLab quiz and brain games'}
     graph = {'@context': 'https://schema.org', '@graph': [schema, {'@type':'BreadcrumbList','itemListElement':[
         {'@type':'ListItem','position':1,'name':'Home','item':BASE+'/'},
         {'@type':'ListItem','position':2,'name':'Learn','item':BASE+'/learn/'}
@@ -59,12 +66,13 @@ def page(path, title, description, body, schema):
 <meta name="robots" content="index,follow"/><link rel="canonical" href="{url}"/>
 <meta property="og:type" content="{'website' if path == '/learn/' else 'article'}"/><meta property="og:title" content="{escape(title, quote=True)}"/>
 <meta property="og:description" content="{escape(description, quote=True)}"/><meta property="og:url" content="{url}"/>
-<meta property="og:image" content="{BASE}/assets/brand/og-card.png"/><meta property="og:image:alt" content="BrainiLab quiz and brain games"/>
+<meta property="og:image" content="{BASE}{escape(cover['src'])}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
-<link rel="stylesheet" href="/assets/css/site.css?v=41.11.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/editorial.css?v=41.12.0"/>
-<script defer src="/assets/js/shell.bundle.js?v=41.12.0"></script>
+<link rel="stylesheet" href="/assets/css/site.css?v=41.14.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
+<link rel="stylesheet" href="/assets/css/editorial.css?v=41.14.0"/>
+<script defer src="/assets/js/shell.bundle.js?v=41.14.0"></script>
+{'<script defer src="/assets/js/learn-library.js?v=41.14.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
 {header}<main id="main-content">{body}</main>{footer}<div class="toast" role="status"></div></body></html>'''
@@ -73,13 +81,16 @@ def page(path, title, description, body, schema):
     target.write_text(content, encoding='utf-8')
 
 topics = sorted({a['topic'] for a in articles})
-topic_id = lambda t: t.lower().replace(' ', '-')
-library = ''.join(f'''<section class="learn-topic" id="{topic_id(t)}" aria-labelledby="{topic_id(t)}-title"><div class="section-heading"><h2 id="{topic_id(t)}-title">{escape(t)}</h2><span>{sum(a['topic']==t for a in articles)} guide{'s' if sum(a['topic']==t for a in articles)!=1 else ''}</span></div><div class="learn-grid">{''.join(card(a) for a in articles if a['topic']==t)}</div></section>''' for t in topics)
-page('/learn/', 'Learn something. Put it into play.', 'Practical guides to geography, quiz practice and BrainiLab games. Find a topic, understand the idea and try a related challenge.', f'''
+library = ''.join(card(a,i<3) for i,a in enumerate(articles))
+page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geography, history, numbers and word puzzles. Short reads with worked examples, a quick question and a related game.', f'''
 <div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Learn</span></nav>
-<header class="learn-hero"><p class="eyebrow">THE BRA IN YOUR BRAIN BREAK</p><h1>Learn something.<br/><span>Put it into play.</span></h1><p>Clear explanations, useful examples and a game to try next.<br/>A little reading can give your next challenge a new direction.</p>
-<nav class="topic-nav" aria-label="Guide topics">{''.join(f'<a href="#{topic_id(t)}">{escape(t)}</a>' for t in topics)}</nav></header>
-{library}<aside class="learn-next"><div><p class="eyebrow">READY WHEN YOU ARE</p><h2>More of a learn-by-doing person?</h2><p>Pick a free game and follow your curiosity.</p></div><a class="btn-secondary" href="/games/">Explore the games →</a></aside></div>'''.replace('THE BRA IN YOUR BRAIN BREAK','A LITTLE CURIOSITY GOES A LONG WAY'), {'@type':'CollectionPage','name':'BrainiLab Learn','url':BASE+'/learn/','description':'Practical guides connected to BrainiLab games','hasPart':[{'@type':'Article','headline':a['title'],'url':BASE+'/learn/'+a['slug']+'/'} for a in articles]})
+<header class="learn-hero"><div><h1>A little more to discover.</h1><p>Curious questions, clear answers and a few things to try.</p></div>
+<label class="learn-search" hidden>Find an article<input type="search" id="learn-search" placeholder="Try Moon, flags, numbers…" autocomplete="off" aria-controls="learn-articles"/></label></header>
+<nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="" aria-pressed="true">All articles</button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)}</button>' for t in topics)}</nav>
+<p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(articles)} articles</p>
+<div class="learn-grid library-grid" id="learn-articles">{library}</div>
+<div class="learn-empty" hidden><h2>No articles found</h2><p>Try another word or browse all topics.</p><button type="button" data-clear-filters>Show all articles</button></div>
+<p class="learn-footer-link">In the mood to play? <a href="/games/">Browse the games →</a></p></div>''', {'@type':'CollectionPage','name':'BrainiLab Learn','url':BASE+'/learn/','description':'Short reads on science, geography, history and puzzles','hasPart':[{'@type':'Article','headline':a['title'],'url':BASE+'/learn/'+a['slug']+'/','image':BASE+a['cover']['src']} for a in articles]})
 
 for a in articles:
     toc = ''.join(f'<li><a href="#{s["id"]}">{escape(s["title"])}</a></li>' for s in a['sections'])
@@ -88,11 +99,11 @@ for a in articles:
     sources = ''.join(f'<li><a href="{escape(s["url"], quote=True)}">{escape(s["name"])}</a></li>' for s in a['sources'])
     body = f'''<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">{escape(a['topic'])}</span></nav>
     <header class="article-header"><p class="eyebrow">{escape(a['topic'])} · {a['minutes']} min read</p><h1>{escape(a['title'])}</h1><p>{escape(a['description'])}</p></header>
-    <div class="article-layout"><aside class="article-sidebar"><nav aria-label="In this guide"><p class="eyebrow">IN THIS GUIDE</p><ol>{toc}</ol></nav><a class="sidebar-game" href="{escape(a['game']['url'], quote=True)}">Put it into practice →<strong>{escape(a['game']['name'])}</strong></a></aside>
-    <article class="article-body">{sections}<section id="sources"><h2>Sources &amp; further reading</h2><ul>{sources}</ul></section>
-    <aside class="article-practice"><p class="eyebrow">YOUR NEXT STEP</p><h2>Turn the idea into a little practice.</h2><p>Try a round, review the result and choose one thing to come back to.</p><a class="btn" href="{escape(a['game']['url'], quote=True)}">Play {escape(a['game']['name'])} →</a><a class="article-hub-link" href="{escape(a['hub']['url'], quote=True)}">Explore {escape(a['hub']['name'])}</a></aside></article></div>
+    <div class="article-layout"><aside class="article-sidebar"><details><summary>In this article</summary><nav aria-label="In this article"><ol>{toc}</ol></nav></details><a class="sidebar-game" href="{escape(a['game']['url'], quote=True)}">Related game<strong>{escape(a['game']['name'])} →</strong></a></aside>
+    <article class="article-body"><figure class="article-cover"><img src="{escape(a['cover']['src'])}" alt="{escape(a['cover']['alt'],quote=True)}" width="960" height="640" fetchpriority="high"/><figcaption>{escape(a['cover']['credit'])}</figcaption></figure>{sections}<section id="sources"><h2>Sources &amp; further reading</h2><ul>{sources}</ul></section>
+    <aside class="article-practice"><h2>Fancy a round?</h2><p>{escape(a['practice'])}</p><a class="btn" href="{escape(a['game']['url'], quote=True)}">Play {escape(a['game']['name'])} →</a><a class="article-hub-link" href="{escape(a['hub']['url'], quote=True)}">Explore {escape(a['hub']['name'])}</a></aside></article></div>
     <section class="learn-related"><div class="section-heading"><h2>Keep exploring</h2><a href="/learn/">All guides →</a></div><div class="learn-grid">{related}</div></section></div>'''
-    page('/learn/'+a['slug']+'/', a['title'], a['description'], body, {'@type':'Article','headline':a['title'],'description':a['description'],'url':BASE+'/learn/'+a['slug']+'/','inLanguage':'en','publisher':{'@type':'Organization','name':'BrainiLab','url':BASE+'/'},'mainEntityOfPage':BASE+'/learn/'+a['slug']+'/'})
+    page('/learn/'+a['slug']+'/', a['title'], a['description'], body, {'@type':'Article','headline':a['title'],'description':a['description'],'url':BASE+'/learn/'+a['slug']+'/','image':BASE+a['cover']['src'],'inLanguage':'en','publisher':{'@type':'Organization','name':'BrainiLab','url':BASE+'/'},'mainEntityOfPage':BASE+'/learn/'+a['slug']+'/'},a['cover'])
 
 # Only files with our exact generated marker can be removed when unpublishing.
 for p in (ROOT/'learn').glob('*/index.html'):
