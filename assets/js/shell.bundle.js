@@ -4348,6 +4348,18 @@ window.BrainiSiteAnalytics=(()=>{
   function safe(){return ['brainilabgames.com','www.brainilabgames.com'].includes(location.hostname)&&!/^\/(admin|auth|profile)(\/|$)/.test(location.pathname)&&![...new URLSearchParams(location.search+'&'+location.hash.slice(1)).keys()].some(k=>/^(code|access_token|refresh_token|token_hash|error_description|email|password)$/.test(k));}
   function allowed(){return choice===true&&safe();}
   const path=()=>location.pathname.replace(/index\.html$/,'');
+  // Only our public, predefined social links. Never forward arbitrary query values.
+  function campaign(){
+    const q=new URLSearchParams(location.search);
+    const names=['utm_source','utm_medium','utm_campaign','utm_content'];
+    if(names.some(name=>q.getAll(name).length>1)||q.get('utm_medium')!=='social'||q.get('utm_campaign')!=='learn_discovery')return {};
+    const source=q.get('utm_source');
+    if(!['youtube','instagram','tiktok'].includes(source))return {};
+    const data={campaign_source:source,campaign_medium:'social',campaign_name:'learn_discovery'};
+    const content=q.get('utm_content');
+    if(['bio','flags_video','moon_short','general_quiz','geography_short'].includes(content))data.campaign_content=content;
+    return data;
+  }
   function tag(){window.dataLayer.push(arguments);}
   function send(name,params={}){if(!allowed()||!loaded)return;tag('event',name,{send_to:id,page_location:location.origin+path(),page_title:document.title,page_referrer:referrer(),...params});}
   function referrer(){try{return document.referrer?new URL(document.referrer).origin:'';}catch{return '';}}
@@ -4358,7 +4370,7 @@ window.BrainiSiteAnalytics=(()=>{
       window.dataLayer=window.dataLayer||[];window.gtag=tag;
       tag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
       tag('consent','update',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-      tag('js',new Date());tag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:location.origin+path(),page_referrer:referrer(),cookie_expires:180*86400});
+      tag('js',new Date());tag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:location.origin+path(),page_referrer:referrer(),cookie_expires:180*86400,...campaign()});
       const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;script.dataset.brainilabAnalytics='1';document.head.appendChild(script);loaded=true;
     }else tag('consent','update',{analytics_storage:'granted'});
     if(!viewed){send('page_view');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
