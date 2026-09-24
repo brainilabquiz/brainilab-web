@@ -70,10 +70,10 @@ def page(path, title, description, body, schema, cover=None):
 <meta property="og:image" content="{BASE}{escape(cover['src'])}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
-<link rel="stylesheet" href="/assets/css/site.css?v=41.16.1"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/editorial.css?v=41.16.1"/>
-<script defer src="/assets/js/shell.bundle.js?v=41.16.1"></script>
-{'<script defer src="/assets/js/learn-library.js?v=41.16.1"></script>' if path == '/learn/' else ''}
+<link rel="stylesheet" href="/assets/css/site.css?v=41.17.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
+<link rel="stylesheet" href="/assets/css/editorial.css?v=41.17.0"/>
+<script defer src="/assets/js/shell.bundle.js?v=41.17.0"></script>
+{'<script defer src="/assets/js/learn-library.js?v=41.17.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
 {header}<main id="main-content">{body}</main>{footer}<div class="toast" role="status"></div></body></html>'''

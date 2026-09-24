@@ -13,8 +13,8 @@ window.BRAINI_MONETIZATION_CONFIG={
     publisherId:"ca-pub-5613536700850101",
 
     slots:{
-      home_after_play:"",
-      games_mid_content:"",
+      home_after_play:"2201740000",
+      games_mid_content:"9888658335",
       daily_lower:"",
       quiz_result:"",
       rankings_after_board:"",

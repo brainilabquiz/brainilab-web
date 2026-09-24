@@ -2441,8 +2441,8 @@ window.BRAINI_MONETIZATION_CONFIG={
     publisherId:"ca-pub-5613536700850101",
 
     slots:{
-      home_after_play:"",
-      games_mid_content:"",
+      home_after_play:"2201740000",
+      games_mid_content:"9888658335",
       daily_lower:"",
       quiz_result:"",
       rankings_after_board:"",
@@ -3401,6 +3401,10 @@ window.BrainiAds=(function(){
   let scriptPromise=null;
   let observer=null;
 
+  function productionHost(){
+    return ["brainilabgames.com","www.brainilabgames.com"].includes(location.hostname);
+  }
+
   function safeTestHost(){
     const host=String(
       location.hostname||""
@@ -3461,6 +3465,8 @@ window.BrainiAds=(function(){
       window.BrainiMonetization;
 
     if(debugMode()) return true;
+    if(!productionHost()) return false;
+    if(document.querySelector('#homeQuiz [data-answers]')) return false;
     if(!/^(?:\/(?:index\.html)?|\/games\/(?:index\.html)?|\/daily-quiz\/(?:index\.html)?|\/about\/(?:index\.html)?|\/(?:general-knowledge|geography|science|history|sports)\/[^/]+\/(?:index\.html)?)$/.test(location.pathname)) return false;
 
     if(!monetization) return false;
@@ -3487,7 +3493,6 @@ window.BrainiAds=(function(){
   }
 
   function loadAdSense(){
-    if(window.adsbygoogle) return Promise.resolve();
     if(scriptPromise) return scriptPromise;
 
     const client=
@@ -3503,6 +3508,20 @@ window.BrainiAds=(function(){
 
     scriptPromise=
       new Promise((resolve,reject)=>{
+        window.googlefc=window.googlefc||{};
+        window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+        window.googlefc.callbackQueue.push({CONSENT_API_READY:()=>{
+          if(document.querySelector('[data-google-ad-choices]')) return;
+          const footer=document.querySelector('footer');
+          if(!footer) return;
+          const link=document.createElement('button');
+          link.type='button';
+          link.className='btn-light';
+          link.dataset.googleAdChoices='1';
+          link.textContent='Ad privacy choices';
+          link.onclick=()=>window.googlefc.callbackQueue.push({CONSENT_API_READY:()=>window.googlefc.showRevocationMessage()});
+          footer.appendChild(link);
+        }});
         const existing=
           document.querySelector(
             'script[data-brainilab-adsense]'
@@ -3555,13 +3574,21 @@ window.BrainiAds=(function(){
   }
 
   function watchFill(ins,name){
+    let lastStatus=null;
     const trackStatus=()=>{
       const status=
         ins.getAttribute("data-ad-status");
 
-      if(!status) return;
+      if(!status || status===lastStatus) return;
+      lastStatus=status;
 
-      BrainiData?.track?.(
+      // Keep Google's processed unit in place; never request it again.
+      // Only collapse a confirmed empty slot, not a delayed consent request.
+      const slot=ins.parentElement?.closest('.brainilab-ad-slot[data-ad-slot]');
+      if(slot && status==='unfilled') slot.hidden=true;
+      else if(slot && status==='filled' && eligiblePlacement(name)) slot.hidden=false;
+
+      window.BrainiData?.track?.(
         status==="filled"
           ?"ad_slot_filled"
           :"ad_slot_unfilled",
@@ -3583,10 +3610,8 @@ window.BrainiAds=(function(){
       }
     );
 
-    setTimeout(
-      ()=>mutation.disconnect(),
-      15000
-    );
+    // Consent can take longer than 15 seconds. Observe for the unit lifetime.
+    trackStatus();
   }
 
   async function renderSlot(element){
@@ -3698,7 +3723,7 @@ window.BrainiAds=(function(){
   }
 
   function observe(element){
-    if(!element || element.dataset.adObserved==="1"){
+    if(!element || element.dataset.adObserved==="1" || element.dataset.adRequested==="1"){
       return;
     }
 
@@ -3710,7 +3735,7 @@ window.BrainiAds=(function(){
       return;
     }
 
-    if(!eligiblePlacement(name)){
+    if(!eligiblePlacement(name) || !publisherReady(name)){
       resetSlot(element);
       return;
     }
@@ -3749,7 +3774,7 @@ window.BrainiAds=(function(){
   function scan(root=document){
     root
       .querySelectorAll?.(
-        "[data-ad-slot]"
+        ".brainilab-ad-slot[data-ad-slot]"
       )
       .forEach(observe);
   }
@@ -3757,7 +3782,7 @@ window.BrainiAds=(function(){
   function reconcile(){
     document
       .querySelectorAll(
-        "[data-ad-slot]"
+        ".brainilab-ad-slot[data-ad-slot]"
       )
       .forEach(element=>{
         const name=
@@ -3779,7 +3804,7 @@ window.BrainiAds=(function(){
 
     const slots=[
       ...document.querySelectorAll(
-        "[data-ad-slot]"
+        ".brainilab-ad-slot[data-ad-slot]"
       )
     ];
 
@@ -3826,7 +3851,7 @@ window.BrainiAds=(function(){
       // bypass observer, flags, publisher IDs and Plus entitlement.
       document
         .querySelectorAll(
-          "[data-ad-slot]"
+          ".brainilab-ad-slot[data-ad-slot]"
         )
         .forEach(element=>{
           element.hidden=false;
@@ -3838,13 +3863,14 @@ window.BrainiAds=(function(){
 
     const mutations=
       new MutationObserver(records=>{
+        if(records.some(record=>record.target.closest?.('#homeQuiz'))) reconcile();
         records.forEach(record=>{
           record.addedNodes.forEach(node=>{
             if(!(node instanceof Element)){
               return;
             }
 
-            if(node.matches?.("[data-ad-slot]")){
+            if(node.matches?.(".brainilab-ad-slot[data-ad-slot]")){
               if(debugMode()){
                 node.hidden=false;
                 renderSlot(node);
@@ -3857,7 +3883,7 @@ window.BrainiAds=(function(){
             if(debugMode()){
               node
                 .querySelectorAll?.(
-                  "[data-ad-slot]"
+                  ".brainilab-ad-slot[data-ad-slot]"
                 )
                 .forEach(element=>{
                   element.hidden=false;
