@@ -655,6 +655,11 @@ window.BrainiDailyHub=(function(){
   function completedMarkup(status,options={}){
     const prefix=options.prefix||"";
     const result=options.result||status.games.brainmix?.result||null;
+
+    if(result&&window.BrainiPostGame){
+      BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status,focus:options.focus!==false});
+      return status;
+    }
     const hasQuizNumbers=
       result &&
       Number.isFinite(Number(result.correct)) &&

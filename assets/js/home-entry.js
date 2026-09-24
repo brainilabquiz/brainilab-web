@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if(window.BrainiAuth && BrainiAuth.addSavePrompt){
           BrainiAuth.addSavePrompt(
-            stage.querySelector(".home-daily-state"),
+            stage.querySelector(".post-game, .home-daily-state"),
             "home_daily_result"
           );
         }
