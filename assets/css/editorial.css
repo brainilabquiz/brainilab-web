@@ -28,4 +28,5 @@
 @media(max-width:600px){.learn-hero{padding:18px;border-radius:16px;margin-bottom:18px}.learn-hero:after{right:-35px;bottom:80px;width:100px;height:100px;opacity:.25}.learn-hero h1{font-size:28px}.learn-search{margin-top:16px}}
 
 /* Compact covers keep the title and topic visible together. */
+.article-header>p.article-byline{font-size:12px;line-height:1.8;color:#655d54;margin:16px 0 0;max-width:none}.article-byline a{color:#2d296e;text-decoration:underline;text-underline-offset:3px}.learn-feed-link{font-size:13px;margin:24px 0 0;color:#2d296e}
 .library-grid .learn-card-art{aspect-ratio:2.4/1}.library-grid .learn-card-art img{object-position:center 45%}.library-grid .learn-card-copy{padding:17px 19px}.library-grid .learn-card-copy>p:not(.eyebrow){margin-bottom:12px}.library-grid{gap:22px}.library-grid .learn-card-art:has(img[src*="moon"] ) img{object-position:center 20%}.library-grid .learn-card-art:has(img[src*="flags"]) img{object-position:center 42%}@media(max-width:600px){.library-grid .learn-card-art{aspect-ratio:2.5/1}}
