@@ -4,10 +4,10 @@ JS=ROOT/'assets/js'
 BUNDLES={
  'shell.bundle.js':['icon-system.js','build.js','data.js','try-first-runtime.js','daily-completion-guard.js','ui.js','progression-ui.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','site-analytics.js','meta-pixel.js'],
  'cloud.bundle.js':['supabase-config.js','supabase-auth.js','supabase-profile.js','supabase-games.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
- 'quiz.bundle.js':['share.js','supabase-content.js','quiz.js'],
+ 'quiz.bundle.js':['share.js','post-game.js','supabase-content.js','quiz.js'],
  'daily.bundle.js':['share.js','supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
  'daily-overview.bundle.js':['supabase-daily.js','daily-hub.js','daily-countdown.js','daily-games.js','daily-journey.js','daily-overview.js','anytime-browser.js'],
- 'home.bundle.js':['share.js','supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','quiz.js','home-entry.js'],
+ 'home.bundle.js':['share.js','post-game.js','supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','quiz.js','home-entry.js'],
  'games.bundle.js':['games-library.js'],
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],

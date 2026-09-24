@@ -30,6 +30,12 @@ window.BrainiHomeDaily=(function(){
       return;
     }
 
+    if(result&&window.BrainiPostGame){
+      container.classList.remove('home-start');
+      BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status});
+      return;
+    }
+
     container.innerHTML=`
       <div class="home-daily-state ${complete?"is-caught-up":""}">
         <div class="home-daily-state-top">

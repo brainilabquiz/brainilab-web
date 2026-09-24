@@ -1,0 +1,24 @@
+/* One result, one next step, with answer detail available on demand. */
+.post-game{max-width:680px;margin:0 auto;padding:30px;text-align:center;background:#fffdf8;color:#211e38;border:1px solid #e4dfd5;border-radius:22px;box-sizing:border-box}
+.post-game .post-kicker{margin:0 0 18px;color:#2d296e;font-size:12px;font-weight:750;letter-spacing:.04em}
+.post-game .post-score{font-size:clamp(42px,8vw,68px);line-height:1.1;margin:0;color:#2d296e;letter-spacing:-.04em;outline:none}
+.post-score span{font-size:.5em;font-weight:550;color:#756d82}
+.post-game .post-score-label{margin:7px 0 18px;color:#625b6b;font-size:14px}
+.post-game .post-message{margin:0 auto 10px;font-size:16px;line-height:1.6;color:#211e38;max-width:420px}
+.post-game .post-points{margin:0 0 22px;font-size:13px;color:#625b6b}
+.post-review{margin:20px 0;text-align:left;border-block:1px solid #e4dfd5}
+.post-review details+details{border-top:1px solid #e4dfd5}
+.post-review summary{cursor:pointer;padding:16px 4px;color:#2d296e;font-size:15px;font-weight:700;line-height:1.5}
+.post-answer{padding:16px;background:#f5f2e9;border-radius:10px;margin:0 0 12px}
+.post-answer h4{font-size:15px;line-height:1.6;margin:0 0 10px;color:#211e38}
+.post-game .post-answer p{color:#3f394b;font-size:14px;line-height:1.65;margin:6px 0;max-width:none}
+.post-game .post-answer .post-answer-choice{font-size:12px;color:#736a78}
+.post-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px}
+.post-primary,.post-share{min-height:46px;border-radius:12px;font:700 14px inherit;padding:13px 20px;line-height:1.45;cursor:pointer}
+.post-primary{background:#fdd81c;color:#211e38;text-decoration:none;border:1px solid #fdd81c;font-weight:750;font-size:14px}
+.post-share{background:transparent;color:#2d296e;border:1px solid #d7d0e1;font-family:inherit;font-weight:700;font-size:14px}
+.post-game .post-daily,.post-browse{font-size:12px;line-height:1.6;color:#625b6b;margin:18px 0 0}
+.post-daily a{display:inline-block;margin-left:10px;text-decoration:underline;color:#2d296e}.post-browse{display:inline-block;text-decoration:underline}
+.post-game :is(a,button,summary):focus-visible{outline:3px solid #3fab34;outline-offset:4px}
+.home-hero:has(.post-game){align-items:start}.home-hero .post-game{padding:26px 22px}.home-hero .challenge:has(.post-game){background:transparent;box-shadow:none}.home-hero .challenge:has(.post-game) .challenge-inner{padding:0}.home-hero .challenge:has(.post-game)::before{display:none}
+@media(max-width:600px){.post-game{padding:24px 18px}.post-actions{flex-direction:column}.post-actions>*{width:100%;box-sizing:border-box}.post-answer{padding:12px}}

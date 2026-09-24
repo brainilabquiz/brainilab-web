@@ -26,13 +26,14 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://brainilabgames.com/games/brain-mix/#webpage","url":"https://brainilabgames.com/games/brain-mix/","name":"Brain Mix \u2014 Today\u2019s 10-Question Daily Quiz | BrainiLab","description":"Play today’s free 10-question Brain Mix on BrainiLab: a mixed general-knowledge Daily challenge with instant feedback and up to 2,500 Daily Brain Score points.","isPartOf":{"@id":"https://brainilabgames.com/#website"},"mainEntity":{"@id":"https://brainilabgames.com/games/brain-mix/#quiz"},"inLanguage":"en"},{"@type":"Quiz","@id":"https://brainilabgames.com/games/brain-mix/#quiz","name":"Daily Brain Challenge","description":"Play today’s free 10-question Brain Mix on BrainiLab: a mixed general-knowledge Daily challenge with instant feedback and up to 2,500 Daily Brain Score points.","url":"https://brainilabgames.com/games/brain-mix/","isAccessibleForFree":true,"inLanguage":"en","interactivityType":"active","learningResourceType":"Quiz","educationalUse":"assessment","about":{"@type":"Thing","name":"Mixed daily knowledge"},"publisher":{"@id":"https://brainilabgames.com/#organization"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://brainilabgames.com/"},{"@type":"ListItem","position":2,"name":"Daily","item":"https://brainilabgames.com/daily-quiz/"},{"@type":"ListItem","position":3,"name":"Brain Mix","item":"https://brainilabgames.com/games/brain-mix/"}]}]}</script>
 <!-- BrainiLab data layer -->
 <!-- /BrainiLab data layer -->
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer="" src="../../assets/js/shell.bundle.js?v=41.17.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.11.0"></script><script defer src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/quiz.bundle.js?v=41.12.0"></script><script defer="" src="../../assets/js/daily.bundle.js?v=41.11.0"></script>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer="" src="../../assets/js/shell.bundle.js?v=41.17.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.11.0"></script><script defer src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/quiz.bundle.js?v=41.18.0"></script><script defer="" src="../../assets/js/daily.bundle.js?v=41.18.0"></script>
 <meta property="og:image:alt" content="BrainiLab quiz and brain games"/>
 <meta name="twitter:image:alt" content="BrainiLab quiz and brain games"/>
 <link rel="alternate" hreflang="en" href="https://brainilabgames.com/games/brain-mix/"/>
 <link rel="alternate" hreflang="x-default" href="https://brainilabgames.com/games/brain-mix/"/>
 <meta name="theme-color" content="#34327f"/>
 <meta name="google-adsense-account" content="ca-pub-5613536700850101">
+<link rel="stylesheet" href="/assets/css/post-game.css?v=41.18.0"/>
 </head>
 <body>
 <header class="topbar">
@@ -171,67 +172,12 @@
         await BrainiDailyHub.renderBrainMixCompleted(stage,{
           status:previousStatus,
           prefix:"../../",
-          result:previousResult
+          result:previousResult,focus:false
         });
 
-        if(
-          previousResult &&
-          Array.isArray(previousResult.answerDetails) &&
-          previousResult.answerDetails.length===10 &&
-          guide &&
-          postQuiz
-        ){
-          guide.innerHTML=previousResult.answerDetails.map((item,i)=>`
-            <article class="qa">
-              <h3>${i+1}. ${item.questionText}</h3>
-              <p><strong>${item.correctAnswer||""}.</strong> ${item.explanation||""}</p>
-            </article>`).join("");
-          postQuiz.hidden=false;
-        }
 
         return;
       }
-    }
-
-    function resultMarkup(r,result){
-      const cells=r.results.map(x=>x?"🟩":"🟥").join("");
-      const accuracy=Math.round(r.correct/r.total*100);
-      const replayHref=archiveMode
-        ? `index.html?archive=${encodeURIComponent(daily.challengeDate)}`
-        : "index.html";
-
-      return `
-        <div class="daily-result-inline">
-          <div class="daily-result-kicker">${archiveMode?"Brain Mix":"Daily"}${archiveMode?"":" #"+daily.dailyNumber} complete</div>
-          <h1>${archiveMode?"Your result":"Today’s result"}</h1>
-
-          <div class="daily-result-score-row">
-            <div class="daily-result-score">
-              <strong>${r.correct}/${r.total}</strong>
-              <span>correct answers</span>
-            </div>
-            <div class="daily-result-stat">
-              <strong>${r.points.toLocaleString()}</strong>
-              <span>points</span>
-            </div>
-            <div class="daily-result-stat">
-              <strong>${accuracy}%</strong>
-              <span>accuracy</span>
-            </div>
-            <div class="daily-result-stat">
-              <strong>${archiveMode?"Play anytime":`Top ${result.percentile}%`}</strong>
-              <span>${archiveMode?"game":"today"}</span>
-            </div>
-          </div>
-
-          <div class="daily-result-grid" aria-label="Result grid">${cells}</div>
-          ${archiveMode?'':'<div id="dailyInlineShare"></div>'}
-
-          <div class="daily-result-actions">
-            <a class="btn-secondary" href="${replayHref}">${archiveMode?"Play another Brain Mix":"Replay today’s quiz"}</a>
-            <a class="btn-light" href="../../games/index.html">Choose another game</a>
-          </div>
-        </div>`;
     }
 
     BrainiQuiz.mount(root,questions,{
@@ -265,7 +211,7 @@
         }
 
         if(archiveMode){
-          stage.innerHTML=resultMarkup(r,result);
+          BrainiPostGame.mount(stage,{result:{...result,answerDetails:r.answerDetails},gameId:'brainmix',name:'Brain Mix',next:{href:'/games/#general-knowledge',label:'Choose another quiz'}});
         }else{
           const completedStatus=await BrainiDailyHub.resolve(daily.dailyNumber);
           await BrainiDailyHub.renderBrainMixCompleted(stage,{
@@ -275,19 +221,11 @@
           });
         }
 
-        if(guide){
-          guide.innerHTML=r.answerDetails.map((item,i)=>`
-            <article class="qa">
-              <h3>${i+1}. ${item.questionText}</h3>
-              <p><strong>${item.correctAnswer||""}.</strong> ${item.explanation||""}</p>
-            </article>`).join("");
-        }
-
-        if(postQuiz) postQuiz.hidden=false;
+        if(postQuiz) postQuiz.hidden=true;
 
         if(!archiveMode && window.BrainiAuth && BrainiAuth.addSavePrompt){
           BrainiAuth.addSavePrompt(
-            stage.querySelector(".daily-completed-state"),
+            stage.querySelector(".post-game, .daily-completed-state"),
             "daily_result"
           );
         }
