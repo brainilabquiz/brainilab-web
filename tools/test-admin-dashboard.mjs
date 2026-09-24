@@ -22,4 +22,6 @@ for(const [data,expected] of [
   assert.ok(html.includes(`<strong>${expected}</strong>`),html);
   assert.ok(!html.includes('NaN'),html);
 }
-console.log('Admin dashboard: empty, zero and fractional verified-answer rates passed.');
+const textMetric=vm.runInNewContext(`${helpers}\n${metric}\nmetric('Top game', 'Brain Mix <test>', 'By completed plays')`);
+assert.ok(textMetric.includes('<strong>Brain Mix &lt;test&gt;</strong>'));
+console.log('Admin dashboard: empty, zero and fractional rates plus escaped game names passed.');

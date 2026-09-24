@@ -600,9 +600,12 @@ window.BrainiAdmin=(function(){
   }
 
   function metric(label,value,note,suffix=""){
+    const display=value===null?"—"
+      : typeof value==="string"&&!Number.isFinite(Number(value))?value
+      : num(value)+suffix;
     return `<div class="admin-metric">
       <span>${esc(label)}</span>
-      <strong>${value===null?"—":esc(num(value))+esc(suffix)}</strong>
+      <strong>${esc(display)}</strong>
       <small>${esc(note)}</small>
     </div>`;
   }
