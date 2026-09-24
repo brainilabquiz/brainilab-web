@@ -17,4 +17,18 @@ assert.equal(events().filter(x=>x[1]==='game_complete').length,1);assert.ok(!JSO
 w.BrainiSiteAnalytics.setConsent(false);assert.equal(w['ga-disable-G-97WN37VLHV'],true);const n=events().length;w.document.querySelector('a').dispatchEvent(new w.MouseEvent('click',{bubbles:true}));assert.equal(events().length,n);w.close();
 for(const url of ['https://brainilabgames.com/admin/','https://brainilabgames.com/auth/','https://brainilabgames.com/?code=secret','http://localhost:8000/']){w=page(url,{allowed:true,at:Date.now()});assert.equal(w.document.scripts.length,0);w.close();}
 w=page('https://brainilabgames.com/');w.eval(meta);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));assert.ok(w.document.querySelector('[data-statistics-choice]'));w.document.querySelector('[data-statistics-choice]').checked=true;w.document.querySelector('[data-ad-choice]').checked=false;w.document.querySelector('[data-save-cookie-choices]').click();assert.equal(w.BrainiSiteAnalytics.isAllowed(),true);assert.equal(w.fbq,undefined);w.close();
-console.log('GA4 consent, no preconsent SDK, account/auth exclusion, sanitized events, result deduplication, withdrawal and independent Meta/statistics preferences passed.');
+const socialQuery='?utm_source=youtube&utm_medium=social&utm_campaign=learn_discovery&utm_content=flags_video';
+w=page('https://brainilabgames.com/learn/moon/'+socialQuery);
+assert.equal(w.document.scripts.length,0);assert.equal(w.dataLayer,undefined);
+w.BrainiSiteAnalytics.setConsent(true);
+let config=w.dataLayer.find(x=>x[0]==='config')[2];
+assert.equal(config.campaign_source,'youtube');assert.equal(config.campaign_content,'flags_video');
+assert.equal(config.page_location,'https://brainilabgames.com/learn/moon/');
+w.close();
+for(const query of [socialQuery.replace('youtube','private@example.com'),socialQuery+'&utm_source=tiktok',socialQuery.replace('learn_discovery','private@example.com')]){
+ w=page('https://brainilabgames.com/'+query,{allowed:true,at:Date.now()});
+ config=w.dataLayer.find(x=>x[0]==='config')[2];assert.equal(config.campaign_source,undefined);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
+}
+w=page('https://brainilabgames.com/'+socialQuery.replace('flags_video','private@example.com'),{allowed:true,at:Date.now()});
+config=w.dataLayer.find(x=>x[0]==='config')[2];assert.equal(config.campaign_content,undefined);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
+console.log('GA4 consent, sanitized events, result deduplication, withdrawal, independent choices and allowlisted social attribution passed.');

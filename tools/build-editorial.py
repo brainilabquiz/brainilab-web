@@ -73,7 +73,7 @@ def page(path, title, description, body, schema, cover=None):
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.17.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
 <link rel="stylesheet" href="/assets/css/editorial.css?v=41.18.1"/>
-<script defer src="/assets/js/shell.bundle.js?v=41.17.0"></script>
+<script defer src="/assets/js/shell.bundle.js?v=41.18.2"></script>
 {'<script defer src="/assets/js/learn-library.js?v=41.17.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
