@@ -484,7 +484,7 @@ window.BrainiAdmin=(function(){
 
     const verifiedPct=Number(d.results_today||0)
       ? Math.round(Number(d.answers_verified_today||0)/Number(d.results_today)*1000)/10
-      : 0;
+      : null;
 
     const daily=d.daily||{};
     const dailyHealthy=
@@ -502,7 +502,7 @@ window.BrainiAdmin=(function(){
         ${metric("Synced results today",d.synced_results_today,"Authenticated cloud results")}
         ${metric("Daily players today",d.cloud_daily_players_today,"Cloud players with ≥1 Daily")}
         ${metric("Full Dailies today",d.full_dailies_today,"All 4 Daily Games")}
-        ${metric("Verified answers",`${verifiedPct}%`,"Of today's synced results")}
+        ${metric("Verified answers",verifiedPct,"Of today's synced results","%")}
         ${metric("Public ranking profiles",d.public_ranking_profiles,"Explicit ranking opt-ins")}
         ${metric("Active groups",d.active_groups,`${num(d.eligible_groups)} ranking-eligible`)}
         ${metric("New suggestions",d.new_suggestions,"Feedback inbox")}
@@ -599,10 +599,10 @@ window.BrainiAdmin=(function(){
     );
   }
 
-  function metric(label,value,note){
+  function metric(label,value,note,suffix=""){
     return `<div class="admin-metric">
       <span>${esc(label)}</span>
-      <strong>${esc(num(value))}</strong>
+      <strong>${value===null?"—":esc(num(value))+esc(suffix)}</strong>
       <small>${esc(note)}</small>
     </div>`;
   }
