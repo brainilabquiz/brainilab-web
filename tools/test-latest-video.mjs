@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import worker,{parseFeed,latestVideo} from '../worker.js';
+import {latestPlaylistVideo} from '../lib/youtube-playlist.js';
 const channel='UCy35EdjSpdYufOLJBybevsA';
 const playlist='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4';
 const feedStart='<feed><yt:playlistId>'+playlist+'</yt:playlistId>';
@@ -23,11 +24,38 @@ saved.set('https://brainilabgames.com/api/latest-video',new Response(JSON.string
 let response=await latestVideo(request,ctx,cache,feed);await Promise.all(pending);
 assert.equal((await response.json()).id,'newerVid002');assert.equal(calls,1);
 response=await latestVideo(request,ctx,cache,feed);assert.equal(calls,1);assert.equal((await response.json()).stale,false);
-const key='https://brainilabgames.com/api/latest-video?playlist='+playlist;
+const key='https://brainilabgames.com/api/latest-video?playlist='+playlist+'&source=youtube-feed&v=2';
 const data=await saved.get(key).json();data.checkedAt=Date.now()-20*60000;saved.set(key,new Response(JSON.stringify(data)));
 response=await latestVideo(request,ctx,cache,async()=>{throw new Error('Network down');});assert.equal((await response.json()).stale,true);
-response=await latestVideo(request,ctx,{match:async()=>null},async()=>new Response('',{status:503}));assert.equal(response.status,503);
+const emptyCache={match:async()=>null,put:async()=>{}};
+response=await latestVideo(request,ctx,emptyCache,async()=>new Response('',{status:503}));assert.equal(response.status,503);
 response=await worker.fetch(new Request(key,{method:'POST'}),{},ctx);assert.equal(response.status,405);
 response=await worker.fetch(new Request('https://brainilabgames.com/api/youtube-thumbnail/invalid'),{},ctx);assert.equal(response.status,404);
 response=await worker.fetch(new Request('https://brainilabgames.com/games/'),{ASSETS:{fetch:async()=>new Response('static')}},ctx);assert.equal(await response.text(),'static');
-console.log('YouTube: newest playlist entry, XML decoding, ID/channel/playlist validation, scoped cache, stale fallback, upstream failure, methods and static routing passed.');
+const item=(id,date,options={})=>({snippet:{playlistId:playlist,videoOwnerChannelId:channel,title:id,resourceId:{kind:'youtube#video',videoId:id},publishedAt:'2026-09-24T00:00:00Z',...options.snippet},contentDetails:{videoId:id,videoPublishedAt:date},status:{privacyStatus:options.privacy||'public'}});
+const pages=[{items:[item('olderVid001','2026-09-01T00:00:00Z'),item('private0001','2026-09-23T00:00:00Z',{privacy:'private'}),item('foreign0001','2026-09-23T00:00:00Z',{snippet:{videoOwnerChannelId:'someone-else'}})],nextPageToken:'page-2'},{items:[item('newerVid002','2026-09-20T00:00:00Z'),item('unlisted001','2026-09-23T00:00:00Z',{privacy:'unlisted'}),item('future00001','2999-01-01T00:00:00Z')]}];
+let apiCalls=0;
+const api=async(address,options)=>{const u=new URL(address);assert.equal(u.origin,'https://www.googleapis.com');assert.equal(u.pathname,'/youtube/v3/playlistItems');assert.equal(u.searchParams.get('key'),'test-key');assert.equal(u.searchParams.get('playlistId'),playlist);assert.equal(u.searchParams.get('maxResults'),'50');assert.equal(u.searchParams.get('pageToken'),apiCalls?'page-2':null);assert.ok(options.signal);assert.equal(options.redirect,'error');return Response.json(pages[apiCalls++]);};
+assert.equal((await latestPlaylistVideo('test-key',api)).id,'newerVid002');assert.equal(apiCalls,2);
+assert.equal(await latestPlaylistVideo('test-key',async()=>Response.json({items:[]})),null);
+await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({items:[item('wrongList01','2026-09-01T00:00:00Z',{snippet:{playlistId:'wrong'}})]})),/Unexpected playlist/);
+await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({items:[],nextPageToken:'repeated'})),/pagination/);
+let many=0;await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({items:[],nextPageToken:String(++many)})),/scan limit/);assert.equal(many,10);
+await assert.rejects(latestPlaylistVideo('test-key',async()=>new Response('x'.repeat(500001))),/too large/);
+await assert.rejects(latestPlaylistVideo('test-key',async()=>new Response('secret upstream error',{status:403})),/Video service unavailable/);
+// Changing source bypasses the feed cache; no API secret enters public data/cache.
+apiCalls=0;response=await latestVideo(request,ctx,cache,api,'test-key');await Promise.all(pending);
+const apiData=await response.json();assert.equal(apiData.source,'youtube-api');assert.equal(apiData.id,'newerVid002');assert.equal(apiData.stale,false);assert.ok(!JSON.stringify(apiData).includes('test-key'));
+const apiCacheKey=key.replace('youtube-feed','youtube-api');
+assert.ok(saved.has(apiCacheKey));assert.ok(![...saved.keys()].join().includes('test-key'));
+apiData.checkedAt=Date.now()-20*60000;saved.set(apiCacheKey,Response.json(apiData));
+let failedCalls=0;const fail=async()=>{failedCalls++;throw Error('Network');};
+response=await latestVideo(request,ctx,cache,fail,'test-key');await Promise.all(pending);assert.equal((await response.json()).stale,true);
+response=await latestVideo(request,ctx,cache,fail,'test-key');assert.equal(failedCalls,1);assert.equal((await response.json()).stale,true);
+// Original success time controls expiry, even after repeated upstream failures.
+const expired={...apiData,checkedAt:Date.now()-8*86400000};saved.set(apiCacheKey,Response.json(expired));
+response=await latestVideo(request,ctx,cache,fail,'test-key');assert.equal(response.status,503);assert.equal((await response.json()).id,undefined);
+// A successful empty playlist clears the old public video instead of resurrecting it.
+saved.set(apiCacheKey,Response.json({...apiData,checkedAt:Date.now()-20*60000}));
+response=await latestVideo(request,ctx,cache,async()=>Response.json({items:[]}),'test-key');const empty=await response.json();assert.equal(empty.unavailable,true);assert.equal(empty.stale,false);assert.equal(empty.id,undefined);
+console.log('YouTube feed/API: full pagination, actual publication date, channel/privacy validation, no secret leakage, empty playlist, source isolation, backoff, expiry and routing passed.');
