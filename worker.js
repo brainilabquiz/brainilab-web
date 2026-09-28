@@ -76,11 +76,12 @@ export default {
       if(url.pathname==='/api/latest-video')return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
       const match=url.pathname.match(/^\/api\/youtube-thumbnail\/([-\w]{11})$/);
       if(match){
-        const key=new Request(new URL(url.pathname,url.origin));
+        const key=new Request(new URL(url.pathname+'?thumbnail=320-webp-v2',url.origin));
         const cached=await caches.default.match(key);
         if(cached)return cached;
         try{
-          const response=await fetch('https://i.ytimg.com/vi/'+match[1]+'/hqdefault.jpg',{signal:AbortSignal.timeout(5000)});
+          let response=await fetch('https://i.ytimg.com/vi_webp/'+match[1]+'/mqdefault.webp',{signal:AbortSignal.timeout(4000)});
+          if(!response.ok||!response.headers.get('content-type')?.startsWith('image/'))response=await fetch('https://i.ytimg.com/vi/'+match[1]+'/mqdefault.jpg',{signal:AbortSignal.timeout(4000)});
           if(!response.ok||!response.headers.get('content-type')?.startsWith('image/'))throw new Error('No thumbnail');
           const image=new Response(response.body,{headers:{'Content-Type':response.headers.get('content-type'),'Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'}});
           ctx.waitUntil(caches.default.put(key,image.clone()));

@@ -1,6 +1,8 @@
 import {esc,cleanHtml,prepareArticle,articleBody,safeCover} from '../lib/learn-content.js';
 import {articleChecks} from '../lib/article-checks.js';
-let context,rows=[],active=null,dirty=false,busy=false;
+import {coverImage} from '../lib/cover-images.js';
+import {uploadCover} from './cover-upload.js';
+let context,rows=[],active=null,dirty=false,busy=false,coverSelection=null;
 const $=selector=>context.root.querySelector(selector);
 const slugify=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100);
 const topics=['Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Sports','Words & puzzles'];
@@ -23,7 +25,7 @@ function renderRows(){
  const query=$('#article-search').value.trim().toLowerCase(),status=$('#article-status').value,category=$('#article-category').value;
  const filtered=rows.filter(r=>(r.document.title+' '+r.document.topic).toLowerCase().includes(query)&&(!category||r.document.topic===category)&&(!status||(status==='published'?r.published_revision:r.revision!==r.published_revision)));
  $('#article-list-count').textContent=`Showing ${filtered.length} of ${rows.length} articles`;
- $('#article-list').innerHTML=filtered.length?`<div class="article-admin-list">${filtered.map(r=>`<button type="button" class="article-admin-row" data-open="${esc(r.slug)}"><img src="${safeCover(r.document.cover?.src)?esc(r.document.cover.src):'/assets/brand/iso-multicolor.png'}" alt="" loading="lazy"/><span><strong>${esc(r.document.title)}</strong><small>${esc(r.document.topic||'No topic')} · ${r.published_revision?(r.revision===r.published_revision?'Published':'Published · draft changes'):'Draft'}</small></span><span aria-hidden="true">Edit →</span></button>`).join('')}</div>`:'<p>No articles match this search.</p>';
+ $('#article-list').innerHTML=filtered.length?`<div class="article-admin-list">${filtered.map(r=>`<button type="button" class="article-admin-row" data-open="${esc(r.slug)}"><img src="${safeCover(r.document.cover?.src)?esc(coverImage(r.document.cover,'thumbnail')):'/assets/brand/iso-multicolor.png'}" alt="" loading="lazy"/><span><strong>${esc(r.document.title)}</strong><small>${esc(r.document.topic||'No topic')} · ${r.published_revision?(r.revision===r.published_revision?'Published':'Published · draft changes'):'Draft'}</small></span><span aria-hidden="true">Edit →</span></button>`).join('')}</div>`:'<p>No articles match this search.</p>';
  context.root.querySelectorAll('[data-open]').forEach(button=>button.onclick=()=>openArticle(rows.find(r=>r.slug===button.dataset.open)));
 }
 function blank(){return {slug:'',title:'',description:'',topic:'Geography',sections:[{id:'first-section',title:'',html:'<p></p>'}],sources:[],related:[],cover:{src:'',alt:'',credit:'',position:45},game:{name:'Brain Mix',url:'/games/brain-mix/'},hub:{name:'Games',url:'/games/'},practice:'',order:999};}
@@ -33,7 +35,7 @@ function sourceMarkup(source,index){return `<div class="article-source" data-sou
 function collect(){
  const value=id=>$('#'+id).value.trim();
  return {...active.document,slug:value('article-slug'),title:value('article-title'),topic:value('article-topic'),description:value('article-description'),practice:value('article-practice'),order:Number(value('article-order')),
- cover:{src:value('article-cover-url'),alt:value('article-cover-alt'),credit:value('article-cover-credit'),position:Number(value('article-cover-position'))},
+ cover:{...(coverSelection?.src===value('article-cover-url')?coverSelection:{}),src:value('article-cover-url'),alt:value('article-cover-alt'),credit:value('article-cover-credit'),position:Number(value('article-cover-position'))},
  game:{name:value('article-game-name'),url:value('article-game-url')},hub:{name:value('article-hub-name'),url:value('article-hub-url')},
  sections:[...context.root.querySelectorAll('[data-section]')].map((section,i)=>({id:section.querySelector('[data-section-id]').value||slugify(section.querySelector('[data-section-title]').value)||'section-'+(i+1),title:section.querySelector('[data-section-title]').value.trim(),html:cleanHtml(section.querySelector('[data-rich]').innerHTML)})),
  sources:[...context.root.querySelectorAll('[data-source]')].map(source=>({name:source.querySelector('[data-source-name]').value.trim(),url:source.querySelector('[data-source-url]').value.trim()})).filter(s=>s.name||s.url),related:[...context.root.querySelectorAll('[data-related]:checked')].map(input=>input.value)};
@@ -42,6 +44,7 @@ function openArticle(row,documentOverride){
  active=row?structuredClone(row):{slug:'',revision:0,document:blank(),published_revision:null};
  if(documentOverride)active.document=structuredClone(documentOverride);
  const a=active.document;
+ coverSelection=structuredClone(a.cover||{});
  const covers=[...new Map(rows.filter(r=>safeCover(r.document.cover?.src)).map(r=>[r.document.cover.src,r.document])).values()];
  context.root.innerHTML=`<div class="article-editor"><div class="article-editor-actions"><button class="admin-button" type="button" id="articles-back">← Articles</button><div><button type="button" class="admin-button" id="article-preview">Preview</button><button type="button" class="admin-button" data-save="draft">Save draft</button><button type="button" class="admin-button primary" data-save="publish">Publish</button></div></div><p id="article-save-state" role="status">${active.revision?'Saved revision '+active.revision:'New draft'}${active.published_revision?' · currently published':''}</p>
 <div class="article-editor-grid"><div class="admin-panel">${field('article-title','Title',a.title,'text','maxlength="180" required')}${area('article-description','Short description / search description',a.description)}<div class="article-two-columns">${field('article-topic','Category',a.topic,'text','list="article-topics" maxlength="60"')}<datalist id="article-topics">${topics.map(t=>`<option value="${esc(t)}">`).join('')}</datalist>${field('article-slug','Article URL',a.slug,'text',active.revision?'readonly':'placeholder="short-readable-url"')}</div><p class="article-help">/learn/<span id="article-url-label">${esc(a.slug||'your-article')}</span>/ ${active.revision?' · URL stays stable for existing links.':''}</p>
@@ -69,9 +72,9 @@ function openArticle(row,documentOverride){
  });
  $('#article-game-pick').onchange=()=>{const pair=gameOptions.find(([,url])=>url===$('#article-game-pick').value);if(pair){$('#article-game-name').value=pair[0];$('#article-game-url').value=pair[1];}};
  function updateCover(){const src=$('#article-cover-url').value;if(safeCover(src))$('#article-cover-preview').src=src;$('#article-cover-preview').style.objectPosition='center '+$('#article-cover-position').value+'%';}
- $('#article-cover-pick').onchange=()=>{const a=covers.find(a=>a.cover.src===$('#article-cover-pick').value);if(a){$('#article-cover-url').value=a.cover.src;$('#article-cover-alt').value=a.cover.alt;$('#article-cover-credit').value=a.cover.credit;updateCover();}};
+ $('#article-cover-pick').onchange=()=>{const a=covers.find(a=>a.cover.src===$('#article-cover-pick').value);if(a){coverSelection=structuredClone(a.cover);$('#article-cover-url').value=a.cover.src;$('#article-cover-alt').value=a.cover.alt;$('#article-cover-credit').value=a.cover.credit;updateCover();}};
  $('#article-cover-url').oninput=updateCover;$('#article-cover-position').oninput=updateCover;
- $('#article-upload').onchange=()=>guarded(async()=>{const file=$('#article-upload').files[0];if(!file)return;if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>20*1024*1024)throw Error('Choose a JPG, PNG or WebP smaller than 20 MB.');setStatus('Preparing cover…');const bitmap=await createImageBitmap(file);if(bitmap.width*bitmap.height>80000000){bitmap.close();throw Error('This image is too large. Resize it before uploading.');}const scale=Math.min(1,1600/bitmap.width,1600/bitmap.height),canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/webp',.86));if(!blob||blob.size>3145728)throw Error('Please choose a smaller image.');const path=crypto.randomUUID()+'.webp';const {error}=await context.sb.storage.from('learn-covers').upload(path,blob,{contentType:'image/webp',upsert:false});if(error)throw error;$('#article-cover-url').value=context.sb.storage.from('learn-covers').getPublicUrl(path).data.publicUrl;updateCover();markDirty();setStatus('Cover uploaded · save your draft to keep this selection.');});
+ $('#article-upload').onchange=()=>guarded(async()=>{const file=$('#article-upload').files[0];if(!file)return;setStatus('Preparing cover and thumbnails…');const uploaded=await uploadCover(file,context.sb.storage.from('learn-covers'));coverSelection=uploaded;$('#article-cover-url').value=uploaded.src;updateCover();markDirty();setStatus('Cover and thumbnails uploaded · save your draft to keep this selection.');});
  context.root.querySelectorAll('[data-save]').forEach(button=>button.onclick=()=>guarded(async()=>{
   const action=button.dataset.save;if(action==='unpublish'&&!confirm('Remove this article from the public library? Its draft and history will remain.'))return;
   const a=collect();if(action==='publish'){

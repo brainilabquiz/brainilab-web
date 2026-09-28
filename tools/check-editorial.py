@@ -15,7 +15,9 @@ class Page(HTMLParser):
         if tag=='meta' and a.get('name')=='description':self.description.append(a['content'])
         if tag in ('a','link','img','script','source'):
             for key in ('href','src','srcset'):
-                if key in a:self.refs.append(a[key])
+                if key in a:
+                    if key=='srcset':self.refs.extend(part.strip().split()[0] for part in a[key].split(',') if part.strip())
+                    else:self.refs.append(a[key])
 pages=[ROOT/'index.html',*sorted((ROOT/'learn').rglob('index.html'))]
 for path in pages:
     text=path.read_text(encoding='utf-8');p=Page(text)
@@ -44,6 +46,10 @@ with tempfile.TemporaryDirectory(prefix='brainilab-editorial-', dir=ROOT.parent)
     src=temp/'content/articles/how-to-learn-world-flags.json'
     a=json.loads(src.read_text(encoding='utf-8'));a['status']='draft';src.write_text(json.dumps(a),encoding='utf-8')
     subprocess.run([sys.executable,str(temp/'tools/build-editorial.py')],check=True,capture_output=True)
+    generated=Page((temp/'learn/index.html').read_text(encoding='utf-8'))
+    for ref in generated.refs:
+        if 'brainilab-logo' in ref:
+            assert ref.startswith('/') and (temp/ref.lstrip('/')).is_file(),('Generated responsive logo',ref)
     assert not (temp/'learn/how-to-learn-world-flags/index.html').exists()
     for file in ('sitemap.xml','learn/index.html','learn/daily-or-anytime/index.html','index.html'):
         assert '/learn/how-to-learn-world-flags/' not in (temp/file).read_text(encoding='utf-8'),file

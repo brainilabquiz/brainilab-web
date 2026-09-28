@@ -12,7 +12,7 @@
       const image=card.querySelector('img');
       const original=image.src;
       image.onerror=()=>{image.onerror=null;image.src=original;card.classList.remove('has-video');};
-      image.src='/api/youtube-thumbnail/'+video.id;
+      image.src='/api/youtube-thumbnail/'+video.id+'?v=2';
       image.alt='';
       card.classList.add('has-video');
     }).catch(()=>{}); // The playlist link remains useful when the feed is unavailable.
