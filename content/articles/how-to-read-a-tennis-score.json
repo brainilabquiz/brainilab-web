@@ -1,0 +1,61 @@
+{
+  "hub": {
+    "url": "/sports/",
+    "name": "Sports"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "slug": "how-to-read-a-tennis-score",
+  "cover": {
+    "alt": "Two tennis balls beside a racket on a sunlit green court",
+    "src": "/assets/images/learn/how-to-read-a-tennis-score.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 55
+  },
+  "order": 16,
+  "title": "What does deuce mean? A tennis score you can actually follow",
+  "topic": "Sports",
+  "status": "published",
+  "related": [
+    "mental-percentages-without-a-calculator",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "sources": [
+    {
+      "url": "https://www.lta.org.uk/play/how-to-get-started/rules-scoring/",
+      "name": "LTA — Tennis rules and scoring"
+    },
+    {
+      "url": "https://www4.lta.org.uk/play-compete/getting-started/scoring-in-tennis/",
+      "name": "LTA — Scoring in a set, game and tie-break"
+    }
+  ],
+  "practice": "Fancy a change of sport? Try the Sports Quiz and see which rules you recognise.",
+  "sections": [
+    {
+      "id": "score",
+      "html": "<p>You glance at a match and see 30–40. Nobody has scored thirty or forty points. Those numbers are labels: love means zero, then come 15, 30 and 40 for the first three points.</p><p>The server’s score is called first. So 30–40 means the server has won two points and the receiver three. In a standard game, the receiver can win the game on the next point. One small detail—the order of the score—makes the whole rally easier to follow.</p>",
+      "title": "Start with the player serving"
+    },
+    {
+      "id": "deuce",
+      "html": "<p>If both players reach 40, the score is deuce. With advantage scoring, a player now needs two points in a row to finish the game. Winning the first gives them advantage. Winning the next closes it out; losing it sends the score back to deuce.</p><p>Picture this: you are serving at deuce. You win a long rally. Advantage to you. Your next serve catches the net, and after the second serve your opponent wins the point. You are back at deuce. That earlier rally counted, but it did not give you a permanent lead.</p>",
+      "title": "Deuce is a tie with unfinished business"
+    },
+    {
+      "id": "scoreboard",
+      "html": "<p>A scoreboard can show several numbers because points build games, games build sets and sets decide the match. In a usual tie-break set, 6–4 finishes the set; at six games each, a tie-break settles it. Tie-break points use ordinary numbers—1, 2, 3—rather than 15, 30 and 40.</p><p>Formats vary. For example, no-ad scoring replaces the advantage cycle with a deciding point at deuce. If a match seems to skip the step you expected, check its format before assuming the scoreboard is wrong.</p>",
+      "title": "Games sit inside sets"
+    },
+    {
+      "id": "practice",
+      "html": "<p>Try this without looking back: you are serving at 30–40 and win the next point. What do you call?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p>Deuce. You have both won three points. With advantage scoring, you still need the next two points in a row to take the game.</p></details><p>That is enough to follow the tension in a close game. You do not need to memorise every competition’s rules before enjoying the next rally.</p>",
+      "title": "Call the next score"
+    }
+  ],
+  "updatedAt": "2026-09-28T18:48:21.926724+00:00",
+  "description": "Love, 15, 30, 40… then what? Follow one short game to make sense of deuce, advantage and the scoreboard.",
+  "publishedAt": "2026-09-28T18:48:21.926724+00:00"
+}

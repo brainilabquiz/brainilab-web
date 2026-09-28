@@ -1,11 +1,13 @@
 import {esc,cleanHtml,prepareArticle,articleBody,safeCover} from '../lib/learn-content.js';
+import {articleChecks} from '../lib/article-checks.js';
 let context,rows=[],active=null,dirty=false,busy=false;
 const $=selector=>context.root.querySelector(selector);
 const slugify=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100);
-const topics=['Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Words & puzzles'];
+const topics=['Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Sports','Words & puzzles'];
 const gameOptions=[['Brain Mix','/games/brain-mix/'],['World Flags','/geography/world-flags-quiz/'],['World Capitals','/geography/world-capitals-quiz/'],['General Knowledge','/general-knowledge/general-knowledge-quiz/'],['Science Quiz','/science/science-quiz/'],['History Quiz','/history/history-quiz/'],['Sports Quiz','/sports/sports-quiz/'],['Connections','/games/connections/'],['Math Rush','/games/math-rush/'],['Sequence','/games/sequence/'],['BrainiWord','/games/brainiword/'],['Number Route','/games/number-route/'],['Map Hunt','/games/map-hunt/']];
-function markDirty(){dirty=true;const status=$('#article-save-state');if(status)status.textContent='Unsaved changes';}
-function canLeave(){return !dirty||window.confirm('You have unsaved article changes. Leave without saving?');}
+function markDirty(){dirty=true;if(busy)return;const status=$('#article-save-state');if(status)status.textContent='Unsaved changes';renderChecks();}
+function canLeave(){if(busy){context.toast('Please wait for the current save or upload to finish.');return false;}return !dirty||window.confirm('You have unsaved article changes. Leave without saving?');}
+function renderChecks(){const el=$('#article-checks');if(!el||!active)return;const checks=articleChecks(collect());el.innerHTML=`<summary>Before publishing · ${checks.filter(c=>c.ok).length}/${checks.length} complete</summary><ul>${checks.map(c=>`<li>${c.ok?'✓':'○'} ${esc(c.label)}</li>`).join('')}</ul><p class="article-help">Check the facts and image preview too. These checks do not predict search rankings.</p>`;}
 function field(id,label,value='',type='text',extra=''){return `<label class="article-field" for="${id}">${label}<input id="${id}" type="${type}" value="${esc(value)}" ${extra}/></label>`;}
 function area(id,label,value='',rows=3){return `<label class="article-field" for="${id}">${label}<textarea id="${id}" rows="${rows}">${esc(value)}</textarea></label>`;}
 function setStatus(message,error=false){const el=$('#article-save-state');if(el){el.textContent=message;el.classList.toggle('error',error);}}
@@ -13,13 +15,14 @@ async function guarded(fn){if(busy)return;busy=true;context.root.querySelectorAl
 async function load(){rows=await context.rpc('admin_list_learn_articles');}
 function listing(){
  active=null;dirty=false;
- context.root.innerHTML=`<div class="admin-panel"><div class="article-list-toolbar"><p>${rows.length} articles · edit a draft before publishing</p><button type="button" class="admin-button primary" id="article-new">+ New article</button></div><div class="article-list-toolbar">${field('article-search','Search articles')}<label class="article-field">Status<select id="article-status"><option value="">All</option><option value="published">Published</option><option value="draft">Drafts / changes</option></select></label></div><div id="article-list"></div></div>`;
+ context.root.innerHTML=`<div class="admin-panel"><div class="article-list-toolbar"><p>${rows.filter(r=>r.published_revision).length} published · ${rows.filter(r=>r.revision!==r.published_revision).length} drafts / changes</p><button type="button" class="admin-button primary" id="article-new">+ New article</button></div><div class="article-list-toolbar">${field('article-search','Search articles')}<label class="article-field">Category<select id="article-category"><option value="">All categories</option>${[...new Set(rows.map(r=>r.document.topic).filter(Boolean))].sort().map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></label><label class="article-field">Status<select id="article-status"><option value="">All</option><option value="published">Published</option><option value="draft">Drafts / changes</option></select></label></div><p id="article-list-count" class="article-help" role="status"></p><div id="article-list"></div></div>`;
  $('#article-new').onclick=()=>openArticle(null);
- $('#article-search').oninput=renderRows;$('#article-status').onchange=renderRows;renderRows();
+ $('#article-search').oninput=renderRows;$('#article-status').onchange=renderRows;$('#article-category').onchange=renderRows;renderRows();
 }
 function renderRows(){
- const query=$('#article-search').value.toLowerCase(),status=$('#article-status').value;
- const filtered=rows.filter(r=>(r.document.title+' '+r.document.topic).toLowerCase().includes(query)&&(!status||(status==='published'?r.published_revision:r.revision!==r.published_revision)));
+ const query=$('#article-search').value.trim().toLowerCase(),status=$('#article-status').value,category=$('#article-category').value;
+ const filtered=rows.filter(r=>(r.document.title+' '+r.document.topic).toLowerCase().includes(query)&&(!category||r.document.topic===category)&&(!status||(status==='published'?r.published_revision:r.revision!==r.published_revision)));
+ $('#article-list-count').textContent=`Showing ${filtered.length} of ${rows.length} articles`;
  $('#article-list').innerHTML=filtered.length?`<div class="article-admin-list">${filtered.map(r=>`<button type="button" class="article-admin-row" data-open="${esc(r.slug)}"><img src="${safeCover(r.document.cover?.src)?esc(r.document.cover.src):'/assets/brand/iso-multicolor.png'}" alt="" loading="lazy"/><span><strong>${esc(r.document.title)}</strong><small>${esc(r.document.topic||'No topic')} · ${r.published_revision?(r.revision===r.published_revision?'Published':'Published · draft changes'):'Draft'}</small></span><span aria-hidden="true">Edit →</span></button>`).join('')}</div>`:'<p>No articles match this search.</p>';
  context.root.querySelectorAll('[data-open]').forEach(button=>button.onclick=()=>openArticle(rows.find(r=>r.slug===button.dataset.open)));
 }
@@ -47,6 +50,8 @@ function openArticle(row,documentOverride){
 <details class="article-settings"><summary>Related game and articles</summary><label class="article-field">Choose a game<select id="article-game-pick"><option value="">Custom / current</option>${gameOptions.map(([name,url])=>`<option value="${url}">${esc(name)}</option>`).join('')}</select></label><div class="article-two-columns">${field('article-game-name','Game name',a.game?.name)}${field('article-game-url','Game path',a.game?.url)}</div>${area('article-practice','Invitation to play',a.practice)}<div class="article-two-columns">${field('article-hub-name','Topic link label',a.hub?.name)}${field('article-hub-url','Topic path',a.hub?.url)}</div><fieldset class="article-related-choices"><legend>Related articles</legend>${rows.filter(r=>r.slug!==a.slug).map(r=>`<label><input type="checkbox" data-related value="${esc(r.slug)}"${a.related?.includes(r.slug)?' checked':''}/> ${esc(r.document.title)}</label>`).join('')}</fieldset></details></div>
 <aside><div class="admin-panel"><h2>Cover</h2><div class="article-cover-preview"><img id="article-cover-preview" src="${safeCover(a.cover?.src)?esc(a.cover.src):'/assets/brand/iso-multicolor.png'}" alt="Cover crop preview" style="object-position:center ${Number(a.cover?.position??45)}%"/></div><label class="article-field">Use an existing cover<select id="article-cover-pick"><option value="">Choose a cover…</option>${covers.map(c=>`<option value="${esc(c.cover.src)}">${esc(c.title)}</option>`).join('')}</select></label><label class="article-field">Upload photo<input id="article-upload" type="file" accept="image/jpeg,image/png,image/webp"/></label><p class="article-help">JPG, PNG or WebP. Images are resized before upload. Uploaded covers are public.</p>${field('article-cover-url','Cover URL',a.cover?.src)}${field('article-cover-position','Vertical crop position',a.cover?.position??45,'range','min="0" max="100"')}${area('article-cover-alt','Describe the image (alt text)',a.cover?.alt,2)}${field('article-cover-credit','Photo credit',a.cover?.credit)}</div>
 <details class="admin-panel article-settings"><summary>Publishing &amp; history</summary>${field('article-order','Display order (lower comes first)',a.order??999,'number','min="0" max="9999"')}<p class="article-help">Edits stay private until Publish. Changes appear on the website within about a minute.</p>${active.published_revision?`<a href="/learn/${esc(a.slug)}/" target="_blank" rel="noopener">Open published article ↗</a><button type="button" class="admin-button" data-save="unpublish">Move published article to draft</button>`:''}<button type="button" class="admin-button" id="article-history" ${active.revision?'':'disabled'}>Version history</button><div id="article-history-list"></div></details></aside></div><dialog id="article-preview-dialog"><div><strong>Article preview · not published</strong><button type="button" class="admin-button" id="article-preview-close">Close</button></div><iframe title="Article preview" sandbox=""></iframe></dialog></div>`;
+ context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('afterbegin','<details id="article-checks" class="admin-panel article-readiness"></details>');
+ renderChecks();
  dirty=!!documentOverride;
  context.root.oninput=markDirty;context.root.onchange=markDirty;
  $('#articles-back').onclick=()=>{if(canLeave())listing();};
@@ -72,6 +77,8 @@ function openArticle(row,documentOverride){
   const a=collect();if(action==='publish'){
    if(!a.sections.length||a.sections.some(s=>!s.title||!s.html.replace(/<[^>]*>/g,'').trim()))throw Error('Each section needs a heading and text before publishing.');
    if(!safeCover(a.cover.src))throw Error('Choose or upload a cover before publishing.');
+   const missing=articleChecks(a).filter(c=>!c.ok);if(missing.length)throw Error('Complete before publishing: '+missing.map(c=>c.label).join(', ')+'.');
+   const cover=$('#article-cover-preview');if(!cover.complete||!cover.naturalWidth)throw Error('The cover has not loaded. Check its URL or upload a new image.');
   }
   setStatus(action==='publish'?'Publishing…':'Saving…');
   const result=await context.rpc('admin_save_learn_article',{p_slug:a.slug,p_document:a,p_revision:active.revision,p_action:action});

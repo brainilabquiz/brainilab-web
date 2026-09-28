@@ -52,6 +52,16 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
+    // Consolidate production entry points before rendering or caching HTML.
+    // Keep previews and local development on their own origin.
+    if(['brainilabgames.com','www.brainilabgames.com'].includes(url.hostname)){
+      const canonical=new URL(url);
+      canonical.protocol='https:';
+      canonical.hostname='brainilabgames.com';
+      canonical.port='';
+      canonical.pathname=canonical.pathname.replace(/\/index\.html$/,'/');
+      if(canonical.href!==url.href)return Response.redirect(canonical.href,308);
+    }
     if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml'].includes(url.pathname)){
       const response=await serveLearn(request,env,ctx,caches.default);
       const secured=new Response(response.body,response);
