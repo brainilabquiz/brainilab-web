@@ -1,5 +1,6 @@
 /* GA4: basic consent mode. No Google request before an explicit statistics choice. */
 window.BrainiSiteAnalytics=(()=>{
+  if(window.BrainiSiteAnalytics)return window.BrainiSiteAnalytics;
   const id='G-97WN37VLHV',key='brainilab_statistics_consent_v1',maxAge=180*86400000;
   let choice=read(),loaded=false,viewed=false,articleRead=false,activeSeconds=0;
   const completed=new Set();

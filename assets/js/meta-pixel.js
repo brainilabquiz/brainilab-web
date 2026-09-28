@@ -115,7 +115,9 @@ window.BrainiMarketing = (function(){
     if(choice===true) activate();
     if((choice===null || window.BrainiSiteAnalytics?.needsConsent()) && safePage()) showPreferences();
   }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true});
-  else boot();
+  // The early, deferred consent bundle runs once the document is parsed.
+  // Do not wait for unrelated deferred account/game scripts or their network.
+  if(document.body) boot();
+  else document.addEventListener("DOMContentLoaded",boot,{once:true});
   return {pixelId,showPreferences};
 })();

@@ -1,0 +1,54 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import {pathToFileURL} from 'node:url';
+import {coverImage} from '../lib/cover-images.js';
+import {uploadCover} from '../editor/cover-upload.js';
+import {homeArticle,card} from '../lib/learn-content.js';
+const {JSDOM,requestInterceptor}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+for(const path of execFileSync('git',['ls-files','*.html'],{encoding:'utf8'}).trim().split('\n')){
+ const html=readFileSync(path.trim(),'utf8');if(!html.includes('shell.bundle.js?'))continue;
+ assert.equal((html.match(/consent\.bundle\.js\?/g)||[]).length,1,path);
+ assert.ok(html.indexOf('consent.bundle.js?')<html.indexOf('shell.bundle.js?'),path);
+ const account=html.indexOf('src="https://cdn.jsdelivr.net/npm/@supabase/');
+ if(account>=0)assert.ok(html.indexOf('consent.bundle.js?')<account,path);
+}
+const storage='https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/';
+const cover={src:storage+'new.webp',thumbnail:storage+'new-320.webp',small:storage+'new-640.webp',position:55};
+assert.equal(coverImage(cover,'thumbnail'),cover.thumbnail);
+assert.equal(coverImage(cover),cover.small);
+assert.equal(coverImage({src:cover.src,thumbnail:'https://evil.test/tracker'},'thumbnail'),cover.src);
+assert.equal(coverImage({src:storage+'72a8737d-67ce-4591-9ff7-45482acd1e17.webp'},'thumbnail'),'/assets/images/learn/how-to-read-a-tennis-score-thumb.webp');
+assert.equal(coverImage({src:storage+'replacement.webp'},'thumbnail'),storage+'replacement.webp');
+assert.equal(coverImage({src:'/assets/images/learn/daily-or-anytime.webp'}),'/assets/images/learn/daily-or-anytime-small.webp');
+assert.ok(homeArticle({cover,title:'Title',slug:'test',minutes:2}).includes(cover.thumbnail));
+assert.ok(card({cover,title:'Title',slug:'test',minutes:2}).includes(cover.small));
+let closed=0,draws=[],uploads=[];
+const deps={uuid:()=> 'fixed-id',decode:async()=>({width:2400,height:1600,close(){closed++;}}),canvas:()=>({width:0,height:0,getContext(){return {drawImage:(_b,_x,_y,w,h)=>draws.push([w,h])};},toBlob(cb,type){cb(new Blob(['webp'],{type}));}})};
+const bucket={upload:async(path,blob,options)=>{uploads.push({path,options});return {error:null};},getPublicUrl:path=>({data:{publicUrl:storage+path}})};
+const variants=await uploadCover({type:'image/jpeg',size:1000},bucket,deps);
+assert.deepEqual(draws,[[1600,1067],[640,427],[320,213]]);
+assert.equal(closed,1);assert.equal(uploads.length,3);assert.equal(variants.thumbnail,storage+'fixed-id-320.webp');
+assert.ok(uploads.every(x=>x.options.upsert===false&&x.options.cacheControl==='31536000'));
+await assert.rejects(uploadCover({type:'image/svg+xml',size:1000},bucket,deps));
+let failures=0;
+await assert.rejects(uploadCover({type:'image/webp',size:1000},{...bucket,upload:async()=>({error:++failures===2?Error('Upload unavailable'):null})},deps),/Upload unavailable/);
+assert.equal(failures,2);assert.equal(closed,2);
+// Simulate a slow account SDK holding DOMContentLoaded open. The independent
+// consent bundle must still render and accept a choice before that SDK arrives.
+const requested=[];let releaseAccount;
+const resources={interceptors:[requestInterceptor(request=>{const url=request.url;requested.push(url);if(url.endsWith('/consent.js'))return new Response(readFileSync('assets/js/consent.bundle.js'),{headers:{'Content-Type':'application/javascript'}});if(url.endsWith('/slow-account.js'))return new Promise(resolve=>{releaseAccount=resolve;});return new Response('');})]};
+const dom=new JSDOM('<!doctype html><head><script defer src="/consent.js"></script><script defer src="/slow-account.js"></script></head><body><main>Play</main></body>',{url:'https://brainilabgames.com/',runScripts:'dangerously',resources});
+let domReady=false;dom.window.document.addEventListener('DOMContentLoaded',()=>domReady=true);
+for(let n=0;n<20&&!dom.window.document.querySelector('.marketing-consent');n++)await new Promise(r=>setTimeout(r,10));
+assert.equal(domReady,false);
+assert.ok(dom.window.document.querySelector('.marketing-consent'));
+assert.equal(requested.some(u=>/google|facebook/.test(u)),false);
+dom.window.document.querySelector('[data-marketing-reject]').click();
+assert.equal(dom.window.document.querySelector('.marketing-consent'),null);
+assert.equal(dom.window.BrainiSiteAnalytics.isAllowed(),false);
+assert.equal(dom.window.fbq,undefined);
+releaseAccount(new Response(''));await new Promise(r=>setTimeout(r,20));
+assert.equal(domReady,true);assert.equal(dom.window.document.querySelector('.marketing-consent'),null);
+dom.window.close();
+console.log('PASS: cover selection, safe legacy fallback, upload sizes/failure handling, early consent while account SDK is delayed, rejection before DOM ready and no premature tracking.');
