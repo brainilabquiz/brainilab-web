@@ -83,7 +83,7 @@ button{cursor:pointer}
 .footer{padding:44px 0 68px}
 .footer-grid{border-top:1px solid var(--line);padding-top:24px;display:grid;grid-template-columns:1fr auto;gap:22px}
 .footer-logo{height:45px;width:auto}
-.footer-copy{color:#858496;font-size:11px;line-height:1.6;font-weight:700}
+.footer-copy{color:#636173;font-size:11px;line-height:1.6;font-weight:700}
 .footer-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;color:var(--navy);font-size:11px;font-weight:850}
 .challenge-wrap{padding:24px 0 10px}
 .challenge{background:var(--navy);border-radius:28px;color:#fff;box-shadow:var(--shadow);overflow:hidden}
