@@ -1,0 +1,18 @@
+{
+  "name": "brainilab-web",
+  "private": true,
+  "version": "41.11.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "build": "python3 tools/build-editorial.py && python3 tools/rebuild-bundles.py && node tools/build.mjs",
+    "bundle": "python3 tools/rebuild-bundles.py",
+    "editorial": "python3 tools/build-editorial.py"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  },
+  "dependencies": {
+    "sanitize-html": "2.17.7"
+  }
+}
