@@ -1385,6 +1385,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
     state.cloudProgression={
       synced:true,
+      streakSnapshot:summary.continuity?{progression:clone(p),continuity:clone(summary.continuity)}:null,
       generatedAt:summary.generated_at||new Date().toISOString(),
       fullDailyCount:Number(p.full_daily_count||0),
       today:clone(today),

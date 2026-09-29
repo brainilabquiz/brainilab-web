@@ -5799,3 +5799,6 @@ main > section.section,
 
 .account-popover-head .account-menu-avatar>span{display:grid;place-items:center;margin:0;font-size:19px;color:#2d296e;background:#edeaf5}
 .account-popover>a.account-progress-link>span{text-align:left}
+
+.continuity-card.is-compact{min-height:156px;box-sizing:border-box}.continuity-card.is-compact .continuity-main h2{min-height:24px}
+@media(max-width:700px){.continuity-card.is-compact{min-height:260px}}
