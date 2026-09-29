@@ -1,5 +1,6 @@
 /* Compact entrances: recognise the game, then play. */
 .game-entry-page{background:#faf8f3}
+.game-entry-page .breadcrumb{color:#625b6b}
 .game-entry-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:10px;padding-bottom:16px}
 .game-entry-heading h1{font-size:clamp(27px,4vw,40px);line-height:1.15;color:#2d296e;letter-spacing:-.03em;margin:0 0 8px}
 .game-entry-heading p{font-size:15px;line-height:1.5;color:#514b5c;margin:0 0 7px}
