@@ -302,12 +302,17 @@ window.BrainiPostGame=(()=>{
   if(meta)return {href:'/'+meta.href+(meta.dailyQuery?'?daily='+new Date().toISOString().slice(0,10):''),label:'Play '+meta.name};
   return status?.completedCount>=4?{href:'/games/',label:'Find another game'}:{href:'/daily-quiz/',label:'Continue Daily'};
  }
- function mount(container,{result={},gameId='brainmix',name='Brain Mix',status=null,difficulty='',next=null,ads=false,focus=true}={}){
+ const guides={worldflags:{slug:'how-to-learn-world-flags',title:'Spot the clues in a flag'},generalknowledge:{slug:'why-2100-is-not-a-leap-year',title:'The leap-year rule with a twist'},mathrush:{slug:'multiply-by-11-in-your-head',title:'Try a mental-maths shortcut'}};
+ const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
+ function mount(container,{result={},gameId='brainmix',name='Brain Mix',status=null,difficulty='',next=null,ads=false,focus=true,timed=false,metrics=[]}={}){
   if(!container)return;
   const correct=number(result.correct),total=number(result.total),points=number(result.score??result.points);
   const primary=next||(status?nextDaily(status):{href:'/games/',label:'Find another game'});
-  const message=total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. Take a look at the ones that surprised you.':'A few familiar facts, a few new discoveries.';
-  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · Complete</p><h2 tabindex="-1" class="post-score">${total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p><div data-result-reward="${esc(result.clientResultId||'')}">${window.BrainiContinuity?.rewardMarkup?.(result)||''}</div>${review(result.answerDetails)}<div class="post-actions"><a class="post-primary" href="${esc(primary.href)}">${esc(primary.label)} →</a><button type="button" class="post-share">Share result</button></div>${status?`<p class="post-daily">Daily · ${number(status.completedCount)} of 4 complete <a href="/daily-quiz/">See today’s games</a></p>`:'<a class="post-browse" href="/games/">Browse all games</a>'}${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
+  const message=timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Try another round at your own pace.'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. Take a look at the ones that surprised you.':'A few familiar facts, a few new discoveries.';
+  const guide=guides[gameId];
+  const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
+  const practice=result.practice||result.tryFirst;
+  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · ${practice?'Practice complete':'Complete'}</p><h2 tabindex="-1" class="post-score">${timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total||timed?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p>${stats}<div data-result-reward="${esc(practice?'':result.clientResultId||'')}">${window.BrainiContinuity?.rewardMarkup?.(result)||''}</div><div class="post-actions"><a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)} →</a><button type="button" class="post-share">Share result</button></div>${status?`<p class="post-daily">Daily · ${number(status.completedCount)} of 4 complete <a href="/daily-quiz/">See today’s games</a></p>`:''}${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="/learn/${guide.slug}/"><span>A little reading</span><strong>${esc(guide.title)} →</strong></a>`:''}<a class="post-browse" data-post-action="browse" href="/games/">Browse all games</a>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   container.querySelector('.post-share').addEventListener('click',()=>window.BrainiShare?.open(gameId,result));
   if(focus)container.querySelector('.post-score').focus({preventScroll:true});
  }
@@ -2284,6 +2289,13 @@ window.BrainiQuiz = (function(){
   }
 
   function mount(el, questions, opts={}){
+    const analyticsRound={};
+    function trackStart(){
+      const params=new URLSearchParams(location.search);
+      if(opts.practice||opts.tryFirst||params.has('archive')||params.get('try')==='1')return;
+      const gameId=opts.gameId||inferGameId();
+      window.BrainiSiteAnalytics?.gameStart(gameId,analyticsRound,opts.dailyNumber!=null||gameId==='brainmix'?'daily':'anytime');
+    }
     let index=0, correct=0, points=0, locked=false, readyForNext=false, renderToken=0, results=[], answerDetails=[], started=performance.now(), completed=false, questionStarted=performance.now();
     const healthIds=(questions||[]).map(x=>x.questionVersionId||x.questionId).filter(Boolean);
     const healthTracker=window.BrainiContentHealth&&healthIds.length
@@ -2442,6 +2454,7 @@ window.BrainiQuiz = (function(){
 
     async function choose(choice,button){
       if(locked) return;
+      trackStart();
       locked=true;
       readyForNext=false;
 
@@ -2531,6 +2544,7 @@ window.BrainiQuiz = (function(){
 
     async function doSkip(){
       if(locked) return;
+      trackStart();
       locked=true;
       readyForNext=false;
 

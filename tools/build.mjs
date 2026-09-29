@@ -23,7 +23,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set(['assets/js/admin-articles.bundle.js',...files.filter(file=>file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file)),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.

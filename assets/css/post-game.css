@@ -6,6 +6,10 @@
 .post-game .post-score-label{margin:7px 0 18px;color:#625b6b;font-size:14px}
 .post-game .post-message{margin:0 auto 10px;font-size:16px;line-height:1.6;color:#211e38;max-width:420px}
 .post-game .post-points{margin:0 0 22px;font-size:13px;color:#625b6b}
+.post-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 20px}.post-metrics div{padding:12px 6px;background:#f2efe8;border-radius:12px}.post-metrics dt{font-size:12px;color:#625b6b}.post-metrics dd{font-size:22px;font-weight:750;color:#2d296e;margin:5px 0 0}
+.post-guide{display:block;text-align:left;margin-top:20px;padding:14px 16px;background:#f0f5e9;border-radius:12px;color:#2d296e;text-decoration:none}.post-guide span{display:block;font-size:11px;color:#536448;margin-bottom:5px}.post-guide strong{font-size:14px;line-height:1.5}.post-reward-note a{text-decoration:underline;color:#2d296e}
+.post-game [data-result-reward]{min-height:38px;margin:14px 0 20px}.post-game .post-reward-note{font-size:13px;line-height:1.6;color:#625b6b}
+.post-game [data-result-reward]:empty{display:none}
 .post-review{margin:20px 0;text-align:left;border-block:1px solid #e4dfd5}
 .post-review details+details{border-top:1px solid #e4dfd5}
 .post-review summary{cursor:pointer;padding:16px 4px;color:#2d296e;font-size:15px;font-weight:700;line-height:1.5}

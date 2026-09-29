@@ -26,16 +26,16 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/#webpage","url":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/","name":"General Knowledge Quiz \u2014 Free Trivia Questions | BrainiLab","description":"Test yourself with a free general knowledge quiz covering everyday facts, science, geography, history and culture, with concise explanations after every answer.","isPartOf":{"@id":"https://brainilabgames.com/#website"},"mainEntity":{"@id":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/#quiz"},"inLanguage":"en"},{"@type":"Quiz","@id":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/#quiz","name":"General Knowledge Quiz","description":"Test yourself with a free general knowledge quiz covering everyday facts, science, geography, history and culture, with concise explanations after every answer.","url":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/","isAccessibleForFree":true,"inLanguage":"en","interactivityType":"active","learningResourceType":"Quiz","educationalUse":"assessment","about":{"@type":"Thing","name":"General knowledge"},"publisher":{"@id":"https://brainilabgames.com/#organization"},"hasPart":[{"@type":"Question","name":"How many continents are there?"},{"@type":"Question","name":"Which language has the most native speakers worldwide?"},{"@type":"Question","name":"What is the smallest prime number?"},{"@type":"Question","name":"Which metal is liquid at room temperature?"},{"@type":"Question","name":"Which country is shaped like a boot?"}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://brainilabgames.com/"},{"@type":"ListItem","position":2,"name":"General Knowledge","item":"https://brainilabgames.com/general-knowledge/"},{"@type":"ListItem","position":3,"name":"General Knowledge Quiz","item":"https://brainilabgames.com/general-knowledge/general-knowledge-quiz/"}]}]}</script>
 <!-- BrainiLab data layer -->
 <!-- /BrainiLab data layer -->
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.21.0"></script><script defer="" src="../../assets/js/shell.bundle.js?v=41.22.1"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.22.1"></script><script defer src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/quiz.bundle.js?v=41.22.0"></script>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.23.0"></script><script defer="" src="../../assets/js/shell.bundle.js?v=41.23.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.22.1"></script><script defer src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/quiz.bundle.js?v=41.23.0"></script>
 <meta property="og:image:alt" content="BrainiLab quiz and brain games"/>
 <meta name="twitter:image:alt" content="BrainiLab quiz and brain games"/>
 <link rel="alternate" hreflang="en" href="https://brainilabgames.com/general-knowledge/general-knowledge-quiz/"/>
 <link rel="alternate" hreflang="x-default" href="https://brainilabgames.com/general-knowledge/general-knowledge-quiz/"/>
 <meta name="theme-color" content="#34327f"/>
 <meta name="google-adsense-account" content="ca-pub-5613536700850101">
-<link rel="stylesheet" href="/assets/css/post-game.css?v=41.18.0"/>
-</head>
-<body>
+<link rel="stylesheet" href="/assets/css/post-game.css?v=41.23.0"/>
+<link rel="stylesheet" href="/assets/css/game-entry.css?v=41.23.0"/></head>
+<body class="game-entry-page">
 <header class="topbar">
 <div class="wrap nav">
 <a aria-label="BrainiLab home" class="brand" href="../../index.html">
@@ -51,11 +51,12 @@
 </header>
 <main>
 <div class="wrap"><nav aria-label="Breadcrumb" class="breadcrumb"><a href="../../index.html">Home</a><span>›</span><a href="../index.html">General Knowledge</a><span>›</span><span>General Knowledge Quiz</span></nav></div>
+<section class="wrap game-entry-heading"><div><h1>General Knowledge Quiz</h1><p>Twenty questions. A little history, science, geography and surprise.</p><span>Free to play · No account needed</span></div><img src="/assets/illustrations/games/mixed-general-knowledge.svg" width="120" height="90" alt=""/></section>
 <div class="wrap quiz-pack-wrap">
 <div class="quiz-pack-bar">
 <div class="quiz-pack-info">
 <strong>20-question quiz</strong>
-<span>Fresh-question rotation · finite quiz</span>
+<span>Choose your level · Review your answers at the end</span>
 </div>
 <nav aria-label="Quiz difficulty" class="quiz-difficulty-tabs">
 <a data-difficulty="easy" href="?difficulty=easy&amp;set=1">Easy</a>
@@ -66,13 +67,13 @@
 </div>
 <section class="challenge-wrap">
 <div class="wrap">
-<article class="challenge" id="leafQuiz">
+<article class="challenge" id="leafQuiz" data-quiz-loading aria-busy="true"><p class="quiz-loading-message" role="status">Getting your questions ready…</p><noscript><p>Enable JavaScript to play. You can still read the guides below.</p></noscript>
 <div class="challenge-inner">
 <div class="challenge-labels">
 <span class="challenge-pill">General Knowledge · <span data-difficulty-label="">Easy</span></span>
 <span class="challenge-pill" data-label="">Question 1 of 20</span>
 </div>
-<h1 class="challenge-question" data-q="">1. How many continents are commonly recognized?</h1>
+<h2 class="challenge-question" data-q=""></h2>
 <div class="answers" data-answers=""></div>
 <div class="feedback-area">
 <div class="feedback" data-feedback=""></div>
@@ -96,12 +97,15 @@
  const params=new URLSearchParams(location.search);
  const difficulty=BrainiContent.normalizeDifficulty(params.get("difficulty")||"easy");
  const set=Math.max(1,parseInt(params.get("set")||"1",10)||1);
- const pack=await BrainiContent.loadQuizPack("generalknowledge",difficulty,set);
+ let pack;
+ try{pack=await BrainiContent.loadQuizPack("generalknowledge",difficulty,set);
+ if(!pack?.questions?.length)throw Error('No questions');
+ }catch(error){root.querySelector('.quiz-loading-message').innerHTML='Questions could not be loaded. <a href="'+location.pathname+'">Try again</a>';root.setAttribute('aria-busy','false');return;}
  const questions=pack.questions;
  const usingCloud=pack.source==="supabase";
 
  root.querySelector("[data-difficulty-label]").textContent=difficulty[0].toUpperCase()+difficulty.slice(1);
- document.querySelectorAll("[data-difficulty]").forEach(a=>a.classList.toggle("active",a.dataset.difficulty===difficulty));
+ document.querySelectorAll("[data-difficulty]").forEach(a=>{a.classList.toggle("active",a.dataset.difficulty===difficulty);if(params.get("try")==="1")a.href+="&try=1";});
 
  const guide=document.querySelector(".question-guide");
  const reviewSection=document.querySelector("[data-quiz-review-section]");
@@ -112,39 +116,23 @@
      : null,
    onComplete:async r=>{
      BrainiContent.recordAnytimeHistory(pack,r.answerDetails);
-     const result=await BrainiData.api.submitGameResult("generalknowledge",{
-       score:r.points,
-       correct:r.correct,
-       total:r.total,
-       accuracy:Math.round(r.correct/r.total*100),
-       timeSec:r.timeSec,
-       results:r.results,
-       answerDetails:r.answerDetails,
-       contentSource:pack.source,
-       quizPackId:pack.packId,
-       difficulty,
-       setNumber:set
-     });
-     resultBox.__brainilabResult=result;
-
-     if(usingCloud){
-       try{
-         await BrainiContent.verifyQuizResult(result,pack,r.answerDetails);
-       }catch(err){
-         console.warn("BrainiLab server answer verification pending:",err.message||err);
-       }
-     }
-
-     if(reviewSection) reviewSection.hidden=true;
-     playStage.hidden=true;
-     resultBox.hidden=false;
-     BrainiPostGame.mount(resultBox,{
-       result:{...result,answerDetails:r.answerDetails},gameId:"generalknowledge",name:"General Knowledge",difficulty,ads:true,
-       next:{href:"/games/#general-knowledge",label:"Play another General Knowledge quiz"}
-     });
+     playStage.hidden=true;resultBox.hidden=false;
+     const payload={score:r.points,correct:r.correct,total:r.total,accuracy:Math.round(r.correct/r.total*100),timeSec:r.timeSec,results:r.results,answerDetails:r.answerDetails,contentSource:pack.source,quizPackId:pack.packId,difficulty,setNumber:set};
+     BrainiPostGame.mount(resultBox,{result:{...payload,practice:params.get('try')==='1'},gameId:"generalknowledge",name:"General Knowledge",difficulty,ads:true,next:{href:location.pathname+'?difficulty='+difficulty+(params.get('try')==='1'?'&try=1':''),label:'Play another round'}});
+     const rewardEl=resultBox.querySelector('[data-result-reward]');rewardEl.textContent='Saving your result…';
+     try{
+       const result=await BrainiData.api.submitGameResult("generalknowledge",payload);
+       resultBox.__brainilabResult=result;
+       rewardEl.dataset.resultReward=result.clientResultId||'';
+       rewardEl.innerHTML=window.BrainiContinuity?.rewardMarkup(result)||'';
+       if(usingCloud)await BrainiContent.verifyQuizResult(result,pack,r.answerDetails);
+     }catch(error){rewardEl.textContent='Your score is shown above. Progress could not be confirmed; please check your connection.';}
+     if(reviewSection)reviewSection.hidden=true;
    }
  });
+ root.removeAttribute("data-quiz-loading");root.setAttribute("aria-busy","false");
 });</script>
+<section class="wrap game-reading" data-game-guides><h2>A clue for your next round</h2><div><a href="/learn/why-2100-is-not-a-leap-year/"><span>Read &amp; try</span><strong>Why 2100 is not a leap year →</strong></a><a href="/learn/remember-quiz-answers-tomorrow/"><span>A little discovery</span><strong>Remember an answer after the quiz →</strong></a></div></section>
 <section class="section"><div class="wrap quiz-page seo-copy"><h2>About this General Knowledge Quiz</h2><p>Choose a difficulty for a 20-question run. Each answer includes feedback, and a complete review is available when you finish. Use the guide below to practise the topic before you start.</p></div></section>
 <section class="section" data-quiz-review-section="" hidden=""><div class="wrap quiz-page"><div class="section-head"><div><h2>Questions and explanations</h2><div class="sub">Correct answers and explanations are revealed after you complete all 20 questions.</div></div></div><div class="question-guide"></div></div></section>
 <section class="section play-guide"><div class="wrap seo-copy"><h2>Build connections between facts</h2><p>A mixed quiz asks you to switch topics rather than stay in one area of expertise. Read the question before comparing the choices: a word such as “smallest”, “first” or “normally” can change what is being asked. Start on Easy to find gaps, then try a harder level for a different challenge.</p><h3>Worked example: what makes a number prime?</h3><p>Consider 1, 2, 4 and 9. A prime number is a whole number greater than 1 with exactly two positive divisors: 1 and itself. The answer is 2. The number 1 has only one positive divisor, while 4 and 9 each have an additional divisor. This definition is more useful to remember than the answer alone.</p><h3>Make the next run more useful</h3><p>When an unfamiliar question appears, eliminate choices you can rule out for a specific reason. After answering, read the feedback before moving on. If you guessed correctly, treat that as something to revisit rather than something you have mastered. The final review collects the questions from your run; you can use it to pick a topic to practise next.</p><p class="guide-note">This guide uses separate teaching examples. <a href="/suggestions/">Report a question or suggest a correction</a> with the game name and the wording you saw.</p></div></section>
