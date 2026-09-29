@@ -74,8 +74,8 @@ def page(path, title, description, body, schema, cover=None):
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.22.1"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/editorial.css?v=41.22.0"/>
-<script defer src="/assets/js/consent.bundle.js?v=41.23.0"></script>
+<link rel="stylesheet" href="/assets/css/editorial.css?v=41.22.0"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
+<script defer src="/assets/js/consent.bundle.js?v=41.24.0"></script>
 <script defer src="/assets/js/shell.bundle.js?v=41.23.0"></script>
 {'<script defer src="/assets/js/learn-library.js?v=41.17.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
@@ -94,11 +94,12 @@ for i,a in enumerate(articles):
     latest=latest_by_topic[a['topic']]==a['slug']
     library_parts.append(card(a,i<3).replace('class="learn-card"', 'class="learn-card" data-latest-topic' if latest else 'class="learn-card" hidden', 1))
 library=''.join(library_parts)
+resource_promo='<p class="learn-resource-link"><a href="/learn/five-number-puzzles-printable/">Take a puzzle break: five free printable number puzzles →</a></p>' if 'five-number-puzzles-printable' in by_slug else ''
 page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geography, history, numbers and word puzzles. Short reads with worked examples, a quick question and a related game.', f'''
 <div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Learn</span></nav>
 <header class="learn-hero"><div><h1>A little more to discover.</h1><p>Curious questions, clear answers and a few things to try.</p></div>
 <label class="learn-search" hidden>Find an article<input type="search" id="learn-search" placeholder="Try Moon, flags, numbers…" autocomplete="off" aria-controls="learn-articles"/></label></header>
-<nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="__latest" aria-pressed="true">Latest by topic</button><button type="button" data-topic-filter="" aria-pressed="false">All articles</button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)}</button>' for t in topics)}</nav>
+{resource_promo}<nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="__latest" aria-pressed="true">Latest by topic</button><button type="button" data-topic-filter="" aria-pressed="false">All articles</button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)}</button>' for t in topics)}</nav>
 <p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(topics)} articles · latest in each topic</p>
 <noscript><style>.library-grid .learn-card[hidden]{{display:flex!important}}</style><p>All articles are shown below. Enable JavaScript to use search and topic filters.</p></noscript><div class="learn-grid library-grid" id="learn-articles">{library}</div>
 <div class="learn-empty" hidden><h2>No articles found</h2><p>Try another word or browse all topics.</p><button type="button" data-clear-filters>Show all articles</button></div>
@@ -107,10 +108,11 @@ page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geo
 for a in articles:
     toc = ''.join(f'<li><a href="#{s["id"]}">{escape(s["title"])}</a></li>' for s in a['sections'])
     sections = ''.join(f'<section id="{s["id"]}"><h2>{escape(s["title"])}</h2>{s["html"]}</section>' for s in a['sections'])
+    download = '<p class="article-download"><a href="/assets/resources/five-number-puzzles.pdf">Download free PDF →</a><span>2 pages · puzzles and explained answers</span></p>' if any('href="/assets/resources/five-number-puzzles.pdf"' in section['html'] for section in a['sections']) else ''
     related = ''.join(card(by_slug[slug]) for slug in a.get('related', []) if slug in by_slug)
     sources = ''.join(f'<li><a href="{escape(s["url"], quote=True)}">{escape(s["name"])}</a></li>' for s in a['sources'])
     body = f'''<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">{escape(a['topic'])}</span></nav>
-    <header class="article-header"><p class="eyebrow">{escape(a['topic'])} · {a['minutes']} min read</p><h1>{escape(a['title'])}</h1><p>{escape(a['description'])}</p></header>
+    <header class="article-header"><p class="eyebrow">{escape(a['topic'])} · {a['minutes']} min read</p><h1>{escape(a['title'])}</h1><p>{escape(a['description'])}</p>{download}</header>
     <div class="article-layout"><aside class="article-sidebar"><details><summary>In this article</summary><nav aria-label="In this article"><ol>{toc}</ol></nav></details><a class="sidebar-game" href="{escape(a['game']['url'], quote=True)}">Related game<strong>{escape(a['game']['name'])} →</strong></a></aside>
     <article class="article-body"><figure class="article-cover"><img src="{escape(a['cover']['src'])}" alt="{escape(a['cover']['alt'],quote=True)}" width="960" height="640" fetchpriority="high"/><figcaption>{escape(a['cover']['credit'])}</figcaption></figure>{sections}<section id="sources"><h2>Sources &amp; further reading</h2><ul>{sources}</ul></section>
     <aside class="article-practice"><h2>Fancy a round?</h2><p>{escape(a['practice'])}</p><a class="btn" href="{escape(a['game']['url'], quote=True)}">Play {escape(a['game']['name'])} →</a><a class="article-hub-link" href="{escape(a['hub']['url'], quote=True)}">Explore {escape(a['hub']['name'])}</a></aside></article></div>
