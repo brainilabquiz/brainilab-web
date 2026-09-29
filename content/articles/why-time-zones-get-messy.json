@@ -2,8 +2,8 @@
   "slug": "why-time-zones-get-messy",
   "status": "published",
   "topic": "Geography",
-  "title": "Why time zones don’t follow tidy lines",
-  "description": "Earth turns steadily. Our clocks follow borders, shared routines and decisions that can change.",
+  "title": "Why don’t time zones follow straight lines?",
+  "description": "Earth’s rotation gives us a starting point, but borders and daylight-saving rules make local time more complicated.",
   "game": {
     "name": "World Capitals Quiz",
     "url": "/geography/world-capitals-quiz/"
@@ -15,23 +15,23 @@
   "sections": [
     {
       "id": "simple-idea",
-      "title": "A simple idea meets a complicated world",
-      "html": "<p>You arrange a call with a friend abroad, confidently add an hour, and still get it wrong. The arithmetic may be fine. The assumption behind it is usually the problem.</p><p>As Earth rotates, different places face the Sun at different times. Dividing 360 degrees by 24 hours gives 15 degrees per hour: a useful starting picture. Civil time, however, is set by people. Time-zone borders and clock changes do not have to follow evenly spaced lines of longitude.</p>"
+      "title": "The idea behind time zones",
+      "html": "<p>As Earth rotates, different places face the Sun at different times. Divide a full rotation of 360 degrees by 24 hours and you get 15 degrees per hour. It seems natural to divide the world into neat strips.</p><p>Actual time-zone boundaries are less tidy. Governments choose civil time to suit borders and daily life, so the lines bend around countries and regions rather than following longitude exactly.</p>"
     },
     {
       "id": "offset-is-not-zone",
-      "title": "A UTC offset is not the whole story",
-      "html": "<p>An offset tells you how far a clock is ahead of or behind UTC at a particular moment. A time zone also contains rules about when that offset changes. IANA’s time-zone database is updated to reflect political decisions about boundaries, offsets and daylight-saving rules.</p><p>That is why ‘five hours behind me’ is a fragile contact note. Save a city and a date when planning a meeting. A calendar that knows both locations can account for the applicable rules. Do not assume that two places change their clocks on the same weekend.</p>"
+      "title": "Why the time difference can change",
+      "html": "<p>A <strong>UTC offset</strong> tells you how far a local clock is ahead of or behind UTC at a particular moment. A time zone includes the rules that determine that offset, including any daylight-saving changes.</p><p>Two places may change their clocks on different dates, or one may not change them at all. The difference between them can therefore vary during the year.</p><p>For a call or a journey, check the cities and the date in a calendar or time-zone tool. IANA’s time-zone database is updated as governments change the rules.</p>"
     },
     {
       "id": "clock-arithmetic",
-      "title": "Practise with fixed offsets first",
-      "html": "<p>Here is a made-up scheduling example with the offsets already supplied. City A is UTC+2 and City B is UTC−3. If it is 14:00 in A, subtract two hours to find UTC: 12:00. Then subtract three more for B: 09:00.</p><p>Writing the intermediate UTC step is less error-prone than juggling ‘ahead’ and ‘behind’ in your head. Near midnight, write the date too.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p>20:00 on Monday. First go back two hours to 23:00 Monday UTC, then back three more hours.</p></details>"
+      "title": "Work through a simple example",
+      "html": "<p>Suppose City A is at UTC+2 and City B is at UTC−3. When it is 14:00 in A, subtract two hours to get 12:00 UTC. Subtract three more to find the time in B: <strong>09:00</strong>.</p><p>Going through UTC gives you a clear intermediate step. Around midnight, remember to check the date as well.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p><strong>20:00 on Monday.</strong> Subtracting two hours gives 23:00 Monday UTC, then subtracting three more gives 20:00.</p></details>"
     },
     {
       "id": "quiz-clue",
-      "title": "Keep geography and clock rules separate",
-      "html": "<p>Knowing where a city is helps you picture the journey, but longitude alone does not tell you its current legal time. In a quiz, read whether the question supplies an offset or asks about a specific place and date. Those are different kinds of problem.</p>"
+      "title": "Check the place and the date",
+      "html": "<p>The example above supplies fixed offsets, so it is a straightforward calculation. For a real city, you first need to know which offset applies on that date. Longitude alone cannot tell you its current legal time.</p>"
     }
   ],
   "sources": [
@@ -48,12 +48,13 @@
     "why-greenland-looks-so-big",
     "mental-percentages-without-a-calculator"
   ],
-  "practice": "Explore World Capitals to connect city names with places. For an actual call or journey, check the date-specific local time.",
+  "practice": "Explore the places behind the clock changes with World Capitals.",
   "cover": {
     "src": "/assets/images/learn/why-time-zones-get-messy.webp",
     "alt": "Three clocks showing different times",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 11,
-  "publishedAt": "2026-09-23T19:51:37Z"
+  "publishedAt": "2026-09-23T19:51:37Z",
+  "updatedAt": "2026-09-29T20:07:50Z"
 }

@@ -5,7 +5,7 @@ import {uploadCover} from './cover-upload.js';
 let context,rows=[],active=null,dirty=false,busy=false,coverSelection=null;
 const $=selector=>context.root.querySelector(selector);
 const slugify=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100);
-const topics=['Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Sports','Words & puzzles'];
+const topics=['Everyday inventions','Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Sports','Words & puzzles'];
 const gameOptions=[['Brain Mix','/games/brain-mix/'],['World Flags','/geography/world-flags-quiz/'],['World Capitals','/geography/world-capitals-quiz/'],['General Knowledge','/general-knowledge/general-knowledge-quiz/'],['Science Quiz','/science/science-quiz/'],['History Quiz','/history/history-quiz/'],['Sports Quiz','/sports/sports-quiz/'],['Connections','/games/connections/'],['Math Rush','/games/math-rush/'],['Sequence','/games/sequence/'],['BrainiWord','/games/brainiword/'],['Number Route','/games/number-route/'],['Order Up','/games/order-up/'],['Topic Rush','/games/topic-rush/'],['Odd One Out','/games/odd-one-out/'],['Higher or Lower','/games/higher-lower/'],['Survival','/games/survival/']];
 function markDirty(){if(!active)return;dirty=true;if(busy)return;const status=$('#article-save-state');if(status)status.textContent='Unsaved changes';renderChecks();}
 function canLeave(){if(busy){context.toast('Please wait for the current save or upload to finish.');return false;}return !dirty||window.confirm('You have unsaved article changes. Leave without saving?');}

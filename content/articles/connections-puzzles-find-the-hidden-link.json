@@ -2,8 +2,8 @@
   "slug": "connections-puzzles-find-the-hidden-link",
   "status": "published",
   "topic": "Words & puzzles",
-  "title": "Connections puzzles: test the link against every clue",
-  "description": "The first association is only a candidate. A good connection has to explain the whole set.",
+  "title": "How to find the link in a Connections puzzle",
+  "description": "A word can have more than one meaning. Here’s how to spot the connection that fits every clue.",
   "game": {
     "name": "Connections",
     "url": "/games/connections/"
@@ -15,23 +15,23 @@
   "sections": [
     {
       "id": "first-association",
-      "title": "Your first thought can be useful—and incomplete",
-      "html": "<p>Read these four words: bark, trunk, leaf, root. ‘Tree’ is an immediate connection. But bark can also be a dog’s sound, a trunk can hold luggage, and a root can belong to an equation.</p><p>A connection puzzle makes you choose which meaning matters in this particular set. Start with your first association, then test it. A strong answer should explain all the clues through the same idea.</p>"
+      "title": "Start with the first connection you notice",
+      "html": "<p>Bark, trunk, leaf, root. You probably thought of a tree before reaching the end of the list. Yet bark can also be a dog’s sound, a trunk can hold luggage, and a root can belong to an equation.</p><p>That is what makes a connections puzzle interesting: several meanings may be possible, but one relationship brings the clues together. Your first thought is a good place to start. Check it against the rest of the set before choosing.</p>"
     },
     {
       "id": "specific-test",
-      "title": "Make the category specific enough to check",
-      "html": "<p>‘Things you can find outside’ is broad enough to accept almost anything. ‘Parts of a tree’ makes a sharper claim. You can examine each word and ask whether it belongs.</p><p>In BrainiLab Connections, you choose the relationship from the available answers. Do not assume it uses the rules of another game with a similar name. Read the prompt and choices before deciding what counts as a successful answer.</p><p>Try mentally completing the sentence ‘Each clue is a…’ or ‘Each word can follow…’. If you have to change the sentence for one clue, your connection may be too loose.</p>"
+      "title": "Find a link you can explain",
+      "html": "<p>“Things you find outside” could describe thousands of objects. “Parts of a tree” explains this set much more clearly.</p><p>Try finishing a sentence such as “Each clue is a…” or “Each word can follow…”. If the sentence works for every clue, you have a promising answer. If one word needs a different explanation, take another look.</p><p>In BrainiLab Connections, you choose the shared relationship from the available answers. Read those choices carefully: games with similar names can have different rules.</p>"
     },
     {
       "id": "odd-clue",
-      "title": "Pay attention to the awkward clue",
-      "html": "<p>Suppose three clues fit your idea immediately and one refuses. Instead of treating the awkward word as an exception, make it the centre of your next attempt. List another meaning for that word and see whether it changes your reading of the other three.</p><p>This is a practical pause, not a demand to invent dozens of possibilities. Test a small number of precise alternatives. The goal is to find a common explanation, not the most imaginative story.</p><details class=\"practice-answer\"><summary>What links keys, space and return in a familiar computer context?</summary><p>A keyboard. “Space” and “return” can name keys, while “keys” gives the broader context. The context matters: those words have other meanings too.</p></details>"
+      "title": "Give the awkward clue another look",
+      "html": "<p>Sometimes three words fit straight away and the fourth seems out of place. That awkward word may be the most useful clue. Think of another meaning for it, then see whether the other words fit that meaning too.</p><details class=\"practice-answer\"><summary>What links shift, space and return in a computer context?</summary><p>They are keyboard keys. Reading the words in that context brings all three together.</p></details>"
     },
     {
       "id": "after-answer",
-      "title": "After the reveal, explain the weakest fit",
-      "html": "<p>When the answer appears, choose the clue you understood least well and explain how it fits. If it uses an unfamiliar meaning, look that meaning up rather than simply memorising the answer label.</p><p>For your next round, remember the move that helped: checking a second meaning, tightening the category or testing the odd clue. That is something you can reuse even when none of the words repeat.</p>"
+      "title": "Make sense of the answer",
+      "html": "<p>If a connection surprises you, go back to the clue that was hardest to place. Was there a meaning you had forgotten, or a category you had not considered?</p><p>Understanding that one link gives you something to try in the next round, even when the words are completely different.</p>"
     }
   ],
   "sources": [
@@ -44,12 +44,13 @@
     "number-sequences-look-at-the-gaps",
     "remember-quiz-answers-tomorrow"
   ],
-  "practice": "Try Connections. Before choosing, check that the proposed relationship explains every clue in the round.",
+  "practice": "Try a round of Connections and see whether you can find a link that fits the whole set.",
   "cover": {
     "src": "/assets/images/learn/connections-puzzles-find-the-hidden-link.webp",
     "alt": "Red objects grouped together on a table",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 5,
-  "publishedAt": "2026-09-23T19:51:37Z"
+  "publishedAt": "2026-09-23T19:51:37Z",
+  "updatedAt": "2026-09-29T20:07:50Z"
 }

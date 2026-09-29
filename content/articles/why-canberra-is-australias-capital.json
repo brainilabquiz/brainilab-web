@@ -15,7 +15,7 @@
     "position": 50
   },
   "order": 15,
-  "title": "Why is Canberra the capital of Australia, not Sydney?",
+  "title": "Why is Canberra Australia’s capital?",
   "topic": "Geography",
   "status": "published",
   "related": [
@@ -32,30 +32,30 @@
       "name": "National Capital Authority — The Siting and Naming of Canberra"
     }
   ],
-  "practice": "Try a round of World Capitals. Watch for the places where the familiar city and the capital are different.",
+  "practice": "Try World Capitals and see how often the best-known city differs from the capital.",
   "sections": [
     {
       "id": "short-answer",
-      "html": "<p>Sydney is often the first guess. Melbourne is usually the second. Australia’s capital is Canberra, and the reason has more to do with a political compromise than with a famous skyline.</p><p>When the Australian colonies federated in 1901, the new country needed a seat of government. Rivalry between New South Wales and Victoria helped rule out putting it in either Sydney or Melbourne. A separate capital offered a way forward.</p>",
-      "title": "Two rivals, one new capital"
+      "title": "A compromise between two rivals",
+      "html": "<p>Sydney may be Australia’s most familiar city, but Canberra is its capital. The choice grew out of a rivalry between New South Wales and Victoria when the colonies federated in 1901.</p><p>Rather than give the role to Sydney or Melbourne, the new nation would have a separate seat of government.</p>"
     },
     {
       "id": "distance-rule",
-      "html": "<p>The Constitution required the new seat of government to be in territory within New South Wales, at least 100 miles from Sydney. That is about 160 kilometres. In the meantime, the federal Parliament met in Melbourne.</p><p>Notice what that rule does <em>not</em> say: the capital did not have to be exactly halfway between the two cities. “A compromise” and “the midpoint” are different ideas. Keeping those separate stops a memorable story turning into a misleading shortcut.</p>",
-      "title": "The surprisingly specific distance rule"
+      "title": "At least 100 miles from Sydney",
+      "html": "<p>The Constitution required the capital to be in territory within New South Wales, at least <strong>100 miles from Sydney</strong>, or about 160 kilometres. Until the new seat of government was ready, Parliament would meet in Melbourne.</p><p>That distance rule is quite specific. It did not require the capital to sit halfway between the two cities, even though Canberra is often described as a compromise between them.</p>"
     },
     {
       "id": "three-dates",
-      "html": "<p>The site of present-day Canberra was chosen in 1908. The city was officially named on 12 March 1913, but Parliament did not move there until 1927. A name on a map and a working seat of government were two different milestones.</p><p>If those dates feel like too much to remember, keep the sequence: <strong>choose the site, name the city, move Parliament</strong>. You can hang the dates on that sequence later. The useful part of the story is the order of events.</p>",
-      "title": "Choosing a place was only the beginning"
+      "title": "A city takes shape",
+      "html": "<p>The site of present-day Canberra was selected in <strong>1908</strong>. The city was officially named on <strong>12 March 1913</strong>, and the federal Parliament moved there in <strong>1927</strong>.</p><p>Those dates mark different steps: choosing the location, naming the city and making it the working home of Parliament.</p>"
     },
     {
       "id": "try-it",
-      "html": "<p>In a capitals quiz, try pausing when the most familiar city springs to mind. Recognition is useful, but it answers “Have I heard of this place?” rather than “Is this the capital?”</p><details class=\"practice-answer\"><summary>Before Parliament moved to Canberra, which city hosted it?</summary><p>Melbourne. Sydney was central to the argument over location, but Melbourne was the temporary home of the federal Parliament.</p></details><p>Next time Australia comes up, use this little chain: two rival cities, a separate capital, Canberra. It gives the answer a reason to stick.</p>",
-      "title": "A better clue than a postcard"
+      "title": "Which city came before Canberra?",
+      "html": "<details class=\"practice-answer\"><summary>Where did the federal Parliament meet before moving to Canberra?</summary><p><strong>Melbourne.</strong> It hosted Parliament while the new capital was being established.</p></details><p>Canberra is a reminder that a country’s best-known city and its seat of government are not always the same place.</p>"
     }
   ],
-  "updatedAt": "2026-09-28T18:46:01.246533+00:00",
-  "description": "The answer starts with a rivalry, a distance rule and a city that had to be built. Here’s the story behind the quiz question.",
+  "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "Sydney and Melbourne were rivals for the role. The solution was a new capital, with a location written into the Constitution.",
   "publishedAt": "2026-09-28T18:46:01.246533+00:00"
 }
