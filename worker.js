@@ -44,7 +44,8 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
     return json(data,200,60);
   }catch(error){
     // Only allowlisted operational codes, never upstream bodies, URLs or credentials.
-    const reason=error?.videoReason|| (error?.name==='TimeoutError'?'timeout':'unavailable');
+    const known=new Map([['Unexpected playlist','playlist-mismatch'],['Video response too large','oversized-response'],['Invalid video response','invalid-response'],['Invalid video pagination','invalid-pagination'],['Video playlist exceeds scan limit','scan-limit']]);
+    const reason=error?.videoReason||known.get(error?.message)||(error?.name==='TimeoutError'?'timeout':error?.name==='SyntaxError'?'invalid-json':error?.name==='TypeError'?'runtime-type-error':'unavailable');
     const data={...(saved||{playlistId:PLAYLIST,playlistUrl:PLAYLIST_URL,source,checkedAt:Date.now(),unavailable:true}),stale:true,retryAt:Date.now()+60000,serviceStatus:Number(error?.videoStatus)||null,serviceReason:reason};
     // Back off on failures too; keep the original checkedAt so stale data expires.
     ctx.waitUntil(cache.put(key,json(data,200,7*86400)));
