@@ -1,0 +1,67 @@
+{
+  "slug": "why-2100-is-not-a-leap-year",
+  "topic": "History",
+  "title": "Why 2100 will not be a leap year (but 2000 was)",
+  "description": "Divisible by four is only the first check. Learn the century exception, then test yourself on four dates.",
+  "game": {
+    "name": "General Knowledge Quiz",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "General knowledge",
+    "url": "/general-knowledge/"
+  },
+  "related": [
+    "what-really-causes-seasons",
+    "which-century-is-that-year"
+  ],
+  "practice": "Try General Knowledge for a broader mix of questions. The date examples above are your calendar practice; the quiz is not limited to leap years.",
+  "sections": [
+    {
+      "id": "short-answer",
+      "title": "The four-year rule has a catch",
+      "html": "<p><strong>2100 is not a leap year in the Gregorian calendar: it is divisible by 100 but not by 400.</strong> The year 2000 passed the 400 test, so it did have a 29 February. Both years divide neatly by four. That is why stopping at the first rule gives the wrong answer.</p><p>A useful way to picture it is a calendar with a small correction, followed by a correction to that correction. It sounds fussy until you try a few dates.</p>"
+    },
+    {
+      "id": "why-add-a-day",
+      "title": "Why add a day at all?",
+      "html": "<p>The seasonal year is about 365.2422 days long. A calendar made only of 365-day years would gradually slip out of step with the seasons. Adding a day roughly every four years catches most of that difference.</p><p>But roughly is doing some work here. Four extra quarters would be a whole day; the actual fraction is slightly smaller than a quarter. The Gregorian rules therefore skip some leap days. This keeps the average calendar year close to the seasonal year without asking every February to have an awkward fraction of a day.</p>"
+    },
+    {
+      "id": "three-checks",
+      "title": "Use three checks, in this order",
+      "html": "<ol><li><strong>Does the year divide by four?</strong> If it does not, stop: it is a common year.</li><li><strong>Does it also divide by 100?</strong> If it does not, it is a leap year.</li><li><strong>If it is a century year, does it divide by 400?</strong> Only then is it a leap year.</li></ol><p>For 2028, the first answer is yes and the second is no: leap year. For 2100, all three checks are needed: yes, yes, no. For 2400 they are yes, yes, yes. You do not need to memorise a long list of dates.</p>"
+    },
+    {
+      "id": "try-four",
+      "title": "Four dates to try before peeking",
+      "html": "<p>Which of these Gregorian calendar years have 366 days: <strong>2027, 2032, 2200 and 2400</strong>? Say which test settles each one.</p><details class=\"practice-answer\"><summary>Show the answers</summary><p><strong>2032 and 2400.</strong> 2027 fails the four test. 2032 passes four and is not a century year. 2200 divides by 100 but not 400. 2400 divides by 400.</p></details><p>That last explanation matters more than getting lucky with the pair. If you mixed up 2200 and 2400, practise just those two until the exception feels ordinary.</p>"
+    },
+    {
+      "id": "calendar-scope",
+      "title": "One small historical caution",
+      "html": "<p>These are Gregorian rules. Countries adopted that calendar at different times, so an old date can need more context than its year alone. For an everyday quiz that explicitly says Gregorian, the three checks above are enough. If a historical question names another calendar, do not quietly apply the same rule.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "NASA — Calendars and their History",
+      "url": "https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html"
+    },
+    {
+      "name": "NASA Space Place — What Is a Leap Year?",
+      "url": "https://spaceplace.nasa.gov/leap-year/en/"
+    }
+  ],
+  "status": "published",
+  "order": 17,
+  "publishedAt": "2026-09-29T06:00:00Z",
+  "cover": {
+    "src": "/assets/images/learn/why-2100-is-not-a-leap-year.webp",
+    "small": "/assets/images/learn/why-2100-is-not-a-leap-year-small.webp",
+    "thumbnail": "/assets/images/learn/why-2100-is-not-a-leap-year-thumb.webp",
+    "alt": "A February 29 desk calendar beside a globe in warm sunlight",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50
+  }
+}

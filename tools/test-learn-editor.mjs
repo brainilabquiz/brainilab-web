@@ -32,7 +32,7 @@ w.eval(readFileSync('assets/js/admin-articles.bundle.js','utf8'));
 await w.BrainiArticles.render({root:w.document.querySelector('#root'),rpc,sb:{},toast(){}});
 assert.equal(w.document.querySelectorAll('[data-open]').length,articles.length);
 w.document.querySelector('#article-category').value='Sports';w.document.querySelector('#article-category').dispatchEvent(new w.Event('change'));
-assert.equal(w.document.querySelectorAll('[data-open]').length,1);
+assert.equal(w.document.querySelectorAll('[data-open]').length,articles.filter(article=>article.topic==='Sports').length);
 w.document.querySelector('#article-category').value='';w.document.querySelector('#article-category').dispatchEvent(new w.Event('change'));
 w.document.querySelector('[data-open]').click();assert.ok(w.document.querySelector('[contenteditable]'));
 w.document.querySelector('#article-title').value='Edited draft';w.document.querySelector('#article-title').dispatchEvent(new w.Event('input',{bubbles:true}));

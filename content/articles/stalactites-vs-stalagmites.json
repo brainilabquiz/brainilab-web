@@ -1,0 +1,67 @@
+{
+  "slug": "stalactites-vs-stalagmites",
+  "topic": "Science & nature",
+  "title": "Stalactites or stalagmites? Look at where they start",
+  "description": "One hangs from the ceiling; the other grows from the ground. A simple way to remember the names, plus the story of the drip between them.",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "related": [
+    "why-octopuses-have-three-hearts",
+    "counting-seconds-after-lightning"
+  ],
+  "practice": "Try Science Quiz for more questions about the natural world. Before you play, picture the cave and name the formation above you.",
+  "sections": [
+    {
+      "id": "look-up",
+      "title": "Start with the ceiling",
+      "html": "<p><strong>A stalactite hangs down from a cave ceiling. A stalagmite grows upward from the floor.</strong> When a downward-growing stalactite and an upward-growing stalagmite join, the formation is called a column.</p><p>The names are close enough to swap in a hurry. Rather than staring at the last few letters, first imagine where the rock is attached. Ceiling or floor? That is the useful difference.</p>"
+    },
+    {
+      "id": "remember",
+      "title": "Two letters that do the remembering",
+      "html": "<p>Here is a memory cue: stalactite contains a <strong>c for ceiling</strong>; stalagmite contains a <strong>g for ground</strong>. This is a spelling trick, not an explanation of where the words came from.</p><p>Try drawing a very small cave: a curved roof, a flat floor, one point hanging down and one pointing up. Label the attachment points before adding the names. If a quiz image crops away the roof and floor, look for another clue rather than assuming every sharp point is a stalactite.</p>"
+    },
+    {
+      "id": "one-drip",
+      "title": "What a drip can leave behind",
+      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. When the water enters the cave and loses carbon dioxide, some of that material can be deposited as calcite. Repeated deposits may build a formation on the ceiling; drops reaching the floor can help build one below.</p><p>A very slender, hollow stalactite is often called a soda straw. Stalagmites commonly look more rounded, but shape alone is a less reliable guide than the place they grow from. Cave formations also include curtains, flowstone and other shapes: not everything has to fit our two-name pair.</p>"
+    },
+    {
+      "id": "not-a-clock",
+      "title": "A cave formation is not a simple stopwatch",
+      "html": "<p>It is tempting to look at a metre of rock and turn it into a neat number of years. Growth depends on conditions such as the water supply and chemistry, so length alone does not give you a dependable age. Avoid learning a universal centimetres-per-century rule.</p><p>On a cave visit, keep to the permitted route and leave formations untouched. The National Park Service notes that these features can be fragile and that oils from touching can affect further growth.</p>"
+    },
+    {
+      "id": "quick-check",
+      "title": "Can you name all three?",
+      "html": "<p>Imagine a pendant on the roof, a mound beneath it, and a third formation that reaches all the way between floor and ceiling.</p><details class=\"practice-answer\"><summary>Open the three names</summary><p>Roof pendant: <strong>stalactite</strong>. Floor mound: <strong>stalagmite</strong>. Joined formation: <strong>column</strong>. If the first two still reverse themselves, return to c for ceiling and g for ground.</p></details>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "National Park Service — Speleothems",
+      "url": "https://www.nps.gov/subjects/caves/speleothems.htm"
+    },
+    {
+      "name": "USGS — An Unseen World Beneath Our Feet",
+      "url": "https://www.usgs.gov/media/audio/unseen-world-beneath-our-feet-caves-sinkholes-and-springs"
+    }
+  ],
+  "status": "published",
+  "order": 18,
+  "publishedAt": "2026-09-29T06:01:00Z",
+  "cover": {
+    "src": "/assets/images/learn/stalactites-vs-stalagmites.webp",
+    "small": "/assets/images/learn/stalactites-vs-stalagmites-small.webp",
+    "thumbnail": "/assets/images/learn/stalactites-vs-stalagmites-thumb.webp",
+    "alt": "A pointed stalactite above a rounded stalagmite in a limestone cave",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50
+  }
+}

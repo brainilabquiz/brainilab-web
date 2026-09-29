@@ -1,0 +1,63 @@
+{
+  "slug": "what-olympic-rings-mean",
+  "topic": "Sports",
+  "title": "Do Olympic ring colours stand for continents? Not individually",
+  "description": "The familiar five-ring symbol hides a common quiz trap. Separate what the rings represent from what their colours mean.",
+  "game": {
+    "name": "Sports Quiz",
+    "url": "/sports/sports-quiz/"
+  },
+  "hub": {
+    "name": "Sports",
+    "url": "/sports/"
+  },
+  "related": [
+    "how-to-read-a-tennis-score",
+    "how-to-learn-world-flags"
+  ],
+  "practice": "Try Sports Quiz for a mix of sporting questions. Keep the rings-versus-colours distinction in mind when a question sounds almost familiar.",
+  "sections": [
+    {
+      "id": "the-trap",
+      "title": "The tempting answer that is wrong",
+      "html": "<p><strong>No individual Olympic ring colour is officially assigned to a particular continent.</strong> You may have seen a tidy list matching blue, yellow, black, green and red to five places. The International Olympic Committee explicitly says that interpretation is wrong.</p><p>It is an excellent quiz trap because it sounds organised and easy to learn. A neat explanation is not always the correct one.</p>"
+    },
+    {
+      "id": "whole-symbol",
+      "title": "Read the symbol as a whole",
+      "html": "<p>The five interlaced rings represent the union of five continents and athletes meeting from across the world at the Olympic Games. The symbol expresses connection; it is not a colour-coded map.</p><p>Keep two separate questions in your head: ‘What do the rings represent together?’ and ‘Does each colour name a continent?’ The first has an answer about unity. The second has the answer no.</p>"
+    },
+    {
+      "id": "why-colours",
+      "title": "Then why those colours?",
+      "html": "<p>According to the IOC, when Pierre de Coubertin created the rings in 1913, the five ring colours <strong>together with the white background</strong> covered the colours used in the national flags of the time. White is part of that explanation even though it is not a ring.</p><p>The date matters too: this is an explanation of the design at that time. Do not turn it into a new claim about every flag that exists today.</p>"
+    },
+    {
+      "id": "three-statements",
+      "title": "Which statement would you trust?",
+      "html": "<p>Read these once, then choose before opening the answer.</p><ol><li>Each ring colour identifies one continent.</li><li>The rings collectively express the union of five continents.</li><li>The white background has no part in the colour explanation.</li></ol><details class=\"practice-answer\"><summary>Check the statements</summary><p><strong>Only statement 2 is correct.</strong> Statement 1 repeats the colour-to-continent myth. Statement 3 drops the white background from Coubertin’s explanation.</p></details><p>If you chose 1 because you remembered a diagram from school, replace the diagram with one sentence: ‘Five rings together, not five colour labels.’ It is a smaller fact to remember, and a more accurate one.</p>"
+    },
+    {
+      "id": "read-carefully",
+      "title": "A useful habit for the next sports question",
+      "html": "<p>When two answers both sound familiar, look for the word that changes the claim. Here it is <em>each</em>. In tennis it might be <em>game</em> versus <em>set</em>; in another quiz it could be <em>first</em> versus <em>most</em>. Pause on that word before choosing.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "International Olympic Committee — What is the meaning of the Olympic rings?",
+      "url": "https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings"
+    }
+  ],
+  "status": "published",
+  "order": 20,
+  "publishedAt": "2026-09-29T06:03:00Z",
+  "cover": {
+    "src": "/assets/images/learn/what-olympic-rings-mean.webp",
+    "small": "/assets/images/learn/what-olympic-rings-mean-small.webp",
+    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-thumb.webp",
+    "alt": "Running shoes on a sunlit athletics track beside empty stadium seats",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 68
+  }
+}

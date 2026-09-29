@@ -35,7 +35,7 @@ response=await worker.fetch(new Request('https://brainilabgames.com/games/'),{AS
 const item=(id,date,options={})=>({snippet:{playlistId:playlist,videoOwnerChannelId:channel,title:id,resourceId:{kind:'youtube#video',videoId:id},publishedAt:'2026-09-24T00:00:00Z',...options.snippet},contentDetails:{videoId:id,videoPublishedAt:date},status:{privacyStatus:options.privacy||'public'}});
 const pages=[{items:[item('olderVid001','2026-09-01T00:00:00Z'),item('private0001','2026-09-23T00:00:00Z',{privacy:'private'}),item('foreign0001','2026-09-23T00:00:00Z',{snippet:{videoOwnerChannelId:'someone-else'}})],nextPageToken:'page-2'},{items:[item('newerVid002','2026-09-20T00:00:00Z'),item('unlisted001','2026-09-23T00:00:00Z',{privacy:'unlisted'}),item('future00001','2999-01-01T00:00:00Z')]}];
 let apiCalls=0;
-const api=async(address,options)=>{const u=new URL(address);assert.equal(u.origin,'https://www.googleapis.com');assert.equal(u.pathname,'/youtube/v3/playlistItems');assert.equal(u.searchParams.get('key'),'test-key');assert.equal(u.searchParams.get('playlistId'),playlist);assert.equal(u.searchParams.get('maxResults'),'50');assert.equal(u.searchParams.get('pageToken'),apiCalls?'page-2':null);assert.ok(options.signal);assert.equal(options.redirect,'error');return Response.json(pages[apiCalls++]);};
+const api=async(address,options)=>{const u=new URL(address);assert.equal(u.origin,'https://www.googleapis.com');assert.equal(u.pathname,'/youtube/v3/playlistItems');assert.equal(u.searchParams.get('key'),'test-key');assert.equal(u.searchParams.get('playlistId'),playlist);assert.equal(u.searchParams.get('maxResults'),'50');assert.equal(u.searchParams.get('pageToken'),apiCalls?'page-2':null);assert.ok(options.signal);assert.equal(options.redirect,'manual');return Response.json(pages[apiCalls++]);};
 assert.equal((await latestPlaylistVideo('test-key',api)).id,'newerVid002');assert.equal(apiCalls,2);
 assert.equal(await latestPlaylistVideo('test-key',async()=>Response.json({items:[]})),null);
 await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({items:[item('wrongList01','2026-09-01T00:00:00Z',{snippet:{playlistId:'wrong'}})]})),/Unexpected playlist/);
@@ -43,6 +43,7 @@ await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({item
 let many=0;await assert.rejects(latestPlaylistVideo('test-key',async()=>Response.json({items:[],nextPageToken:String(++many)})),/scan limit/);assert.equal(many,10);
 await assert.rejects(latestPlaylistVideo('test-key',async()=>new Response('x'.repeat(500001))),/too large/);
 await assert.rejects(latestPlaylistVideo('test-key',async()=>new Response('secret upstream error',{status:403})),/Video service unavailable/);
+await assert.rejects(latestPlaylistVideo('test-key',async()=>new Response('',{status:302,headers:{Location:'https://example.org'}})),/Video service unavailable/);
 // Changing source bypasses the feed cache; no API secret enters public data/cache.
 apiCalls=0;response=await latestVideo(request,ctx,cache,api,'test-key');await Promise.all(pending);
 const apiData=await response.json();assert.equal(apiData.source,'youtube-api');assert.equal(apiData.id,'newerVid002');assert.equal(apiData.stale,false);assert.ok(!JSON.stringify(apiData).includes('test-key'));
