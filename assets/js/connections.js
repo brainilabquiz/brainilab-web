@@ -170,6 +170,7 @@ window.BrainiConnections=(function(){
   }
 
   async function mount(root){
+    const analyticsRound={};
     if(scoringDaily && await window.BrainiDailyCompletionGuard?.check?.()) return;
     const intro=root.querySelector("[data-connections-intro]");
     const roundsStat=root.querySelector("[data-connections-rounds-stat]");
@@ -332,6 +333,7 @@ window.BrainiConnections=(function(){
       game.hidden=false;
       healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"connections",contentType:"connections",contentIds:rounds.map(r=>r.id),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;
       startedAt=performance.now();
+      if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("connections",analyticsRound,scoringDaily?"daily":"anytime");
       renderRound();
     });
   }
