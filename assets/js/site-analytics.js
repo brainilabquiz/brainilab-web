@@ -6,7 +6,7 @@ window.BrainiSiteAnalytics=(()=>{
   const completed=new Set();
   // Game-owned round objects deduplicate starts without retaining player identifiers.
   const started=new WeakSet();
-  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush']);
+  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections']);
   function gameStart(gameId,round,mode='anytime'){
     if(!allowed()||!measuredGames.has(gameId)||!round||typeof round!=='object'||started.has(round)||!['daily','anytime'].includes(mode))return;
     started.add(round);send('game_start',{game_id:gameId,mode});
@@ -40,7 +40,7 @@ window.BrainiSiteAnalytics=(()=>{
       tag('js',new Date());tag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:location.origin+path(),page_referrer:referrer(),cookie_expires:180*86400,...campaign()});
       const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;script.dataset.brainilabAnalytics='1';document.head.appendChild(script);loaded=true;
     }else tag('consent','update',{analytics_storage:'granted'});
-    if(!viewed){send('page_view');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
+    if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
   }
   function revoke(){
     window['ga-disable-'+id]=true;
@@ -53,6 +53,7 @@ window.BrainiSiteAnalytics=(()=>{
     let url;try{url=new URL(a.href);}catch{return;}
     const social={'www.youtube.com':'youtube','youtube.com':'youtube','www.instagram.com':'instagram','instagram.com':'instagram','www.tiktok.com':'tiktok','tiktok.com':'tiktok'}[url.hostname];
     if(social)send('social_click',{platform:social,placement:a.closest('[data-latest-video],.home-social-links')?'home':'footer'});
+    if(url.origin===location.origin&&url.pathname==='/assets/resources/five-number-puzzles.pdf')send('resource_download',{resource_id:'five_number_puzzles'});
     if(url.origin===location.origin&&a.closest('.article-practice,.sidebar-game'))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
     if(url.origin===location.origin&&a.closest('[data-game-guides]')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('game_guide_click',{article_slug:url.pathname.split('/')[2],game_path:path()});
     if(url.origin===location.origin&&a.closest('.post-game')&&['next','guide','progress','browse'].includes(a.dataset.postAction))send('post_game_action',{action:a.dataset.postAction});
