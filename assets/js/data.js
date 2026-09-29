@@ -348,7 +348,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   function game(gameId){ return clone(GAME_DEFS[gameId]||null); }
-  function player(){ return clone(state.player); }
+  function player(){
+    const p=clone(state.player),today=todayKey();
+    const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
+    const last=p.lastStreakDate;
+    p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
+    p.streakSecuredToday=last===today && p.currentStreak>0;
+    return p;
+  }
   function daily(){ return clone(state.daily); }
   function personalBest(gameId){ return clone(state.personalBests[gameId]||null); }
   function anytimeHistory(scope){
@@ -1315,6 +1322,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const month=summary.month||{};
 
     state.player.currentStreak=Number(p.current_streak||0);
+    state.player.lastStreakDate=p.last_streak_date||null;
     state.player.bestStreak=Number(p.best_streak||0);
     state.player.xp=Number(p.xp||0);
     state.player.level=Number(p.level||1);

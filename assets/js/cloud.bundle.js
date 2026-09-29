@@ -759,7 +759,7 @@ window.BrainiCloudGames = (function(){
       p_accuracy:accuracy,
       p_duration_ms:durationMs,
       p_client_percentile:percentile===null?null:Math.round(percentile),
-      p_daily_number:Number.isFinite(Number(result.dailyNumber))?Math.round(Number(result.dailyNumber)):null,
+      p_daily_number:result.dailyNumber!=null&&Number(result.dailyNumber)>0?Math.round(Number(result.dailyNumber)):null,
       p_difficulty:result.difficulty||pack.difficulty,
       p_set_number:Number.isFinite(Number(result.setNumber))
         ? Math.round(Number(result.setNumber))
@@ -1758,23 +1758,10 @@ window.BrainiAuth = (function(){
   }
 
   function guestProfileMarkup(){
-    const p=BrainiData.player();
-    const d=BrainiData.daily();
     return `
-      <section class="profile-guest-hero">
-        <div>
-          <div class="auth-kicker">You’re playing as a guest</div>
-          <h1>Your progress already exists.</h1>
-          <p>Completed games are saved to your guest player and appear in rankings under a generated alias. Create a free account to keep your progress across devices.</p>
-          <button type="button" class="btn" data-profile-save>Save my progress</button>
-          <button type="button" class="btn-light" data-profile-continue>Keep playing as guest</button>
-        </div>
-        <div class="profile-guest-preview">
-          <div><strong>${BrainiIcons.product("streak","braini-inline-icon")} ${p.currentStreak}</strong><span>day streak</span></div>
-          <div><strong>${d.brainScore.toLocaleString()}</strong><span>Daily Brain Score</span></div>
-          <div><strong>${p.totalGames.toLocaleString()}</strong><span>games played</span></div>
-          <div><strong>${p.totalQuestions.toLocaleString()}</strong><span>answers</span></div>
-        </div>
+      <section class="profile-guest-note">
+        <div><strong>Playing as a guest</strong><p>Create a free account to keep your progress across devices.</p></div>
+        <button type="button" class="btn-light" data-profile-save>Save my progress</button>
       </section>`;
   }
 

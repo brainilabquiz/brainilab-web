@@ -51,6 +51,11 @@ window.BrainiUI = (function(){
     renderDailyScoreCards(daily);
 
     setText("[data-player-streak]",player.currentStreak);
+    document.querySelectorAll('.streak').forEach(el=>{
+      el.classList.toggle('is-secured',player.streakSecuredToday===true);
+      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play a Daily game to keep your streak':'Complete a Daily game to start your streak';
+      el.setAttribute('aria-label',`${player.currentStreak} day streak. ${el.title}. Days reset at 00:00 UTC.`);
+    });
     setText("[data-player-best-streak]",player.bestStreak);
     setText("[data-player-total-games]",player.totalGames.toLocaleString());
     setText("[data-player-total-questions]",player.totalQuestions.toLocaleString());
@@ -160,7 +165,7 @@ window.BrainiUI = (function(){
       else if(r.gameId==="orderup") result=Number(r.score||0).toLocaleString()+" / 2,500";
       else if(r.score!=null) result=Number(r.score).toLocaleString()+" pts";
       return `<div class="data-row">
-        <span class="data-rank">${d?.icon||"🧠"}</span>
+        <span class="data-rank">${window.BrainiIcons?.game?.(r.gameId,'mini','recent-game-art')||'●'}</span>
         <span class="data-name">${d?.name||r.gameId}<small style="display:block;color:var(--muted);font-weight:650">${new Date(r.playedAt).toLocaleDateString()}</small></span>
         <span class="data-value">${result}</span>
       </div>`;

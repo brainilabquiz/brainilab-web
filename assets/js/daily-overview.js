@@ -42,7 +42,7 @@ window.BrainiDailyOverview=(function(){
 
               <div class="next-daily-countdown" data-next-daily-countdown></div>
 
-              <div data-daily-journey-hub></div>
+              <div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div><div data-daily-journey-hub></div>
             </div>
           </section>
         `;
@@ -76,11 +76,11 @@ window.BrainiDailyOverview=(function(){
           </div>
         </section>
 
-        <div data-daily-journey-hub></div>
+        <div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div><div data-daily-journey-hub></div>
 
         <section class="daily-rules-compact">
           <div><strong>Daily Brain Score</strong><span>Only today's 4 Daily Games contribute to the 10,000-point Daily score.</span></div>
-          <div><strong>XP</strong><span>Every completed game earns XP. Finishing all four Daily Games adds +250 XP.</span></div>
+          <div><strong>XP</strong><span>Your first three verified games of each kind per UTC day earn XP. Finishing all four Daily Games adds +250 XP.</span></div>
           <a href="../profile/index.html?section=progress">See my progress →</a>
         </section>
       `;

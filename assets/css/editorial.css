@@ -23,7 +23,16 @@
 .learn-hero{background:linear-gradient(110deg,#fdd81c30,#fdd81c0a);border:1px solid #fdd81c68;border-radius:20px;padding:23px 26px;margin:4px 0 22px;position:relative;overflow:hidden}
 .learn-hero:after{content:"";position:absolute;width:125px;height:125px;right:340px;bottom:-67px;background:url('/assets/brand/iso-multicolor.png') center/contain no-repeat;opacity:.5;pointer-events:none}.learn-hero>div,.learn-search{position:relative;z-index:1}.learn-hero h1{color:var(--brand-blue)}
 .topic-nav button{background:#fffdf9;border-color:#2d296e20}.topic-nav button[aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}
-.learn-card{--topic-accent:var(--brand-blue);--topic-wash:#2d296e09;border-color:#2d296e20;background:var(--topic-wash)}.learn-card[data-topic='Geography'],.learn-card[data-topic='Science & nature']{--topic-accent:var(--brand-green);--topic-wash:#3fab340b}.learn-card[data-topic='History'],.learn-card[data-topic='Words & puzzles']{--topic-accent:var(--brand-red);--topic-wash:#e51e2007}.learn-card[data-topic='Numbers & logic'],.learn-card[data-topic='Getting started']{--topic-accent:var(--brand-yellow);--topic-wash:#fdd81c14}.learn-card-art{border-bottom:4px solid var(--topic-accent)}.learn-card:hover{border-color:var(--topic-accent)}.learn-card .eyebrow{color:var(--brand-blue)}
+/* Topics use distinct shapes and explicit labels, never shared colour codes. */
+.learn-card{border-color:#e1dbd1;background:#fffdf9}.learn-card-art{border-bottom:1px solid #e1dbd1}.learn-card:hover{border-color:#a59dbe}.learn-card .eyebrow{color:var(--brand-blue);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.learn-card .eyebrow:before{content:"";width:20px;height:20px;flex:none;background:url('/assets/illustrations/topics/learning.svg') center/contain no-repeat}
+.learn-card[data-topic='Geography'] .eyebrow:before{background-image:url('/assets/illustrations/topics/geography.svg')}
+.learn-card[data-topic='History'] .eyebrow:before{background-image:url('/assets/illustrations/topics/history.svg')}
+.learn-card[data-topic='Science & nature'] .eyebrow:before{background-image:url('/assets/illustrations/topics/science.svg')}
+.learn-card[data-topic='Numbers & logic'] .eyebrow:before{background-image:url('/assets/illustrations/topics/numbers.svg')}
+.learn-card[data-topic='Words & puzzles'] .eyebrow:before{background-image:url('/assets/illustrations/topics/words.svg')}
+.learn-card[data-topic='Getting started'] .eyebrow:before{background-image:url('/assets/illustrations/topics/start.svg')}
+.learn-card[data-topic='Sports'] .eyebrow:before{background-image:url('/assets/illustrations/topics/sports.svg')}
 .article-practice{background:#fdd81c1c;border-color:#fdd81c80}.sidebar-game{background:#3fab3410;border:1px solid #3fab3430}.practice-answer{background:#2d296e0b;border-left:3px solid var(--brand-blue)}
 @media(max-width:600px){.learn-hero{padding:18px;border-radius:16px;margin-bottom:18px}.learn-hero:after{right:-35px;bottom:80px;width:100px;height:100px;opacity:.25}.learn-hero h1{font-size:28px}.learn-search{margin-top:16px}}
 

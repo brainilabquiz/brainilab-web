@@ -307,7 +307,7 @@ window.BrainiPostGame=(()=>{
   const correct=number(result.correct),total=number(result.total),points=number(result.score??result.points);
   const primary=next||(status?nextDaily(status):{href:'/games/',label:'Find another game'});
   const message=total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. Take a look at the ones that surprised you.':'A few familiar facts, a few new discoveries.';
-  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · Complete</p><h2 tabindex="-1" class="post-score">${total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p>${review(result.answerDetails)}<div class="post-actions"><a class="post-primary" href="${esc(primary.href)}">${esc(primary.label)} →</a><button type="button" class="post-share">Share result</button></div>${status?`<p class="post-daily">Daily · ${number(status.completedCount)} of 4 complete <a href="/daily-quiz/">See today’s games</a></p>`:'<a class="post-browse" href="/games/">Browse all games</a>'}${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
+  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · Complete</p><h2 tabindex="-1" class="post-score">${total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p><div data-result-reward="${esc(result.clientResultId||'')}">${window.BrainiContinuity?.rewardMarkup?.(result)||''}</div>${review(result.answerDetails)}<div class="post-actions"><a class="post-primary" href="${esc(primary.href)}">${esc(primary.label)} →</a><button type="button" class="post-share">Share result</button></div>${status?`<p class="post-daily">Daily · ${number(status.completedCount)} of 4 complete <a href="/daily-quiz/">See today’s games</a></p>`:'<a class="post-browse" href="/games/">Browse all games</a>'}${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   container.querySelector('.post-share').addEventListener('click',()=>window.BrainiShare?.open(gameId,result));
   if(focus)container.querySelector('.post-score').focus({preventScroll:true});
  }
@@ -907,7 +907,7 @@ window.BrainiQuiz = (function(){
       if(isCorrect){
         correct++;
         results.push(true);
-        gained=500+Math.max(80,Math.round(300-((performance.now()-started)/1000%25)*8));
+        gained=(opts.gameId||inferGameId())==="brainmix"?1000:500;
         points+=gained;
 
         const correctAnswer=evaluation.correctAnswer || item.a[correctIndex] || item.a[choice];

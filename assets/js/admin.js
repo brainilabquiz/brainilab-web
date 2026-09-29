@@ -232,12 +232,17 @@ window.BrainiAdmin=(function(){
   }
 
   async function rpc(name,args={}){
-    const {data,error}=await state.sb.rpc(name,args);
-    if(error) throw error;
-    return data;
+    const mutation=/^admin_(add_|create_|toggle_|update_|save_|import_|publish_|regenerate_|run_)/.test(name);
+    const key=JSON.stringify([name,args]);
+    rpc.pending ||= new Map();
+    if(mutation && rpc.pending.has(key))return rpc.pending.get(key);
+    const request=(async()=>{const {data,error}=await state.sb.rpc(name,args);if(error)throw error;return data;})();
+    if(mutation)rpc.pending.set(key,request);
+    try{return await request;}finally{rpc.pending.delete(key);}
   }
 
   let drawerReturnFocus=null;
+  let questionDirty=false,questionSaving=false;
   function safeAction(action){
     return (...args)=>Promise.resolve().then(()=>action(...args)).catch(error=>{
       console.error(error);
@@ -246,6 +251,8 @@ window.BrainiAdmin=(function(){
   }
 
   function openDrawer(html){
+    questionDirty=false;
+    $('#adminDrawerContent').oninput=null;$('#adminDrawerContent').onchange=null;
     if($("#adminDrawerBackdrop").hidden) drawerReturnFocus=document.activeElement;
     $("#adminDrawerContent").innerHTML=html;
     $("#adminDrawerBackdrop").hidden=false;
@@ -259,12 +266,16 @@ window.BrainiAdmin=(function(){
     });
   }
 
-  function closeDrawer(){
+  function closeDrawer({force=false}={}){
+    if(!force && questionSaving){toast('Please wait for the question to finish saving.');return false;}
+    if(!force && questionDirty && !confirm('You have unsaved question changes. Close without saving?'))return false;
+    questionDirty=false;
     $("#adminDrawerBackdrop").hidden=true;
     $("#adminDrawerContent").innerHTML="";
     document.body.style.overflow="";
     if(drawerReturnFocus?.isConnected) drawerReturnFocus.focus();
     drawerReturnFocus=null;
+    return true;
   }
 
   function copyText(text){
@@ -467,7 +478,8 @@ window.BrainiAdmin=(function(){
       oddPuzzles,
       higherPairs,
       numberRoutes,
-      sequences
+      sequences,
+      rotationHealth
     ]=await Promise.all([
       rpc("admin_get_dashboard"),
       rpc("admin_get_system_health"),
@@ -479,7 +491,8 @@ window.BrainiAdmin=(function(){
       rpc("admin_list_odd_one_out_puzzles"),
       rpc("admin_list_higher_lower_pairs"),
       rpc("admin_list_number_route_puzzles"),
-      rpc("admin_list_sequence_puzzles")
+      rpc("admin_list_sequence_puzzles"),
+      rpc("admin_get_daily_health")
     ]);
 
     const verifiedPct=Number(d.results_today||0)
@@ -487,12 +500,7 @@ window.BrainiAdmin=(function(){
       : null;
 
     const daily=d.daily||{};
-    const dailyHealthy=
-      Number(daily.brainmix_questions||0)===10
-      && Number(orderUpDaily?.count||0)===2
-      && !!topicRush?.topic_id
-      && Number(topicRush?.answer_count||0)>=Number(topicRush?.target_count||1)
-      && Number(daily.brainiword_words||0)===1;
+    const dailyHealthy=rotationHealth?.healthy===true;
 
     const cron=(system.cron||[])[0]||null;
 
@@ -519,10 +527,7 @@ window.BrainiAdmin=(function(){
           </div>
 
           <div class="admin-daily-score">
-            ${dailyGameCard("Brain Mix",daily.brainmix_questions,10)}
-            ${dailyGameCard("Order Up",orderUpDaily?.count,2)}
-            ${dailyGameCard("Topic Rush",topicRush?.topic_id?1:0,1)}
-            ${dailyGameCard("BrainiWord",daily.brainiword_words,1)}
+            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard(GAME_LABELS[g.game_id]||g.game_id,g.count,g.expected)).join('')}
           </div>
 
           <div class="admin-toolbar">
@@ -649,12 +654,12 @@ window.BrainiAdmin=(function(){
       <div id="dailyPayloadBody"></div>
     `;
 
-    $("#loadDailyHealth").onclick=()=>{
+    $("#loadDailyHealth").onclick=safeAction(()=>{
       state.lastDailyDate=$("#adminDailyDate").value;
-      loadDailyHealth();
-    };
+      return loadDailyHealth();
+    });
 
-    $("#publicPayloadTest").onclick=runPublicPayloadTest;
+    $("#publicPayloadTest").onclick=safeAction(runPublicPayloadTest);
 
     $("#runDailyMaintenance")?.addEventListener("click",async()=>{
       try{
@@ -703,15 +708,7 @@ window.BrainiAdmin=(function(){
     const today=new Date().toISOString().slice(0,10);
     const futureOnly=String(h.date)>today;
     const canRegenerate=!locked && futureOnly;
-    const topicRushReady=!!topicRush?.topic_id
-      && Number(topicRush?.answer_count||0)>=Number(topicRush?.target_count||1);
-    const dailyHealthy=Number(h.brainmix?.count||0)===10
-      && Number(h.brainmix?.easy||0)===4
-      && Number(h.brainmix?.medium||0)===4
-      && Number(h.brainmix?.hard||0)===2
-      && Number(orderUp?.count||0)===2
-      && topicRushReady
-      && Number(h.brainiword?.count||0)===1;
+    const dailyHealthy=h.healthy===true;
 
     body.innerHTML=`
       <section class="admin-panel">
@@ -728,10 +725,7 @@ window.BrainiAdmin=(function(){
         </div>
 
         <div class="admin-daily-score">
-          ${dailyGameCard("Brain Mix",h.brainmix?.count,10)}
-          ${dailyGameCard("Order Up",orderUp?.count,2)}
-          ${dailyGameCard("Topic Rush",topicRush?.topic_id?1:0,1)}
-          ${dailyGameCard("BrainiWord",h.brainiword?.count,1)}
+          ${(h.game_health||[]).map(g=>dailyGameCard(GAME_LABELS[g.game_id]||g.game_id,g.count,g.expected)).join('')}
         </div>
 
         <div class="admin-mini-grid">
@@ -793,7 +787,7 @@ window.BrainiAdmin=(function(){
       </div>
 
       <div class="admin-panels">
-        <section class="admin-panel">
+        <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='orderup')?'':'hidden'}>
           <div class="admin-panel-head">
             <div>
               <h2>Order Up</h2>
@@ -819,7 +813,7 @@ window.BrainiAdmin=(function(){
           `).join("") || `<div class="admin-empty">Order Up is not assigned for this Daily.</div>`}
         </section>
 
-        <section class="admin-panel">
+        <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='topicrush')?'':'hidden'}>
           <div class="admin-panel-head"><div><h2>Topic Rush</h2><p>60-second free-response Daily.</p></div></div>
           ${topicRush?.topic_id?`
             <div class="admin-mini-card"><span>Topic</span><strong>${esc(topicRush.title)}</strong></div>
@@ -836,7 +830,7 @@ window.BrainiAdmin=(function(){
 
     body.querySelector("[data-regenerate]")?.addEventListener("click",()=>regenerateDaily(date));
     body.querySelectorAll("[data-open-q]").forEach(btn=>{
-      btn.onclick=()=>openQuestionEditor(btn.dataset.openQ);
+      btn.onclick=safeAction(()=>openQuestionEditor(btn.dataset.openQ));
     });
   }
 
@@ -1010,6 +1004,7 @@ window.BrainiAdmin=(function(){
     $("#qFilter").onclick=filter;
     $("#qReset").onclick=safeAction(()=>{
       ['qSearch','qStatus','qDifficulty','qTopic'].forEach(id=>$("#"+id).value='');
+      state.questionHealthSort='default';$('#qHealthSort').value='default';
       state.questionPage=0;return loadQuestionTable();
     });
     $("#qHealthSort").onchange=safeAction(e=>{state.questionHealthSort=e.target.value;return loadQuestionTable();});
@@ -1501,10 +1496,12 @@ window.BrainiAdmin=(function(){
 
     $("#qeAnalytics")?.addEventListener(
       "click",
-      ()=>openQuestionAnalytics(q.question_version_id,q.prompt)
+      safeAction(()=>{if(questionSaving)return;if(questionDirty&&!confirm('Discard question changes and open analytics?'))return;return openQuestionAnalytics(q.question_version_id,q.prompt);})
     );
 
     const saveButton=$("#qeSave");
+    $('#adminDrawerContent').oninput=()=>{questionDirty=true;};
+    $('#adminDrawerContent').onchange=()=>{questionDirty=true;};
     const saveLabel=()=>{if(saveButton)saveButton.textContent=({draft:'Save draft',review:'Send to review',published:'Publish question'})[$('#qeStatus').value];};
     $('#qeStatus')?.addEventListener('change',saveLabel);
     saveLabel();
@@ -1541,17 +1538,17 @@ window.BrainiAdmin=(function(){
       errorBox.hidden=!errors.length;
       errorBox.innerHTML=errors.length?`<strong>Check before saving</strong><ul>${errors.map(e=>`<li>${esc(e.message)}</li>`).join('')}</ul>`:'';
       if(errors.length){errors.forEach(e=>{const field=$('#'+e.field);field?.setAttribute('aria-invalid','true');const details=field?.closest('details');if(details)details.open=true;});$('#'+errors[0].field)?.focus();return;}
-      saving=true;saveButton.disabled=true;saveButton.textContent='Saving…';
+      saving=true;questionSaving=true;saveButton.disabled=true;saveButton.textContent='Saving…';
       try{
         const saved=await rpc("admin_save_question",payload);
         toast(saved.status==="published"?"Question published":"Question saved");
-        closeDrawer();
+        closeDrawer({force:true});
         if(state.currentView==="questions") await loadQuestionTable();
       }catch(err){
         errorBox.hidden=false;errorBox.textContent=cleanError(err);
         toast(cleanError(err));
       }finally{
-        saving=false;
+        saving=false;questionSaving=false;
         if(saveButton.isConnected){saveButton.disabled=false;saveLabel();}
       }
     });
@@ -1941,7 +1938,7 @@ window.BrainiAdmin=(function(){
     });
 
     document.querySelectorAll("[data-pack]").forEach(row=>{
-      row.onclick=()=>openQuizPackDetail(row.dataset.pack);
+      row.onclick=safeAction(()=>openQuizPackDetail(row.dataset.pack));
     });
   }
 
@@ -2274,15 +2271,15 @@ window.BrainiAdmin=(function(){
         ${metric("Number Route",counts.numberroute,"Active routes")}
         ${metric("Sequence",counts.sequence,"Active puzzles")}
       </div>
-      <section class="admin-panel" style="margin-top:14px">
+      <details class="admin-panel admin-import-library" style="margin-top:14px"><summary>Import templates &amp; Daily content guide</summary>
         <div class="admin-panel-head"><div><h2>Bulk content imports</h2><p>Question Bank is for normal multiple-choice questions. Content Pools is for game-specific structured content.</p></div><a class="admin-button" href="brainilab_daily_content_map.csv" download>Daily content map CSV</a></div>
         <div class="admin-note"><strong>Daily automation:</strong> Brain Mix and BrainiWord are fixed every day. Two additional slots rotate between Order Up, Topic Rush, Connections, Odd One Out, Higher or Lower, Math Rush, Number Route and Sequence. You do not upload a separate “Daily CSV”; add content to the correct Question Bank or Content Pool and the Daily scheduler selects eligible content automatically.</div>
         <div class="content-import-hub">
           ${Object.entries(CONTENT_POOL_IMPORTS).map(([id,cfg])=>`<div class="content-import-card"><strong>${esc(cfg.label)}</strong><span>${id==="connections"?"4–8 clues + 4 connection choices":id==="oddoneout"?"4 items + the odd item":id==="higherlower"?"Comparison type + two labelled numeric values":id==="numberroute"?"4 one-digit numbers + target; unique route validated automatically":id==="sequence"?"5-number sequence + correct answer + 4 choices":id==="orderup"?"Exactly 10 ordered items":id==="topicrush"?"Topic + accepted answer list":"5-letter words"}</span><button class="admin-button" data-import-pool="${id}">Import CSV</button> <a class="admin-button" href="${esc(cfg.template)}" download>Template</a></div>`).join("")}
         </div>
-      </section>
+      </details>
       <section class="admin-panel" style="margin-top:14px">
-        <div class="admin-toolbar" style="justify-content:flex-end"><div class="admin-field"><label>Order content</label><select class="admin-select" id="poolHealthSort"><option value="default" ${state.poolHealthSort==="default"?"selected":""}>Default</option><option value="health_asc" ${state.poolHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.poolHealthSort==="health_desc"?"selected":""}>Health · strongest</option></select></div></div>
+        <div class="admin-toolbar" style="justify-content:flex-end"><div class="admin-field"><label>Order content</label><select class="admin-select" id="poolHealthSort" aria-label="Order content by health"><option value="default" ${state.poolHealthSort==="default"?"selected":""}>Default</option><option value="health_asc" ${state.poolHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.poolHealthSort==="health_desc"?"selected":""}>Health · strongest</option></select></div></div>
         <div class="admin-pool-tabs">
           <button data-pool="brainiword" class="${state.poolTab==="brainiword"?"active":""}">BrainiWord</button>
           <button data-pool="topicrush" class="${state.poolTab==="topicrush"?"active":""}">Topic Rush</button>
@@ -2316,6 +2313,7 @@ window.BrainiAdmin=(function(){
   function renderPoolBody(data){
     const {pools,topicRushTopics,orderUpRounds,connectionsPuzzles,oddPuzzles,higherPairs,numberRoutes,sequences}=data;
     const root=$("#poolBody"),editable=canEditContent();
+    $("#poolHealthSort").closest(".admin-toolbar").hidden=["mathrush","survival"].includes(state.poolTab);
     if(state.poolTab==="mathrush"){
       root.innerHTML=`<div class="admin-note"><strong>Math Rush has no editorial content pool.</strong> Its 60-second operations are generated deterministically from safe one-digit rules: addition, non-negative subtraction, multiplication and exact whole-number division. There is nothing to upload; every run can generate fresh content automatically.</div>`;
       return;
@@ -2327,48 +2325,48 @@ window.BrainiAdmin=(function(){
     if(state.poolTab==="brainiword"){
       const rows=sortByHealth(pools.brainiword?.rows||[],"brainiword",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${editable?`<div class="admin-field grow"><label>Add 5-letter word</label><input class="admin-input" id="newBrainiWord" maxlength="5" placeholder="CRANE"></div><button class="admin-button primary" id="addBrainiWord">Add word</button>`:""}${poolImportButton("brainiword")}</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Word</th><th>Status</th><th>Last used</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong class="admin-code">${esc(r.word)}</strong></td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${esc(r.last_used||"Never")}</td><td>${editable?`<button class="admin-button" data-word-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      $("#addBrainiWord")?.addEventListener("click",async()=>{try{await rpc("admin_add_brainiword_word",{p_word:$("#newBrainiWord").value});toast("BrainiWord added");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-word-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_brainiword_word",{p_word_id:btn.dataset.wordToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"brainiword");bindInlineImport(root);return;
+      $("#addBrainiWord")?.addEventListener("click",async()=>{try{await rpc("admin_add_brainiword_word",{p_word:$("#newBrainiWord").value});toast("BrainiWord added");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-word-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_brainiword_word",{p_word_id:btn.dataset.wordToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"brainiword");bindInlineImport(root);return;
     }
     if(state.poolTab==="topicrush"){
       const rows=sortByHealth(topicRushTopics||[],"topicrush",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("topicrush")}</div>${editable?`<div class="admin-note">Manual editor: one canonical answer per line. Aliases go after <code>|</code>. CSV batch imports use <code>;</code> between canonical answers and <code>|</code> for aliases.</div><div class="admin-form-grid" style="margin-top:10px"><div class="admin-field"><label>External key</label><input class="admin-input" id="trExternal"></div><div class="admin-field"><label>Title</label><input class="admin-input" id="trTitle"></div><div class="admin-field full"><label>Player prompt</label><input class="admin-input" id="trPrompt"></div><div class="admin-field"><label>Daily target</label><input class="admin-input" id="trTarget" type="number" min="5" max="30" value="15"></div><div class="admin-field full"><label>Accepted answers</label><textarea class="admin-textarea" id="trAnswers" style="min-height:190px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addTopicRush">Create Topic Rush topic</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Topic</th><th>Target</th><th>Answers</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.prompt)}</small></td><td>${num(r.target_count)}</td><td>${num(r.answer_count)}</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-tr-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      $("#addTopicRush")?.addEventListener("click",async()=>{const answers=parseTopicRushAnswers($("#trAnswers").value);if(answers.length<20){toast("Add at least 20 canonical answers");return}try{await rpc("admin_create_topic_rush_topic",{p_external_key:$("#trExternal").value,p_title:$("#trTitle").value,p_prompt:$("#trPrompt").value,p_target_count:Number($("#trTarget").value),p_answers:answers});toast("Topic Rush topic created");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-tr-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_topic_rush_topic",{p_topic_id:btn.dataset.trToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"topicrush");bindInlineImport(root);return;
+      $("#addTopicRush")?.addEventListener("click",async()=>{const answers=parseTopicRushAnswers($("#trAnswers").value);if(answers.length<20){toast("Add at least 20 canonical answers");return}try{await rpc("admin_create_topic_rush_topic",{p_external_key:$("#trExternal").value,p_title:$("#trTitle").value,p_prompt:$("#trPrompt").value,p_target_count:Number($("#trTarget").value),p_answers:answers});toast("Topic Rush topic created");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-tr-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_topic_rush_topic",{p_topic_id:btn.dataset.trToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"topicrush");bindInlineImport(root);return;
     }
     if(state.poolTab==="orderup"){
       const rows=sortByHealth(orderUpRounds||[],"orderup",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("orderup")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="ouExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="ouCategory" value="general"></div><div class="admin-field"><label>Title</label><input class="admin-input" id="ouTitle"></div><div class="admin-field"><label>Direction</label><input class="admin-input" id="ouDirection" placeholder="Earliest → Latest"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="ouPrompt"></div><div class="admin-field full"><label>Correct order · exactly 10 lines</label><textarea class="admin-textarea" id="ouItems" style="min-height:210px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOrderUpRound">Create Order Up round</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Round</th><th>Category</th><th>Items</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.direction_label)}</small></td><td>${esc(r.category)}</td><td>${num(r.item_count)} / 10</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-ou-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      $("#addOrderUpRound")?.addEventListener("click",async()=>{const items=$("#ouItems").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(items.length!==10){toast("Order Up needs exactly 10 items");return}try{await rpc("admin_create_order_up_round",{p_external_key:$("#ouExternal").value,p_title:$("#ouTitle").value,p_prompt:$("#ouPrompt").value,p_direction_label:$("#ouDirection").value,p_category:$("#ouCategory").value,p_items:items});toast("Order Up round created");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-ou-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_order_up_round",{p_round_id:btn.dataset.ouToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"orderup");bindInlineImport(root);return;
+      $("#addOrderUpRound")?.addEventListener("click",async()=>{const items=$("#ouItems").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(items.length!==10){toast("Order Up needs exactly 10 items");return}try{await rpc("admin_create_order_up_round",{p_external_key:$("#ouExternal").value,p_title:$("#ouTitle").value,p_prompt:$("#ouPrompt").value,p_direction_label:$("#ouDirection").value,p_category:$("#ouCategory").value,p_items:items});toast("Order Up round created");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-ou-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_order_up_round",{p_round_id:btn.dataset.ouToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"orderup");bindInlineImport(root);return;
     }
     if(state.poolTab==="connections"){
       const rows=sortByHealth(connectionsPuzzles||[],"connections",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("connections")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="cnExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="cnCategory" value="general"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="cnPrompt" value="What connects these?"></div><div class="admin-field full"><label>Clues · 4–8 lines</label><textarea class="admin-textarea" id="cnClues"></textarea></div><div class="admin-field full"><label>Correct connection</label><input class="admin-input" id="cnCorrect"></div><div class="admin-field full"><label>Wrong connections · exactly 3 lines</label><textarea class="admin-textarea" id="cnDistractors"></textarea></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="cnExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addConnectionsPuzzle">Create Connections puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Clues</th><th>Correct</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>{const correct=(r.choices||[]).find(x=>x.correct);return `<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${num((r.clues||[]).length)}</td><td>${esc(correct?.text||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-cn-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`}).join("")}</tbody></table></div>`;
-      $("#addConnectionsPuzzle")?.addEventListener("click",async()=>{const clues=$("#cnClues").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),distractors=$("#cnDistractors").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(clues.length<4||clues.length>8){toast("Add 4–8 clues");return}if(distractors.length!==3){toast("Add exactly 3 wrong connections");return}try{await rpc("admin_create_connections_puzzle",{p_external_key:$("#cnExternal").value,p_category:$("#cnCategory").value,p_prompt:$("#cnPrompt").value,p_clues:clues,p_correct_connection:$("#cnCorrect").value,p_distractors:distractors,p_explanation:$("#cnExplanation").value});toast("Connections puzzle created");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-cn-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_connections_puzzle",{p_puzzle_id:btn.dataset.cnToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"connections");bindInlineImport(root);return;
+      $("#addConnectionsPuzzle")?.addEventListener("click",async()=>{const clues=$("#cnClues").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),distractors=$("#cnDistractors").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(clues.length<4||clues.length>8){toast("Add 4–8 clues");return}if(distractors.length!==3){toast("Add exactly 3 wrong connections");return}try{await rpc("admin_create_connections_puzzle",{p_external_key:$("#cnExternal").value,p_category:$("#cnCategory").value,p_prompt:$("#cnPrompt").value,p_clues:clues,p_correct_connection:$("#cnCorrect").value,p_distractors:distractors,p_explanation:$("#cnExplanation").value});toast("Connections puzzle created");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-cn-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_connections_puzzle",{p_puzzle_id:btn.dataset.cnToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"connections");bindInlineImport(root);return;
     }
     if(state.poolTab==="oddoneout"){
       const rows=sortByHealth(oddPuzzles||[],"oddoneout",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("oddoneout")}</div>${editable?`<div class="admin-note">Exactly four items. <strong>Odd item</strong> is numbered 1–4 in CSV and in this editor.</div><div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="ooExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="ooCategory" value="general"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="ooPrompt" value="Which one does not belong?"></div>${[1,2,3,4].map(i=>`<div class="admin-field"><label>Item ${i}</label><input class="admin-input" id="ooItem${i}"></div>`).join("")}<div class="admin-field"><label>Odd item</label><select class="admin-select" id="ooOdd">${[1,2,3,4].map(i=>`<option value="${i-1}">${i}</option>`).join("")}</select></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="ooExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOdd">Create Odd One Out puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Items</th><th>Odd item</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${(r.items||[]).map(x=>esc(x)).join(" · ")}</td><td>${esc((r.items||[])[Number(r.odd_index)]||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-oo-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      $("#addOdd")?.addEventListener("click",async()=>{const items=[1,2,3,4].map(i=>$("#ooItem"+i).value.trim());if(items.some(x=>!x)){toast("Add all four items");return}try{await rpc("admin_create_odd_one_out_puzzle",{p_external_key:$("#ooExternal").value,p_category:$("#ooCategory").value,p_prompt:$("#ooPrompt").value,p_items:items,p_odd_index:Number($("#ooOdd").value),p_explanation:$("#ooExplanation").value});toast("Odd One Out puzzle created");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-oo-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_odd_one_out_puzzle",{p_puzzle_id:btn.dataset.ooToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"oddoneout");bindInlineImport(root);return;
+      $("#addOdd")?.addEventListener("click",async()=>{const items=[1,2,3,4].map(i=>$("#ooItem"+i).value.trim());if(items.some(x=>!x)){toast("Add all four items");return}try{await rpc("admin_create_odd_one_out_puzzle",{p_external_key:$("#ooExternal").value,p_category:$("#ooCategory").value,p_prompt:$("#ooPrompt").value,p_items:items,p_odd_index:Number($("#ooOdd").value),p_explanation:$("#ooExplanation").value});toast("Odd One Out puzzle created");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-oo-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_odd_one_out_puzzle",{p_puzzle_id:btn.dataset.ooToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"oddoneout");bindInlineImport(root);return;
     }
     if(state.poolTab==="higherlower"){
       const rows=sortByHealth(higherPairs||[],"higherlower",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("higherlower")}</div>${editable?`<div class="admin-note"><strong>Choose the comparison language first.</strong> This controls the natural question and the two answer buttons. Examples: <em>Is Mozart older or younger than Beethoven?</em>, <em>Is K2 higher or lower than Everest?</em>, <em>Is a lion faster or slower than a cheetah?</em>. For <strong>Older / Younger</strong>, store birth years (a later year means younger). For <strong>Earlier / Later</strong>, store event years.</div><div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="hlExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="hlCategory" value="general"></div><div class="admin-field"><label>Comparison type</label><select class="admin-select" id="hlComparisonType">${higherLowerTypeOptions()}</select></div><div class="admin-field"><label>Metric / stored value</label><input class="admin-input" id="hlMetric" placeholder="Birth year, height, speed…"></div><div class="admin-field"><label>Left label</label><input class="admin-input" id="hlLeftLabel"></div><div class="admin-field"><label>Left value</label><input class="admin-input" id="hlLeftValue" type="number" step="any"></div><div class="admin-field"><label>Right label</label><input class="admin-input" id="hlRightLabel"></div><div class="admin-field"><label>Right value</label><input class="admin-input" id="hlRightValue" type="number" step="any"></div><div class="admin-field"><label>Unit</label><input class="admin-input" id="hlUnit" placeholder="m, km/h, year…"></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="hlExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addHL">Create Higher or Lower pair</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Pair</th><th>Type</th><th>Metric</th><th>Left</th><th>Right</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.category)}</small></td><td>${esc(HIGHER_LOWER_TYPES[r.comparison_type]||r.comparison_type||"Higher / Lower")}</td><td>${esc(r.metric)}</td><td>${esc(r.left_label)} · ${esc(r.left_value)} ${esc(r.unit||"")}</td><td>${esc(r.right_label)} · ${esc(r.right_value)} ${esc(r.unit||"")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-hl-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      $("#addHL")?.addEventListener("click",async()=>{try{await rpc("admin_create_higher_lower_pair",{p_external_key:$("#hlExternal").value,p_category:$("#hlCategory").value,p_comparison_type:$("#hlComparisonType").value,p_metric:$("#hlMetric").value,p_left_label:$("#hlLeftLabel").value,p_left_value:Number($("#hlLeftValue").value),p_right_label:$("#hlRightLabel").value,p_right_value:Number($("#hlRightValue").value),p_unit:$("#hlUnit").value,p_explanation:$("#hlExplanation").value});toast("Higher or Lower pair created");renderContent()}catch(err){toast(cleanError(err))}});
-      root.querySelectorAll("[data-hl-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_higher_lower_pair",{p_pair_id:btn.dataset.hlToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"higherlower");bindInlineImport(root);return;
+      $("#addHL")?.addEventListener("click",async()=>{try{await rpc("admin_create_higher_lower_pair",{p_external_key:$("#hlExternal").value,p_category:$("#hlCategory").value,p_comparison_type:$("#hlComparisonType").value,p_metric:$("#hlMetric").value,p_left_label:$("#hlLeftLabel").value,p_left_value:Number($("#hlLeftValue").value),p_right_label:$("#hlRightLabel").value,p_right_value:Number($("#hlRightValue").value),p_unit:$("#hlUnit").value,p_explanation:$("#hlExplanation").value});toast("Higher or Lower pair created");await renderContent()}catch(err){toast(cleanError(err))}});
+      root.querySelectorAll("[data-hl-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_higher_lower_pair",{p_pair_id:btn.dataset.hlToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"higherlower");bindInlineImport(root);return;
     }
     if(state.poolTab==="numberroute"){
       const rows=sortByHealth(numberRoutes||[],"numberroute",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("numberroute")}</div><div class="admin-note"><strong>Unique-solution validation is automatic.</strong> Every imported route is tested against all 64 possible +, −, × and ÷ combinations using strict left-to-right calculation. Rows with zero or multiple solutions are rejected.</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Route</th><th>Numbers</th><th>Target</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.category||"math")}</small></td><td>${(r.numbers||[]).map(esc).join(" · ")}</td><td><strong>${esc(r.target)}</strong></td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-nr-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      root.querySelectorAll("[data-nr-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_number_route_puzzle",{p_puzzle_id:btn.dataset.nrToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"numberroute");bindInlineImport(root);return;
+      root.querySelectorAll("[data-nr-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_number_route_puzzle",{p_puzzle_id:btn.dataset.nrToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"numberroute");bindInlineImport(root);return;
     }
     if(state.poolTab==="sequence"){
       const rows=sortByHealth(sequences||[],"sequence",state.poolHealthSort);
       root.innerHTML=`<div class="admin-toolbar">${poolImportButton("sequence")}</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Sequence</th><th>Answer</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.category||"math")}</small></td><td>${(r.sequence||[]).map(esc).join(" · ")} · ?</td><td><strong>${esc(r.answer)}</strong><small>${esc(r.explanation||"")}</small></td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-seq-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
-      root.querySelectorAll("[data-seq-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_sequence_puzzle",{p_puzzle_id:btn.dataset.seqToggle,p_active:btn.dataset.active!=="true"});renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"sequence");bindInlineImport(root);return;
+      root.querySelectorAll("[data-seq-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_sequence_puzzle",{p_puzzle_id:btn.dataset.seqToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"sequence");bindInlineImport(root);return;
     }
     root.innerHTML=`<div class="admin-empty">Select a content pool above.</div>`;
   }
@@ -2401,11 +2399,11 @@ window.BrainiAdmin=(function(){
       </div>
       <section class="admin-panel" style="margin-top:14px"><div class="admin-panel-head"><div><h2>Game performance & Health</h2><p>Health combines starts, completed plays, exit/abandonment, accuracy and relative usage. A session that stays unfinished for 15 minutes is treated as an exit.</p></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Game</th><th>Health</th><th>Starts</th><th>Plays</th><th>Exit</th><th>Players</th><th>Avg accuracy</th><th>Avg score</th><th>Avg time</th><th>Verified</th><th>Signal</th></tr></thead><tbody>${games.map(g=>{const plays=Number(g.plays||0);const ratio=maxPlays?plays/maxPlays:0;const cls=plays===0?"low":ratio>=.75?"top":ratio<.25?"low":"mid";const signal=plays===0?"No plays":cls==="top"?"Strong usage":cls==="low"?"Low usage":"Healthy usage";return `<tr><td><strong>${esc(GAME_LABELS[g.game_id]||g.game_id)}</strong><small>Last: ${when(g.last_played)}</small></td><td>${healthBadge({health_score:g.health_score,sample_state:g.sample_state,exposures:g.starts,exit_rate:g.exit_rate})}</td><td>${num(g.starts||0)}</td><td>${num(g.plays)}</td><td>${g.exit_rate==null?"—":esc(g.exit_rate)+"%"}</td><td>${num(g.unique_players)}</td><td>${g.avg_accuracy==null?"—":esc(g.avg_accuracy)+"%"}</td><td>${g.avg_score==null?"—":num(g.avg_score)}</td><td>${g.avg_duration_sec==null?"—":esc(g.avg_duration_sec)+" s"}</td><td>${g.verified_pct==null?"—":esc(g.verified_pct)+"%"}</td><td><span class="admin-analytics-signal ${cls}">${signal}</span></td></tr>`}).join("")}</tbody></table>${games.length?"":`<div class="admin-empty">No game telemetry in this period.</div>`}</div></section>
       <section class="admin-panel" style="margin-top:14px"><div class="admin-panel-head"><div><h2>Questions that need attention</h2><p>Signals from verified answers: unusual difficulty, high skip rate or weak distractors.</p></div><button class="admin-button" id="analyticsQuestionBank">Open Question Bank</button></div><div class="admin-mini-grid"><div class="admin-mini-card"><span>Too easy</span><strong>${num(qSummary.too_easy)}</strong></div><div class="admin-mini-card"><span>Too hard</span><strong>${num(qSummary.too_hard)}</strong></div><div class="admin-mini-card"><span>High skip</span><strong>${num(qSummary.high_skip)}</strong></div><div class="admin-mini-card"><span>Weak distractors</span><strong>${num(qSummary.weak_distractors)}</strong></div></div><div class="admin-table-wrap" style="margin-top:12px"><table class="admin-table"><thead><tr><th>Signal</th><th>Question</th><th>Topic</th><th>Attempts</th><th>Accuracy</th><th>Skip</th></tr></thead><tbody>${issues.slice(0,40).map(r=>`<tr class="clickable" data-analytics-q="${esc(r.question_version_id)}"><td>${qualityBadge(r.quality_state)}</td><td><strong>${esc(r.prompt)}</strong><small>${esc(r.external_key||"")}</small></td><td>${esc(r.topic_name||r.topic_slug)}</td><td>${num(r.attempts)}</td><td>${r.accuracy==null?"—":esc(r.accuracy)+"%"}</td><td>${r.skip_rate==null?"—":esc(r.skip_rate)+"%"}</td></tr>`).join("")}</tbody></table>${issues.length?"":`<div class="admin-empty">No question-quality issues with enough verified data.</div>`}</div></section>`;
-    $("#analyticsDays").onchange=e=>renderAnalytics(Number(e.target.value));
-    $("#analyticsHealthSort").onchange=e=>{state.analyticsHealthSort=e.target.value;renderAnalytics(Number($("#analyticsDays").value));};
-    $("#analyticsRefresh").onclick=()=>renderAnalytics(Number($("#analyticsDays").value));
+    $("#analyticsDays").onchange=safeAction(e=>renderAnalytics(Number(e.target.value)));
+    $("#analyticsHealthSort").onchange=safeAction(e=>{state.analyticsHealthSort=e.target.value;return renderAnalytics(Number($("#analyticsDays").value));});
+    $("#analyticsRefresh").onclick=safeAction(()=>renderAnalytics(Number($("#analyticsDays").value)));
     $("#analyticsQuestionBank").onclick=()=>navigate("questions");
-    document.querySelectorAll("[data-analytics-q]").forEach(row=>row.onclick=()=>openQuestionEditor(row.dataset.analyticsQ));
+    document.querySelectorAll("[data-analytics-q]").forEach(row=>row.onclick=safeAction(()=>openQuestionEditor(row.dataset.analyticsQ)));
   }
 
   // ==========================================================
@@ -2424,8 +2422,8 @@ window.BrainiAdmin=(function(){
       <div id="usersTable" style="margin-top:12px">${loading()}</div>
     `;
 
-    $("#uFilter").onclick=loadUsersTable;
-    $("#uSearch").onkeydown=e=>{if(e.key==="Enter") loadUsersTable()};
+    $("#uFilter").onclick=safeAction(loadUsersTable);
+    $("#uSearch").onkeydown=safeAction(e=>{if(e.key==="Enter") return loadUsersTable()});
     await loadUsersTable();
   }
 
@@ -2467,7 +2465,7 @@ window.BrainiAdmin=(function(){
     `;
 
     holder.querySelectorAll("[data-user]").forEach(row=>{
-      row.onclick=()=>openUserDetail(row.dataset.user);
+      row.onclick=safeAction(()=>openUserDetail(row.dataset.user));
     });
   }
 
@@ -2593,7 +2591,7 @@ window.BrainiAdmin=(function(){
           <label>Game</label>
           <select class="admin-select" id="aRankGame">
             <option value="all">All games</option>
-            ${["brainmix","orderup","topicrush","brainiword","worldflags","worldcapitals","science","history","sports"].map(x=>`<option value="${x}">${x}</option>`).join("")}
+            ${Object.entries(GAME_LABELS).map(([id,label])=>`<option value="${id}">${label}</option>`).join("")}
           </select>
         </div>
         <div class="admin-field">
@@ -2613,7 +2611,14 @@ window.BrainiAdmin=(function(){
       <div id="adminRankingBody" style="margin-top:12px">${loading()}</div>
     `;
 
-    $("#aRankLoad").onclick=loadAdminRankings;
+    $("#aRankLoad").onclick=safeAction(loadAdminRankings);
+    const syncRankFilters=()=>{
+      const streak=$('#aRankMetric').value==='streak';
+      $('#aRankGame').disabled=streak;$('#aRankPeriod').disabled=streak;
+      $('#aRankCountry').disabled=$('#aRankRegion').value!=='country';
+    };
+    $('#aRankRegion').onchange=syncRankFilters;$('#aRankMetric').onchange=syncRankFilters;
+    syncRankFilters();
     await loadAdminRankings();
   }
 
@@ -2708,8 +2713,8 @@ window.BrainiAdmin=(function(){
       <div id="groupsTable">${loading()}</div>
     `;
 
-    $("#gFilter").onclick=loadGroupsTable;
-    $("#gSearch").onkeydown=e=>{if(e.key==="Enter") loadGroupsTable()};
+    $("#gFilter").onclick=safeAction(loadGroupsTable);
+    $("#gSearch").onkeydown=safeAction(e=>{if(e.key==="Enter") return loadGroupsTable()});
     await loadGroupsTable();
   }
 
@@ -2744,7 +2749,7 @@ window.BrainiAdmin=(function(){
     `;
 
     holder.querySelectorAll("[data-group]").forEach(row=>{
-      row.onclick=()=>openGroupDetail(row.dataset.group);
+      row.onclick=safeAction(()=>openGroupDetail(row.dataset.group));
     });
   }
 
@@ -2831,7 +2836,7 @@ window.BrainiAdmin=(function(){
       <div id="suggestionList">${loading()}</div>
     `;
 
-    $("#sFilter").onclick=loadSuggestions;
+    $("#sFilter").onclick=safeAction(loadSuggestions);
     await loadSuggestions();
   }
 
@@ -3631,6 +3636,7 @@ window.BrainiAdmin=(function(){
   }
 
   document.addEventListener("DOMContentLoaded",boot);
+  window.addEventListener('beforeunload',event=>{if(questionDirty||questionSaving){event.preventDefault();event.returnValue='';}});
 
   return {
     boot,

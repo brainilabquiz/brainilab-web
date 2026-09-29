@@ -1,0 +1,30 @@
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const dom=new JSDOM(readFileSync('rankings/index.html','utf8'),{url:'https://brainilabgames.com/rankings/',runScripts:'outside-only'}),w=dom.window;
+let signedIn=true,summary={progression:{xp:240,level:4,current_streak:3,best_streak:5},continuity:{today:'2026-09-28',reset_at:'2026-09-29T00:00:00Z',completed_today:true,days:Array.from({length:7},(_,i)=>({date:'2026-09-'+(22+i),completed:i>3}))},recent_rewards:[{client_result_id:'done',verified:true,xp:60}]};
+w.BrainiData={authState:()=>({status:signedIn?'authenticated':'guest',user:{source:'supabase'}}),player:()=>summary.progression,profile:()=>({})};
+w.BrainiIcons={product:()=>'<svg></svg>',rankHalo:()=>'',groupCrest:()=>''};
+w.BrainiProgression={getCached:()=>summary};w.BrainiBackendAuth={isConfigured:()=>true};
+let data={rows:[],leaderboardEnabled:true,totalPlayers:0};w.BrainiRankingsCloud={individual:async()=>data};
+for(const file of ['progression-ui.js','continuity.js','rankings.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
+await new Promise(resolve=>setTimeout(resolve,0));
+for(const [xp,level,next] of [[0,1,20],[19,1,20],[20,2,80],[80,3,180],[180,4,320],[Infinity,1,20]]){
+ const p=w.BrainiProgressUI.xpProgress(99,xp);assert.equal(p.level,level);assert.equal(p.nextXp,next);assert.ok(p.percent>=0&&p.percent<100);
+}
+const markup=w.BrainiContinuity.markup({summary,now:new Date('2026-09-28T12:00:00Z')});
+assert.match(markup,/Streak secured/);assert.match(markup,/Next milestone: 7 days/);
+assert.equal(w.BrainiContinuity.markup({summary,now:new Date('2026-09-29T00:00:01Z')}),'');
+summary.continuity.completed_today=false;
+assert.match(w.BrainiContinuity.markup({summary,now:new Date('2026-09-28T23:15:00Z')}),/0h 45m/);
+assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'done'}),/\+60 XP/);
+assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'pending'}),/after this result is verified/);
+const practice=w.document.createElement('div');practice.dataset.resultReward='';practice.innerHTML=w.BrainiContinuity.rewardMarkup({practice:true});w.document.body.append(practice);w.BrainiContinuity.render();assert.match(practice.textContent,/Practice round/);
+await w.BrainiRankings.render();assert.ok(w.document.querySelector('[data-ranking-month]'));assert.match(w.document.querySelector('#rankingsRoot').textContent,/XP to level 5/);
+data={leaderboardEnabled:true,totalPlayers:2,user:{rank:2,score:500,name:'Me'},rows:[{rank:1,score:600,name:'<img src=x onerror=alert(1)>',level:2},{rank:2,score:500,name:'Me',isMe:true,level:2}]};
+await w.BrainiRankings.render();assert.match(w.document.querySelector('.ranking-personal').textContent,/100 points to match/);assert.equal(w.document.querySelectorAll('#rankingsRoot img[onerror]').length,0);
+let resolveOld;w.BrainiRankingsCloud.individual=()=>new Promise(resolve=>resolveOld=resolve);
+const oldRender=w.BrainiRankings.render();signedIn=false;w.BrainiRankings.state.mode='friends';await w.BrainiRankings.render();resolveOld(data);await oldRender;
+assert.match(w.document.querySelector('#rankingsRoot').textContent,/Friends rankings need/);
+dom.window.close();console.log('PASS: next-level XP boundaries, stale-day protection, UTC countdown, verified rewards, preserved practice message, empty board, score gap, escaped names and asynchronous auth race.');
