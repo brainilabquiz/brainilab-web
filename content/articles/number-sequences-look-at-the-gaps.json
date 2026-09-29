@@ -2,8 +2,8 @@
   "slug": "number-sequences-look-at-the-gaps",
   "status": "published",
   "topic": "Numbers & logic",
-  "title": "Stuck on a number sequence? Look at the gaps",
-  "description": "Try differences, multipliers and alternating patterns before reaching for a complicated rule.",
+  "title": "How to spot patterns in number sequences",
+  "description": "Look at the gaps, try multiplication and check alternate terms. Four approaches to finding what comes next.",
   "game": {
     "name": "Sequence",
     "url": "/games/sequence/"
@@ -15,23 +15,23 @@
   "sections": [
     {
       "id": "between-numbers",
-      "title": "Look between the numbers",
-      "html": "<p>Consider 4, 7, 10, 13. Instead of staring at the values, ask what happens from one to the next. Each step adds three, so 16 is a natural continuation.</p><p>Write the differences underneath: +3, +3, +3. You have turned four numbers into a simpler pattern. The same move can reveal a rule that was difficult to see in the original line.</p>"
+      "title": "Look at the difference",
+      "html": "<p>What comes next in <strong>4, 7, 10, 13</strong>? Each number is three more than the last, so the pattern suggests 16.</p><p>Writing +3, +3, +3 underneath the sequence makes the rule easy to see. Subtraction is often a useful first step, even when the numbers look less familiar.</p>"
     },
     {
       "id": "growing-gaps",
-      "title": "What if the gaps are changing?",
-      "html": "<p>Try 2, 5, 10, 17. The gaps are +3, +5, +7. Continuing with the next odd gap, +9, gives 26. Check your rule against every displayed step, not just the last two numbers.</p><p>Now compare 3, 6, 12, 24. The gaps are growing, but repeated doubling gives a much simpler explanation. Differences are a first tool, not the only one.</p>"
+      "title": "Check changing gaps and multiplication",
+      "html": "<p>In <strong>2, 5, 10, 17</strong>, the gaps are +3, +5 and +7. Continue with +9 and the next number is 26.</p><p>Now look at <strong>3, 6, 12, 24</strong>. You could study the growing gaps, but there is a simpler description: each number doubles. That gives 48 next.</p><p>Check the rule against the whole sequence before settling on it.</p>"
     },
     {
       "id": "two-lines",
-      "title": "Sometimes there are two interleaved lines",
-      "html": "<p>For 2, 10, 4, 20, 6, 30, separate alternate positions. The first, third and fifth terms are 2, 4, 6; the second, fourth and sixth are 10, 20, 30. A plausible next term is 8.</p><p>On paper, use two colours or two rows. That is more reliable than trying to keep both patterns floating in your head. When a sequence swings between small and large values, this is worth a quick check.</p><details class=\"practice-answer\"><summary>Continue 5, 9, 15, 23 using gaps that increase by two.</summary><p>33. The gaps are 4, 6 and 8; the next is 10, so 23 + 10 = 33.</p></details>"
+      "title": "Read every other number",
+      "html": "<p>For <strong>2, 10, 4, 20, 6, 30</strong>, try splitting the sequence into two rows:</p><ul><li>First, third and fifth terms: 2, 4, 6.</li><li>Second, fourth and sixth terms: 10, 20, 30.</li></ul><p>One row increases by two, the other by ten. Continuing those patterns gives 8 as the next term.</p><details class=\"practice-answer\"><summary>Continue 5, 9, 15, 23, using gaps that increase by two.</summary><p><strong>33.</strong> The gaps are 4, 6 and 8, so the next gap is 10: 23 + 10 = 33.</p></details>"
     },
     {
       "id": "not-proof",
-      "title": "A plausible pattern is not a mathematical proof",
-      "html": "<p>A finite list can fit many rules. Without a stated rule, ‘the next number’ is not always uniquely determined. Puzzle questions generally intend a simple pattern supported by all the clues and answer choices.</p><p>Use a short checklist: constant difference, repeated multiplier, changing differences, alternating lines. Then read the available answers. If your rule needs a fresh exception at every step, try a simpler explanation before committing.</p><p>When you get one wrong, record the type of pattern you missed. ‘I forgot to test alternate terms’ is a more useful note than ‘I am bad at sequences’.</p>"
+      "title": "Could another answer work?",
+      "html": "<p>A short list of numbers can fit more than one rule. Unless the question specifies the pattern, the next number is not always mathematically unique.</p><p>In a puzzle, look for a simple rule that fits every term and the answer choices. Try a constant difference, multiplication, changing gaps or alternate terms. If your explanation needs a new exception at each step, it is worth trying another approach.</p>"
     }
   ],
   "sources": [
@@ -48,12 +48,13 @@
     "mental-percentages-without-a-calculator",
     "connections-puzzles-find-the-hidden-link"
   ],
-  "practice": "Open Sequence and try the checklist on a round. Use the explanation to check whether your rule fits all the terms.",
+  "practice": "Try these approaches in a round of Sequence.",
   "cover": {
     "src": "/assets/images/learn/number-sequences-look-at-the-gaps.webp",
     "alt": "Pebbles arranged in growing groups",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 9,
-  "publishedAt": "2026-09-23T19:51:37Z"
+  "publishedAt": "2026-09-23T19:51:37Z",
+  "updatedAt": "2026-09-29T20:07:50Z"
 }

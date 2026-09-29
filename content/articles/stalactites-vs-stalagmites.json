@@ -1,8 +1,8 @@
 {
   "slug": "stalactites-vs-stalagmites",
   "topic": "Science & nature",
-  "title": "Stalactites or stalagmites? Look at where they start",
-  "description": "One hangs from the ceiling; the other grows from the ground. A simple way to remember the names, plus the story of the drip between them.",
+  "title": "Stalactites and stalagmites: what’s the difference?",
+  "description": "One hangs from the ceiling; the other grows from the floor. Here’s how to tell them apart and remember their names.",
   "game": {
     "name": "Science Quiz",
     "url": "/science/science-quiz/"
@@ -15,32 +15,32 @@
     "why-octopuses-have-three-hearts",
     "counting-seconds-after-lightning"
   ],
-  "practice": "Try Science Quiz for more questions about the natural world. Before you play, picture the cave and name the formation above you.",
+  "practice": "Explore more of the natural world in Science Quiz.",
   "sections": [
     {
       "id": "look-up",
-      "title": "Start with the ceiling",
-      "html": "<p><strong>A stalactite hangs down from a cave ceiling. A stalagmite grows upward from the floor.</strong> When a downward-growing stalactite and an upward-growing stalagmite join, the formation is called a column.</p><p>The names are close enough to swap in a hurry. Rather than staring at the last few letters, first imagine where the rock is attached. Ceiling or floor? That is the useful difference.</p>"
+      "title": "Ceiling or floor?",
+      "html": "<p><strong>Stalactites hang from a cave ceiling. Stalagmites grow up from the floor.</strong> If the two meet, they form a column.</p><p>The names are easy to confuse, so start by looking at where the formation is attached. That is a better guide than whether it looks long, round or pointed.</p>"
     },
     {
       "id": "remember",
-      "title": "Two letters that do the remembering",
-      "html": "<p>Here is a memory cue: stalactite contains a <strong>c for ceiling</strong>; stalagmite contains a <strong>g for ground</strong>. This is a spelling trick, not an explanation of where the words came from.</p><p>Try drawing a very small cave: a curved roof, a flat floor, one point hanging down and one pointing up. Label the attachment points before adding the names. If a quiz image crops away the roof and floor, look for another clue rather than assuming every sharp point is a stalactite.</p>"
+      "title": "A way to remember the names",
+      "html": "<p>Think of the <strong>c in stalactite for ceiling</strong> and the <strong>g in stalagmite for ground</strong>. It is a spelling aid rather than the origin of the words, but it can help when you need to recall them quickly.</p><p>Try sketching a cave with one formation hanging down and another growing up. Label the ceiling and ground, then add the two names.</p>"
     },
     {
       "id": "one-drip",
-      "title": "What a drip can leave behind",
-      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. When the water enters the cave and loses carbon dioxide, some of that material can be deposited as calcite. Repeated deposits may build a formation on the ceiling; drops reaching the floor can help build one below.</p><p>A very slender, hollow stalactite is often called a soda straw. Stalagmites commonly look more rounded, but shape alone is a less reliable guide than the place they grow from. Cave formations also include curtains, flowstone and other shapes: not everything has to fit our two-name pair.</p>"
+      "title": "How dripping water builds rock",
+      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. As the water loses carbon dioxide in the cave, calcite can be left behind. Over time, deposits build on the ceiling and beneath the drips on the floor.</p><p>A thin, hollow stalactite is called a soda straw. Caves also contain curtains, flowstone and many other formations, so not every shape will be a stalactite or stalagmite.</p>"
     },
     {
       "id": "not-a-clock",
-      "title": "A cave formation is not a simple stopwatch",
-      "html": "<p>It is tempting to look at a metre of rock and turn it into a neat number of years. Growth depends on conditions such as the water supply and chemistry, so length alone does not give you a dependable age. Avoid learning a universal centimetres-per-century rule.</p><p>On a cave visit, keep to the permitted route and leave formations untouched. The National Park Service notes that these features can be fragile and that oils from touching can affect further growth.</p>"
+      "title": "Why size does not tell you the age",
+      "html": "<p>Growth depends on water supply, chemistry and other conditions. A formation’s length alone cannot give you a reliable age.</p><p>On a cave visit, stay on the permitted route and avoid touching formations. They can be fragile, and oils from hands can affect further mineral deposits.</p>"
     },
     {
       "id": "quick-check",
-      "title": "Can you name all three?",
-      "html": "<p>Imagine a pendant on the roof, a mound beneath it, and a third formation that reaches all the way between floor and ceiling.</p><details class=\"practice-answer\"><summary>Open the three names</summary><p>Roof pendant: <strong>stalactite</strong>. Floor mound: <strong>stalagmite</strong>. Joined formation: <strong>column</strong>. If the first two still reverse themselves, return to c for ceiling and g for ground.</p></details>"
+      "title": "Name the three formations",
+      "html": "<p>Picture a point hanging from the roof, a mound rising from the floor and a pillar joining the two.</p><details class=\"practice-answer\"><summary>Show the names</summary><ul><li>Hanging from the roof: <strong>stalactite</strong>.</li><li>Rising from the floor: <strong>stalagmite</strong>.</li><li>Joining floor and ceiling: <strong>column</strong>.</li></ul></details>"
     }
   ],
   "sources": [
@@ -67,5 +67,6 @@
     "alt": "A pointed stalactite above a rounded stalagmite in a limestone cave",
     "credit": "AI-generated cover illustration created for BrainiLab.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-29T20:07:50Z"
 }

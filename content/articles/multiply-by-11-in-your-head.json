@@ -1,8 +1,8 @@
 {
   "slug": "multiply-by-11-in-your-head",
   "topic": "Numbers & logic",
-  "title": "Multiply by 11 in your head—without forgetting the carry",
-  "description": "34 × 11 is friendly. 78 × 11 reveals the catch. Work through both, then try three short calculations of your own.",
+  "title": "A simple way to multiply by 11 in your head",
+  "description": "See how the shortcut works with 34 × 11, what changes with 78 × 11, and when you need to carry a digit.",
   "game": {
     "name": "Math Rush",
     "url": "/games/math-rush/"
@@ -15,32 +15,32 @@
     "mental-percentages-without-a-calculator",
     "number-sequences-look-at-the-gaps"
   ],
-  "practice": "Once the examples feel comfortable, try Math Rush. It mixes arithmetic questions, so choose a useful method rather than forcing the eleven trick onto every problem.",
+  "practice": "Try Math Rush when you feel ready for some quick arithmetic.",
   "sections": [
     {
       "id": "one-extra",
-      "title": "Eleven is ten plus one",
-      "html": "<p><strong>To multiply a number by 11, multiply it by 10 and add the original number.</strong> For 34, that is 340 + 34 = <strong>374</strong>. This method works even when a clever-looking digit shortcut feels harder to remember than the calculation.</p><p>Picture eleven boxes, each holding 34 counters. Ten boxes contain 340; one more contains 34. You are adding groups you already understand.</p>"
+      "title": "Multiply by ten, then add once more",
+      "html": "<p>Eleven is ten plus one, so multiplying by 11 means taking ten copies of a number and adding one more.</p><p>For <strong>34 × 11</strong>, calculate 340 + 34. The answer is <strong>374</strong>. This method works for any number and is easy to fall back on if a shortcut slips your mind.</p>"
     },
     {
       "id": "middle-digit",
-      "title": "Where the middle-digit trick comes from",
-      "html": "<p>For a two-digit number such as 34, keep the outer digits and add them to make the middle: 3, then 3 + 4, then 4. The result is 374.</p><p>That pattern comes from place value, not coincidence. Write 340 above 34 with the units aligned. The hundreds column has 3, the tens column has 4 + 3, and the units column has 4. Because the middle sum is less than ten, no carrying is needed.</p><p>Try 52 × 11 the same way: 5, then 7, then 2. Check with 520 + 52 = <strong>572</strong>.</p>"
+      "title": "The shortcut for two-digit numbers",
+      "html": "<p>With 34, you can keep 3 and 4 on the outside and put their sum in the middle: 3, then 7, then 4. That gives 374.</p><p>To see why, line up 340 and 34 as a column addition. You have 3 hundreds, 4 + 3 tens and 4 units.</p><p>Try <strong>52 × 11</strong>: the middle sum is 5 + 2 = 7, giving <strong>572</strong>. Check it with 520 + 52.</p>"
     },
     {
       "id": "carry",
-      "title": "The catch: what happens with 78?",
-      "html": "<p>Seven plus eight is 15. You cannot squeeze 15 into a single digit position and call the answer 7158.</p><ol><li>Keep 8 in the units place.</li><li>Put the 5 from 15 in the tens place.</li><li>Carry the remaining 1 into the hundreds: 7 + 1 = 8.</li></ol><p>So <strong>78 × 11 = 858</strong>. The longer check is 780 + 78 = 858. If you forget the carry, go back to that addition; there is no need to abandon the problem.</p>"
+      "title": "What if the middle sum is ten or more?",
+      "html": "<p>For <strong>78 × 11</strong>, the middle sum is 7 + 8 = 15. That means 15 tens, so you need to carry:</p><ol><li>Keep 8 in the units place.</li><li>Put 5 in the tens place.</li><li>Add the carried 1 to the 7 hundreds.</li></ol><p>The answer is <strong>858</strong>. You can check it with 780 + 78 = 858.</p>"
     },
     {
       "id": "three-practice",
-      "title": "Three examples, with one deliberate trap",
-      "html": "<p>Work out <strong>23 × 11, 67 × 11 and 99 × 11</strong>. Take your time with the last one: carrying can create an extra digit.</p><details class=\"practice-answer\"><summary>Compare your answers</summary><ul><li>23 × 11 = <strong>253</strong>: 230 + 23.</li><li>67 × 11 = <strong>737</strong>: 670 + 67.</li><li>99 × 11 = <strong>1089</strong>: 990 + 99.</li></ul><p>For 99, the middle sum is 18. Put 8 in the tens place and carry 1 into the 9 hundreds. Ten hundreds becomes one thousand. That is why the answer has four digits.</p></details>"
+      "title": "Have a go",
+      "html": "<p>Try <strong>23 × 11, 67 × 11 and 99 × 11</strong>. The last one needs a little extra care.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>23 × 11 = <strong>253</strong>.</li><li>67 × 11 = <strong>737</strong>.</li><li>99 × 11 = <strong>1089</strong>.</li></ul><p>For 99, the middle sum is 18. Carrying 1 into the 9 hundreds gives 10 hundreds, so the result has four digits.</p></details>"
     },
     {
       "id": "choose-method",
-      "title": "Use the method that costs you less effort",
-      "html": "<p>For 126 × 11, ten-times-plus-one is still straightforward: 1260 + 126 = <strong>1386</strong>. The simple two-digit shortcut above should not be applied unchanged to a three-digit number.</p><p>The underlying idea is the distributive property: splitting 11 into 10 + 1 does not change the result. Learn that idea once and you can also turn multiplication by 9 into ten times the number minus one copy. For example, 34 × 9 = 340 − 34 = 306.</p>"
+      "title": "Use the longer method when it helps",
+      "html": "<p>For a larger number such as 126, multiplying by ten and adding the original number is still straightforward: <strong>1260 + 126 = 1386</strong>. The two-digit shortcut needs adapting for longer numbers.</p><p>The same idea works in reverse for multiplication by 9: take ten times the number and subtract one copy. For example, 34 × 9 = 340 − 34 = 306.</p>"
     }
   ],
   "sources": [
@@ -59,5 +59,6 @@
     "alt": "A notebook showing 34 times 11 equals 374 beside a pencil and number tiles",
     "credit": "AI-generated cover illustration created for BrainiLab.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-29T20:07:50Z"
 }
