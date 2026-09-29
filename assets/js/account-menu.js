@@ -5,6 +5,7 @@
 */
 window.BrainiAccountMenu=(function(){
   let openMenu=null;
+  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function close(){
     if(openMenu){
@@ -62,6 +63,8 @@ window.BrainiAccountMenu=(function(){
     const logged=auth.status==="authenticated";
     const tier=window.BrainiProgressUI?.tier?.(p.level||1);
     const photo=safePhotoUrl(p.avatarUrl);
+    const progress=window.BrainiProgressUI?.xpProgress?.(p.level,p.xp);
+    const streak=Math.max(0,Number(p.currentStreak)||0);
 
     return `
       <div class="account-popover" role="menu" aria-label="BrainiLab account menu">
@@ -72,15 +75,21 @@ window.BrainiAccountMenu=(function(){
           } account-menu-avatar">
             ${photo
               ? `<img src="${photo}" alt="">`
-              : `<span>${p.avatarInitial||"B"}</span>`
+              : `<span>${esc(p.avatarInitial||"B")}</span>`
             }
           </span>
 
           <div>
-            <strong>${p.displayName||"Braini Player"}</strong>
-            <span>${tier?.name||"Rookie"} · Level ${Number(p.level||1)}</span>
+            <strong>${esc(p.displayName||"Braini Player")}</strong>
+            <span class="account-level-label">Level ${progress?.level||1} <span class="account-tier">${tier?.name||"Rookie"}</span></span>
           </div>
         </div>
+
+        <a role="menuitem" class="account-progress-link" href="${profileHref('progress')}">
+          <span><strong>${Number(p.xp||0).toLocaleString()} XP</strong><small>${esc(progress?.label||'Start with a game')}</small></span>
+          <i class="account-xp-track"><i style="width:${progress?.percent||0}%"></i></i>
+          <span class="account-streak ${p.streakSecuredToday?'is-secured':''}"><span aria-hidden="true">🔥</span> ${streak} ${streak===1?'day':'days'} <small>${p.streakSecuredToday?'Done for today':'Daily not played today'}</small></span>
+        </a>
 
         <a role="menuitem" class="account-popover-row account-popover-primary" href="${profileHref()}">
           <div>
@@ -92,14 +101,14 @@ window.BrainiAccountMenu=(function(){
         <a role="menuitem" class="account-popover-row" href="${profileHref("profile")}">
           <div>
             <strong>Edit Profile</strong>
-            <small>Name, photo, country & ranking identity</small>
+            <small>Name, photo & public profile</small>
           </div>
         </a>
 
         <a role="menuitem" class="account-popover-row" href="${profileHref("social")}">
           <div>
             <strong>Groups & Friends</strong>
-            <small>Team and social settings</small>
+            <small>Your people, your teams</small>
           </div>
         </a>
 
@@ -164,12 +173,14 @@ window.BrainiAccountMenu=(function(){
 
   function positionMenu(avatar){
     const rect=avatar.getBoundingClientRect();
+    const viewportWidth=document.documentElement.clientWidth||window.innerWidth;
 
     openMenu.style.position="fixed";
-    openMenu.style.right=`${Math.max(12,window.innerWidth-rect.right)}px`;
+    openMenu.style.maxWidth=`${Math.max(0,viewportWidth-24)}px`;
     openMenu.style.visibility="hidden";
 
     document.body.appendChild(openMenu);
+    openMenu.style.right=`${Math.min(Math.max(12,viewportWidth-rect.right),Math.max(12,viewportWidth-openMenu.offsetWidth-12))}px`;
 
     const maxTop=Math.max(
       12,
@@ -300,6 +311,7 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("brainilab:authchange",hydrate);
   window.addEventListener("brainilab:profilechange",hydrate);
   window.addEventListener("brainilab:progressionchange",hydrate);
+  window.addEventListener("brainilab:daychange",close);
   window.addEventListener("brainilab:datachange",hydrate);
 
   return {

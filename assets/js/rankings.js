@@ -21,7 +21,7 @@ window.BrainiRankings=(function(){
   }
 
   function countryFlag(code){
-    if(!code || code.length!==2) return "🌐";
+    if(!/^[A-Za-z]{2}$/.test(code||"")) return "🌐";
     return String.fromCodePoint(
       ...code.toUpperCase().split("").map(
         c=>127397+c.charCodeAt()
@@ -37,7 +37,7 @@ window.BrainiRankings=(function(){
   }
 
   function scoreText(row){
-    if(row?.displayValue) return row.displayValue;
+    if(row?.displayValue) return escapeText(row.displayValue);
 
     return state.metric==="streak"
       ? `${row?.streak||0} days`
@@ -52,10 +52,8 @@ window.BrainiRankings=(function(){
 
   function syncControls(){
     document.querySelectorAll("[data-ranking-mode]").forEach(b=>{
-      b.classList.toggle(
-        "active",
-        b.dataset.rankingMode===state.mode
-      );
+      b.classList.toggle("active",b.dataset.rankingMode===state.mode);
+      b.setAttribute("aria-pressed",String(b.dataset.rankingMode===state.mode));
     });
 
     const region=$("#rankingRegion");
@@ -151,12 +149,12 @@ window.BrainiRankings=(function(){
       return `<span class="rank-avatar ${rank} ${small?"small":""}" title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
         ${photo
           ? `<img src="${photo}" alt="">`
-          : `<span>${String(initial).slice(0,1).toUpperCase()}</span>`
+          : `<span>${escapeText(String(initial).slice(0,1).toUpperCase())}</span>`
         }
       </span>`;
     }
 
-    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:initial}</span>`;
+    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:escapeText(initial)}</span>`;
   }
 
   function podiumCard(row,place){
@@ -177,7 +175,7 @@ window.BrainiRankings=(function(){
       <strong class="podium-name">${escapeText(row.name)}</strong>
 
       <span class="podium-country">
-        ${countryFlag(row.country)} ${row.country||""}
+        ${countryFlag(row.country)} ${escapeText(row.country||"")}
       </span>
 
       <span class="podium-score">${scoreText(row)}</span>
@@ -195,7 +193,7 @@ window.BrainiRankings=(function(){
          <div>
            <strong>${escapeText(row.name)}</strong>
            <small>
-             ${countryFlag(row.country)} ${row.country||""}
+             ${countryFlag(row.country)} ${escapeText(row.country||"")}
              · ${row.members||0}/5 members
            </small>
          </div>`
@@ -203,7 +201,7 @@ window.BrainiRankings=(function(){
          <div>
            <strong>${escapeText(row.name)}</strong>
            <small>
-             ${countryFlag(row.country)} ${row.country||""}
+             ${countryFlag(row.country)} ${escapeText(row.country||"")}
              ${row.level?` · ${BrainiProgressUI?.tier?.(row.level)?.name||"Level"} Lv ${row.level}`:""}
            </small>
          </div>`;
@@ -218,79 +216,40 @@ window.BrainiRankings=(function(){
   }
 
   function personalRankMarkup(user,visibleRanks,data){
-    if(state.mode==="friends") return "";
+    const me=user||data?.user;
+    const title=state.mode==="group"?"Your team":"Your position";
+    if(state.mode==="individual" && !data?.leaderboardEnabled) return "";
+    const ahead=(data?.rows||[]).filter(r=>Number(r.score)>Number(me?.score||0)).at(-1);
+    const gap=me&&ahead?Number(ahead.score)-Number(me.score):0;
+    return `<section class="ranking-personal" aria-label="${title}">
+      <div><span>${title}</span><strong>${me?'#'+Number(me.rank):'Ready when you are'}</strong></div>
+      <div class="ranking-personal-score"><b>${me?scoreText(me):'—'}</b><span>${escapeText(data?.metricLabel||'Points')}</span></div>
+      <p>${me?(Number(me.rank)===1?'You’re sharing the lead or setting the pace.':gap?`${gap.toLocaleString()} ${state.metric==='streak'?'days':'points'} to match the next score.`:'Your position includes everyone in this selection.'):'Finish a game to put your first score on the board.'}</p>
+    </section>`;
+  }
 
-    const auth=authState();
+  function progressionMarkup(){
+    if(state.mode==='group')return '';
+    const p=window.BrainiData?.player?.();
+    if(!p || !window.BrainiProgressUI)return '';
+    const progress=BrainiProgressUI.xpProgress(p.level,p.xp);
+    return `<a class="ranking-level" href="/profile/?section=progress" aria-label="Your level and XP progress">
+      <span class="ranking-level-number">${Number(p.level)||1}</span>
+      <div><strong>Level ${Number(p.level)||1} <span>· ${escapeText(BrainiProgressUI.tier(p.level).name)}</span></strong>
+      <div class="ranking-xp-track" role="progressbar" aria-label="Progress to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><i style="width:${progress.percent}%"></i></div>
+      <small>${escapeText(progress.label)}</small></div><b>${Number(p.xp||0).toLocaleString()} XP <span>→</span></b>
+    </a>`;
+  }
 
-    if(state.mode==="individual"){
-      if(!data?.leaderboardEnabled) return "";
-
-      if(!user){
-        return `<div class="your-rank-card unavailable">
-          <div>
-            <span>Your ranking</span>
-            <strong>—</strong>
-          </div>
-          <small>
-            Play this ${state.metric==="streak"?"Daily challenge":"ranking selection"} to receive a position.
-          </small>
-        </div>`;
-      }
-    }
-
-    if(state.mode==="group" && !user){
-      return `<div class="your-rank-card unavailable">
-        <div>
-          <span>Your group ranking</span>
-          <strong>—</strong>
-        </div>
-        <small>
-          Your eligible group needs a score in this selection before it receives a position.
-        </small>
-      </div>`;
-    }
-
-    if(!user) return "";
-    if(visibleRanks.has(user.rank)) return "";
-
-    if(Number(user.rank)<=1000){
-      return `<div class="your-rank-card">
-        <div>
-          <span>
-            ${state.mode==="group"?"Your group":"Your ranking"}
-          </span>
-          <strong>#${user.rank}</strong>
-        </div>
-
-        <div class="your-rank-name">
-          ${state.mode==="group"
-            ? crestHtml(user.crest)
-            : playerAvatar(user,true)
-          }
-          <b>${escapeText(user.name)}</b>
-        </div>
-
-        <span class="your-rank-score">
-          ${scoreText(user)}
-        </span>
-      </div>`;
-    }
-
-    return `<div class="your-rank-card unavailable">
-      <div>
-        <span>
-          ${state.mode==="group"
-            ? "Your group ranking"
-            : "Your ranking"
-          }
-        </span>
-        <strong>—</strong>
-      </div>
-
-      <small class="ranking-warning">
-        Ranking available from #1000
-      </small>
-    </div>`;
+  function rulesMarkup(){
+    const daily=['brainmix','flagdash','orderup','maphunt','topicrush','brainiword'].includes(state.gameId);
+    const summary=state.metric==='streak'?'Consecutive days with a Daily game':state.gameId==='all'?'Four Daily games. Up to 10,000 points a day.':daily?'Daily points for this game':'Total game points in this period';
+    return `<details class="ranking-rules"><summary>How points work <span>${summary}</span></summary>
+      <div><p><strong>Rankings:</strong> Daily Brain Score combines the four games in each day’s challenge, up to 2,500 points each. Weekly and monthly boards add the days in that calendar period. Individual game boards use Daily contributions for Daily-only games and accumulated game points for games with Anytime play.</p>
+      <p><strong>XP & levels:</strong> XP is your personal progress and does not decide your ranking. Your first three verified games of each kind per UTC day earn 50 XP plus 5 per correct answer, up to 300 XP each. More games can still improve your score. Completing all four Daily games adds 250 XP.</p>
+      <p><strong>Streaks:</strong> Complete at least one Daily game each day. Days reset at 00:00 UTC; weeks start on Monday and months on the first. Equal scores share the same position.</p>
+      ${state.mode==='group'?'<p><strong>Teams:</strong> Groups need 3–5 members. The top three contributors count towards the group score.</p>':''}
+      </div></details>`;
   }
 
   function gateMarkup(){
@@ -336,54 +295,12 @@ window.BrainiRankings=(function(){
   }
 
   function individualPrivacyMarkup(data){
-    if(state.mode!=="individual" || !cloudConfigured()){
-      return "";
-    }
-
-    const auth=authState();
-
-    if(auth.status!=="authenticated"){
-      return `<div class="ranking-privacy-card guest">
-        <div>
-          <strong>${escapeText(data?.leaderboardDisplayName||"Guests compete too")}</strong>
-          <span>Completed games appear automatically under your guest name. Sign in to keep your progress across devices.</span>
-        </div>
-        <button class="ranking-privacy-action" data-ranking-signin>Save my progress</button>
-      </div>`;
-    }
-
-    if(!data?.leaderboardEnabled){
-      return `<div class="ranking-privacy-card private">
-        <div>
-          <strong>Your ranking profile is private</strong>
-          <span>
-            Your ranking is hidden. Show it again whenever you want; your email is never public.
-          </span>
-        </div>
-
-        <button class="ranking-privacy-action primary" data-ranking-join>
-          Show my ranking
-        </button>
-      </div>`;
-    }
-
-    return `<div class="ranking-privacy-card public">
-      <div>
-        <strong>
-          Public as ${escapeText(data.leaderboardDisplayName||"Braini Player")}
-        </strong>
-        <span>
-          ${data.userEligible
-            ? "Your current score is eligible for this ranking."
-            : "Your profile is public, but you need a score in this selection to receive a rank."
-          }
-        </span>
-      </div>
-
-      <button class="ranking-privacy-action" data-ranking-hide>
-        Hide ranking profile
-      </button>
-    </div>`;
+    if(state.mode!=="individual" || !cloudConfigured())return '';
+    const guest=authState().status!=="authenticated";
+    const enabled=data?.leaderboardEnabled;
+    return `<details class="ranking-privacy"><summary>${guest?'Playing as a guest':enabled?'Public as '+escapeText(data.leaderboardDisplayName||'Braini Player'):'Your ranking is private'} <span>Manage</span></summary>
+      <div><p>${guest?'Your guest name appears on the board. Sign in to keep your progress across devices.':enabled?'Only your public profile appears here. Your email stays private.':'Your progress is saved. Choose a public name to appear on the board.'}</p>
+      <button class="ranking-privacy-action" ${guest?'data-ranking-signin':enabled?'data-ranking-hide':'data-ranking-join'}>${guest?'Save my progress':enabled?'Hide ranking profile':'Show my ranking'}</button></div></details>`;
   }
 
   function countryRequiredMarkup(){
@@ -427,32 +344,9 @@ window.BrainiRankings=(function(){
   }
 
   function rankingEmptyMarkup(data){
-    if(state.mode==="individual"){
-      return `<div class="ranking-friends-empty ranking-no-scores">
-        <div class="ranking-friends-empty-icon">🏆</div>
-        <h2>No ranked scores here yet</h2>
-        <p>
-          Complete a scored game to appear automatically in its ranking.
-          Daily Brain Score includes today’s Daily games.
-        </p>
-      </div>`;
-    }
-
-    if(state.mode==="friends"){
-      return `<div class="ranking-friends-empty">
-        <div class="ranking-friends-empty-icon">🤝</div>
-        <h2>Connect with friends to start this ranking</h2>
-        <p>
-          Your Friends Ranking only contains people you have
-          explicitly connected with.
-        </p>
-        <a class="btn-secondary" href="../profile/index.html#friends">
-          Manage friends
-        </a>
-      </div>`;
-    }
-
-    return "";
+    if(state.mode==='friends')return `<div class="ranking-friends-empty"><h2>A little friendly competition</h2><p>Connect with friends to compare your scores here.</p><a class="btn-secondary" href="/profile/#friends">Find your friends</a></div>`;
+    const daily=state.gameId==='all'||state.metric==='streak'||['brainmix','orderup','topicrush','brainiword'].includes(state.gameId);
+    return `<div class="ranking-friends-empty ranking-no-scores"><span class="ranking-empty-mark" aria-hidden="true">${BrainiIcons.product('rankings','ranking-empty-icon')}</span><h2>A fresh board. Your move.</h2><p>No scores in this selection yet.</p><a class="btn" href="${daily?'/daily-quiz/':'/games/'}">${daily?'Play today’s games':'Find a game'} →</a>${state.period==='daily'&&state.metric==='score'?'<button type="button" class="ranking-month-link" data-ranking-month>See this month’s scores</button>':''}</div>`;
   }
 
   function loadingMarkup(){
@@ -612,6 +506,8 @@ window.BrainiRankings=(function(){
       render
     );
 
+    root.querySelector("[data-ranking-month]")?.addEventListener("click",()=>{state.period="monthly";updateUrl();render();});
+
     root.querySelector("[data-rank-more]")?.addEventListener(
       "click",
       ()=>{
@@ -627,6 +523,7 @@ window.BrainiRankings=(function(){
     const root=$("#rankingsRoot");
     if(!root) return;
 
+    const token=++renderToken;
     const gate=gateMarkup();
 
     if(gate){
@@ -635,7 +532,6 @@ window.BrainiRankings=(function(){
       return;
     }
 
-    const token=++renderToken;
     root.innerHTML=loadingMarkup();
 
     let data;
@@ -708,7 +604,7 @@ window.BrainiRankings=(function(){
             </div>
             <h2>Complete your team</h2>
             <p>
-              <strong>${closest?.name||"Your group"}</strong>
+              <strong>${escapeText(closest?.name||"Your group")}</strong>
               has ${closest?.members||0}/3 members required for
               Group Rankings. Invite ${remaining} more
               ${remaining===1?"player":"players"}.
@@ -724,11 +620,7 @@ window.BrainiRankings=(function(){
     const privacy=individualPrivacyMarkup(data);
 
     if(rows.length===0){
-      root.innerHTML=`
-        ${privacy}
-        ${rankingEmptyMarkup(data)}
-        ${personalRankMarkup(data.user,new Set(),data)}
-      `;
+      root.innerHTML=`${progressionMarkup()}<div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div>${rankingEmptyMarkup(data)}${rulesMarkup()}${privacy}`;
       bindDynamicActions(root);
       return;
     }
@@ -739,83 +631,11 @@ window.BrainiRankings=(function(){
       visible.map(r=>Number(r.rank))
     );
 
-    const podium=rows.slice(0,3);
-    const listRows=rows.slice(3,limit);
-
-    root.innerHTML=`
-      ${privacy}
-
-      <div class="ranking-summary">
-        <div>
-          <span>Ranking</span>
-          <strong>
-            ${state.mode==="friends"
-              ? "Friends"
-              : state.mode==="group"
-                ? "Groups"
-                : "Individual"
-            }
-          </strong>
-        </div>
-
-        <div>
-          <span>Region</span>
-          <strong>
-            ${state.mode==="friends"
-              ? "Friends only"
-              : state.region==="country"
-                ? `Country${data.country?` · ${countryFlag(data.country)} ${data.country}`:""}`
-                : "Global"
-            }
-          </strong>
-        </div>
-
-        <div>
-          <span>Period</span>
-          <strong>${currentPeriodLabel()}</strong>
-        </div>
-
-        <div>
-          <span>Ranked</span>
-          <strong>
-            ${Number(data.totalPlayers||rows.length).toLocaleString()}
-          </strong>
-        </div>
-      </div>
-
-      <section class="ranking-podium" aria-label="Top 3">
-        ${podium.map((r,i)=>podiumCard(r,i+1)).join("")}
-      </section>
-
-      ${listRows.length ? `
-        <section class="ranking-list">
-          <div class="ranking-list-head">
-            <span>Rank</span>
-            <span>${state.mode==="group"?"Group":"Player"}</span>
-            <span>${data.metricLabel||"Score"}</span>
-          </div>
-
-          ${listRows.map(tableRow).join("")}
-        </section>
-      ` : ""}
-
-      ${personalRankMarkup(
-        data.user,
-        visibleRanks,
-        data
-      )}
-
-      ${rows.length>10 ? `
-        <div class="ranking-more-wrap">
-          <button class="ranking-more" data-rank-more>
-            ${state.expanded
-              ? "Show top 10"
-              : "See more · Top 100"
-            }
-          </button>
-        </div>
-      ` : ""}
-    `;
+    root.innerHTML=`${personalRankMarkup(data.user,visibleRanks,data)}${progressionMarkup()}<div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div>
+      <div class="ranking-board-heading"><h2>${state.metric==='streak'?'Current streaks':escapeText($('#rankingGame')?.selectedOptions?.[0]?.textContent||'Leaderboard')}</h2><span>${Number(data.totalPlayers||rows.length).toLocaleString()} ${state.mode==='group'?'teams':'players'} · ${currentPeriodLabel()}</span></div>
+      <section class="ranking-list" aria-label="Leaderboard"><div class="ranking-list-head"><span>Rank</span><span>${state.mode==='group'?'Team':'Player'}</span><span>${escapeText(data.metricLabel||'Points')}</span></div>${visible.map(tableRow).join('')}</section>
+      ${rows.length>10?`<div class="ranking-more-wrap"><button class="ranking-more" data-rank-more>${state.expanded?'Show top 10':'Show up to 100 players'}</button></div>`:''}
+      ${rulesMarkup()}${privacy}`;
 
     bindDynamicActions(root);
   }

@@ -218,7 +218,7 @@ window.BrainiQuiz = (function(){
       if(isCorrect){
         correct++;
         results.push(true);
-        gained=500+Math.max(80,Math.round(300-((performance.now()-started)/1000%25)*8));
+        gained=(opts.gameId||inferGameId())==="brainmix"?1000:500;
         points+=gained;
 
         const correctAnswer=evaluation.correctAnswer || item.a[correctIndex] || item.a[choice];

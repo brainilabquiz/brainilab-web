@@ -96,3 +96,10 @@
  .home-intro .home-article,.home-intro .home-article-empty{order:2;margin-top:12px}
  .home-intro .home-social-links{order:3;margin-top:14px}
 }
+
+/* Game scenes keep the cards readable while giving each game a distinct identity. */
+.home-game-card{padding:18px 20px 22px;overflow:hidden}
+.home-game-card>img{width:calc(100% + 40px);height:132px;max-width:none;margin:-18px -20px 0;padding:8px 20px;object-fit:contain;background:#eef7e9}
+.home-game-card:nth-child(2)>img{background:#fff5cc}.home-game-card:nth-child(3)>img{background:#fff0e4}.home-game-card:nth-child(4)>img{background:#eeebf8}
+.home-game-card h3{margin:18px 0 10px}.home-game-card p{margin-bottom:18px;line-height:1.55}
+@media(max-width:700px){.home-game-card{padding:16px}.home-game-card>img{width:calc(100% + 32px);margin:-16px -16px 0;height:110px;padding:6px}.home-game-card h3{font-size:19px}}

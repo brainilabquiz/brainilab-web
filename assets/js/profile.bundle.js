@@ -1395,22 +1395,19 @@ window.BrainiProfileSections=(function(){
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
 
     root.innerHTML=`
-      <div class="profile-rank-avatar-wrap">
-        ${BrainiProgressUI.avatarMarkup(
-          p.avatarInitial||"B",
-          p.level||1,
-          "profile-rank-avatar"
-        )}
-      </div>
-      <div class="profile-rank-main">
-        <span>Your Brain Rank</span>
-        <h2>${tier.name}</h2>
-        <p>Level ${Number(p.level||1)} · ${Number(p.xp||0).toLocaleString()} XP</p>
-        <div class="profile-rank-progress"><span style="width:${progress.percent}%"></span></div>
+      <div class="profile-level-medallion" aria-hidden="true">${progress.level}</div>
+      <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
+        <p>${Number(p.xp||0).toLocaleString()} XP earned</p>
+        <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><span style="width:${progress.percent}%"></span></div>
         <small>${progress.label}</small>
       </div>
-      <a href="/rankings/" class="profile-rank-link">View rankings →</a>
-    `;
+      <a href="/rankings/" class="profile-rank-link">Your rankings →</a>`;
+    const journey=document.querySelector('[data-profile-milestones]');
+    if(journey){
+      const best=Math.max(0,Number(p.bestStreak)||0);
+      journey.innerHTML=[3,7,14,30].map(days=>`<div class="profile-milestone ${best>=days?'earned':''}"><span aria-hidden="true">${best>=days?'✓':'○'}</span><strong>${days} days</strong><small>${best>=days?'Reached':'Streak milestone'}</small></div>`).join('');
+    }
+    window.BrainiContinuity?.render?.();
   }
 
 
@@ -1504,6 +1501,7 @@ window.BrainiProfileSections=(function(){
 
     window.addEventListener("popstate",()=>show(selected()));
     window.addEventListener("brainilab:progressionchange",hydrateRankHero);
+    window.addEventListener("brainilab:daychange",hydrateRankHero);
     window.addEventListener("brainilab:authchange",renderSecurity);
 
     show(selected());

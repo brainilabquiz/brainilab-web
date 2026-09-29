@@ -54,6 +54,9 @@ window.BrainiIcons=(function(){
     sequence:"sequence"
   };
 
+  const ILLUSTRATIONS=new Set(["world-flags","connections","math-rush","mixed-general-knowledge","brain-mix","brainiword","number-route","sequence","order-up","topic-rush","odd-one-out","higher-lower","survival","science","history","sports","world-capitals","geography"]);
+  function artPath(file,fallback){return ILLUSTRATIONS.has(file)?`${ASSET_ROOT}/illustrations/games/${file}.svg`:fallback;}
+
   function esc(value){
     return String(value??"")
       .replaceAll("&","&amp;")
@@ -72,12 +75,12 @@ window.BrainiIcons=(function(){
 
   function game(id,variant="standard",className="braini-game-icon",alt=""){
     const file=GAME_FILES[id]||id;
-    return img(`${ROOT}/games/${variant}/${file}.svg`,className,alt);
+    return img(artPath(file,`${ROOT}/games/${variant}/${file}.svg`),className,alt);
   }
 
   function category(id,className="braini-category-icon",alt=""){
     const file=CATEGORY_BY_GAME[id]||id;
-    return img(`${ROOT}/categories/${file}.svg`,className,alt);
+    return img(artPath(file,`${ROOT}/categories/${file}.svg`),className,alt);
   }
 
   function groupSymbol(value,className="braini-group-symbol",alt=""){
@@ -97,12 +100,12 @@ window.BrainiIcons=(function(){
 
   function gamePath(id,variant="standard"){
     const file=GAME_FILES[id]||id;
-    return `${ROOT}/games/${variant}/${file}.svg`;
+    return artPath(file,`${ROOT}/games/${variant}/${file}.svg`);
   }
 
   function categoryPath(id){
     const file=CATEGORY_BY_GAME[id]||id;
-    return `${ROOT}/categories/${file}.svg`;
+    return artPath(file,`${ROOT}/categories/${file}.svg`);
   }
 
   return {

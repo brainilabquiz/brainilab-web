@@ -42,6 +42,12 @@ assert.ok(calls.some(c=>c.name==='admin_save_learn_article'&&c.args.p_action==='
 assert.equal(rows[0].published_revision,1);assert.equal(rows[0].revision,2);
 assert.match(w.document.querySelector('#article-save-state').textContent,/Draft saved/);
 w.document.querySelector('#article-add-section').click();assert.equal(w.document.querySelectorAll('[data-section]').length,articles[0].sections.length+1);
+assert.equal(w.document.querySelector('[data-move="-1"]').disabled,true);
+assert.equal([...w.document.querySelectorAll('[data-move="1"]')].at(-1).disabled,true);
+assert.ok(!w.document.querySelector('#article-game-pick option[value="/games/map-hunt/"]'));
+w.document.querySelector('#articles-back').click();
+w.document.querySelector('#article-search').value='tennis';w.document.querySelector('#article-search').dispatchEvent(new w.Event('input',{bubbles:true}));
+w.confirm=()=>false;assert.equal(w.BrainiArticles.canLeave(),true,'searching the article list is not an unsaved edit');
 w.BrainiArticles.reset();assert.equal(w.BrainiArticles.canLeave(),true);
 dom.window.close();
 console.log('PASS: safe HTML, seven-category library, dynamic metadata, publication routing, unpublish/failure handling, sitemap, editor list/form, private draft save and unsaved-change guard.');

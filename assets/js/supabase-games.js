@@ -127,7 +127,7 @@ window.BrainiCloudGames = (function(){
       p_accuracy:accuracy,
       p_duration_ms:durationMs,
       p_client_percentile:percentile===null?null:Math.round(percentile),
-      p_daily_number:Number.isFinite(Number(result.dailyNumber))?Math.round(Number(result.dailyNumber)):null,
+      p_daily_number:result.dailyNumber!=null&&Number(result.dailyNumber)>0?Math.round(Number(result.dailyNumber)):null,
       p_difficulty:result.difficulty||pack.difficulty,
       p_set_number:Number.isFinite(Number(result.setNumber))
         ? Math.round(Number(result.setNumber))

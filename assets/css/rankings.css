@@ -1,0 +1,57 @@
+.rankings-page{background:#faf7f0}
+.rankings-page .rankings-shell>.wrap{max-width:1040px}
+.rankings-page .rankings-title-row{margin-bottom:20px;align-items:center}
+.rankings-page h1{font-size:clamp(32px,5vw,46px);margin:0}
+.rankings-title-row p{margin:5px 0 0;color:#636173;font-size:15px}
+.rankings-page .rankings-group-link{background:transparent;border:0;box-shadow:none}
+.rankings-page .ranking-mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#eee9dd;border-radius:14px;padding:5px;max-width:550px}
+.rankings-page .ranking-mode-tabs button{min-height:42px;border:0;background:transparent;border-radius:10px;font-size:14px}
+.rankings-page .ranking-mode-tabs button.active{background:var(--navy);color:#fff}
+.rankings-page .ranking-filters{grid-template-columns:repeat(4,minmax(0,1fr));border-radius:14px;border-color:#e4ded1;padding:12px;gap:12px;margin:14px 0}
+.rankings-page .ranking-filter label{font-size:11px;color:#636173;text-transform:none;letter-spacing:0}
+.rankings-page .ranking-filter select{font-size:14px;min-height:43px;background:#fff;border-color:#e4ded1}
+.ranking-personal{display:grid;grid-template-columns:1fr auto;gap:8px 20px;background:var(--navy);color:white;padding:22px 24px;border-radius:18px;border-top:5px solid var(--yellow);margin:18px 0 12px}
+.ranking-personal span{display:block;font-size:13px;color:#e5e2ff}
+.ranking-personal strong{font-size:32px;line-height:1.3;display:block}
+.ranking-personal-score{text-align:right}
+.ranking-personal-score b{font-size:28px;display:block}
+.ranking-personal p{grid-column:1/-1;font-size:14px;margin:2px 0 0;color:#e5e2ff}
+.ranking-level{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 20px;background:#fff;border:1px solid #e4ded1;border-radius:16px;color:var(--navy);text-decoration:none;margin:12px 0 22px}
+.ranking-level-number{display:grid;place-items:center;background:#ffe56a;border-radius:14px;width:44px;height:44px;font-size:23px;font-weight:900}
+.ranking-level strong{font-size:15px}.ranking-level strong span{font-weight:500;color:#636173}
+.ranking-level>b{font-size:14px;white-space:nowrap}.ranking-level>b span{margin-left:10px}
+.ranking-level small{font-size:12px;color:#636173}
+.ranking-xp-track{height:7px;background:#e9e6ef;border-radius:10px;margin:7px 0 4px;max-width:420px;overflow:hidden}
+.ranking-xp-track i{display:block;height:100%;background:#3fae2a;border-radius:10px}
+.ranking-board-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:24px 0 12px}
+.ranking-board-heading h2{font-size:21px;margin:0}.ranking-board-heading>span{font-size:13px;color:#636173;text-align:right}
+.rankings-page .ranking-list{border:1px solid #e4ded1;border-radius:16px}
+.rankings-page .ranking-list-head{background:#eee9dd;color:#514e62;font-size:11px}
+.rankings-page .ranking-row{padding:13px 18px;min-height:72px;border-color:#eee9dd}
+.rankings-page .ranking-row.is-me{background:#f0f8ea;box-shadow:inset 4px 0 #3fae2a}
+.rankings-page .ranking-position{font-size:22px;color:var(--navy)}
+.rankings-page .ranking-row-score{font-size:19px;color:var(--navy)}
+.rankings-page .ranking-identity strong{font-size:15px;overflow-wrap:anywhere}
+.rankings-page .ranking-identity small{font-size:12px;color:#636173}
+.ranking-rules,.ranking-privacy{border-bottom:1px solid #e4ded1;padding:16px 2px;color:var(--navy)}
+.ranking-rules summary,.ranking-privacy summary{cursor:pointer;font-size:14px;font-weight:750}
+.ranking-rules summary span{font-size:12px;font-weight:400;color:#636173;margin-left:12px}
+.ranking-rules p,.ranking-privacy p{font-size:14px;line-height:1.65;max-width:760px;color:#514e62}
+.ranking-privacy summary{font-size:12px;font-weight:500;color:#636173}.ranking-privacy summary span{float:right;color:var(--navy)}
+.rankings-page .ranking-friends-empty{max-width:none;margin:18px 0;padding:30px 24px;background:#fff;border:1px solid #e4ded1;border-radius:18px}
+.rankings-page .ranking-friends-empty h2{font-size:24px;margin:12px 0 8px}
+.rankings-page .ranking-friends-empty p{font-size:15px;margin:0 0 18px;color:#636173}
+.ranking-empty-icon{width:42px;height:42px}.ranking-empty-mark{display:inline-flex;border-radius:18px;padding:12px;background:#fff3ba}
+.ranking-month-link{display:block;margin:16px auto 0;background:none;border:0;text-decoration:underline;color:var(--navy);font-size:13px;min-height:35px}
+.rankings-page :is(button,a,select,summary):focus-visible{outline:3px solid #3fae2a;outline-offset:4px}
+@media(max-width:650px){
+ .rankings-page .rankings-shell{padding-top:20px}.rankings-page .ranking-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .rankings-page .ranking-mode-tabs{grid-template-columns:repeat(3,1fr);max-width:none}.rankings-page .ranking-mode-tabs button{font-size:12px}
+ .rankings-page .rankings-group-link{display:none}.ranking-personal{padding:18px}.ranking-personal strong{font-size:28px}.ranking-personal-score b{font-size:24px}
+ .ranking-level{padding:14px;gap:10px;grid-template-columns:38px minmax(0,1fr)}.ranking-level-number{width:38px;height:38px}.ranking-level>b{grid-column:2;font-size:12px}
+ .ranking-level strong span{display:none}.ranking-board-heading{align-items:center}.ranking-board-heading h2{font-size:19px}
+ .rankings-page .ranking-list-head,.rankings-page .ranking-row{grid-template-columns:42px minmax(0,1fr) auto;gap:8px;padding:12px}
+ .rankings-page .ranking-row-score{font-size:16px}.rankings-page .ranking-position{font-size:18px}.rankings-page .rank-avatar.small{width:34px;height:34px;min-width:34px}
+ .rankings-page .ranking-identity{gap:7px}.rankings-page .ranking-identity strong{font-size:13px}.rankings-page .ranking-identity small{font-size:10px}
+ .ranking-rules summary span{display:block;margin:6px 0 0 18px}.ranking-board-heading>span{font-size:12px}
+}

@@ -1,0 +1,87 @@
+// Real PostgreSQL execution in PGlite; no production accounts or records are changed.
+import {readFile} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+const {PGlite}=await import(pathToFileURL(process.env.PGLITE_MODULE).href);
+const db=new PGlite();let passed=0;
+const check=(ok,label)=>{assert.ok(ok,label);passed++;console.log('PASS',label)};
+const scalar=async(sql,args=[])=>Object.values((await db.query(sql,args)).rows[0])[0];
+const actor=async id=>db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]);
+const a='10000000-0000-4000-8000-000000000001',b='20000000-0000-4000-8000-000000000002';
+const submit=async(id,game='science',daily=null,score=99999,payload={})=>scalar("select to_jsonb(r) from submit_brainilab_game_result($1,$2,'2040-01-01'::timestamptz,$3,2,10,20,1000,null,$4,null,null,$5::jsonb) r",[id,game,score,daily,JSON.stringify(payload)]);
+const refresh=async()=>db.query('select refresh_brainilab_player_progression($1)',[a]);
+const xp=async()=>Number(await scalar('select xp from player_progression where user_id=$1',[a]));
+try{
+ await db.exec(`create role anon;create role authenticated;create schema auth;
+ create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+ grant usage on schema auth to anon,authenticated;grant execute on function auth.uid() to anon,authenticated;`);
+ await db.exec(await readFile('tools/fixtures/rewards-schema.sql','utf8'));
+ await db.exec(`alter table player_progression add primary key(user_id);alter table profiles add primary key(user_id);
+ alter table game_results add primary key(id);alter table game_results add unique(session_id);
+ alter table game_sessions add primary key(id);alter table game_sessions add unique(user_id,client_result_id);
+ alter table verified_question_answers add unique(result_id,question_version_id);
+ insert into topic_rush_settings(singleton,launch_date)values(true,'2026-01-01');insert into order_up_settings(singleton,launch_date)values(true,'2026-01-01');
+ insert into profiles(user_id,display_name,leaderboard_display_name) values('${a}','Zed','Zed'),('${b}','Amy','Amy');`);
+ await db.exec(await readFile('tools/fixtures/rewards-existing-helpers.sql','utf8'));
+ await db.exec(await readFile('supabase/migrations/20260928203423_ranking_rewards_continuity.sql','utf8'));
+ await actor(a);
+ await assert.rejects(()=>submit('invalid-game','madeup'));check(true,'unknown games rejected');
+ await assert.rejects(()=>submit('practice-game','science',null,100,{practice:true}));check(true,'practice cannot award cloud points');
+ const first=await submit('pending-first');await refresh();check(await xp()===0,'unverified new result earns no XP');
+ check(await scalar("select daily_number is null and completed_at<now()+interval '1 second' from game_sessions where client_result_id='pending-first'"),'server date prevents future-period injection');
+ await db.query('update game_results set answers_verified=true,verified_correct_answers=2,verified_total_questions=10 where id=$1',[first.result_id]);
+ await refresh();check(await xp()===60,'verified completion earns 50 + 5 per correct answer');
+ check((await submit('pending-first')).already_existed,'retry retains original result');await refresh();check(await xp()===60,'retry cannot duplicate XP');
+ for(let i=2;i<=4;i++){const r=await submit('verified-game-'+i);await db.query('update game_results set answers_verified=true,verified_correct_answers=2,verified_total_questions=10 where id=$1',[r.result_id]);}
+ await refresh();check(await xp()===180,'only first three verified games of one kind earn XP in a UTC day');
+ const other=await submit('another-kind','history',0);await db.query('update game_results set answers_verified=true,verified_correct_answers=2,verified_total_questions=10 where id=$1',[other.result_id]);await refresh();
+ check(await xp()===240,'another game has its own daily XP allowance');
+ check(await scalar("select daily_number is null from game_sessions where client_result_id='another-kind'"),'Anytime zero is normalized to NULL');
+ // Legacy records retain the original XP even when verification was unavailable.
+ const old=await submit('old-import');await db.query("update game_results set created_at=public.brainilab_rewards_started_at()-interval '1 day' where id=$1",[old.result_id]);await refresh();
+ check(await xp()===300,'historical XP preserved without retroactive deduction');
+ await db.query("update player_progression set current_streak=9,last_streak_date=(now() at time zone 'UTC')::date-2 where user_id=$1",[a]);
+ check(Number(await scalar("select brainilab_player_rank_value($1,'daily','all','streak')",[a]))===0,'expired streak reads as zero without a new game');
+ await db.query("update player_progression set last_streak_date=(now() at time zone 'UTC')::date-1 where user_id=$1",[a]);
+ check(Number(await scalar("select brainilab_player_rank_value($1,'daily','all','streak')",[a]))===9,'yesterday streak remains active until UTC reset');
+ await db.query("insert into player_progression(user_id,current_streak,last_streak_date)values($1,9,(now() at time zone 'UTC')::date)",[b]);
+ const tied=await scalar("select get_brainilab_individual_rankings(p_metric=>'streak')");
+ check(tied.rows.length===2&&tied.rows.every(r=>r.rank===1),'equal scores share rank regardless of alphabetical order');
+ check(tied.user?.name==='Zed'&&tied.user.rank===1,'own tied position returned correctly');
+ const summary=await scalar('select get_my_brainilab_progression()');
+ check(summary.continuity.days.length===7&&summary.continuity.completed_today===false,'seven-day calendar distinguishes Anytime from Daily');
+ check(summary.reward_rules.per_game_daily_limit===3,'reward rules exposed with personal summary');
+ const capped=summary.recent_rewards.find(r=>r.client_result_id==='verified-game-4');
+ check(capped.xp===0&&capped.daily_limit_reached,'result summary reports a capped reward truthfully');
+ await assert.rejects(()=>submit('oversized','science',null,100001));check(true,'oversized score rejected');
+ await db.exec(`insert into topics(id,slug,name)values('30000000-0000-4000-8000-000000000003','science','Science');
+ insert into questions(id)values('40000000-0000-4000-8000-000000000004');
+ insert into question_versions(id,question_id,primary_topic_id,status,difficulty)values('50000000-0000-4000-8000-000000000005','40000000-0000-4000-8000-000000000004','30000000-0000-4000-8000-000000000003','published','easy');
+ insert into question_options(id,question_version_id,is_correct)values('60000000-0000-4000-8000-000000000006','50000000-0000-4000-8000-000000000005',true);`);
+ const answers=[{question_version_id:'50000000-0000-4000-8000-000000000005',selected_option_id:'60000000-0000-4000-8000-000000000006',response_time_ms:1}];
+ const verify=(id,answerList=answers)=>scalar("select verify_brainilab_anytime_quiz_result($1,'science','easy',$2::jsonb)",[id,JSON.stringify(answerList)]);
+ const scored=await submit('canonical-score');await verify('canonical-score');
+ check(Number(await scalar('select score from game_results where id=$1',[scored.result_id]))===500,'client score and timer cannot inflate verified quiz points');
+ await submit('wrong-game','history');await assert.rejects(()=>verify('wrong-game'));check(true,'quiz verification cannot be attached to another game');
+ await assert.rejects(()=>verify('canonical-score',[]));check(true,'empty quiz cannot earn completion XP');
+ await assert.rejects(()=>verify('canonical-score',[answers[0],answers[0]]));check(true,'duplicate question answers rejected');
+ const zero=await submit('zero-correct');await verify('zero-correct',[{...answers[0],selected_option_id:null}]);
+ check(Number(await scalar('select score from game_results where id=$1',[zero.result_id]))===0,'skipped answers award zero score');
+ // Full Daily integration on a clean second account, with the actual rotation.
+ await actor(b);const ids=await scalar("select brainilab_daily_game_ids((now() at time zone 'UTC')::date)"),daily=await scalar("select brainilab_daily_number_for_date((now() at time zone 'UTC')::date)");
+ for(const game of ids){const r=await submit('full-'+game,game,daily,1000);await db.query('update game_results set answers_verified=true,verified_correct_answers=2,verified_total_questions=10 where id=$1',[r.result_id]);}
+ await db.query('select refresh_brainilab_player_progression($1)',[b]);
+ const full=await scalar('select get_my_brainilab_progression()');
+ check(Number(full.progression.xp)===490,'four verified Daily games award 240 XP plus one 250 completion bonus');
+ check(full.continuity.completed_today&&full.progression.current_streak===1,'verified Daily secures the day and starts a streak');
+ await db.query('select refresh_brainilab_player_progression($1)',[b]);
+ check(Number(await scalar('select xp from player_progression where user_id=$1',[b]))===490,'rebuilding progression does not duplicate the full Daily bonus');
+ await db.query('update profiles set leaderboard_enabled=false where user_id=$1',[b]);
+ const privateBoard=await scalar("select get_brainilab_individual_rankings(p_metric=>'streak')");
+ check(!privateBoard.rows.some(r=>r.user_id===b),'private profile excluded from public board');
+ await actor(a);
+ await db.exec('set role authenticated');
+ await assert.rejects(()=>db.query('select public.brainilab_rewards_started_at()'));check(true,'internal rules helper is not a public RPC');
+ await db.exec('reset role');
+ console.log(`${passed} rewards and ranking checks passed.`);
+}finally{await db.close();}

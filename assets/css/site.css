@@ -5770,3 +5770,32 @@ main > section.section,
 
 
 .cookie-settings{font-size:12px;margin-top:8px}.cookie-settings summary{cursor:pointer;font-weight:650;color:var(--navy)}.cookie-settings label{display:flex;align-items:center;gap:8px;margin:10px 0}.cookie-settings input{width:18px;height:18px}.cookie-settings button{border:1px solid #c8c1b7;background:white;border-radius:7px;padding:8px 12px;cursor:pointer}
+
+/* Daily continuity and verified rewards */
+.continuity-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;background:#fffaf0;border:1px solid #e6d7bc;border-radius:18px;padding:22px;margin:20px 0;color:#30296f}
+.continuity-card.is-secured{background:#f4faef;border-color:#cbdcbe}
+.continuity-main{display:flex;align-items:center;gap:16px}.continuity-count{display:flex;align-items:center;gap:4px;flex-shrink:0}.continuity-count b{font-size:32px}.continuity-flame{width:33px;height:39px}
+.continuity-main h2{font-size:18px!important;margin:0 0 5px!important;line-height:1.3}.continuity-main p{font-size:14px;line-height:1.5;margin:0;color:#514e62}.continuity-main small{display:block;font-size:12px;color:#636173;margin-top:5px}
+.continuity-week{display:flex;align-items:center;justify-content:center;gap:6px;list-style:none;margin:0;padding:0}.continuity-week li{text-align:center;font-size:11px;color:#636173;min-width:25px}.continuity-week li span{display:block;margin-bottom:6px}.continuity-week b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#ebe6db;color:#636173}.continuity-week .complete b{background:#3fae2a;color:#fff}.continuity-week .today b{outline:2px solid #30296f;outline-offset:3px}
+.continuity-action{font-size:14px;font-weight:800;text-decoration:none;color:#30296f}.continuity-timezone{font-size:11px;color:#636173;text-align:right;align-self:center}
+.post-reward{display:block;max-width:420px;margin:18px auto;text-decoration:none;background:#f4faef;border:1px solid #cbdcbe;border-radius:14px;padding:14px 18px;color:#30296f;text-align:left}.post-reward strong{display:block;font-size:19px}.post-reward>span{display:block;font-size:13px;margin:4px 0 8px}.post-reward small{display:block;font-size:12px;line-height:1.5;margin-top:8px}.post-reward-note{font-size:13px!important;color:#636173!important}.post-xp-track{display:block;height:7px;border-radius:8px;background:#dddce7;overflow:hidden}.post-xp-track>i{display:block;height:100%;background:#3fae2a}
+@media(max-width:700px){.continuity-card{grid-template-columns:1fr;gap:16px;padding:18px}.continuity-week{justify-content:space-between}.continuity-week b{width:30px;height:30px}.continuity-timezone{text-align:left;margin-top:-10px}.continuity-main h2{font-size:17px!important}}
+
+.profile-continuity{grid-column:1/-1;width:100%}
+
+/* A grey flame means today's Daily has not been completed, even with an active streak. */
+.streak{filter:grayscale(1);color:#777985;background:#f6f5f2}.streak span{color:#6c6b76}
+.streak.is-secured{filter:none;background:#fff6e6;border-color:#efcf98}.streak.is-secured span{color:#b44908}
+.continuity-card:not(.is-secured) .continuity-flame{filter:grayscale(1);opacity:.55}
+.account-popover{width:min(340px,calc(100vw - 24px));padding:14px;border-radius:22px;border-color:#e4ddd2;box-shadow:0 14px 46px #29234425}
+.account-popover-head{gap:13px;margin:0;padding:8px 5px 14px;border:0}.account-popover-head .account-menu-avatar{width:48px!important;height:48px!important;flex:none}
+.account-popover-head strong{font-size:19px;overflow-wrap:anywhere}.account-popover-head .account-level-label{font-size:13px;font-weight:700;color:#2d296e;margin-top:4px}
+.account-popover-head .account-tier{display:inline;font-size:11px;font-weight:500;color:#6b687b;margin-left:5px}
+.account-popover>a.account-progress-link{display:block;padding:13px;background:#f7f4ed;border:1px solid #e8e0d1;border-radius:14px;color:#2d296e;text-decoration:none;margin:0 0 10px}
+.account-popover>a.account-progress-link>span:first-child{display:flex;justify-content:space-between;align-items:center;gap:8px}.account-progress-link strong{font-size:13px}.account-progress-link small{font-size:11px;color:#686477}
+.account-xp-track{display:block;height:6px;background:#e2dfea;border-radius:8px;margin:9px 0 11px;overflow:hidden}.account-xp-track i{display:block;height:100%;background:#40ab34;border-radius:8px}
+.account-streak{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:750}.account-streak>span{filter:grayscale(1)}.account-streak.is-secured>span{filter:none}.account-streak small{margin-left:auto;font-weight:500}
+.account-popover a.account-popover-row,.account-popover button.account-popover-row{padding:11px 10px;min-height:48px;border-radius:10px}.account-popover-row strong{font-size:14px}.account-popover-row small{font-size:11px}.account-popover-row:hover{background:#f6f3ed}
+
+.account-popover-head .account-menu-avatar>span{display:grid;place-items:center;margin:0;font-size:19px;color:#2d296e;background:#edeaf5}
+.account-popover>a.account-progress-link>span{text-align:left}

@@ -33,23 +33,12 @@ window.BrainiProgressUI=(function(){
   }
 
   function xpProgress(level,xp){
-    const current=tier(level);
-    const next=nextTier(level);
-    if(!next){
-      return {percent:100,currentXp:Number(xp||0),nextXp:null,label:"Top rank"};
-    }
-
-    const start=xpForLevel(current.min);
-    const end=xpForLevel(next.min);
-    const value=Math.max(start,Number(xp||0));
-    const percent=Math.max(0,Math.min(100,(value-start)/(end-start)*100));
-
-    return {
-      percent,
-      currentXp:value,
-      nextXp:end,
-      label:`${Math.max(0,end-value).toLocaleString()} XP to ${next.name}`
-    };
+    const value=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
+    const n=Math.max(1,Math.floor(Math.sqrt(value/20))+1);
+    const start=xpForLevel(n),end=xpForLevel(n+1);
+    return {percent:Math.max(0,Math.min(100,(value-start)/(end-start)*100)),
+      currentXp:value,nextXp:end,level:n,nextLevel:n+1,
+      label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
 
   function avatarClass(level){

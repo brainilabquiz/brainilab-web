@@ -56,6 +56,9 @@ window.BrainiIcons=(function(){
     sequence:"sequence"
   };
 
+  const ILLUSTRATIONS=new Set(["world-flags","connections","math-rush","mixed-general-knowledge","brain-mix","brainiword","number-route","sequence","order-up","topic-rush","odd-one-out","higher-lower","survival","science","history","sports","world-capitals","geography"]);
+  function artPath(file,fallback){return ILLUSTRATIONS.has(file)?`${ASSET_ROOT}/illustrations/games/${file}.svg`:fallback;}
+
   function esc(value){
     return String(value??"")
       .replaceAll("&","&amp;")
@@ -74,12 +77,12 @@ window.BrainiIcons=(function(){
 
   function game(id,variant="standard",className="braini-game-icon",alt=""){
     const file=GAME_FILES[id]||id;
-    return img(`${ROOT}/games/${variant}/${file}.svg`,className,alt);
+    return img(artPath(file,`${ROOT}/games/${variant}/${file}.svg`),className,alt);
   }
 
   function category(id,className="braini-category-icon",alt=""){
     const file=CATEGORY_BY_GAME[id]||id;
-    return img(`${ROOT}/categories/${file}.svg`,className,alt);
+    return img(artPath(file,`${ROOT}/categories/${file}.svg`),className,alt);
   }
 
   function groupSymbol(value,className="braini-group-symbol",alt=""){
@@ -99,12 +102,12 @@ window.BrainiIcons=(function(){
 
   function gamePath(id,variant="standard"){
     const file=GAME_FILES[id]||id;
-    return `${ROOT}/games/${variant}/${file}.svg`;
+    return artPath(file,`${ROOT}/games/${variant}/${file}.svg`);
   }
 
   function categoryPath(id){
     const file=CATEGORY_BY_GAME[id]||id;
-    return `${ROOT}/categories/${file}.svg`;
+    return artPath(file,`${ROOT}/categories/${file}.svg`);
   }
 
   return {
@@ -486,7 +489,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   function game(gameId){ return clone(GAME_DEFS[gameId]||null); }
-  function player(){ return clone(state.player); }
+  function player(){
+    const p=clone(state.player),today=todayKey();
+    const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
+    const last=p.lastStreakDate;
+    p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
+    p.streakSecuredToday=last===today && p.currentStreak>0;
+    return p;
+  }
   function daily(){ return clone(state.daily); }
   function personalBest(gameId){ return clone(state.personalBests[gameId]||null); }
   function anytimeHistory(scope){
@@ -1453,6 +1463,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const month=summary.month||{};
 
     state.player.currentStreak=Number(p.current_streak||0);
+    state.player.lastStreakDate=p.last_streak_date||null;
     state.player.bestStreak=Number(p.best_streak||0);
     state.player.xp=Number(p.xp||0);
     state.player.level=Number(p.level||1);
@@ -1875,6 +1886,11 @@ window.BrainiUI = (function(){
     renderDailyScoreCards(daily);
 
     setText("[data-player-streak]",player.currentStreak);
+    document.querySelectorAll('.streak').forEach(el=>{
+      el.classList.toggle('is-secured',player.streakSecuredToday===true);
+      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play a Daily game to keep your streak':'Complete a Daily game to start your streak';
+      el.setAttribute('aria-label',`${player.currentStreak} day streak. ${el.title}. Days reset at 00:00 UTC.`);
+    });
     setText("[data-player-best-streak]",player.bestStreak);
     setText("[data-player-total-games]",player.totalGames.toLocaleString());
     setText("[data-player-total-questions]",player.totalQuestions.toLocaleString());
@@ -1984,7 +2000,7 @@ window.BrainiUI = (function(){
       else if(r.gameId==="orderup") result=Number(r.score||0).toLocaleString()+" / 2,500";
       else if(r.score!=null) result=Number(r.score).toLocaleString()+" pts";
       return `<div class="data-row">
-        <span class="data-rank">${d?.icon||"🧠"}</span>
+        <span class="data-rank">${window.BrainiIcons?.game?.(r.gameId,'mini','recent-game-art')||'●'}</span>
         <span class="data-name">${d?.name||r.gameId}<small style="display:block;color:var(--muted);font-weight:650">${new Date(r.playedAt).toLocaleDateString()}</small></span>
         <span class="data-value">${result}</span>
       </div>`;
@@ -2034,23 +2050,12 @@ window.BrainiProgressUI=(function(){
   }
 
   function xpProgress(level,xp){
-    const current=tier(level);
-    const next=nextTier(level);
-    if(!next){
-      return {percent:100,currentXp:Number(xp||0),nextXp:null,label:"Top rank"};
-    }
-
-    const start=xpForLevel(current.min);
-    const end=xpForLevel(next.min);
-    const value=Math.max(start,Number(xp||0));
-    const percent=Math.max(0,Math.min(100,(value-start)/(end-start)*100));
-
-    return {
-      percent,
-      currentXp:value,
-      nextXp:end,
-      label:`${Math.max(0,end-value).toLocaleString()} XP to ${next.name}`
-    };
+    const value=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
+    const n=Math.max(1,Math.floor(Math.sqrt(value/20))+1);
+    const start=xpForLevel(n),end=xpForLevel(n+1);
+    return {percent:Math.max(0,Math.min(100,(value-start)/(end-start)*100)),
+      currentXp:value,nextXp:end,level:n,nextLevel:n+1,
+      label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
 
   function avatarClass(level){
@@ -2193,6 +2198,50 @@ window.BrainiProgressUI=(function(){
     avatarClass,avatarMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
+})();
+
+/* ===== continuity.js ===== */
+
+/* A single, server-backed view of Daily continuity and earned rewards. */
+window.BrainiContinuity=(()=>{
+  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const count=value=>Math.max(0,Math.floor(Number(value)||0));
+  const milestones=[3,7,14,30,60,100,180,365];
+  function markup({summary=window.BrainiProgression?.getCached?.(),now=new Date(),compact=false}={}){
+    const continuity=summary?.continuity,p=summary?.progression;
+    // Do not present stale cached dates or browser-only scores as a secured day.
+    if(!continuity||!p||continuity.today!==now.toISOString().slice(0,10))return '';
+    const streak=count(p.current_streak),best=count(p.best_streak),secured=!!continuity.completed_today;
+    if(compact&&!streak&&!best&&!count(p.xp))return '';
+    const next=milestones.find(n=>n>streak)||Math.ceil((streak+1)/100)*100;
+    const remaining=Math.max(0,new Date(continuity.reset_at)-now),hours=Math.floor(remaining/3600000),minutes=Math.floor(remaining%3600000/60000);
+    const heading=secured?'Streak secured for today':streak?'Keep your streak going':'Start a new streak';
+    const detail=secured?`${streak} ${streak===1?'day':'days'} and counting. Next milestone: ${next} days.`:streak?`One Daily game keeps it going. Today ends in ${hours}h ${minutes}m.`:'Complete one Daily game. Your first day starts there.';
+    const days=(continuity.days||[]).map(d=>{const date=new Date(d.date+'T12:00:00Z'),today=d.date===continuity.today;return `<li class="${d.completed?'complete':''} ${today?'today':''}" aria-label="${esc(date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'}))}: ${d.completed?'completed':today?'not completed yet':'no Daily game'}"><span>${esc(date.toLocaleDateString('en-GB',{weekday:'narrow',timeZone:'UTC'}))}</span><b aria-hidden="true">${d.completed?'✓':today?'•':'–'}</b></li>`;}).join('');
+    return `<section class="continuity-card ${secured?'is-secured':''}" aria-label="Your Daily streak"><div class="continuity-main"><span class="continuity-count" aria-label="${streak} day streak">${BrainiIcons.product('streak','continuity-flame')}<b>${streak}</b></span><div><h2>${heading}</h2><p>${detail}</p>${best?`<small>Personal best: ${best} ${best===1?'day':'days'}</small>`:''}</div></div><ol class="continuity-week" aria-label="Last seven UTC days">${days}</ol>${secured?'<a class="continuity-action" href="/profile/?section=progress">See your progress →</a>':'<a class="continuity-action" href="/daily-quiz/">Play a Daily game →</a>'}<span class="continuity-timezone">Daily reset: 00:00 UTC</span></section>`;
+  }
+  function rewardMarkup(result){
+    if(result?.practice||result?.tryFirst)return '<p class="post-reward-note">Practice round · no XP or streak changes</p>';
+    if(!result?.clientResultId)return '';
+    const summary=window.BrainiProgression?.getCached?.(),reward=summary?.recent_rewards?.find(r=>r.client_result_id===result.clientResultId);
+    if(!reward?.verified)return '<p class="post-reward-note">Your progress will update after this result is verified.</p>';
+    const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp);
+    return `<a class="post-reward" href="/profile/?section=progress"><strong>${reward.daily_limit_reached?'Today’s XP earned for this game':'+'+count(reward.xp)+' XP'}</strong><span>Level ${count(p.level)||1} · ${esc(progress.label)}</span><i class="post-xp-track"><i style="width:${progress.percent}%"></i></i>${reward.daily_limit_reached?'<small>You can still improve your score. New XP tomorrow, or try another game.</small>':''}</a>`;
+  }
+  function render(){
+    window.BrainiUI?.hydrate?.();
+    document.querySelectorAll('[data-braini-continuity]').forEach(el=>{el.innerHTML=markup({compact:el.dataset.brainiContinuity==='compact'});el.hidden=!el.innerHTML;});
+    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward)el.innerHTML=rewardMarkup({clientResultId:el.dataset.resultReward});});
+  }
+  document.addEventListener('DOMContentLoaded',render);
+  window.addEventListener('brainilab:progressionchange',render);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();const cached=window.BrainiProgression?.getCached?.();if(cached?.continuity?.today!==new Date().toISOString().slice(0,10))window.BrainiProgression?.sync?.();}});
+  function scheduleReset(){
+    const now=new Date(),next=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1);
+    setTimeout(()=>{render();window.dispatchEvent(new CustomEvent('brainilab:daychange'));window.BrainiProgression?.sync?.();scheduleReset();},next-now+1000);
+  }
+  scheduleReset();
+  return {markup,rewardMarkup,render};
 })();
 
 /* ===== perf-loader.js ===== */
@@ -3943,6 +3992,7 @@ window.BrainiAds=(function(){
 */
 window.BrainiAccountMenu=(function(){
   let openMenu=null;
+  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function close(){
     if(openMenu){
@@ -4000,6 +4050,8 @@ window.BrainiAccountMenu=(function(){
     const logged=auth.status==="authenticated";
     const tier=window.BrainiProgressUI?.tier?.(p.level||1);
     const photo=safePhotoUrl(p.avatarUrl);
+    const progress=window.BrainiProgressUI?.xpProgress?.(p.level,p.xp);
+    const streak=Math.max(0,Number(p.currentStreak)||0);
 
     return `
       <div class="account-popover" role="menu" aria-label="BrainiLab account menu">
@@ -4010,15 +4062,21 @@ window.BrainiAccountMenu=(function(){
           } account-menu-avatar">
             ${photo
               ? `<img src="${photo}" alt="">`
-              : `<span>${p.avatarInitial||"B"}</span>`
+              : `<span>${esc(p.avatarInitial||"B")}</span>`
             }
           </span>
 
           <div>
-            <strong>${p.displayName||"Braini Player"}</strong>
-            <span>${tier?.name||"Rookie"} · Level ${Number(p.level||1)}</span>
+            <strong>${esc(p.displayName||"Braini Player")}</strong>
+            <span class="account-level-label">Level ${progress?.level||1} <span class="account-tier">${tier?.name||"Rookie"}</span></span>
           </div>
         </div>
+
+        <a role="menuitem" class="account-progress-link" href="${profileHref('progress')}">
+          <span><strong>${Number(p.xp||0).toLocaleString()} XP</strong><small>${esc(progress?.label||'Start with a game')}</small></span>
+          <i class="account-xp-track"><i style="width:${progress?.percent||0}%"></i></i>
+          <span class="account-streak ${p.streakSecuredToday?'is-secured':''}"><span aria-hidden="true">🔥</span> ${streak} ${streak===1?'day':'days'} <small>${p.streakSecuredToday?'Done for today':'Daily not played today'}</small></span>
+        </a>
 
         <a role="menuitem" class="account-popover-row account-popover-primary" href="${profileHref()}">
           <div>
@@ -4030,14 +4088,14 @@ window.BrainiAccountMenu=(function(){
         <a role="menuitem" class="account-popover-row" href="${profileHref("profile")}">
           <div>
             <strong>Edit Profile</strong>
-            <small>Name, photo, country & ranking identity</small>
+            <small>Name, photo & public profile</small>
           </div>
         </a>
 
         <a role="menuitem" class="account-popover-row" href="${profileHref("social")}">
           <div>
             <strong>Groups & Friends</strong>
-            <small>Team and social settings</small>
+            <small>Your people, your teams</small>
           </div>
         </a>
 
@@ -4102,12 +4160,14 @@ window.BrainiAccountMenu=(function(){
 
   function positionMenu(avatar){
     const rect=avatar.getBoundingClientRect();
+    const viewportWidth=document.documentElement.clientWidth||window.innerWidth;
 
     openMenu.style.position="fixed";
-    openMenu.style.right=`${Math.max(12,window.innerWidth-rect.right)}px`;
+    openMenu.style.maxWidth=`${Math.max(0,viewportWidth-24)}px`;
     openMenu.style.visibility="hidden";
 
     document.body.appendChild(openMenu);
+    openMenu.style.right=`${Math.min(Math.max(12,viewportWidth-rect.right),Math.max(12,viewportWidth-openMenu.offsetWidth-12))}px`;
 
     const maxTop=Math.max(
       12,
@@ -4238,6 +4298,7 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("brainilab:authchange",hydrate);
   window.addEventListener("brainilab:profilechange",hydrate);
   window.addEventListener("brainilab:progressionchange",hydrate);
+  window.addEventListener("brainilab:daychange",close);
   window.addEventListener("brainilab:datachange",hydrate);
 
   return {
