@@ -42,8 +42,10 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
     const data={...(video||{unavailable:true}),playlistId:PLAYLIST,playlistUrl:PLAYLIST_URL,source,checkedAt:Date.now(),stale:false};
     ctx.waitUntil(cache.put(key,json(data,200,7*86400)));
     return json(data,200,60);
-  }catch{
-    const data={...(saved||{playlistId:PLAYLIST,playlistUrl:PLAYLIST_URL,source,checkedAt:Date.now(),unavailable:true}),stale:true,retryAt:Date.now()+60000};
+  }catch(error){
+    // Only allowlisted operational codes, never upstream bodies, URLs or credentials.
+    const reason=error?.videoReason|| (error?.name==='TimeoutError'?'timeout':'unavailable');
+    const data={...(saved||{playlistId:PLAYLIST,playlistUrl:PLAYLIST_URL,source,checkedAt:Date.now(),unavailable:true}),stale:true,retryAt:Date.now()+60000,serviceStatus:Number(error?.videoStatus)||null,serviceReason:reason};
     // Back off on failures too; keep the original checkedAt so stale data expires.
     ctx.waitUntil(cache.put(key,json(data,200,7*86400)));
     return json(data,data.unavailable?503:200,60);
