@@ -887,7 +887,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     if(!def) throw new Error("Unknown game: "+gameId);
 
     const requestedDaily=Number(payload?.dailyNumber);
-    if(Number.isFinite(requestedDaily) && !payload?.practice){
+    if(Number.isInteger(requestedDaily) && requestedDaily>0 && !payload?.practice){
       const existing=state.recentResults.find(r=>r.gameId===gameId && !r.practice && Number(r.dailyNumber)===requestedDaily);
       if(existing) return Object.assign(clone(existing),{dailyReplayBlocked:true});
     }
@@ -1786,7 +1786,7 @@ window.BrainiTryFirstRuntime=(function(){
     document.documentElement.classList.add("try-first-active");
     if(!document.querySelector("[data-try-first-banner]")){
       const banner=document.createElement("div");banner.dataset.tryFirstBanner="1";banner.className="try-first-global-banner";
-      banner.innerHTML='<strong>Try first · full practice game</strong><span>Same rules as the Daily. Different batch. No score, XP, streak, rankings or Health.</span>';
+      banner.innerHTML='<strong>Practice round</strong><span>Try the game. Your score, XP and streak stay unchanged.</span>';
       document.body.prepend(banner);
     }
     document.querySelectorAll(".inline-quiz-result-actions,.simple-result-actions").forEach(box=>{
@@ -2240,7 +2240,8 @@ window.BrainiContinuity=(()=>{
     if(result?.practice||result?.tryFirst)return '<p class="post-reward-note">Practice round · no XP or streak changes</p>';
     if(!result?.clientResultId)return '';
     const summary=window.BrainiProgression?.getCached?.(),reward=summary?.recent_rewards?.find(r=>r.client_result_id===result.clientResultId);
-    if(!reward?.verified)return '<p class="post-reward-note">Your progress will update after this result is verified.</p>';
+    const signedIn=(window.BrainiData?.getState?.()?.auth||window.BrainiData?.authState?.())?.status==='authenticated';
+    if(!reward?.verified)return signedIn?'<p class="post-reward-note" role="status">Checking your XP. Your result is saved on this device.</p>':'<p class="post-reward-note">Playing as a guest. <a data-post-action="progress" href="/profile/?section=progress">Sign in to keep your progress across devices</a>.</p>';
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp);
     return `<a class="post-reward" href="/profile/?section=progress"><strong>${reward.daily_limit_reached?'Today’s XP earned for this game':'+'+count(reward.xp)+' XP'}</strong><span>Level ${count(p.level)||1} · ${esc(progress.label)}</span><i class="post-xp-track"><i style="width:${progress.percent}%"></i></i>${reward.daily_limit_reached?'<small>You can still improve your score. New XP tomorrow, or try another game.</small>':''}</a>`;
   }

@@ -11,6 +11,8 @@
 
 Events: page_view, article_view, article_read (30 visible seconds plus reading depth), article_game_click, game_complete (deduplicated non-practice result), social_click, feedback_open. No account IDs, answers, emails or scores. Statistics and Meta have independent consent choices. Google signals and ad personalization are not enabled.
 
+29 September: game_complete is marked as a GA4 key event. Added game_start for the shared quiz engine (first answer or skip) and Math Rush (successfully loaded run), with per-round deduplication. No starts for Try First/archive practice, and no queue before statistics consent. Added game_guide_click and allowlisted post_game_action (next/guide/progress/browse). Start-to-completion comparisons are valid only for instrumented games, not all minigames. Use GA4 retention/cohort reports for D1/D7; no new persistent visitor identifier has been added.
+
 The setup banner may lag real-time collection. Owner/test visits are currently included; interpret early samples carefully. No paid campaign, session replay or visitor-identification service was added.
 
 AdSense publisher, supplied by the owner: ca-pub-5613536700850101. Kept consistent in account meta tags, ads.txt and monetization configuration. The existing async/crossorigin=anonymous loader remains gated by runtime ad flags and configured slots. Verification is available via the meta tag or ads.txt while display ads remain disabled.

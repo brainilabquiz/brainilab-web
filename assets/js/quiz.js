@@ -13,6 +13,13 @@ window.BrainiQuiz = (function(){
   }
 
   function mount(el, questions, opts={}){
+    const analyticsRound={};
+    function trackStart(){
+      const params=new URLSearchParams(location.search);
+      if(opts.practice||opts.tryFirst||params.has('archive')||params.get('try')==='1')return;
+      const gameId=opts.gameId||inferGameId();
+      window.BrainiSiteAnalytics?.gameStart(gameId,analyticsRound,opts.dailyNumber!=null||gameId==='brainmix'?'daily':'anytime');
+    }
     let index=0, correct=0, points=0, locked=false, readyForNext=false, renderToken=0, results=[], answerDetails=[], started=performance.now(), completed=false, questionStarted=performance.now();
     const healthIds=(questions||[]).map(x=>x.questionVersionId||x.questionId).filter(Boolean);
     const healthTracker=window.BrainiContentHealth&&healthIds.length
@@ -171,6 +178,7 @@ window.BrainiQuiz = (function(){
 
     async function choose(choice,button){
       if(locked) return;
+      trackStart();
       locked=true;
       readyForNext=false;
 
@@ -260,6 +268,7 @@ window.BrainiQuiz = (function(){
 
     async function doSkip(){
       if(locked) return;
+      trackStart();
       locked=true;
       readyForNext=false;
 

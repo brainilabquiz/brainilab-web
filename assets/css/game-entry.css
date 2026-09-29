@@ -1,0 +1,16 @@
+/* Compact entrances: recognise the game, then play. */
+.game-entry-page{background:#faf8f3}
+.game-entry-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:10px;padding-bottom:16px}
+.game-entry-heading h1{font-size:clamp(27px,4vw,40px);line-height:1.15;color:#2d296e;letter-spacing:-.03em;margin:0 0 8px}
+.game-entry-heading p{font-size:15px;line-height:1.5;color:#514b5c;margin:0 0 7px}
+.game-entry-heading span{font-size:12px;color:#625b6b}.game-entry-heading img{width:120px;height:90px;object-fit:contain;flex-shrink:0}
+.game-entry-page .quiz-pack-wrap{padding-top:0}.game-entry-page .quiz-pack-info span{font-size:12px}.game-entry-page .challenge-wrap{padding-top:14px}
+.game-entry-page #leafQuiz{position:relative;min-height:440px}.quiz-loading-message{display:none}
+[data-quiz-loading] .quiz-loading-message{display:block;position:absolute;inset:0;padding:90px 24px;text-align:center;color:#fff;line-height:1.7}
+[data-quiz-loading] .challenge-inner{visibility:hidden;pointer-events:none}
+.quiz-loading-message a{color:#fdd81c;text-decoration:underline}
+.game-reading{padding-block:28px}.game-reading h2{font-size:21px;color:#211e38;margin:0 0 14px}.game-reading>div{display:grid;grid-template-columns:1fr 1fr;gap:14px}.game-reading a{display:block;background:#fffdf8;border:1px solid #e4dfd5;border-radius:14px;padding:17px 20px;text-decoration:none}.game-reading a:hover{border-color:#8aa56a}.game-reading span{display:block;font-size:11px;color:#626451;margin-bottom:6px}.game-reading strong{font-size:15px;color:#2d296e;line-height:1.5}
+.game-entry-page .seo-copy{max-width:850px}.game-entry-page .section{padding-block:24px}.game-entry-page .game-reading a:focus-visible{outline:3px solid #3fab34;outline-offset:3px}
+.math-entry .labgame-top{align-items:center}.math-entry .labgame-top p{font-size:15px;font-weight:400}.math-entry-art{width:120px;height:90px;object-fit:contain}.math-entry .labgame-intro{margin-top:18px}.math-entry .labgame-intro h2{font-size:28px}.math-entry .labgame-result:has(.post-game){background:transparent;padding:0;border:0;width:calc(100% - 32px)}
+@media(max-width:600px){.game-entry-heading{gap:10px;padding-bottom:12px}.game-entry-heading img{width:72px;height:64px}.game-entry-heading h1{font-size:27px}.game-entry-heading p{font-size:14px}.game-entry-page .quiz-pack-info span{display:none}.game-entry-page #leafQuiz{min-height:450px}.game-reading>div{grid-template-columns:1fr}.game-reading{padding-block:24px}.math-entry .labgame-top{display:flex;padding:20px 18px 0}.math-entry .labgame-top h1{font-size:34px}.math-entry-art{width:80px;height:70px}.math-entry .labgame-top p{font-size:14px}.math-entry .labgame-intro h2{font-size:25px}}
+@media(max-width:600px){.game-entry-page #leafQuiz .challenge-inner{padding:18px 12px}.game-entry-page #leafQuiz .challenge-question{font-size:25px;line-height:1.2;margin:14px auto 18px}.game-entry-page #leafQuiz .answers{gap:9px}.game-entry-page #leafQuiz .answer{min-height:52px;padding:10px 12px}.game-entry-page .quiz-pack-bar{padding:12px}.game-entry-page .quiz-difficulty-tabs a{min-height:42px}}

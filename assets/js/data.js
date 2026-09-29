@@ -746,7 +746,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     if(!def) throw new Error("Unknown game: "+gameId);
 
     const requestedDaily=Number(payload?.dailyNumber);
-    if(Number.isFinite(requestedDaily) && !payload?.practice){
+    if(Number.isInteger(requestedDaily) && requestedDaily>0 && !payload?.practice){
       const existing=state.recentResults.find(r=>r.gameId===gameId && !r.practice && Number(r.dailyNumber)===requestedDaily);
       if(existing) return Object.assign(clone(existing),{dailyReplayBlocked:true});
     }

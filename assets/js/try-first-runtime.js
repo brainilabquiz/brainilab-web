@@ -12,7 +12,7 @@ window.BrainiTryFirstRuntime=(function(){
     document.documentElement.classList.add("try-first-active");
     if(!document.querySelector("[data-try-first-banner]")){
       const banner=document.createElement("div");banner.dataset.tryFirstBanner="1";banner.className="try-first-global-banner";
-      banner.innerHTML='<strong>Try first · full practice game</strong><span>Same rules as the Daily. Different batch. No score, XP, streak, rankings or Health.</span>';
+      banner.innerHTML='<strong>Practice round</strong><span>Try the game. Your score, XP and streak stay unchanged.</span>';
       document.body.prepend(banner);
     }
     document.querySelectorAll(".inline-quiz-result-actions,.simple-result-actions").forEach(box=>{
