@@ -133,8 +133,8 @@ window.BrainiGamesLibrary=(function(){
           `${meta.route}?archive=${encodeURIComponent(date)}`;
 
         link.removeAttribute("aria-disabled");
-        link.textContent=
-          `Play past ${meta.name}`;
+        link.textContent="Play";
+        link.setAttribute("aria-label", `Play ${meta.name}`);
       });
   }
 
