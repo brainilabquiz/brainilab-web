@@ -154,9 +154,9 @@ window.BrainiUI = (function(){
       </div>`;
   }
 
-  function renderRecentResults(container,limit=8){
+  function renderRecentResults(container,limit=8,cloudRows=null){
     if(!container) return;
-    const rows=BrainiData.recentResults().slice(0,limit);
+    const rows=(cloudRows||BrainiData.recentResults()).slice(0,limit);
     container.innerHTML=rows.map(r=>{
       const d=BrainiData.game(r.gameId);
       let result="Completed";

@@ -1386,6 +1386,20 @@ window.BrainiProfileSections=(function(){
     }
   }
 
+  let recentRequest=0;
+  async function hydrateRecentGames(){
+    const request=++recentRequest,root=document.getElementById('recentResults');
+    if(!root||!window.BrainiAnalytics?.fetchStats)return;
+    try{
+      const snapshot=await BrainiAnalytics.fetchStats(0);
+      if(request!==recentRequest||!Array.isArray(snapshot?.recent_results))return;
+      const rows=snapshot.recent_results.map(r=>({gameId:r.game_id,playedAt:r.completed_at,score:r.score,correct:r.correct_answers,won:r.special?.won,attempts:r.special?.attempts}));
+      BrainiUI.renderRecentResults(root,5,rows);
+    }catch(error){
+      if(request===recentRequest&&!BrainiData.recentResults().length)root.textContent='Recent games could not be loaded. Please try again.';
+    }
+  }
+
   function hydrateRankHero(){
     const root=document.querySelector("[data-profile-rank-hero]");
     if(!root || !window.BrainiProgressUI) return;
@@ -1408,6 +1422,7 @@ window.BrainiProfileSections=(function(){
       journey.innerHTML=[3,7,14,30].map(days=>`<div class="profile-milestone ${best>=days?'earned':''}"><span aria-hidden="true">${best>=days?'✓':'○'}</span><strong>${days} days</strong><small>${best>=days?'Reached':'Streak milestone'}</small></div>`).join('');
     }
     window.BrainiContinuity?.render?.();
+    hydrateRecentGames();
   }
 
 
