@@ -9,9 +9,9 @@
 <meta content="noindex,follow" name="robots"/>
 <link href="https://brainilabgames.com/suggestions/" rel="canonical"/>
 <link href="../assets/brand/iso-multicolor.png" rel="icon"/>
-<link href="../assets/css/site.css?v=41.26.0" rel="stylesheet"/><link href="../assets/css/suggestions.css?v=41.11.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
+<link href="../assets/css/site.css?v=41.26.0" rel="stylesheet"/><link href="../assets/css/suggestions.css?v=41.27.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BrainiLab Suggestions","url":"https://brainilabgames.com/suggestions/"}</script>
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.25.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/suggestions.bundle.js?v=41.11.0"></script>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/suggestions.bundle.js?v=41.27.0"></script>
 </head>
 <body>
 <header class="topbar">
@@ -30,10 +30,11 @@
 <div class="wrap suggestions-wrap">
 <div class="suggestions-copy">
 <div class="auth-kicker">Help improve BrainiLab</div>
-<h1>Suggestions</h1>
-<p>Got an idea, found a problem or need to contact BrainiLab? Send it here. You can also report a question, request a correction or contact BrainiLab about your data.</p>
+<h1>What’s on your mind?</h1>
+<p>An idea for a game, a question that felt wrong, or something that could work better? Tell us.</p>
 </div>
-<form class="suggestions-card" id="suggestionsForm">
+<p id="feedbackGame" class="feedback-context" hidden></p>
+<form class="suggestions-card" id="suggestionsForm" method="post" action="/suggestions/">
 <div class="suggestions-field">
 <label for="suggestionType">What is it about?</label>
 <select id="suggestionType" name="type">
@@ -45,24 +46,25 @@
 </select>
 </div>
 <div class="suggestions-field">
-<label for="suggestionMessage">Your suggestion</label>
-<textarea id="suggestionMessage" maxlength="4000" name="message" placeholder="Tell us what you would add or change..." required="" rows="7"></textarea>
+<label for="suggestionMessage">Your message</label>
+<textarea id="suggestionMessage" maxlength="3900" minlength="10" name="message" placeholder="Tell us what you would add or change..." required="" rows="5"></textarea>
 </div>
 <div class="suggestions-field">
 <label for="suggestionEmail">Email <span>optional</span></label>
 <input autocomplete="email" id="suggestionEmail" name="email" placeholder="Only if you want us to be able to reply" type="email"/>
 </div>
-<div class="suggestions-error" id="suggestionsError"></div>
-<button class="btn-secondary suggestions-submit" type="submit">Send suggestion</button>
+<div class="suggestions-error" id="suggestionsError" role="alert" tabindex="-1"></div>
+<button class="btn-secondary suggestions-submit" type="submit" disabled>Send message</button>
 <p class="suggestions-note">Suggestions are sent to BrainiLab. Email is optional and only used if a reply is needed.</p>
+<noscript><p>Please enable JavaScript to send a message. Nothing has been sent.</p></noscript>
 </form>
-<div class="suggestions-success" hidden="" id="suggestionsSuccess">
+<div class="suggestions-success" hidden="" id="suggestionsSuccess" tabindex="-1" role="status">
 <span class="suggestions-success-icon"><img src="../assets/icons/product/success.svg" alt="" aria-hidden="true"></span>
 <div>
-<strong>Thanks — suggestion received.</strong>
-<p>It has been added to the BrainiLab feedback inbox.</p>
+<strong>Thanks — your message is in.</strong>
+<p>We’ll read it in the BrainiLab feedback inbox.</p>
 </div>
-<button class="btn-light" id="suggestAnother" type="button">Send another</button>
+<a class="btn-secondary" href="/games/">Back to games →</a><button class="btn-light" id="suggestAnother" type="button">Send another</button>
 </div>
 </div>
 </section>
@@ -73,36 +75,6 @@
 </div>
 <div class="wrap footer-contact"><a data-contact-link href="/suggestions/">Contact &amp; corrections</a> · <a href="/cookies/" data-manage-privacy>Manage privacy</a></div></footer>
 <div class="toast">Done</div>
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-  const form=document.getElementById("suggestionsForm");
-  const error=document.getElementById("suggestionsError");
-  const success=document.getElementById("suggestionsSuccess");
-  const again=document.getElementById("suggestAnother");
 
-  form.addEventListener("submit",async e=>{
-    e.preventDefault();
-    error.textContent="";
-    const fd=new FormData(form);
-    try{
-      await BrainiFeedback.submit({
-        type:fd.get("type"),
-        message:fd.get("message"),
-        email:fd.get("email")
-      });
-      form.hidden=true;
-      success.hidden=false;
-    }catch(err){
-      error.textContent=err.message||"Could not send your suggestion.";
-    }
-  });
-
-  again.addEventListener("click",()=>{
-    form.reset();
-    form.hidden=false;
-    success.hidden=true;
-  });
-});
-</script>
 </body>
 </html>

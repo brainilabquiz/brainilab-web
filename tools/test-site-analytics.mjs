@@ -32,3 +32,16 @@ for(const query of [socialQuery.replace('youtube','private@example.com'),socialQ
 w=page('https://brainilabgames.com/'+socialQuery.replace('flags_video','private@example.com'),{allowed:true,at:Date.now()});
 config=w.dataLayer.find(x=>x[0]==='config')[2];assert.equal(config.campaign_content,undefined);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
 console.log('GA4 consent, sanitized events, result deduplication, withdrawal, independent choices and allowlisted social attribution passed.');
+
+w=page('https://brainilabgames.com/games/');
+w.dispatchEvent(new w.CustomEvent('brainilab:discovery',{detail:{type:'numbers'}}));assert.equal(w.dataLayer,undefined);
+w.BrainiSiteAnalytics.setConsent(true);
+w.dispatchEvent(new w.CustomEvent('brainilab:discovery',{detail:{type:'numbers',message:'private@example.com'}}));
+assert.equal(w.dataLayer.filter(x=>x[0]==='event').at(-1)[1],'game_filter');
+w.dispatchEvent(new w.CustomEvent('brainilab:feedbacksent',{detail:{source:'post-game',message:'private@example.com'}}));
+assert.equal(w.dataLayer.filter(x=>x[0]==='event').at(-1)[1],'feedback_submit');
+const before=w.dataLayer.length;
+w.dispatchEvent(new w.CustomEvent('brainilab:feedbacksent',{detail:{source:'private@example.com'}}));
+w.dispatchEvent(new w.CustomEvent('brainilab:discovery',{detail:{type:'private@example.com'}}));
+assert.equal(w.dataLayer.length,before);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
+console.log('PASS: discovery and feedback analytics require consent and omit message/email/arbitrary values.');
