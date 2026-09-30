@@ -111,9 +111,14 @@ window.BrainiSocial = (function(){
       <div class="auth-kicker">${group?"Manage group":"New group"}</div>
       <h2 id="groupDialogTitle">${group?"Edit your group":"Create a group"}</h2>
       <p class="auth-lead">
-        Pick a name and make it yours. You can invite friends now or later.
+        Give your team a look of its own.
       </p>
 
+      <div class="crest-preview" aria-label="Your team preview">
+        <div data-crest-preview></div>
+        <div><span class="crest-preview-kicker">Your team</span><strong data-crest-name></strong><span data-crest-description></span></div>
+      </div>
+      <div class="crest-name-fields"><div>
       <label class="social-label" for="groupName">Group name</label>
       <input
         class="social-input"
@@ -123,23 +128,23 @@ window.BrainiSocial = (function(){
         placeholder="e.g. Brain Storm"
       >
 
-      <label class="social-label" for="groupCountry">Country</label>
+      </div><div><label class="social-label" for="groupCountry">Country</label>
       <select id="groupCountry" class="social-input social-select" data-group-country>
         ${groupCountryOptions(group?.country)}
       </select>
 
-      <label class="social-label">Crest icon</label>
-      <div class="social-choice-row">
+      </div></div><fieldset class="crest-fieldset"><legend>Choose your symbol</legend>
+      <div class="crest-symbol-grid">
         ${icons.map(i=>`
           <button
             type="button"
             class="social-icon-choice ${i===(group?.crest?.icon||"⚡")?"active":""}"
             data-group-icon="${i}" aria-label="${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}" aria-pressed="${i===(group?.crest?.icon||"⚡")}"
-          >${BrainiIcons.groupSymbol(i,"social-choice-symbol")}</button>`).join("")}
+          >${BrainiIcons.groupSymbol(i,"social-choice-symbol")}<span>${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}</span></button>`).join("")}
       </div>
 
-      <label class="social-label">Crest colour</label>
-      <div class="social-choice-row">
+      </fieldset><fieldset class="crest-fieldset"><legend>Pick a colour <span data-crest-colour-name></span></legend>
+      <div class="crest-colour-grid">
         ${colors.map(c=>`
           <button
             type="button"
@@ -147,9 +152,10 @@ window.BrainiSocial = (function(){
             style="--choice:${c}"
             data-group-color="${c}"
             aria-label="${["Yellow","Green","Red","Orange","Navy"][colors.indexOf(c)]}" aria-pressed="${c===(group?.crest?.color||"#FFD813")}"
-          ></button>`).join("")}
-      </div>
+          ><span class="crest-colour-tick" aria-hidden="true">✓</span></button>`).join("")}
+      </div></fieldset>
 
+      <details class="crest-invites"><summary>Invite friends <span>Optional</span></summary>
       <label class="social-label">
         ${group?"Invite more friends":"Invite friends now"}
         <span data-member-count>
@@ -190,10 +196,10 @@ window.BrainiSocial = (function(){
         </div>
       ` : ""}
 
-      <div class="auth-error" role="alert" data-group-error></div>
+      </details><div class="auth-error" role="alert" data-group-error></div>
 
       <button type="button" class="auth-primary" data-group-save>
-        ${group?"Save & send invites":"Create group"}
+        ${group?"Save changes":"Create group"}
       </button>
     `;
 
@@ -202,6 +208,18 @@ window.BrainiSocial = (function(){
 
     let icon=group?.crest?.icon||"⚡";
     let color=group?.crest?.color||"#FFD813";
+    const iconNames=["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"];
+    const colourNames=["Yellow","Green","Red","Orange","Navy"];
+    function previewCrest(){
+      const symbolName=iconNames[icons.indexOf(icon)]||'Custom symbol';
+      const colourName=colourNames[colors.indexOf(color)]||'Custom colour';
+      m.querySelector('[data-crest-preview]').innerHTML=BrainiIcons.groupCrest({icon,color},'crest-preview-badge');
+      m.querySelector('[data-crest-name]').textContent=m.querySelector('[data-group-name]').value.trim()||'Your team name';
+      m.querySelector('[data-crest-description]').textContent=symbolName+' · '+colourName;
+      m.querySelector('[data-crest-colour-name]').textContent=colourName;
+    }
+    m.querySelector('[data-group-name]').addEventListener('input',previewCrest);
+    previewCrest();
 
     m.querySelectorAll("[data-group-icon]").forEach(b=>{
       b.onclick=()=>{
@@ -209,6 +227,7 @@ window.BrainiSocial = (function(){
         m.querySelectorAll("[data-group-icon]").forEach(
           x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b));}
         );
+        previewCrest();
       };
     });
 
@@ -218,6 +237,7 @@ window.BrainiSocial = (function(){
         m.querySelectorAll("[data-group-color]").forEach(
           x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b));}
         );
+        previewCrest();
       };
     });
 
@@ -245,6 +265,10 @@ window.BrainiSocial = (function(){
     sync();
 
     const save=m.querySelector("[data-group-save]");
+    checks.forEach(c=>c.addEventListener('change',()=>{
+      const count=checks.filter(x=>x.checked).length;
+      save.textContent=group?(count?`Save & invite ${count}`:'Save changes'):(count?`Create & invite ${count}`:'Create group');
+    }));
     save.onclick=async()=>{
       if(save.disabled)return;
       const error=m.querySelector("[data-group-error]");
