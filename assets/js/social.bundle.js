@@ -605,7 +605,9 @@ window.BrainiGroups=(function(){
 
 
 window.BrainiSocial = (function(){
-  let modal=null;
+  let modal=null,modalTrigger=null;
+  const groupEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function closeGroupModal(){modal?.classList.remove('show');if(modalTrigger?.isConnected)modalTrigger.focus();}
   function toast(m){ if(typeof showToast==="function") showToast(m); }
   function flag(code){
     if(!code || code.length!==2) return "🌐";
@@ -667,17 +669,27 @@ window.BrainiSocial = (function(){
   function ensureModal(){
     if(modal) return modal;
     modal=document.createElement("div");modal.className="social-modal";
-    modal.innerHTML='<div class="social-dialog"><button class="social-modal-close" aria-label="Close">×</button><div data-social-modal-view></div></div>';
+    modal.innerHTML='<div class="social-dialog" role="dialog" aria-modal="true" aria-labelledby="groupDialogTitle"><button class="social-modal-close" aria-label="Close">×</button><div data-social-modal-view></div></div>';
     document.body.appendChild(modal);
-    modal.querySelector(".social-modal-close").onclick=()=>modal.classList.remove("show");
-    modal.onclick=e=>{if(e.target===modal)modal.classList.remove("show")};
-    document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remove("show")});
+    modal.querySelector(".social-modal-close").onclick=closeGroupModal;
+    modal.onclick=e=>{if(e.target===modal)closeGroupModal()};
+    document.addEventListener("keydown",e=>{
+      if(!modal.classList.contains('show'))return;
+      if(e.key==='Escape'){e.preventDefault();closeGroupModal();}
+      if(e.key==='Tab'){
+        const items=[...modal.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),a[href]')].filter(el=>el.getClientRects().length);
+        const first=items[0],last=items.at(-1);
+        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}
+        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}
+      }
+    });
     return modal;
   }
 
   function openGroupModal(group=null){
     if(needsAuth("group_create")) return;
 
+    modalTrigger=document.activeElement;
     const m=ensureModal();
     const friends=BrainiData.friends();
     const cloud=cloudGroupsReady();
@@ -702,23 +714,22 @@ window.BrainiSocial = (function(){
 
     m.querySelector("[data-social-modal-view]").innerHTML=`
       <div class="auth-kicker">${group?"Manage group":"New group"}</div>
-      <h2>${group?"Customize & invite":"Create a group"}</h2>
+      <h2 id="groupDialogTitle">${group?"Edit your group":"Create a group"}</h2>
       <p class="auth-lead">
-        Maximum 5 members. Group Rankings unlock at 3 members and use the
-        top 3 member scores.
+        Pick a name and make it yours. You can invite friends now or later.
       </p>
 
-      <label class="social-label">Group name</label>
+      <label class="social-label" for="groupName">Group name</label>
       <input
         class="social-input"
         maxlength="28"
-        data-group-name
-        value="${(group?.name||"").replace(/"/g,"&quot;")}"
+        id="groupName" data-group-name
+        value="${groupEscape(group?.name||"")}"
         placeholder="e.g. Brain Storm"
       >
 
-      <label class="social-label">Group country</label>
-      <select class="social-input social-select" data-group-country>
+      <label class="social-label" for="groupCountry">Country</label>
+      <select id="groupCountry" class="social-input social-select" data-group-country>
         ${groupCountryOptions(group?.country)}
       </select>
 
@@ -728,7 +739,7 @@ window.BrainiSocial = (function(){
           <button
             type="button"
             class="social-icon-choice ${i===(group?.crest?.icon||"⚡")?"active":""}"
-            data-group-icon="${i}"
+            data-group-icon="${i}" aria-label="${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}" aria-pressed="${i===(group?.crest?.icon||"⚡")}"
           >${BrainiIcons.groupSymbol(i,"social-choice-symbol")}</button>`).join("")}
       </div>
 
@@ -740,7 +751,7 @@ window.BrainiSocial = (function(){
             class="social-color-choice ${c===(group?.crest?.color||"#FFD813")?"active":""}"
             style="--choice:${c}"
             data-group-color="${c}"
-            aria-label="${c}"
+            aria-label="${["Yellow","Green","Red","Orange","Navy"][colors.indexOf(c)]}" aria-pressed="${c===(group?.crest?.color||"#FFD813")}"
           ></button>`).join("")}
       </div>
 
@@ -757,12 +768,12 @@ window.BrainiSocial = (function(){
               <label>
                 <input
                   type="checkbox"
-                  value="${f.userId||f.id}"
+                  value="${groupEscape(f.userId||f.id)}"
                   data-group-friend
                 >
-                <span class="social-avatar">${f.avatar||f.name?.[0]||"B"}</span>
+                <span class="social-avatar">${groupEscape(f.avatar||f.name?.[0]||"B")}</span>
                 <span>
-                  <strong>${f.name}</strong>
+                  <strong>${groupEscape(f.name)}</strong>
                   <small>${flag(f.country)} ${f.country||""}</small>
                 </span>
               </label>`).join("")
@@ -779,12 +790,12 @@ window.BrainiSocial = (function(){
         <div class="group-modal-pending">
           <strong>Pending invitations</strong>
           ${group.pendingInvites.map(i=>`
-            <span>${i.avatar||i.name?.[0]||"B"} ${i.name}</span>
+            <span>${groupEscape(i.avatar||i.name?.[0]||"B")} ${groupEscape(i.name)}</span>
           `).join("")}
         </div>
       ` : ""}
 
-      <div class="auth-error" data-group-error></div>
+      <div class="auth-error" role="alert" data-group-error></div>
 
       <button type="button" class="auth-primary" data-group-save>
         ${group?"Save & send invites":"Create group"}
@@ -792,6 +803,7 @@ window.BrainiSocial = (function(){
     `;
 
     m.classList.add("show");
+    m.querySelector("[data-group-name]").focus();
 
     let icon=group?.crest?.icon||"⚡";
     let color=group?.crest?.color||"#FFD813";
@@ -800,7 +812,7 @@ window.BrainiSocial = (function(){
       b.onclick=()=>{
         icon=b.dataset.groupIcon;
         m.querySelectorAll("[data-group-icon]").forEach(
-          x=>x.classList.toggle("active",x===b)
+          x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b));}
         );
       };
     });
@@ -809,7 +821,7 @@ window.BrainiSocial = (function(){
       b.onclick=()=>{
         color=b.dataset.groupColor;
         m.querySelectorAll("[data-group-color]").forEach(
-          x=>x.classList.toggle("active",x===b)
+          x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b));}
         );
       };
     });
@@ -837,7 +849,9 @@ window.BrainiSocial = (function(){
     checks.forEach(c=>c.onchange=()=>sync(c));
     sync();
 
-    m.querySelector("[data-group-save]").onclick=async()=>{
+    const save=m.querySelector("[data-group-save]");
+    save.onclick=async()=>{
+      if(save.disabled)return;
       const error=m.querySelector("[data-group-error]");
       error.textContent="";
 
@@ -849,6 +863,8 @@ window.BrainiSocial = (function(){
         friendIds:checks.filter(x=>x.checked).map(x=>x.value)
       };
 
+      if(!payload.name.trim()){error.textContent='Give your group a name.';m.querySelector('[data-group-name]').focus();return;}
+      const label=save.textContent;save.disabled=true;save.textContent='Saving…';
       try{
         if(cloud){
           if(group){
@@ -866,13 +882,13 @@ window.BrainiSocial = (function(){
           );
         }
 
-        m.classList.remove("show");
+        closeGroupModal();
         toast(group?"Group updated":"Group created");
         await render();
         renderHomeGroup();
       }catch(e){
         error.textContent=e.message||"Could not save group";
-      }
+      }finally{save.disabled=false;save.textContent=label;}
     };
   }
 
@@ -1017,7 +1033,7 @@ window.BrainiSocial = (function(){
       <div class="group-invite-banner-icon">🛡️</div>
       <div>
         <strong>Group invite received</strong>
-        <span>Join this BrainiLab group to build a shared score and compete in Group Rankings.</span>
+        <span>Your friends are waiting. Join their team and play together.</span>
       </div>
       <button type="button" data-accept-group-link>Join group</button>
     </div>`;
@@ -1235,6 +1251,8 @@ window.BrainiSocial = (function(){
     const received=Array.isArray(social.groupInvites)
       ? social.groupInvites
       : [];
+
+    if(window.BrainiGroupsView)return BrainiGroupsView.markup({authenticated:auth.status==="authenticated",groups,invites:received});
 
     if(auth.status!=="authenticated"){
       return `<div class="social-locked">
