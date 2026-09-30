@@ -7,6 +7,44 @@
     "url": "/history/history-quiz/",
     "name": "History Quiz"
   },
+  "quiz": {
+    "version": "beginner-20260930",
+    "questions": [
+      {
+        "prompt": "A box holds years 1 through 100. Where does year 101 go?",
+        "options": [
+          "In the first box",
+          "In the second box",
+          "In the tenth box",
+          "It has no box"
+        ],
+        "answer": 1,
+        "explanation": "The first box is full at year 100. Year 101 starts the second group of one hundred years."
+      },
+      {
+        "prompt": "The 19th century runs from 1801 to 1900. Which century contains 1900?",
+        "options": [
+          "18th",
+          "19th",
+          "20th",
+          "21st"
+        ],
+        "answer": 1,
+        "explanation": "1900 is the last year of the 19th century. The next century starts in 1901."
+      },
+      {
+        "prompt": "Which year began the 21st century?",
+        "options": [
+          "1901",
+          "1999",
+          "2000",
+          "2001"
+        ],
+        "answer": 3,
+        "explanation": "The 20th century ended in 2000. The next year, 2001, began the 21st."
+      }
+    ]
+  },
   "slug": "which-century-is-that-year",
   "cover": {
     "alt": "An open history book and magnifying glass in a library",
@@ -14,7 +52,7 @@
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 4,
-  "title": "Is 1900 in the 19th or 20th century?",
+  "title": "Which century is a year in? Think of boxes of 100",
   "topic": "History",
   "status": "published",
   "related": [
@@ -27,74 +65,31 @@
       "name": "US Naval Observatory — The 21st century and 3rd millennium"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try History Quiz and see which periods you recognise.",
   "sections": [
     {
-      "id": "boundary",
-      "html": "<p><strong>1900 is in the 19th century.</strong> The 20th century began in 1901 and ended in 2000.</p><p>Under the conventional AD/CE numbering system, the first century runs from year 1 to year 100. The second starts at 101 and ends at 200. Following that pattern, the 19th century covers 1801–1900.</p><p>This is also why the 21st century began in 2001.</p>",
-      "title": "The last year of the 19th century"
-    },
-    {
       "id": "shelf",
-      "html": "<p>Imagine putting numbered year cards into boxes that hold 100 cards each. The first box takes 1 through 100. Card 101 goes in the second box.</p><p>Each box ends on a multiple of 100. A year such as 1900 finishes its century; 1901 begins the next.</p><p>“The 1900s” can mean 1900–1999, so it is not quite the same range as “the 20th century”.</p>",
-      "title": "Think of groups of 100 years"
+      "title": "One century holds one hundred years",
+      "html": "<p>A <strong>century</strong> is a period of one hundred years. When we say “the first century”, we mean the first numbered group of one hundred years.</p><p>Imagine a box that holds 100 year cards. Put cards 1, 2, 3 and so on into it. Card <strong>100</strong> fills the last space. Card <strong>101</strong> must go in the next box.</p><p>The second box holds years 101 to 200. The third holds 201 to 300. Each box is one century.</p>"
     },
     {
-      "id": "shortcut",
-      "html": "<p>For a positive CE year that does not end in 00, take the hundreds part and add one. For example, 1789 belongs to the <strong>18th century</strong>.</p><p>If the year ends in 00, keep the hundreds number: 1800 is still in the <strong>18th century</strong>.</p><p>You can also subtract one from the year, divide by 100, discard the remainder and add one. For 2000: 1999 ÷ 100 gives 19 whole hundreds, then adding one gives 20.</p>",
-      "title": "A quick way to work it out"
-    },
-    {
-      "id": "reading-dates",
-      "html": "<p>Which centuries contain <strong>1600, 1601 and 1999</strong>?</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>1600: <strong>16th century</strong>.</li><li>1601: <strong>17th century</strong>.</li><li>1999: <strong>20th century</strong>.</li></ul></details><p>The shortcut above is for positive CE years. BCE dates need a different approach to the numbering.</p>",
-      "title": "Try the boundary years"
+      "id": "boundary",
+      "title": "Why 1900 belongs in the nineteenth box",
+      "html": "<p>Following the same pattern, the nineteenth box starts at <strong>1801</strong> and finishes at <strong>1900</strong>. That is the <strong>19th century</strong>.</p><p>The twentieth box starts with the very next card: <strong>1901</strong>. It finishes at 2000.</p><p>It feels odd because 1900 and 1901 both start with “19”. But one is the last card in a full box, and the other is the first card in a new one.</p>"
     },
     {
       "id": "at-a-glance",
-      "title": "At a glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Watch the boundary</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year CE</th><th scope=\"col\">Last year CE</th></tr></thead><tbody><tr><td>19th</td><td>1801</td><td>1900</td></tr><tr><td>20th</td><td>1901</td><td>2000</td></tr><tr><td>21st</td><td>2001</td><td>2100</td></tr></tbody></table></div>"
+      "title": "Three boxes you will often meet",
+      "html": "<div class=\"table-scroll\"><table><caption>First and last years in each century</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year</th><th scope=\"col\">Last year</th></tr></thead><tbody><tr><td>19th century</td><td>1801</td><td>1900</td></tr><tr><td>20th century</td><td>1901</td><td>2000</td></tr><tr><td>21st century</td><td>2001</td><td>2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>. The year 2000 was the final year of the twentieth box.</p>"
+    },
+    {
+      "id": "reading-dates",
+      "title": "Try a date on the edge",
+      "html": "<p>The 16th century runs from 1501 to 1600. Where should the next year, <strong>1601</strong>, go?</p><details class=\"practice-answer\"><summary>Open the next box</summary><p>Into the <strong>17th century</strong>. The old box finished with 1600, so 1601 starts a new one.</p></details><p>You may see <strong>CE</strong> after a year. It means “Common Era”; <strong>AD</strong> is another label used for the same year numbering. In this numbering, the first century begins with year 1, not year 0.</p><p>This article uses those year numbers. Dates marked BCE or BC describe earlier years and need a separate explanation.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "description": "1900 belongs to the 19th century. Here’s why the years ending in 00 can be confusing, and how to work out any positive CE year.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda",
-  "quiz": {
-    "version": "initial-20260930",
-    "questions": [
-      {
-        "prompt": "Which century contains the year 1900 CE?",
-        "options": [
-          "18th",
-          "19th",
-          "20th",
-          "21st"
-        ],
-        "answer": 1,
-        "explanation": "The 19th century runs from 1801 through 1900. The 20th starts in 1901."
-      },
-      {
-        "prompt": "When did the 21st century begin?",
-        "options": [
-          "1999",
-          "2000",
-          "2001",
-          "2010"
-        ],
-        "answer": 2,
-        "explanation": "In conventional CE numbering, the first century starts at year 1, so the 21st starts at 2001."
-      },
-      {
-        "prompt": "Which year begins a new century?",
-        "options": [
-          "1600",
-          "1700",
-          "2000",
-          "1601"
-        ],
-        "answer": 3,
-        "explanation": "1600 ends the 16th century. The next year, 1601, begins the 17th."
-      }
-    ]
-  }
+  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "description": "A century is a group of one hundred years. Imagine putting the years into numbered boxes and the awkward dates start to make sense.",
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

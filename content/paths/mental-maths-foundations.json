@@ -2,50 +2,24 @@
   "slug": "mental-maths-foundations",
   "title": "Make numbers easier to work with",
   "topic": "Numbers & logic",
-  "description": "Build three reusable mental-maths tools: adjust a number, split a multiplication and combine familiar percentages.",
-  "introduction": "<p>Begin by changing a calculation without changing its answer. Then use that idea to split multiplication into parts, before combining parts of a whole.</p>",
-  "prerequisites": "Comfort with basic addition, subtraction and multiplication.",
-  "outcomes": [
-    "Explain the correction after rounding a number.",
-    "Multiply by 11 and handle a carry.",
-    "Build percentages from tenths, halves and quarters."
-  ],
+  "status": "published",
   "lessons": [
     {
       "slug": "mental-math-round-and-adjust",
       "level": "1 · Foundations",
-      "objective": "Use nearby tens, then undo exactly what you changed."
+      "objective": "Move a few counters and see why an awkward sum gets easier."
     },
     {
       "slug": "multiply-by-11-in-your-head",
       "level": "2 · Build on it",
-      "objective": "Split multiplication into ten copies and one more; handle carrying."
+      "objective": "Count ten bags of sweets, then add the last bag."
     },
     {
       "slug": "mental-percentages-without-a-calculator",
       "level": "3 · Put it together",
-      "objective": "Combine familiar shares to find a percentage of a whole."
+      "objective": "See what half, a quarter and ten percent look like."
     }
   ],
-  "glossary": [
-    {
-      "term": "Compensation",
-      "definition": "Adjusting a calculation, then correcting for that change."
-    },
-    {
-      "term": "Distributive property",
-      "definition": "Multiplying a sum by multiplying its parts and adding the results."
-    },
-    {
-      "term": "Percent",
-      "definition": "A proportion expressed per hundred."
-    }
-  ],
-  "authorId": "biel-sarda",
-  "status": "published",
-  "publishedAt": "2026-09-30T18:40:48.395302+00:00",
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "coverArticle": "mental-math-round-and-adjust",
   "sources": [
     {
       "url": "https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties",
@@ -59,5 +33,31 @@
       "url": "https://openstax.org/books/prealgebra/pages/6-key-concepts",
       "name": "OpenStax — Prealgebra: percent concepts"
     }
-  ]
+  ],
+  "authorId": "biel-sarda",
+  "glossary": [
+    {
+      "term": "Sum",
+      "definition": "The total when you add amounts together."
+    },
+    {
+      "term": "Multiply",
+      "definition": "Count equal groups of something."
+    },
+    {
+      "term": "Percent",
+      "definition": "A share described as an amount out of every hundred."
+    }
+  ],
+  "outcomes": [
+    "Explain the correction after rounding a number.",
+    "Multiply by 11 and handle a carry.",
+    "Build percentages from tenths, halves and quarters."
+  ],
+  "updatedAt": "2026-09-30T19:26:19.758102+00:00",
+  "description": "Turn awkward sums into easier ones. Start with counters and sweets, then explore what percentages really mean.",
+  "publishedAt": "2026-09-30 18:56:22.650105+00",
+  "coverArticle": "mental-math-round-and-adjust",
+  "introduction": "<p>No need to remember a page of formulas. We’ll begin with small groups of things you can count, explain each step, and give you one little idea to try at a time.</p>",
+  "prerequisites": "Comfort with basic addition, subtraction and multiplication."
 }

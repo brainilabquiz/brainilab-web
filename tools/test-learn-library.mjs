@@ -9,7 +9,7 @@ const topics=new Set(articles.map(a=>a.topic));
 for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)]){
  const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/',runScripts:'outside-only'});
  const w=dom.window,d=w.document;
- assert.equal(d.querySelectorAll('.learn-card').length,articles.length);
+ assert.equal(d.querySelectorAll('.learn-card[data-format=article]').length,articles.length);
  assert.ok(d.querySelector('.learn-search').hidden);
  assert.ok(d.querySelector('noscript').textContent.includes('display:flex!important'));
  assert.equal(d.querySelector('.learn-resource-link'),null);
@@ -17,7 +17,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  w.eval(readFileSync('assets/js/learn-library.js','utf8'));
  const surprise=d.querySelector('[data-random-article]');
  assert.equal(surprise.parentElement.hidden,false);
- const links=[...d.querySelectorAll('.learn-card h3 a')].map(link=>link.getAttribute('href'));
+ const links=[...d.querySelectorAll('.learn-card[data-format=article] h3 a')].map(link=>link.getAttribute('href'));
  // Prevent actual navigation in this DOM test while exercising native click handling.
  d.addEventListener('click',event=>event.preventDefault());
  w.Math.random=()=>0;
@@ -26,10 +26,20 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  w.dispatchEvent(new w.PageTransitionEvent('pageshow',{persisted:true}));
  surprise.click();assert.notEqual(surprise.getAttribute('href'),first,'Back navigation must not repeat the previous pick');
  assert.equal(w.sessionStorage.getItem('brainilab:last-surprise-article'),surprise.getAttribute('href'));
- const visible=()=>[...d.querySelectorAll('.learn-card:not([hidden])')];
+ const visible=()=>[...d.querySelectorAll('.learn-card[data-format=article]:not([hidden])')];
  const input=d.querySelector('#learn-search'),select=d.querySelector('#learn-topic');
  assert.equal(visible().length,topics.size);
  assert.equal(select.options.length,topics.size+2);
+ const academy=[...d.querySelectorAll('[data-format=academy]')];
+ if(academy.length){
+  assert.deepEqual([...d.querySelectorAll('.learn-card:not([hidden])')].slice(0,6).map(c=>c.dataset.format),['article','academy','article','academy','article','academy']);
+  d.querySelector('[data-format-filter=academy]').click();assert.equal(visible().length,0);assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,3);
+  assert.equal(d.querySelector('[data-format-filter=academy]').getAttribute('aria-pressed'),'true');
+  input.value='calendar';input.dispatchEvent(new w.Event('input'));assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,1);
+  input.value='';input.dispatchEvent(new w.Event('input'));d.querySelector('[data-format-filter=article]').click();assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,0);
+  d.querySelector('[data-format-filter=all]').click();
+ }
+
  select.value='Sports';select.dispatchEvent(new w.Event('change'));
  assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);
  assert.ok(visible().every(e=>e.dataset.topic==='Sports'));

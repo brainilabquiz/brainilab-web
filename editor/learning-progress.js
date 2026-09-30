@@ -17,11 +17,11 @@ async function identify(session){
  const next=session?.user&&!session.user.is_anonymous?session.user.id:'guest';if(identified&&next===account)return;identified=true;
  const token=++epoch;account=next;pending=null;load();paint();
  blocks.forEach(el=>{const form=el.querySelector('form');form.reset();form.querySelectorAll('input,button').forEach(e=>e.disabled=false);form.querySelector('[type=submit]').hidden=false;form.querySelector('[data-quiz-retry]').hidden=true;el.querySelectorAll('[data-explanation]').forEach(e=>e.hidden=true);el.querySelector('[data-sync-retry]').hidden=true;el.querySelector('[data-quiz-result]').textContent='';});
- if(account==='guest'){note('Progress is saved on this browser. Completion counts finished lessons, not a measure of everything you know.');return;}
+ if(account==='guest'){note('Your progress is saved on this device. Finish a quick quiz to tick off a chapter.');return;}
  try{
   const result=await sb.from('learn_progress').select('article_slug,quiz_version,score,total').eq('user_id',account);
   if(result.error)throw result.error;if(token!==epoch)return;
-  for(const r of result.data){const expected=versions.get(r.article_slug),local=records[r.article_slug];if(expected&&r.quiz_version!==expected)continue;records[r.article_slug]={version:r.quiz_version,score:local?.version===r.quiz_version?Math.max(local.score||0,r.score):r.score,total:r.total};}save();paint();note('Your completed lessons are saved to your account. Completion counts finished lessons, not a measure of everything you know.');
+  for(const r of result.data){const expected=versions.get(r.article_slug),local=records[r.article_slug];if(expected&&r.quiz_version!==expected)continue;records[r.article_slug]={version:r.quiz_version,score:local?.version===r.quiz_version?Math.max(local.score||0,r.score):r.score,total:r.total};}save();paint();note('Your progress follows your account. Finish a quick quiz to tick off a chapter.');
  }catch{if(token===epoch)note('Account progress could not be loaded. Local progress is still available; reload to try again.');}
 }
 async function sync(el,quiz,answers,token){
@@ -53,3 +53,7 @@ async function initSession(){
  try{if(window.BrainiPerf?.ensureCloud)await window.BrainiPerf.ensureCloud();sb=window.BrainiBackendAuth?.getClient();if(!sb)return;const {data}=await sb.auth.getSession();await identify(data?.session);}catch{note('Progress is saved on this browser. Sign-in is unavailable right now.');}
 }
 const sessionReady=initSession();
+
+// Compact chapter navigation keeps the article readable on small screens.
+const chapterMedia=window.matchMedia?.("(max-width: 1000px)");
+if(chapterMedia){const adapt=()=>document.querySelectorAll("[data-chapter-menu]").forEach(el=>el.open=!chapterMedia.matches);adapt();chapterMedia.addEventListener("change",adapt);}
