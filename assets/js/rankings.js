@@ -214,14 +214,12 @@ window.BrainiRankings=(function(){
   }
 
   function rulesMarkup(){
-    const daily=['brainmix','flagdash','orderup','maphunt','topicrush','brainiword'].includes(state.gameId);
-    const summary=state.metric==='streak'?'Consecutive days completing the main Daily':state.gameId==='all'?'Main Daily + one optional extra. Up to 3,500 points a day.':daily?'Daily points for this game':'Total game points in this period';
-    return `<details class="ranking-rules"><summary>How points work <span>${summary}</span></summary>
-      <div><p><strong>Rankings:</strong> From 1 October 2026, Daily Brain Score combines the main Daily (up to 2,500) and one optional extra (up to 1,000). Earlier days retain their original scores. Weekly and monthly boards add the days in that calendar period. Individual game boards use Daily contributions for Daily-only games and accumulated game points for games with Anytime play.</p>
-      <p><strong>XP & levels:</strong> XP is your personal progress and does not decide your ranking. Your first three verified games of each kind per UTC day earn 50 XP plus 5 per correct answer, up to 300 XP each. More games can still improve your score. Completing the main Daily adds 250 XP. The extra is optional.</p>
-      <p><strong>Streaks:</strong> Complete the main Daily each day to keep your streak. The optional extra does not maintain it. Days reset at 00:00 UTC; weeks start on Monday and months on the first. Equal scores share the same position.</p>
-      ${state.mode==='group'?'<p><strong>Teams:</strong> Groups need 3–5 members. The top three contributors count towards the group score.</p>':''}
-      </div></details>`;
+    const explanation=state.metric==='streak'
+      ? 'Longer active streaks rank higher. Complete the main Daily to keep yours going.'
+      : state.mode==='group'
+        ? 'Your team’s three highest scores count. Teams with the same score share a place.'
+        : 'Your score decides your place. Players with the same score share a position.';
+    return `<details class="ranking-rules"><summary>How rankings work</summary><p>${explanation}</p><p>XP builds your level and is separate from this ranking.</p></details>`;
   }
 
   function gateMarkup(){

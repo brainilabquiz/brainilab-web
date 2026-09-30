@@ -15,6 +15,9 @@ for(const file of ['progression-ui.js','rankings.js'])w.eval(readFileSync('asset
 await new Promise(r=>setTimeout(r,0));
 const root=w.document.querySelector('#rankingsRoot');
 assert.equal(root.querySelectorAll('[role=table] [role=row]').length,4);
+assert.doesNotMatch(root.querySelector('.ranking-rules').textContent,/2026|verified|UTC|2,500|50 XP|250 XP/);
+assert.ok(root.querySelector('.ranking-rules').textContent.length<260);
+assert.ok(!root.querySelector('.ranking-rules').open);
 assert.equal(root.querySelectorAll('.place-1').length,2,'ties keep their server-provided rank');
 assert.equal(root.querySelectorAll('.place-2').length,0,'no invented runner-up');
 assert.equal(root.querySelector('.ranking-you').textContent,'You');
