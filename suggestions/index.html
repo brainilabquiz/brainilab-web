@@ -9,9 +9,9 @@
 <meta content="noindex,follow" name="robots"/>
 <link href="https://brainilabgames.com/suggestions/" rel="canonical"/>
 <link href="../assets/brand/iso-multicolor.png" rel="icon"/>
-<link href="../assets/css/site.css?v=41.26.0" rel="stylesheet"/><link href="../assets/css/suggestions.css?v=41.27.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
+<link href="../assets/css/site.css?v=41.26.0" rel="stylesheet"/><link href="../assets/css/suggestions.css?v=41.32.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BrainiLab Suggestions","url":"https://brainilabgames.com/suggestions/"}</script>
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/suggestions.bundle.js?v=41.27.0"></script>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/suggestions.bundle.js?v=41.32.0"></script>
 </head>
 <body>
 <header class="topbar">
@@ -49,12 +49,18 @@
 <label for="suggestionMessage">Your message</label>
 <textarea id="suggestionMessage" maxlength="3900" minlength="10" name="message" placeholder="Tell us what you would add or change..." required="" rows="5"></textarea>
 </div>
+<details class="suggestions-reply">
+<summary>Add an email for a reply <span>optional</span></summary>
 <div class="suggestions-field">
 <label for="suggestionEmail">Email <span>optional</span></label>
-<input autocomplete="email" id="suggestionEmail" name="email" placeholder="Only if you want us to be able to reply" type="email"/>
+<input autocomplete="email" id="suggestionEmail" name="email" maxlength="254" placeholder="you@example.com" type="email"/>
 </div>
+</details>
 <div class="suggestions-error" id="suggestionsError" role="alert" tabindex="-1"></div>
+<div class="suggestions-actions">
 <button class="btn-secondary suggestions-submit" type="submit" disabled>Send message</button>
+<a class="suggestions-return" href="/games/" data-feedback-return>Back to games →</a>
+</div>
 <p class="suggestions-note">Suggestions are sent to BrainiLab. Email is optional and only used if a reply is needed.</p>
 <noscript><p>Please enable JavaScript to send a message. Nothing has been sent.</p></noscript>
 </form>
@@ -62,9 +68,9 @@
 <span class="suggestions-success-icon"><img src="../assets/icons/product/success.svg" alt="" aria-hidden="true"></span>
 <div>
 <strong>Thanks — your message is in.</strong>
-<p>We’ll read it in the BrainiLab feedback inbox.</p>
+<p>Thanks for helping us make the games better.</p>
 </div>
-<a class="btn-secondary" href="/games/">Back to games →</a><button class="btn-light" id="suggestAnother" type="button">Send another</button>
+<div class="suggestions-actions"><a class="btn-secondary" href="/games/" data-feedback-return>Back to games →</a><button class="btn-light" id="suggestAnother" type="button">Send another</button></div>
 </div>
 </div>
 </section>
