@@ -5887,3 +5887,5 @@ main > section.section,
  .crest-name-fields{grid-template-columns:minmax(0,1fr);gap:16px}.crest-symbol-grid{gap:8px}.social-dialog .crest-symbol-grid .social-icon-choice{height:72px}
  .social-dialog .crest-symbol-grid .social-icon-choice span{font-size:10px}.crest-colour-grid{gap:12px}
 }
+
+.friend-preview{display:flex;align-items:center;gap:14px;background:#f7f2e7;border:1px solid #e9dfc9;border-radius:16px;padding:15px;margin:16px 0}.friend-preview[hidden]{display:none}.friend-preview-art{display:grid;place-items:center;width:62px;height:62px;flex:none}.friend-preview-art img{width:60px;height:60px}.friend-preview strong{display:block;font-size:20px;color:#30296f}.friend-preview div>span{display:block;margin-top:5px;font-size:14px;color:#62596a}

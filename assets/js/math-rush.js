@@ -68,8 +68,9 @@ window.BrainiMathRush=(function(){
       try{
         const result=await BrainiData.api.submitGameResult('mathrush',payload);
         rewardEl.dataset.resultReward=practice?'':result.clientResultId||'';
-        rewardEl.innerHTML=window.BrainiContinuity?.rewardMarkup(result)||'';
+        rewardEl.innerHTML=window.BrainiContinuity?.rewardMarkup({...result,gameId:'mathrush',practice})||'';
         await verify(result,data.seed,answers,data.source);
+        BrainiPostGame.refresh();
       }catch(error){rewardEl.textContent='Your score is shown above. Progress could not be saved; please check your connection.';console.warn('Math Rush result saving failed');}
     }
     start.onclick=async()=>{start.disabled=true;intro.hidden=true;loading.hidden=false;data=await load();loading.hidden=true;if(!data?.operations?.length){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"mathrush",contentType:"mathrush",contentIds:data.operations.slice(0,60).map(x=>String(x.id)),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;stage.hidden=false;if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("mathrush",analyticsRound,scoringDaily?"daily":"anytime");started=performance.now();let remaining=60;timeEl.textContent=remaining;progress.style.width="100%";render();timer=setInterval(()=>{remaining=Math.max(0,Math.ceil((60000-(performance.now()-started))/1000));timeEl.textContent=Math.max(0,remaining);progress.style.width=`${Math.max(0,remaining/60*100)}%`;if(remaining<=0)finish()},1000)};

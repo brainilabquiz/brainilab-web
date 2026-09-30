@@ -95,7 +95,7 @@ window.BrainiOddOneOut=(function(){
       let result=await BrainiData.api.submitGameResult("oddoneout",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
       await verify(result,details);
       stage.hidden=true;resultEl.hidden=false;
-      resultEl.innerHTML=`<div class="labgame-result-inner"><span class="simple-result-kicker">${dailyMode?`${archiveMode?"Past Daily · Practice":"Daily"} #${BrainiData.dailyNumberForDate?.(dailyDate)||""} · `:""}Odd One Out complete</span><h2>${correct}<small> / ${ROUNDS}</small></h2><p>${score} points</p><div class="labgame-result-grid"><div><span>Correct</span><strong>${correct}</strong></div><div><span>Accuracy</span><strong>${correct*10}%</strong></div><div><span>Rounds</span><strong>${ROUNDS}</strong></div></div><div class="inline-quiz-result-actions"><a class="simple-result-play" href="${scoringDaily?"../../daily-quiz/":archiveMode?"../index.html":"./"}">${scoringDaily?"Continue Daily":archiveMode?"Choose another Past Daily game":"Play another set"}</a><a class="simple-result-progress" href="../index.html">Choose another game</a></div></div>`;
+      BrainiPostGame.mount(resultEl,{result,gameId:'oddoneout',name:'Odd One Out',metrics:[{label:'Accuracy',value:correct*10+'%'}],next:{href:'/games/odd-one-out/',label:'Play again'}});
     }
     start.onclick=async()=>{
       start.disabled=true;intro.hidden=true;loading.hidden=false;

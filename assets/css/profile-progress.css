@@ -40,3 +40,5 @@
 .profile-guest-note{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;margin:0 0 18px;border:1px solid #e3dccf;border-radius:14px;background:#f2eee5}
 .profile-guest-note strong{font-size:14px;color:#2d296e}.profile-guest-note p{font-size:13px;margin:5px 0 0;color:#686477}.profile-guest-note .btn-light{font-size:13px;white-space:nowrap;min-height:42px}
 @media(max-width:600px){.profile-guest-note{align-items:flex-start;flex-direction:column;gap:12px;padding:16px}.profile-guest-note .btn-light{width:100%}}
+
+.profile-page .profile-progress-avatar{width:76px;height:76px}.profile-page .profile-rank-progress{height:12px;border-radius:20px;box-shadow:inset 0 1px 2px #30296f10}.profile-page .profile-rank-progress span{border-radius:inherit;position:relative}.profile-page .profile-rank-progress span:after{content:"";position:absolute;inset:2px 3px auto;height:2px;border-radius:5px;background:#ffffff65}@media(max-width:700px){.profile-page .profile-progress-avatar{width:54px;height:54px}}
