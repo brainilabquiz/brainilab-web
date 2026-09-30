@@ -45,7 +45,7 @@ const pathDom=new JSDOM(renderLearningPage(template,{articles,paths,authors,path
 assert.equal(pathDom.window.document.querySelector('[data-lesson-number]').textContent,'✓');assert.match(pathDom.window.document.querySelector('[data-progress-label]').textContent,/33%/);
 w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.querySelectorAll('input:checked').length,0);assert.equal(JSON.parse(w.localStorage.getItem('brainilab_learning_v1:guest'))[lesson.slug].version,quiz.version);
 // Every navigational link carries the explicit new-tab policy.
-for(const a of w.document.querySelectorAll('a[href]')){assert.equal(a.target,'_blank');assert.ok(a.relList.contains('noopener'));}
+for(const a of w.document.querySelectorAll('a[href]')){const external=/^https?:$/.test(a.protocol)&&a.hostname.replace(/^www\./,'')!=='brainilabgames.com';assert.equal(a.target,external?'_blank':'');assert.equal(a.relList.contains('noopener'),external);}
 dom.window.close();pathDom.window.close();
 // Every current Academy lesson has a working in-article lab.
 for(const article of articles.filter(a=>a.quiz)){
