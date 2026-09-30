@@ -1,0 +1,62 @@
+{
+  "slug": "why-ballpoint-pens-have-a-tiny-ball",
+  "topic": "Everyday inventions",
+  "title": "Why is there a tiny ball in a ballpoint pen?",
+  "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
+  "sections": [
+    {
+      "id": "rolling-tip",
+      "title": "The point is a moving part",
+      "html": "<p>Draw a short line with a ballpoint pen. The tip may look like a fixed metal point, but a tiny ball turns as it travels over the paper.</p><p>The ball sits in a socket, with ink supplied from the pen’s reservoir behind it. As it rotates, it picks up ink and transfers it to the page. That small moving part gives the pen its name.</p>"
+    },
+    {
+      "id": "ink-problem",
+      "title": "Better ink needed a different way out",
+      "html": "<p>The National Inventors Hall of Fame credits <strong>László Bíró</strong> with the modern successful ballpoint pen. As a journalist, he noticed that newspaper printing ink dried faster than fountain-pen ink.</p><p>But putting printing ink into a fountain pen did not solve the problem: it was too thick to flow through the tip. Bíró developed a rotating-ball design that could carry ink onto the paper instead.</p><p>Changing the ink alone was not enough. The ink and the way it reached the page had to work together.</p>"
+    },
+    {
+      "id": "small-and-tough",
+      "title": "A tiny component has a demanding job",
+      "html": "<p>The ball needs to keep its shape while rubbing against paper. For example, BIC describes the tungsten carbide ball used in its Cristal pen as highly resistant. That is a detail of that product, not a claim that every ballpoint uses the same material.</p><p>The same manufacturer’s description gives a useful size comparison: its medium point measures 1.0 millimetre, while the stated line width is 0.4 millimetres. <strong>The ball’s diameter and the width of the mark are different measurements.</strong></p>"
+    },
+    {
+      "id": "draw-the-journey",
+      "title": "Can you sketch the ink’s journey?",
+      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\">the hooks and loops in a reusable fastener</a>.</p>"
+    }
+  ],
+  "game": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/"
+  },
+  "related": [
+    "how-hook-and-loop-fasteners-work",
+    "how-post-it-notes-were-invented"
+  ],
+  "practice": "Try General Knowledge for more questions about familiar things and surprising ideas.",
+  "sources": [
+    {
+      "name": "National Inventors Hall of Fame — László Bíró and the modern ballpoint pen",
+      "url": "https://www.invent.org/inductees/laszlo-josef-biro"
+    },
+    {
+      "name": "BIC — Cristal ball material, point size and line width (2011 product description)",
+      "url": "https://us.bic.com/media/bicworld/files/SHAREHOLDERS-LETTERS/BIC_ShareholdersLetter_15_HD.pdf"
+    }
+  ],
+  "status": "published",
+  "order": 31,
+  "publishedAt": "2026-09-30T17:06:40.274Z",
+  "cover": {
+    "src": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball.webp",
+    "small": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-small.webp",
+    "thumbnail": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-thumb.webp",
+    "alt": "An enlarged ballpoint tip with an ink reservoir, a ball held in its socket, and a line on paper; schematic not to scale",
+    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "position": 50
+  }
+}
