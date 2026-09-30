@@ -86,10 +86,10 @@ def page(path, title, description, body, schema, cover=None):
 <meta property="og:image" content="{BASE}{escape(cover['src'])}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
-<link rel="stylesheet" href="/assets/css/site.css?v=41.39.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
+<link rel="stylesheet" href="/assets/css/site.css?v=41.40.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
 <link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v={'41.33.0' if path == '/learn/' else '41.31.0'}"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
 <script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script>
-<script defer src="/assets/js/shell.bundle.js?v=41.39.0"></script>
+<script defer src="/assets/js/shell.bundle.js?v=41.40.0"></script>
 {'<script defer src="/assets/js/learn-library.js?v=41.34.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
