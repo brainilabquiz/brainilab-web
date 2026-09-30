@@ -7,13 +7,13 @@ import {renderLearningPage,enrichAuthors,teamSection} from '../lib/learning-rend
 import {serveLearn} from '../lib/learn-worker.js';
 const read=p=>JSON.parse(readFileSync(p,'utf8'));
 const authors=read('content/authors.json'),articles=enrichAuthors(readdirSync('content/articles').map(f=>prepareArticle(read('content/articles/'+f))),authors),paths=readdirSync('content/paths').map(f=>read('content/paths/'+f)),template=readFileSync('learn/index.html','utf8');
-assert.equal(readyPaths(paths,articles).length,3);
+assert.equal(readyPaths(paths,articles).length,paths.length);
 const lesson=articles.find(a=>a.slug===paths[0].lessons[0].slug),quiz=lesson.quiz;
 assert.equal(validQuiz(quiz),true);assert.throws(()=>gradeQuiz(quiz,[0]));assert.equal(gradeQuiz(quiz,quiz.questions.map(q=>q.answer)).score,3);
 assert.equal(validQuiz({...quiz,questions:[...quiz.questions,{prompt:'Missing',options:['A','A','B','C'],answer:0,explanation:'Duplicate'}]}),false);
 const ls=paths[0].lessons.map(l=>({slug:l.slug,version:articles.find(a=>a.slug===l.slug).quiz.version}));
 assert.equal(pathProgress(ls,{[ls[0].slug]:{version:ls[0].version}}).percent,33);assert.equal(pathProgress(ls,{[ls[0].slug]:{version:'outdated'}}).percent,0);
-assert.equal(readyPaths(paths,articles.filter(a=>a.slug!==lesson.slug)).length,2);
+assert.equal(readyPaths(paths,articles.filter(a=>a.slug!==lesson.slug)).length,paths.length-1);
 assert.ok(cleanHtml('<table><caption>Compare</caption><tr><th scope="col">A</th><td onclick="bad()">B</td></tr></table>').includes('<th scope="col">'));assert.ok(!cleanHtml('<table onclick="bad()"><tr><td style="color:red">x</td></tr></table>').includes('onclick'));
 const html=renderPage(template,articles,lesson,paths);assert.equal((html.match(/src="\/assets\/js\/learning-paths.bundle/g)||[]).length,1);assert.match(html,/By <a[^>]+href="\/about\/#biel-sarda"[^>]*>Biel Sardà<\/a>/);assert.ok(html.includes('data-lesson-quiz'));
 const schema=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(schema['@graph'].find(x=>x['@type']==='Article').author['@type'],'Person');
@@ -72,4 +72,4 @@ const ar=authors.map(document=>({slug:document.slug,revision:1,document})),pr=pa
 const rpc=async(name,p)=>name==='admin_list_learn_articles'?articles.map(document=>({slug:document.slug,document,published_revision:1})):name==='admin_list_learning_entities'?(p.p_kind==='author'?ar:pr):name==='admin_save_learning_entity'?(saved=p,{slug:p.p_slug}):[];
 a.eval(readFileSync('assets/js/admin-learning.bundle.js','utf8'));await a.BrainiLearningAdmin.render({root:a.document.querySelector('#root'),rpc,sb:{},kind:'author'});a.document.querySelector('[data-entity]').click();assert.equal(a.document.querySelector('#entity-name').value,'Biel Sardà');a.document.querySelector('#add-social').click();assert.equal(a.document.querySelectorAll('[data-social]').length,1);a.document.querySelector('[data-label]').value='YouTube';a.document.querySelector('[data-url]').value='https://www.youtube.com/@BrainiLab';a.document.querySelector('[data-entity-save=publish]').click();await new Promise(r=>setTimeout(r,10));assert.equal(saved.p_document.socials[0].url,'https://www.youtube.com/@BrainiLab');
 await a.BrainiLearningAdmin.render({root:a.document.querySelector('#root'),rpc,sb:{},kind:'path'});a.document.querySelector('[data-entity]').click();const first=a.document.querySelector('[data-path-lesson]').dataset.pathLesson;a.document.querySelector('[data-lesson-move="1"]').click();assert.notEqual(a.document.querySelector('[data-path-lesson]').dataset.pathLesson,first);assert.equal(a.document.querySelector('#editor-author').value,'biel-sarda');admin.window.close();
-console.log('PASS: 3 coherent paths, 27 quiz questions, progress/version rules, full-round grading, retry/reload, completion tick, tables, safe HTML, Person/byline privacy, live path routing, admin author/social/path ordering.');
+console.log(`PASS: ${paths.length} coherent paths, ${articles.reduce((n,a)=>n+(a.quiz?.questions.length||0),0)} quiz questions, progress/version rules, full-round grading, retry/reload, completion tick, tables, safe HTML, Person/byline privacy, live path routing, admin author/social/path ordering.`);

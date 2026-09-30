@@ -31,6 +31,12 @@ for a in all_articles:
     assert a['status'] in ('draft', 'published'), 'Invalid status'
 articles = sorted([a for a in all_articles if a['status'] == 'published'], key=lambda a:(a.get('publishedAt',''), -a.get('order',999)), reverse=True)
 by_slug = {a['slug']: a for a in articles}
+published_path_urls = {
+    f"/learn/paths/{p['slug']}/"
+    for file in (ROOT/'content/paths').glob('*.json')
+    for p in [json.loads(file.read_text(encoding='utf-8'))]
+    if p.get('status') == 'published'
+}
 cluster_file = ROOT/'content/editorial-clusters.json'
 if cluster_file.is_file():
     validate_clusters(all_articles, json.loads(cluster_file.read_text(encoding='utf-8')))
@@ -48,7 +54,8 @@ for a in articles:
         target = ROOT/urlsplit(link['url']).path.strip('/')/'index.html'
         # New hubs and their members can be generated in the same build.
         is_article = link['url'] in {f'/learn/{slug}/' for slug in by_slug}
-        assert target.is_file() or is_article, f'Missing destination: {target}'
+        # The shared learning build below validates and renders new Academy paths.
+        assert target.is_file() or is_article or link['url'] in published_path_urls, f'Missing destination: {target}'
     words = len(re.sub('<[^>]+>', ' ', ' '.join(s['html'] for s in a['sections'])).split())
     a['minutes'] = max(1, math.ceil(words/200))
 

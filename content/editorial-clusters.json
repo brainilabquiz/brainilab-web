@@ -294,6 +294,55 @@
           "angle": "Compare what the two systems track without implying a universal calendar."
         }
       ]
+    },
+    {
+      "id": "arithmetic-from-zero-1",
+      "topic": "Numbers & logic",
+      "readerQuestion": "How do the basic number operations work, from counting objects to fractions and simple expressions?",
+      "hubSlug": "arithmetic-from-zero-a-friendly-guide",
+      "hubTitle": "Arithmetic from zero: a friendly guide",
+      "members": [
+        {
+          "slug": "addition-putting-things-together",
+          "angle": "Join small piles; introduce plus, equals and zero."
+        },
+        {
+          "slug": "subtraction-how-many-are-left",
+          "angle": "Take away physical objects and check by adding."
+        },
+        {
+          "slug": "multiplication-equal-groups",
+          "angle": "Connect equal groups, repeated addition and a times table."
+        },
+        {
+          "slug": "division-sharing-fairly",
+          "angle": "Share objects equally and explain leftovers."
+        },
+        {
+          "slug": "place-value-ones-tens-hundreds",
+          "angle": "Build larger numbers from grouped counters."
+        },
+        {
+          "slug": "fractions-equal-parts-of-a-whole",
+          "angle": "Name equal pieces and link sharing to fractions."
+        },
+        {
+          "slug": "decimals-money-and-parts-of-ten",
+          "angle": "Use a ten-by-ten grid to connect decimals and fractions."
+        },
+        {
+          "slug": "negative-numbers-below-zero",
+          "angle": "Use a number line to introduce signed values."
+        },
+        {
+          "slug": "which-calculation-comes-first",
+          "angle": "Explain grouping and the order of operations with clear stories."
+        },
+        {
+          "slug": "missing-numbers-first-equations",
+          "angle": "Use a balance to find one missing number."
+        }
+      ]
     }
   ],
   "nextCategoryArticles": [

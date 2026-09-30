@@ -50,3 +50,7 @@ Driving rules must be scoped by state and dated, with relevant official DMV sour
 | Sun, Moon and time | Time zones | Three fixed-offset clocks with previous/next-day labels |
 
 Activities are part of teaching; trying them is not a ranked match. Final completion gives account XP once. Do not award repeat XP for hovering, moving a slider, reloading or replaying. Maintain a readable explanation when JavaScript is unavailable, visible focus, labelled inputs and reduced-motion support.
+
+## First beginner course — 30 September 2026
+
+`maths-from-zero` supplies the first three introductory chapters: addition with two piles, subtraction with removable counters, and multiplication with equal groups and an accessible times table. Each has an original photographic cover, beginner copy and a three-question round. This is a complete three-lesson starter course, not the whole college curriculum. Division and later levels remain planned. The separate `arithmetic-from-zero-1` editorial block has 3 of 10 supporting pieces; its additional HUB remains unpublished.
