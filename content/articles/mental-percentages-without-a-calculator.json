@@ -46,12 +46,9 @@
   ],
   "practice": "For more mental arithmetic, try a round of Math Rush.",
   "cover": {
-    "src": "/assets/images/learn/mental-percentages-without-a-calculator-diagram.webp",
-    "small": "/assets/images/learn/mental-percentages-without-a-calculator-diagram-small.webp",
-    "thumbnail": "/assets/images/learn/mental-percentages-without-a-calculator-diagram-thumb.webp",
-    "alt": "A grid of one hundred squares with twenty-five highlighted, beside 25 percent equals one quarter",
-    "credit": "Original explanatory illustration by BrainiLab.",
-    "position": 50
+    "alt": "Oranges and a balance scale at a market",
+    "src": "/assets/images/learn/mental-percentages-without-a-calculator.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 2,
   "publishedAt": "2026-09-23T19:51:37Z",

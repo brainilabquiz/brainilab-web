@@ -46,12 +46,9 @@
   ],
   "practice": "Try History Quiz and see which periods you recognise.",
   "cover": {
-    "src": "/assets/images/learn/which-century-is-that-year-diagram.webp",
-    "small": "/assets/images/learn/which-century-is-that-year-diagram-small.webp",
-    "thumbnail": "/assets/images/learn/which-century-is-that-year-diagram-thumb.webp",
-    "alt": "A timeline showing the nineteenth century from 1801 to 1900 and the twentieth starting in 1901",
-    "credit": "Original explanatory illustration by BrainiLab.",
-    "position": 50
+    "alt": "An open history book and magnifying glass in a library",
+    "src": "/assets/images/learn/which-century-is-that-year.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 4,
   "publishedAt": "2026-09-23T19:51:37Z",

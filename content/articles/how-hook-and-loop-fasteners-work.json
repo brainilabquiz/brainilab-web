@@ -51,13 +51,14 @@
   ],
   "status": "published",
   "order": 30,
-  "publishedAt": "2026-09-30T17:06:40.274Z",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "cover": {
-    "src": "/assets/images/learn/how-hook-and-loop-fasteners-work.webp",
-    "small": "/assets/images/learn/how-hook-and-loop-fasteners-work-small.webp",
-    "thumbnail": "/assets/images/learn/how-hook-and-loop-fasteners-work-thumb.webp",
-    "alt": "Enlarged purple hooks facing green loops on two fabric strips, a schematic of a hook-and-loop fastener",
-    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "src": "/assets/images/learn/how-hook-and-loop-fasteners-work-photo.webp",
+    "small": "/assets/images/learn/how-hook-and-loop-fasteners-work-photo-small.webp",
+    "thumbnail": "/assets/images/learn/how-hook-and-loop-fasteners-work-photo-thumb.webp",
+    "alt": "A hooked plant burr caught in wool beside an open hook-and-loop fastening strap",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
 }

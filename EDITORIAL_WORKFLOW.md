@@ -15,6 +15,8 @@ Under **Publishing & history**, load one of the 30 most recent revisions as unsa
 
 Write in English for a curious reader. Start with a concrete question, explain a useful example and offer a small activity or related game. Vary the structure and avoid duplicating topics. Do not invent authors, experiences, testimonials or cognitive/medical benefits. Generated covers are labelled as illustrations, not documentary photos. Keep internal SEO, conversion, retention and monetisation targets out of public copy.
 
+**Cover style confirmed by the user on 30 September 2026:** use AI-generated photorealistic imagery with a concrete subject relevant to the article. Do not replace article covers with vector drawings, icons, diagrams or cartoons. Preserve the existing photographic covers when editing older articles unless a replacement is requested. Generate raster images with ImageGen, inspect them, and serve responsive WebP derivatives. Credit them as AI-generated photorealistic images; never imply that a generated historical scene is an authentic archival photograph. Diagrams, if separately useful and requested, belong inside an article rather than replacing its photographic cover.
+
 Learn opens with the newest publication per category. Search, category filters and All articles expose the rest. Original publication dates decide recency; ordinary edits do not make an old article new. Display order breaks ties. Covers use a compact crop and readable titles.
 
 ## Daily publishing and topic hubs

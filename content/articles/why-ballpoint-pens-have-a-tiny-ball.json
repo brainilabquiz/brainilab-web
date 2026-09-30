@@ -50,13 +50,14 @@
   ],
   "status": "published",
   "order": 31,
-  "publishedAt": "2026-09-30T17:06:40.274Z",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "cover": {
-    "src": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball.webp",
-    "small": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-small.webp",
-    "thumbnail": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-thumb.webp",
-    "alt": "An enlarged ballpoint tip with an ink reservoir, a ball held in its socket, and a line on paper; schematic not to scale",
-    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "src": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-photo.webp",
+    "small": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-photo-small.webp",
+    "thumbnail": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-photo-thumb.webp",
+    "alt": "A macro view of a ballpoint pen tip making a blue ink line on textured paper",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
 }
