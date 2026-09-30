@@ -5810,3 +5810,42 @@ main > section.section,
 .daily-choice{margin:24px 0}.daily-choice-heading{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:700;margin:0 0 12px;color:#2d296e}
 .daily-choice-card{display:flex;align-items:center;gap:18px;padding:22px;border:1px solid #ded8cd;border-radius:20px;background:#fffefa;min-width:0}.daily-choice-card.is-primary{background:#f3f0ff;border-color:#cbc4ed;padding:28px}.daily-choice-card h3{margin:4px 0;font-size:22px}.daily-choice-card p{margin:4px 0;color:#53536a;font-size:14px}.daily-choice-card .btn{margin-left:auto;flex-shrink:0}.daily-choice-art{flex:0 0 68px}.daily-choice-art svg,.daily-choice-art img{display:block;width:68px;height:68px;object-fit:contain}.daily-choice-role{font-size:12px;font-weight:750;color:#55506d}.daily-choice-extra-heading{margin:26px 0 14px}.daily-choice-extra-heading h3{margin:0;font-size:22px}.daily-choice-extra-heading p,.daily-choice-note{font-size:14px;color:#5c596a;line-height:1.5}.daily-choice-extras{display:grid;grid-template-columns:1fr 1fr;gap:16px}.daily-choice-extras .daily-choice-card{flex-wrap:wrap}.daily-choice-extras .btn{width:100%;margin:6px 0 0;text-align:center;background:#2d296e;color:white}.daily-choice-done{color:#286c2c;margin-left:auto}.daily-choice-card.is-unavailable{background:#f4f2ee}.daily-choice-card.is-complete{border-color:#82aa79}.daily-rules-compact summary{cursor:pointer;font-weight:700}.daily-rules-compact p{line-height:1.6}
 @media(max-width:640px){.daily-choice-card,.daily-choice-card.is-primary{padding:18px;gap:12px;flex-wrap:wrap}.daily-choice-card .btn{width:100%;margin:8px 0 0;text-align:center}.daily-choice-extras{grid-template-columns:1fr}.daily-choice-art{flex-basis:48px}.daily-choice-art svg,.daily-choice-art img{width:48px;height:48px}.daily-choice-heading{font-size:12px}.daily-choice-card h3{font-size:20px}}
+
+/* Player identity: tier frames and a small level-by-level inner accent. */
+.rank-avatar.rank-ring,.avatar.rank-header-avatar{background:#fffefa;padding:4px}
+.rank-avatar.rank-ring::after,.avatar.rank-header-avatar::after{inset:-6px;transform:none;filter:none;background-image:var(--player-frame);background-size:contain}
+.rank-avatar.rank-ring::before,.avatar.rank-header-avatar::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--ring) var(--rank-step,0deg),#e9e5dc 0);pointer-events:none;z-index:0}
+.rank-avatar>img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.avatar.rank-header-avatar>img{background:#fffefa}
+.rank-rookie{--player-frame:url("../icons/rank-frames/rookie.svg")}
+.rank-elementary{--player-frame:url("../icons/rank-frames/elementary.svg")}
+.rank-highschool{--player-frame:url("../icons/rank-frames/highschool.svg")}
+.rank-college{--player-frame:url("../icons/rank-frames/college.svg")}
+.rank-graduate{--player-frame:url("../icons/rank-frames/graduate.svg")}
+.rank-phd{--player-frame:url("../icons/rank-frames/phd.svg")}
+.rank-researcher{--player-frame:url("../icons/rank-frames/researcher.svg")}
+.rank-professor{--player-frame:url("../icons/rank-frames/professor.svg")}
+.rank-dean{--player-frame:url("../icons/rank-frames/dean.svg")}
+.rank-nobel{--player-frame:url("../icons/rank-frames/nobel.svg")}
+.rank-step-0{--rank-step:36deg}
+.rank-step-1{--rank-step:72deg}
+.rank-step-2{--rank-step:108deg}
+.rank-step-3{--rank-step:144deg}
+.rank-step-4{--rank-step:180deg}
+.rank-step-5{--rank-step:216deg}
+.rank-step-6{--rank-step:252deg}
+.rank-step-7{--rank-step:288deg}
+.rank-step-8{--rank-step:324deg}
+.rank-step-9{--rank-step:360deg}
+
+.account-popover{background:#fffefa;border-color:#e3dece;border-radius:22px;padding:18px;box-shadow:0 16px 48px #27225220}
+.account-popover-head{gap:18px;padding:8px 5px 20px;min-width:0}.account-menu-avatar{width:58px!important;height:58px!important}
+.account-popover-head>div{min-width:0}.account-popover-head strong{font-size:21px;line-height:1.3;overflow-wrap:anywhere}
+.account-level-label{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:7px;font-size:13px;font-weight:750}
+.account-level-label .account-tier{font-size:11px;background:#eeebf6;border:1px solid #dfdaee;border-radius:6px;padding:3px 7px;color:#554984}
+.account-progress-link{padding:14px;background:#f7f4eb;border-color:#e5ddca;border-radius:14px}
+.account-progress-link>span:first-child{gap:10px;align-items:center}.account-progress-link strong{font-size:14px}.account-progress-link small{font-size:11px}
+.account-xp-track{display:block;height:11px;margin:11px 0 14px;border-radius:8px;background:#e5e0d2;box-shadow:inset 0 1px 2px #423b6320;overflow:hidden}
+.account-xp-track>i{display:block;position:relative;height:100%;background:#40ab34;border-radius:8px;border-top:2px solid #73c467;box-shadow:inset 0 -2px #2c8428}
+.account-streak{border-top:1px solid #e2dccf;padding-top:12px}.account-streak small{line-height:1.4}
+@media(max-width:380px){.account-popover{padding:14px}.account-menu-avatar{width:50px!important;height:50px!important}}
