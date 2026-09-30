@@ -62,7 +62,7 @@ window.BrainiDailyJourney=(function(){
   }
 
   function formatPoints(n){
-    return Number(n||0).toLocaleString();
+    return Number(n||0).toLocaleString('en-GB');
   }
 
   async function markup(options={}){
@@ -71,6 +71,7 @@ window.BrainiDailyJourney=(function(){
       {forceCloud:!!options.forceCloud}
     );
     const current=options.currentGame||"";
+    if(status.model?.version==='daily-choice-v1')return choiceMarkup(status);
 
     return `
       <section class="daily-journey ${status.completedCount===4?"is-full":""}">
@@ -140,8 +141,22 @@ window.BrainiDailyJourney=(function(){
       {forceCloud:!!options.forceCloud}
     );
     container.innerHTML=await markup({...options,status});
+    window.BrainiFriendChallenge?.mount(container,status);
     return status;
   }
 
-  return {META,ORDER,markup,render};
+  function gameHref(id,day){return siteUrl(META[id].href)+(META[id].dailyQuery?'?daily='+day:'');}
+  function choiceMarkup(status){
+    const model=status.model,day=BrainiData.dateForDailyNumber(status.dailyNumber),primary=status.games[model.primary]||{},bonus=status.bonusChoice;
+    const done=primary.completed&&bonus&&status.games[bonus]?.completed;
+    function card(id,isPrimary){
+      const meta=META[id],game=status.games[id]||{},max=BrainiDailyRules.max(id,day);
+      const unavailable=!isPrimary&&(!primary.completed||bonus&&bonus!==id);
+      const href=gameHref(id,day);
+      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Available after your Daily'):`Up to ${formatPoints(max)} points`;
+      return `<article class="daily-choice-card ${isPrimary?'is-primary':''} ${game.completed?'is-complete':''} ${unavailable?'is-unavailable':''}"><span class="daily-choice-art">${BrainiIcons.game(meta.icon,'mini','braini-game-mini')}</span><div><span class="daily-choice-role">${isPrimary?"Today’s Daily":bonus===id?'Your extra':'Optional extra'}</span><h3>${meta.name}</h3><p>${message}</p></div>${game.completed?'<strong class="daily-choice-done">Completed ✓</strong>':unavailable?'':`<a class="btn" href="${href}">${isPrimary?'Play today’s Daily':bonus===id?'Continue extra':'Choose '+meta.name}</a>`}</article>`;
+    }
+    return `<section class="daily-choice" aria-label="Today’s Daily games"><div class="daily-choice-heading"><span>Daily #${status.dailyNumber}</span><span>${formatPoints(status.brainScore)} / ${formatPoints(model.maxScore)} points</span></div>${card(model.primary,true)}<div class="daily-choice-extra-heading"><h3>${done?'All done for today':bonus?'Your extra':'Fancy one more?'}</h3><p>${done?'You’ve played your Daily and your extra.':bonus?'Up to 1,000 more points. Your streak is already safe.':'Choose one extra. Up to 1,000 points. Your streak only needs the main Daily.'}</p></div><div class="daily-choice-extras">${model.choices.map(id=>card(id,false)).join('')}</div><p class="daily-choice-note">${done?'A fresh challenge arrives tomorrow.':'Your extra is fixed when you open it. A new choice is available tomorrow.'}</p></section>`;
+  }
+  return {META,ORDER,markup,render,gameHref,choiceMarkup};
 })();

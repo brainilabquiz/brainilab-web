@@ -20,8 +20,8 @@
     },
     {
       "id": "daily",
-      "title": "A fresh set of Daily challenges",
-      "html": "<p>The Daily page brings together the day’s challenges and shows which ones you have finished. Four scored games contribute up to 2,500 points each to the Daily Brain Score, for a possible total of 10,000.</p><p>Brain Mix is a good starting point if you enjoy a variety of questions. After a round, return to Daily to choose another unfinished challenge.</p><p>The combined Brain Score is different from an individual game’s raw score. Replays and past challenges can also have different scoring rules, so check the mode label when choosing a round.</p>"
+      "title": "One Daily, with room for one more",
+      "html": "<p>From 1 October 2026, the Daily starts with one main game, chosen for everyone that day. Finish it to keep your streak and earn up to 2,500 Daily points. The game changes each day, so tomorrow might bring a word puzzle, a quick calculation or a set of questions.</p><p>Fancy another round? Choose one of the two optional extras. That extra can add up to 1,000 points, bringing the daily maximum to 3,500. Your choice is fixed when you open the extra, but skipping it does not affect your streak.</p><p>Daily points are separate from an individual game’s raw score and from XP. Previous days keep their original scores. Past Daily rounds are practice and do not replace today’s challenge.</p>"
     },
     {
       "id": "anytime",
@@ -62,7 +62,7 @@
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 13,
-  "practice": "Browse today’s Daily challenges and pick a game to start with.",
+  "practice": "Try today’s main Daily. If you fancy more, choose one optional extra.",
   "publishedAt": "2026-09-23T15:00:00Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "updatedAt": "2026-09-30T05:15:07Z"
 }

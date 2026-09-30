@@ -43,6 +43,7 @@ window.BrainiTopicRush=(function(){
   }
 
   async function mount(root){
+    if(await window.BrainiDailyChoiceGuard?.check?.(root))return;
     const loading=root.querySelector("[data-tr-loading]");
     const intro=root.querySelector("[data-tr-intro]");
     const play=root.querySelector("[data-tr-play]");
@@ -411,7 +412,7 @@ window.BrainiTopicRush=(function(){
 
       const correct=Number(result.correct||0);
       const target=Number(result.total||result.targetCount||content.targetCount||15);
-      const points=Number(result.score||0);
+      const points=archiveMode?Number(result.score||0):BrainiData.dailyPointsForResult('topicrush',result);
 
       resultBox.innerHTML=`
         <div class="simple-game-result">

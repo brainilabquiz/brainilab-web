@@ -898,7 +898,7 @@ window.BrainiStatsUI=(function(){
             <span>DAILY PERFORMANCE</span>
             <h2>Your Daily Brain Score</h2>
             <p>
-              Your four Daily Games combine for a maximum of 10,000.
+              From 1 October 2026: up to 2,500 main Daily points plus 1,000 optional extra points. Earlier scores keep their original scale.
             </p>
           </div>
 
@@ -1116,7 +1116,7 @@ window.BrainiStatsUI=(function(){
       out.push({
         title:"Daily consistency",
         text:
-          `You completed ${num(daily.full_dailies)} Full Dailies in this range. Keep the four-game habit going.`
+          `You completed ${num(daily.full_dailies)} Full Dailies in this range. Each completed main Daily counts from 1 October 2026.`
       });
     }
 

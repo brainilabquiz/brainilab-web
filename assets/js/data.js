@@ -151,6 +151,7 @@ window.BrainiData = (function(){
   }
 
   function dailyGameIdsForDate(dateValue=todayKey()){
+    const next=window.BrainiDailyRules?.lineup(dateValue);if(next)return next;
     const date=String(dateValue||todayKey()).slice(0,10);
     if(date<DAILY_ROTATION_START){
       return ["brainmix","orderup","topicrush","brainiword"];
@@ -168,7 +169,7 @@ window.BrainiData = (function(){
   function emptyDailyBreakdown(dateValue=todayKey()){
     const out={};
     dailyGameIdsForDate(dateValue).forEach(id=>{
-      out[id]={points:0,max:2500,label:"Not played yet"};
+      out[id]={points:0,max:window.BrainiDailyRules?.max(id,dateValue)??2500,label:"Not played yet"};
     });
     return out;
   }
@@ -356,7 +357,10 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     p.streakSecuredToday=last===today && p.currentStreak>0;
     return p;
   }
-  function daily(){ return clone(state.daily); }
+  function daily(){
+    if(state.daily.key!==todayKey()){state.daily={key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePercentile:null,bonusChoice:null,dailyBreakdown:emptyDailyBreakdown()};save();}
+    return clone(state.daily);
+  }
   function personalBest(gameId){ return clone(state.personalBests[gameId]||null); }
   function anytimeHistory(scope){
     const key=String(scope||"").trim();
@@ -402,6 +406,10 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   function scoreForDaily(gameId,payload){
+    const raw=rawScoreForDaily(gameId,payload);
+    return window.BrainiDailyRules?.points(raw,gameId,dateForDailyNumber(payload.dailyNumber||state.daily.number))??raw;
+  }
+  function rawScoreForDaily(gameId,payload){
     if(gameId==="brainmix") return Math.min(2500,Math.round((payload.score||0)*.25));
     if(gameId==="flagdash") return Math.min(2500,Math.round((payload.correct||0)*70 + (payload.bestCombo||0)*15));
     if(gameId==="orderup") return Math.min(2500,Math.max(0,Math.round(payload.score||0)));
@@ -426,11 +434,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const dailyIds=dailyGameIdsForDate(todayDate);
     const acceptedIds=todayDate<DAILY_ROTATION_START?[...dailyIds,"maphunt"]:[...dailyIds];
     const bestByGame={};
+    const rules=window.BrainiDailyRules?.model(todayDate);
+    const chosen=state.daily.bonusChoice;
 
     // V26 migration bridge: a Map Hunt result already completed today occupies
     // the new Topic Rush Daily slot instead of disappearing from 4/4 progress.
     state.recentResults
-      .filter(r=>r.dailyNumber===today && acceptedIds.includes(r.gameId))
+      .filter(r=>!r.practice && r.dailyNumber===today && acceptedIds.includes(r.gameId) && (rules?.version!=="daily-choice-v1" || r.gameId===rules.primary || r.gameId===chosen))
       .forEach(r=>{
         const sourceGameId=r.gameId;
         const slotGameId=sourceGameId==="maphunt" && todayDate<DAILY_ROTATION_START ? "topicrush" : sourceGameId;
@@ -451,13 +461,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     state.daily.brainScore = Object.values(bestByGame)
       .reduce((sum,r)=>sum+(r._dailyPoints ?? scoreForDaily(r.gameId,r)),0);
     const completion=Object.keys(bestByGame).length;
-    state.daily.brainScorePercentile = completion ? Math.max(4,Math.round(74-state.daily.brainScore/160)) : null;
+    state.daily.brainScorePercentile = null; // Percentiles require a measured server cohort.
     state.daily.completedGames=Object.keys(bestByGame);
     const breakdown={};
     dailyIds.forEach(gameId=>{
       const res=bestByGame[gameId];
       if(!res){
-        breakdown[gameId]={points:0,max:2500,label:"Not played yet"};
+        breakdown[gameId]={points:0,max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,label:"Not played yet"};
         return;
       }
       const pts=res._dailyPoints ?? scoreForDaily(gameId,res);
@@ -476,7 +486,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       else if(gameId==="mathrush") label=`${Number(res.correct||0)} correct · ${Number(res.bestCombo||0)} best combo`;
       else if(gameId==="numberroute") label=`${Number(res.correct||0)}/${Number(res.total||10)} routes solved`;
       else if(gameId==="sequence") label=`${Number(res.correct||0)}/${Number(res.total||10)} correct`;
-      breakdown[gameId]={points:pts,max:2500,label};
+      breakdown[gameId]={points:pts,max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,label};
     });
     state.daily.dailyBreakdown=breakdown;
   }
@@ -751,6 +761,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       if(existing) return Object.assign(clone(existing),{dailyReplayBlocked:true});
     }
 
+    if(requestedDaily>0 && dateForDailyNumber(requestedDaily)!==todayKey())payload={...payload,practice:true};
+    const day=dateForDailyNumber(requestedDaily||state.daily.number),rules=window.BrainiDailyRules?.model(day);
+    if(rules?.version==='daily-choice-v1' && requestedDaily>0 && !payload.practice){
+      if(!dailyGameIdsForDate(day).includes(gameId) || (gameId!==rules.primary && state.daily.bonusChoice!==gameId)){
+        payload={...payload,practice:true};
+      }
+    }
     const result=Object.assign({
       id:"r-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
       clientResultId:makeClientResultId(),
@@ -1339,6 +1356,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       state.daily.number=Number(today.daily_number);
     }
 
+    state.daily.bonusChoice=today.bonus_choice||state.daily.bonusChoice||null;
     state.daily.brainScore=Number(today.daily_brain_score||0);
     state.daily.completedGames=[];
 
@@ -1374,7 +1392,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
         : !!today[`${field}_played`];
       breakdown[gameId]={
         points:Number(today[`${field}_points`]||0),
-        max:2500,
+        max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,
         label:played?"Completed today":"Not played yet"
       };
       if(played) state.daily.completedGames.push(gameId);
@@ -1625,6 +1643,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     getCollective:()=>clone(collective),
     todayKey,dailyNumber,dailyNumberForDate,pastDailyDate,dateForDailyNumber,
     dailyGameIdsForDate,dailyGameIdsForNumber,DAILY_ROTATION_START,
+    dailyPointsForResult:scoreForDaily,
+    setDailyBonusChoice(id){state.daily.bonusChoice=id||null;save();},
     DAILY_GAME_IDS:dailyGameIdsForDate(todayKey())
   };
 })();

@@ -17,8 +17,9 @@ dom=new JSDOM('',{url:'https://brainilabgames.com/games/math-rush/',runScripts:'
 const first=w.BrainiData.recordGameResult('mathrush',{score:100,dailyNumber:null});
 const second=w.BrainiData.recordGameResult('mathrush',{score:200,dailyNumber:null});
 assert.notEqual(first.clientResultId,second.clientResultId);assert.equal(second.score,200);assert.ok(!second.dailyReplayBlocked);
-const daily=w.BrainiData.recordGameResult('mathrush',{score:100,dailyNumber:42});
-assert.equal(w.BrainiData.recordGameResult('mathrush',{score:999,dailyNumber:42}).clientResultId,daily.clientResultId);w.close();
+const dailyNumber=w.BrainiData.daily().number;
+const daily=w.BrainiData.recordGameResult('mathrush',{score:100,dailyNumber});
+assert.equal(w.BrainiData.recordGameResult('mathrush',{score:999,dailyNumber}).clientResultId,daily.clientResultId);w.close();
 
 // A double submit cannot score twice. The result is visible before a slow save completes.
 dom=new JSDOM(readFileSync('games/math-rush/index.html','utf8'),{url:'https://brainilabgames.com/games/math-rush/',runScripts:'outside-only'});w=dom.window;

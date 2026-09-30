@@ -383,7 +383,7 @@ window.BrainiDailyGames=(function(){
       });
       if(error) throw error;
       return {
-        validWord:data.valid_word!==false,
+        validWord:data?.valid_word===true,
         message:data.message||null,
         states:data.states||[],
         won:!!data.won,
@@ -392,6 +392,11 @@ window.BrainiDailyGames=(function(){
       };
     }
 
+    // Never silently count arbitrary five-letter strings in fallback/archive mode.
+    if(!configured())throw new Error('Reconnect to check the English word list.');
+    const {data:valid,error}=await client().rpc('is_brainilab_english_guess',{p_guess:guess});
+    if(error)throw error;
+    if(valid!==true)return {validWord:false,message:'Not in the English word list. Your attempt has not been used.',states:[],won:false,finished:false,answer:null};
     const states=evaluateLocalWord(content.fallbackAnswer,guess);
     const won=states.every(s=>s==="correct");
     const finished=won||attempt>=5;
