@@ -98,7 +98,7 @@ window.BrainiShare = (function(){
       if(result.correct!=null) lines.push(`${Number(result.correct)} / 20 exact positions`);
     } else if(gameId==="topicrush"){
       if(result.topicTitle) lines.push(result.topicTitle);
-      if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Daily points`);
+      if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Topic Rush points`);
     } else if(gameId==="connections"){
       if(result.attempts!=null) lines.push(`${Number(result.attempts)} total attempts`);
       if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Connections points`);

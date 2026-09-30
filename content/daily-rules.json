@@ -1,0 +1,8 @@
+{
+  "version": "daily-choice-v1",
+  "startsOn": "2026-10-01",
+  "primaryMax": 2500,
+  "bonusMax": 1000,
+  "completionXP": 250,
+  "rotation": ["brainmix", "connections", "mathrush", "brainiword", "numberroute", "orderup", "oddoneout", "topicrush", "sequence", "higherlower"]
+}

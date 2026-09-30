@@ -11,6 +11,11 @@ window.BrainiDailyOverview=(function(){
     try{
       const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});
       const p=BrainiData.player();
+      if(status.model?.version==='daily-choice-v1'){
+        const done=!!status.games[status.model.primary]?.completed;
+        root.innerHTML=`<header class="daily-choice-intro"><h1>${done?'Daily complete. Nicely done.':"A little challenge for today."}</h1><p>${done?'Your main result is saved. The extra is entirely up to you.':'One game for your streak. A different challenge every day.'}</p></header><div data-daily-journey-hub></div><div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div><details class="daily-rules-compact"><summary>How points work</summary><p>Main Daily: up to 2,500 points and 250 completion XP. Optional extra: choose one of two, worth up to 1,000 points. Game XP is separate from your ranking score. Days reset at 00:00 UTC.</p></details>`;
+        await BrainiDailyJourney.render(root.querySelector('[data-daily-journey-hub]'),{status});return;
+      }
 
       if(status.completedCount===4){
         root.innerHTML=`
@@ -103,6 +108,7 @@ window.BrainiDailyOverview=(function(){
   document.addEventListener("DOMContentLoaded",render);
   window.addEventListener("brainilab:datachange",render);
   window.addEventListener("brainilab:progressionchange",render);
+  window.addEventListener("brainilab:daychange",render);
 
   return {render};
 })();

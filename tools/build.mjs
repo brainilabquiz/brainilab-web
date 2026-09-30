@@ -3,6 +3,7 @@ import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
+import './check-site-integrity.mjs';
 
 const root=path.resolve('.');
 await build({entryPoints:['editor/admin-articles.js'],outfile:'assets/js/admin-articles.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});

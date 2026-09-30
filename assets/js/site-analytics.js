@@ -40,7 +40,7 @@ window.BrainiSiteAnalytics=(()=>{
       tag('js',new Date());tag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:location.origin+path(),page_referrer:referrer(),cookie_expires:180*86400,...campaign()});
       const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;script.dataset.brainilabAnalytics='1';document.head.appendChild(script);loaded=true;
     }else tag('consent','update',{analytics_storage:'granted'});
-    if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
+    if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});if(path()==='/daily-quiz/'&&new URLSearchParams(location.search).getAll('friend').length===1&&new URLSearchParams(location.search).get('friend')===new Date().toISOString().slice(0,10))send('friend_challenge_open');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
   }
   function revoke(){
     window['ga-disable-'+id]=true;
@@ -60,6 +60,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(url.origin===location.origin&&url.pathname.startsWith('/suggestions'))send('feedback_open',{source:path().startsWith('/learn/')?'learn':'site'});
   });
   window.addEventListener('brainilab:datachange',event=>{if(!allowed()||event.detail?.type!=='game_result')return;const {gameId,result}=event.detail;if(!result||result.practice||result.tryFirst||result.dailyReplayBlocked||!result.clientResultId||completed.has(result.clientResultId)||!/^[a-z0-9]{1,30}$/.test(gameId||''))return;completed.add(result.clientResultId);send('game_complete',{game_id:gameId,mode:result.dailyNumber!=null?'daily':'anytime'});});
+  window.addEventListener('brainilab:friendchallenge',event=>{if(['copy','share'].includes(event.detail?.method))send('friend_challenge_share',{method:event.detail.method});});
   window.addEventListener('storage',event=>{if(event.key!==key&&event.key!==null)return;choice=read();if(choice)activate();else revoke();});
   // Reading signal = at least 30 seconds visible AND halfway through the article.
   const timer=setInterval(()=>{if(articleRead||!safe()){clearInterval(timer);return;}const article=document.querySelector('.article-body');if(!article){clearInterval(timer);return;}if(allowed()&&!document.hidden)activeSeconds++;if(activeSeconds>=30&&article.getBoundingClientRect().top+article.offsetHeight/2<=innerHeight){articleRead=true;send('article_read',{article_slug:path().split('/')[2]});clearInterval(timer);}},1000);

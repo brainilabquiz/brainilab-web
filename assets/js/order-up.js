@@ -69,6 +69,7 @@ window.BrainiOrderUp=(function(){
   }
 
   async function mount(root){
+    if(await window.BrainiDailyChoiceGuard?.check?.(root))return;
     const loading=root.querySelector("[data-ou-loading]");
     const intro=root.querySelector("[data-ou-intro]");
     const game=root.querySelector("[data-ou-game]");
@@ -513,7 +514,8 @@ window.BrainiOrderUp=(function(){
       loading.hidden=true;
       resultBox.hidden=false;
 
-      const score=Number(result.score||0);
+      const score=archiveMode?Number(result.score||0):BrainiData.dailyPointsForResult('orderup',result);
+      const dailyMax=archiveMode?2500:BrainiDailyRules.max('orderup',content.challengeDate);
       const accuracy=Number(result.accuracy||0);
 
       resultBox.innerHTML=`
@@ -524,7 +526,7 @@ window.BrainiOrderUp=(function(){
 
           <h2>
             ${score.toLocaleString()}
-            / 2,500
+            / ${dailyMax.toLocaleString('en-GB')}
           </h2>
 
           <p>

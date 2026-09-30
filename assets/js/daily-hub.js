@@ -1,13 +1,18 @@
 /*
   BrainiLab Daily Hub
   -------------------
-  Persistent 4-game Daily state for Home + Daily Quiz.
+  Shared, date-aware Daily state for Home + Daily Quiz.
 
   If today's Brain Mix has already been completed, the quiz is not mounted
   again. The same box becomes a completed-state hub with links to the
   remaining Daily Games.
 */
 window.BrainiDailyHub=(function(){
+  async function bounded(work){
+    let timer;
+    try{return await Promise.race([work,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Daily connection timed out')),8000);})]);}
+    finally{clearTimeout(timer);}
+  }
   const GAME_META={
     brainmix:{
       id:"brainmix",
@@ -71,6 +76,7 @@ window.BrainiDailyHub=(function(){
     const payload=gr.result_payload||{};
     return Object.assign({},payload,{
       id:gr.id,
+      answersVerified:gr.answers_verified===true,
       gameId:row.game_id,
       playedAt:row.completed_at,
       dailyNumber:row.daily_number,
@@ -94,10 +100,10 @@ window.BrainiDailyHub=(function(){
     }
 
     try{
-      const session=await BrainiBackendAuth.getSession();
+      const session=await bounded(BrainiBackendAuth.getSession());
       if(!session?.user) return [];
 
-      const rows=await BrainiCloudGames.getMyRecentResults(80);
+      const rows=await bounded(BrainiCloudGames.getMyRecentResults(80));
       const ids=dailyIds(dailyNumber);
       return (rows||[]).filter(row=>
         ids.includes(row.game_id) &&
@@ -112,15 +118,23 @@ window.BrainiDailyHub=(function(){
   async function resolve(dailyNumber=currentDailyNumber(),options={}){
     const daily=BrainiData.daily();
     const games={};
+    const date=BrainiData.dateForDailyNumber(dailyNumber);
+    if(window.BrainiDailyRules?.active(date)&&window.BrainiBackendAuth?.getClient?.()){
+      const {data,error}=await bounded(BrainiBackendAuth.getClient().rpc('get_brainilab_daily_lineup',{p_challenge_date:date}));
+      if(error||data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(dailyIds(dailyNumber)))throw new Error('Daily rules could not be checked');
+      daily.bonusChoice=data.bonus_choice||null;
+      BrainiData.setDailyBonusChoice(daily.bonusChoice);
+    }
 
     function build(cloudRows=[]){
       const ids=dailyIds(dailyNumber);
       ids.forEach(gameId=>{
         let result=localResult(gameId,dailyNumber);
 
-        if(!result && cloudRows.length){
+        if(cloudRows.length){
           const cloudRow=cloudRows.find(row=>row.game_id===gameId);
-          result=cloudResultToLocal(cloudRow);
+          const remote=cloudResultToLocal(cloudRow);
+          if(!result||remote?.answersVerified)result=remote||result;
         }
 
         const completedFromState=
@@ -134,12 +148,15 @@ window.BrainiDailyHub=(function(){
           label:"Not played yet"
         };
 
+        const modern=window.BrainiDailyRules?.active(BrainiData.dateForDailyNumber(dailyNumber));
+        const verified=result?.answersVerified||result?.dailyGameVerificationStatus==='verified'||result?.dailyAnswerVerificationStatus==='verified';
+        const completed=completedFromState||!!result&&!result.practice&&(!modern||verified);
         games[gameId]={
           id:gameId,
-          completed:!!result||completedFromState,
+          completed,
           result,
-          points:Number(breakdown.points||0),
-          max:Number(breakdown.max||2500),
+          points:completed?Number(breakdown.points||BrainiData.dailyPointsForResult?.(gameId,result||{})||0):0,
+          max:window.BrainiDailyRules?.max(gameId,BrainiData.dateForDailyNumber(dailyNumber))??Number(breakdown.max||2500),
           label:breakdown.label||""
         };
       });
@@ -150,7 +167,7 @@ window.BrainiDailyHub=(function(){
     // knows that Brain Mix was completed.
     build();
 
-    if(options.forceCloud || !games.brainmix.completed){
+    if(options.forceCloud || !games[dailyIds(dailyNumber)[0]]?.completed){
       const cloudRows=await cloudTodayRows(dailyNumber);
       if(cloudRows.length){
         Object.keys(games).forEach(k=>delete games[k]);
@@ -160,7 +177,9 @@ window.BrainiDailyHub=(function(){
 
     return {
       dailyNumber:Number(dailyNumber),
-      brainScore:Number(daily.brainScore||0),
+      model:window.BrainiDailyRules?.model(BrainiData.dateForDailyNumber(dailyNumber)),
+      bonusChoice:daily.bonusChoice||null,
+      brainScore:window.BrainiDailyRules?.active(BrainiData.dateForDailyNumber(dailyNumber))?Object.values(games).reduce((sum,g)=>sum+(g.completed?g.points:0),0):Number(daily.brainScore||0),
       completedCount:Object.values(games).filter(g=>g.completed).length,
       dailyIds:dailyIds(dailyNumber),
       games
@@ -195,10 +214,7 @@ window.BrainiDailyHub=(function(){
     const prefix=options.prefix||"";
     const result=options.result||status.games.brainmix?.result||null;
 
-    if(result&&window.BrainiPostGame){
-      BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status,focus:options.focus!==false});
-      return status;
-    }
+
     const hasQuizNumbers=
       result &&
       Number.isFinite(Number(result.correct)) &&
@@ -266,6 +282,7 @@ window.BrainiDailyHub=(function(){
     const status=options.status||await resolve(options.dailyNumber);
     const result=options.result||status.games.brainmix?.result||null;
 
+    if(result&&window.BrainiPostGame){BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status,focus:options.focus!==false});return status;}
     container.innerHTML=completedMarkup(status,{
       prefix:options.prefix||"",
       result

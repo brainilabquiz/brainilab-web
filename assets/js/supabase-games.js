@@ -220,6 +220,7 @@ window.BrainiCloudGames = (function(){
           duration_ms,
           client_percentile,
           server_verified,
+          answers_verified,
           result_payload
         )
       `)

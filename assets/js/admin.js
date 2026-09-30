@@ -509,7 +509,7 @@ window.BrainiAdmin=(function(){
         ${metric("Cloud users",d.cloud_users,"Synced BrainiLab accounts")}
         ${metric("Synced results today",d.synced_results_today,"Authenticated cloud results")}
         ${metric("Daily players today",d.cloud_daily_players_today,"Cloud players with ≥1 Daily")}
-        ${metric("Full Dailies today",d.full_dailies_today,"All 4 Daily Games")}
+        ${metric("Full Dailies today",d.full_dailies_today,"Main Daily completed (legacy: full set)")}
         ${metric("Verified answers",verifiedPct,"Of today's synced results","%")}
         ${metric("Public ranking profiles",d.public_ranking_profiles,"Explicit ranking opt-ins")}
         ${metric("Active groups",d.active_groups,`${num(d.eligible_groups)} ranking-eligible`)}
@@ -527,7 +527,7 @@ window.BrainiAdmin=(function(){
           </div>
 
           <div class="admin-daily-score">
-            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard(GAME_LABELS[g.game_id]||g.game_id,g.count,g.expected)).join('')}
+            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected)).join('')}
           </div>
 
           <div class="admin-toolbar">
@@ -714,7 +714,7 @@ window.BrainiAdmin=(function(){
       <section class="admin-panel">
         <div class="admin-panel-head">
           <div>
-            <h2>Daily #${esc(h.daily_number)} · ${esc(h.date)}</h2>
+            <h2>Daily #${esc(h.daily_number)} · ${esc(h.date)}</h2><p>${h.daily_rules?.rules_version==='daily-choice-v1'?'Main: 2,500 points · choose one of two extras: 1,000 points · maximum 3,500':'Legacy Daily format'}</p>
             <p>Generation v${esc(h.generation_version)} · ${num(h.completed_sessions)} completed cloud sessions</p>
           </div>
           <div>
@@ -724,11 +724,12 @@ window.BrainiAdmin=(function(){
           </div>
         </div>
 
+        ${dailyHealthy?'':`<div class="admin-note" role="alert"><strong>Check the marked games below.</strong> ${(h.game_health||[]).filter(g=>!g.ready).map(g=>esc((GAME_LABELS[g.game_id]||g.game_id)+': '+g.count+' of '+g.expected+' items ready.')).join(' ')} ${!futureOnly?'Today’s played content must not be regenerated. Review its pool and prepare the next Daily.':'Check the matching Content Pool, then regenerate this unplayed future date.'}</div>`}
         <div class="admin-daily-score">
-          ${(h.game_health||[]).map(g=>dailyGameCard(GAME_LABELS[g.game_id]||g.game_id,g.count,g.expected)).join('')}
+          ${(h.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected)).join('')}
         </div>
 
-        <div class="admin-mini-grid">
+        <div class="admin-mini-grid" ${h.game_health?.some(g=>g.game_id==='brainmix')?'':'hidden'}>
           <div class="admin-mini-card"><span>Easy</span><strong>${num(h.brainmix?.easy)}</strong></div>
           <div class="admin-mini-card"><span>Medium</span><strong>${num(h.brainmix?.medium)}</strong></div>
           <div class="admin-mini-card"><span>Hard</span><strong>${num(h.brainmix?.hard)}</strong></div>

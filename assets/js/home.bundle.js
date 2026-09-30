@@ -100,7 +100,7 @@ window.BrainiShare = (function(){
       if(result.correct!=null) lines.push(`${Number(result.correct)} / 20 exact positions`);
     } else if(gameId==="topicrush"){
       if(result.topicTitle) lines.push(result.topicTitle);
-      if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Daily points`);
+      if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Topic Rush points`);
     } else if(gameId==="connections"){
       if(result.attempts!=null) lines.push(`${Number(result.attempts)} total attempts`);
       if(result.score!=null) lines.push(`${Number(result.score).toLocaleString()} Connections points`);
@@ -297,6 +297,7 @@ window.BrainiPostGame=(()=>{
   return `<div class="post-review">${missed.length?`<details><summary>Review ${missed.length} ${missed.length===1?'answer':'answers'} to revisit</summary>${items(missed)}</details>`:''}${correct.length?`<details><summary>${missed.length?'Your correct answers':'Review your answers'} · ${correct.length}</summary>${items(correct)}</details>`:''}</div>`;
  }
  function nextDaily(status){
+  if(status?.model?.version==='daily-choice-v1')return {href:'/daily-quiz/',label:status.games?.[status.model.primary]?.completed?'See today’s Daily':'Play the main Daily'};
   const id=(status?.dailyIds||[]).find(id=>id!=='brainmix'&&!status.games?.[id]?.completed);
   const meta=window.BrainiDailyJourney?.META?.[id];
   if(meta)return {href:'/'+meta.href+(meta.dailyQuery?'?daily='+new Date().toISOString().slice(0,10):''),label:'Play '+meta.name};
@@ -312,8 +313,9 @@ window.BrainiPostGame=(()=>{
   const guide=guides[gameId];
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   const practice=result.practice||result.tryFirst;
-  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · ${practice?'Practice complete':'Complete'}</p><h2 tabindex="-1" class="post-score">${timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total||timed?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p>${stats}<div data-result-reward="${esc(practice?'':result.clientResultId||'')}">${window.BrainiContinuity?.rewardMarkup?.(result)||''}</div><div class="post-actions"><a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)} →</a><button type="button" class="post-share">Share result</button></div>${status?`<p class="post-daily">Daily · ${number(status.completedCount)} of 4 complete <a href="/daily-quiz/">See today’s games</a></p>`:''}${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="/learn/${guide.slug}/"><span>A little reading</span><strong>${esc(guide.title)} →</strong></a>`:''}<a class="post-browse" data-post-action="browse" href="/games/">Browse all games</a>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
-  container.querySelector('.post-share').addEventListener('click',()=>window.BrainiShare?.open(gameId,result));
+  const friendInvite=!practice&&status&&window.BrainiFriendChallenge?.buildInvite(status);
+  container.innerHTML=`<section class="post-game" aria-label="Quiz result"><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''} · ${practice?'Practice complete':'Complete'}</p><h2 tabindex="-1" class="post-score">${timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2>${total||timed?'<p class="post-score-label">correct answers</p>':''}<p class="post-message">${message}</p><p class="post-points">${points.toLocaleString()} Quiz Points${Number.isFinite(result.timeSec)?' · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0'):''}</p>${stats}<div data-result-reward="${esc(practice?'':result.clientResultId||'')}">${window.BrainiContinuity?.rewardMarkup?.(result)||''}</div><div class="post-actions"><a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)} →</a><button type="button" class="post-share">${friendInvite?'Challenge a friend':'Share result'}</button></div>${status?`<p class="post-daily">${status.model?.version==='daily-choice-v1'?(status.games?.[status.model.primary]?.completed?'Daily complete':'Daily in progress'):'Daily · '+number(status.completedCount)+' of 4 complete'} <a href="/daily-quiz/">See today’s games</a></p>`:''}${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="/learn/${guide.slug}/"><span>A little reading</span><strong>${esc(guide.title)} →</strong></a>`:''}<a class="post-browse" data-post-action="browse" href="/games/">Browse all games</a>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
+  container.querySelector('.post-share').addEventListener('click',event=>friendInvite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result));
   if(focus)container.querySelector('.post-score').focus({preventScroll:true});
  }
  return {mount,review,nextDaily};
@@ -1154,13 +1156,18 @@ window.BrainiDaily = (function(){
 /*
   BrainiLab Daily Hub
   -------------------
-  Persistent 4-game Daily state for Home + Daily Quiz.
+  Shared, date-aware Daily state for Home + Daily Quiz.
 
   If today's Brain Mix has already been completed, the quiz is not mounted
   again. The same box becomes a completed-state hub with links to the
   remaining Daily Games.
 */
 window.BrainiDailyHub=(function(){
+  async function bounded(work){
+    let timer;
+    try{return await Promise.race([work,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Daily connection timed out')),8000);})]);}
+    finally{clearTimeout(timer);}
+  }
   const GAME_META={
     brainmix:{
       id:"brainmix",
@@ -1224,6 +1231,7 @@ window.BrainiDailyHub=(function(){
     const payload=gr.result_payload||{};
     return Object.assign({},payload,{
       id:gr.id,
+      answersVerified:gr.answers_verified===true,
       gameId:row.game_id,
       playedAt:row.completed_at,
       dailyNumber:row.daily_number,
@@ -1247,10 +1255,10 @@ window.BrainiDailyHub=(function(){
     }
 
     try{
-      const session=await BrainiBackendAuth.getSession();
+      const session=await bounded(BrainiBackendAuth.getSession());
       if(!session?.user) return [];
 
-      const rows=await BrainiCloudGames.getMyRecentResults(80);
+      const rows=await bounded(BrainiCloudGames.getMyRecentResults(80));
       const ids=dailyIds(dailyNumber);
       return (rows||[]).filter(row=>
         ids.includes(row.game_id) &&
@@ -1265,15 +1273,23 @@ window.BrainiDailyHub=(function(){
   async function resolve(dailyNumber=currentDailyNumber(),options={}){
     const daily=BrainiData.daily();
     const games={};
+    const date=BrainiData.dateForDailyNumber(dailyNumber);
+    if(window.BrainiDailyRules?.active(date)&&window.BrainiBackendAuth?.getClient?.()){
+      const {data,error}=await bounded(BrainiBackendAuth.getClient().rpc('get_brainilab_daily_lineup',{p_challenge_date:date}));
+      if(error||data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(dailyIds(dailyNumber)))throw new Error('Daily rules could not be checked');
+      daily.bonusChoice=data.bonus_choice||null;
+      BrainiData.setDailyBonusChoice(daily.bonusChoice);
+    }
 
     function build(cloudRows=[]){
       const ids=dailyIds(dailyNumber);
       ids.forEach(gameId=>{
         let result=localResult(gameId,dailyNumber);
 
-        if(!result && cloudRows.length){
+        if(cloudRows.length){
           const cloudRow=cloudRows.find(row=>row.game_id===gameId);
-          result=cloudResultToLocal(cloudRow);
+          const remote=cloudResultToLocal(cloudRow);
+          if(!result||remote?.answersVerified)result=remote||result;
         }
 
         const completedFromState=
@@ -1287,12 +1303,15 @@ window.BrainiDailyHub=(function(){
           label:"Not played yet"
         };
 
+        const modern=window.BrainiDailyRules?.active(BrainiData.dateForDailyNumber(dailyNumber));
+        const verified=result?.answersVerified||result?.dailyGameVerificationStatus==='verified'||result?.dailyAnswerVerificationStatus==='verified';
+        const completed=completedFromState||!!result&&!result.practice&&(!modern||verified);
         games[gameId]={
           id:gameId,
-          completed:!!result||completedFromState,
+          completed,
           result,
-          points:Number(breakdown.points||0),
-          max:Number(breakdown.max||2500),
+          points:completed?Number(breakdown.points||BrainiData.dailyPointsForResult?.(gameId,result||{})||0):0,
+          max:window.BrainiDailyRules?.max(gameId,BrainiData.dateForDailyNumber(dailyNumber))??Number(breakdown.max||2500),
           label:breakdown.label||""
         };
       });
@@ -1303,7 +1322,7 @@ window.BrainiDailyHub=(function(){
     // knows that Brain Mix was completed.
     build();
 
-    if(options.forceCloud || !games.brainmix.completed){
+    if(options.forceCloud || !games[dailyIds(dailyNumber)[0]]?.completed){
       const cloudRows=await cloudTodayRows(dailyNumber);
       if(cloudRows.length){
         Object.keys(games).forEach(k=>delete games[k]);
@@ -1313,7 +1332,9 @@ window.BrainiDailyHub=(function(){
 
     return {
       dailyNumber:Number(dailyNumber),
-      brainScore:Number(daily.brainScore||0),
+      model:window.BrainiDailyRules?.model(BrainiData.dateForDailyNumber(dailyNumber)),
+      bonusChoice:daily.bonusChoice||null,
+      brainScore:window.BrainiDailyRules?.active(BrainiData.dateForDailyNumber(dailyNumber))?Object.values(games).reduce((sum,g)=>sum+(g.completed?g.points:0),0):Number(daily.brainScore||0),
       completedCount:Object.values(games).filter(g=>g.completed).length,
       dailyIds:dailyIds(dailyNumber),
       games
@@ -1348,10 +1369,7 @@ window.BrainiDailyHub=(function(){
     const prefix=options.prefix||"";
     const result=options.result||status.games.brainmix?.result||null;
 
-    if(result&&window.BrainiPostGame){
-      BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status,focus:options.focus!==false});
-      return status;
-    }
+
     const hasQuizNumbers=
       result &&
       Number.isFinite(Number(result.correct)) &&
@@ -1419,6 +1437,7 @@ window.BrainiDailyHub=(function(){
     const status=options.status||await resolve(options.dailyNumber);
     const result=options.result||status.games.brainmix?.result||null;
 
+    if(result&&window.BrainiPostGame){BrainiPostGame.mount(container,{result,gameId:'brainmix',name:'Brain Mix',status,focus:options.focus!==false});return status;}
     container.innerHTML=completedMarkup(status,{
       prefix:options.prefix||"",
       result
@@ -1574,7 +1593,7 @@ window.BrainiDailyJourney=(function(){
   }
 
   function formatPoints(n){
-    return Number(n||0).toLocaleString();
+    return Number(n||0).toLocaleString('en-GB');
   }
 
   async function markup(options={}){
@@ -1583,6 +1602,7 @@ window.BrainiDailyJourney=(function(){
       {forceCloud:!!options.forceCloud}
     );
     const current=options.currentGame||"";
+    if(status.model?.version==='daily-choice-v1')return choiceMarkup(status);
 
     return `
       <section class="daily-journey ${status.completedCount===4?"is-full":""}">
@@ -1652,10 +1672,24 @@ window.BrainiDailyJourney=(function(){
       {forceCloud:!!options.forceCloud}
     );
     container.innerHTML=await markup({...options,status});
+    window.BrainiFriendChallenge?.mount(container,status);
     return status;
   }
 
-  return {META,ORDER,markup,render};
+  function gameHref(id,day){return siteUrl(META[id].href)+(META[id].dailyQuery?'?daily='+day:'');}
+  function choiceMarkup(status){
+    const model=status.model,day=BrainiData.dateForDailyNumber(status.dailyNumber),primary=status.games[model.primary]||{},bonus=status.bonusChoice;
+    const done=primary.completed&&bonus&&status.games[bonus]?.completed;
+    function card(id,isPrimary){
+      const meta=META[id],game=status.games[id]||{},max=BrainiDailyRules.max(id,day);
+      const unavailable=!isPrimary&&(!primary.completed||bonus&&bonus!==id);
+      const href=gameHref(id,day);
+      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Available after your Daily'):`Up to ${formatPoints(max)} points`;
+      return `<article class="daily-choice-card ${isPrimary?'is-primary':''} ${game.completed?'is-complete':''} ${unavailable?'is-unavailable':''}"><span class="daily-choice-art">${BrainiIcons.game(meta.icon,'mini','braini-game-mini')}</span><div><span class="daily-choice-role">${isPrimary?"Today’s Daily":bonus===id?'Your extra':'Optional extra'}</span><h3>${meta.name}</h3><p>${message}</p></div>${game.completed?'<strong class="daily-choice-done">Completed ✓</strong>':unavailable?'':`<a class="btn" href="${href}">${isPrimary?'Play today’s Daily':bonus===id?'Continue extra':'Choose '+meta.name}</a>`}</article>`;
+    }
+    return `<section class="daily-choice" aria-label="Today’s Daily games"><div class="daily-choice-heading"><span>Daily #${status.dailyNumber}</span><span>${formatPoints(status.brainScore)} / ${formatPoints(model.maxScore)} points</span></div>${card(model.primary,true)}<div class="daily-choice-extra-heading"><h3>${done?'All done for today':bonus?'Your extra':'Fancy one more?'}</h3><p>${done?'You’ve played your Daily and your extra.':bonus?'Up to 1,000 more points. Your streak is already safe.':'Choose one extra. Up to 1,000 points. Your streak only needs the main Daily.'}</p></div><div class="daily-choice-extras">${model.choices.map(id=>card(id,false)).join('')}</div><p class="daily-choice-note">${done?'A fresh challenge arrives tomorrow.':'Your extra is fixed when you open it. A new choice is available tomorrow.'}</p></section>`;
+  }
+  return {META,ORDER,markup,render,gameHref,choiceMarkup};
 })();
 
 /* ===== home-daily.js ===== */
@@ -2158,7 +2192,7 @@ window.BrainiDailyGames=(function(){
       });
       if(error) throw error;
       return {
-        validWord:data.valid_word!==false,
+        validWord:data?.valid_word===true,
         message:data.message||null,
         states:data.states||[],
         won:!!data.won,
@@ -2167,6 +2201,11 @@ window.BrainiDailyGames=(function(){
       };
     }
 
+    // Never silently count arbitrary five-letter strings in fallback/archive mode.
+    if(!configured())throw new Error('Reconnect to check the English word list.');
+    const {data:valid,error}=await client().rpc('is_brainilab_english_guess',{p_guess:guess});
+    if(error)throw error;
+    if(valid!==true)return {validWord:false,message:'Not in the English word list. Your attempt has not been used.',states:[],won:false,finished:false,answer:null};
     const states=evaluateLocalWord(content.fallbackAnswer,guess);
     const won=states.every(s=>s==="correct");
     const finished=won||attempt>=5;
@@ -2706,6 +2745,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const stage = root?.querySelector(".challenge-inner");
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
+  let playing=false;
+  async function modernEntry(){
+    const day=BrainiData.todayKey(),ids=BrainiDailyRules.lineup(day),meta=BrainiDailyJourney.META[ids[0]];
+    const href=BrainiDailyJourney.gameHref(ids[0],day);
+    stage.innerHTML=`<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>One little challenge. See how you do.</p><div class="home-start-actions"><a class="btn" href="${href}">Play today’s Daily</a><a class="btn-light" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
+    try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});if(day===BrainiData.todayKey()&&status.games[ids[0]]?.completed&&stage.isConnected){stage.innerHTML=`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" href="/games/">Explore all games</a></div>`;}}catch(error){console.warn('Daily status unavailable',error);}
+  }
+  window.addEventListener('brainilab:daychange',()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
+  if(window.BrainiDailyRules?.active()){
+    await modernEntry();
+    return;
+  }
   let timeout;
   try {
     const [daily, previousStatus] = await Promise.race([
@@ -2738,6 +2790,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     root.removeAttribute('data-home-loading');
     root.setAttribute('aria-busy','false');
     button.addEventListener("click", () => {
+      if(daily.dailyNumber!==BrainiData.daily().number){location.href='/daily-quiz/';return;}
+      playing=true;
       stage.replaceChildren(template.content.cloneNode(true));
       stage.querySelector("[data-home-title]").textContent = `Daily Brain Challenge · #${daily.dailyNumber}`;
     BrainiQuiz.mount(root,questions,{

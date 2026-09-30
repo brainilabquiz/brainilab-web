@@ -39,12 +39,13 @@ window.BrainiUI = (function(){
       return `<article class="brain-score-game" data-daily-item="${id}">
         <div class="brain-score-game-head"><div><span class="brain-score-game-icon">${window.BrainiIcons?.game?BrainiIcons.game(icon,"mini","braini-game-mini"):""}</span><strong>${name}</strong></div><span class="brain-score-game-points" data-item-value>—</span></div>
         <div class="brain-score-game-track"><span data-item-bar style="width:0%"></span></div>
-        <small data-item-note>Not played yet · worth up to 2,500</small>
+        <small data-item-note>${window.BrainiDailyRules?.model(BrainiData.dateForDailyNumber(daily.number)).primary===id?"Main Daily":"Daily game"} · up to ${(window.BrainiDailyRules?.max(id,BrainiData.dateForDailyNumber(daily.number))||2500).toLocaleString("en-GB")} points</small>
       </article>`;
     }).join("");
   }
 
   async function hydrate(){
+    setText('[data-daily-score-max]','/ '+(window.BrainiDailyRules?.model().maxScore||10000).toLocaleString()+' points');
     const player=await BrainiData.api.getPlayer();
     const daily=await BrainiData.api.getDaily();
     const collective=BrainiData.getCollective();
@@ -53,7 +54,7 @@ window.BrainiUI = (function(){
     setText("[data-player-streak]",player.currentStreak);
     document.querySelectorAll('.streak').forEach(el=>{
       el.classList.toggle('is-secured',player.streakSecuredToday===true);
-      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play a Daily game to keep your streak':'Complete a Daily game to start your streak';
+      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play the main Daily to keep your streak':'Complete the main Daily to start your streak';
       el.setAttribute('aria-label',`${player.currentStreak} day streak. ${el.title}. Days reset at 00:00 UTC.`);
     });
     setText("[data-player-best-streak]",player.bestStreak);

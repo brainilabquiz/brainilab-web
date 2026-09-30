@@ -137,6 +137,27 @@ window.BRAINI_BUILD="41.11.0";
 window.BRAINI_ENABLE_SW=
   window.BRAINI_ENABLE_SW===true;
 
+/* ===== daily-rules.js ===== */
+
+/* Shared Daily contract. Configuration is generated from content/daily-rules.json. */
+window.BrainiDailyRules=(()=>{
+ const config={version:'daily-choice-v1',startsOn:'2026-10-01',primaryMax:2500,bonusMax:1000,completionXP:250,rotation:['brainmix','connections','mathrush','brainiword','numberroute','orderup','oddoneout','topicrush','sequence','higherlower']};
+ const date=()=>new Date().toISOString().slice(0,10);
+ function active(day=date()){return /^\d{4}-\d{2}-\d{2}$/.test(day)&&day>=config.startsOn;}
+ function lineup(day=date()){
+  if(!active(day))return null;
+  const offset=Math.floor((Date.parse(day+'T00:00:00Z')-Date.parse(config.startsOn+'T00:00:00Z'))/86400000);
+  if(!Number.isFinite(offset))return null;
+  const rotation=config.rotation,n=rotation.length,index=offset%n;
+  // Coprime day steps rotate each role; offsets always produce three distinct games.
+  return [rotation[index],rotation[(index+3+Math.floor(offset/n)%3)%n],rotation[(index+7+Math.floor(offset/n)%2)%n]];
+ }
+ function max(game,day=date()){const ids=lineup(day);return ids?(game===ids[0]?config.primaryMax:ids.slice(1).includes(game)?config.bonusMax:0):2500;}
+ function points(raw,game,day=date()){return Math.round(Math.min(2500,Math.max(0,Number(raw)||0))*max(game,day)/2500);}
+ function model(day=date()){const ids=lineup(day);return ids?{version:config.version,primary:ids[0],choices:ids.slice(1),maxScore:config.primaryMax+config.bonusMax,maxGames:2,completionXP:config.completionXP}:{version:'legacy',primary:'brainmix',choices:[],maxScore:10000,maxGames:4,completionXP:250};}
+ return {config,active,lineup,max,points,model};
+})();
+
 /* ===== data.js ===== */
 
 
@@ -292,6 +313,7 @@ window.BrainiData = (function(){
   }
 
   function dailyGameIdsForDate(dateValue=todayKey()){
+    const next=window.BrainiDailyRules?.lineup(dateValue);if(next)return next;
     const date=String(dateValue||todayKey()).slice(0,10);
     if(date<DAILY_ROTATION_START){
       return ["brainmix","orderup","topicrush","brainiword"];
@@ -309,7 +331,7 @@ window.BrainiData = (function(){
   function emptyDailyBreakdown(dateValue=todayKey()){
     const out={};
     dailyGameIdsForDate(dateValue).forEach(id=>{
-      out[id]={points:0,max:2500,label:"Not played yet"};
+      out[id]={points:0,max:window.BrainiDailyRules?.max(id,dateValue)??2500,label:"Not played yet"};
     });
     return out;
   }
@@ -497,7 +519,10 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     p.streakSecuredToday=last===today && p.currentStreak>0;
     return p;
   }
-  function daily(){ return clone(state.daily); }
+  function daily(){
+    if(state.daily.key!==todayKey()){state.daily={key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePercentile:null,bonusChoice:null,dailyBreakdown:emptyDailyBreakdown()};save();}
+    return clone(state.daily);
+  }
   function personalBest(gameId){ return clone(state.personalBests[gameId]||null); }
   function anytimeHistory(scope){
     const key=String(scope||"").trim();
@@ -543,6 +568,10 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   function scoreForDaily(gameId,payload){
+    const raw=rawScoreForDaily(gameId,payload);
+    return window.BrainiDailyRules?.points(raw,gameId,dateForDailyNumber(payload.dailyNumber||state.daily.number))??raw;
+  }
+  function rawScoreForDaily(gameId,payload){
     if(gameId==="brainmix") return Math.min(2500,Math.round((payload.score||0)*.25));
     if(gameId==="flagdash") return Math.min(2500,Math.round((payload.correct||0)*70 + (payload.bestCombo||0)*15));
     if(gameId==="orderup") return Math.min(2500,Math.max(0,Math.round(payload.score||0)));
@@ -567,11 +596,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const dailyIds=dailyGameIdsForDate(todayDate);
     const acceptedIds=todayDate<DAILY_ROTATION_START?[...dailyIds,"maphunt"]:[...dailyIds];
     const bestByGame={};
+    const rules=window.BrainiDailyRules?.model(todayDate);
+    const chosen=state.daily.bonusChoice;
 
     // V26 migration bridge: a Map Hunt result already completed today occupies
     // the new Topic Rush Daily slot instead of disappearing from 4/4 progress.
     state.recentResults
-      .filter(r=>r.dailyNumber===today && acceptedIds.includes(r.gameId))
+      .filter(r=>!r.practice && r.dailyNumber===today && acceptedIds.includes(r.gameId) && (rules?.version!=="daily-choice-v1" || r.gameId===rules.primary || r.gameId===chosen))
       .forEach(r=>{
         const sourceGameId=r.gameId;
         const slotGameId=sourceGameId==="maphunt" && todayDate<DAILY_ROTATION_START ? "topicrush" : sourceGameId;
@@ -592,13 +623,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     state.daily.brainScore = Object.values(bestByGame)
       .reduce((sum,r)=>sum+(r._dailyPoints ?? scoreForDaily(r.gameId,r)),0);
     const completion=Object.keys(bestByGame).length;
-    state.daily.brainScorePercentile = completion ? Math.max(4,Math.round(74-state.daily.brainScore/160)) : null;
+    state.daily.brainScorePercentile = null; // Percentiles require a measured server cohort.
     state.daily.completedGames=Object.keys(bestByGame);
     const breakdown={};
     dailyIds.forEach(gameId=>{
       const res=bestByGame[gameId];
       if(!res){
-        breakdown[gameId]={points:0,max:2500,label:"Not played yet"};
+        breakdown[gameId]={points:0,max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,label:"Not played yet"};
         return;
       }
       const pts=res._dailyPoints ?? scoreForDaily(gameId,res);
@@ -617,7 +648,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       else if(gameId==="mathrush") label=`${Number(res.correct||0)} correct · ${Number(res.bestCombo||0)} best combo`;
       else if(gameId==="numberroute") label=`${Number(res.correct||0)}/${Number(res.total||10)} routes solved`;
       else if(gameId==="sequence") label=`${Number(res.correct||0)}/${Number(res.total||10)} correct`;
-      breakdown[gameId]={points:pts,max:2500,label};
+      breakdown[gameId]={points:pts,max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,label};
     });
     state.daily.dailyBreakdown=breakdown;
   }
@@ -892,6 +923,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       if(existing) return Object.assign(clone(existing),{dailyReplayBlocked:true});
     }
 
+    if(requestedDaily>0 && dateForDailyNumber(requestedDaily)!==todayKey())payload={...payload,practice:true};
+    const day=dateForDailyNumber(requestedDaily||state.daily.number),rules=window.BrainiDailyRules?.model(day);
+    if(rules?.version==='daily-choice-v1' && requestedDaily>0 && !payload.practice){
+      if(!dailyGameIdsForDate(day).includes(gameId) || (gameId!==rules.primary && state.daily.bonusChoice!==gameId)){
+        payload={...payload,practice:true};
+      }
+    }
     const result=Object.assign({
       id:"r-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
       clientResultId:makeClientResultId(),
@@ -1480,6 +1518,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       state.daily.number=Number(today.daily_number);
     }
 
+    state.daily.bonusChoice=today.bonus_choice||state.daily.bonusChoice||null;
     state.daily.brainScore=Number(today.daily_brain_score||0);
     state.daily.completedGames=[];
 
@@ -1515,7 +1554,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
         : !!today[`${field}_played`];
       breakdown[gameId]={
         points:Number(today[`${field}_points`]||0),
-        max:2500,
+        max:window.BrainiDailyRules?.max(gameId,todayDate)??2500,
         label:played?"Completed today":"Not played yet"
       };
       if(played) state.daily.completedGames.push(gameId);
@@ -1766,8 +1805,92 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     getCollective:()=>clone(collective),
     todayKey,dailyNumber,dailyNumberForDate,pastDailyDate,dateForDailyNumber,
     dailyGameIdsForDate,dailyGameIdsForNumber,DAILY_ROTATION_START,
+    dailyPointsForResult:scoreForDaily,
+    setDailyBonusChoice(id){state.daily.bonusChoice=id||null;save();},
     DAILY_GAME_IDS:dailyGameIdsForDate(todayKey())
   };
+})();
+
+/* ===== friend-challenge.js ===== */
+
+/* Voluntary, spoiler-free invitations to the same UTC Daily. No contacts or player IDs. */
+window.BrainiFriendChallenge=(()=>{
+ const today=()=>new Date().toISOString().slice(0,10);
+ const validDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+ const label=date=>new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z'));
+ const dateFor=status=>window.BrainiData?.dateForDailyNumber?.(status?.dailyNumber);
+ function buildInvite(status,day=today()){
+  const date=dateFor(status);
+  if(!validDate(date)||date!==day||!Number.isInteger(status?.dailyNumber)||status.dailyNumber<1)return null;
+  const model=window.BrainiDailyRules?.model(date);
+  if(model?.version==='daily-choice-v1'){
+    const primary=status.games?.[model.primary],name=window.BrainiDailyJourney?.META?.[model.primary]?.name||'Daily',score=Math.max(0,Math.min(2500,Number(primary?.points)||0));
+    const url='https://brainilabgames.com/daily-quiz/?friend='+date;
+    const text=(primary?.completed?`I got ${score.toLocaleString('en-GB')} points in today’s ${name} 😄\nThink you can beat me? Your turn!`:'Fancy a quick challenge? 😄\nTry today’s BrainiLab Daily with me — let’s see who gets the higher score.')+'\n\n'+url;
+    return {date,url,text,title:'Your turn! Try today’s Daily'};
+  }
+  const completed=Math.max(0,Math.min(4,Math.floor(Number(status.completedCount)||0)));
+  const score=Math.max(0,Math.min(completed*2500,Math.floor(Number(status.brainScore)||0)));
+  const url='https://brainilabgames.com/daily-quiz/?friend='+date;
+  const progress=completed===4?`Just finished today’s BrainiLab Daily — ${score.toLocaleString('en-GB')} points 😄\nYour turn! Think you can beat me?`:completed?`I’m trying today’s BrainiLab Daily — ${completed} ${completed===1?'game':'games'} down, ${4-completed} to go 😄\nFancy joining me? Let’s finish all four and compare scores.`:'Fancy a little challenge? 😄\nLet’s try today’s BrainiLab Daily and see who gets the higher score.';
+  const text=`${progress}\n\n${url}`;
+  return {date,url,text,title:'Try the BrainiLab Daily with me'};
+ }
+ function invitationState(search=location.search,day=today()){
+  const params=new URLSearchParams(search);if(!params.has('friend'))return null;
+  const date=params.get('friend');
+  if(params.getAll('friend').length!==1||!validDate(date)||date>day)return {kind:'invalid',title:'Let’s play today’s Daily',text:'This invitation is not valid, but today’s challenge is ready below.'};
+  if(date<day)return {kind:'expired',title:'A new Daily is ready',text:`That invitation was for ${label(date)}. Today has a different set of games, so compare results from the same day.`};
+  return {kind:'current',title:'You’ve been challenged!',text:'Play the same main Daily as your friend, then compare your main-game points. No account needed. Today ends at 00:00 UTC.'};
+ }
+ function renderInvitation(){
+  const root=document.querySelector('[data-friend-invitation]');if(!root)return;
+  const state=invitationState();root.hidden=!state;
+  if(!state){root.replaceChildren();return;}
+  const title=document.createElement('strong'),copy=document.createElement('p');title.textContent=state.title;copy.textContent=state.text;
+  root.replaceChildren(title,copy);root.dataset.invitationState=state.kind;
+ }
+ let modal,opener;
+ function ensureModal(){
+  if(modal)return modal;
+  modal=document.createElement('dialog');modal.className='friend-dialog';modal.setAttribute('aria-labelledby','friend-dialog-title');
+  modal.innerHTML='<div class="friend-dialog-head"><h2 id="friend-dialog-title">Challenge a friend</h2><button type="button" data-friend-close aria-label="Close invitation">×</button></div><p>Add their name or a line of your own.</p><label for="friend-invitation-text">Your message</label><textarea id="friend-invitation-text" rows="7" maxlength="3000"></textarea><div class="friend-dialog-actions"><button type="button" data-friend-copy>Copy invitation</button><button type="button" data-friend-share hidden>Share…</button></div><p class="friend-dialog-status" role="status" aria-live="polite"></p><p class="friend-dialog-note">The same Daily is available until 00:00 UTC.</p>';
+  document.body.append(modal);
+  modal.querySelector('[data-friend-close]').onclick=()=>modal.close();
+  modal.addEventListener('click',e=>{if(e.target===modal){const r=modal.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)modal.close();}});
+  modal.addEventListener('close',()=>{if(opener?.isConnected)opener.focus();});
+  return modal;
+ }
+ function open(status,trigger=document.activeElement){
+  const invite=buildInvite(status);if(!invite)return false;
+  const dialog=ensureModal(),copy=dialog.querySelector('[data-friend-copy]'),share=dialog.querySelector('[data-friend-share]'),feedback=dialog.querySelector('[role="status"]');
+  const field=dialog.querySelector('textarea');field.value=invite.text;feedback.textContent='';copy.textContent='Copy invitation';copy.disabled=false;share.disabled=false;share.hidden=typeof navigator.share!=='function';opener=trigger;
+  async function send(method){
+   if(invite.date!==today()){feedback.textContent='That Daily has ended. Open today’s Daily to send a fresh invitation.';copy.disabled=true;share.disabled=true;return;}
+   const message=field.value.trim();if(!message){feedback.textContent='Write your message first.';field.focus();return;}
+   copy.disabled=true;share.disabled=true;
+   try{
+    if(method==='copy'){if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText(message);feedback.textContent='Copied. Paste it into your chat when you’re ready.';copy.textContent='Copied ✓';}
+    else{await navigator.share({title:invite.title,text:message});feedback.textContent='Invitation ready to share.';}
+    window.dispatchEvent(new CustomEvent('brainilab:friendchallenge',{detail:{method}}));
+   }catch(error){
+    if(error?.name!=='AbortError'){feedback.textContent='Couldn’t share automatically. Select and copy the invitation above.';field.focus();field.select();}
+   }finally{copy.disabled=false;share.disabled=false;}
+  }
+  copy.onclick=()=>send('copy');share.onclick=()=>send('share');if(!dialog.open)dialog.showModal();copy.focus();return true;
+ }
+ function mount(container,status){
+  if(!container||!buildInvite(status))return;
+  container.querySelector('[data-friend-challenge]')?.remove();
+  const box=document.createElement('div');box.className='friend-challenge';box.dataset.friendChallenge='';
+  const button=document.createElement('button'),note=document.createElement('span');button.type='button';button.textContent='Challenge a friend';note.textContent='Same Daily. No spoilers.';
+  button.onclick=()=>{if(!open(status,button)){note.textContent='A new Daily has started.';button.disabled=true;}};
+  box.append(button,note);container.append(box);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderInvitation);else renderInvitation();
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderInvitation();});
+ if(new URLSearchParams(location.search).has('friend'))setInterval(renderInvitation,60000);
+ return {buildInvite,invitationState,renderInvitation,open,mount};
 })();
 
 /* ===== try-first-runtime.js ===== */
@@ -1801,6 +1924,58 @@ window.BrainiTryFirstRuntime=(function(){
   return {active,decorate};
 })();
 
+/* ===== daily-choice-guard.js ===== */
+
+/* Authoritative eligibility/extra selection before mounting a scored game. */
+window.BrainiDailyChoiceGuard=(()=>{
+ const paths={brainmix:'brain-mix',brainiword:'brainiword',orderup:'order-up',topicrush:'topic-rush',connections:'connections',oddoneout:'odd-one-out',higherlower:'higher-lower',mathrush:'math-rush',numberroute:'number-route',sequence:'sequence'};
+ const params=new URLSearchParams(location.search);
+ const game=Object.keys(paths).find(id=>location.pathname.split('/').includes(paths[id]));
+ const day=params.get('daily')||new Date().toISOString().slice(0,10);
+ const dailyOnly=['brainmix','brainiword','orderup','topicrush'].includes(game);
+ const active=!!game&&(params.has('daily')||dailyOnly)&&!params.has('archive')&&params.get('try')!=='1'&&window.BrainiDailyRules?.active(day);
+ let pending;
+ async function rpc(client,name,args){let timer;try{return await Promise.race([client.rpc(name,args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Connection timed out')),8000);})]);}finally{clearTimeout(timer);}}
+ async function validate(){
+  if(!active)return {allowed:true};
+  if(day!==new Date().toISOString().slice(0,10))return {allowed:false,message:'That Daily has ended. Pick today’s challenge or play for practice.'};
+  const ids=BrainiDailyRules.lineup(day);
+  if(!ids.includes(game))return {allowed:false,message:'This game is not in today’s Daily. You can still play another round for practice.'};
+  try{
+   const client=window.BrainiBackendAuth?.getClient?.();
+   if(!client)throw new Error('Connection unavailable');
+   const {data,error}=await rpc(client,'get_brainilab_daily_lineup',{p_challenge_date:day});
+   if(error)throw error;
+   if(data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(ids)||data.max_score!==3500||data.extra_max!==1000)throw new Error('Daily rules are updating');
+   if(game!==ids[0]){
+    let sessionTimer;
+    try{await Promise.race([BrainiBackendAuth.ensurePlayerSession(),new Promise((_,reject)=>{sessionTimer=setTimeout(()=>reject(new Error('Connection timed out')),8000);})]);}finally{clearTimeout(sessionTimer);}
+    const chosen=await rpc(client,'choose_brainilab_daily_extra',{p_game_id:game,p_challenge_date:day});
+    if(chosen.error)throw chosen.error;
+    BrainiData.setDailyBonusChoice(chosen.data.game_id);
+   }
+   return {allowed:true};
+  }catch(error){
+   const text=String(error?.message||'');
+   return {allowed:false,message:text.includes('already chosen')?'You have already chosen your extra for today.':text.includes('main Daily first')?'Complete the main Daily first. If you just finished, wait for your result to sync.':'Your Daily could not be checked. Please reconnect and try again.'};
+  }
+ }
+ async function check(root){
+  if(!active)return false;
+  pending ||=validate();
+  const result=await pending;
+  if(result.allowed)return false;
+  const target=root||document.querySelector('.labgame-shell');
+  if(target){
+   target.innerHTML='<section class="daily-load-error" role="status"><h2>Let’s get you to the right game</h2><p></p><a class="btn" href="/daily-quiz/">Today’s Daily</a> <a class="btn-light" href="/games/">All games</a> <button class="btn-light" type="button">Retry</button></section>';
+   target.querySelector('p').textContent=result.message;
+   target.querySelector('button').onclick=()=>location.reload();
+  }
+  return true;
+ }
+ return {active,check};
+})();
+
 /* ===== daily-completion-guard.js ===== */
 
 /* BrainiLab Daily completion guard — V41.8.0
@@ -1823,6 +1998,7 @@ window.BrainiDailyCompletionGuard=(function(){
     shell.innerHTML=`<div class="daily-completed-state simple-daily-result"><div class="daily-completed-kicker simple-result-kicker-row"><span>Daily #${Number(dailyNumber)||""}</span><strong>Completed ✓</strong></div><h1>Already played today</h1><p class="daily-completed-lead">This Daily result is locked. Each scored Daily game can only be completed once.</p><div class="simple-result-actions"><a class="simple-result-play" href="../../daily-quiz/">Continue Daily</a><a class="simple-result-progress" href="../index.html">Play Anytime</a></div></div>`;
   }
   async function check(){
+    if(await window.BrainiDailyChoiceGuard?.check?.())return true;
     if(localComplete()){showLock();return true}
     if(window.BrainiCloudGames&&window.BrainiBackendAuth?.isConfigured?.()){
       try{const session=await BrainiBackendAuth.getSession?.();if(session?.user){const rows=await BrainiCloudGames.getMyRecentResults(80);if((rows||[]).some(r=>r.game_id===gameId&&Number(r.daily_number)===Number(dailyNumber))){showLock();return true}}}catch(err){console.warn("BrainiLab Daily completion guard:",err?.message||err)}
@@ -1875,12 +2051,13 @@ window.BrainiUI = (function(){
       return `<article class="brain-score-game" data-daily-item="${id}">
         <div class="brain-score-game-head"><div><span class="brain-score-game-icon">${window.BrainiIcons?.game?BrainiIcons.game(icon,"mini","braini-game-mini"):""}</span><strong>${name}</strong></div><span class="brain-score-game-points" data-item-value>—</span></div>
         <div class="brain-score-game-track"><span data-item-bar style="width:0%"></span></div>
-        <small data-item-note>Not played yet · worth up to 2,500</small>
+        <small data-item-note>${window.BrainiDailyRules?.model(BrainiData.dateForDailyNumber(daily.number)).primary===id?"Main Daily":"Daily game"} · up to ${(window.BrainiDailyRules?.max(id,BrainiData.dateForDailyNumber(daily.number))||2500).toLocaleString("en-GB")} points</small>
       </article>`;
     }).join("");
   }
 
   async function hydrate(){
+    setText('[data-daily-score-max]','/ '+(window.BrainiDailyRules?.model().maxScore||10000).toLocaleString()+' points');
     const player=await BrainiData.api.getPlayer();
     const daily=await BrainiData.api.getDaily();
     const collective=BrainiData.getCollective();
@@ -1889,7 +2066,7 @@ window.BrainiUI = (function(){
     setText("[data-player-streak]",player.currentStreak);
     document.querySelectorAll('.streak').forEach(el=>{
       el.classList.toggle('is-secured',player.streakSecuredToday===true);
-      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play a Daily game to keep your streak':'Complete a Daily game to start your streak';
+      el.title=player.streakSecuredToday?'Daily streak secured for today':player.currentStreak?'Play the main Daily to keep your streak':'Complete the main Daily to start your streak';
       el.setAttribute('aria-label',`${player.currentStreak} day streak. ${el.title}. Days reset at 00:00 UTC.`);
     });
     setText("[data-player-best-streak]",player.bestStreak);
@@ -2232,9 +2409,9 @@ window.BrainiContinuity=(()=>{
     const next=milestones.find(n=>n>streak)||Math.ceil((streak+1)/100)*100;
     const remaining=Math.max(0,new Date(continuity.reset_at)-now),hours=Math.floor(remaining/3600000),minutes=Math.floor(remaining%3600000/60000);
     const heading=secured?'Streak secured for today':streak?'Keep your streak going':'Start a new streak';
-    const detail=secured?`${streak} ${streak===1?'day':'days'} and counting. Next milestone: ${next} days.`:streak?`One Daily game keeps it going. Today ends in ${hours}h ${minutes}m.`:'Complete one Daily game. Your first day starts there.';
+    const detail=secured?`${streak} ${streak===1?'day':'days'} and counting. Next milestone: ${next} days.`:streak?`The main Daily keeps it going. Today ends in ${hours}h ${minutes}m.`:'Complete the main Daily to start your streak.';
     const days=(continuity.days||[]).map(d=>{const date=new Date(d.date+'T12:00:00Z'),today=d.date===continuity.today;return `<li class="${d.completed?'complete':''} ${today?'today':''}" aria-label="${esc(date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'}))}: ${d.completed?'completed':today?'not completed yet':'no Daily game'}"><span>${esc(date.toLocaleDateString('en-GB',{weekday:'narrow',timeZone:'UTC'}))}</span><b aria-hidden="true">${d.completed?'✓':today?'•':'–'}</b></li>`;}).join('');
-    return `<section class="continuity-card ${secured?'is-secured':''} ${compact?'is-compact':''}" aria-label="Your Daily streak"><div class="continuity-main"><span class="continuity-count" aria-label="${streak} day streak">${BrainiIcons.product('streak','continuity-flame')}<b>${streak}</b></span><div><h2>${heading}</h2>${compact?'':`<p>${detail}</p>`}${best||compact?`<small>Personal best: ${best} ${best===1?'day':'days'}</small>`:''}</div></div><ol class="continuity-week" aria-label="Last seven UTC days">${days}</ol>${secured?'<a class="continuity-action" href="/profile/?section=progress">See your progress →</a>':'<a class="continuity-action" href="/daily-quiz/">Play a Daily game →</a>'}<span class="continuity-timezone">Daily reset: 00:00 UTC</span></section>`;
+    return `<section class="continuity-card ${secured?'is-secured':''} ${compact?'is-compact':''}" aria-label="Your Daily streak"><div class="continuity-main"><span class="continuity-count" aria-label="${streak} day streak">${BrainiIcons.product('streak','continuity-flame')}<b>${streak}</b></span><div><h2>${heading}</h2>${compact?'':`<p>${detail}</p>`}${best||compact?`<small>Personal best: ${best} ${best===1?'day':'days'}</small>`:''}</div></div><ol class="continuity-week" aria-label="Last seven UTC days">${days}</ol>${secured?'<a class="continuity-action" href="/profile/?section=progress">See your progress →</a>':'<a class="continuity-action" href="/daily-quiz/">Play today’s Daily →</a>'}<span class="continuity-timezone">Daily reset: 00:00 UTC</span></section>`;
   }
   function rewardMarkup(result){
     if(result?.practice||result?.tryFirst)return '<p class="post-reward-note">Practice round · no XP or streak changes</p>';

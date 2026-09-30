@@ -130,7 +130,7 @@ window.BrainiAnytimeBrowser=(function(){
             <h2>${daily ? "More games, whenever you want" : "Pick another quiz"}</h2>
 
             <p>${daily
-              ? "These quizzes are replayable and earn XP, but they do not change today’s 10,000-point Daily Brain Score."
+              ? "These quizzes are replayable and earn XP, but they do not change today’s Daily Brain Score."
               : "Choose a category and difficulty. These quizzes are replayable whenever you want."
             }</p>
           </div>

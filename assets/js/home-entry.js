@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const stage = root?.querySelector(".challenge-inner");
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
+  let playing=false;
+  async function modernEntry(){
+    const day=BrainiData.todayKey(),ids=BrainiDailyRules.lineup(day),meta=BrainiDailyJourney.META[ids[0]];
+    const href=BrainiDailyJourney.gameHref(ids[0],day);
+    stage.innerHTML=`<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>One little challenge. See how you do.</p><div class="home-start-actions"><a class="btn" href="${href}">Play today’s Daily</a><a class="btn-light" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
+    try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});if(day===BrainiData.todayKey()&&status.games[ids[0]]?.completed&&stage.isConnected){stage.innerHTML=`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" href="/games/">Explore all games</a></div>`;}}catch(error){console.warn('Daily status unavailable',error);}
+  }
+  window.addEventListener('brainilab:daychange',()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
+  if(window.BrainiDailyRules?.active()){
+    await modernEntry();
+    return;
+  }
   let timeout;
   try {
     const [daily, previousStatus] = await Promise.race([
@@ -36,6 +49,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     root.removeAttribute('data-home-loading');
     root.setAttribute('aria-busy','false');
     button.addEventListener("click", () => {
+      if(daily.dailyNumber!==BrainiData.daily().number){location.href='/daily-quiz/';return;}
+      playing=true;
       stage.replaceChildren(template.content.cloneNode(true));
       stage.querySelector("[data-home-title]").textContent = `Daily Brain Challenge · #${daily.dailyNumber}`;
     BrainiQuiz.mount(root,questions,{
