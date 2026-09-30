@@ -16,6 +16,8 @@ window.BrainiPuzzleResults = (() => {
     reward.setAttribute('role', 'status');
     const practice = result.practice || result.tryFirst;
     if (!practice) reward.textContent = 'Saving your result…';
+    container.classList.add('puzzle-result-panel');
+    container.scrollIntoView?.({block: 'start', behavior: 'instant'});
     let saving = false, saved = false;
     return async function save(payload) {
       if (saving || saved) return null;
