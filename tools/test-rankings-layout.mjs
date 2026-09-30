@@ -23,6 +23,15 @@ assert.equal(root.querySelectorAll('.place-2').length,0,'no invented runner-up')
 assert.equal(root.querySelector('.ranking-you').textContent,'You');
 assert.match(root.querySelector('.ranking-personal').textContent,/400 points/);
 assert.ok(!root.querySelector('.ranking-streak-details').open,'streak details do not push the board down');
+data={...data,totalPlayers:12,rows:Array.from({length:12},(_,i)=>row(i+1,'Player '+i,1000-i))};await w.BrainiRankings.render();
+assert.equal(root.querySelectorAll('.ranking-row').length,10,'top ten visible without expanding');
+assert.equal(root.querySelectorAll('.ranking-medal').length,3);
+assert.ok(root.querySelector('.place-10'));
+assert.ok(root.querySelector('.default-player-avatar'));
+assert.equal(root.querySelector('.default-player-avatar').getAttribute('src'),'/assets/icons/product/player-owl.svg');
+assert.notEqual(w.BrainiProgressUI.avatarClass(5),w.BrainiProgressUI.avatarClass(6),'frame accent evolves each level');
+assert.notEqual(w.BrainiProgressUI.avatarClass(24),w.BrainiProgressUI.avatarClass(25),'tier frames evolve');
+assert.equal(w.BrainiProgressUI.xpProgress(5,395).nextXp,500,'XP math unchanged');
 data={...data,totalPlayers:1,rows:[row(1,'Only player',50)],user:null};await w.BrainiRankings.render();
 assert.equal(root.querySelector('.ranking-player-count').textContent,'1 player');
 assert.equal(root.querySelectorAll('.ranking-row').length,1);

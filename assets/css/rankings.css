@@ -103,3 +103,28 @@
  .rankings-page .ranking-gate{display:block;padding:24px}.rankings-page .ranking-gate button{margin-top:16px}.rankings-page .ranking-friends-empty{padding:28px 20px}
 }
 
+
+/* Medal rows, with descending emphasis and one consistent number face. */
+.rankings-page :is(.ranking-position,.ranking-row-score,.ranking-personal strong,.ranking-personal-score b){font-family:"Montserrat",system-ui,sans-serif;font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}
+.rankings-page .ranking-row{min-height:90px}.rankings-page .ranking-identity strong{font-size:16px}.rankings-page .ranking-identity small{font-size:12px}
+.rankings-page .ranking-position>span{position:relative;clip-path:none!important;padding:0!important;isolation:isolate}
+.ranking-position b{position:relative;font:inherit;z-index:1}.ranking-medal{max-width:none;position:absolute;width:46px;height:54px;left:50%;top:50%;transform:translate(-50%,-50%);fill:var(--medal);stroke:var(--medal-edge);stroke-width:1.2}
+.ranking-medal .medal-inner{fill:none;stroke:#fffefa;stroke-width:1.5;opacity:.8}.ranking-medal .medal-ribbon{fill:var(--ribbon);stroke:none}
+.rankings-page :is(.place-1,.place-2,.place-3) .ranking-position>span{background:none;height:40px;padding-bottom:6px!important}
+.rankings-page .ranking-row.place-1{--medal:#ffdc35;--medal-edge:#d6a719;--ribbon:#e9bd28;background:#fff8da;min-height:110px;border-top:1px solid #edda9c}
+.rankings-page .ranking-row.place-2{--medal:#dee5ec;--medal-edge:#99a8b7;--ribbon:#b7c3cf;background:#f1f4f7;min-height:100px}
+.rankings-page .ranking-row.place-3{--medal:#e9c5a1;--medal-edge:#ba8959;--ribbon:#d2a173;background:#fcf1e5;min-height:96px}
+.rankings-page .place-1 .ranking-row-score{font-size:28px}.rankings-page .place-2 .ranking-row-score{font-size:25px}.rankings-page .place-3 .ranking-row-score{font-size:23px}
+.rankings-page .place-1 .ranking-identity strong{font-size:18px}.rankings-page .ranking-row.is-me{box-shadow:inset 4px 0 var(--green)}
+.rankings-page .ranking-row.is-me:not(.place-1):not(.place-2):not(.place-3){background:#eef8ed}
+.rankings-page .rank-avatar.small{width:44px;height:44px;min-width:44px;margin:0 3px}.rankings-page .place-1 .rank-avatar.small{width:50px;height:50px;min-width:50px}
+.rankings-page :is(.place-4,.place-5,.place-6,.place-7,.place-8,.place-9,.place-10) .ranking-position>span{background:#f1eee6;border:1px solid #e5e0d5;border-radius:10px;width:32px;height:32px;font-size:15px}
+.ranking-level{grid-template-columns:48px minmax(0,1fr);gap:12px 16px}.ranking-level>.rank-avatar{align-self:start;margin-top:4px}.ranking-level strong{font-size:16px}.ranking-level strong span{font-size:12px}
+.ranking-xp-track{height:11px;background:#e5e0d2;box-shadow:inset 0 1px 2px #423b6320;margin:10px 0 7px}.ranking-xp-track i{border-top:2px solid #73c467;box-shadow:inset 0 -2px #2c8428}
+@media(max-width:600px){
+ .rankings-page .ranking-row{min-height:86px}.rankings-page .ranking-identity strong{font-size:13px}.rankings-page .ranking-identity small{font-size:10px}
+ .rankings-page .ranking-row-score{font-size:17px}.rankings-page .place-1 .ranking-row-score{font-size:21px}.rankings-page .place-2 .ranking-row-score{font-size:19px}.rankings-page .place-3 .ranking-row-score{font-size:18px}
+ .rankings-page .ranking-row.place-1{min-height:100px}.rankings-page .place-2,.rankings-page .ranking-row.place-3{min-height:92px}.rankings-page .place-1 .ranking-identity strong{font-size:14px}
+ .rankings-page .rank-avatar.small,.rankings-page .place-1 .rank-avatar.small{width:34px;height:34px;min-width:34px;margin:0 2px}.ranking-medal{width:34px;height:43px}
+ .rankings-page .ranking-position>span{width:28px}.rankings-page :is(.place-4,.place-5,.place-6,.place-7,.place-8,.place-9,.place-10) .ranking-position>span{width:26px;height:28px;font-size:13px}
+}
