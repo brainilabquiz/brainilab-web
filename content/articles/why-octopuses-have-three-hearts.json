@@ -1,51 +1,52 @@
 {
-  "slug": "why-octopuses-have-three-hearts",
-  "status": "published",
-  "topic": "Science & nature",
-  "title": "Why do octopuses have three hearts?",
-  "description": "Two hearts send blood to the gills, while a third supplies the body. And that blood has an unusual colour.",
-  "game": {
-    "name": "Science Quiz",
-    "url": "/science/science-quiz/"
-  },
   "hub": {
-    "name": "Science",
-    "url": "/science/"
+    "url": "/science/",
+    "name": "Science"
   },
-  "sections": [
-    {
-      "id": "three-jobs",
-      "title": "Two for the gills, one for the body",
-      "html": "<p>An octopus has <strong>three hearts</strong>, each with a part to play in moving blood around its body.</p><p>Two pump blood through the gills, where it picks up oxygen. The third pumps oxygenated blood to the rest of the body. Remembering those jobs makes the number easier to recall: two for the gills, plus one for the body.</p>"
-    },
-    {
-      "id": "blue-blood",
-      "title": "Why is the blood blue?",
-      "html": "<p>Octopus blood carries oxygen using a protein called <strong>haemocyanin</strong>, which contains copper. It appears blue when oxygenated.</p><p>Humans use haemoglobin, an iron-containing protein, to carry oxygen. Both proteins do a similar job, but their different chemistry gives blood its different colours.</p>"
-    },
-    {
-      "id": "rebuild",
-      "title": "Can you remember the arrangement?",
-      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Natural History Museum — Octopuses keep surprising us",
-      "url": "https://www.nhm.ac.uk/discover/octopuses-keep-surprising-us-here-are-eight-examples-how.html"
-    }
-  ],
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "why-octopuses-have-three-hearts",
+  "cover": {
+    "alt": "An octopus resting among underwater rocks",
+    "src": "/assets/images/learn/why-octopuses-have-three-hearts.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 3,
+  "title": "Why do octopuses have three hearts?",
+  "topic": "Science & nature",
+  "status": "published",
   "related": [
     "remember-quiz-answers-tomorrow",
     "why-the-moon-changes-shape"
   ],
+  "sources": [
+    {
+      "url": "https://www.nhm.ac.uk/discover/octopuses-keep-surprising-us-here-are-eight-examples-how.html",
+      "name": "Natural History Museum — Octopuses keep surprising us"
+    }
+  ],
   "practice": "Discover more animal facts in Science Quiz.",
-  "cover": {
-    "src": "/assets/images/learn/why-octopuses-have-three-hearts.webp",
-    "alt": "An octopus resting among underwater rocks",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 3,
+  "sections": [
+    {
+      "id": "three-jobs",
+      "html": "<p>An octopus has <strong>three hearts</strong>, each with a part to play in moving blood around its body.</p><p>Two pump blood through the gills, where it picks up oxygen. The third pumps oxygenated blood to the rest of the body. Remembering those jobs makes the number easier to recall: two for the gills, plus one for the body.</p>",
+      "title": "Two for the gills, one for the body"
+    },
+    {
+      "id": "blue-blood",
+      "html": "<p>Octopus blood carries oxygen using a protein called <strong>haemocyanin</strong>, which contains copper. It appears blue when oxygenated.</p><p>Humans use haemoglobin, an iron-containing protein, to carry oxygen. Both proteins do a similar job, but their different chemistry gives blood its different colours.</p>",
+      "title": "Why is the blood blue?"
+    },
+    {
+      "id": "rebuild",
+      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details>",
+      "title": "Can you remember the arrangement?"
+    }
+  ],
+  "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "Two hearts send blood to the gills, while a third supplies the body. And that blood has an unusual colour.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "authorId": "biel-sarda"
 }

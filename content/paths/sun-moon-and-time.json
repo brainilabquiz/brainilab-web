@@ -1,0 +1,67 @@
+{
+  "slug": "sun-moon-and-time",
+  "title": "From the Moon to the time on your clock",
+  "topic": "Science & nature",
+  "description": "Follow sunlight from lunar phases to Earth’s seasons, then separate the motion of Earth from the rules on our clocks.",
+  "introduction": "<p>Start with something you can notice in the sky: the Moon seems to change shape. Build a picture of sunlight and motion, then use it to understand seasons and the human choices behind civil time.</p>",
+  "prerequisites": "No astronomy background needed. The last lesson includes simple clock arithmetic.",
+  "outcomes": [
+    "Explain lunar phases without confusing them with eclipses.",
+    "Connect seasons to tilt, sunlight angle and daylight.",
+    "Distinguish a time zone from its current UTC offset."
+  ],
+  "lessons": [
+    {
+      "slug": "why-the-moon-changes-shape",
+      "level": "1 · Foundations",
+      "objective": "Separate the Moon’s shape from our changing view of its sunlit half."
+    },
+    {
+      "slug": "what-really-causes-seasons",
+      "level": "2 · Build on it",
+      "objective": "Compare the hemispheres and explain the effects of Earth’s tilt."
+    },
+    {
+      "slug": "why-time-zones-get-messy",
+      "level": "3 · Apply and distinguish",
+      "objective": "Use fixed offsets while recognising that civil time follows human rules."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Phase",
+      "definition": "The changing portion of the Moon’s illuminated half visible from Earth."
+    },
+    {
+      "term": "Axial tilt",
+      "definition": "The inclination of Earth’s rotation axis relative to its orbital plane."
+    },
+    {
+      "term": "UTC offset",
+      "definition": "The difference between a local clock and UTC at a particular moment."
+    }
+  ],
+  "authorId": "biel-sarda",
+  "status": "published",
+  "publishedAt": "2026-09-30T18:40:48.395302+00:00",
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
+  "coverArticle": "why-the-moon-changes-shape",
+  "sources": [
+    {
+      "url": "https://science.nasa.gov/moon/moon-phases/",
+      "name": "NASA Science — Moon phases"
+    },
+    {
+      "url": "https://spaceplace.nasa.gov/seasons/en/",
+      "name": "NASA Space Place — What causes the seasons?"
+    },
+    {
+      "url": "https://www.iana.org/time-zones/tz-link",
+      "name": "IANA — Time-zone database and civil-time changes"
+    },
+    {
+      "url": "https://www.rmg.co.uk/stories/time/time-greenwich-mean-time-confusing-case-travellers-watch",
+      "name": "Royal Museums Greenwich — Local time and the railways"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ async function scan(dir){
   if(file.endsWith('.html')){
    pages++;
    for(const match of text.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
-    if(/application\/ld\+json/.test(match[1]))JSON.parse(match[2]);
+    if(/application\/(?:ld\+)?json/.test(match[1]))JSON.parse(match[2]);
     else if(!/\bsrc=|type=["']module/.test(match[1])&&match[2].trim())new vm.Script(match[2],{filename:file});
    }
   }

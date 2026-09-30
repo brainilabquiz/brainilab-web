@@ -1,60 +1,104 @@
 {
-  "slug": "why-time-zones-get-messy",
-  "status": "published",
-  "topic": "Geography",
-  "title": "Why don’t time zones follow straight lines?",
-  "description": "Earth’s rotation gives us a starting point, but borders and daylight-saving rules make local time more complicated.",
-  "game": {
-    "name": "World Capitals Quiz",
-    "url": "/geography/world-capitals-quiz/"
-  },
   "hub": {
-    "name": "Geography",
-    "url": "/geography/"
+    "url": "/geography/",
+    "name": "Geography"
   },
-  "sections": [
-    {
-      "id": "simple-idea",
-      "title": "The idea behind time zones",
-      "html": "<p>As Earth rotates, different places face the Sun at different times. Divide a full rotation of 360 degrees by 24 hours and you get 15 degrees per hour. It seems natural to divide the world into neat strips.</p><p>Actual time-zone boundaries are less tidy. Governments choose civil time to suit borders and daily life, so the lines bend around countries and regions rather than following longitude exactly.</p>"
-    },
-    {
-      "id": "offset-is-not-zone",
-      "title": "Why the time difference can change",
-      "html": "<p>A <strong>UTC offset</strong> tells you how far a local clock is ahead of or behind UTC at a particular moment. A time zone includes the rules that determine that offset, including any daylight-saving changes.</p><p>Two places may change their clocks on different dates, or one may not change them at all. The difference between them can therefore vary during the year.</p><p>For a call or a journey, check the cities and the date in a calendar or time-zone tool. IANA’s time-zone database is updated as governments change the rules.</p>"
-    },
-    {
-      "id": "clock-arithmetic",
-      "title": "Work through a simple example",
-      "html": "<p>Suppose City A is at UTC+2 and City B is at UTC−3. When it is 14:00 in A, subtract two hours to get 12:00 UTC. Subtract three more to find the time in B: <strong>09:00</strong>.</p><p>Going through UTC gives you a clear intermediate step. Around midnight, remember to check the date as well.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p><strong>20:00 on Monday.</strong> Subtracting two hours gives 23:00 Monday UTC, then subtracting three more gives 20:00.</p></details>"
-    },
-    {
-      "id": "quiz-clue",
-      "title": "Check the place and the date",
-      "html": "<p>The example above supplies fixed offsets, so it is a straightforward calculation. For a real city, you first need to know which offset applies on that date. Longitude alone cannot tell you its current legal time.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "IANA — Time-zone database and civil-time changes",
-      "url": "https://www.iana.org/time-zones/tz-link"
-    },
-    {
-      "name": "Royal Museums Greenwich — Local time and the railways",
-      "url": "https://www.rmg.co.uk/stories/time/time-greenwich-mean-time-confusing-case-travellers-watch"
-    }
-  ],
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals Quiz"
+  },
+  "slug": "why-time-zones-get-messy",
+  "cover": {
+    "alt": "Three clocks showing different times",
+    "src": "/assets/images/learn/why-time-zones-get-messy.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 11,
+  "title": "Why don’t time zones follow straight lines?",
+  "topic": "Geography",
+  "status": "published",
   "related": [
     "why-greenland-looks-so-big",
     "mental-percentages-without-a-calculator"
   ],
+  "sources": [
+    {
+      "url": "https://www.iana.org/time-zones/tz-link",
+      "name": "IANA — Time-zone database and civil-time changes"
+    },
+    {
+      "url": "https://www.rmg.co.uk/stories/time/time-greenwich-mean-time-confusing-case-travellers-watch",
+      "name": "Royal Museums Greenwich — Local time and the railways"
+    }
+  ],
   "practice": "Explore the places behind the clock changes with World Capitals.",
-  "cover": {
-    "src": "/assets/images/learn/why-time-zones-get-messy.webp",
-    "alt": "Three clocks showing different times",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 11,
+  "sections": [
+    {
+      "id": "simple-idea",
+      "html": "<p>As Earth rotates, different places face the Sun at different times. Divide a full rotation of 360 degrees by 24 hours and you get 15 degrees per hour. It seems natural to divide the world into neat strips.</p><p>Actual time-zone boundaries are less tidy. Governments choose civil time to suit borders and daily life, so the lines bend around countries and regions rather than following longitude exactly.</p>",
+      "title": "The idea behind time zones"
+    },
+    {
+      "id": "offset-is-not-zone",
+      "html": "<p>A <strong>UTC offset</strong> tells you how far a local clock is ahead of or behind UTC at a particular moment. A time zone includes the rules that determine that offset, including any daylight-saving changes.</p><p>Two places may change their clocks on different dates, or one may not change them at all. The difference between them can therefore vary during the year.</p><p>For a call or a journey, check the cities and the date in a calendar or time-zone tool. IANA’s time-zone database is updated as governments change the rules.</p>",
+      "title": "Why the time difference can change"
+    },
+    {
+      "id": "clock-arithmetic",
+      "html": "<p>Suppose City A is at UTC+2 and City B is at UTC−3. When it is 14:00 in A, subtract two hours to get 12:00 UTC. Subtract three more to find the time in B: <strong>09:00</strong>.</p><p>Going through UTC gives you a clear intermediate step. Around midnight, remember to check the date as well.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p><strong>20:00 on Monday.</strong> Subtracting two hours gives 23:00 Monday UTC, then subtracting three more gives 20:00.</p></details>",
+      "title": "Work through a simple example"
+    },
+    {
+      "id": "quiz-clue",
+      "html": "<p>The example above supplies fixed offsets, so it is a straightforward calculation. For a real city, you first need to know which offset applies on that date. Longitude alone cannot tell you its current legal time.</p>",
+      "title": "Check the place and the date"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Convert through UTC</caption><thead><tr><th scope=\"col\">Step</th><th scope=\"col\">Clock time</th><th scope=\"col\">Operation</th></tr></thead><tbody><tr><td>City A, UTC+2</td><td>14:00</td><td>Start</td></tr><tr><td>UTC</td><td>12:00</td><td>Subtract 2 hours</td></tr><tr><td>City B, UTC−3</td><td>09:00</td><td>Subtract 3 hours</td></tr></tbody></table></div>"
+    }
+  ],
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
+  "description": "Earth’s rotation gives us a starting point, but borders and daylight-saving rules make local time more complicated.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "authorId": "biel-sarda",
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "What does a UTC offset tell you?",
+        "options": [
+          "A country’s longitude",
+          "A clock’s difference from UTC at a given time",
+          "Every future daylight-saving rule",
+          "The length of the year"
+        ],
+        "answer": 1,
+        "explanation": "An offset gives a difference at a particular moment. A time zone also includes the rules that can change that offset."
+      },
+      {
+        "prompt": "It is 14:00 at UTC+2. What time is it at UTC−3, using those fixed offsets?",
+        "options": [
+          "19:00",
+          "11:00",
+          "09:00",
+          "12:00"
+        ],
+        "answer": 2,
+        "explanation": "Subtract two hours to get 12:00 UTC, then subtract three more: 09:00."
+      },
+      {
+        "prompt": "Why should a real international meeting include both city and date?",
+        "options": [
+          "Time-zone rules can change the applicable offset",
+          "Longitude always gives the legal time",
+          "All places change their clocks together",
+          "UTC changes with every city"
+        ],
+        "answer": 0,
+        "explanation": "The place and date determine the applicable civil-time rules, including daylight saving where used."
+      }
+    ]
+  }
 }

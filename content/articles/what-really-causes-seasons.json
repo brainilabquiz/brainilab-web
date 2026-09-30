@@ -1,56 +1,100 @@
 {
-  "slug": "what-really-causes-seasons",
-  "status": "published",
-  "topic": "Science & nature",
-  "title": "What causes the seasons?",
-  "description": "Earth’s tilt changes the angle of sunlight and the length of our days. Here’s why summer arrives at different times in each hemisphere.",
-  "game": {
-    "name": "Science Quiz",
-    "url": "/science/science-quiz/"
-  },
   "hub": {
-    "name": "Science",
-    "url": "/science/"
+    "url": "/science/",
+    "name": "Science"
   },
-  "sections": [
-    {
-      "id": "tempting-answer",
-      "title": "It starts with Earth’s tilt",
-      "html": "<p>It seems reasonable to think that summer happens when Earth moves closer to the Sun. But that would leave a puzzle: why is June summer in the Northern Hemisphere and winter in the Southern Hemisphere?</p><p>The main reason is <strong>Earth’s tilted axis</strong>. As Earth travels around the Sun, one hemisphere tilts towards it, receiving more direct sunlight and longer days. About six months later, the other hemisphere tilts towards the Sun.</p>"
-    },
-    {
-      "id": "light-and-time",
-      "title": "More direct light and longer days",
-      "html": "<p>Sunlight arriving at a low angle spreads over a larger area than sunlight striking more directly. In summer, a hemisphere receives more direct sunlight and has more daylight hours in which to warm up.</p><p>Earth’s distance from the Sun does change during the year. In fact, Earth is closest to the Sun in January, during Northern Hemisphere winter. That is a useful clue that distance alone cannot explain the seasons.</p>"
-    },
-    {
-      "id": "test-explanation",
-      "title": "Why the hemispheres have opposite seasons",
-      "html": "<p>When the Northern Hemisphere tilts towards the Sun, the Southern Hemisphere tilts away. One gets longer days and more direct sunlight while the other gets shorter days and less direct light.</p><details class=\"practice-answer\"><summary>Which hemisphere is tilted towards the Sun during Northern Hemisphere summer?</summary><p><strong>The Northern Hemisphere.</strong> At the same time, the Southern Hemisphere is tilted away.</p></details>"
-    },
-    {
-      "id": "next-walk",
-      "title": "Notice the change where you live",
-      "html": "<p>Over several weeks, you may notice daylight lasting longer or shadows changing at the same time of day. Those everyday changes are a way to see the seasonal pattern for yourself.</p><p>A cold summer afternoon or a mild winter day can still happen. Weather varies from day to day; the seasons describe a much longer cycle.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "NASA Space Place — What causes the seasons?",
-      "url": "https://spaceplace.nasa.gov/seasons/en/"
-    }
-  ],
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "what-really-causes-seasons",
+  "cover": {
+    "alt": "Sunlight through autumn leaves on a woodland path",
+    "src": "/assets/images/learn/what-really-causes-seasons.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 8,
+  "title": "What causes the seasons?",
+  "topic": "Science & nature",
+  "status": "published",
   "related": [
     "why-the-moon-changes-shape",
     "counting-seconds-after-lightning"
   ],
+  "sources": [
+    {
+      "url": "https://spaceplace.nasa.gov/seasons/en/",
+      "name": "NASA Space Place — What causes the seasons?"
+    }
+  ],
   "practice": "Try Science Quiz for more questions about Earth and space.",
-  "cover": {
-    "src": "/assets/images/learn/what-really-causes-seasons.webp",
-    "alt": "Sunlight through autumn leaves on a woodland path",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 8,
+  "sections": [
+    {
+      "id": "tempting-answer",
+      "html": "<p>It seems reasonable to think that summer happens when Earth moves closer to the Sun. But that would leave a puzzle: why is June summer in the Northern Hemisphere and winter in the Southern Hemisphere?</p><p>The main reason is <strong>Earth’s tilted axis</strong>. As Earth travels around the Sun, one hemisphere tilts towards it, receiving more direct sunlight and longer days. About six months later, the other hemisphere tilts towards the Sun.</p>",
+      "title": "It starts with Earth’s tilt"
+    },
+    {
+      "id": "light-and-time",
+      "html": "<p>Sunlight arriving at a low angle spreads over a larger area than sunlight striking more directly. In summer, a hemisphere receives more direct sunlight and has more daylight hours in which to warm up.</p><p>Earth’s distance from the Sun does change during the year. In fact, Earth is closest to the Sun in January, during Northern Hemisphere winter. That is a useful clue that distance alone cannot explain the seasons.</p>",
+      "title": "More direct light and longer days"
+    },
+    {
+      "id": "test-explanation",
+      "html": "<p>When the Northern Hemisphere tilts towards the Sun, the Southern Hemisphere tilts away. One gets longer days and more direct sunlight while the other gets shorter days and less direct light.</p><details class=\"practice-answer\"><summary>Which hemisphere is tilted towards the Sun during Northern Hemisphere summer?</summary><p><strong>The Northern Hemisphere.</strong> At the same time, the Southern Hemisphere is tilted away.</p></details>",
+      "title": "Why the hemispheres have opposite seasons"
+    },
+    {
+      "id": "next-walk",
+      "html": "<p>Over several weeks, you may notice daylight lasting longer or shadows changing at the same time of day. Those everyday changes are a way to see the seasonal pattern for yourself.</p><p>A cold summer afternoon or a mild winter day can still happen. Weather varies from day to day; the seasons describe a much longer cycle.</p>",
+      "title": "Notice the change where you live"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Compare the hemispheres</caption><thead><tr><th scope=\"col\">Northern Hemisphere</th><th scope=\"col\">Southern Hemisphere</th><th scope=\"col\">Seasonal sunlight pattern</th></tr></thead><tbody><tr><td>Summer</td><td>Winter</td><td>North has longer daylight and more direct sunlight</td></tr><tr><td>Winter</td><td>Summer</td><td>South has longer daylight and more direct sunlight</td></tr></tbody></table></div>"
+    }
+  ],
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
+  "description": "Earth’s tilt changes the angle of sunlight and the length of our days. Here’s why summer arrives at different times in each hemisphere.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "authorId": "biel-sarda",
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "What is the main cause of Earth’s seasons?",
+        "options": [
+          "Changing distance from the Sun",
+          "Earth’s tilted axis as it orbits the Sun",
+          "The phases of the Moon",
+          "A change in the Sun’s size"
+        ],
+        "answer": 1,
+        "explanation": "The tilt changes the angle of sunlight and the length of daylight through the year."
+      },
+      {
+        "prompt": "When it is summer in the Northern Hemisphere, what season is it in the Southern Hemisphere?",
+        "options": [
+          "Summer",
+          "Spring",
+          "Winter",
+          "Always autumn"
+        ],
+        "answer": 2,
+        "explanation": "The hemispheres tilt towards the Sun at opposite parts of Earth’s orbit, so their seasons are opposite."
+      },
+      {
+        "prompt": "Which pair helps explain warmer summers in a hemisphere?",
+        "options": [
+          "Longer daylight and more direct sunlight",
+          "Shorter daylight and less direct sunlight",
+          "A larger Moon and stronger tides",
+          "The Sun turning on earlier"
+        ],
+        "answer": 0,
+        "explanation": "More direct sunlight and longer daylight both change how much solar energy a surface receives."
+      }
+    ]
+  }
 }

@@ -1,67 +1,112 @@
 {
-  "slug": "mental-math-round-and-adjust",
-  "topic": "Numbers & logic",
-  "title": "Mental maths: round a number, then fix the difference",
-  "description": "49 + 18 feels friendlier as 50 + 18. The important part is remembering what to undo. Try addition, subtraction and three short checks.",
-  "sections": [
-    {
-      "id": "quick-answer",
-      "title": "Make one number friendlier",
-      "html": "<p><strong>Round one number to a nearby ten, do the easier calculation, then correct for the change you made.</strong> For 49 + 18, use 50 + 18 = 68. You added one too many, so subtract one: <strong>67</strong>.</p><p>The result is exact. You are using a rounded number as a temporary tool, rather than rounding the final answer. The method is often called compensation. It is useful when a number sits close to an easy landmark such as 10, 50 or 100.</p>"
-    },
-    {
-      "id": "addition",
-      "title": "Adding: take back what you added",
-      "html": "<p>Try <strong>38 + 27</strong>. Increase 38 to 40: 40 + 27 = 67. Because you increased the first number by 2, take those 2 back. The answer is <strong>65</strong>.</p><p>You can keep the adjustment inside the calculation instead. Move 2 from the 27 to the 38 and you get 40 + 25. Nothing has been gained or lost; the same total is split into friendlier pieces.</p><p>For <strong>99 + 36</strong>, add 100 and subtract 1: 100 + 36 − 1 = <strong>135</strong>. If you find yourself juggling several corrections, use the ordinary written method. A shortcut should make the task easier for you.</p>"
-    },
-    {
-      "id": "subtraction",
-      "title": "Subtracting: notice which number you changed",
-      "html": "<p>For <strong>72 − 29</strong>, subtract 30 first: 72 − 30 = 42. That removed one too many, so put one back. The answer is <strong>43</strong>.</p><p>Compare that with <strong>59 − 24</strong>. Here you can increase the starting number to 60. Sixty minus 24 is 36, but the starting amount was one smaller, so the answer is <strong>35</strong>.</p><p>The sign of the correction depends on what you changed. Instead of memorising “round up, then subtract”, ask: did I add too much, remove too much, or change the amount I started with?</p>"
-    },
-    {
-      "id": "small-facts",
-      "title": "The same idea works with small numbers",
-      "html": "<p>Math Rush uses small operands, so try the method on <strong>9 + 6</strong>: take one from the 6 to make 10 + 5 = <strong>15</strong>. For <strong>8 + 7</strong>, move two to make 10 + 5 again.</p><p>Multiplication needs a different correction. For <strong>9 × 6</strong>, use 10 × 6 − 6 = <strong>54</strong>. You added a whole group of six, so remove six, not one. That is the distributive property at work.</p>"
-    },
-    {
-      "id": "check-yourself",
-      "title": "Three calculations to try",
-      "html": "<p>Work out <strong>48 + 19</strong>, <strong>83 − 39</strong> and <strong>7 × 9</strong>. Say the correction to yourself before checking.</p><details class=\"practice-answer\"><summary>Check the answers</summary><ol><li><strong>67</strong>: 48 + 20 = 68, then subtract 1.</li><li><strong>44</strong>: 83 − 40 = 43, then add 1.</li><li><strong>63</strong>: 7 × 10 = 70, then subtract one group of 7.</li></ol></details><p>In a timed game, practise one method until it feels comfortable. Use it when it suits the numbers; you do not need a clever trick for every answer. For another specific pattern, see <a href=\"/learn/multiply-by-11-in-your-head/\">multiplying by 11, including the carry</a>.</p>"
-    }
-  ],
-  "game": {
-    "name": "Math Rush",
-    "url": "/games/math-rush/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "slug": "mental-math-round-and-adjust",
+  "cover": {
+    "alt": "A notebook with 49 plus 18 beside a yellow pencil and a purple kitchen scale",
+    "src": "/assets/images/learn/mental-math-round-and-adjust.webp",
+    "small": "/assets/images/learn/mental-math-round-and-adjust-small.webp",
+    "credit": "AI-generated editorial illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/mental-math-round-and-adjust-thumb.webp"
+  },
+  "order": 22,
+  "title": "Mental maths: round a number, then fix the difference",
+  "topic": "Numbers & logic",
+  "status": "published",
   "related": [
     "multiply-by-11-in-your-head",
     "mental-percentages-without-a-calculator"
   ],
-  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
   "sources": [
     {
-      "name": "OpenStax — Commutative and Associative Properties",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties",
+      "name": "OpenStax — Commutative and Associative Properties"
     },
     {
-      "name": "OpenStax — Distributive Property",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/7-3-distributive-property"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/7-3-distributive-property",
+      "name": "OpenStax — Distributive Property"
     }
   ],
-  "status": "published",
-  "order": 22,
+  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
+  "sections": [
+    {
+      "id": "quick-answer",
+      "html": "<p><strong>Round one number to a nearby ten, do the easier calculation, then correct for the change you made.</strong> For 49 + 18, use 50 + 18 = 68. You added one too many, so subtract one: <strong>67</strong>.</p><p>The result is exact. You are using a rounded number as a temporary tool, rather than rounding the final answer. The method is often called compensation. It is useful when a number sits close to an easy landmark such as 10, 50 or 100.</p>",
+      "title": "Make one number friendlier"
+    },
+    {
+      "id": "addition",
+      "html": "<p>Try <strong>38 + 27</strong>. Increase 38 to 40: 40 + 27 = 67. Because you increased the first number by 2, take those 2 back. The answer is <strong>65</strong>.</p><p>You can keep the adjustment inside the calculation instead. Move 2 from the 27 to the 38 and you get 40 + 25. Nothing has been gained or lost; the same total is split into friendlier pieces.</p><p>For <strong>99 + 36</strong>, add 100 and subtract 1: 100 + 36 − 1 = <strong>135</strong>. If you find yourself juggling several corrections, use the ordinary written method. A shortcut should make the task easier for you.</p>",
+      "title": "Adding: take back what you added"
+    },
+    {
+      "id": "subtraction",
+      "html": "<p>For <strong>72 − 29</strong>, subtract 30 first: 72 − 30 = 42. That removed one too many, so put one back. The answer is <strong>43</strong>.</p><p>Compare that with <strong>59 − 24</strong>. Here you can increase the starting number to 60. Sixty minus 24 is 36, but the starting amount was one smaller, so the answer is <strong>35</strong>.</p><p>The sign of the correction depends on what you changed. Instead of memorising “round up, then subtract”, ask: did I add too much, remove too much, or change the amount I started with?</p>",
+      "title": "Subtracting: notice which number you changed"
+    },
+    {
+      "id": "small-facts",
+      "html": "<p>Math Rush uses small operands, so try the method on <strong>9 + 6</strong>: take one from the 6 to make 10 + 5 = <strong>15</strong>. For <strong>8 + 7</strong>, move two to make 10 + 5 again.</p><p>Multiplication needs a different correction. For <strong>9 × 6</strong>, use 10 × 6 − 6 = <strong>54</strong>. You added a whole group of six, so remove six, not one. That is the distributive property at work.</p>",
+      "title": "The same idea works with small numbers"
+    },
+    {
+      "id": "check-yourself",
+      "html": "<p>Work out <strong>48 + 19</strong>, <strong>83 − 39</strong> and <strong>7 × 9</strong>. Say the correction to yourself before checking.</p><details class=\"practice-answer\"><summary>Check the answers</summary><ol><li><strong>67</strong>: 48 + 20 = 68, then subtract 1.</li><li><strong>44</strong>: 83 − 40 = 43, then add 1.</li><li><strong>63</strong>: 7 × 10 = 70, then subtract one group of 7.</li></ol></details><p>In a timed game, practise one method until it feels comfortable. Use it when it suits the numbers; you do not need a clever trick for every answer. For another specific pattern, see <a href=\"/learn/multiply-by-11-in-your-head/\">multiplying by 11, including the carry</a>.</p>",
+      "title": "Three calculations to try"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Compare the corrections</caption><thead><tr><th scope=\"col\">Calculation</th><th scope=\"col\">Easier step</th><th scope=\"col\">Correction</th></tr></thead><tbody><tr><td>49 + 18</td><td>50 + 18 = 68</td><td>Subtract 1 → 67</td></tr><tr><td>72 − 29</td><td>72 − 30 = 42</td><td>Add 1 → 43</td></tr><tr><td>9 × 6</td><td>10 × 6 = 60</td><td>Subtract 6 → 54</td></tr></tbody></table></div>"
+    }
+  ],
+  "description": "49 + 18 feels friendlier as 50 + 18. The important part is remembering what to undo. Try addition, subtraction and three short checks.",
   "publishedAt": "2026-09-29T20:12:35.334945Z",
-  "cover": {
-    "src": "/assets/images/learn/mental-math-round-and-adjust.webp",
-    "small": "/assets/images/learn/mental-math-round-and-adjust-small.webp",
-    "thumbnail": "/assets/images/learn/mental-math-round-and-adjust-thumb.webp",
-    "alt": "A notebook with 49 plus 18 beside a yellow pencil and a purple kitchen scale",
-    "credit": "AI-generated editorial illustration created for BrainiLab.",
-    "position": 50
-  }
+  "authorId": "biel-sarda",
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "You turn 49 + 18 into 50 + 18. What must you do next?",
+        "options": [
+          "Add 1",
+          "Subtract 1",
+          "Subtract 18",
+          "Nothing"
+        ],
+        "answer": 1,
+        "explanation": "Increasing 49 to 50 added one too many. Take it back: 68 − 1 = 67."
+      },
+      {
+        "prompt": "To find 72 − 29, you first calculate 72 − 30 = 42. What is the answer?",
+        "options": [
+          "41",
+          "42",
+          "43",
+          "44"
+        ],
+        "answer": 2,
+        "explanation": "Subtracting 30 removed one too many, so put one back: 43."
+      },
+      {
+        "prompt": "Why does 9 × 6 equal 10 × 6 − 6?",
+        "options": [
+          "Nine is six less than ten",
+          "Multiplication ignores the adjustment",
+          "Subtracting one is always enough",
+          "The extra group contains six"
+        ],
+        "answer": 3,
+        "explanation": "Ten groups of six include one more group than nine groups. Remove that whole group of six."
+      }
+    ]
+  },
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00"
 }

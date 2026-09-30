@@ -1,0 +1,10 @@
+import {esc} from '../lib/learn-content.js';
+export function quizFields(quiz){return `<details class="article-settings" open><summary>Quick round · A/B/C/D</summary><p>Optional for standalone articles; required for path lessons. Use 2–8 questions, each with one correct answer and a short explanation.</p><div id="quiz-questions">${(quiz?.questions||[]).map((q,i)=>`<fieldset data-question class="article-section"><legend>Question ${i+1}</legend><label class="article-field">Question<input data-prompt value="${esc(q.prompt)}" maxlength="600"/></label>${q.options.map((o,j)=>`<label class="article-field">${'ABCD'[j]}<input data-option value="${esc(o)}" maxlength="500"/></label>`).join('')}<label class="article-field">Correct answer<select data-answer>${[0,1,2,3].map(j=>`<option value="${j}" ${q.answer===j?'selected':''}>${'ABCD'[j]}</option>`).join('')}</select></label><label class="article-field">Explanation<textarea data-explanation maxlength="1500">${esc(q.explanation)}</textarea></label><button type="button" data-remove-question>Remove question</button></fieldset>`).join('')}</div><button class="admin-button" id="add-question" type="button">+ Add question</button></details>`;}
+export function collectQuiz(root,previous){
+ const questions=[...root.querySelectorAll('[data-question]')].map(el=>({prompt:el.querySelector('[data-prompt]').value.trim(),options:[...el.querySelectorAll('[data-option]')].map(i=>i.value.trim()),answer:Number(el.querySelector('[data-answer]').value),explanation:el.querySelector('[data-explanation]').value.trim()}));
+ if(!questions.length)return null;
+ return {version:JSON.stringify(questions)===JSON.stringify(previous?.questions)?previous.version:crypto.randomUUID(),questions};
+}
+export function authorSelect(authors,current='biel-sarda'){
+ return `<label class="article-field">Author<select id="editor-author"><option value="">BrainiLab (legacy credit)</option>${authors.filter(a=>a.document.active!==false||a.slug===current).map(a=>`<option value="${a.slug}" ${a.slug===current?'selected':''}>${esc(a.document.name)}${a.document.visible?' · Team':' · Contributor'}</option>`).join('')}</select></label>`;
+}

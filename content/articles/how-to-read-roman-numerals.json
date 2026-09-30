@@ -1,60 +1,61 @@
 {
-  "slug": "how-to-read-roman-numerals",
-  "status": "published",
-  "topic": "History",
-  "title": "How to read Roman numerals",
-  "description": "Learn the seven symbols, spot the subtraction pairs and turn a date such as MCMXLIV into a number you recognise.",
-  "game": {
-    "name": "History Quiz",
-    "url": "/history/history-quiz/"
-  },
   "hub": {
-    "name": "History",
-    "url": "/history/"
+    "url": "/history/",
+    "name": "History"
   },
-  "sections": [
-    {
-      "id": "start-seven",
-      "title": "Get to know the seven symbols",
-      "html": "<p>Roman numerals turn up on clocks, buildings and film credits. A long string of letters can look intimidating, but the usual notation uses just seven symbols:</p><p class=\"number-example\">I = 1 · V = 5 · X = 10 · L = 50<br/>C = 100 · D = 500 · M = 1,000</p><p>When the symbols run from larger to smaller values, add them. VI is 5 + 1, or 6. VIII is 5 + 1 + 1 + 1, or 8.</p>"
-    },
-    {
-      "id": "pairs",
-      "title": "When a smaller symbol comes first",
-      "html": "<p>Some pairs use subtraction. IV means 5 − 1, giving 4; IX means 10 − 1, giving 9. The standard pairs are <strong>IV, IX, XL, XC, CD and CM</strong>: 4, 9, 40, 90, 400 and 900.</p><p>You cannot use any pair you like. For example, 49 is written XLIX: forty plus nine. IL is not the standard form.</p><p>Historical inscriptions sometimes follow different conventions. Clock faces, for instance, often use IIII for four.</p>"
-    },
-    {
-      "id": "doorway-date",
-      "title": "Read a date one piece at a time",
-      "html": "<p>Take <strong>MCMXLIV</strong>. Split it into M | CM | XL | IV:</p><p>1,000 + 900 + 40 + 4 = <strong>1944</strong>.</p><p>Breaking the date into thousands, hundreds, tens and units makes it easier to read and check.</p><details class=\"practice-answer\"><summary>What year is MMXXVI?</summary><p><strong>2026.</strong> MM is 2,000, XX is 20 and VI is 6.</p></details>"
-    },
-    {
-      "id": "practice",
-      "title": "Three more to try",
-      "html": "<p>Work out <strong>XIV, XLII and XC</strong>. Look for subtraction pairs before adding the remaining values.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>XIV = 10 + 4 = <strong>14</strong>.</li><li>XLII = 40 + 2 = <strong>42</strong>.</li><li>XC = 100 − 10 = <strong>90</strong>.</li></ul></details>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Wolfram MathWorld — Roman numerals",
-      "url": "https://mathworld.wolfram.com/RomanNumerals.html"
-    },
-    {
-      "name": "University of Cambridge NRICH — Roman numerals",
-      "url": "https://nrich.maths.org/problems/roman-numerals?tab=teacher"
-    }
-  ],
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "slug": "how-to-read-roman-numerals",
+  "cover": {
+    "alt": "A stone clock face with Roman numerals",
+    "src": "/assets/images/learn/how-to-read-roman-numerals.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 10,
+  "title": "How to read Roman numerals",
+  "topic": "History",
+  "status": "published",
   "related": [
     "which-century-is-that-year",
     "number-sequences-look-at-the-gaps"
   ],
+  "sources": [
+    {
+      "url": "https://mathworld.wolfram.com/RomanNumerals.html",
+      "name": "Wolfram MathWorld — Roman numerals"
+    },
+    {
+      "url": "https://nrich.maths.org/problems/roman-numerals?tab=teacher",
+      "name": "University of Cambridge NRICH — Roman numerals"
+    }
+  ],
   "practice": "Explore more dates and discoveries in History Quiz.",
-  "cover": {
-    "src": "/assets/images/learn/how-to-read-roman-numerals.webp",
-    "alt": "A stone clock face with Roman numerals",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 10,
+  "sections": [
+    {
+      "id": "start-seven",
+      "html": "<p>Roman numerals turn up on clocks, buildings and film credits. A long string of letters can look intimidating, but the usual notation uses just seven symbols:</p><p class=\"number-example\">I = 1 · V = 5 · X = 10 · L = 50<br/>C = 100 · D = 500 · M = 1,000</p><p>When the symbols run from larger to smaller values, add them. VI is 5 + 1, or 6. VIII is 5 + 1 + 1 + 1, or 8.</p>",
+      "title": "Get to know the seven symbols"
+    },
+    {
+      "id": "pairs",
+      "html": "<p>Some pairs use subtraction. IV means 5 − 1, giving 4; IX means 10 − 1, giving 9. The standard pairs are <strong>IV, IX, XL, XC, CD and CM</strong>: 4, 9, 40, 90, 400 and 900.</p><p>You cannot use any pair you like. For example, 49 is written XLIX: forty plus nine. IL is not the standard form.</p><p>Historical inscriptions sometimes follow different conventions. Clock faces, for instance, often use IIII for four.</p>",
+      "title": "When a smaller symbol comes first"
+    },
+    {
+      "id": "doorway-date",
+      "html": "<p>Take <strong>MCMXLIV</strong>. Split it into M | CM | XL | IV:</p><p>1,000 + 900 + 40 + 4 = <strong>1944</strong>.</p><p>Breaking the date into thousands, hundreds, tens and units makes it easier to read and check.</p><details class=\"practice-answer\"><summary>What year is MMXXVI?</summary><p><strong>2026.</strong> MM is 2,000, XX is 20 and VI is 6.</p></details>",
+      "title": "Read a date one piece at a time"
+    },
+    {
+      "id": "practice",
+      "html": "<p>Work out <strong>XIV, XLII and XC</strong>. Look for subtraction pairs before adding the remaining values.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>XIV = 10 + 4 = <strong>14</strong>.</li><li>XLII = 40 + 2 = <strong>42</strong>.</li><li>XC = 100 − 10 = <strong>90</strong>.</li></ul></details>",
+      "title": "Three more to try"
+    }
+  ],
+  "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "Learn the seven symbols, spot the subtraction pairs and turn a date such as MCMXLIV into a number you recognise.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "authorId": "biel-sarda"
 }

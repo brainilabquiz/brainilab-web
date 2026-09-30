@@ -1,67 +1,68 @@
 {
-  "slug": "how-post-it-notes-were-invented",
-  "status": "published",
-  "topic": "Everyday inventions",
-  "title": "How a slipping bookmark helped invent Post-it Notes",
-  "description": "A bookmark that kept falling out gave an unusual adhesive a purpose. Meet the two inventors behind Post-it Notes and the problem they solved.",
-  "sections": [
-    {
-      "id": "a-bookmark-that-would-stay",
-      "title": "The problem was losing the page",
-      "html": "<p>Imagine finding the right song in a book, marking it with a scrap of paper, then watching the marker fall out. For <strong>Art Fry</strong>, who sang in a church choir, this was a familiar annoyance.</p><p>In 1974, that slipping bookmark gave the 3M researcher an idea: perhaps an unusual adhesive developed by his colleague <strong>Spencer Silver</strong> could hold the marker in place. It needed to stay put, then come off when he wanted to move it.</p>"
-    },
-    {
-      "id": "glue-that-could-let-go",
-      "title": "The glue already existed",
-      "html": "<p>Silver had developed the adhesive in <strong>1968</strong>, years before Fry found a use for it. According to 3M, Silver had been aiming for a strong bond. What he made instead allowed surfaces to stick together, separate and stick again.</p><p>The adhesive contained tiny spheres, known as <strong>microspheres</strong>. The National Inventors Hall of Fame describes it as sticky to the touch but with a low level of adhesion. That combination made sense for something you wanted to reposition.</p><p>Calling it glue that did not work misses the interesting bit. It could stick. The question was what kind of job needed it to let go.</p>"
-    },
-    {
-      "id": "from-marker-to-message",
-      "title": "A bookmark became a message",
-      "html": "<p>Fry made sample bookmarks using Silver’s adhesive. When he used them to exchange notes with his supervisor, another possibility became clear: a message could stay attached to a page and still be removed.</p><p>Turning that idea into a reliable product took years. The team had to solve manufacturing problems, including keeping the adhesive on the paper and making its grip consistent. Post-it Notes reached the US nationwide in <strong>1980</strong>.</p><p>Both inventors matter to the story: Silver developed the adhesive; Fry helped turn it into the repositionable note.</p>"
-    },
-    {
-      "id": "spot-the-design-choice",
-      "title": "Would stronger glue have been better?",
-      "html": "<p>Picture two jobs: fixing a loose chair leg and leaving a reminder on a page. A permanent bond makes sense for one. For the other, being able to remove the message is part of the point.</p><p>Try explaining the invention in three steps: <strong>a marker that slips → a grip that releases → a note you can move</strong>. Which step connects the laboratory discovery to an everyday problem?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>The grip that releases.</strong> Fry needed enough hold to keep his bookmark in place, while still being able to move it.</p></details><p>For another object that found an unexpected purpose, discover <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">why bubble wrap began as wallpaper</a>.</p>"
-    }
-  ],
-  "game": {
-    "name": "General Knowledge",
-    "url": "/general-knowledge/general-knowledge-quiz/"
-  },
   "hub": {
-    "name": "General Knowledge",
-    "url": "/general-knowledge/"
+    "url": "/general-knowledge/",
+    "name": "General Knowledge"
   },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "slug": "how-post-it-notes-were-invented",
+  "cover": {
+    "alt": "A yellow sticky note marking a page in an open book, with a second curled note on the desk",
+    "src": "/assets/images/learn/how-post-it-notes-were-invented-photo.webp",
+    "small": "/assets/images/learn/how-post-it-notes-were-invented-photo-small.webp",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/how-post-it-notes-were-invented-photo-thumb.webp"
+  },
+  "order": 25,
+  "title": "How a slipping bookmark helped invent Post-it Notes",
+  "topic": "Everyday inventions",
+  "status": "published",
   "related": [
     "was-bubble-wrap-invented-as-wallpaper",
     "remember-quiz-answers-tomorrow"
   ],
-  "practice": "Curious about the stories behind familiar things? Try a mixed round of General Knowledge.",
   "sources": [
     {
-      "name": "3M — How Silver and Fry found a use for a removable adhesive",
-      "url": "https://www.3m.co.uk/3M/en_GB/consumer-uk/stories/full-story/?storyid=1cb531b8-6506-4475-936c-bb79107502d6"
+      "url": "https://www.3m.co.uk/3M/en_GB/consumer-uk/stories/full-story/?storyid=1cb531b8-6506-4475-936c-bb79107502d6",
+      "name": "3M — How Silver and Fry found a use for a removable adhesive"
     },
     {
-      "name": "National Inventors Hall of Fame — Spencer Silver",
-      "url": "https://www.invent.org/inductees/spencer-silver"
+      "url": "https://www.invent.org/inductees/spencer-silver",
+      "name": "National Inventors Hall of Fame — Spencer Silver"
     },
     {
-      "name": "National Inventors Hall of Fame — How Art Fry co-invented Post-it Notes",
-      "url": "https://www.invent.org/blog/inventors/art-fry-post-it-notes"
+      "url": "https://www.invent.org/blog/inventors/art-fry-post-it-notes",
+      "name": "National Inventors Hall of Fame — How Art Fry co-invented Post-it Notes"
     }
   ],
-  "order": 25,
+  "practice": "Curious about the stories behind familiar things? Try a mixed round of General Knowledge.",
+  "sections": [
+    {
+      "id": "a-bookmark-that-would-stay",
+      "html": "<p>Imagine finding the right song in a book, marking it with a scrap of paper, then watching the marker fall out. For <strong>Art Fry</strong>, who sang in a church choir, this was a familiar annoyance.</p><p>In 1974, that slipping bookmark gave the 3M researcher an idea: perhaps an unusual adhesive developed by his colleague <strong>Spencer Silver</strong> could hold the marker in place. It needed to stay put, then come off when he wanted to move it.</p>",
+      "title": "The problem was losing the page"
+    },
+    {
+      "id": "glue-that-could-let-go",
+      "html": "<p>Silver had developed the adhesive in <strong>1968</strong>, years before Fry found a use for it. According to 3M, Silver had been aiming for a strong bond. What he made instead allowed surfaces to stick together, separate and stick again.</p><p>The adhesive contained tiny spheres, known as <strong>microspheres</strong>. The National Inventors Hall of Fame describes it as sticky to the touch but with a low level of adhesion. That combination made sense for something you wanted to reposition.</p><p>Calling it glue that did not work misses the interesting bit. It could stick. The question was what kind of job needed it to let go.</p>",
+      "title": "The glue already existed"
+    },
+    {
+      "id": "from-marker-to-message",
+      "html": "<p>Fry made sample bookmarks using Silver’s adhesive. When he used them to exchange notes with his supervisor, another possibility became clear: a message could stay attached to a page and still be removed.</p><p>Turning that idea into a reliable product took years. The team had to solve manufacturing problems, including keeping the adhesive on the paper and making its grip consistent. Post-it Notes reached the US nationwide in <strong>1980</strong>.</p><p>Both inventors matter to the story: Silver developed the adhesive; Fry helped turn it into the repositionable note.</p>",
+      "title": "A bookmark became a message"
+    },
+    {
+      "id": "spot-the-design-choice",
+      "html": "<p>Picture two jobs: fixing a loose chair leg and leaving a reminder on a page. A permanent bond makes sense for one. For the other, being able to remove the message is part of the point.</p><p>Try explaining the invention in three steps: <strong>a marker that slips → a grip that releases → a note you can move</strong>. Which step connects the laboratory discovery to an everyday problem?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>The grip that releases.</strong> Fry needed enough hold to keep his bookmark in place, while still being able to move it.</p></details><p>For another object that found an unexpected purpose, discover <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">why bubble wrap began as wallpaper</a>.</p>",
+      "title": "Would stronger glue have been better?"
+    }
+  ],
+  "updatedAt": "2026-09-30T05:28:02.99054+00:00",
+  "description": "A bookmark that kept falling out gave an unusual adhesive a purpose. Meet the two inventors behind Post-it Notes and the problem they solved.",
   "publishedAt": "2026-09-30T05:28:02.99054+00:00",
-  "cover": {
-    "src": "/assets/images/learn/how-post-it-notes-were-invented-photo.webp",
-    "small": "/assets/images/learn/how-post-it-notes-were-invented-photo-small.webp",
-    "thumbnail": "/assets/images/learn/how-post-it-notes-were-invented-photo-thumb.webp",
-    "alt": "A yellow sticky note marking a page in an open book, with a second curled note on the desk",
-    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
-    "position": 50
-  },
-  "updatedAt": "2026-09-30T05:28:02.99054+00:00"
+  "authorId": "biel-sarda"
 }

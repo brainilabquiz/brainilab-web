@@ -1,67 +1,68 @@
 {
-  "slug": "how-to-play-number-route",
-  "topic": "Numbers & logic",
-  "title": "How to play Number Route: follow the running total",
-  "description": "Four numbers, three missing signs and one target. Learn the left-to-right rule with a complete example, then try a route yourself.",
-  "sections": [
-    {
-      "id": "the-rule",
-      "title": "One rule makes this puzzle different",
-      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose an operation between each pair. Calculate from left to right until your running total matches the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Here, each button changes the running total immediately. That small difference is where many first attempts go wrong.</p>"
-    },
-    {
-      "id": "worked-route",
-      "title": "A complete route: 7, 3, 6, 4 → 28",
-      "html": "<p>Suppose the numbers are <strong>7, 3, 6, 4</strong> and the target is <strong>28</strong>. Keep the numbers in place and try subtraction, multiplication, then addition.</p><ol><li>Start at 7. Subtract 3 to reach <strong>4</strong>.</li><li>Multiply that 4 by 6 to reach <strong>24</strong>.</li><li>Add the final 4 to reach <strong>28</strong>.</li></ol><p>The route is <strong>((7 − 3) × 6) + 4 = 28</strong>. The brackets show the game’s left-to-right steps. Written without them, 7 − 3 × 6 + 4 would mean something different under standard arithmetic rules.</p>"
-    },
-    {
-      "id": "work-back",
-      "title": "When you get stuck, look at the last number",
-      "html": "<p>The last number in the example is 4. To finish at 28, the total just before that last step could be 24 if you plan to add, 32 if you plan to subtract, 7 if you plan to multiply, or 112 if you plan to divide.</p><p>Now ask whether the first three numbers can reach one of those values. Seven minus three gives four; multiplying by six gives 24. That makes the final addition a good candidate. Working backwards narrows your search, but you still need to test the whole route forwards.</p>"
-    },
-    {
-      "id": "division",
-      "title": "Why a division button can be unavailable",
-      "html": "<p>Easy routes use whole-number division. If the running total is 5 and the next number is 2, division is unavailable because 5 ÷ 2 is 2.5. If the total is 6, division by 2 is valid and gives 3.</p><p>You must use all four numbers, even if you reach the target after the first or second operation. Reset clears the chosen signs so you can try another route. Skip reveals a solution if you would rather move on.</p>"
-    },
-    {
-      "id": "try-one",
-      "title": "Your turn: reach 21",
-      "html": "<p>Use <strong>4, 9, 2, 5</strong>, in that order. The target is <strong>21</strong>. Start by considering what total you need before the final 5.</p><details class=\"practice-answer\"><summary>Show the route and running totals</summary><p>Choose <strong>+, ×, −</strong>. First 4 + 9 = 13, then 13 × 2 = 26, then 26 − 5 = 21. In ordinary notation: <strong>((4 + 9) × 2) − 5 = 21</strong>.</p></details><p>Play Anytime contains ten routes. The Daily format uses three. For a paper version, try the <a href=\"/learn/five-number-puzzles-printable/\">five-puzzle sheet with a separate answer page</a>.</p>"
-    }
-  ],
-  "game": {
-    "name": "Number Route",
-    "url": "/games/number-route/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
+  "game": {
+    "url": "/games/number-route/",
+    "name": "Number Route"
+  },
+  "slug": "how-to-play-number-route",
+  "cover": {
+    "alt": "Four wooden number tiles and purple operation chips on a warm paper surface",
+    "src": "/assets/images/learn/how-to-play-number-route.webp",
+    "small": "/assets/images/learn/how-to-play-number-route-small.webp",
+    "credit": "AI-generated editorial illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/how-to-play-number-route-thumb.webp"
+  },
+  "order": 21,
+  "title": "How to play Number Route: follow the running total",
+  "topic": "Numbers & logic",
+  "status": "published",
   "related": [
     "five-number-puzzles-printable",
     "mental-math-round-and-adjust"
   ],
-  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
   "sources": [
     {
-      "name": "BrainiLab — Number Route rules and playable game",
-      "url": "https://brainilabgames.com/games/number-route/"
+      "url": "https://brainilabgames.com/games/number-route/",
+      "name": "BrainiLab — Number Route rules and playable game"
     },
     {
-      "name": "OpenStax — Use the Language of Algebra: order of operations",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "name": "OpenStax — Use the Language of Algebra: order of operations"
     }
   ],
-  "status": "published",
-  "order": 21,
+  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
+  "sections": [
+    {
+      "id": "the-rule",
+      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose an operation between each pair. Calculate from left to right until your running total matches the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Here, each button changes the running total immediately. That small difference is where many first attempts go wrong.</p>",
+      "title": "One rule makes this puzzle different"
+    },
+    {
+      "id": "worked-route",
+      "html": "<p>Suppose the numbers are <strong>7, 3, 6, 4</strong> and the target is <strong>28</strong>. Keep the numbers in place and try subtraction, multiplication, then addition.</p><ol><li>Start at 7. Subtract 3 to reach <strong>4</strong>.</li><li>Multiply that 4 by 6 to reach <strong>24</strong>.</li><li>Add the final 4 to reach <strong>28</strong>.</li></ol><p>The route is <strong>((7 − 3) × 6) + 4 = 28</strong>. The brackets show the game’s left-to-right steps. Written without them, 7 − 3 × 6 + 4 would mean something different under standard arithmetic rules.</p>",
+      "title": "A complete route: 7, 3, 6, 4 → 28"
+    },
+    {
+      "id": "work-back",
+      "html": "<p>The last number in the example is 4. To finish at 28, the total just before that last step could be 24 if you plan to add, 32 if you plan to subtract, 7 if you plan to multiply, or 112 if you plan to divide.</p><p>Now ask whether the first three numbers can reach one of those values. Seven minus three gives four; multiplying by six gives 24. That makes the final addition a good candidate. Working backwards narrows your search, but you still need to test the whole route forwards.</p>",
+      "title": "When you get stuck, look at the last number"
+    },
+    {
+      "id": "division",
+      "html": "<p>Easy routes use whole-number division. If the running total is 5 and the next number is 2, division is unavailable because 5 ÷ 2 is 2.5. If the total is 6, division by 2 is valid and gives 3.</p><p>You must use all four numbers, even if you reach the target after the first or second operation. Reset clears the chosen signs so you can try another route. Skip reveals a solution if you would rather move on.</p>",
+      "title": "Why a division button can be unavailable"
+    },
+    {
+      "id": "try-one",
+      "html": "<p>Use <strong>4, 9, 2, 5</strong>, in that order. The target is <strong>21</strong>. Start by considering what total you need before the final 5.</p><details class=\"practice-answer\"><summary>Show the route and running totals</summary><p>Choose <strong>+, ×, −</strong>. First 4 + 9 = 13, then 13 × 2 = 26, then 26 − 5 = 21. In ordinary notation: <strong>((4 + 9) × 2) − 5 = 21</strong>.</p></details><p>Play Anytime contains ten routes. The Daily format uses three. For a paper version, try the <a href=\"/learn/five-number-puzzles-printable/\">five-puzzle sheet with a separate answer page</a>.</p>",
+      "title": "Your turn: reach 21"
+    }
+  ],
+  "description": "Four numbers, three missing signs and one target. Learn the left-to-right rule with a complete example, then try a route yourself.",
   "publishedAt": "2026-09-29T20:12:34.329468Z",
-  "cover": {
-    "src": "/assets/images/learn/how-to-play-number-route.webp",
-    "small": "/assets/images/learn/how-to-play-number-route-small.webp",
-    "thumbnail": "/assets/images/learn/how-to-play-number-route-thumb.webp",
-    "alt": "Four wooden number tiles and purple operation chips on a warm paper surface",
-    "credit": "AI-generated editorial illustration created for BrainiLab.",
-    "position": 50
-  }
+  "authorId": "biel-sarda"
 }

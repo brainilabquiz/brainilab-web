@@ -44,3 +44,15 @@ Keep original explanations and verified sources, vary titles and structure, and 
 Build with `npm run build`. Add new public assets to Git first. Run `tools/test-learn-editor.mjs` and `tools/test-learn-library.mjs` with JSDOM_MODULE pointing to jsdom, plus `tools/check-build.py` and `tools/check-editorial.py`. Transactional database checks cover drafts, public isolation, conflicts, publish/unpublish, history and unauthorized access; test writes are rolled back.
 
 Research queue: consult `content/editorial-research-2026-09-30.md` alongside the cluster plan. These source-backed briefs prioritise thin categories but are not approved drafts; resolve the recorded source conflicts and check current product behaviour before writing.
+
+## Authors and learning paths
+
+All existing articles are credited to Biel Sardà (`authorId: biel-sarda`), also the default for new articles and paths. The admin author selector can change this. About us links each visible member through `/about/#<slug>` and emits Person structured data. In People, edit name, role, biography, photo and optional labelled HTTPS social links; the latter become `sameAs`. Do not invent biographies or credentials. Contributors can stay off the team page while retaining article credit. Archive a person instead of deleting their history.
+
+Learning paths are ordered teaching routes, distinct from the ten-supporting-articles-plus-HUB editorial rule. Publish complete lessons with valid quizzes before publishing their path. A path has 2–30 distinct published lessons, clear objectives, prerequisites, useful sources and an author. Start with fundamentals, then build on them. Use meaningful tables, examples and glossary entries where useful; keep photorealistic article covers.
+
+Each lesson round has 2–8 questions with four distinct options, one correct answer and an explanation. Completing every question records lesson completion regardless of score; percentages measure completed lessons, not mastery. Changing questions requires a new quiz version, so stale completions do not count. Guest progress stays in that browser; signed-in progress is scoped to that account and validated by the database. Guest progress is never silently transferred into another account.
+
+Private learning entities and immutable revisions are accessible only through owner/editor RPCs. Public author/path tables expose intentional publications only. Path publishing validates its lessons; referenced lessons cannot be withdrawn or lose their quiz while the path is public. Draft edits retain the last publication. Deploy new assets before publishing database documents and check expected revisions and hashes against a fresh backup.
+
+Validation: `tools/test-learning-paths.mjs` covers quiz grading, completion, retries, versions, Person markup, privacy, path routing and admin editing. `supabase/tests/learning_paths.sql` runs transactional checks and rolls everything back. Run the normal editorial, library, SEO and build checks as well.

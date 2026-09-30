@@ -1,68 +1,69 @@
 {
-  "slug": "daily-or-anytime",
-  "status": "published",
-  "topic": "Getting started",
-  "title": "Daily or Anytime: what would you like to play?",
-  "description": "Take on today’s shared challenges or choose a quiz on a favourite topic. A quick guide to finding your next game.",
-  "game": {
-    "name": "Today’s Daily games",
-    "url": "/daily-quiz/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
-  "sections": [
-    {
-      "id": "choose",
-      "title": "Two ways to get started",
-      "html": "<p>Want a fresh challenge chosen for you? Head to Daily. Have a particular topic in mind? Browse the Anytime games and pick whatever catches your eye.</p><p>You can start playing without an account. If you want to keep your progress across devices, sign in through My Stats. Guest results can also appear in the rankings, under a generated alias.</p>"
-    },
-    {
-      "id": "daily",
-      "title": "One Daily, with room for one more",
-      "html": "<p>From 1 October 2026, the Daily starts with one main game, chosen for everyone that day. Finish it to keep your streak and earn up to 2,500 Daily points. The game changes each day, so tomorrow might bring a word puzzle, a quick calculation or a set of questions.</p><p>Fancy another round? Choose one of the two optional extras. That extra can add up to 1,000 points, bringing the daily maximum to 3,500. Your choice is fixed when you open the extra, but skipping it does not affect your streak.</p><p>Daily points are separate from an individual game’s raw score and from XP. Previous days keep their original scores. Past Daily rounds are practice and do not replace today’s challenge.</p>"
-    },
-    {
-      "id": "anytime",
-      "title": "Follow your interests with Anytime",
-      "html": "<p>Try World Flags if you like recognising designs, World Capitals for a geography challenge, or General Knowledge for a bit of everything. Where difficulty levels are available, choose one that feels enjoyable and gives you room to improve.</p><p>For a change of pace, explore the word and number games. Each has its own rules; a quick look at the guide can help you settle in before the timer starts.</p>"
-    },
-    {
-      "id": "result",
-      "title": "See where a round takes you",
-      "html": "<p>Perhaps a flag caught your attention, or an answer reminded you of something you would like to know more about. Follow a related guide, try another topic, or share your result with a friend.</p><p>There is no need to turn every mistake into homework. One interesting answer can be enough to bring you back for another round.</p>"
-    },
-    {
-      "id": "return",
-      "title": "Come back when you feel like it",
-      "html": "<p>You can work through the Daily set, spend a few minutes on a favourite quiz, or leave the next challenge for tomorrow.</p><p>BrainiLab+ is optional support for the project. It does not provide extra points, attempts or ranking advantages. The membership page explains the current benefits and advertising status; an upgrade is not required to play.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "BrainiLab — Daily games and score",
-      "url": "/daily-quiz/"
-    },
-    {
-      "name": "BrainiLab — Games library",
-      "url": "/games/"
-    },
-    {
-      "name": "BrainiLab — Membership details",
-      "url": "/plus/"
-    }
-  ],
-  "related": [
-    "how-to-learn-world-flags"
-  ],
+  "game": {
+    "url": "/daily-quiz/",
+    "name": "Today’s Daily games"
+  },
+  "slug": "daily-or-anytime",
   "cover": {
     "alt": "Tea, a notebook and wooden puzzle pieces on a morning table",
     "src": "/assets/images/learn/daily-or-anytime.webp",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 13,
+  "title": "Daily or Anytime: what would you like to play?",
+  "topic": "Getting started",
+  "status": "published",
+  "related": [
+    "how-to-learn-world-flags"
+  ],
+  "sources": [
+    {
+      "url": "/daily-quiz/",
+      "name": "BrainiLab — Daily games and score"
+    },
+    {
+      "url": "/games/",
+      "name": "BrainiLab — Games library"
+    },
+    {
+      "url": "/plus/",
+      "name": "BrainiLab — Membership details"
+    }
+  ],
   "practice": "Try today’s main Daily. If you fancy more, choose one optional extra.",
+  "sections": [
+    {
+      "id": "choose",
+      "html": "<p>Want a fresh challenge chosen for you? Head to Daily. Have a particular topic in mind? Browse the Anytime games and pick whatever catches your eye.</p><p>You can start playing without an account. If you want to keep your progress across devices, sign in through My Stats. Guest results can also appear in the rankings, under a generated alias.</p>",
+      "title": "Two ways to get started"
+    },
+    {
+      "id": "daily",
+      "html": "<p>From 1 October 2026, the Daily starts with one main game, chosen for everyone that day. Finish it to keep your streak and earn up to 2,500 Daily points. The game changes each day, so tomorrow might bring a word puzzle, a quick calculation or a set of questions.</p><p>Fancy another round? Choose one of the two optional extras. That extra can add up to 1,000 points, bringing the daily maximum to 3,500. Your choice is fixed when you open the extra, but skipping it does not affect your streak.</p><p>Daily points are separate from an individual game’s raw score and from XP. Previous days keep their original scores. Past Daily rounds are practice and do not replace today’s challenge.</p>",
+      "title": "One Daily, with room for one more"
+    },
+    {
+      "id": "anytime",
+      "html": "<p>Try World Flags if you like recognising designs, World Capitals for a geography challenge, or General Knowledge for a bit of everything. Where difficulty levels are available, choose one that feels enjoyable and gives you room to improve.</p><p>For a change of pace, explore the word and number games. Each has its own rules; a quick look at the guide can help you settle in before the timer starts.</p>",
+      "title": "Follow your interests with Anytime"
+    },
+    {
+      "id": "result",
+      "html": "<p>Perhaps a flag caught your attention, or an answer reminded you of something you would like to know more about. Follow a related guide, try another topic, or share your result with a friend.</p><p>There is no need to turn every mistake into homework. One interesting answer can be enough to bring you back for another round.</p>",
+      "title": "See where a round takes you"
+    },
+    {
+      "id": "return",
+      "html": "<p>You can work through the Daily set, spend a few minutes on a favourite quiz, or leave the next challenge for tomorrow.</p><p>BrainiLab+ is optional support for the project. It does not provide extra points, attempts or ranking advantages. The membership page explains the current benefits and advertising status; an upgrade is not required to play.</p>",
+      "title": "Come back when you feel like it"
+    }
+  ],
+  "updatedAt": "2026-09-30T05:15:07Z",
+  "description": "Take on today’s shared challenges or choose a quiz on a favourite topic. A quick guide to finding your next game.",
   "publishedAt": "2026-09-23T15:00:00Z",
-  "updatedAt": "2026-09-30T05:15:07Z"
+  "authorId": "biel-sarda"
 }
