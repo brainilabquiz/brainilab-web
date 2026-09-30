@@ -1,6 +1,7 @@
+import {newTabLinks} from '../lib/link-policy.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
-import {mkdir,copyFile,rm,lstat,stat,readdir} from 'node:fs/promises';
+import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import './check-site-integrity.mjs';
@@ -40,7 +41,8 @@ for(const file of publicFiles){
   if(/\.(js|css)$/.test(file)){
     await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
-  }else await copyFile(source,target);
+  }else if(file.endsWith('.html')) await writeFile(target,newTabLinks(await readFile(source,'utf8')));
+  else await copyFile(source,target);
 }
 for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
   await stat(path.join(output,required));
