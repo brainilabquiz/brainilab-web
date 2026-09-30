@@ -75,7 +75,7 @@ window.BrainiAccountMenu=(function(){
           } account-menu-avatar">
             ${photo
               ? `<img src="${photo}" alt="">`
-              : `<span>${esc(p.avatarInitial||"B")}</span>`
+              : BrainiProgressUI.defaultAvatarMarkup()
             }
           </span>
 
@@ -87,7 +87,7 @@ window.BrainiAccountMenu=(function(){
 
         <a role="menuitem" class="account-progress-link" href="${profileHref('progress')}">
           <span><strong>${Number(p.xp||0).toLocaleString()} XP</strong><small>${esc(progress?.label||'Start with a game')}</small></span>
-          <i class="account-xp-track"><i style="width:${progress?.percent||0}%"></i></i>
+          <i class="account-xp-track" role="progressbar" aria-label="Progress to level ${progress?.nextLevel||2}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress?.percent||0)}"><i style="width:${progress?.percent||0}%"></i></i>
           <span class="account-streak ${p.streakSecuredToday?'is-secured':''}"><span aria-hidden="true">🔥</span> ${streak} ${streak===1?'day':'days'} <small>${p.streakSecuredToday?'Done for today':'Daily not played today'}</small></span>
         </a>
 
@@ -254,7 +254,7 @@ window.BrainiAccountMenu=(function(){
         const t=BrainiProgressUI.tier(p.level||1);
         avatar.classList.add(
           "rank-header-avatar",
-          `rank-${t.key}`
+          ...BrainiProgressUI.avatarClass(p.level||1).split(" ")
         );
         avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${Number(p.level||1)}`;
       }
@@ -271,10 +271,10 @@ window.BrainiAccountMenu=(function(){
           img.alt="";
           avatar.replaceChildren(img);
         }catch(err){
-          avatar.textContent=p.avatarInitial||"B";
+          avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
         }
       }else{
-        avatar.textContent=p.avatarInitial||"B";
+        avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
       }
     });
   }

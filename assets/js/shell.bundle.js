@@ -2213,7 +2213,7 @@ window.BrainiProgressUI=(function(){
 
   function tier(level){
     const n=Math.max(1,Number(level||1));
-    return TIERS.find(t=>n>=t.min && n<=t.max)||TIERS[0];
+    return TIERS.find(t=>n>=t.min && n<=t.max)||(n>999?TIERS.at(-1):TIERS[0]);
   }
 
   function nextTier(level){
@@ -2237,15 +2237,30 @@ window.BrainiProgressUI=(function(){
   }
 
   function avatarClass(level){
-    return `rank-ring rank-${tier(level).key}`;
+    const t=tier(level),n=Math.max(t.min,Math.min(t.max,Number(level)||1));
+    const step=Math.min(9,Math.floor((n-t.min)/Math.min(10,t.max-t.min+1)*10));
+    return `rank-ring rank-${t.key} rank-step-${step}`;
   }
 
   function avatarMarkup(initial,level,extraClass=""){
     const t=tier(level);
     return `<span class="rank-avatar ${avatarClass(level)} ${extraClass}" title="${t.name} · Level ${Number(level||1)}">
-      <span>${String(initial||"B").slice(0,1).toUpperCase()}</span>
+      ${defaultAvatarMarkup()}
     </span>`;
   }
+
+  function defaultAvatarMarkup(){
+    return '<img class="default-player-avatar" src="/assets/icons/product/player-owl.svg" width="48" height="48" alt="">';
+  }
+
+  // Capture image errors once: broken remote photos receive the same local avatar.
+  document.addEventListener('error',event=>{
+    const image=event.target;
+    if(image?.tagName==='IMG' && image.closest('.rank-avatar,.rank-header-avatar') && !image.classList.contains('default-player-avatar')){
+      image.classList.add('default-player-avatar');
+      image.src='/assets/icons/product/player-owl.svg';
+    }
+  },true);
 
   function badgeMarkup(level){
     const t=tier(level);
@@ -2373,7 +2388,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();
@@ -4258,7 +4273,7 @@ window.BrainiAccountMenu=(function(){
           } account-menu-avatar">
             ${photo
               ? `<img src="${photo}" alt="">`
-              : `<span>${esc(p.avatarInitial||"B")}</span>`
+              : BrainiProgressUI.defaultAvatarMarkup()
             }
           </span>
 
@@ -4270,7 +4285,7 @@ window.BrainiAccountMenu=(function(){
 
         <a role="menuitem" class="account-progress-link" href="${profileHref('progress')}">
           <span><strong>${Number(p.xp||0).toLocaleString()} XP</strong><small>${esc(progress?.label||'Start with a game')}</small></span>
-          <i class="account-xp-track"><i style="width:${progress?.percent||0}%"></i></i>
+          <i class="account-xp-track" role="progressbar" aria-label="Progress to level ${progress?.nextLevel||2}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress?.percent||0)}"><i style="width:${progress?.percent||0}%"></i></i>
           <span class="account-streak ${p.streakSecuredToday?'is-secured':''}"><span aria-hidden="true">🔥</span> ${streak} ${streak===1?'day':'days'} <small>${p.streakSecuredToday?'Done for today':'Daily not played today'}</small></span>
         </a>
 
@@ -4437,7 +4452,7 @@ window.BrainiAccountMenu=(function(){
         const t=BrainiProgressUI.tier(p.level||1);
         avatar.classList.add(
           "rank-header-avatar",
-          `rank-${t.key}`
+          ...BrainiProgressUI.avatarClass(p.level||1).split(" ")
         );
         avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${Number(p.level||1)}`;
       }
@@ -4454,10 +4469,10 @@ window.BrainiAccountMenu=(function(){
           img.alt="";
           avatar.replaceChildren(img);
         }catch(err){
-          avatar.textContent=p.avatarInitial||"B";
+          avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
         }
       }else{
-        avatar.textContent=p.avatarInitial||"B";
+        avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
       }
     });
   }

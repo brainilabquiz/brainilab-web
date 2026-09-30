@@ -149,12 +149,12 @@ window.BrainiRankings=(function(){
       return `<span class="rank-avatar ${rank} ${small?"small":""}" title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
         ${photo
           ? `<img src="${photo}" alt="">`
-          : `<span>${escapeText(String(initial).slice(0,1).toUpperCase())}</span>`
+          : BrainiProgressUI.defaultAvatarMarkup()
         }
       </span>`;
     }
 
-    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:escapeText(initial)}</span>`;
+    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:'<img src="/assets/icons/product/player-owl.svg" alt="">'}</span>`;
   }
 
   function tableRow(row){
@@ -179,8 +179,8 @@ window.BrainiRankings=(function(){
     const rank=Number(row.rank);
     return `<div role="row" class="ranking-row ${
       row.isMe?"is-me":""
-    } ${rank>=1&&rank<=3?"place-"+rank:""}">
-      <span class="ranking-position" role="cell" aria-label="Rank ${rank}"><span>${rank}</span></span>
+    } ${rank>=1&&rank<=10?"place-"+rank:""}">
+      <span class="ranking-position" role="cell" aria-label="Rank ${rank}"><span>${rank<=3?`<svg class="ranking-medal" viewBox="0 0 48 56" aria-hidden="true"><path class="medal-ribbon" d="m11 31-2 23 15-8 15 8-2-23"/><circle cx="24" cy="23" r="20"/><circle class="medal-inner" cx="24" cy="23" r="15"/></svg>`:""}<b>${rank}</b></span></span>
       <div class="ranking-identity" role="cell">${identity}</div>
       <span class="ranking-row-score" role="cell">${scoreText(row)}</span>
     </div>`;
@@ -206,7 +206,7 @@ window.BrainiRankings=(function(){
     if(!p || !window.BrainiProgressUI)return '';
     const progress=BrainiProgressUI.xpProgress(p.level,p.xp);
     return `<a class="ranking-level" href="/profile/?section=progress" aria-label="Your level and XP progress">
-      <span class="ranking-level-number">${Number(p.level)||1}</span>
+      ${playerAvatar({...p,name:p.displayName})}
       <div><strong>Level ${Number(p.level)||1} <span>· ${escapeText(BrainiProgressUI.tier(p.level).name)}</span></strong>
       <div class="ranking-xp-track" role="progressbar" aria-label="Progress to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><i style="width:${progress.percent}%"></i></div>
       <small>${escapeText(progress.label)}</small></div><b>${Number(p.xp||0).toLocaleString()} XP <span>→</span></b>
