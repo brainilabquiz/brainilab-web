@@ -57,9 +57,12 @@
     "how-to-learn-world-flags"
   ],
   "cover": {
-    "src": "/assets/images/learn/daily-or-anytime.webp",
-    "alt": "Tea, a notebook and wooden puzzle pieces on a morning table",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "src": "/assets/images/learn/daily-or-anytime-diagram.webp",
+    "small": "/assets/images/learn/daily-or-anytime-diagram-small.webp",
+    "thumbnail": "/assets/images/learn/daily-or-anytime-diagram-thumb.webp",
+    "alt": "A calendar marked Today beside three different puzzle tiles marked Anytime",
+    "credit": "Original explanatory illustration by BrainiLab.",
+    "position": 50
   },
   "order": 13,
   "practice": "Try today’s main Daily. If you fancy more, choose one optional extra.",

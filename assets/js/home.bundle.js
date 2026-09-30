@@ -2747,10 +2747,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
   let playing=false;
+  const dailyDescriptions={brainmix:'Ten questions. A little of everything. What will surprise you?',brainiword:'Five letters, five tries. Follow the clues to the word.',orderup:'Put the clues in order. Which one belongs first?',topicrush:'One topic, a ticking clock. How many answers can you find?',connections:'Different clues, one hidden link. Can you see it?',oddoneout:'Four possibilities. Find the one that does not belong.',higherlower:'Trust your knowledge: is the next answer higher or lower?',mathrush:'A minute of mental maths. How far can you go?',numberroute:'Four numbers, one target. Find a route between them.',sequence:'Look at the gaps. What comes next?'};
   async function modernEntry(){
     const day=BrainiData.todayKey(),ids=BrainiDailyRules.lineup(day),meta=BrainiDailyJourney.META[ids[0]];
     const href=BrainiDailyJourney.gameHref(ids[0],day);
-    stage.innerHTML=`<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>One little challenge. See how you do.</p><div class="home-start-actions"><a class="btn" href="${href}">Play today’s Daily</a><a class="btn-light" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    stage.innerHTML=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" href="${href}">Play today’s Daily</a><a class="btn-light" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
     root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
     try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});if(day===BrainiData.todayKey()&&status.games[ids[0]]?.completed&&stage.isConnected){stage.innerHTML=`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" href="/games/">Explore all games</a></div>`;}}catch(error){console.warn('Daily status unavailable',error);}
   }

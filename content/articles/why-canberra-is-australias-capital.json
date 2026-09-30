@@ -9,9 +9,11 @@
   },
   "slug": "why-canberra-is-australias-capital",
   "cover": {
-    "alt": "A globe, travel notebook and compass on a sunlit desk",
-    "src": "/assets/images/learn/why-canberra-is-australias-capital.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "src": "/assets/images/learn/why-canberra-is-australias-capital-diagram.webp",
+    "small": "/assets/images/learn/why-canberra-is-australias-capital-diagram-small.webp",
+    "thumbnail": "/assets/images/learn/why-canberra-is-australias-capital-diagram-thumb.webp",
+    "alt": "A schematic connecting Sydney, Canberra and Melbourne, with Canberra highlighted as the capital",
+    "credit": "Original explanatory illustration by BrainiLab.",
     "position": 50
   },
   "order": 15,

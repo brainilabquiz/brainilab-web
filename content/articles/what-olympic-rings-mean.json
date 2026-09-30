@@ -48,12 +48,12 @@
   "order": 20,
   "publishedAt": "2026-09-29T06:03:00Z",
   "cover": {
-    "src": "/assets/images/learn/what-olympic-rings-mean.webp",
-    "small": "/assets/images/learn/what-olympic-rings-mean-small.webp",
-    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-thumb.webp",
-    "alt": "Running shoes on a sunlit athletics track beside empty stadium seats",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 68
+    "src": "/assets/images/learn/what-olympic-rings-mean-diagram.webp",
+    "small": "/assets/images/learn/what-olympic-rings-mean-diagram-small.webp",
+    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-diagram-thumb.webp",
+    "alt": "Five overlapping Olympic rings: blue, black and red above yellow and green, on white",
+    "credit": "Original explanatory illustration by BrainiLab.",
+    "position": 50
   },
   "updatedAt": "2026-09-29T20:07:50Z"
 }

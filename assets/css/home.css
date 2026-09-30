@@ -59,10 +59,10 @@
 
 /* A neutral, reserved card prevents the unplayed state flashing before progress loads. */
 .home-loading{display:none}
-#homeQuiz{position:relative;min-height:450px}
+#homeQuiz{position:relative;min-height:320px}
 #homeQuiz[data-home-loading]>.home-loading{display:grid;position:absolute;inset:0;place-items:center;padding:28px;color:#e8e6ff;text-align:center;font-size:16px}
 #homeQuiz[data-home-loading]>.challenge-inner{visibility:hidden;pointer-events:none}
-@media(max-width:370px){#homeQuiz{min-height:520px}}
+@media(max-width:370px){#homeQuiz{min-height:360px}}
 
 /* Warm reading and play surfaces; keep the live challenge clearly distinct. */
 .home-page{background:#faf8f3}.home-hero{padding-top:40px;padding-bottom:24px}

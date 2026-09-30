@@ -160,7 +160,7 @@ window.BrainiGamesLibrary=(function(){
 
         if(!results.length){
           status.innerHTML=
-            '<span class="anytime-new">Not played yet</span>';
+            '';
           return;
         }
 
