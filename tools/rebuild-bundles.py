@@ -9,12 +9,12 @@ BUNDLES={
  'daily.bundle.js':['share.js','supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
  'daily-overview.bundle.js':['supabase-daily.js','daily-hub.js','daily-countdown.js','daily-games.js','daily-journey.js','daily-overview.js','anytime-browser.js'],
  'home.bundle.js':['share.js','post-game.js','supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','quiz.js','home-entry.js'],
- 'games.bundle.js':['games-library.js'],
+ 'games.bundle.js':['games-library.js','game-discovery.js'],
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],
  'profile.bundle.js':['supabase-analytics.js','stats-ui.js','profile-sections.js'],
  'profile-social.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','social.js'],
- 'suggestions.bundle.js':['supabase-feedback.js'],
+ 'suggestions.bundle.js':['supabase-feedback.js','suggestions-ui.js'],
 }
 for out,parts in BUNDLES.items():
     chunks=[]

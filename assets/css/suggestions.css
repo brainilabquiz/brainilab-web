@@ -1,4 +1,15 @@
 .auth-header-cta{display:none !important}
+.suggestions-card[hidden],.suggestions-success[hidden],.feedback-context[hidden]{display:none!important}
+.suggestions-main .suggestions-copy p{font-size:16px;font-weight:400;line-height:1.6}
+.suggestions-main .suggestions-field label{font-size:13px;text-transform:none}
+.suggestions-main .suggestions-note{font-size:12px;color:#625b6b}
+.suggestions-main .suggestions-error{font-size:13px;line-height:1.5}
+.suggestions-main .suggestions-success p{font-size:14px}
+.suggestions-main .suggestions-success{grid-template-columns:auto 1fr}
+.suggestions-main .suggestions-card{background:#fffdf8}
+.suggestions-main :is(a,button,input,textarea,select):focus-visible{outline:3px solid #3fab34;outline-offset:3px}
+.feedback-context{display:inline-block;padding:8px 12px;background:#f0eef9;color:#2d296e;border-radius:10px;font-size:14px}
+.suggestions-submit:disabled{opacity:.65;cursor:wait}
 .help-dot{
   width:28px;height:28px;display:grid;place-items:center;border-radius:50%;
   border:1px solid #d8d7e4;background:transparent;color:#77758d;

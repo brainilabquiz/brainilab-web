@@ -58,11 +58,13 @@ window.BrainiSiteAnalytics=(()=>{
     if(url.origin===location.origin&&url.pathname==='/assets/resources/five-number-puzzles.pdf')send('resource_download',{resource_id:'five_number_puzzles'});
     if(url.origin===location.origin&&a.closest('.article-practice,.sidebar-game'))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
     if(url.origin===location.origin&&a.closest('[data-game-guides]')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('game_guide_click',{article_slug:url.pathname.split('/')[2],game_path:path()});
-    if(url.origin===location.origin&&a.closest('.post-game')&&['next','guide','progress','browse'].includes(a.dataset.postAction))send('post_game_action',{action:a.dataset.postAction});
-    if(url.origin===location.origin&&url.pathname.startsWith('/suggestions'))send('feedback_open',{source:path().startsWith('/learn/')?'learn':'site'});
+    if(url.origin===location.origin&&a.closest('.post-game')&&['next','guide','progress','browse','feedback'].includes(a.dataset.postAction))send('post_game_action',{action:a.dataset.postAction});
+    if(url.origin===location.origin&&url.pathname.startsWith('/suggestions'))send('feedback_open',{source:a.closest('.post-game')?'post-game':path().startsWith('/learn/')?'learn':'site'});
   });
   window.addEventListener('brainilab:datachange',event=>{if(!allowed()||event.detail?.type!=='game_result')return;const {gameId,result}=event.detail;if(!result||result.practice||result.tryFirst||result.dailyReplayBlocked||!result.clientResultId||completed.has(result.clientResultId)||!/^[a-z0-9]{1,30}$/.test(gameId||''))return;completed.add(result.clientResultId);send('game_complete',{game_id:gameId,mode:result.dailyNumber!=null?'daily':'anytime'});});
   window.addEventListener('brainilab:friendchallenge',event=>{if(['copy','share'].includes(event.detail?.method))send('friend_challenge_share',{method:event.detail.method});});
+  window.addEventListener('brainilab:discovery',event=>{if(['all','quizzes','words','numbers'].includes(event.detail?.type))send('game_filter',{game_type:event.detail.type});});
+  window.addEventListener('brainilab:feedbacksent',event=>{if(['site','post-game'].includes(event.detail?.source))send('feedback_submit',{source:event.detail.source});});
   window.addEventListener('storage',event=>{if(event.key!==key&&event.key!==null)return;choice=read();if(choice)activate();else revoke();});
   // Reading signal = at least 30 seconds visible AND halfway through the article.
   const timer=setInterval(()=>{if(articleRead||!safe()){clearInterval(timer);return;}const article=document.querySelector('.article-body');if(!article){clearInterval(timer);return;}if(allowed()&&!document.hidden)activeSeconds++;if(activeSeconds>=30&&article.getBoundingClientRect().top+article.offsetHeight/2<=innerHeight){articleRead=true;send('article_read',{article_slug:path().split('/')[2]});clearInterval(timer);}},1000);
