@@ -36,23 +36,23 @@
   "sections": [
     {
       "id": "score",
-      "title": "Why the score goes 15, 30, 40",
-      "html": "<p>A tennis score of 30–40 looks puzzling if you are expecting an ordinary point count. In a standard game, the first point is called 15, the second 30 and the third 40. Zero is called <em>love</em>.</p><p>The server’s score comes first. At 30–40, the server has won two points and the receiver three. If the receiver wins the next point, they win the game. If the server wins it, the score becomes deuce.</p>"
+      "html": "<p>A tennis score of 30–40 looks puzzling if you are expecting an ordinary point count. In a standard game, the first point is called 15, the second 30 and the third 40. Zero is called <em>love</em>.</p><p>The server’s score comes first. At 30–40, the server has won two points and the receiver three. If the receiver wins the next point, they win the game. If the server wins it, the score becomes deuce.</p>",
+      "title": "Why the score goes 15, 30, 40"
     },
     {
       "id": "deuce",
-      "title": "What happens at deuce?",
-      "html": "<p>Deuce means both players have reached 40. Under advantage scoring, a player needs to win two consecutive points from there to take the game.</p><p>The first point gives them <em>advantage</em>. Win the next, and the game is theirs. Lose it, and the score returns to deuce.</p><p>So if you are serving at deuce, win a rally and then lose the following point, you are back where you started. A close game can go through this cycle several times.</p>"
+      "html": "<p>Deuce means both players have reached 40. Under advantage scoring, a player needs to win two consecutive points from there to take the game.</p><p>The first point gives them <em>advantage</em>. Win the next, and the game is theirs. Lose it, and the score returns to deuce.</p><p>So if you are serving at deuce, win a rally and then lose the following point, you are back where you started. A close game can go through this cycle several times.</p>",
+      "title": "What happens at deuce?"
     },
     {
       "id": "scoreboard",
-      "title": "From games to sets",
-      "html": "<p>Points make up games, games make up sets, and sets decide the match. In a usual tie-break set, a score of 6–4 wins the set. At six games each, a tie-break decides it. Tie-break points are counted 1, 2, 3 and so on.</p><p>Match formats can differ. In <em>no-ad</em> scoring, for example, a deciding point replaces the advantage sequence at deuce. Check the format if a scoreboard seems to skip a step.</p>"
+      "html": "<p>Points make up games, games make up sets, and sets decide the match. In a usual tie-break set, a score of 6–4 wins the set. At six games each, a tie-break decides it. Tie-break points are counted 1, 2, 3 and so on.</p><p>Match formats can differ. In <em>no-ad</em> scoring, for example, a deciding point replaces the advantage sequence at deuce. Check the format if a scoreboard seems to skip a step.</p>",
+      "title": "From games to sets"
     },
     {
       "id": "practice",
-      "title": "Call the next score",
-      "html": "<p>You are serving at 30–40 and win the next point. What is the score now?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>Deuce.</strong> You have each won three points. With advantage scoring, either player now needs two points in a row to win the game.</p></details><p>Once you know who is serving and whether you are looking at points, games or sets, the scoreboard becomes much easier to follow.</p>"
+      "html": "<p>You are serving at 30–40 and win the next point. What is the score now?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>Deuce.</strong> You have each won three points. With advantage scoring, either player now needs two points in a row to win the game.</p></details><p>Once you know who is serving and whether you are looking at points, games or sets, the scoreboard becomes much easier to follow.</p>",
+      "title": "Call the next score"
     }
   ],
   "updatedAt": "2026-09-29T20:07:50Z",

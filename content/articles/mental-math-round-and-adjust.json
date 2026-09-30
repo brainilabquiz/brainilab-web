@@ -69,6 +69,7 @@
   ],
   "description": "49 + 18 feels friendlier as 50 + 18. The important part is remembering what to undo. Try addition, subtraction and three short checks.",
   "publishedAt": "2026-09-29T20:12:35.334945Z",
+  "authorId": "biel-sarda",
   "quiz": {
     "version": "initial-20260930",
     "questions": [
@@ -107,6 +108,5 @@
       }
     ]
   },
-  "authorId": "biel-sarda",
-  "updatedAt": "2026-09-30T18:12:37.373691+00:00"
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00"
 }

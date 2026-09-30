@@ -67,9 +67,10 @@
       "html": "<div class=\"table-scroll\"><table><caption>Apply the century exception</caption><thead><tr><th scope=\"col\">Year</th><th scope=\"col\">Divisible by 400?</th><th scope=\"col\">Gregorian leap year?</th></tr></thead><tbody><tr><td>1900</td><td>No</td><td>No</td></tr><tr><td>2000</td><td>Yes</td><td>Yes</td></tr><tr><td>2100</td><td>No</td><td>No</td></tr></tbody></table></div>"
     }
   ],
-  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
   "description": "2000 had a 29 February, but 2100 will not. The difference comes down to the calendar’s rule for century years.",
   "publishedAt": "2026-09-29T06:00:00Z",
+  "authorId": "biel-sarda",
   "quiz": {
     "version": "initial-20260930",
     "questions": [
@@ -107,6 +108,5 @@
         "explanation": "Leap rules help keep calendar dates aligned with the seasons because the seasonal year is a little longer than 365 days."
       }
     ]
-  },
-  "authorId": "biel-sarda"
+  }
 }

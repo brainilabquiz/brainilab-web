@@ -59,9 +59,10 @@
       "html": "<div class=\"table-scroll\"><table><caption>Convert through UTC</caption><thead><tr><th scope=\"col\">Step</th><th scope=\"col\">Clock time</th><th scope=\"col\">Operation</th></tr></thead><tbody><tr><td>City A, UTC+2</td><td>14:00</td><td>Start</td></tr><tr><td>UTC</td><td>12:00</td><td>Subtract 2 hours</td></tr><tr><td>City B, UTC−3</td><td>09:00</td><td>Subtract 3 hours</td></tr></tbody></table></div>"
     }
   ],
-  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
   "description": "Earth’s rotation gives us a starting point, but borders and daylight-saving rules make local time more complicated.",
   "publishedAt": "2026-09-23T19:51:37Z",
+  "authorId": "biel-sarda",
   "quiz": {
     "version": "initial-20260930",
     "questions": [
@@ -99,6 +100,5 @@
         "explanation": "The place and date determine the applicable civil-time rules, including daylight saving where used."
       }
     ]
-  },
-  "authorId": "biel-sarda"
+  }
 }

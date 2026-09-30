@@ -1,57 +1,57 @@
 {
-  "slug": "remember-quiz-answers-tomorrow",
-  "status": "published",
-  "topic": "Learning",
-  "title": "How to remember what you learn in a quiz",
-  "description": "An answer can feel obvious as soon as you see it. Try recalling it later, without the clues, to see what has stuck.",
-  "game": {
-    "name": "General Knowledge Quiz",
-    "url": "/general-knowledge/general-knowledge-quiz/"
-  },
   "hub": {
-    "name": "General knowledge",
-    "url": "/general-knowledge/"
+    "url": "/general-knowledge/",
+    "name": "General knowledge"
   },
-  "sections": [
-    {
-      "id": "familiar",
-      "title": "Why an answer can feel familiar and still slip away",
-      "html": "<p>You reveal a quiz answer and think, “Of course!” Then the same question comes up a week later and you draw a blank.</p><p>Recognising an answer on the screen is different from recalling it yourself. Research reviewed by Roediger and Karpicke found that practising recall can help people retain information over time. That gives you a simple way to follow up on an answer you want to remember.</p>"
-    },
-    {
-      "id": "one-answer",
-      "title": "Turn an interesting fact into a question",
-      "html": "<p>After a round, choose one answer that caught your attention. Write a question on one side of a card and the answer on the other. Add a short explanation if it helps.</p><p>For example: “How many hearts does an octopus have, and what does each do?” That gives you something specific to answer.</p><p>Cover the explanation, say what you remember, then check it. If you got a detail wrong, correct your note before trying again.</p>"
-    },
-    {
-      "id": "later",
-      "title": "Come back to it another day",
-      "html": "<p>Put the card aside and try answering it on a later day before turning it over. You might remember the number but forget the explanation, or recall the idea without finding the right word. Check the part you missed.</p><p>Once the answer comes easily, try a follow-up: explain why it is true or give an example. You can adjust the gap between attempts to suit what you are learning.</p><details class=\"practice-answer\"><summary>What is the difference between recognising and recalling an answer?</summary><p>Recognition happens when you see the answer and know it looks familiar. Recall means bringing it to mind without having the answer in front of you.</p></details>"
-    },
-    {
-      "id": "keep-it-small",
-      "title": "Keep it manageable",
-      "html": "<p>You do not need to make a card for every question. Start with two or three facts you would enjoy remembering.</p><p>Include a lucky guess if you want to check that you really know it. A correct score and a confident explanation do not always go together.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Roediger & Karpicke — The power of testing memory (research review)",
-      "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_Review.pdf"
-    }
-  ],
-  "related": [
-    "why-octopuses-have-three-hearts",
-    "how-to-learn-world-flags"
-  ],
-  "practice": "Play General Knowledge and pick one interesting answer to revisit later.",
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "slug": "remember-quiz-answers-tomorrow",
   "cover": {
     "alt": "Index cards, a notebook and a pencil ready for practice",
     "src": "/assets/images/learn/remember-quiz-answers-tomorrow.webp",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 7,
-  "publishedAt": "2026-09-23T19:51:37Z",
+  "title": "How to remember what you learn in a quiz",
+  "topic": "Learning",
+  "status": "published",
+  "related": [
+    "why-octopuses-have-three-hearts",
+    "how-to-learn-world-flags"
+  ],
+  "sources": [
+    {
+      "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_Review.pdf",
+      "name": "Roediger & Karpicke — The power of testing memory (research review)"
+    }
+  ],
+  "practice": "Play General Knowledge and pick one interesting answer to revisit later.",
+  "sections": [
+    {
+      "id": "familiar",
+      "html": "<p>You reveal a quiz answer and think, “Of course!” Then the same question comes up a week later and you draw a blank.</p><p>Recognising an answer on the screen is different from recalling it yourself. Research reviewed by Roediger and Karpicke found that practising recall can help people retain information over time. That gives you a simple way to follow up on an answer you want to remember.</p>",
+      "title": "Why an answer can feel familiar and still slip away"
+    },
+    {
+      "id": "one-answer",
+      "html": "<p>After a round, choose one answer that caught your attention. Write a question on one side of a card and the answer on the other. Add a short explanation if it helps.</p><p>For example: “How many hearts does an octopus have, and what does each do?” That gives you something specific to answer.</p><p>Cover the explanation, say what you remember, then check it. If you got a detail wrong, correct your note before trying again.</p>",
+      "title": "Turn an interesting fact into a question"
+    },
+    {
+      "id": "later",
+      "html": "<p>Put the card aside and try answering it on a later day before turning it over. You might remember the number but forget the explanation, or recall the idea without finding the right word. Check the part you missed.</p><p>Once the answer comes easily, try a follow-up: explain why it is true or give an example. You can adjust the gap between attempts to suit what you are learning.</p><details class=\"practice-answer\"><summary>What is the difference between recognising and recalling an answer?</summary><p>Recognition happens when you see the answer and know it looks familiar. Recall means bringing it to mind without having the answer in front of you.</p></details>",
+      "title": "Come back to it another day"
+    },
+    {
+      "id": "keep-it-small",
+      "html": "<p>You do not need to make a card for every question. Start with two or three facts you would enjoy remembering.</p><p>Include a lucky guess if you want to check that you really know it. A correct score and a confident explanation do not always go together.</p>",
+      "title": "Keep it manageable"
+    }
+  ],
   "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "An answer can feel obvious as soon as you see it. Try recalling it later, without the clues, to see what has stuck.",
+  "publishedAt": "2026-09-23T19:51:37Z",
   "authorId": "biel-sarda"
 }

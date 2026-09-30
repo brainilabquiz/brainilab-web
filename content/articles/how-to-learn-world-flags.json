@@ -1,61 +1,61 @@
 {
-  "slug": "how-to-learn-world-flags",
-  "status": "published",
-  "topic": "Geography",
-  "title": "How to learn world flags without mixing them up",
-  "description": "Start with a few flags, notice their distinctive details and compare the pairs that keep catching you out.",
-  "game": {
-    "name": "World Flags Quiz",
-    "url": "/geography/world-flags-quiz/?difficulty=easy&set=1"
-  },
   "hub": {
-    "name": "Flags learning hub",
-    "url": "/geography/flags/"
+    "url": "/geography/flags/",
+    "name": "Flags learning hub"
   },
-  "sections": [
-    {
-      "id": "start-small",
-      "title": "Start with five flags",
-      "html": "<p>A page full of flags can soon become a blur of stripes, stars and familiar colours. Pick five to begin with. Look at each design, cover its name and see which countries you can recall.</p><p>You could choose flags from one region or revisit countries you confused in a quiz. A short, familiar set gives you time to notice the details.</p>"
-    },
-    {
-      "id": "describe",
-      "title": "Look at the design in three steps",
-      "html": "<p>Before naming the country, describe what you see:</p><ul><li><strong>Layout:</strong> horizontal stripes, vertical stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones appear, and in what order?</li><li><strong>Symbols:</strong> is there a star, emblem or other detail, and where is it?</li></ul><p>The edge attached to the flagpole is called the <em>hoist</em>. In a standard illustration with the pole on the left, that is where you start reading vertical stripes. Watch out for photographs showing the flag from the other side.</p>"
-    },
-    {
-      "id": "worked-example",
-      "title": "Try it with Italy",
-      "html": "<div class=\"flag-example\"><div class=\"italy-flag\" role=\"img\" aria-label=\"Italy’s flag: equal vertical bands of green, white and red\"></div><p>Italy’s flag has three equal vertical bands: <strong>green, white and red</strong>, starting at the hoist. Article 12 of the Italian Constitution specifies that design.</p></div><p>“Green by the pole, white in the middle, red at the end” gives you a more useful clue than simply remembering red and green.</p><details class=\"practice-answer\"><summary>Which colour is next to the flagpole?</summary><p><strong>Green.</strong> The order from the hoist is green, white, red.</p></details>"
-    },
-    {
-      "id": "compare",
-      "title": "Put confusing pairs side by side",
-      "html": "<p>If you keep mixing up two flags, compare their labelled illustrations. Look for a difference you can describe: the order of the stripes, an emblem or the position of a star. Then cover the names and try again.</p><p>Subtle shades can be unreliable in small images. Screens, lighting and image files affect how colours look. For flags distinguished by precise colours or proportions, check an authoritative reference rather than relying on two thumbnails.</p>"
-    },
-    {
-      "id": "review",
-      "title": "Keep a short list for next time",
-      "html": "<p>After a World Flags round, jot down two or three answers you were unsure about, including lucky guesses. Note the detail that distinguishes each flag.</p><p>Before your next round, look at those flags again and try naming them without the labels. Once they feel familiar, add a few more or explore the same countries in World Capitals.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Italian Presidency — The Italian Tricolour Flag",
-      "url": "https://www.quirinale.it/it/pagine/italian-tricolour-flag"
-    }
-  ],
-  "related": [
-    "daily-or-anytime"
-  ],
+  "game": {
+    "url": "/geography/world-flags-quiz/?difficulty=easy&set=1",
+    "name": "World Flags Quiz"
+  },
+  "slug": "how-to-learn-world-flags",
   "cover": {
-    "src": "/assets/images/learn/how-to-learn-world-flags.webp",
     "alt": "Table flags of Japan, Italy and Sweden beside a notebook",
+    "src": "/assets/images/learn/how-to-learn-world-flags.webp",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 1,
+  "title": "How to learn world flags without mixing them up",
+  "topic": "Geography",
+  "status": "published",
+  "related": [
+    "daily-or-anytime"
+  ],
+  "sources": [
+    {
+      "url": "https://www.quirinale.it/it/pagine/italian-tricolour-flag",
+      "name": "Italian Presidency — The Italian Tricolour Flag"
+    }
+  ],
   "practice": "Put your eye for detail to the test in World Flags.",
-  "publishedAt": "2026-09-23T15:00:00Z",
+  "sections": [
+    {
+      "id": "start-small",
+      "html": "<p>A page full of flags can soon become a blur of stripes, stars and familiar colours. Pick five to begin with. Look at each design, cover its name and see which countries you can recall.</p><p>You could choose flags from one region or revisit countries you confused in a quiz. A short, familiar set gives you time to notice the details.</p>",
+      "title": "Start with five flags"
+    },
+    {
+      "id": "describe",
+      "html": "<p>Before naming the country, describe what you see:</p><ul><li><strong>Layout:</strong> horizontal stripes, vertical stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones appear, and in what order?</li><li><strong>Symbols:</strong> is there a star, emblem or other detail, and where is it?</li></ul><p>The edge attached to the flagpole is called the <em>hoist</em>. In a standard illustration with the pole on the left, that is where you start reading vertical stripes. Watch out for photographs showing the flag from the other side.</p>",
+      "title": "Look at the design in three steps"
+    },
+    {
+      "id": "worked-example",
+      "html": "<div class=\"flag-example\"><div class=\"italy-flag\" role=\"img\" aria-label=\"Italy’s flag: equal vertical bands of green, white and red\"></div><p>Italy’s flag has three equal vertical bands: <strong>green, white and red</strong>, starting at the hoist. Article 12 of the Italian Constitution specifies that design.</p></div><p>“Green by the pole, white in the middle, red at the end” gives you a more useful clue than simply remembering red and green.</p><details class=\"practice-answer\"><summary>Which colour is next to the flagpole?</summary><p><strong>Green.</strong> The order from the hoist is green, white, red.</p></details>",
+      "title": "Try it with Italy"
+    },
+    {
+      "id": "compare",
+      "html": "<p>If you keep mixing up two flags, compare their labelled illustrations. Look for a difference you can describe: the order of the stripes, an emblem or the position of a star. Then cover the names and try again.</p><p>Subtle shades can be unreliable in small images. Screens, lighting and image files affect how colours look. For flags distinguished by precise colours or proportions, check an authoritative reference rather than relying on two thumbnails.</p>",
+      "title": "Put confusing pairs side by side"
+    },
+    {
+      "id": "review",
+      "html": "<p>After a World Flags round, jot down two or three answers you were unsure about, including lucky guesses. Note the detail that distinguishes each flag.</p><p>Before your next round, look at those flags again and try naming them without the labels. Once they feel familiar, add a few more or explore the same countries in World Capitals.</p>",
+      "title": "Keep a short list for next time"
+    }
+  ],
   "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "Start with a few flags, notice their distinctive details and compare the pairs that keep catching you out.",
+  "publishedAt": "2026-09-23T15:00:00Z",
   "authorId": "biel-sarda"
 }

@@ -1,83 +1,83 @@
 {
-  "slug": "five-number-puzzles-printable",
-  "topic": "Numbers & logic",
-  "title": "5 number puzzles for a coffee break — free printable",
-  "description": "A pencil, four numbers and a target. Try five original Number Route puzzles online or print the two-page sheet with explained answers.",
-  "sections": [
-    {
-      "id": "get-sheet",
-      "title": "Take five puzzles away from the screen",
-      "html": "<p><strong>Download five original number puzzles with a separate page of worked solutions.</strong> Each puzzle has exactly one valid sequence of three operators under the rules below. There is no timer, sign-up or email form.</p><div class=\"number-example\"><p><a href=\"/assets/resources/five-number-puzzles.pdf\">Download the free two-page PDF →</a></p><p>Page 1: the puzzles. Page 2: solutions and running totals. A4, with generous margins for printing.</p></div><p>You can also solve every puzzle on this page and open the answers one at a time. These are teaching examples, separate from the Daily challenge.</p>"
-    },
-    {
-      "id": "rules",
-      "title": "Read this before filling the gaps",
-      "html": "<p>Use all four numbers in their given order. Put one of <strong>+, −, × or ÷</strong> in each gap. Operators may repeat. Work strictly <strong>left to right</strong>, keeping a running total; division must give a whole number at that step.</p><p>These are Number Route rules. In ordinary written arithmetic, multiplication and division have priority. To avoid that ambiguity when writing your solution, add brackets around each completed step. For a slower introduction, read <a href=\"/learn/how-to-play-number-route/\">the complete Number Route example</a>.</p>"
-    },
-    {
-      "id": "puzzle-1",
-      "title": "Reach 28: 7, 3, 6, 4",
-      "html": "<p><strong>7 □ 3 □ 6 □ 4 → 28</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 1</summary><p>Choose <strong>−, ×, +</strong>.</p><ol><li>7 − 3 = 4</li><li>4 × 6 = 24</li><li>24 + 4 = 28</li></ol></details>"
-    },
-    {
-      "id": "puzzle-2",
-      "title": "Reach 29: 6, 2, 3, 7",
-      "html": "<p><strong>6 □ 2 □ 3 □ 7 → 29</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 2</summary><p>Choose <strong>×, ×, −</strong>.</p><ol><li>6 × 2 = 12</li><li>12 × 3 = 36</li><li>36 − 7 = 29</li></ol></details>"
-    },
-    {
-      "id": "puzzle-3",
-      "title": "Reach 21: 4, 9, 2, 5",
-      "html": "<p><strong>4 □ 9 □ 2 □ 5 → 21</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 3</summary><p>Choose <strong>+, ×, −</strong>.</p><ol><li>4 + 9 = 13</li><li>13 × 2 = 26</li><li>26 − 5 = 21</li></ol></details>"
-    },
-    {
-      "id": "puzzle-4",
-      "title": "Reach 14: 3, 5, 7, 4",
-      "html": "<p><strong>3 □ 5 □ 7 □ 4 → 14</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 4</summary><p>Choose <strong>+, ×, ÷</strong>.</p><ol><li>3 + 5 = 8</li><li>8 × 7 = 56</li><li>56 ÷ 4 = 14</li></ol></details>"
-    },
-    {
-      "id": "puzzle-5",
-      "title": "Reach 11: 8, 6, 7, 9",
-      "html": "<p><strong>8 □ 6 □ 7 □ 9 → 11</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 5</summary><p>Choose <strong>+, ÷, +</strong>.</p><ol><li>8 + 6 = 14</li><li>14 ÷ 7 = 2</li><li>2 + 9 = 11</li></ol></details>"
-    },
-    {
-      "id": "use-sheet",
-      "title": "Make it a shared puzzle break",
-      "html": "<p>Try the first route together, saying each running total aloud. Then work separately on the remaining four and compare methods before opening the answer page. Getting a different result is a useful prompt to find the exact step where the routes diverged.</p><p>For a class or puzzle group, print the first page for participants and keep the second page aside. There is no fixed age requirement; the relevant starting point is comfort with the four operations and the left-to-right rule. You can leave division-heavy routes until everyone is ready.</p><p>You may print and share this unmodified sheet freely for personal use, classes and puzzle groups. Keep the BrainiLab credit and link. The QR code on the sheet opens Number Route, where another set is ready to play.</p>"
-    }
-  ],
-  "game": {
-    "name": "Number Route",
-    "url": "/games/number-route/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
+  "game": {
+    "url": "/games/number-route/",
+    "name": "Number Route"
+  },
+  "slug": "five-number-puzzles-printable",
+  "cover": {
+    "alt": "A five-row puzzle worksheet, wooden number tiles and a yellow pencil beside a cup of tea",
+    "src": "/assets/images/learn/five-number-puzzles-printable.webp",
+    "small": "/assets/images/learn/five-number-puzzles-printable-small.webp",
+    "credit": "AI-generated editorial illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/five-number-puzzles-printable-thumb.webp"
+  },
+  "order": 23,
+  "title": "5 number puzzles for a coffee break — free printable",
+  "topic": "Numbers & logic",
+  "status": "published",
   "related": [
     "how-to-play-number-route",
     "mental-math-round-and-adjust"
   ],
-  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
   "sources": [
     {
-      "name": "BrainiLab — Number Route rules and playable game",
-      "url": "https://brainilabgames.com/games/number-route/"
+      "url": "https://brainilabgames.com/games/number-route/",
+      "name": "BrainiLab — Number Route rules and playable game"
     },
     {
-      "name": "OpenStax — Use the Language of Algebra: order of operations",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "name": "OpenStax — Use the Language of Algebra: order of operations"
     }
   ],
-  "status": "published",
-  "order": 23,
+  "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
+  "sections": [
+    {
+      "id": "get-sheet",
+      "html": "<p><strong>Download five original number puzzles with a separate page of worked solutions.</strong> Each puzzle has exactly one valid sequence of three operators under the rules below. There is no timer, sign-up or email form.</p><div class=\"number-example\"><p><a href=\"/assets/resources/five-number-puzzles.pdf\">Download the free two-page PDF →</a></p><p>Page 1: the puzzles. Page 2: solutions and running totals. A4, with generous margins for printing.</p></div><p>You can also solve every puzzle on this page and open the answers one at a time. These are teaching examples, separate from the Daily challenge.</p>",
+      "title": "Take five puzzles away from the screen"
+    },
+    {
+      "id": "rules",
+      "html": "<p>Use all four numbers in their given order. Put one of <strong>+, −, × or ÷</strong> in each gap. Operators may repeat. Work strictly <strong>left to right</strong>, keeping a running total; division must give a whole number at that step.</p><p>These are Number Route rules. In ordinary written arithmetic, multiplication and division have priority. To avoid that ambiguity when writing your solution, add brackets around each completed step. For a slower introduction, read <a href=\"/learn/how-to-play-number-route/\">the complete Number Route example</a>.</p>",
+      "title": "Read this before filling the gaps"
+    },
+    {
+      "id": "puzzle-1",
+      "html": "<p><strong>7 □ 3 □ 6 □ 4 → 28</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 1</summary><p>Choose <strong>−, ×, +</strong>.</p><ol><li>7 − 3 = 4</li><li>4 × 6 = 24</li><li>24 + 4 = 28</li></ol></details>",
+      "title": "Reach 28: 7, 3, 6, 4"
+    },
+    {
+      "id": "puzzle-2",
+      "html": "<p><strong>6 □ 2 □ 3 □ 7 → 29</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 2</summary><p>Choose <strong>×, ×, −</strong>.</p><ol><li>6 × 2 = 12</li><li>12 × 3 = 36</li><li>36 − 7 = 29</li></ol></details>",
+      "title": "Reach 29: 6, 2, 3, 7"
+    },
+    {
+      "id": "puzzle-3",
+      "html": "<p><strong>4 □ 9 □ 2 □ 5 → 21</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 3</summary><p>Choose <strong>+, ×, −</strong>.</p><ol><li>4 + 9 = 13</li><li>13 × 2 = 26</li><li>26 − 5 = 21</li></ol></details>",
+      "title": "Reach 21: 4, 9, 2, 5"
+    },
+    {
+      "id": "puzzle-4",
+      "html": "<p><strong>3 □ 5 □ 7 □ 4 → 14</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 4</summary><p>Choose <strong>+, ×, ÷</strong>.</p><ol><li>3 + 5 = 8</li><li>8 × 7 = 56</li><li>56 ÷ 4 = 14</li></ol></details>",
+      "title": "Reach 14: 3, 5, 7, 4"
+    },
+    {
+      "id": "puzzle-5",
+      "html": "<p><strong>8 □ 6 □ 7 □ 9 → 11</strong></p><p>Fill each gap with +, −, × or ÷. Keep the numbers in order and calculate from left to right.</p><details class=\"practice-answer\"><summary>Show solution 5</summary><p>Choose <strong>+, ÷, +</strong>.</p><ol><li>8 + 6 = 14</li><li>14 ÷ 7 = 2</li><li>2 + 9 = 11</li></ol></details>",
+      "title": "Reach 11: 8, 6, 7, 9"
+    },
+    {
+      "id": "use-sheet",
+      "html": "<p>Try the first route together, saying each running total aloud. Then work separately on the remaining four and compare methods before opening the answer page. Getting a different result is a useful prompt to find the exact step where the routes diverged.</p><p>For a class or puzzle group, print the first page for participants and keep the second page aside. There is no fixed age requirement; the relevant starting point is comfort with the four operations and the left-to-right rule. You can leave division-heavy routes until everyone is ready.</p><p>You may print and share this unmodified sheet freely for personal use, classes and puzzle groups. Keep the BrainiLab credit and link. The QR code on the sheet opens Number Route, where another set is ready to play.</p>",
+      "title": "Make it a shared puzzle break"
+    }
+  ],
+  "description": "A pencil, four numbers and a target. Try five original Number Route puzzles online or print the two-page sheet with explained answers.",
   "publishedAt": "2026-09-29T20:12:36.340515Z",
-  "cover": {
-    "src": "/assets/images/learn/five-number-puzzles-printable.webp",
-    "small": "/assets/images/learn/five-number-puzzles-printable-small.webp",
-    "thumbnail": "/assets/images/learn/five-number-puzzles-printable-thumb.webp",
-    "alt": "A five-row puzzle worksheet, wooden number tiles and a yellow pencil beside a cup of tea",
-    "credit": "AI-generated editorial illustration created for BrainiLab.",
-    "position": 50
-  },
   "authorId": "biel-sarda"
 }

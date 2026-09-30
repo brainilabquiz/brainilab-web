@@ -62,9 +62,10 @@
       "html": "<div class=\"table-scroll\"><table><caption>Date labels around the reform</caption><thead><tr><th scope=\"col\">In Britain</th><th scope=\"col\">Date label</th><th scope=\"col\">What changed</th></tr></thead><tbody><tr><td>Before the jump</td><td>2 September 1752</td><td>Julian calendar date</td></tr><tr><td>The following day</td><td>14 September 1752</td><td>Gregorian calendar date</td></tr></tbody></table></div>"
     }
   ],
-  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
   "description": "In Britain, 2 September 1752 was followed by 14 September. The missing dates were a calendar correction, not eleven days of lost time.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00",
+  "authorId": "biel-sarda",
   "quiz": {
     "version": "initial-20260930",
     "questions": [
@@ -102,6 +103,5 @@
         "explanation": "Countries adopted calendar reforms at different times. Check which calendar a historical source uses."
       }
     ]
-  },
-  "authorId": "biel-sarda"
+  }
 }

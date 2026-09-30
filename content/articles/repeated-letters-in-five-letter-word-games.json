@@ -1,65 +1,65 @@
 {
-  "slug": "repeated-letters-in-five-letter-word-games",
-  "status": "published",
-  "topic": "Words & puzzles",
-  "title": "Two Ls, two different colours: how repeated letters work",
-  "description": "One L turns yellow; the other turns grey. A worked example explains what repeated letters tell you in a five-letter word puzzle.",
-  "game": {
-    "name": "BrainiWord",
-    "url": "/games/brainiword/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
-  "sections": [
-    {
-      "id": "quick-answer",
-      "title": "Can the answer contain the same letter twice?",
-      "html": "<p>Yes. A five-letter answer can contain repeated letters. Each coloured tile accounts for one copy of a letter in the answer: matching positions are checked first, then other positions. A grey duplicate means there is no further copy available for that tile.</p><p>That last detail is easy to miss. If one L is yellow and another L is grey, the word still contains an L. It just does not contain enough Ls to colour both tiles.</p>"
-    },
-    {
-      "id": "apple-alley",
-      "title": "Try APPLE against ALLEY",
-      "html": "<p>Imagine the hidden word is <strong>APPLE</strong> and your guess is <strong>ALLEY</strong>. This is a teaching example, not today’s answer.</p><ol><li><strong>A — green:</strong> it matches the first position.</li><li><strong>First L — yellow:</strong> APPLE contains one L, but it belongs in position four.</li><li><strong>Second L — grey:</strong> the only L has already been accounted for.</li><li><strong>E — yellow:</strong> E belongs in position five, not four.</li><li><strong>Y — grey:</strong> APPLE contains no Y.</li></ol><p>The two grey tiles tell different stories. Y is absent altogether; the second L is an extra copy. Read the whole row before crossing a letter off your mental list.</p>"
-    },
-    {
-      "id": "green-first",
-      "title": "Why the green tiles take priority",
-      "html": "<p>Now imagine the answer is <strong>LEVEL</strong> and you guess <strong>LEMON</strong>. L and E are green. That does not tell you whether there are more Ls or Es elsewhere: both happen to appear twice in LEVEL.</p><p>A green tile tells you that a particular position is right. It does not mean you have found every occurrence of that letter. Keep repeated-letter possibilities open until another guess tests them.</p><details class=\"practice-answer\"><summary>Answer APPLE, guess AMPLE: what happens to the P?</summary><p>P is green in position three. There is another P in the answer, in position two, but this guess does not test it. The row is A green, M grey, P green, L green, E green.</p></details>"
-    },
-    {
-      "id": "next-guess",
-      "title": "Use the clue in your next guess",
-      "html": "<p>After the ALLEY example, write down what you actually know: A is first, E is somewhere other than fourth, L is somewhere other than second, and Y is absent. Because the second L is grey, a candidate with two Ls will not fit.</p><p>You do not need to remember a technical rulebook. Ask two questions: “Where can this letter go?” and “How many copies do these tiles allow?” They help you separate position from quantity.</p><p>If you like this kind of careful reading, try <a href=\"/learn/connections-puzzles-find-the-hidden-link/\">finding the link in a Connections puzzle</a>, where checking every clue matters just as much.</p>"
-    },
-    {
-      "id": "brainiword-rules",
-      "title": "A quick note before you play BrainiWord",
-      "html": "<p>BrainiWord gives you five tries at a five-letter word. Guesses must be accepted by the game’s English word list. A rejected word does not use an attempt; if the word check cannot connect, retry once the connection is back.</p><p>The worked examples above explain the tile rules, not a list of guaranteed answers. Games with similar mechanics may use different word lists or attempt limits.</p><p>New to the rest of BrainiLab? <a href=\"/learn/daily-or-anytime/\">See how Daily and Anytime play differ</a>.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "BrainiLab — BrainiWord rules and play",
-      "url": "https://brainilabgames.com/games/brainiword/"
-    }
-  ],
+  "game": {
+    "url": "/games/brainiword/",
+    "name": "BrainiWord"
+  },
+  "slug": "repeated-letters-in-five-letter-word-games",
+  "cover": {
+    "alt": "Five wooden tiles spelling APPLE, with two P tiles side by side on a desk",
+    "src": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo.webp",
+    "small": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-small.webp",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-thumb.webp"
+  },
+  "order": 26,
+  "title": "Two Ls, two different colours: how repeated letters work",
+  "topic": "Words & puzzles",
+  "status": "published",
   "related": [
     "connections-puzzles-find-the-hidden-link",
     "remember-quiz-answers-tomorrow"
   ],
+  "sources": [
+    {
+      "url": "https://brainilabgames.com/games/brainiword/",
+      "name": "BrainiLab — BrainiWord rules and play"
+    }
+  ],
   "practice": "Try BrainiWord. When a letter repeats, compare all its tiles before choosing your next word.",
-  "cover": {
-    "src": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo.webp",
-    "small": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-small.webp",
-    "thumbnail": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-thumb.webp",
-    "alt": "Five wooden tiles spelling APPLE, with two P tiles side by side on a desk",
-    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
-    "position": 50
-  },
-  "order": 26,
-  "publishedAt": "2026-09-30T17:15:00Z",
+  "sections": [
+    {
+      "id": "quick-answer",
+      "html": "<p>Yes. A five-letter answer can contain repeated letters. Each coloured tile accounts for one copy of a letter in the answer: matching positions are checked first, then other positions. A grey duplicate means there is no further copy available for that tile.</p><p>That last detail is easy to miss. If one L is yellow and another L is grey, the word still contains an L. It just does not contain enough Ls to colour both tiles.</p>",
+      "title": "Can the answer contain the same letter twice?"
+    },
+    {
+      "id": "apple-alley",
+      "html": "<p>Imagine the hidden word is <strong>APPLE</strong> and your guess is <strong>ALLEY</strong>. This is a teaching example, not today’s answer.</p><ol><li><strong>A — green:</strong> it matches the first position.</li><li><strong>First L — yellow:</strong> APPLE contains one L, but it belongs in position four.</li><li><strong>Second L — grey:</strong> the only L has already been accounted for.</li><li><strong>E — yellow:</strong> E belongs in position five, not four.</li><li><strong>Y — grey:</strong> APPLE contains no Y.</li></ol><p>The two grey tiles tell different stories. Y is absent altogether; the second L is an extra copy. Read the whole row before crossing a letter off your mental list.</p>",
+      "title": "Try APPLE against ALLEY"
+    },
+    {
+      "id": "green-first",
+      "html": "<p>Now imagine the answer is <strong>LEVEL</strong> and you guess <strong>LEMON</strong>. L and E are green. That does not tell you whether there are more Ls or Es elsewhere: both happen to appear twice in LEVEL.</p><p>A green tile tells you that a particular position is right. It does not mean you have found every occurrence of that letter. Keep repeated-letter possibilities open until another guess tests them.</p><details class=\"practice-answer\"><summary>Answer APPLE, guess AMPLE: what happens to the P?</summary><p>P is green in position three. There is another P in the answer, in position two, but this guess does not test it. The row is A green, M grey, P green, L green, E green.</p></details>",
+      "title": "Why the green tiles take priority"
+    },
+    {
+      "id": "next-guess",
+      "html": "<p>After the ALLEY example, write down what you actually know: A is first, E is somewhere other than fourth, L is somewhere other than second, and Y is absent. Because the second L is grey, a candidate with two Ls will not fit.</p><p>You do not need to remember a technical rulebook. Ask two questions: “Where can this letter go?” and “How many copies do these tiles allow?” They help you separate position from quantity.</p><p>If you like this kind of careful reading, try <a href=\"/learn/connections-puzzles-find-the-hidden-link/\">finding the link in a Connections puzzle</a>, where checking every clue matters just as much.</p>",
+      "title": "Use the clue in your next guess"
+    },
+    {
+      "id": "brainiword-rules",
+      "html": "<p>BrainiWord gives you five tries at a five-letter word. Guesses must be accepted by the game’s English word list. A rejected word does not use an attempt; if the word check cannot connect, retry once the connection is back.</p><p>The worked examples above explain the tile rules, not a list of guaranteed answers. Games with similar mechanics may use different word lists or attempt limits.</p><p>New to the rest of BrainiLab? <a href=\"/learn/daily-or-anytime/\">See how Daily and Anytime play differ</a>.</p>",
+      "title": "A quick note before you play BrainiWord"
+    }
+  ],
   "updatedAt": "2026-09-30T17:15:00Z",
+  "description": "One L turns yellow; the other turns grey. A worked example explains what repeated letters tell you in a five-letter word puzzle.",
+  "publishedAt": "2026-09-30T17:15:00Z",
   "authorId": "biel-sarda"
 }

@@ -33,6 +33,16 @@ const pathDom=new JSDOM(renderLearningPage(template,{articles,paths,authors,path
 assert.equal(pathDom.window.document.querySelector('[data-lesson-number]').textContent,'✓');assert.match(pathDom.window.document.querySelector('[data-progress-label]').textContent,/33%/);
 w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.querySelectorAll('input:checked').length,0);assert.equal(JSON.parse(w.localStorage.getItem('brainilab_learning_v1:guest'))[lesson.slug].version,quiz.version);
 dom.window.close();pathDom.window.close();
+// Account switches must not reuse guest answers, and old server versions must not erase current local completion.
+const accountDom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),aw=accountDom.window;
+aw.localStorage.setItem('brainilab_learning_v1:account-a',stored);
+const client={auth:{getSession:async()=>({data:{session:{user:{id:'account-a'}}}})},from:()=>({select:()=>({eq:async(_,id)=>({data:id==='account-a'?[{article_slug:lesson.slug,quiz_version:'old-version',score:1,total:3}]:[]})})}),rpc:async()=>({data:{}})};
+aw.BrainiBackendAuth={getClient:()=>client};aw.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));await new Promise(r=>setTimeout(r,10));
+assert.match(aw.document.querySelector('[data-progress-label]').textContent,/33%/);
+quiz.questions.forEach((q,i)=>aw.document.querySelector(`[name="question-${i}"][value="${q.answer}"]`).checked=true);
+aw.document.querySelector('form[data-lesson-quiz]').dispatchEvent(new aw.Event('submit',{cancelable:true}));await new Promise(r=>setTimeout(r,10));
+aw.dispatchEvent(new aw.CustomEvent('brainilab:backend-auth',{detail:{session:{user:{id:'account-b'}}}}));await new Promise(r=>setTimeout(r,10));
+assert.match(aw.document.querySelector('[data-progress-label]').textContent,/0%/);assert.equal(aw.document.querySelectorAll('input:checked,input:disabled').length,0);assert.equal(aw.document.querySelector('[type=submit]').hidden,false);accountDom.window.close();
 // Admin: edit person/socials, path order and selected author without touching production.
 const admin=new JSDOM('<div id="root"></div>',{url:'https://brainilabgames.com/admin/',runScripts:'outside-only'}),a=admin.window;a.structuredClone=structuredClone;a.confirm=()=>true;
 const ar=authors.map(document=>({slug:document.slug,revision:1,document})),pr=paths.map(document=>({slug:document.slug,revision:1,document,published_revision:1}));let saved;

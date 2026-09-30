@@ -1,60 +1,60 @@
 {
-  "slug": "can-a-wrong-guess-help-you-learn",
-  "topic": "Learning",
-  "title": "Can a wrong guess help you learn the answer?",
-  "description": "Guessing before reading can sometimes help you learn. Try a short question, then see what a pretesting study found—and what it did not.",
-  "sections": [
-    {
-      "id": "guess-first",
-      "title": "Try this before reading on",
-      "html": "<p>Without looking it up: <strong>what number comes next—3, 6, 12, 24?</strong> Make a guess and think of a rule that explains it.</p><p>You might say 48 because each number doubles. Keep both parts of your answer in mind: the number and your reason. We will return to them below.</p><p>Trying a question before studying its answer is often called <strong>pretesting</strong>. It can feel backwards. Why attempt something you have not learned yet?</p>"
-    },
-    {
-      "id": "study",
-      "title": "A wrong first answer was not the end",
-      "html": "<p>In a 2009 study, Lindsey Richland, Nate Kornell and Liche Sean Kao ran five experiments using a passage about vision. Some participants attempted questions before reading; others spent more time studying the passage.</p><p>The pretested material was remembered better on the later test, even when the researchers analysed only questions people had initially answered incorrectly. The attempted answer did not have to be right for a benefit to appear.</p><p>This was a sequence of <strong>trying, then studying the correct information</strong>. It does not show that guessing alone teaches an answer, or that every wrong answer improves memory. Benefits for material that had not been pretested were also inconsistent across the experiments.</p>"
-    },
-    {
-      "id": "check-the-rule",
-      "title": "The explanation is the useful part",
-      "html": "<p>Back to 3, 6, 12, 24. Under the doubling rule, the next number is <strong>48</strong>: 24 × 2 = 48.</p><p>A short sequence can fit more than one possible rule, so the explanation matters. “48, because I double the previous number” tells you much more than “48, because it looked right”.</p><p>If you guessed something else, compare your rule with doubling. Which step led you in another direction? This example illustrates how to compare an attempt with an explanation; it is not a test of whether pretesting has improved your memory.</p>"
-    },
-    {
-      "id": "small-routine",
-      "title": "Give yourself one question to look out for",
-      "html": "<p>Before your next short article, turn its title into a question and write one tentative answer. Then read it and check what you would change.</p><ul><li>Keep the first attempt brief.</li><li>Look for the correct explanation, not just a score.</li><li>Write the corrected answer in your own words.</li></ul><p>You do not need to manufacture a mistake. If you know the answer, use the explanation to check your reasoning. If you do not, leave room to revise it.</p><p>Later, close the page and try recalling what you learned. That is a different step, covered in <a href=\"/learn/remember-quiz-answers-tomorrow/\">our guide to remembering quiz answers</a>. Neither exercise is a promise of a particular result or a proven benefit from playing BrainiLab.</p>"
-    }
-  ],
-  "game": {
-    "name": "Sequence",
-    "url": "/games/sequence/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
+  "game": {
+    "url": "/games/sequence/",
+    "name": "Sequence"
+  },
+  "slug": "can-a-wrong-guess-help-you-learn",
+  "cover": {
+    "alt": "An open book and notebook with a pencil, eraser and a corrected handwritten answer on a wooden desk",
+    "src": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo.webp",
+    "small": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo-small.webp",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo-thumb.webp"
+  },
+  "order": 27,
+  "title": "Can a wrong guess help you learn the answer?",
+  "topic": "Learning",
+  "status": "published",
   "related": [
     "remember-quiz-answers-tomorrow",
     "number-sequences-look-at-the-gaps"
   ],
-  "practice": "Try Sequence and see whether you can explain the pattern behind your answer.",
   "sources": [
     {
-      "name": "Richland, Kornell & Kao (2009) — The pretesting effect: five experiments and their limits",
-      "url": "https://web.williams.edu/Psychology/Faculty/Kornell/Publications/Richland.Kornell.Kao.2009.pdf"
+      "url": "https://web.williams.edu/Psychology/Faculty/Kornell/Publications/Richland.Kornell.Kao.2009.pdf",
+      "name": "Richland, Kornell & Kao (2009) — The pretesting effect: five experiments and their limits"
     }
   ],
-  "status": "published",
-  "order": 27,
-  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "cover": {
-    "src": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo.webp",
-    "small": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo-small.webp",
-    "thumbnail": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo-thumb.webp",
-    "alt": "An open book and notebook with a pencil, eraser and a corrected handwritten answer on a wooden desk",
-    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
-    "position": 50
-  },
+  "practice": "Try Sequence and see whether you can explain the pattern behind your answer.",
+  "sections": [
+    {
+      "id": "guess-first",
+      "html": "<p>Without looking it up: <strong>what number comes next—3, 6, 12, 24?</strong> Make a guess and think of a rule that explains it.</p><p>You might say 48 because each number doubles. Keep both parts of your answer in mind: the number and your reason. We will return to them below.</p><p>Trying a question before studying its answer is often called <strong>pretesting</strong>. It can feel backwards. Why attempt something you have not learned yet?</p>",
+      "title": "Try this before reading on"
+    },
+    {
+      "id": "study",
+      "html": "<p>In a 2009 study, Lindsey Richland, Nate Kornell and Liche Sean Kao ran five experiments using a passage about vision. Some participants attempted questions before reading; others spent more time studying the passage.</p><p>The pretested material was remembered better on the later test, even when the researchers analysed only questions people had initially answered incorrectly. The attempted answer did not have to be right for a benefit to appear.</p><p>This was a sequence of <strong>trying, then studying the correct information</strong>. It does not show that guessing alone teaches an answer, or that every wrong answer improves memory. Benefits for material that had not been pretested were also inconsistent across the experiments.</p>",
+      "title": "A wrong first answer was not the end"
+    },
+    {
+      "id": "check-the-rule",
+      "html": "<p>Back to 3, 6, 12, 24. Under the doubling rule, the next number is <strong>48</strong>: 24 × 2 = 48.</p><p>A short sequence can fit more than one possible rule, so the explanation matters. “48, because I double the previous number” tells you much more than “48, because it looked right”.</p><p>If you guessed something else, compare your rule with doubling. Which step led you in another direction? This example illustrates how to compare an attempt with an explanation; it is not a test of whether pretesting has improved your memory.</p>",
+      "title": "The explanation is the useful part"
+    },
+    {
+      "id": "small-routine",
+      "html": "<p>Before your next short article, turn its title into a question and write one tentative answer. Then read it and check what you would change.</p><ul><li>Keep the first attempt brief.</li><li>Look for the correct explanation, not just a score.</li><li>Write the corrected answer in your own words.</li></ul><p>You do not need to manufacture a mistake. If you know the answer, use the explanation to check your reasoning. If you do not, leave room to revise it.</p><p>Later, close the page and try recalling what you learned. That is a different step, covered in <a href=\"/learn/remember-quiz-answers-tomorrow/\">our guide to remembering quiz answers</a>. Neither exercise is a promise of a particular result or a proven benefit from playing BrainiLab.</p>",
+      "title": "Give yourself one question to look out for"
+    }
+  ],
   "updatedAt": "2026-09-30T17:19:01.76865+00:00",
+  "description": "Guessing before reading can sometimes help you learn. Try a short question, then see what a pretesting study found—and what it did not.",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "authorId": "biel-sarda"
 }

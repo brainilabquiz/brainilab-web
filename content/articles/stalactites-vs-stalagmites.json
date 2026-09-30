@@ -1,73 +1,73 @@
 {
-  "slug": "stalactites-vs-stalagmites",
-  "topic": "Science & nature",
-  "title": "Stalactites and stalagmites: what’s the difference?",
-  "description": "One hangs from the ceiling; the other grows from the floor. Here’s how to tell them apart and remember their names.",
-  "game": {
-    "name": "Science Quiz",
-    "url": "/science/science-quiz/"
-  },
   "hub": {
-    "name": "Science",
-    "url": "/science/"
+    "url": "/science/",
+    "name": "Science"
   },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "stalactites-vs-stalagmites",
+  "cover": {
+    "alt": "A pointed stalactite above a rounded stalagmite in a limestone cave",
+    "src": "/assets/images/learn/stalactites-vs-stalagmites.webp",
+    "small": "/assets/images/learn/stalactites-vs-stalagmites-small.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/stalactites-vs-stalagmites-thumb.webp"
+  },
+  "order": 18,
+  "title": "Stalactites and stalagmites: what’s the difference?",
+  "topic": "Science & nature",
+  "status": "published",
   "related": [
     "why-octopuses-have-three-hearts",
     "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "url": "https://www.nps.gov/cuga/planyourvisit/gap-cave-1.htm",
+      "name": "National Park Service — Gap Cave and protecting cave formations"
+    },
+    {
+      "url": "https://www.nps.gov/subjects/caves/speleothems.htm",
+      "name": "National Park Service — Speleothems"
+    },
+    {
+      "url": "https://www.usgs.gov/media/audio/unseen-world-beneath-our-feet-caves-sinkholes-and-springs",
+      "name": "USGS — An Unseen World Beneath Our Feet"
+    }
   ],
   "practice": "Explore more of the natural world in Science Quiz.",
   "sections": [
     {
       "id": "look-up",
-      "title": "Ceiling or floor?",
-      "html": "<p><strong>Stalactites hang from a cave ceiling. Stalagmites grow up from the floor.</strong> If the two meet, they form a column.</p><p>The names are easy to confuse, so start by looking at where the formation is attached. That is a better guide than whether it looks long, round or pointed.</p>"
+      "html": "<p><strong>Stalactites hang from a cave ceiling. Stalagmites grow up from the floor.</strong> If the two meet, they form a column.</p><p>The names are easy to confuse, so start by looking at where the formation is attached. That is a better guide than whether it looks long, round or pointed.</p>",
+      "title": "Ceiling or floor?"
     },
     {
       "id": "remember",
-      "title": "A way to remember the names",
-      "html": "<p>Think of the <strong>c in stalactite for ceiling</strong> and the <strong>g in stalagmite for ground</strong>. It is a spelling aid rather than the origin of the words, but it can help when you need to recall them quickly.</p><p>Try sketching a cave with one formation hanging down and another growing up. Label the ceiling and ground, then add the two names.</p>"
+      "html": "<p>Think of the <strong>c in stalactite for ceiling</strong> and the <strong>g in stalagmite for ground</strong>. It is a spelling aid rather than the origin of the words, but it can help when you need to recall them quickly.</p><p>Try sketching a cave with one formation hanging down and another growing up. Label the ceiling and ground, then add the two names.</p>",
+      "title": "A way to remember the names"
     },
     {
       "id": "one-drip",
-      "title": "How dripping water builds rock",
-      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. As the water loses carbon dioxide in the cave, calcite can be left behind. Over time, deposits build on the ceiling and beneath the drips on the floor.</p><p>A thin, hollow stalactite is called a soda straw. Caves also contain curtains, flowstone and many other formations, so not every shape will be a stalactite or stalagmite.</p>"
+      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. As the water loses carbon dioxide in the cave, calcite can be left behind. Over time, deposits build on the ceiling and beneath the drips on the floor.</p><p>A thin, hollow stalactite is called a soda straw. Caves also contain curtains, flowstone and many other formations, so not every shape will be a stalactite or stalagmite.</p>",
+      "title": "How dripping water builds rock"
     },
     {
       "id": "not-a-clock",
-      "title": "Why size does not tell you the age",
-      "html": "<p>Growth depends on water supply, chemistry and other conditions. A formation’s length alone cannot give you a reliable age.</p><p>On a cave visit, stay on the permitted route and avoid touching formations. They can be fragile, and oils from hands can affect further mineral deposits.</p>"
+      "html": "<p>Growth depends on water supply, chemistry and other conditions. A formation’s length alone cannot give you a reliable age.</p><p>On a cave visit, stay on the permitted route and avoid touching formations. They can be fragile, and oils from hands can affect further mineral deposits.</p>",
+      "title": "Why size does not tell you the age"
     },
     {
       "id": "quick-check",
-      "title": "Name the three formations",
-      "html": "<p>Picture a point hanging from the roof, a mound rising from the floor and a pillar joining the two.</p><details class=\"practice-answer\"><summary>Show the names</summary><ul><li>Hanging from the roof: <strong>stalactite</strong>.</li><li>Rising from the floor: <strong>stalagmite</strong>.</li><li>Joining floor and ceiling: <strong>column</strong>.</li></ul></details>"
+      "html": "<p>Picture a point hanging from the roof, a mound rising from the floor and a pillar joining the two.</p><details class=\"practice-answer\"><summary>Show the names</summary><ul><li>Hanging from the roof: <strong>stalactite</strong>.</li><li>Rising from the floor: <strong>stalagmite</strong>.</li><li>Joining floor and ceiling: <strong>column</strong>.</li></ul></details>",
+      "title": "Name the three formations"
     }
   ],
-  "sources": [
-    {
-      "name": "National Park Service — Gap Cave and protecting cave formations",
-      "url": "https://www.nps.gov/cuga/planyourvisit/gap-cave-1.htm"
-    },
-    {
-      "name": "National Park Service — Speleothems",
-      "url": "https://www.nps.gov/subjects/caves/speleothems.htm"
-    },
-    {
-      "name": "USGS — An Unseen World Beneath Our Feet",
-      "url": "https://www.usgs.gov/media/audio/unseen-world-beneath-our-feet-caves-sinkholes-and-springs"
-    }
-  ],
-  "status": "published",
-  "order": 18,
-  "publishedAt": "2026-09-29T06:01:00Z",
-  "cover": {
-    "src": "/assets/images/learn/stalactites-vs-stalagmites.webp",
-    "small": "/assets/images/learn/stalactites-vs-stalagmites-small.webp",
-    "thumbnail": "/assets/images/learn/stalactites-vs-stalagmites-thumb.webp",
-    "alt": "A pointed stalactite above a rounded stalagmite in a limestone cave",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 50
-  },
   "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "One hangs from the ceiling; the other grows from the floor. Here’s how to tell them apart and remember their names.",
+  "publishedAt": "2026-09-29T06:01:00Z",
   "authorId": "biel-sarda"
 }

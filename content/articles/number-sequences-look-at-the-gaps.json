@@ -1,61 +1,61 @@
 {
-  "slug": "number-sequences-look-at-the-gaps",
-  "status": "published",
-  "topic": "Numbers & logic",
-  "title": "How to spot patterns in number sequences",
-  "description": "Look at the gaps, try multiplication and check alternate terms. Four approaches to finding what comes next.",
-  "game": {
-    "name": "Sequence",
-    "url": "/games/sequence/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
-  "sections": [
-    {
-      "id": "between-numbers",
-      "title": "Look at the difference",
-      "html": "<p>What comes next in <strong>4, 7, 10, 13</strong>? Each number is three more than the last, so the pattern suggests 16.</p><p>Writing +3, +3, +3 underneath the sequence makes the rule easy to see. Subtraction is often a useful first step, even when the numbers look less familiar.</p>"
-    },
-    {
-      "id": "growing-gaps",
-      "title": "Check changing gaps and multiplication",
-      "html": "<p>In <strong>2, 5, 10, 17</strong>, the gaps are +3, +5 and +7. Continue with +9 and the next number is 26.</p><p>Now look at <strong>3, 6, 12, 24</strong>. You could study the growing gaps, but there is a simpler description: each number doubles. That gives 48 next.</p><p>Check the rule against the whole sequence before settling on it.</p>"
-    },
-    {
-      "id": "two-lines",
-      "title": "Read every other number",
-      "html": "<p>For <strong>2, 10, 4, 20, 6, 30</strong>, try splitting the sequence into two rows:</p><ul><li>First, third and fifth terms: 2, 4, 6.</li><li>Second, fourth and sixth terms: 10, 20, 30.</li></ul><p>One row increases by two, the other by ten. Continuing those patterns gives 8 as the next term.</p><details class=\"practice-answer\"><summary>Continue 5, 9, 15, 23, using gaps that increase by two.</summary><p><strong>33.</strong> The gaps are 4, 6 and 8, so the next gap is 10: 23 + 10 = 33.</p></details>"
-    },
-    {
-      "id": "not-proof",
-      "title": "Could another answer work?",
-      "html": "<p>A short list of numbers can fit more than one rule. Unless the question specifies the pattern, the next number is not always mathematically unique.</p><p>In a puzzle, look for a simple rule that fits every term and the answer choices. Try a constant difference, multiplication, changing gaps or alternate terms. If your explanation needs a new exception at each step, it is worth trying another approach.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "University of Cambridge NRICH — Patterns, sequences and structure",
-      "url": "https://nrich.maths.org/tags/patterns-sequences-and-structure"
-    },
-    {
-      "name": "BrainiLab — Sequence rules and play",
-      "url": "/games/sequence/"
-    }
-  ],
+  "game": {
+    "url": "/games/sequence/",
+    "name": "Sequence"
+  },
+  "slug": "number-sequences-look-at-the-gaps",
+  "cover": {
+    "alt": "Pebbles arranged in growing groups",
+    "src": "/assets/images/learn/number-sequences-look-at-the-gaps.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 9,
+  "title": "How to spot patterns in number sequences",
+  "topic": "Numbers & logic",
+  "status": "published",
   "related": [
     "mental-percentages-without-a-calculator",
     "connections-puzzles-find-the-hidden-link"
   ],
+  "sources": [
+    {
+      "url": "https://nrich.maths.org/tags/patterns-sequences-and-structure",
+      "name": "University of Cambridge NRICH — Patterns, sequences and structure"
+    },
+    {
+      "url": "/games/sequence/",
+      "name": "BrainiLab — Sequence rules and play"
+    }
+  ],
   "practice": "Try these approaches in a round of Sequence.",
-  "cover": {
-    "src": "/assets/images/learn/number-sequences-look-at-the-gaps.webp",
-    "alt": "Pebbles arranged in growing groups",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 9,
-  "publishedAt": "2026-09-23T19:51:37Z",
+  "sections": [
+    {
+      "id": "between-numbers",
+      "html": "<p>What comes next in <strong>4, 7, 10, 13</strong>? Each number is three more than the last, so the pattern suggests 16.</p><p>Writing +3, +3, +3 underneath the sequence makes the rule easy to see. Subtraction is often a useful first step, even when the numbers look less familiar.</p>",
+      "title": "Look at the difference"
+    },
+    {
+      "id": "growing-gaps",
+      "html": "<p>In <strong>2, 5, 10, 17</strong>, the gaps are +3, +5 and +7. Continue with +9 and the next number is 26.</p><p>Now look at <strong>3, 6, 12, 24</strong>. You could study the growing gaps, but there is a simpler description: each number doubles. That gives 48 next.</p><p>Check the rule against the whole sequence before settling on it.</p>",
+      "title": "Check changing gaps and multiplication"
+    },
+    {
+      "id": "two-lines",
+      "html": "<p>For <strong>2, 10, 4, 20, 6, 30</strong>, try splitting the sequence into two rows:</p><ul><li>First, third and fifth terms: 2, 4, 6.</li><li>Second, fourth and sixth terms: 10, 20, 30.</li></ul><p>One row increases by two, the other by ten. Continuing those patterns gives 8 as the next term.</p><details class=\"practice-answer\"><summary>Continue 5, 9, 15, 23, using gaps that increase by two.</summary><p><strong>33.</strong> The gaps are 4, 6 and 8, so the next gap is 10: 23 + 10 = 33.</p></details>",
+      "title": "Read every other number"
+    },
+    {
+      "id": "not-proof",
+      "html": "<p>A short list of numbers can fit more than one rule. Unless the question specifies the pattern, the next number is not always mathematically unique.</p><p>In a puzzle, look for a simple rule that fits every term and the answer choices. Try a constant difference, multiplication, changing gaps or alternate terms. If your explanation needs a new exception at each step, it is worth trying another approach.</p>",
+      "title": "Could another answer work?"
+    }
+  ],
   "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "Look at the gaps, try multiplication and check alternate terms. Four approaches to finding what comes next.",
+  "publishedAt": "2026-09-23T19:51:37Z",
   "authorId": "biel-sarda"
 }

@@ -1,52 +1,52 @@
 {
-  "slug": "why-greenland-looks-so-big",
-  "status": "published",
-  "topic": "Geography",
-  "title": "Why does Greenland look so big on a map?",
-  "description": "On a Mercator map, places near the poles look larger than they really are relative to the rest of the world. Here’s why.",
-  "game": {
-    "name": "World Capitals Quiz",
-    "url": "/geography/world-capitals-quiz/"
-  },
   "hub": {
-    "name": "Geography",
-    "url": "/geography/"
+    "url": "/geography/",
+    "name": "Geography"
   },
-  "sections": [
-    {
-      "id": "the-map-trick",
-      "title": "A flat map has to stretch something",
-      "html": "<p>Greenland can look enormous on a wall map. On a globe, its size relative to places near the equator is much less dramatic.</p><p>The difference comes from the map projection: the method used to show Earth’s curved surface on a flat page. A <strong>Mercator projection</strong> stretches areas more and more towards the poles. Greenland sits far to the north, so its size is exaggerated.</p><p>This does not happen in the same way on every rectangular map. Different projections preserve different features, such as area, local shape or direction.</p>"
-    },
-    {
-      "id": "choose-the-tool",
-      "title": "Which map should you use?",
-      "html": "<p>For comparing sizes, use a globe or an <strong>equal-area map</strong>. Equal-area projections keep relative areas correct, although shapes may look unfamiliar.</p><p>Other projections are useful for other purposes. As the US Geological Survey explains, there is no single best projection for every task. A map that helps with navigation may be a poor choice for comparing how much land two places cover.</p>"
-    },
-    {
-      "id": "try-a-comparison",
-      "title": "Compare a globe with a Mercator map",
-      "html": "<p>Find Greenland and a place near the equator on both. Compare their apparent sizes. Which looks larger on the flat map than it does on the globe?</p><p>Now try an equal-area world map. The outlines may look different, but the size comparison should be easier to trust.</p><details class=\"practice-answer\"><summary>Does an equal-area map also preserve every country’s shape?</summary><p><strong>No.</strong> Keeping relative areas correct and preserving local shapes are different goals. A flat world map cannot preserve everything at once.</p></details>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "US Geological Survey — Map projections",
-      "url": "https://www.usgs.gov/publications/map-projections"
-    }
-  ],
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals Quiz"
+  },
+  "slug": "why-greenland-looks-so-big",
+  "cover": {
+    "alt": "A globe, folded map and compass on a desk",
+    "src": "/assets/images/learn/why-greenland-looks-so-big.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab."
+  },
+  "order": 6,
+  "title": "Why does Greenland look so big on a map?",
+  "topic": "Geography",
+  "status": "published",
   "related": [
     "why-time-zones-get-messy",
     "how-to-learn-world-flags"
   ],
+  "sources": [
+    {
+      "url": "https://www.usgs.gov/publications/map-projections",
+      "name": "US Geological Survey — Map projections"
+    }
+  ],
   "practice": "Explore World Capitals, then find an unfamiliar place on a globe.",
-  "cover": {
-    "src": "/assets/images/learn/why-greenland-looks-so-big.webp",
-    "alt": "A globe, folded map and compass on a desk",
-    "credit": "AI-generated cover illustration created for BrainiLab."
-  },
-  "order": 6,
-  "publishedAt": "2026-09-23T19:51:37Z",
+  "sections": [
+    {
+      "id": "the-map-trick",
+      "html": "<p>Greenland can look enormous on a wall map. On a globe, its size relative to places near the equator is much less dramatic.</p><p>The difference comes from the map projection: the method used to show Earth’s curved surface on a flat page. A <strong>Mercator projection</strong> stretches areas more and more towards the poles. Greenland sits far to the north, so its size is exaggerated.</p><p>This does not happen in the same way on every rectangular map. Different projections preserve different features, such as area, local shape or direction.</p>",
+      "title": "A flat map has to stretch something"
+    },
+    {
+      "id": "choose-the-tool",
+      "html": "<p>For comparing sizes, use a globe or an <strong>equal-area map</strong>. Equal-area projections keep relative areas correct, although shapes may look unfamiliar.</p><p>Other projections are useful for other purposes. As the US Geological Survey explains, there is no single best projection for every task. A map that helps with navigation may be a poor choice for comparing how much land two places cover.</p>",
+      "title": "Which map should you use?"
+    },
+    {
+      "id": "try-a-comparison",
+      "html": "<p>Find Greenland and a place near the equator on both. Compare their apparent sizes. Which looks larger on the flat map than it does on the globe?</p><p>Now try an equal-area world map. The outlines may look different, but the size comparison should be easier to trust.</p><details class=\"practice-answer\"><summary>Does an equal-area map also preserve every country’s shape?</summary><p><strong>No.</strong> Keeping relative areas correct and preserving local shapes are different goals. A flat world map cannot preserve everything at once.</p></details>",
+      "title": "Compare a globe with a Mercator map"
+    }
+  ],
   "updatedAt": "2026-09-29T20:07:50Z",
+  "description": "On a Mercator map, places near the poles look larger than they really are relative to the rest of the world. Here’s why.",
+  "publishedAt": "2026-09-23T19:51:37Z",
   "authorId": "biel-sarda"
 }

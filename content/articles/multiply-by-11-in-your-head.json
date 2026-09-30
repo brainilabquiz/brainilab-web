@@ -63,9 +63,10 @@
       "html": "<div class=\"table-scroll\"><table><caption>Follow the carry</caption><thead><tr><th scope=\"col\">Example</th><th scope=\"col\">Ten copies plus one</th><th scope=\"col\">Result</th></tr></thead><tbody><tr><td>34 × 11</td><td>340 + 34</td><td>374</td></tr><tr><td>78 × 11</td><td>780 + 78</td><td>858</td></tr><tr><td>99 × 11</td><td>990 + 99</td><td>1089</td></tr></tbody></table></div>"
     }
   ],
-  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
   "description": "See how the shortcut works with 34 × 11, what changes with 78 × 11, and when you need to carry a digit.",
   "publishedAt": "2026-09-29T06:02:00Z",
+  "authorId": "biel-sarda",
   "quiz": {
     "version": "initial-20260930",
     "questions": [
@@ -103,6 +104,5 @@
         "explanation": "The middle sum is 18. Carrying one into nine hundreds makes ten hundreds, giving 1089."
       }
     ]
-  },
-  "authorId": "biel-sarda"
+  }
 }
