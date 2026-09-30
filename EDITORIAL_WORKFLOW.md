@@ -39,4 +39,6 @@ Keep original explanations and verified sources, vary titles and structure, and 
 - `editor/admin-articles.js`: admin editor source; build produces its browser bundle.
 - `content/articles/*.json`: initial reviewed seed and static build fixtures. Editing these files does not edit the live database. The generator still supplies the shared shell; the Worker owns public article routes.
 
-Build with `npm run build`. Add new public assets to Git first. Run `tools/test-learn-editor.mjs` with JSDOM_MODULE pointing to jsdom, plus `tools/check-build.py` and `tools/check-editorial.py`. Transactional database checks cover drafts, public isolation, conflicts, publish/unpublish, history and unauthorized access; test writes are rolled back.
+Build with `npm run build`. Add new public assets to Git first. Run `tools/test-learn-editor.mjs` and `tools/test-learn-library.mjs` with JSDOM_MODULE pointing to jsdom, plus `tools/check-build.py` and `tools/check-editorial.py`. Transactional database checks cover drafts, public isolation, conflicts, publish/unpublish, history and unauthorized access; test writes are rolled back.
+
+Research queue: consult `content/editorial-research-2026-09-30.md` alongside the cluster plan. These source-backed briefs prioritise thin categories but are not approved drafts; resolve the recorded source conflicts and check current product behaviour before writing.
