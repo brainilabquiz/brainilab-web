@@ -150,3 +150,7 @@ if '<!-- learn-preview:start -->' in home:
     home = re.sub(r'<!-- learn-preview:start -->.*?<!-- learn-preview:end -->', lambda _: preview, home, flags=re.S)
     (ROOT/'index.html').write_text(home, encoding='utf-8')
 print(f'Built Learn library and {len(articles)} published articles; drafts excluded.')
+
+# Reuse the production renderer for static previews, paths and author credits.
+import subprocess
+subprocess.run(['node',str(ROOT/'tools/build-learning-static.mjs')],cwd=ROOT,check=True)

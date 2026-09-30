@@ -139,9 +139,6 @@
     <loc>https://brainilabgames.com/learn/why-canberra-is-australias-capital/</loc>
   </url>
   <url>
-    <loc>https://brainilabgames.com/learn/why-the-moon-changes-shape/</loc>
-  </url>
-  <url>
     <loc>https://brainilabgames.com/learn/mental-percentages-without-a-calculator/</loc>
   </url>
   <url>
@@ -175,9 +172,12 @@
     <loc>https://brainilabgames.com/learn/counting-seconds-after-lightning/</loc>
   </url>
   <url>
+    <loc>https://brainilabgames.com/learn/why-the-moon-changes-shape/</loc>
+  </url>
+  <url>
     <loc>https://brainilabgames.com/learn/how-to-learn-world-flags/</loc>
   </url>
   <url>
     <loc>https://brainilabgames.com/learn/daily-or-anytime/</loc>
   </url>
-</urlset>
+<url><loc>https://brainilabgames.com/learn/paths/</loc></url><url><loc>https://brainilabgames.com/learn/paths/calendars-explained/</loc></url><url><loc>https://brainilabgames.com/learn/paths/mental-maths-foundations/</loc></url><url><loc>https://brainilabgames.com/learn/paths/sun-moon-and-time/</loc></url></urlset>

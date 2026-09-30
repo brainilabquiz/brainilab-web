@@ -1,56 +1,100 @@
 {
-  "slug": "mental-percentages-without-a-calculator",
-  "status": "published",
-  "topic": "Numbers & logic",
-  "title": "How to work out percentages in your head",
-  "description": "Find 10%, 5% and 1%, then combine them to solve less familiar percentages. Try a few examples at your own pace.",
-  "game": {
-    "name": "Math Rush",
-    "url": "/games/math-rush/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
-  "sections": [
-    {
-      "id": "ten-first",
-      "title": "Start with 10%",
-      "html": "<p>To find 15% of 80, start with a simpler number: 10%. Divide 80 by ten to get 8. Half of that gives you 5%, which is 4. Add them together: <strong>15% of 80 is 12</strong>.</p><p>Finding 10% always means dividing by ten. Dropping a zero works for 80, but you will need the division for numbers such as 37: 10% of 37 is 3.7.</p>"
-    },
-    {
-      "id": "useful-pieces",
-      "title": "Use halves, quarters and hundredths",
-      "html": "<p>A few familiar percentages give you plenty to work with:</p><ul><li><strong>50% is half:</strong> 50% of 46 is 23.</li><li><strong>25% is a quarter:</strong> 25% of 80 is 20.</li><li><strong>1% is a hundredth:</strong> 1% of 250 is 2.5.</li></ul><p>For 12% of 250, combine 10% and 2%. You get 25 + 5 = <strong>30</strong>. Choose whichever pieces make the calculation easiest.</p>"
-    },
-    {
-      "id": "of-what",
-      "title": "Check what the percentage refers to",
-      "html": "<p>A percentage depends on the starting amount. Reduce 100 by 20% and you have 80. Increase that 80 by 20% and you add 16, taking it to 96.</p><p>Why does it not return to 100? The second 20% is calculated from 80, a smaller amount. When a question involves more than one change, write down the amount you are using at each step.</p><details class=\"practice-answer\"><summary>What is 15% of 60?</summary><p><strong>9.</strong> Ten percent is 6 and five percent is 3. Add them together.</p></details>"
-    },
-    {
-      "id": "practice-pair",
-      "title": "Try the same method on a new number",
-      "html": "<p>Now find 15% of 120. Ten percent is 12; five percent is 6. The total is <strong>18</strong>, twice the answer for 60, as you would expect.</p><p>Take your time until the pieces feel familiar. Math Rush offers timed arithmetic practice when you fancy a faster challenge, though it is not a dedicated percentage quiz.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Prealgebra: percent concepts",
-      "url": "https://openstax.org/books/prealgebra/pages/6-key-concepts"
-    }
-  ],
-  "related": [
-    "number-sequences-look-at-the-gaps",
-    "counting-seconds-after-lightning"
-  ],
-  "practice": "For more mental arithmetic, try a round of Math Rush.",
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "slug": "mental-percentages-without-a-calculator",
   "cover": {
     "alt": "Oranges and a balance scale at a market",
     "src": "/assets/images/learn/mental-percentages-without-a-calculator.webp",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 2,
+  "title": "How to work out percentages in your head",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "number-sequences-look-at-the-gaps",
+    "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra/pages/6-key-concepts",
+      "name": "OpenStax — Prealgebra: percent concepts"
+    }
+  ],
+  "practice": "For more mental arithmetic, try a round of Math Rush.",
+  "sections": [
+    {
+      "id": "ten-first",
+      "html": "<p>To find 15% of 80, start with a simpler number: 10%. Divide 80 by ten to get 8. Half of that gives you 5%, which is 4. Add them together: <strong>15% of 80 is 12</strong>.</p><p>Finding 10% always means dividing by ten. Dropping a zero works for 80, but you will need the division for numbers such as 37: 10% of 37 is 3.7.</p>",
+      "title": "Start with 10%"
+    },
+    {
+      "id": "useful-pieces",
+      "html": "<p>A few familiar percentages give you plenty to work with:</p><ul><li><strong>50% is half:</strong> 50% of 46 is 23.</li><li><strong>25% is a quarter:</strong> 25% of 80 is 20.</li><li><strong>1% is a hundredth:</strong> 1% of 250 is 2.5.</li></ul><p>For 12% of 250, combine 10% and 2%. You get 25 + 5 = <strong>30</strong>. Choose whichever pieces make the calculation easiest.</p>",
+      "title": "Use halves, quarters and hundredths"
+    },
+    {
+      "id": "of-what",
+      "html": "<p>A percentage depends on the starting amount. Reduce 100 by 20% and you have 80. Increase that 80 by 20% and you add 16, taking it to 96.</p><p>Why does it not return to 100? The second 20% is calculated from 80, a smaller amount. When a question involves more than one change, write down the amount you are using at each step.</p><details class=\"practice-answer\"><summary>What is 15% of 60?</summary><p><strong>9.</strong> Ten percent is 6 and five percent is 3. Add them together.</p></details>",
+      "title": "Check what the percentage refers to"
+    },
+    {
+      "id": "practice-pair",
+      "html": "<p>Now find 15% of 120. Ten percent is 12; five percent is 6. The total is <strong>18</strong>, twice the answer for 60, as you would expect.</p><p>Take your time until the pieces feel familiar. Math Rush offers timed arithmetic practice when you fancy a faster challenge, though it is not a dedicated percentage quiz.</p>",
+      "title": "Try the same method on a new number"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Useful shares of 80</caption><thead><tr><th scope=\"col\">Share</th><th scope=\"col\">Method</th><th scope=\"col\">Amount</th></tr></thead><tbody><tr><td>10%</td><td>80 ÷ 10</td><td>8</td></tr><tr><td>5%</td><td>Half of 10%</td><td>4</td></tr><tr><td>15%</td><td>10% + 5%</td><td>12</td></tr><tr><td>25%</td><td>80 ÷ 4</td><td>20</td></tr></tbody></table></div>"
+    }
+  ],
+  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "description": "Find 10%, 5% and 1%, then combine them to solve less familiar percentages. Try a few examples at your own pace.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "What is 10% of 80?",
+        "options": [
+          "0.8",
+          "8",
+          "10",
+          "18"
+        ],
+        "answer": 1,
+        "explanation": "Ten percent is one tenth. Divide 80 by 10 to get 8."
+      },
+      {
+        "prompt": "How can you build 15% from familiar percentages?",
+        "options": [
+          "10% − 5%",
+          "10% + 10%",
+          "5% ÷ 10%",
+          "10% + 5%"
+        ],
+        "answer": 3,
+        "explanation": "Fifteen percent is ten percent plus five percent of the same whole."
+      },
+      {
+        "prompt": "What is 25% of 80?",
+        "options": [
+          "20",
+          "25",
+          "40",
+          "60"
+        ],
+        "answer": 0,
+        "explanation": "25% is one quarter: 80 ÷ 4 = 20."
+      }
+    ]
+  },
+  "authorId": "biel-sarda"
 }

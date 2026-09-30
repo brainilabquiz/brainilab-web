@@ -1,63 +1,107 @@
 {
-  "slug": "why-britain-skipped-eleven-days-in-1752",
-  "topic": "History",
-  "title": "Why did Britain skip 11 days in 1752?",
-  "description": "In Britain, 2 September 1752 was followed by 14 September. The missing dates were a calendar correction, not eleven days of lost time.",
-  "sections": [
-    {
-      "id": "next-morning",
-      "title": "The next morning had an unexpected date",
-      "html": "<p>Imagine ending your day on <strong>2 September</strong> and waking up on <strong>14 September</strong>. In Britain in 1752, that was the official change of date. Nobody had slept through eleven extra nights.</p><p>The Calendar (New Style) Act directed that the day after 2 September would be numbered 14 September. The date labels from <strong>3 to 13 September</strong> were left out.</p><p>It is a neat distinction: time kept passing normally; the calendar’s way of naming the next day changed.</p>"
-    },
-    {
-      "id": "catching-up",
-      "title": "Why did the calendar need correcting?",
-      "html": "<p>Britain was changing from the Julian calendar to the Gregorian calendar. By then, the two systems were eleven days apart. Moving the date forward brought Britain into line with the Gregorian reckoning already used elsewhere.</p><p>Royal Museums Greenwich explains that the older Julian calendar used a simpler leap-year system. Small differences in the treatment of leap years add up over long periods. The Gregorian reform adjusted both the date and the rules used to keep the calendar on course.</p><p>That is also why <a href=\"/learn/why-2100-is-not-a-leap-year/\">2100 will not be a leap year</a> in the Gregorian calendar, even though 2000 was. The one-off jump and the ongoing leap-year rule solve different parts of the problem.</p>"
-    },
-    {
-      "id": "count-the-days",
-      "title": "Count labels and elapsed days separately",
-      "html": "<p>For a tiny version of that September, write:</p><p><strong>1 → 2 → 14 → 15 → 16</strong></p><p>Each arrow means the next day. The jump from 2 to 14 increases the printed number by twelve, but only one overnight transition.</p><p>Try this: a fictional traveller in Britain goes to bed on 2 September and sends a letter the following morning. What date should appear on the letter?</p><details class=\"practice-answer\"><summary>Show the date</summary><p><strong>14 September 1752.</strong> The omitted dates are 3 through 13, inclusive: eleven labels. Subtracting the printed dates would give the wrong impression of how much time had passed.</p></details>"
-    },
-    {
-      "id": "reading-old-dates",
-      "title": "One date needs a little context",
-      "html": "<p>The reform was not a worldwide switch made on the same morning. When you encounter an old date, its place and calendar system can matter as well as its day, month and year.</p><p>So “eleven days disappeared” works as a surprising headline, but the more accurate explanation is less mysterious: eleven dates were omitted from that calendar.</p><p>Dates have other small traps too. If 1900 and 1901 seem to belong in the same century, <a href=\"/learn/which-century-is-that-year/\">follow where the century boundary actually falls</a>.</p>"
-    }
-  ],
-  "game": {
-    "name": "History Quiz",
-    "url": "/history/history-quiz/"
-  },
   "hub": {
-    "name": "History",
-    "url": "/history/"
+    "url": "/history/",
+    "name": "History"
   },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "slug": "why-britain-skipped-eleven-days-in-1752",
+  "cover": {
+    "alt": "Staged September 1752 date cards numbered 2 and 14 beside an old book and a quill",
+    "src": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo.webp",
+    "small": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-small.webp",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-thumb.webp"
+  },
+  "order": 29,
+  "title": "Why did Britain skip 11 days in 1752?",
+  "topic": "History",
+  "status": "published",
   "related": [
     "why-2100-is-not-a-leap-year",
     "which-century-is-that-year"
   ],
-  "practice": "Try the History Quiz for more questions about how we describe the past.",
   "sources": [
     {
-      "name": "UK legislation — Calendar (New Style) Act 1750, sections 1–2",
-      "url": "https://www.legislation.gov.uk/apgb/Geo2/24/23"
+      "url": "https://www.legislation.gov.uk/apgb/Geo2/24/23",
+      "name": "UK legislation — Calendar (New Style) Act 1750, sections 1–2"
     },
     {
-      "name": "Royal Museums Greenwich — Leap years and the 1752 calendar change",
-      "url": "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds"
+      "url": "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds",
+      "name": "Royal Museums Greenwich — Leap years and the 1752 calendar change"
     }
   ],
-  "status": "published",
-  "order": 29,
+  "practice": "Try the History Quiz for more questions about how we describe the past.",
+  "sections": [
+    {
+      "id": "next-morning",
+      "html": "<p>Imagine ending your day on <strong>2 September</strong> and waking up on <strong>14 September</strong>. In Britain in 1752, that was the official change of date. Nobody had slept through eleven extra nights.</p><p>The Calendar (New Style) Act directed that the day after 2 September would be numbered 14 September. The date labels from <strong>3 to 13 September</strong> were left out.</p><p>It is a neat distinction: time kept passing normally; the calendar’s way of naming the next day changed.</p>",
+      "title": "The next morning had an unexpected date"
+    },
+    {
+      "id": "catching-up",
+      "html": "<p>Britain was changing from the Julian calendar to the Gregorian calendar. By then, the two systems were eleven days apart. Moving the date forward brought Britain into line with the Gregorian reckoning already used elsewhere.</p><p>Royal Museums Greenwich explains that the older Julian calendar used a simpler leap-year system. Small differences in the treatment of leap years add up over long periods. The Gregorian reform adjusted both the date and the rules used to keep the calendar on course.</p><p>That is also why <a href=\"/learn/why-2100-is-not-a-leap-year/\">2100 will not be a leap year</a> in the Gregorian calendar, even though 2000 was. The one-off jump and the ongoing leap-year rule solve different parts of the problem.</p>",
+      "title": "Why did the calendar need correcting?"
+    },
+    {
+      "id": "count-the-days",
+      "html": "<p>For a tiny version of that September, write:</p><p><strong>1 → 2 → 14 → 15 → 16</strong></p><p>Each arrow means the next day. The jump from 2 to 14 increases the printed number by twelve, but only one overnight transition.</p><p>Try this: a fictional traveller in Britain goes to bed on 2 September and sends a letter the following morning. What date should appear on the letter?</p><details class=\"practice-answer\"><summary>Show the date</summary><p><strong>14 September 1752.</strong> The omitted dates are 3 through 13, inclusive: eleven labels. Subtracting the printed dates would give the wrong impression of how much time had passed.</p></details>",
+      "title": "Count labels and elapsed days separately"
+    },
+    {
+      "id": "reading-old-dates",
+      "html": "<p>The reform was not a worldwide switch made on the same morning. When you encounter an old date, its place and calendar system can matter as well as its day, month and year.</p><p>So “eleven days disappeared” works as a surprising headline, but the more accurate explanation is less mysterious: eleven dates were omitted from that calendar.</p><p>Dates have other small traps too. If 1900 and 1901 seem to belong in the same century, <a href=\"/learn/which-century-is-that-year/\">follow where the century boundary actually falls</a>.</p>",
+      "title": "One date needs a little context"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Date labels around the reform</caption><thead><tr><th scope=\"col\">In Britain</th><th scope=\"col\">Date label</th><th scope=\"col\">What changed</th></tr></thead><tbody><tr><td>Before the jump</td><td>2 September 1752</td><td>Julian calendar date</td></tr><tr><td>The following day</td><td>14 September 1752</td><td>Gregorian calendar date</td></tr></tbody></table></div>"
+    }
+  ],
+  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "description": "In Britain, 2 September 1752 was followed by 14 September. The missing dates were a calendar correction, not eleven days of lost time.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "cover": {
-    "src": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo.webp",
-    "small": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-small.webp",
-    "thumbnail": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-thumb.webp",
-    "alt": "Staged September 1752 date cards numbered 2 and 14 beside an old book and a quill",
-    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
-    "position": 50
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "Which date followed 2 September 1752 in Britain’s calendar change?",
+        "options": [
+          "3 September",
+          "11 September",
+          "13 September",
+          "14 September"
+        ],
+        "answer": 3,
+        "explanation": "The calendar labels jumped from 2 September to 14 September; eleven date labels were omitted."
+      },
+      {
+        "prompt": "Did people physically lose eleven days of elapsed time?",
+        "options": [
+          "Yes, time stopped",
+          "No, the date labels changed",
+          "Only in London",
+          "Only at sea"
+        ],
+        "answer": 1,
+        "explanation": "Time continued normally. The reform changed how the next day was dated."
+      },
+      {
+        "prompt": "Why should you be careful comparing historical dates from different countries?",
+        "options": [
+          "Every country changed calendars on the same day",
+          "Old dates always mean modern Gregorian dates",
+          "Calendar adoption happened at different times",
+          "There were no calendars before 1752"
+        ],
+        "answer": 2,
+        "explanation": "Countries adopted calendar reforms at different times. Check which calendar a historical source uses."
+      }
+    ]
   },
-  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
+  "authorId": "biel-sarda"
 }

@@ -1,64 +1,108 @@
 {
-  "slug": "multiply-by-11-in-your-head",
-  "topic": "Numbers & logic",
-  "title": "A simple way to multiply by 11 in your head",
-  "description": "See how the shortcut works with 34 × 11, what changes with 78 × 11, and when you need to carry a digit.",
-  "game": {
-    "name": "Math Rush",
-    "url": "/games/math-rush/"
-  },
   "hub": {
-    "name": "All games",
-    "url": "/games/"
+    "url": "/games/",
+    "name": "All games"
   },
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "slug": "multiply-by-11-in-your-head",
+  "cover": {
+    "alt": "A notebook showing 34 times 11 equals 374 beside a pencil and number tiles",
+    "src": "/assets/images/learn/multiply-by-11-in-your-head.webp",
+    "small": "/assets/images/learn/multiply-by-11-in-your-head-small.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/multiply-by-11-in-your-head-thumb.webp"
+  },
+  "order": 19,
+  "title": "A simple way to multiply by 11 in your head",
+  "topic": "Numbers & logic",
+  "status": "published",
   "related": [
     "mental-percentages-without-a-calculator",
     "number-sequences-look-at-the-gaps"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/7-3-distributive-property",
+      "name": "OpenStax — The Distributive Property"
+    }
   ],
   "practice": "Try Math Rush when you feel ready for some quick arithmetic.",
   "sections": [
     {
       "id": "one-extra",
-      "title": "Multiply by ten, then add once more",
-      "html": "<p>Eleven is ten plus one, so multiplying by 11 means taking ten copies of a number and adding one more.</p><p>For <strong>34 × 11</strong>, calculate 340 + 34. The answer is <strong>374</strong>. This method works for any number and is easy to fall back on if a shortcut slips your mind.</p>"
+      "html": "<p>Eleven is ten plus one, so multiplying by 11 means taking ten copies of a number and adding one more.</p><p>For <strong>34 × 11</strong>, calculate 340 + 34. The answer is <strong>374</strong>. This method works for any number and is easy to fall back on if a shortcut slips your mind.</p>",
+      "title": "Multiply by ten, then add once more"
     },
     {
       "id": "middle-digit",
-      "title": "The shortcut for two-digit numbers",
-      "html": "<p>With 34, you can keep 3 and 4 on the outside and put their sum in the middle: 3, then 7, then 4. That gives 374.</p><p>To see why, line up 340 and 34 as a column addition. You have 3 hundreds, 4 + 3 tens and 4 units.</p><p>Try <strong>52 × 11</strong>: the middle sum is 5 + 2 = 7, giving <strong>572</strong>. Check it with 520 + 52.</p>"
+      "html": "<p>With 34, you can keep 3 and 4 on the outside and put their sum in the middle: 3, then 7, then 4. That gives 374.</p><p>To see why, line up 340 and 34 as a column addition. You have 3 hundreds, 4 + 3 tens and 4 units.</p><p>Try <strong>52 × 11</strong>: the middle sum is 5 + 2 = 7, giving <strong>572</strong>. Check it with 520 + 52.</p>",
+      "title": "The shortcut for two-digit numbers"
     },
     {
       "id": "carry",
-      "title": "What if the middle sum is ten or more?",
-      "html": "<p>For <strong>78 × 11</strong>, the middle sum is 7 + 8 = 15. That means 15 tens, so you need to carry:</p><ol><li>Keep 8 in the units place.</li><li>Put 5 in the tens place.</li><li>Add the carried 1 to the 7 hundreds.</li></ol><p>The answer is <strong>858</strong>. You can check it with 780 + 78 = 858.</p>"
+      "html": "<p>For <strong>78 × 11</strong>, the middle sum is 7 + 8 = 15. That means 15 tens, so you need to carry:</p><ol><li>Keep 8 in the units place.</li><li>Put 5 in the tens place.</li><li>Add the carried 1 to the 7 hundreds.</li></ol><p>The answer is <strong>858</strong>. You can check it with 780 + 78 = 858.</p>",
+      "title": "What if the middle sum is ten or more?"
     },
     {
       "id": "three-practice",
-      "title": "Have a go",
-      "html": "<p>Try <strong>23 × 11, 67 × 11 and 99 × 11</strong>. The last one needs a little extra care.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>23 × 11 = <strong>253</strong>.</li><li>67 × 11 = <strong>737</strong>.</li><li>99 × 11 = <strong>1089</strong>.</li></ul><p>For 99, the middle sum is 18. Carrying 1 into the 9 hundreds gives 10 hundreds, so the result has four digits.</p></details>"
+      "html": "<p>Try <strong>23 × 11, 67 × 11 and 99 × 11</strong>. The last one needs a little extra care.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>23 × 11 = <strong>253</strong>.</li><li>67 × 11 = <strong>737</strong>.</li><li>99 × 11 = <strong>1089</strong>.</li></ul><p>For 99, the middle sum is 18. Carrying 1 into the 9 hundreds gives 10 hundreds, so the result has four digits.</p></details>",
+      "title": "Have a go"
     },
     {
       "id": "choose-method",
-      "title": "Use the longer method when it helps",
-      "html": "<p>For a larger number such as 126, multiplying by ten and adding the original number is still straightforward: <strong>1260 + 126 = 1386</strong>. The two-digit shortcut needs adapting for longer numbers.</p><p>The same idea works in reverse for multiplication by 9: take ten times the number and subtract one copy. For example, 34 × 9 = 340 − 34 = 306.</p>"
-    }
-  ],
-  "sources": [
+      "html": "<p>For a larger number such as 126, multiplying by ten and adding the original number is still straightforward: <strong>1260 + 126 = 1386</strong>. The two-digit shortcut needs adapting for longer numbers.</p><p>The same idea works in reverse for multiplication by 9: take ten times the number and subtract one copy. For example, 34 × 9 = 340 − 34 = 306.</p>",
+      "title": "Use the longer method when it helps"
+    },
     {
-      "name": "OpenStax — The Distributive Property",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/7-3-distributive-property"
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Follow the carry</caption><thead><tr><th scope=\"col\">Example</th><th scope=\"col\">Ten copies plus one</th><th scope=\"col\">Result</th></tr></thead><tbody><tr><td>34 × 11</td><td>340 + 34</td><td>374</td></tr><tr><td>78 × 11</td><td>780 + 78</td><td>858</td></tr><tr><td>99 × 11</td><td>990 + 99</td><td>1089</td></tr></tbody></table></div>"
     }
   ],
-  "status": "published",
-  "order": 19,
+  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "description": "See how the shortcut works with 34 × 11, what changes with 78 × 11, and when you need to carry a digit.",
   "publishedAt": "2026-09-29T06:02:00Z",
-  "cover": {
-    "src": "/assets/images/learn/multiply-by-11-in-your-head.webp",
-    "small": "/assets/images/learn/multiply-by-11-in-your-head-small.webp",
-    "thumbnail": "/assets/images/learn/multiply-by-11-in-your-head-thumb.webp",
-    "alt": "A notebook showing 34 times 11 equals 374 beside a pencil and number tiles",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 50
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "Which calculation always gives 34 × 11?",
+        "options": [
+          "340 + 34",
+          "340 + 11",
+          "34 + 11",
+          "340 − 34"
+        ],
+        "answer": 0,
+        "explanation": "Eleven copies are ten copies plus one more: 340 + 34 = 374."
+      },
+      {
+        "prompt": "What is 78 × 11?",
+        "options": [
+          "7158",
+          "758",
+          "858",
+          "788"
+        ],
+        "answer": 2,
+        "explanation": "7 + 8 gives 15 tens. Keep five tens and carry one hundred: 858."
+      },
+      {
+        "prompt": "Why does 99 × 11 have four digits?",
+        "options": [
+          "Multiplying by 11 always gives four digits",
+          "The carry makes ten hundreds",
+          "The two nines stay together",
+          "The middle sum is nine"
+        ],
+        "answer": 1,
+        "explanation": "The middle sum is 18. Carrying one into nine hundreds makes ten hundreds, giving 1089."
+      }
+    ]
   },
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "authorId": "biel-sarda"
 }

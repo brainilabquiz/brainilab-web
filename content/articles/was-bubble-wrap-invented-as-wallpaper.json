@@ -4,8 +4,14 @@
   "topic": "Everyday inventions",
   "title": "Was bubble wrap really invented as wallpaper?",
   "description": "Before it protected parcels, bubble wrap was meant to decorate walls. The familiar packing material began with a very different plan.",
-  "game": {"name": "General Knowledge", "url": "/general-knowledge/general-knowledge-quiz/"},
-  "hub": {"name": "General Knowledge", "url": "/general-knowledge/"},
+  "game": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/"
+  },
   "sections": [
     {
       "id": "wallpaper-first",
@@ -29,10 +35,19 @@
     }
   ],
   "sources": [
-    {"name": "Sealed Air — Our history", "url": "https://jobs.sealedair.com/content/Our-History/?locale=en_US"},
-    {"name": "Sealed Air — The origins of Bubble Wrap", "url": "https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day"}
+    {
+      "name": "Sealed Air — Our history",
+      "url": "https://jobs.sealedair.com/content/Our-History/?locale=en_US"
+    },
+    {
+      "name": "Sealed Air — The origins of Bubble Wrap",
+      "url": "https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day"
+    }
   ],
-  "related": ["why-canberra-is-australias-capital", "what-olympic-rings-mean"],
+  "related": [
+    "why-canberra-is-australias-capital",
+    "what-olympic-rings-mean"
+  ],
   "practice": "Fancy another unexpected fact? Try a round of General Knowledge.",
   "cover": {
     "src": "/assets/images/learn/was-bubble-wrap-invented-as-wallpaper.webp",
@@ -43,5 +58,6 @@
     "position": 50
   },
   "order": 21,
-  "publishedAt": "2026-09-29T20:20:36Z"
+  "publishedAt": "2026-09-29T20:20:36Z",
+  "authorId": "biel-sarda"
 }

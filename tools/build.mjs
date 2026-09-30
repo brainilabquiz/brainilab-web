@@ -7,6 +7,8 @@ import './check-site-integrity.mjs';
 
 const root=path.resolve('.');
 await build({entryPoints:['editor/admin-articles.js'],outfile:'assets/js/admin-articles.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
+await build({entryPoints:['editor/admin-learning.js'],outfile:'assets/js/admin-learning.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
+await build({entryPoints:['editor/learning-progress.js'],outfile:'assets/js/learning-paths.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const output=path.resolve(root,'dist');
 if(path.relative(root,output)!=='dist') throw new Error('Unsafe build output');
 const previous=await lstat(output).catch(error=>{if(error.code!=='ENOENT')throw error;return null;});
@@ -24,7 +26,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set(['assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['learn/feed.xml','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.

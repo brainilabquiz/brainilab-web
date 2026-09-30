@@ -1,56 +1,100 @@
 {
-  "slug": "which-century-is-that-year",
-  "status": "published",
-  "topic": "History",
-  "title": "Is 1900 in the 19th or 20th century?",
-  "description": "1900 belongs to the 19th century. Here’s why the years ending in 00 can be confusing, and how to work out any positive CE year.",
-  "game": {
-    "name": "History Quiz",
-    "url": "/history/history-quiz/"
-  },
   "hub": {
-    "name": "History",
-    "url": "/history/"
+    "url": "/history/",
+    "name": "History"
   },
-  "sections": [
-    {
-      "id": "boundary",
-      "title": "The last year of the 19th century",
-      "html": "<p><strong>1900 is in the 19th century.</strong> The 20th century began in 1901 and ended in 2000.</p><p>Under the conventional AD/CE numbering system, the first century runs from year 1 to year 100. The second starts at 101 and ends at 200. Following that pattern, the 19th century covers 1801–1900.</p><p>This is also why the 21st century began in 2001.</p>"
-    },
-    {
-      "id": "shelf",
-      "title": "Think of groups of 100 years",
-      "html": "<p>Imagine putting numbered year cards into boxes that hold 100 cards each. The first box takes 1 through 100. Card 101 goes in the second box.</p><p>Each box ends on a multiple of 100. A year such as 1900 finishes its century; 1901 begins the next.</p><p>“The 1900s” can mean 1900–1999, so it is not quite the same range as “the 20th century”.</p>"
-    },
-    {
-      "id": "shortcut",
-      "title": "A quick way to work it out",
-      "html": "<p>For a positive CE year that does not end in 00, take the hundreds part and add one. For example, 1789 belongs to the <strong>18th century</strong>.</p><p>If the year ends in 00, keep the hundreds number: 1800 is still in the <strong>18th century</strong>.</p><p>You can also subtract one from the year, divide by 100, discard the remainder and add one. For 2000: 1999 ÷ 100 gives 19 whole hundreds, then adding one gives 20.</p>"
-    },
-    {
-      "id": "reading-dates",
-      "title": "Try the boundary years",
-      "html": "<p>Which centuries contain <strong>1600, 1601 and 1999</strong>?</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>1600: <strong>16th century</strong>.</li><li>1601: <strong>17th century</strong>.</li><li>1999: <strong>20th century</strong>.</li></ul></details><p>The shortcut above is for positive CE years. BCE dates need a different approach to the numbering.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "US Naval Observatory — The 21st century and 3rd millennium",
-      "url": "https://aa.usno.navy.mil/faq/millennium"
-    }
-  ],
-  "related": [
-    "how-to-read-roman-numerals",
-    "remember-quiz-answers-tomorrow"
-  ],
-  "practice": "Try History Quiz and see which periods you recognise.",
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "slug": "which-century-is-that-year",
   "cover": {
     "alt": "An open history book and magnifying glass in a library",
     "src": "/assets/images/learn/which-century-is-that-year.webp",
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 4,
+  "title": "Is 1900 in the 19th or 20th century?",
+  "topic": "History",
+  "status": "published",
+  "related": [
+    "how-to-read-roman-numerals",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "sources": [
+    {
+      "url": "https://aa.usno.navy.mil/faq/millennium",
+      "name": "US Naval Observatory — The 21st century and 3rd millennium"
+    }
+  ],
+  "practice": "Try History Quiz and see which periods you recognise.",
+  "sections": [
+    {
+      "id": "boundary",
+      "html": "<p><strong>1900 is in the 19th century.</strong> The 20th century began in 1901 and ended in 2000.</p><p>Under the conventional AD/CE numbering system, the first century runs from year 1 to year 100. The second starts at 101 and ends at 200. Following that pattern, the 19th century covers 1801–1900.</p><p>This is also why the 21st century began in 2001.</p>",
+      "title": "The last year of the 19th century"
+    },
+    {
+      "id": "shelf",
+      "html": "<p>Imagine putting numbered year cards into boxes that hold 100 cards each. The first box takes 1 through 100. Card 101 goes in the second box.</p><p>Each box ends on a multiple of 100. A year such as 1900 finishes its century; 1901 begins the next.</p><p>“The 1900s” can mean 1900–1999, so it is not quite the same range as “the 20th century”.</p>",
+      "title": "Think of groups of 100 years"
+    },
+    {
+      "id": "shortcut",
+      "html": "<p>For a positive CE year that does not end in 00, take the hundreds part and add one. For example, 1789 belongs to the <strong>18th century</strong>.</p><p>If the year ends in 00, keep the hundreds number: 1800 is still in the <strong>18th century</strong>.</p><p>You can also subtract one from the year, divide by 100, discard the remainder and add one. For 2000: 1999 ÷ 100 gives 19 whole hundreds, then adding one gives 20.</p>",
+      "title": "A quick way to work it out"
+    },
+    {
+      "id": "reading-dates",
+      "html": "<p>Which centuries contain <strong>1600, 1601 and 1999</strong>?</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>1600: <strong>16th century</strong>.</li><li>1601: <strong>17th century</strong>.</li><li>1999: <strong>20th century</strong>.</li></ul></details><p>The shortcut above is for positive CE years. BCE dates need a different approach to the numbering.</p>",
+      "title": "Try the boundary years"
+    },
+    {
+      "id": "at-a-glance",
+      "title": "At a glance",
+      "html": "<div class=\"table-scroll\"><table><caption>Watch the boundary</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year CE</th><th scope=\"col\">Last year CE</th></tr></thead><tbody><tr><td>19th</td><td>1801</td><td>1900</td></tr><tr><td>20th</td><td>1901</td><td>2000</td></tr><tr><td>21st</td><td>2001</td><td>2100</td></tr></tbody></table></div>"
+    }
+  ],
+  "updatedAt": "2026-09-30T18:12:37.373691+00:00",
+  "description": "1900 belongs to the 19th century. Here’s why the years ending in 00 can be confusing, and how to work out any positive CE year.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "updatedAt": "2026-09-29T20:07:50Z"
+  "quiz": {
+    "version": "initial-20260930",
+    "questions": [
+      {
+        "prompt": "Which century contains the year 1900 CE?",
+        "options": [
+          "18th",
+          "19th",
+          "20th",
+          "21st"
+        ],
+        "answer": 1,
+        "explanation": "The 19th century runs from 1801 through 1900. The 20th starts in 1901."
+      },
+      {
+        "prompt": "When did the 21st century begin?",
+        "options": [
+          "1999",
+          "2000",
+          "2001",
+          "2010"
+        ],
+        "answer": 2,
+        "explanation": "In conventional CE numbering, the first century starts at year 1, so the 21st starts at 2001."
+      },
+      {
+        "prompt": "Which year begins a new century?",
+        "options": [
+          "1600",
+          "1700",
+          "2000",
+          "1601"
+        ],
+        "answer": 3,
+        "explanation": "1600 ends the 16th century. The next year, 1601, begins the 17th."
+      }
+    ]
+  },
+  "authorId": "biel-sarda"
 }

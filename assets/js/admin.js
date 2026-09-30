@@ -31,6 +31,8 @@ window.BrainiAdmin=(function(){
     questions:["Content","Question Bank"],
     content:["Content","Content Pools"],
     articles:["Content","Articles"],
+    paths:["Content","Learning paths"],
+    people:["Content","People & authors"],
     analytics:["Gameplay","Game Analytics"],
     users:["Accounts","Users"],
     rankings:["Competition","Rankings"],
@@ -146,6 +148,8 @@ window.BrainiAdmin=(function(){
     questions:"questions",
     content:"content",
     articles:"content",
+    paths:"content",
+    people:"content",
     analytics:"results",
     users:"users",
     rankings:"rankings",
@@ -395,6 +399,7 @@ window.BrainiAdmin=(function(){
   }
 
   function navigate(view,{replace=false}={}){
+    if(['paths','people'].includes(state.currentView)&&window.BrainiLearningAdmin){if(!window.BrainiLearningAdmin.canLeave())return;window.BrainiLearningAdmin.reset();}
     if(state.currentView==='articles' && window.BrainiArticles){if(!window.BrainiArticles.canLeave())return;window.BrainiArticles.reset();}
     if(state.rendering){state.pendingView={view,replace};return;}
     if(!titles[view] || !has(viewPermission[view])){
@@ -447,6 +452,8 @@ window.BrainiAdmin=(function(){
       daily:renderDaily,
       questions:renderQuestions,
       content:renderContent,
+      paths:()=>window.BrainiLearningAdmin.render({kind:'path',sb:state.sb,rpc,root:$('#adminContent'),toast}),
+      people:()=>window.BrainiLearningAdmin.render({kind:'author',sb:state.sb,rpc,root:$('#adminContent'),toast}),
       articles:()=>window.BrainiArticles.render({sb:state.sb,rpc,root:$('#adminContent'),toast}),
       analytics:renderAnalytics,
       users:renderUsers,

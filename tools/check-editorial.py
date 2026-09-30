@@ -34,7 +34,7 @@ for path in pages:
         assert dest.is_file(),(path,ref,'Missing destination')
         if url.fragment and dest.suffix=='.html':
             assert url.fragment in Page(dest.read_text(encoding='utf-8')).ids,(path,ref,'Missing anchor')
-assert 'content/articles/' in (ROOT/'.assetsignore').read_text(),'Draft sources must not be served'
+assert 'content/' in (ROOT/'.assetsignore').read_text(),'Draft sources must not be served'
 assert 'pnpm-lock.yaml' in (ROOT/'.assetsignore').read_text()
 nf=Page((ROOT/'404.html').read_text(encoding='utf-8'))
 assert all(ref.startswith('/') for ref in nf.refs if 'assets/' in ref)
@@ -43,6 +43,10 @@ with tempfile.TemporaryDirectory(prefix='brainilab-editorial-', dir=ROOT.parent)
     assert Path(tmp).resolve().is_relative_to(ROOT.parent.resolve())
     temp=Path(tmp)/'site'
     shutil.copytree(ROOT,temp,ignore=shutil.ignore_patterns('.git','node_modules','dist'))
+    # The shared production renderer uses the installed sanitizer. Reuse the
+    # pinned package in this isolated fixture instead of copying dependencies.
+    renderer=temp/'lib/learn-content.js'
+    renderer.write_text(renderer.read_text(encoding='utf-8').replace("from 'sanitize-html'", "from '"+(ROOT/'node_modules/sanitize-html/index.js').resolve().as_uri()+"'"),encoding='utf-8')
     src=temp/'content/articles/how-to-learn-world-flags.json'
     a=json.loads(src.read_text(encoding='utf-8'));a['status']='draft';src.write_text(json.dumps(a),encoding='utf-8')
     subprocess.run([sys.executable,str(temp/'tools/build-editorial.py')],check=True,capture_output=True)
