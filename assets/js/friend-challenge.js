@@ -12,7 +12,7 @@ window.BrainiFriendChallenge=(()=>{
     const primary=status.games?.[model.primary],name=window.BrainiDailyJourney?.META?.[model.primary]?.name||'Daily',score=Math.max(0,Math.min(2500,Number(primary?.points)||0));
     const url='https://brainilabgames.com/daily-quiz/?friend='+date;
     const text=(primary?.completed?`I got ${score.toLocaleString('en-GB')} points in today’s ${name} 😄\nThink you can beat me? Your turn!`:'Fancy a quick challenge? 😄\nTry today’s BrainiLab Daily with me — let’s see who gets the higher score.')+'\n\n'+url;
-    return {date,url,text,title:'Your turn! Try today’s Daily'};
+    return {date,url,text,title:'Your turn! Try today’s Daily',gameId:model.primary,gameName:name,score:primary?.completed?score:null};
   }
   const completed=Math.max(0,Math.min(4,Math.floor(Number(status.completedCount)||0)));
   const score=Math.max(0,Math.min(completed*2500,Math.floor(Number(status.brainScore)||0)));
@@ -39,7 +39,7 @@ window.BrainiFriendChallenge=(()=>{
  function ensureModal(){
   if(modal)return modal;
   modal=document.createElement('dialog');modal.className='friend-dialog';modal.setAttribute('aria-labelledby','friend-dialog-title');
-  modal.innerHTML='<div class="friend-dialog-head"><h2 id="friend-dialog-title">Challenge a friend</h2><button type="button" data-friend-close aria-label="Close invitation">×</button></div><p>Add their name or a line of your own.</p><label for="friend-invitation-text">Your message</label><textarea id="friend-invitation-text" rows="7" maxlength="3000"></textarea><div class="friend-dialog-actions"><button type="button" data-friend-copy>Copy invitation</button><button type="button" data-friend-share hidden>Share…</button></div><p class="friend-dialog-status" role="status" aria-live="polite"></p><p class="friend-dialog-note">The same Daily is available until 00:00 UTC.</p>';
+  modal.innerHTML='<div class="friend-dialog-head"><h2 id="friend-dialog-title">Challenge a friend</h2><button type="button" data-friend-close aria-label="Close invitation">×</button></div><div class="friend-preview" hidden></div><p>Add their name or a line of your own.</p><label for="friend-invitation-text">Your message</label><textarea id="friend-invitation-text" rows="7" maxlength="3000"></textarea><div class="friend-dialog-actions"><button type="button" data-friend-copy>Copy invitation</button><button type="button" data-friend-share hidden>Share…</button></div><p class="friend-dialog-status" role="status" aria-live="polite"></p><p class="friend-dialog-note">The same Daily is available until 00:00 UTC.</p>';
   document.body.append(modal);
   modal.querySelector('[data-friend-close]').onclick=()=>modal.close();
   modal.addEventListener('click',e=>{if(e.target===modal){const r=modal.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)modal.close();}});
@@ -49,6 +49,8 @@ window.BrainiFriendChallenge=(()=>{
  function open(status,trigger=document.activeElement){
   const invite=buildInvite(status);if(!invite)return false;
   const dialog=ensureModal(),copy=dialog.querySelector('[data-friend-copy]'),share=dialog.querySelector('[data-friend-share]'),feedback=dialog.querySelector('[role="status"]');
+  const preview=dialog.querySelector('.friend-preview');preview.replaceChildren();preview.hidden=!invite.gameId;
+  if(invite.gameId){const art=document.createElement('span'),detail=document.createElement('div'),game=document.createElement('strong'),target=document.createElement('span');art.className='friend-preview-art';art.innerHTML=window.BrainiIcons?.game?.(invite.gameId,'mini')||'';game.textContent=invite.gameName;target.textContent=invite.score===null?'Same game. Your turn.':invite.score.toLocaleString('en-GB')+' points to beat';detail.append(game,target);preview.append(art,detail);}
   const field=dialog.querySelector('textarea');field.value=invite.text;feedback.textContent='';copy.textContent='Copy invitation';copy.disabled=false;share.disabled=false;share.hidden=typeof navigator.share!=='function';opener=trigger;
   async function send(method){
    if(invite.date!==today()){feedback.textContent='That Daily has ended. Open today’s Daily to send a fresh invitation.';copy.disabled=true;share.disabled=true;return;}

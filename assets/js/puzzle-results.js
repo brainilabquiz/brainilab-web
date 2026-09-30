@@ -10,7 +10,7 @@ window.BrainiPuzzleResults = (() => {
       link.dataset.postAction = 'guide';
       link.href = guide.href;
       link.textContent = guide.title + ' →';
-      container.querySelector('.post-browse').before(link);
+      container.querySelector('.post-footer').before(link);
     }
     const reward = container.querySelector('[data-result-reward]');
     reward.setAttribute('role', 'status');
@@ -31,7 +31,9 @@ window.BrainiPuzzleResults = (() => {
         saved = true;
         Object.assign(result, confirmed);
         reward.dataset.resultReward = practice ? '' : confirmed.clientResultId || '';
-        reward.innerHTML = window.BrainiContinuity?.rewardMarkup(confirmed) || '';
+        reward.innerHTML = window.BrainiContinuity?.rewardMarkup({...confirmed,gameId,practice}) || '';
+        window.BrainiContinuity?.animateReward?.(reward);
+        window.BrainiPostGame.refresh();
         return confirmed;
       } catch {
         reward.textContent = 'Your score is shown above. Progress could not be saved; please check your connection.';

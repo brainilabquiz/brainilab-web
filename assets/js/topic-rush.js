@@ -403,58 +403,10 @@ window.BrainiTopicRush=(function(){
     }
 
     async function showResult(result){
-      if(timer) clearInterval(timer);
-
-      loading.hidden=true;
-      intro.hidden=true;
-      play.hidden=true;
-      resultBox.hidden=false;
-
-      const correct=Number(result.correct||0);
-      const target=Number(result.total||result.targetCount||content.targetCount||15);
-      const points=archiveMode?Number(result.score||0):BrainiData.dailyPointsForResult('topicrush',result);
-
-      resultBox.innerHTML=`
-        <div class="simple-game-result">
-          <div class="simple-result-kicker">${archiveMode?"Topic Rush · Complete ✓":`Daily #${content.dailyNumber} · Topic Rush · Complete ✓`}</div>
-          <h2>${correct} ${correct===1?"answer":"answers"}</h2>
-          <p>${points.toLocaleString()} ${archiveMode?"":"Daily "}points · ${escapeHtml(content.title)}</p>
-
-          ${archiveMode?`
-            
-            <div class="simple-result-actions archive-result-actions">
-              <a class="simple-result-play" href="${localHref("../../games/index.html#topic-rush")}">Play another Topic Rush</a>
-              <a class="simple-result-share archive-result-other" href="${localHref("../../games/index.html")}">Choose another game</a>
-            </div>
-          `:`
-            <div class="simple-result-actions">
-              <a class="simple-result-play" href="${localHref("../../daily-quiz/index.html")}">Continue Daily</a>
-              <button class="simple-result-share" type="button" data-tr-share>Share result</button>
-              <a class="simple-result-progress" href="${localHref("../../profile/index.html?section=progress")}">See my progress</a>
-            </div>
-            <div data-tr-daily-journey></div>
-          `}
-        </div>`;
-
-      resultBox.querySelector("[data-tr-share]")?.addEventListener(
-        "click",
-        ()=>BrainiShare.open("topicrush",result)
-      );
-
-      if(!archiveMode && window.BrainiDailyJourney){
-        const status=await BrainiDailyHub.resolve(content.dailyNumber);
-        const primary=resultBox.querySelector(".simple-result-play");
-
-        if(primary && status.completedCount===4){
-          primary.href="/games/";
-          primary.textContent="Play an anytime quiz";
-        }
-
-        await BrainiDailyJourney.render(
-          resultBox.querySelector("[data-tr-daily-journey]"),
-          {status,currentGame:"topicrush"}
-        );
-      }
+      if(timer)clearInterval(timer);loading.hidden=true;intro.hidden=true;play.hidden=true;resultBox.hidden=false;
+      const options={gameId:'topicrush',name:'Topic Rush',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},timed:true,scoreLabel:'answers found',summary:content.title,next:{href:'/games/',label:'Find another game'}};
+      BrainiPostGame.mount(resultBox,options);
+      if(!archiveMode){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
     }
 
     startBtn.addEventListener("click",start);
