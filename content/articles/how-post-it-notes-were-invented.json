@@ -26,23 +26,42 @@
       "html": "<p>Picture two jobs: fixing a loose chair leg and leaving a reminder on a page. A permanent bond makes sense for one. For the other, being able to remove the message is part of the point.</p><p>Try explaining the invention in three steps: <strong>a marker that slips → a grip that releases → a note you can move</strong>. Which step connects the laboratory discovery to an everyday problem?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>The grip that releases.</strong> Fry needed enough hold to keep his bookmark in place, while still being able to move it.</p></details><p>For another object that found an unexpected purpose, discover <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">why bubble wrap began as wallpaper</a>.</p>"
     }
   ],
-  "game": {"name": "General Knowledge", "url": "/general-knowledge/general-knowledge-quiz/"},
-  "hub": {"name": "General Knowledge", "url": "/general-knowledge/"},
-  "related": ["was-bubble-wrap-invented-as-wallpaper", "remember-quiz-answers-tomorrow"],
+  "game": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/"
+  },
+  "related": [
+    "was-bubble-wrap-invented-as-wallpaper",
+    "remember-quiz-answers-tomorrow"
+  ],
   "practice": "Curious about the stories behind familiar things? Try a mixed round of General Knowledge.",
   "sources": [
-    {"name": "3M — How Silver and Fry found a use for a removable adhesive", "url": "https://www.3m.co.uk/3M/en_GB/consumer-uk/stories/full-story/?storyid=1cb531b8-6506-4475-936c-bb79107502d6"},
-    {"name": "National Inventors Hall of Fame — Spencer Silver", "url": "https://www.invent.org/inductees/spencer-silver"},
-    {"name": "National Inventors Hall of Fame — How Art Fry co-invented Post-it Notes", "url": "https://www.invent.org/blog/inventors/art-fry-post-it-notes"}
+    {
+      "name": "3M — How Silver and Fry found a use for a removable adhesive",
+      "url": "https://www.3m.co.uk/3M/en_GB/consumer-uk/stories/full-story/?storyid=1cb531b8-6506-4475-936c-bb79107502d6"
+    },
+    {
+      "name": "National Inventors Hall of Fame — Spencer Silver",
+      "url": "https://www.invent.org/inductees/spencer-silver"
+    },
+    {
+      "name": "National Inventors Hall of Fame — How Art Fry co-invented Post-it Notes",
+      "url": "https://www.invent.org/blog/inventors/art-fry-post-it-notes"
+    }
   ],
   "order": 25,
-  "publishedAt": "2026-09-30T05:18:01Z",
+  "publishedAt": "2026-09-30T05:28:02.99054+00:00",
   "cover": {
-    "src": "/assets/images/learn/how-post-it-notes-were-invented.webp",
-    "small": "/assets/images/learn/how-post-it-notes-were-invented-small.webp",
-    "thumbnail": "/assets/images/learn/how-post-it-notes-were-invented-thumb.webp",
-    "alt": "Illustration of an open book with a yellow sticky bookmark and a curled note beside it",
-    "credit": "Original illustration created for BrainiLab; not a historical photograph.",
+    "src": "/assets/images/learn/how-post-it-notes-were-invented-photo.webp",
+    "small": "/assets/images/learn/how-post-it-notes-were-invented-photo-small.webp",
+    "thumbnail": "/assets/images/learn/how-post-it-notes-were-invented-photo-thumb.webp",
+    "alt": "A yellow sticky note marking a page in an open book, with a second curled note on the desk",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T05:28:02.99054+00:00"
 }

@@ -53,13 +53,14 @@
   ],
   "status": "published",
   "order": 26,
-  "publishedAt": "2026-09-30T17:06:40.272Z",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "cover": {
-    "src": "/assets/images/learn/words-that-mean-their-own-opposite.webp",
-    "small": "/assets/images/learn/words-that-mean-their-own-opposite-small.webp",
-    "thumbnail": "/assets/images/learn/words-that-mean-their-own-opposite-thumb.webp",
-    "alt": "The word DUST between two cards: remove particles from a shelf, or add a dusting to dough",
-    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "src": "/assets/images/learn/words-that-mean-their-own-opposite-photo.webp",
+    "small": "/assets/images/learn/words-that-mean-their-own-opposite-photo-small.webp",
+    "thumbnail": "/assets/images/learn/words-that-mean-their-own-opposite-photo-thumb.webp",
+    "alt": "Flour dusted over dough beside a sieve and cleaning cloth on a wooden worktop",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
 }

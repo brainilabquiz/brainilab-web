@@ -1,6 +1,6 @@
 # Six supporting articles — 30 September 2026
 
-The user explicitly requested five or six new articles after the regular daily publication. This is a one-off six-article release, not a change to the one-per-day automation. All six are original English explainers, with short paragraphs, a specific reader question, original practice and original vector cover artwork. No search-volume or traffic claim is made.
+The user explicitly requested five or six new articles after the regular daily publication. This is a one-off six-article release, not a change to the one-per-day automation. All six are original English explainers, with short paragraphs, a specific reader question, original practice and AI-generated photorealistic cover imagery. No search-volume or traffic claim is made.
 
 ## Reading blocks
 
@@ -28,6 +28,6 @@ Sources were checked on 30 September using Parallel Search and direct primary-so
 
 ## Artwork and publication
 
-Six original SVG diagrams; three WebP derivatives each (960, 480 and 240 pixels wide), descriptive alt text and honest illustration credit. Reproducible source: `tools/build-september-editorial-covers.mjs`. No third-party images reproduced.
+Cover correction explicitly requested by the user: six AI-generated photorealistic scenes replace the initial diagrams, with an additional photographic replacement for the earlier Post-it article. Each has three WebP derivatives (960, 480 and 240 pixels wide), descriptive alt text and a clear AI-generated credit. The built-in ImageGen tool was used; original PNGs and prompts are preserved in the private workspace. The vector-cover scripts are historical, superseded assets and must not be used to regenerate article covers. Seven older photographic covers are preserved, cancelling an unexecuted diagram replacement. No third-party photographs reproduced.
 
 Deploy assets and static fixtures before publishing the six live documents in one guarded transaction. Preserve all prior publications. The private backup and transaction are kept outside the public repository. Verify live page titles, canonical URLs, images, structured data, internal links, Learn listing and sitemap after publication. Record actual database publication time in the external editorial ledger.

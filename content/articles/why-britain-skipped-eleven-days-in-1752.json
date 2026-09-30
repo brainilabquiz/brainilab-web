@@ -50,13 +50,14 @@
   ],
   "status": "published",
   "order": 29,
-  "publishedAt": "2026-09-30T17:06:40.274Z",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "cover": {
-    "src": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752.webp",
-    "small": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-small.webp",
-    "thumbnail": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-thumb.webp",
-    "alt": "Two September 1752 calendar pages showing the second followed by the fourteenth the next day",
-    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "src": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo.webp",
+    "small": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-small.webp",
+    "thumbnail": "/assets/images/learn/why-britain-skipped-eleven-days-in-1752-photo-thumb.webp",
+    "alt": "Staged September 1752 date cards numbered 2 and 14 beside an old book and a quill",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
 }

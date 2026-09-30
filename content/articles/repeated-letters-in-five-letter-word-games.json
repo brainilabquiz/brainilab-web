@@ -51,11 +51,11 @@
   ],
   "practice": "Try BrainiWord. When a letter repeats, compare all its tiles before choosing your next word.",
   "cover": {
-    "src": "/assets/images/learn/repeated-letters-in-five-letter-word-games.webp",
-    "small": "/assets/images/learn/repeated-letters-in-five-letter-word-games-small.webp",
-    "thumbnail": "/assets/images/learn/repeated-letters-in-five-letter-word-games-thumb.webp",
-    "alt": "ALLEY shown as five tiles: green A, yellow L, grey L, yellow E and grey Y, for the example answer APPLE",
-    "credit": "Original explanatory illustration by BrainiLab. Teaching example, not today’s answer.",
+    "src": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo.webp",
+    "small": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-small.webp",
+    "thumbnail": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-thumb.webp",
+    "alt": "Five wooden tiles spelling APPLE, with two P tiles side by side on a desk",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
   },
   "order": 26,

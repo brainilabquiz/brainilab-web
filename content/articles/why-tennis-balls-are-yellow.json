@@ -50,13 +50,14 @@
   ],
   "status": "published",
   "order": 28,
-  "publishedAt": "2026-09-30T17:06:40.274Z",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
   "cover": {
-    "src": "/assets/images/learn/why-tennis-balls-are-yellow.webp",
-    "small": "/assets/images/learn/why-tennis-balls-are-yellow-small.webp",
-    "thumbnail": "/assets/images/learn/why-tennis-balls-are-yellow-thumb.webp",
-    "alt": "A white tennis ball beside a television showing a yellow ball; timeline labels 1972 ITF and 1986 Wimbledon",
-    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "src": "/assets/images/learn/why-tennis-balls-are-yellow-photo.webp",
+    "small": "/assets/images/learn/why-tennis-balls-are-yellow-photo-small.webp",
+    "thumbnail": "/assets/images/learn/why-tennis-balls-are-yellow-photo-thumb.webp",
+    "alt": "An off-white and an optic-yellow tennis ball beside a wooden racket on a green court",
+    "credit": "AI-generated photorealistic cover image created for BrainiLab; illustrative scene, not an archival photograph.",
     "position": 50
-  }
+  },
+  "updatedAt": "2026-09-30T17:19:01.76865+00:00"
 }
