@@ -1,0 +1,52 @@
+{
+  "supportingArticlesPerHub": 10,
+  "blocks": [
+    {
+      "id": "everyday-object-origins-1",
+      "topic": "Everyday inventions",
+      "readerQuestion": "What everyday problems led to familiar objects, and how did their designs solve them?",
+      "hubSlug": "everyday-inventions-and-the-problems-they-solved",
+      "hubTitle": "10 everyday inventions and the problems they solved",
+      "members": [
+        {"slug": "was-bubble-wrap-invented-as-wallpaper", "angle": "A textured wall covering finds a role in protective packaging."},
+        {"slug": "how-post-it-notes-were-invented", "angle": "A removable adhesive keeps a bookmark in place and becomes a note."},
+        {"slug": "how-hook-and-loop-fasteners-work", "angle": "Investigate how burrs inspired a reusable fastening system."},
+        {"slug": "why-zippers-have-interlocking-teeth", "angle": "Explain how rows of teeth make a closure that can reopen."},
+        {"slug": "how-safety-pins-got-their-clasp", "angle": "Investigate how a clasp covers a sharp point while holding fabric."},
+        {"slug": "why-ballpoint-pens-have-a-tiny-ball", "angle": "Explain the rolling ball that transfers ink to paper."},
+        {"slug": "why-pencils-have-erasers", "angle": "Investigate the combination of writing and correcting in one tool."},
+        {"slug": "how-corrugated-cardboard-protects-parcels", "angle": "Explain how a fluted layer gives a lightweight sheet structure."},
+        {"slug": "why-can-openers-came-after-cans", "angle": "Investigate the gap between a storage container and a convenient opening tool."},
+        {"slug": "how-drinking-straws-got-their-bend", "angle": "Investigate how a flexible section changed the use of a drinking straw."}
+      ]
+    },
+    {
+      "id": "mental-maths-and-number-puzzles-1",
+      "topic": "Numbers & logic",
+      "readerQuestion": "How can I break down calculations, check answers and use those skills in a number puzzle?",
+      "hubSlug": "mental-maths-and-number-puzzles-guide",
+      "hubTitle": "Mental maths and number puzzles: 10 ways to get started",
+      "members": [
+        {"slug": "mental-percentages-without-a-calculator", "angle": "Build percentages from manageable parts."},
+        {"slug": "multiply-by-11-in-your-head", "angle": "Use place value to multiply by eleven."},
+        {"slug": "mental-math-round-and-adjust", "angle": "Round to a convenient value and compensate."},
+        {"slug": "divide-by-five-in-your-head", "angle": "Double a number and divide by ten; explain why it works."},
+        {"slug": "square-numbers-ending-in-five", "angle": "Use the tens part and its successor; explain the limits and proof."},
+        {"slug": "make-ten-mental-addition", "angle": "Regroup addition into tens with original practice examples."},
+        {"slug": "check-division-with-multiplication", "angle": "Check quotients and remainders by reversing the operation."},
+        {"slug": "number-sequences-look-at-the-gaps", "angle": "Use differences to investigate a numerical pattern."},
+        {"slug": "how-to-play-number-route", "angle": "Follow the running total and operation choices in a game."},
+        {"slug": "five-number-puzzles-printable", "angle": "Apply the skills in five worked paper puzzles."}
+      ]
+    }
+  ],
+  "nextCategoryArticles": [
+    {"topic": "Words & puzzles", "workingTitle": "One word, two meanings: when a puzzle clue misleads you", "futureBlock": "Word meanings and connections", "intent": "Interpret ambiguous clues with original examples; complement the existing Connections guide."},
+    {"topic": "Learning", "workingTitle": "Why rereading feels easier than remembering", "futureBlock": "Remembering what you learn", "intent": "Explain familiarity versus retrieval with a small exercise; distinguish from the existing quiz-memory guide."},
+    {"topic": "Getting started", "workingTitle": "Which BrainiLab game should you try first?", "futureBlock": "Finding your next brain game", "intent": "Choose by mechanics and mood; do not repeat Daily or Anytime."},
+    {"topic": "Sports", "workingTitle": "Why do tennis players change ends?", "futureBlock": "Understanding a tennis match", "intent": "Explain changeovers; complement the existing tennis scoring article."},
+    {"topic": "History", "workingTitle": "Did Britain really skip 11 days in 1752?", "futureBlock": "How calendars count time", "intent": "Explain a calendar transition alongside centuries and leap years."},
+    {"topic": "Geography", "workingTitle": "Ireland or Côte d’Ivoire? Check the colour order", "futureBlock": "Telling similar flags apart", "intent": "Teach a specific flag distinction using the hoist; complement the flag-learning guide."},
+    {"topic": "Science & nature", "workingTitle": "Why are flamingos pink?", "futureBlock": "Surprising animal adaptations", "intent": "Explain dietary pigments; build an animal series alongside octopus anatomy."}
+  ]
+}

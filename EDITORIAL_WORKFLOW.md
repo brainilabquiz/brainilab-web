@@ -17,6 +17,18 @@ Write in English for a curious reader. Start with a concrete question, explain a
 
 Learn opens with the newest publication per category. Search, category filters and All articles expose the rest. Original publication dates decide recency; ordinary edits do not make an old article new. Display order breaks ties. Covers use a compact crop and readable titles.
 
+## Daily publishing and topic hubs
+
+The editorial cadence is one reviewed supporting article per day, with an additional hub when a coherent block reaches ten published supporting articles. Quality takes priority over the daily slot. Do not batch missed days into a publishing surge. Before each run, check the live publications and the local daily ledger to avoid duplicate releases.
+
+Plan a shared reader question before filling a block. A category can contain several distinct blocks: ten unrelated articles in one category are not automatically a useful hub. `content/editorial-clusters.json` records two initial ten-article blocks and the next pieces for the other categories. Missing member files are planned ideas, not researched facts or live links. Research can change an unpublished idea or working slug. Expand the other provisional blocks before publishing their follow-up articles. Prioritise categories with fewer articles while steadily completing coherent blocks.
+
+A hub is an original guided reading route with context, meaningful groups and an explanation of what each of the ten articles contributes. It links to all ten supporting articles, which link back to it. The hub is additional to the ten and must never count as a supporting article. Keep later sets of ten as separate, coherent blocks rather than duplicating an existing hub. Update existing hubs as their articles improve; do not refresh publication dates merely to appear new.
+
+The static editorial build validates registered blocks: incomplete blocks cannot have a published hub, and complete blocks require a published hub with all ten links and return links. This is a repository release check, not a database constraint or an automatic rule in the admin editor. Before publishing through the admin or database, verify the same conditions against live documents and publish a tenth member, hub and return-link changes together. Preserve concurrent edits and record revisions. Public links must never point to a planned article or unpublished hub.
+
+Keep original explanations and verified sources, vary titles and structure, and include a useful next reading or game choice. Review weekly using available Search Console and engagement data; do not invent demand, rankings, conversion rates or revenue. The content backlog does not override these rules or require publication before a piece passes review.
+
 ## Technical source of truth
 
 - Private `brainilab_editor.articles` and `revisions`: drafts and immutable history, optimistic revision checks. No client table grants. Privileged helpers are in a non-exposed schema and verify active owner/editor role and MFA.

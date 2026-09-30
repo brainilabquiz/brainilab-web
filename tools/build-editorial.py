@@ -7,6 +7,7 @@ from datetime import datetime
 import math
 import re
 import xml.etree.ElementTree as ET
+from editorial_clusters import validate_clusters
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://brainilabgames.com'
@@ -30,6 +31,9 @@ for a in all_articles:
     assert a['status'] in ('draft', 'published'), 'Invalid status'
 articles = sorted([a for a in all_articles if a['status'] == 'published'], key=lambda a:(a.get('order',999),a['slug']))
 by_slug = {a['slug']: a for a in articles}
+cluster_file = ROOT/'content/editorial-clusters.json'
+if cluster_file.is_file():
+    validate_clusters(all_articles, json.loads(cluster_file.read_text(encoding='utf-8')))
 for a in articles:
     for key in ('title', 'description', 'topic', 'sections', 'sources', 'game', 'hub', 'cover', 'practice'):
         assert a.get(key), f"Missing {key} in {a['slug']}"
@@ -42,7 +46,9 @@ for a in articles:
     assert len(ids) == len(set(ids)) and all(re.fullmatch(r'[a-z0-9-]+', i) for i in ids)
     for link in (a['game'], a['hub']):
         target = ROOT/urlsplit(link['url']).path.strip('/')/'index.html'
-        assert target.is_file(), f'Missing destination: {target}'
+        # New hubs and their members can be generated in the same build.
+        is_article = link['url'] in {f'/learn/{slug}/' for slug in by_slug}
+        assert target.is_file() or is_article, f'Missing destination: {target}'
     words = len(re.sub('<[^>]+>', ' ', ' '.join(s['html'] for s in a['sections'])).split())
     a['minutes'] = max(1, math.ceil(words/200))
 
