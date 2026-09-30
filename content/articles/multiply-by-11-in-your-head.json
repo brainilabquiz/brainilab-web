@@ -7,6 +7,44 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
+  "quiz": {
+    "version": "beginner-20260930",
+    "questions": [
+      {
+        "prompt": "Which story matches multiplying three by four?",
+        "options": [
+          "Three bags with four sweets in each",
+          "Three sweets with four taken away",
+          "One bag with seven sweets",
+          "Four bags with nothing inside"
+        ],
+        "answer": 0,
+        "explanation": "Multiplication can count equal groups. Three groups of four contain twelve sweets."
+      },
+      {
+        "prompt": "How can you count eleven equal bags more easily?",
+        "options": [
+          "Count one bag and stop",
+          "Count ten bags, then add one more bag",
+          "Count ten bags, then take a bag away",
+          "Add eleven to the number in one bag"
+        ],
+        "answer": 1,
+        "explanation": "Eleven bags are ten bags plus one more. Each bag still holds the same number."
+      },
+      {
+        "prompt": "Ten bags hold 30 sweets. The last bag holds three more. How many are there altogether?",
+        "options": [
+          "13",
+          "27",
+          "30",
+          "33"
+        ],
+        "answer": 3,
+        "explanation": "Start with the 30 sweets in the first ten bags. Add the last three: 33."
+      }
+    ]
+  },
   "slug": "multiply-by-11-in-your-head",
   "cover": {
     "alt": "A notebook showing 34 times 11 equals 374 beside a pencil and number tiles",
@@ -17,7 +55,7 @@
     "thumbnail": "/assets/images/learn/multiply-by-11-in-your-head-thumb.webp"
   },
   "order": 19,
-  "title": "A simple way to multiply by 11 in your head",
+  "title": "Multiplying by 11: ten groups, then one more",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -30,79 +68,41 @@
       "name": "OpenStax — The Distributive Property"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try Math Rush when you feel ready for some quick arithmetic.",
   "sections": [
     {
       "id": "one-extra",
-      "html": "<p>Eleven is ten plus one, so multiplying by 11 means taking ten copies of a number and adding one more.</p><p>For <strong>34 × 11</strong>, calculate 340 + 34. The answer is <strong>374</strong>. This method works for any number and is easy to fall back on if a shortcut slips your mind.</p>",
-      "title": "Multiply by ten, then add once more"
+      "title": "What does multiplying mean?",
+      "html": "<p>Imagine <strong>3 bags with 4 sweets in each</strong>. You could count 4 sweets, then another 4, then another 4. That makes <strong>12 sweets</strong>.</p><p>Multiplication is a shorter way to describe equal groups. The sign <strong>×</strong> means “times”. Three groups of four can be written as <strong>3 × 4</strong>.</p><p>Now imagine eleven bags. Rather than counting every bag separately, we can count <strong>ten bags first, then the last bag</strong>.</p>"
+    },
+    {
+      "id": "small-example",
+      "title": "Eleven bags with two sweets each",
+      "html": "<ol><li><strong>Count the first ten bags.</strong> Each has two sweets. Count in twos: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20.</li><li><strong>Open the last bag.</strong> It has two more sweets.</li><li><strong>Add them to the twenty.</strong> Twenty and two make <strong>22</strong>.</li></ol><p>That is why 11 × 2 is 22. The trick works because eleven is ten and one more.</p>"
     },
     {
       "id": "middle-digit",
-      "html": "<p>With 34, you can keep 3 and 4 on the outside and put their sum in the middle: 3, then 7, then 4. That gives 374.</p><p>To see why, line up 340 and 34 as a column addition. You have 3 hundreds, 4 + 3 tens and 4 units.</p><p>Try <strong>52 × 11</strong>: the middle sum is 5 + 2 = 7, giving <strong>572</strong>. Check it with 520 + 52.</p>",
-      "title": "The shortcut for two-digit numbers"
+      "title": "Now put 34 sweets in each bag",
+      "html": "<p>The number is bigger, but the idea is exactly the same. We want the sweets in eleven bags, with <strong>34 in each</strong>.</p><ol><li><strong>Ten bags hold 340 sweets.</strong> To see why, split each bag into 30 sweets and 4 sweets. Ten lots of 30 make 300. Ten lots of 4 make 40. Together, that is 340.</li><li><strong>The last bag holds another 34.</strong> Add its 30 sweets first: 340 becomes 370.</li><li><strong>Add its remaining four sweets.</strong> The total becomes <strong>374</strong>.</li></ol><p>Written as one calculation, that is <strong>34 × 11 = 374</strong>. The symbols are just a short way of writing the story about the bags.</p>"
     },
     {
       "id": "carry",
-      "html": "<p>For <strong>78 × 11</strong>, the middle sum is 7 + 8 = 15. That means 15 tens, so you need to carry:</p><ol><li>Keep 8 in the units place.</li><li>Put 5 in the tens place.</li><li>Add the carried 1 to the 7 hundreds.</li></ol><p>The answer is <strong>858</strong>. You can check it with 780 + 78 = 858.</p>",
-      "title": "What if the middle sum is ten or more?"
+      "title": "A bigger example, with no new trick",
+      "html": "<p>What about eleven bags with <strong>78 sweets in each</strong>?</p><ol><li>Ten bags hold <strong>780</strong> sweets.</li><li>Split the last bag’s 78 sweets into 70 and 8. Add the 70 first. From 780, another 20 gets you to 800; the remaining 50 takes you to <strong>850</strong>.</li><li>Add the final eight. That makes <strong>858</strong>.</li></ol><p>There are faster shortcuts with digits, but you do not need them here. Counting ten equal groups and adding one more is enough.</p>"
     },
     {
       "id": "three-practice",
-      "html": "<p>Try <strong>23 × 11, 67 × 11 and 99 × 11</strong>. The last one needs a little extra care.</p><details class=\"practice-answer\"><summary>Show the answers</summary><ul><li>23 × 11 = <strong>253</strong>.</li><li>67 × 11 = <strong>737</strong>.</li><li>99 × 11 = <strong>1089</strong>.</li></ul><p>For 99, the middle sum is 18. Carrying 1 into the 9 hundreds gives 10 hundreds, so the result has four digits.</p></details>",
-      "title": "Have a go"
-    },
-    {
-      "id": "choose-method",
-      "html": "<p>For a larger number such as 126, multiplying by ten and adding the original number is still straightforward: <strong>1260 + 126 = 1386</strong>. The two-digit shortcut needs adapting for longer numbers.</p><p>The same idea works in reverse for multiplication by 9: take ten times the number and subtract one copy. For example, 34 × 9 = 340 − 34 = 306.</p>",
-      "title": "Use the longer method when it helps"
+      "title": "Try eleven bags of three",
+      "html": "<p>Each bag holds three sweets. How many sweets are in eleven bags?</p><details class=\"practice-answer\"><summary>Walk me through it</summary><p>Ten bags of three hold 30 sweets. The last bag adds another 3. Altogether, there are <strong>33 sweets</strong>.</p></details><p>If you get stuck, draw the bags. Understanding why it works is more useful than rushing.</p>"
     },
     {
       "id": "at-a-glance",
-      "title": "At a glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Follow the carry</caption><thead><tr><th scope=\"col\">Example</th><th scope=\"col\">Ten copies plus one</th><th scope=\"col\">Result</th></tr></thead><tbody><tr><td>34 × 11</td><td>340 + 34</td><td>374</td></tr><tr><td>78 × 11</td><td>780 + 78</td><td>858</td></tr><tr><td>99 × 11</td><td>990 + 99</td><td>1089</td></tr></tbody></table></div>"
+      "title": "Ten bags, then the last bag",
+      "html": "<div class=\"table-scroll\"><table><caption>The same idea at different sizes</caption><thead><tr><th scope=\"col\">Sweets in each bag</th><th scope=\"col\">First ten bags</th><th scope=\"col\">Last bag</th><th scope=\"col\">Altogether</th></tr></thead><tbody><tr><td>2</td><td>20</td><td>2 more</td><td>22</td></tr><tr><td>34</td><td>340</td><td>34 more</td><td>374</td></tr><tr><td>78</td><td>780</td><td>78 more</td><td>858</td></tr></tbody></table></div><p>Next, <a href=\"/learn/mental-percentages-without-a-calculator/\">discover what a percentage actually means</a>, starting with a tray of one hundred squares.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "description": "See how the shortcut works with 34 × 11, what changes with 78 × 11, and when you need to carry a digit.",
-  "publishedAt": "2026-09-29T06:02:00Z",
-  "authorId": "biel-sarda",
-  "quiz": {
-    "version": "initial-20260930",
-    "questions": [
-      {
-        "prompt": "Which calculation always gives 34 × 11?",
-        "options": [
-          "340 + 34",
-          "340 + 11",
-          "34 + 11",
-          "340 − 34"
-        ],
-        "answer": 0,
-        "explanation": "Eleven copies are ten copies plus one more: 340 + 34 = 374."
-      },
-      {
-        "prompt": "What is 78 × 11?",
-        "options": [
-          "7158",
-          "758",
-          "858",
-          "788"
-        ],
-        "answer": 2,
-        "explanation": "7 + 8 gives 15 tens. Keep five tens and carry one hundred: 858."
-      },
-      {
-        "prompt": "Why does 99 × 11 have four digits?",
-        "options": [
-          "Multiplying by 11 always gives four digits",
-          "The carry makes ten hundreds",
-          "The two nines stay together",
-          "The middle sum is nine"
-        ],
-        "answer": 1,
-        "explanation": "The middle sum is 18. Carrying one into nine hundreds makes ten hundreds, giving 1089."
-      }
-    ]
-  }
+  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "description": "Picture eleven bags with the same number of sweets in each. Count ten bags first, then add the last one. We’ll take it one step at a time.",
+  "publishedAt": "2026-09-29T06:02:00Z"
 }

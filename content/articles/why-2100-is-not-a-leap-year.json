@@ -7,6 +7,44 @@
     "url": "/general-knowledge/general-knowledge-quiz/",
     "name": "General Knowledge Quiz"
   },
+  "quiz": {
+    "version": "beginner-20260930",
+    "questions": [
+      {
+        "prompt": "What is the extra day in a leap year?",
+        "options": [
+          "1 January",
+          "28 February",
+          "29 February",
+          "31 December"
+        ],
+        "answer": 2,
+        "explanation": "A leap year adds 29 February, taking the year from 365 days to 366."
+      },
+      {
+        "prompt": "Why does the calendar sometimes need an extra day?",
+        "options": [
+          "A year of seasons is a little longer than 365 days",
+          "The Moon stops moving",
+          "Every month has thirty days",
+          "Earth pauses in February"
+        ],
+        "answer": 0,
+        "explanation": "The small amount of time beyond 365 days adds up. Leap days help keep calendar dates in step with the seasons."
+      },
+      {
+        "prompt": "Why will 2100 not be a leap year?",
+        "options": [
+          "All years ending in 00 lose the day",
+          "2100 is odd",
+          "February will disappear",
+          "It ends in 00 but does not divide exactly by 400"
+        ],
+        "answer": 3,
+        "explanation": "Years ending in 00 have an extra check. 2100 is five groups of 400 plus 100 left over, so it skips the leap day."
+      }
+    ]
+  },
   "slug": "why-2100-is-not-a-leap-year",
   "cover": {
     "alt": "A February 29 desk calendar beside a globe in warm sunlight",
@@ -17,7 +55,7 @@
     "thumbnail": "/assets/images/learn/why-2100-is-not-a-leap-year-thumb.webp"
   },
   "order": 17,
-  "title": "Why won’t 2100 be a leap year?",
+  "title": "Why will 2100 skip its leap day?",
   "topic": "History",
   "status": "published",
   "related": [
@@ -34,79 +72,36 @@
       "name": "NASA Space Place — What Is a Leap Year?"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try General Knowledge for more questions about dates, discoveries and the world around us.",
   "sections": [
     {
-      "id": "short-answer",
-      "html": "<p><strong>2100 will not be a leap year because it is divisible by 100 but not by 400.</strong> The year 2000 was divisible by 400, so it did have an extra day in February.</p><p>In the Gregorian calendar, being divisible by four is only the first test. Years ending in 00 need one more check.</p>",
-      "title": "The exception to the four-year rule"
+      "id": "why-add-a-day",
+      "title": "What is a leap day?",
+      "html": "<p>Most calendar years have <strong>365 days</strong>. A leap year has <strong>366</strong>. The extra day is <strong>29 February</strong>.</p><p>We need that extra day because a year of seasons is a little longer than 365 days: almost another quarter of a day. If we ignored that leftover time every year, our calendar would slowly slip away from the seasons.</p><p>Adding a day roughly every four years helps the calendar keep up.</p>"
     },
     {
-      "id": "why-add-a-day",
-      "html": "<p>A seasonal year lasts about 365.2422 days. If every calendar year had exactly 365 days, the calendar would gradually drift away from the seasons.</p><p>Adding a day every four years gets close, but adds slightly too much time. Skipping some century leap years makes the calendar’s average year a better match.</p>",
-      "title": "Why we need leap days"
+      "id": "short-answer",
+      "title": "Why “every four years” is not the whole story",
+      "html": "<p>The leftover time is a little <strong>less</strong> than a quarter of a day. Adding a whole day every four years therefore adds slightly too much.</p><p>The calendar fixes this by leaving out a few leap days. The extra rule applies to years ending in <strong>00</strong>, such as 1900, 2000 and 2100.</p><p>These rules belong to the <strong>Gregorian calendar</strong>, the calendar widely used for everyday dates today.</p>"
     },
     {
       "id": "three-checks",
-      "html": "<ol><li><strong>Is the year divisible by four?</strong> If not, it is a common year.</li><li><strong>Is it divisible by 100?</strong> If not, it is a leap year.</li><li><strong>For a century year, is it divisible by 400?</strong> If so, it is a leap year; otherwise, it is not.</li></ol><p>So 2028 is a leap year, 2100 is not, and 2400 will be.</p>",
-      "title": "Three checks to remember"
-    },
-    {
-      "id": "try-four",
-      "html": "<p>Which of these years have 366 days in the Gregorian calendar: <strong>2027, 2032, 2200 and 2400</strong>?</p><details class=\"practice-answer\"><summary>Show the answers</summary><p><strong>2032 and 2400.</strong> The first is divisible by four and is not a century year. The second is divisible by 400. Meanwhile, 2027 is not divisible by four, and 2200 fails the 400 test.</p></details>",
-      "title": "Try four dates"
-    },
-    {
-      "id": "calendar-scope",
-      "html": "<p>These rules apply to the Gregorian calendar. Countries adopted it at different times, and other calendars use different rules. For a historical date, check which calendar the question is using.</p>",
-      "title": "What about historical dates?"
+      "title": "Follow the checks one at a time",
+      "html": "<p>First, a small maths phrase: <strong>“divisible by four”</strong> means you can split a number into groups of four with nothing left over. For example, 12 makes three complete groups of four; 13 leaves one over.</p><ol><li><strong>Can the year number be divided by 4 with nothing left over?</strong> If no, it is not a leap year. If yes, continue.</li><li><strong>Does the year end in 00?</strong> If no, it is a leap year. If yes, there is one last check.</li><li><strong>Can it be divided by 400 with nothing left over?</strong> If yes, keep the leap day. If no, skip it.</li></ol>"
     },
     {
       "id": "at-a-glance",
-      "title": "At a glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Apply the century exception</caption><thead><tr><th scope=\"col\">Year</th><th scope=\"col\">Divisible by 400?</th><th scope=\"col\">Gregorian leap year?</th></tr></thead><tbody><tr><td>1900</td><td>No</td><td>No</td></tr><tr><td>2000</td><td>Yes</td><td>Yes</td></tr><tr><td>2100</td><td>No</td><td>No</td></tr></tbody></table></div>"
+      "title": "Compare 2000 and 2100",
+      "html": "<div class=\"table-scroll\"><table><caption>Both years end in 00, so check groups of 400</caption><thead><tr><th scope=\"col\">Year</th><th scope=\"col\">Groups of 400</th><th scope=\"col\">Leap day?</th></tr></thead><tbody><tr><td>2000</td><td>Five complete groups; nothing left over</td><td>Yes</td></tr><tr><td>2100</td><td>Five complete groups, with 100 left over</td><td>No</td></tr><tr><td>2400</td><td>Six complete groups; nothing left over</td><td>Yes</td></tr></tbody></table></div><p>That is why <strong>2100 will not have 29 February</strong>. It does pass the four-year check, but fails the extra check for years ending in 00.</p>"
+    },
+    {
+      "id": "calendar-scope",
+      "title": "An old date needs one extra question",
+      "html": "<p>Countries did not all start using this calendar at once. When reading about an old event, ask which calendar was in use there.</p><p>Next, see what happened when <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\">Britain changed its calendar in 1752</a>. The date jumped, but people did not lose eleven days of their lives.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "description": "2000 had a 29 February, but 2100 will not. The difference comes down to the calendar’s rule for century years.",
-  "publishedAt": "2026-09-29T06:00:00Z",
-  "authorId": "biel-sarda",
-  "quiz": {
-    "version": "initial-20260930",
-    "questions": [
-      {
-        "prompt": "Which rule applies to century years in the Gregorian calendar?",
-        "options": [
-          "All are leap years",
-          "None are leap years",
-          "They must be divisible by 400",
-          "They must end in 00 only"
-        ],
-        "answer": 2,
-        "explanation": "A year divisible by 100 is a leap year only when it is also divisible by 400."
-      },
-      {
-        "prompt": "Which of these was or will be a leap year?",
-        "options": [
-          "1900",
-          "2000",
-          "2100",
-          "2200"
-        ],
-        "answer": 1,
-        "explanation": "2000 is divisible by 400. The other three century years are not."
-      },
-      {
-        "prompt": "Why does the calendar need leap-year corrections?",
-        "options": [
-          "The seasonal year is not exactly 365 days",
-          "February changes the speed of Earth",
-          "Every month should have equal length",
-          "The Moon makes years exactly 366 days"
-        ],
-        "answer": 0,
-        "explanation": "Leap rules help keep calendar dates aligned with the seasons because the seasonal year is a little longer than 365 days."
-      }
-    ]
-  }
+  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "description": "Most of us learn that a leap year comes every four years. There is a small extra rule, and the year 2100 is where it matters.",
+  "publishedAt": "2026-09-29T06:00:00Z"
 }

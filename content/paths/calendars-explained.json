@@ -2,50 +2,24 @@
   "slug": "calendars-explained",
   "title": "Make sense of years and calendars",
   "topic": "History",
-  "description": "Start with century numbers, understand leap-year rules, then follow the calendar reform that changed Britain’s dates.",
-  "introduction": "<p>A date looks precise, but understanding it takes a little context. First learn how years are grouped. Next explore the rule that keeps a calendar close to the seasons. Finally see why a historical date needs its calendar as well as its numbers.</p>",
-  "prerequisites": "No previous history reading required. The century examples use positive CE years.",
-  "outcomes": [
-    "Place a positive CE year in its century.",
-    "Apply the Gregorian leap-year exception.",
-    "Distinguish a calendar date change from elapsed time."
-  ],
+  "status": "published",
   "lessons": [
     {
       "slug": "which-century-is-that-year",
       "level": "1 · Foundations",
-      "objective": "Place years in centuries and check the boundary years."
+      "objective": "Put years into boxes of one hundred."
     },
     {
       "slug": "why-2100-is-not-a-leap-year",
       "level": "2 · Build on it",
-      "objective": "Understand why divisible by four is not the whole rule."
+      "objective": "Find out why February sometimes gets an extra day."
     },
     {
       "slug": "why-britain-skipped-eleven-days-in-1752",
       "level": "3 · Add historical context",
-      "objective": "Explain Britain’s eleven omitted date labels without imagining missing time."
+      "objective": "Discover how a date jumped forward while life went on as usual."
     }
   ],
-  "glossary": [
-    {
-      "term": "Century",
-      "definition": "A period of one hundred years; conventional CE centuries begin in years ending in 01."
-    },
-    {
-      "term": "Leap year",
-      "definition": "A calendar year with an extra day, governed here by Gregorian rules."
-    },
-    {
-      "term": "Calendar reform",
-      "definition": "A change to the rules used to label and organise dates."
-    }
-  ],
-  "authorId": "biel-sarda",
-  "status": "published",
-  "publishedAt": "2026-09-30T18:40:48.395302+00:00",
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "coverArticle": "which-century-is-that-year",
   "sources": [
     {
       "url": "https://aa.usno.navy.mil/faq/millennium",
@@ -67,5 +41,31 @@
       "url": "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds",
       "name": "Royal Museums Greenwich — Leap years and the 1752 calendar change"
     }
-  ]
+  ],
+  "authorId": "biel-sarda",
+  "glossary": [
+    {
+      "term": "Century",
+      "definition": "A group of one hundred years."
+    },
+    {
+      "term": "Leap day",
+      "definition": "The extra day, 29 February, added in a leap year."
+    },
+    {
+      "term": "Calendar",
+      "definition": "A system for giving dates to days, months and years."
+    }
+  ],
+  "outcomes": [
+    "Place a positive CE year in its century.",
+    "Apply the Gregorian leap-year exception.",
+    "Distinguish a calendar date change from elapsed time."
+  ],
+  "updatedAt": "2026-09-30T19:26:19.706917+00:00",
+  "description": "Centuries, leap years and eleven missing days: untangle the oddities of our calendar, one short read at a time.",
+  "publishedAt": "2026-09-30 18:56:22.650105+00",
+  "coverArticle": "which-century-is-that-year",
+  "introduction": "<p>Why does 1900 belong to the 19th century? Why does February sometimes get an extra day? Start with boxes of one hundred years, then follow the small rules behind some surprising dates.</p>",
+  "prerequisites": "No previous history reading required. The century examples use positive CE years."
 }

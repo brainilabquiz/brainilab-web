@@ -7,6 +7,44 @@
     "url": "/geography/world-capitals-quiz/",
     "name": "World Capitals Quiz"
   },
+  "quiz": {
+    "version": "beginner-20260930",
+    "questions": [
+      {
+        "prompt": "What does UTC+2 mean?",
+        "options": [
+          "Two hours behind UTC",
+          "Two hours ahead of UTC",
+          "Two days ahead",
+          "The same time as UTC"
+        ],
+        "answer": 1,
+        "explanation": "The plus sign means ahead. When UTC shows noon, UTC+2 shows two in the afternoon."
+      },
+      {
+        "prompt": "UTC shows noon. A clock is three hours behind it. What time does that clock show?",
+        "options": [
+          "3 in the afternoon",
+          "11 in the morning",
+          "9 in the morning",
+          "Midnight"
+        ],
+        "answer": 2,
+        "explanation": "Go back three hours from noon: eleven, ten, nine."
+      },
+      {
+        "prompt": "Why check both the city and date before an international call?",
+        "options": [
+          "Some places change their clocks during the year",
+          "Every city uses the same clock rules",
+          "The Sun stops at borders",
+          "UTC is different for every person"
+        ],
+        "answer": 0,
+        "explanation": "Clock changes can alter the difference between two places. The city and date help a calendar choose the right time."
+      }
+    ]
+  },
   "slug": "why-time-zones-get-messy",
   "cover": {
     "alt": "Three clocks showing different times",
@@ -14,7 +52,7 @@
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 11,
-  "title": "Why don’t time zones follow straight lines?",
+  "title": "Why isn’t it the same time everywhere?",
   "topic": "Geography",
   "status": "published",
   "related": [
@@ -31,74 +69,41 @@
       "name": "Royal Museums Greenwich — Local time and the railways"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Explore the places behind the clock changes with World Capitals.",
   "sections": [
     {
       "id": "simple-idea",
-      "html": "<p>As Earth rotates, different places face the Sun at different times. Divide a full rotation of 360 degrees by 24 hours and you get 15 degrees per hour. It seems natural to divide the world into neat strips.</p><p>Actual time-zone boundaries are less tidy. Governments choose civil time to suit borders and daily life, so the lines bend around countries and regions rather than following longitude exactly.</p>",
-      "title": "The idea behind time zones"
+      "title": "Your afternoon can be someone else’s morning",
+      "html": "<p>Imagine calling a friend far away. You have just finished lunch, but your friend is eating breakfast. Your clocks show different times.</p><p>Earth turns, so different places face the Sun at different moments. If every clock showed the same local time, “nine in the morning” could happen in darkness in some places.</p><p>A <strong>time zone</strong> is an area that follows the same rules for its clocks.</p>"
+    },
+    {
+      "id": "borders",
+      "title": "Why aren’t time zones straight stripes?",
+      "html": "<p>You might expect neat stripes around the globe. Real life is less tidy.</p><p>People often want towns in the same region or country to share a clock time. Governments choose the rules, so the boundaries bend around borders and places where people live.</p><p>Where a place sits on the globe helps explain its daylight. It does not, by itself, tell you the exact time on its clocks.</p>"
     },
     {
       "id": "offset-is-not-zone",
-      "html": "<p>A <strong>UTC offset</strong> tells you how far a local clock is ahead of or behind UTC at a particular moment. A time zone includes the rules that determine that offset, including any daylight-saving changes.</p><p>Two places may change their clocks on different dates, or one may not change them at all. The difference between them can therefore vary during the year.</p><p>For a call or a journey, check the cities and the date in a calendar or time-zone tool. IANA’s time-zone database is updated as governments change the rules.</p>",
-      "title": "Why the time difference can change"
+      "title": "UTC is a shared starting clock",
+      "html": "<p><strong>UTC</strong> is the common time reference used to compare clocks around the world. Think of it as our starting clock.</p><p><strong>UTC+2</strong> means a local clock is two hours ahead of that starting clock. When UTC shows 12 noon, the local clock shows 2 in the afternoon.</p><p><strong>UTC−3</strong> means three hours behind. When UTC shows 12 noon, that local clock shows 9 in the morning.</p><p>That difference is called an <strong>offset</strong>. The plus sign means ahead; the minus sign means behind.</p>"
     },
     {
       "id": "clock-arithmetic",
-      "html": "<p>Suppose City A is at UTC+2 and City B is at UTC−3. When it is 14:00 in A, subtract two hours to get 12:00 UTC. Subtract three more to find the time in B: <strong>09:00</strong>.</p><p>Going through UTC gives you a clear intermediate step. Around midnight, remember to check the date as well.</p><details class=\"practice-answer\"><summary>It is 01:00 on Tuesday at UTC+2. What time is it at UTC−3?</summary><p><strong>20:00 on Monday.</strong> Subtracting two hours gives 23:00 Monday UTC, then subtracting three more gives 20:00.</p></details>",
-      "title": "Work through a simple example"
-    },
-    {
-      "id": "quiz-clue",
-      "html": "<p>The example above supplies fixed offsets, so it is a straightforward calculation. For a real city, you first need to know which offset applies on that date. Longitude alone cannot tell you its current legal time.</p>",
-      "title": "Check the place and the date"
+      "title": "Follow one call, step by step",
+      "html": "<p>For this made-up example, City A uses UTC+2 and City B uses UTC−3. It is <strong>2 in the afternoon in City A</strong>, also written as 14:00.</p><ol><li><strong>Find the starting clock.</strong> City A is two hours ahead of UTC. Go back two hours: from 2 in the afternoon to 12 noon.</li><li><strong>Find City B.</strong> Its clock is three hours behind UTC. Go back from noon to 11, then 10, then 9.</li><li><strong>It is 9 in the morning in City B.</strong> That is written as 09:00.</li></ol>"
     },
     {
       "id": "at-a-glance",
-      "title": "At a glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Convert through UTC</caption><thead><tr><th scope=\"col\">Step</th><th scope=\"col\">Clock time</th><th scope=\"col\">Operation</th></tr></thead><tbody><tr><td>City A, UTC+2</td><td>14:00</td><td>Start</td></tr><tr><td>UTC</td><td>12:00</td><td>Subtract 2 hours</td></tr><tr><td>City B, UTC−3</td><td>09:00</td><td>Subtract 3 hours</td></tr></tbody></table></div>"
+      "title": "Three clocks at the same moment",
+      "html": "<div class=\"table-scroll\"><table><caption>Using the fixed differences in our example</caption><thead><tr><th scope=\"col\">Clock</th><th scope=\"col\">Time</th></tr></thead><tbody><tr><td>City A: two hours ahead of UTC</td><td>2 in the afternoon (14:00)</td></tr><tr><td>UTC: our starting clock</td><td>12 noon (12:00)</td></tr><tr><td>City B: three hours behind UTC</td><td>9 in the morning (09:00)</td></tr></tbody></table></div>"
+    },
+    {
+      "id": "quiz-clue",
+      "title": "For a real call, check the city and date",
+      "html": "<p>Some places move their clocks forward or back during the year. Others do not. This is often called <strong>daylight saving time</strong>.</p><p>So a place can use a different offset at different times of year. A time zone includes those rules, not just today’s difference from UTC.</p><p>For a real call or journey, use a calendar or world-clock tool with <strong>both the city and the date</strong>. IANA keeps a database of these clock rules as they change.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "description": "Earth’s rotation gives us a starting point, but borders and daylight-saving rules make local time more complicated.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda",
-  "quiz": {
-    "version": "initial-20260930",
-    "questions": [
-      {
-        "prompt": "What does a UTC offset tell you?",
-        "options": [
-          "A country’s longitude",
-          "A clock’s difference from UTC at a given time",
-          "Every future daylight-saving rule",
-          "The length of the year"
-        ],
-        "answer": 1,
-        "explanation": "An offset gives a difference at a particular moment. A time zone also includes the rules that can change that offset."
-      },
-      {
-        "prompt": "It is 14:00 at UTC+2. What time is it at UTC−3, using those fixed offsets?",
-        "options": [
-          "19:00",
-          "11:00",
-          "09:00",
-          "12:00"
-        ],
-        "answer": 2,
-        "explanation": "Subtract two hours to get 12:00 UTC, then subtract three more: 09:00."
-      },
-      {
-        "prompt": "Why should a real international meeting include both city and date?",
-        "options": [
-          "Time-zone rules can change the applicable offset",
-          "Longitude always gives the legal time",
-          "All places change their clocks together",
-          "UTC changes with every city"
-        ],
-        "answer": 0,
-        "explanation": "The place and date determine the applicable civil-time rules, including daylight saving where used."
-      }
-    ]
-  }
+  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "description": "Your afternoon might be someone else’s morning. Start with a turning Earth, then see why the lines on a time-zone map bend around countries.",
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

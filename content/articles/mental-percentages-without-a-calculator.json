@@ -7,6 +7,44 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
+  "quiz": {
+    "version": "beginner-20260930",
+    "questions": [
+      {
+        "prompt": "What does 50% mean?",
+        "options": [
+          "All of something",
+          "Half of something",
+          "Exactly fifty objects every time",
+          "One object"
+        ],
+        "answer": 1,
+        "explanation": "Fifty out of one hundred is half. Half of ten is five; half of eighty is forty."
+      },
+      {
+        "prompt": "You share 80 oranges equally among ten baskets. Each basket has eight. What is 10% of the oranges?",
+        "options": [
+          "80 oranges",
+          "40 oranges",
+          "10 oranges",
+          "8 oranges"
+        ],
+        "answer": 3,
+        "explanation": "Ten percent is one tenth. One of the ten equal baskets contains eight oranges."
+      },
+      {
+        "prompt": "Of the same 80 oranges, 10% is eight and 5% is four. How many oranges is 15%?",
+        "options": [
+          "12",
+          "4",
+          "8",
+          "15"
+        ],
+        "answer": 0,
+        "explanation": "Fifteen percent is ten percent plus five percent of the same starting amount. Eight plus four is twelve."
+      }
+    ]
+  },
   "slug": "mental-percentages-without-a-calculator",
   "cover": {
     "alt": "Oranges and a balance scale at a market",
@@ -14,7 +52,7 @@
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 2,
-  "title": "How to work out percentages in your head",
+  "title": "What does a percentage mean? Start with 100 squares",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -27,74 +65,41 @@
       "name": "OpenStax — Prealgebra: percent concepts"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "For more mental arithmetic, try a round of Math Rush.",
   "sections": [
     {
-      "id": "ten-first",
-      "html": "<p>To find 15% of 80, start with a simpler number: 10%. Divide 80 by ten to get 8. Half of that gives you 5%, which is 4. Add them together: <strong>15% of 80 is 12</strong>.</p><p>Finding 10% always means dividing by ten. Dropping a zero works for 80, but you will need the division for numbers such as 37: 10% of 37 is 3.7.</p>",
-      "title": "Start with 10%"
+      "id": "meaning",
+      "title": "Percent means “out of one hundred”",
+      "html": "<p>Imagine a tray with <strong>100 little squares</strong>. Colour in 50 of them. You have coloured half the tray.</p><p>You can say “50 out of 100”, or write <strong>50%</strong>. The symbol <strong>%</strong> means “percent”. Fifty percent means fifty out of every hundred: <strong>half</strong>.</p><p>Colour in 25 squares instead and you have coloured <strong>one quarter</strong> of the tray. That is 25%. Colour all one hundred squares and you have 100%: the whole tray.</p>"
     },
     {
       "id": "useful-pieces",
-      "html": "<p>A few familiar percentages give you plenty to work with:</p><ul><li><strong>50% is half:</strong> 50% of 46 is 23.</li><li><strong>25% is a quarter:</strong> 25% of 80 is 20.</li><li><strong>1% is a hundredth:</strong> 1% of 250 is 2.5.</li></ul><p>For 12% of 250, combine 10% and 2%. You get 25 + 5 = <strong>30</strong>. Choose whichever pieces make the calculation easiest.</p>",
-      "title": "Use halves, quarters and hundredths"
+      "title": "The tray does not have to contain 100 things",
+      "html": "<p>A percentage describes a <strong>share</strong>, not a fixed number of objects.</p><p>Half of 10 oranges is 5 oranges. Half of 80 oranges is 40 oranges. Both are <strong>50%</strong> of the oranges you started with, even though the number of oranges is different.</p><p>So whenever you see a percentage, ask: <strong>a share of what?</strong> In our next examples, we will always start with 80 oranges.</p>"
     },
     {
-      "id": "of-what",
-      "html": "<p>A percentage depends on the starting amount. Reduce 100 by 20% and you have 80. Increase that 80 by 20% and you add 16, taking it to 96.</p><p>Why does it not return to 100? The second 20% is calculated from 80, a smaller amount. When a question involves more than one change, write down the amount you are using at each step.</p><details class=\"practice-answer\"><summary>What is 15% of 60?</summary><p><strong>9.</strong> Ten percent is 6 and five percent is 3. Add them together.</p></details>",
-      "title": "Check what the percentage refers to"
+      "id": "ten-first",
+      "title": "Find 10% by making ten equal groups",
+      "html": "<p>On a tray of 100 squares, 10 coloured squares take up one of ten equal groups. That is why <strong>10% means one tenth</strong>.</p><ol><li>Imagine sorting our <strong>80 oranges into ten equal baskets</strong>.</li><li>Each basket holds <strong>8 oranges</strong>. Ten baskets of eight make eighty.</li><li>One basket is one tenth of all the oranges. So <strong>10% of 80 is 8</strong>.</li></ol><p>In maths, sharing equally is called <strong>division</strong>. The sign ÷ means “divide”. You can write the basket step as 80 ÷ 10 = 8.</p>"
     },
     {
-      "id": "practice-pair",
-      "html": "<p>Now find 15% of 120. Ten percent is 12; five percent is 6. The total is <strong>18</strong>, twice the answer for 60, as you would expect.</p><p>Take your time until the pieces feel familiar. Math Rush offers timed arithmetic practice when you fancy a faster challenge, though it is not a dedicated percentage quiz.</p>",
-      "title": "Try the same method on a new number"
+      "id": "build-fifteen",
+      "title": "How do we find 15%?",
+      "html": "<p>Fifteen percent is ten percent and another five percent. Keep using the <strong>same original 80 oranges</strong>.</p><ol><li>We already found 10%: that is <strong>8 oranges</strong>.</li><li>Five is half of ten, so 5% is half as much. Half of eight is <strong>4 oranges</strong>.</li><li>Add the two shares: eight oranges and four oranges make <strong>12 oranges</strong>.</li></ol><p>So <strong>15% of 80 is 12</strong>. We built the answer from two smaller, easier pieces.</p>"
+    },
+    {
+      "id": "quarter",
+      "title": "One quarter is another useful starting point",
+      "html": "<p>We saw that 25% is one quarter. To find 25% of our 80 oranges, split them into <strong>four equal baskets</strong>.</p><p>Each basket holds 20 oranges. So <strong>25% of 80 is 20</strong>.</p><details class=\"practice-answer\"><summary>If there are 20 oranges, how many is 50%?</summary><p>Fifty percent means half. Split 20 oranges into two equal groups. Each group has <strong>10 oranges</strong>.</p></details>"
     },
     {
       "id": "at-a-glance",
-      "title": "At a glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Useful shares of 80</caption><thead><tr><th scope=\"col\">Share</th><th scope=\"col\">Method</th><th scope=\"col\">Amount</th></tr></thead><tbody><tr><td>10%</td><td>80 ÷ 10</td><td>8</td></tr><tr><td>5%</td><td>Half of 10%</td><td>4</td></tr><tr><td>15%</td><td>10% + 5%</td><td>12</td></tr><tr><td>25%</td><td>80 ÷ 4</td><td>20</td></tr></tbody></table></div>"
+      "title": "Keep the original amount in view",
+      "html": "<div class=\"table-scroll\"><table><caption>Each row starts with the same 80 oranges</caption><thead><tr><th scope=\"col\">Share</th><th scope=\"col\">Picture it as…</th><th scope=\"col\">Oranges</th></tr></thead><tbody><tr><td>50%</td><td>Half of all the oranges</td><td>40</td></tr><tr><td>25%</td><td>One of four equal groups</td><td>20</td></tr><tr><td>10%</td><td>One of ten equal groups</td><td>8</td></tr><tr><td>5%</td><td>Half as much as the 10% share</td><td>4</td></tr><tr><td>15%</td><td>The 10% share plus the 5% share</td><td>12</td></tr></tbody></table></div><p>You do not need to memorise the whole table. Start with half, then practise making ten equal groups. The other pieces can come later.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T18:40:48.395302+00:00",
-  "description": "Find 10%, 5% and 1%, then combine them to solve less familiar percentages. Try a few examples at your own pace.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda",
-  "quiz": {
-    "version": "initial-20260930",
-    "questions": [
-      {
-        "prompt": "What is 10% of 80?",
-        "options": [
-          "0.8",
-          "8",
-          "10",
-          "18"
-        ],
-        "answer": 1,
-        "explanation": "Ten percent is one tenth. Divide 80 by 10 to get 8."
-      },
-      {
-        "prompt": "How can you build 15% from familiar percentages?",
-        "options": [
-          "10% − 5%",
-          "10% + 10%",
-          "5% ÷ 10%",
-          "10% + 5%"
-        ],
-        "answer": 3,
-        "explanation": "Fifteen percent is ten percent plus five percent of the same whole."
-      },
-      {
-        "prompt": "What is 25% of 80?",
-        "options": [
-          "20",
-          "25",
-          "40",
-          "60"
-        ],
-        "answer": 0,
-        "explanation": "25% is one quarter: 80 ÷ 4 = 20."
-      }
-    ]
-  }
+  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "description": "Percentages are a way to describe a part of something. Start with shaded squares, then use halves and small equal groups to make sense of the numbers.",
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

@@ -31,7 +31,7 @@ window.BrainiAdmin=(function(){
     questions:["Content","Question Bank"],
     content:["Content","Content Pools"],
     articles:["Content","Articles"],
-    paths:["Content","Learning paths"],
+    paths:["Content","BrainiLab Academy"],
     people:["Content","People & authors"],
     analytics:["Gameplay","Game Analytics"],
     users:["Accounts","Users"],

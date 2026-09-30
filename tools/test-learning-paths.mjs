@@ -21,7 +21,7 @@ assert.ok(!teamSection([...authors,{slug:'private',name:'Private Person',visible
 const env={ASSETS:{fetch:async r=>new Response(new URL(r.url).pathname.startsWith('/about')?readFileSync('about/index.html','utf8'):template)}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
 const fetcher=async url=>new Response(JSON.stringify((url.includes('learn_paths?')?paths:url.includes('learn_authors?')?authors:articles).map(document=>({document}))));
 assert.equal((await serveLearn(new Request('https://brainilabgames.com/learn/paths/missing/'),env,ctx,cache,fetcher)).status,404);
-const page=await serveLearn(new Request('https://brainilabgames.com/learn/paths/'+paths[0].slug+'/'),env,ctx,cache,fetcher);assert.equal(page.status,200);assert.ok((await page.text()).includes('data-lesson-number="3"'));
+const page=await serveLearn(new Request('https://brainilabgames.com/learn/paths/'+paths[0].slug+'/'),env,ctx,cache,fetcher);assert.equal(page.status,200);const pathHTML=await page.text();assert.ok(pathHTML.includes('data-lesson-number="3"'));assert.ok(pathHTML.includes('academy-sidebar'));assert.ok(!pathHTML.includes('What you will learn'));assert.ok(!pathHTML.includes(paths[0].outcomes[0]));assert.ok(pathHTML.includes('BrainiLab Academy'));assert.ok(html.includes('aria-current="page"'));
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),w=dom.window;w.structuredClone=structuredClone;w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
 quiz.questions.forEach((q,i)=>{w.document.querySelector(`[name="question-${i}"][value="${q.answer}"]`).checked=true;});
