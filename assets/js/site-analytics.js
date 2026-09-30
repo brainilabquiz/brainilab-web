@@ -6,7 +6,7 @@ window.BrainiSiteAnalytics=(()=>{
   const completed=new Set();
   // Game-owned round objects deduplicate starts without retaining player identifiers.
   const started=new WeakSet();
-  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections']);
+  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword']);
   function gameStart(gameId,round,mode='anytime'){
     if(!allowed()||!measuredGames.has(gameId)||!round||typeof round!=='object'||started.has(round)||!['daily','anytime'].includes(mode))return;
     started.add(round);send('game_start',{game_id:gameId,mode});
