@@ -46,9 +46,12 @@
   ],
   "practice": "Try a round of Connections and see whether you can find a link that fits the whole set.",
   "cover": {
-    "src": "/assets/images/learn/connections-puzzles-find-the-hidden-link.webp",
-    "alt": "Red objects grouped together on a table",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "src": "/assets/images/learn/connections-puzzles-find-the-hidden-link-diagram.webp",
+    "small": "/assets/images/learn/connections-puzzles-find-the-hidden-link-diagram-small.webp",
+    "thumbnail": "/assets/images/learn/connections-puzzles-find-the-hidden-link-diagram-thumb.webp",
+    "alt": "Four word cards, robin, eagle, owl and swan, connected to one shared question mark",
+    "credit": "Original explanatory illustration by BrainiLab.",
+    "position": 50
   },
   "order": 5,
   "publishedAt": "2026-09-23T19:51:37Z",
