@@ -526,8 +526,9 @@ window.BrainiAdmin=(function(){
             ${dailyHealthy?badge("Healthy","ok"):badge("Needs attention","bad")}
           </div>
 
+          ${dailyHealthExplanation(rotationHealth)}
           <div class="admin-daily-score">
-            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected)).join('')}
+            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected,g.ready)).join('')}
           </div>
 
           <div class="admin-toolbar">
@@ -615,8 +616,25 @@ window.BrainiAdmin=(function(){
     </div>`;
   }
 
-  function dailyGameCard(name,value,expected){
-    const ok=Number(value||0)===expected;
+  function dailyHealthExplanation(health){
+    if(health?.healthy===true)return '';
+    const issues=(health?.game_health||[]).filter(g=>!g.ready);
+    const reasons=issues.map(g=>Number(g.count)===Number(g.expected)
+      ? `${GAME_LABELS[g.game_id]||g.game_id}: content is assigned but its readiness check did not pass.`
+      : `${GAME_LABELS[g.game_id]||g.game_id}: ${Number(g.count)||0} of ${Number(g.expected)||0} items ready.`);
+    if(!health?.exists)reasons.unshift('This date has no generated Daily.');
+    if(health?.game_health?.some(g=>g.game_id==='brainmix')&&health.brainmix){
+      const b=health.brainmix;
+      if(Number(b.easy)!==4||Number(b.medium)!==4||Number(b.hard)!==2)reasons.push(`Brain Mix needs 4 easy, 4 medium and 2 hard questions; found ${Number(b.easy)||0}, ${Number(b.medium)||0} and ${Number(b.hard)||0}. Review the question bank.`);
+    }
+    const expectedGames=health?.daily_rules?.rules_version==='daily-choice-v1'?3:4;
+    if(health?.exists&&health.game_health?.length!==expectedGames)reasons.push(`Expected ${expectedGames} scheduled games; found ${health.game_health?.length||0}. Check the Daily schedule before regenerating a future date.`);
+    if(!reasons.length)reasons.push('The Daily check did not confirm readiness. Open Daily Operations and reload the check before changing content.');
+    return `<div class="admin-note" role="status"><strong>What needs attention</strong><p>${reasons.map(esc).join(' ')}</p></div>`;
+  }
+
+  function dailyGameCard(name,value,expected,ready){
+    const ok=typeof ready==='boolean'?ready:Number(value||0)===expected;
     return `<div class="admin-daily-game">
       <span>${esc(name)}</span>
       <strong>${num(value)} / ${expected}</strong>
@@ -672,7 +690,9 @@ window.BrainiAdmin=(function(){
     await loadDailyHealth();
   }
 
+  let dailyHealthRequest=0;
   async function loadDailyHealth(){
+    const request=++dailyHealthRequest;
     const body=$("#dailyHealthBody");
     if(!body) return;
 
@@ -681,11 +701,17 @@ window.BrainiAdmin=(function(){
     const date=$("#adminDailyDate")?.value||state.lastDailyDate;
     state.lastDailyDate=date;
 
-    const [h,topicRush,orderUp]=await Promise.all([
-      rpc("admin_get_daily_health",{p_date:date}),
-      rpc("admin_get_topic_rush_daily",{p_date:date}),
-      rpc("admin_get_order_up_daily",{p_date:date})
+    const h=await rpc("admin_get_daily_health",{p_date:date});
+    if(request!==dailyHealthRequest||!body.isConnected)return;
+    const scheduled=id=>h?.game_health?.some(g=>g.game_id===id);
+    const supplemental=await Promise.allSettled([
+      scheduled('topicrush')?rpc("admin_get_topic_rush_daily",{p_date:date}):Promise.resolve(null),
+      scheduled('orderup')?rpc("admin_get_order_up_daily",{p_date:date}):Promise.resolve(null)
     ]);
+    if(request!==dailyHealthRequest||!body.isConnected)return;
+    const [topicRush,orderUp]=supplemental.map(r=>r.status==='fulfilled'?r.value:null);
+    const detailErrors=supplemental.map((r,i)=>r.status==='rejected'?['Topic Rush','Order Up'][i]:null).filter(Boolean);
+
 
     if(!h?.exists){
       body.innerHTML=`
@@ -724,12 +750,13 @@ window.BrainiAdmin=(function(){
           </div>
         </div>
 
-        ${dailyHealthy?'':`<div class="admin-note" role="alert"><strong>Check the marked games below.</strong> ${(h.game_health||[]).filter(g=>!g.ready).map(g=>esc((GAME_LABELS[g.game_id]||g.game_id)+': '+g.count+' of '+g.expected+' items ready.')).join(' ')} ${!futureOnly?'Today’s played content must not be regenerated. Review its pool and prepare the next Daily.':'Check the matching Content Pool, then regenerate this unplayed future date.'}</div>`}
+        ${dailyHealthExplanation(h)}
+        ${detailErrors.length?`<div class="admin-note" role="alert">Details could not be loaded for ${detailErrors.map(esc).join(' and ')}. The readiness counts below are still available. Use Load Daily to try again.</div>`:''}
         <div class="admin-daily-score">
-          ${(h.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected)).join('')}
+          ${(h.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected,g.ready)).join('')}
         </div>
         <div class="admin-toolbar">
-          ${(h.game_health||[]).filter(g=>!['brainmix','brainiword','orderup','topicrush'].includes(g.game_id)).map(g=>`<button class="admin-button" data-daily-pool="${esc(g.game_id)}">Review ${esc(GAME_LABELS[g.game_id]||g.game_id)} pool</button>`).join('')}
+          ${(h.game_health||[]).map(g=>`<button class="admin-button" data-daily-pool="${esc(g.game_id)}">Review ${esc(GAME_LABELS[g.game_id]||g.game_id)} ${g.game_id==='brainmix'?'questions':'pool'}</button>`).join('')}
         </div>
 
         <div class="admin-mini-grid" ${h.game_health?.some(g=>g.game_id==='brainmix')?'':'hidden'}>
@@ -814,7 +841,7 @@ window.BrainiAdmin=(function(){
                   <span></span><span></span>
                 </div>`).join("")}
             </div>
-          `).join("") || `<div class="admin-empty">Order Up is not assigned for this Daily.</div>`}
+          `).join("") || `<div class="admin-empty">Order Up details are unavailable for this date.</div>`}
         </section>
 
         <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='topicrush')?'':'hidden'}>
@@ -827,13 +854,13 @@ window.BrainiAdmin=(function(){
               <dt>Accepted answers</dt><dd>${num(topicRush.answer_count)}</dd>
               <dt>Duration</dt><dd>${num(topicRush.duration_seconds)} seconds</dd>
             </dl>
-          `:`<div class="admin-empty">Topic Rush is not assigned for this Daily.</div>`}
+          `:`<div class="admin-empty">Topic Rush details are unavailable for this date.</div>`}
         </section>
       </div>
     `;
 
     body.querySelector("[data-regenerate]")?.addEventListener("click",()=>regenerateDaily(date));
-    body.querySelectorAll('[data-daily-pool]').forEach(btn=>{btn.onclick=safeAction(()=>{state.poolTab=btn.dataset.dailyPool;return navigate('content');});});
+    body.querySelectorAll('[data-daily-pool]').forEach(btn=>{btn.onclick=safeAction(()=>{if(btn.dataset.dailyPool==='brainmix')return navigate('questions');state.poolTab=btn.dataset.dailyPool;return navigate('content');});});
     body.querySelectorAll("[data-open-q]").forEach(btn=>{
       btn.onclick=safeAction(()=>openQuestionEditor(btn.dataset.openQ));
     });

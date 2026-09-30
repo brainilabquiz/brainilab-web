@@ -1,0 +1,31 @@
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const dom=new JSDOM(readFileSync('admin/index.html','utf8'),{url:'https://brainilabgames.com/admin/',runScripts:'outside-only'}),w=dom.window;
+w.eval(readFileSync('assets/js/admin.js','utf8').replace('document.addEventListener("DOMContentLoaded",boot);',''));
+const admin=w.BrainiAdmin;admin.state.admin={role:'owner',permissions:['dashboard','daily','questions','content']};
+let calls=[],health={exists:true,healthy:false,date:'2026-10-02',status:'ready',game_health:[{game_id:'brainmix',count:9,expected:10,ready:false},{game_id:'brainiword',count:1,expected:1,ready:true},{game_id:'topicrush',count:1,expected:1,ready:true}]};
+admin.state.sb={rpc:async(name,args)=>{
+ calls.push(name);
+ if(name==='admin_get_daily_health')return {data:health};
+ if(name==='admin_get_topic_rush_daily')return {error:{message:'Temporary unavailable'}};
+ if(name==='admin_list_questions')return {data:{rows:[],total:0}};
+ return {data:[]};
+}};
+async function settle(){for(let i=0;i<50;i++){await new Promise(r=>setTimeout(r,2));if(!admin.state.rendering)break;}}
+await admin.navigate('daily');await settle();
+assert.match(w.document.querySelector('#dailyHealthBody').textContent,/Brain Mix: 9 of 10 items ready/);
+assert.match(w.document.querySelector('#dailyHealthBody').textContent,/Details could not be loaded for Topic Rush/);
+assert.equal(calls.includes('admin_get_order_up_daily'),false,'unselected engines must not block health');
+assert.equal(w.document.querySelectorAll('[data-daily-pool]').length,3);
+w.document.querySelector('[data-daily-pool="brainmix"]').click();await settle();
+assert.equal(admin.state.currentView,'questions');
+assert.ok(w.document.querySelector('#qSearch'),'question bank renders after the shortcut');
+health={...health,status:'published',brainmix:{easy:5,medium:3,hard:2},game_health:[{game_id:'connections',count:3,expected:3,ready:false},{game_id:'brainmix',count:10,expected:10,ready:true}]};
+await admin.navigate('daily');await settle();
+assert.match(w.document.querySelector('.admin-daily-game').textContent,/Check content/,'explicit readiness overrides matching counts');
+assert.match(w.document.querySelector('#dailyHealthBody').textContent,/found 5, 3 and 2/,'explain difficulty imbalance despite ten assigned questions');
+assert.equal(calls.filter(x=>x==='admin_get_order_up_daily').length,0);
+dom.window.close();
+console.log('PASS: actionable health reasons, all pool shortcuts, question-bank routing, partial detail failure, scheduled-only requests and server readiness.');

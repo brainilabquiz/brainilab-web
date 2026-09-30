@@ -180,7 +180,7 @@ window.BrainiConnections=(function(){
     if(roundsStat) roundsStat.textContent=String(ROUND_COUNT);
     if(roundsLabel) roundsLabel.textContent=dailyMode?"Daily rounds":"Anytime rounds";
     if(maxStat) maxStat.textContent=MAX_SCORE.toLocaleString();
-    if(maxLabel) maxLabel.textContent=dailyMode?"Daily raw max":"Anytime max";
+    if(maxLabel) maxLabel.textContent="Quiz Points max";
     const game=root.querySelector("[data-connections-game]");
     const resultEl=root.querySelector("[data-connections-result]");
     const loading=root.querySelector("[data-connections-loading]");
@@ -195,7 +195,7 @@ window.BrainiConnections=(function(){
     const next=root.querySelector("[data-connections-next]");
     const progress=root.querySelector("[data-connections-progress]");
 
-    let rounds=[],roundIndex=0,totalScore=0,attempts=0,locked=false,roundDetails=[],source="local",startedAt=0,healthTracker=null;
+    let rounds=[],roundIndex=0,totalScore=0,attempts=0,locked=false,roundDetails=[],source="local",startedAt=0,healthTracker=null,finished=false;
 
     function renderRound(){
       const round=rounds[roundIndex];
@@ -208,7 +208,8 @@ window.BrainiConnections=(function(){
       promptEl.textContent=round.prompt||"What connects these?";
       progress.style.width=`${(roundIndex/ROUND_COUNT)*100}%`;
       feedbackEl.innerHTML="";
-      next.hidden=true;
+      next.hidden=true;next.disabled=false;
+      promptEl.tabIndex=-1;promptEl.focus({preventScroll:true});
       next.textContent=roundIndex===ROUND_COUNT-1?"See result":"Next round";
       cluesEl.innerHTML=(round.clues||[]).map(clue=>`<div class="connections-clue">${escapeHtml(clue)}</div>`).join("");
       choicesEl.innerHTML="";
@@ -224,10 +225,9 @@ window.BrainiConnections=(function(){
     }
 
     async function choose(round,choice,button){
-      if(locked || button.disabled) return;
+      if(finished || locked || button.disabled || !next.hidden) return;
       locked=true;
       button.disabled=true;
-      attempts++;
       feedbackEl.innerHTML=`<span class="connections-checking">Checking…</span>`;
 
       let checked;
@@ -239,6 +239,7 @@ window.BrainiConnections=(function(){
         return;
       }
 
+      attempts++;
       const detail=roundDetails[roundIndex] || {
         puzzleId:round.id,
         attempts:0,
@@ -252,6 +253,8 @@ window.BrainiConnections=(function(){
       if(checked.correct){
         const gained=SCORE_BY_ATTEMPT[Math.min(attempts,4)-1]||200;
         detail.score=gained;
+        detail.answer=checked.answer||choice.text;
+        detail.explanation=checked.explanation||"";
         totalScore+=gained;
         button.classList.add("correct");
         choicesEl.querySelectorAll("button").forEach(x=>x.disabled=true);
@@ -271,11 +274,13 @@ window.BrainiConnections=(function(){
     }
 
     async function finish(){
+      if(finished)return;
+      finished=true;next.disabled=true;
       const timeSec=Math.max(1,Math.round((performance.now()-startedAt)/1000));
       const totalAttempts=roundDetails.reduce((sum,x)=>sum+Number(x?.attempts||0),0);
       if(!dailyMode) recordLocalHistory(roundDetails);
       healthTracker?.complete(roundDetails.map((r,i)=>({contentId:r.puzzleId,position:i+1,attempts:r.attempts,isCorrect:true,score:r.score})));
-      let result=await BrainiData.api.submitGameResult("connections",{
+      const payload={
         score:totalScore,
         correct:ROUND_COUNT,
         total:ROUND_COUNT,
@@ -288,36 +293,36 @@ window.BrainiConnections=(function(){
         archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,
         practice:archiveMode,
         challengeDate:dailyDate||null
+      };
+      const practice=archiveMode||PARAMS.get('try')==='1';
+      const result={...payload,practice};
+      game.hidden=true;resultEl.hidden=false;
+      const firstTry=roundDetails.filter(r=>r.attempts===1).length;
+      const save=BrainiPuzzleResults.show(resultEl,{
+        gameId:'connections',name:'Connections',result,
+        summary:firstTry===ROUND_COUNT?'Every link on the first try. Nicely done.':'You found every link. See which ones took a second look.',
+        metrics:[{label:'First try',value:firstTry},{label:'Attempts',value:totalAttempts}],
+        next:{href:scoringDaily?'/daily-quiz/':archiveMode?'/games/':'/games/connections/'+(practice?'?try=1':''),label:scoringDaily?'See today’s Daily':archiveMode?'Choose another game':'Play another set'},
+        guide:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Test a link against every clue'}
       });
-      if(!dailyMode) await recordCloudHistory(roundDetails);
-      await verifyCloudResult(result,roundDetails);
-
-      game.hidden=true;
-      resultEl.hidden=false;
-      resultEl.innerHTML=`
-        <div class="connections-result-inner">
-          <span class="simple-result-kicker">${dailyMode?`${archiveMode?"Past Daily · Practice":"Daily"} #${BrainiData.dailyNumberForDate?.(dailyDate)||""} · `:""}Connections · ${ROUND_COUNT} rounds complete ✓</span>
-          <h2>${totalScore.toLocaleString()} <small>/ ${MAX_SCORE.toLocaleString()}</small></h2>
-          <p>${totalAttempts} total attempt${totalAttempts===1?"":"s"}</p>
-          <div class="connections-result-rounds">
-            ${roundDetails.map((r,i)=>`<div><strong>Round ${i+1}</strong><span>${Number(r.score||0).toLocaleString()} pts · ${r.attempts} attempt${r.attempts===1?"":"s"}</span></div>`).join("")}
-          </div>
-          <div class="inline-quiz-result-actions">
-            <a class="simple-result-play" href="${scoringDaily?"../../daily-quiz/":archiveMode?"../index.html":"./"}">${scoringDaily?"Continue Daily":archiveMode?"Choose another Past Daily game":"Play another Connections"}</a>
-            <button class="simple-result-share" type="button" data-connections-share>Share result</button>
-            <a class="simple-result-progress" href="../index.html">Choose another game</a>
-          </div>
-        </div>`;
-      resultEl.querySelector("[data-connections-share]")?.addEventListener("click",()=>BrainiShare.open("connections",result));
+      const review=document.createElement('details');review.className='puzzle-round-review';
+      review.innerHTML=`<summary>Review ${ROUND_COUNT} connections</summary>${roundDetails.map((r,i)=>`<article><strong>${escapeHtml(rounds[i].clues.join(' · '))}</strong><p>${escapeHtml(r.answer)} · ${r.attempts} attempt${r.attempts===1?'':'s'}</p>${r.explanation?`<p>${escapeHtml(r.explanation)}</p>`:''}</article>`).join('')}`;
+      resultEl.querySelector('.post-guide').before(review);
+      const confirmed=await save(payload);
+      if(confirmed)await verifyCloudResult(confirmed,roundDetails);
+      if(!dailyMode)void recordCloudHistory(roundDetails).catch(()=>{});
     }
 
     next.addEventListener("click",()=>{
+      if(finished||next.hidden)return;
       if(roundIndex<ROUND_COUNT-1){ roundIndex++; renderRound(); }
       else finish();
     });
 
     start.addEventListener("click",async()=>{
+      if(start.disabled)return;
       start.disabled=true;
+      root.querySelector("[data-connections-load-error]").hidden=true;
       loading.hidden=false;
       intro.hidden=true;
       const loaded=await loadGame();
