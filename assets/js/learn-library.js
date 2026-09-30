@@ -8,6 +8,8 @@
   const count=document.querySelector('#learn-count');
   const empty=document.querySelector('.learn-empty');
   const buttons=[...nav.querySelectorAll('[data-topic-filter]')];
+  const select=document.querySelector('#learn-topic');
+  const clearSearch=document.querySelector('.learn-search-clear');
   const normalize=value=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
   const texts=cards.map(card=>normalize(card.textContent));
   let topic='__latest';
@@ -21,13 +23,18 @@
       if(match)visible++;
     });
     buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.topicFilter===topic)));
+    select.value=topic;
+    clearSearch.hidden=!input.value;
     count.textContent=`${visible} article${visible===1?'':'s'}${topic==='__latest'&&!terms.length?' · latest in each topic':topic&&topic!=='__latest'?' · '+topic:''}`;
     empty.hidden=visible!==0;
   }
   nav.hidden=false;
-  input.closest('label').hidden=false;
+  input.closest('.learn-search').hidden=false;
+  select.closest('label').hidden=false;
   buttons.forEach(button=>button.addEventListener('click',()=>{topic=button.dataset.topicFilter;render();}));
   input.addEventListener('input',render);
+  select.addEventListener('change',()=>{topic=select.value;render();});
+  clearSearch.addEventListener('click',()=>{input.value='';render();input.focus();});
   document.querySelector('[data-clear-filters]').addEventListener('click',()=>{topic='';input.value='';render();input.focus();});
   render();
 })();
