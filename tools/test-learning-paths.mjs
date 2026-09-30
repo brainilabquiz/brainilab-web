@@ -15,7 +15,7 @@ const ls=paths[0].lessons.map(l=>({slug:l.slug,version:articles.find(a=>a.slug==
 assert.equal(pathProgress(ls,{[ls[0].slug]:{version:ls[0].version}}).percent,33);assert.equal(pathProgress(ls,{[ls[0].slug]:{version:'outdated'}}).percent,0);
 assert.equal(readyPaths(paths,articles.filter(a=>a.slug!==lesson.slug)).length,2);
 assert.ok(cleanHtml('<table><caption>Compare</caption><tr><th scope="col">A</th><td onclick="bad()">B</td></tr></table>').includes('<th scope="col">'));assert.ok(!cleanHtml('<table onclick="bad()"><tr><td style="color:red">x</td></tr></table>').includes('onclick'));
-const html=renderPage(template,articles,lesson,paths);assert.equal((html.match(/src="\/assets\/js\/learning-paths.bundle/g)||[]).length,1);assert.ok(html.includes('By <a rel="author" href="/about/#biel-sarda">Biel Sardà</a>'));assert.ok(html.includes('data-lesson-quiz'));
+const html=renderPage(template,articles,lesson,paths);assert.equal((html.match(/src="\/assets\/js\/learning-paths.bundle/g)||[]).length,1);assert.match(html,/By <a[^>]+href="\/about\/#biel-sarda"[^>]*>Biel Sardà<\/a>/);assert.ok(html.includes('data-lesson-quiz'));
 const schema=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(schema['@graph'].find(x=>x['@type']==='Article').author['@type'],'Person');
 assert.ok(!teamSection([...authors,{slug:'private',name:'Private Person',visible:false}]).includes('Private Person'));
 const env={ASSETS:{fetch:async r=>new Response(new URL(r.url).pathname.startsWith('/about')?readFileSync('about/index.html','utf8'):template)}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
@@ -24,25 +24,48 @@ assert.equal((await serveLearn(new Request('https://brainilabgames.com/learn/pat
 const page=await serveLearn(new Request('https://brainilabgames.com/learn/paths/'+paths[0].slug+'/'),env,ctx,cache,fetcher);assert.equal(page.status,200);const pathHTML=await page.text();assert.ok(pathHTML.includes('data-lesson-number="3"'));assert.ok(pathHTML.includes('academy-sidebar'));assert.ok(!pathHTML.includes('What you will learn'));assert.ok(!pathHTML.includes(paths[0].outcomes[0]));assert.ok(pathHTML.includes('BrainiLab Academy'));assert.ok(html.includes('aria-current="page"'));
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),w=dom.window;w.structuredClone=structuredClone;w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
-quiz.questions.forEach((q,i)=>{w.document.querySelector(`[name="question-${i}"][value="${q.answer}"]`).checked=true;});
-w.document.querySelector('[data-lesson-quiz]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
-await new Promise(r=>setTimeout(r,0));
+async function playRound(win, quiz, wrongFirst=false){
+ await new Promise(r=>setTimeout(r,10));
+ for(let i=0;i<quiz.questions.length;i++){
+  assert.equal(win.document.querySelectorAll('fieldset:not([hidden])').length,1);
+  const q=quiz.questions[i],choice=wrongFirst&&i===0?(q.answer+1)%4:q.answer;
+  win.document.querySelector(`[name="question-${i}"][value="${choice}"]`).checked=true;
+  win.document.querySelector('[data-lesson-quiz]').dispatchEvent(new win.Event('submit',{bubbles:true,cancelable:true}));
+  await new Promise(r=>setTimeout(r,0));
+  assert.equal(win.document.querySelectorAll(`fieldset[data-question="${i}"] input:not(:disabled)`).length,0);
+  if(i===0&&wrongFirst)assert.equal(win.document.querySelectorAll('.answer.wrong').length,1);
+  win.document.querySelector('[data-quiz-next]').click();
+  await new Promise(r=>setTimeout(r,0));
+ }
+}
+await playRound(w,quiz);
 assert.match(w.document.querySelector('[data-quiz-result]').textContent,/3 of 3 correct/);assert.ok([...w.document.querySelectorAll('[data-explanation]')].every(e=>!e.hidden));
 const stored=w.localStorage.getItem('brainilab_learning_v1:guest');assert.equal(JSON.parse(stored)[lesson.slug].version,quiz.version);
 const pathDom=new JSDOM(renderLearningPage(template,{articles,paths,authors,path:paths[0]}),{url:'https://brainilabgames.com/learn/paths/',runScripts:'outside-only'});pathDom.window.localStorage.setItem('brainilab_learning_v1:guest',stored);pathDom.window.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
 assert.equal(pathDom.window.document.querySelector('[data-lesson-number]').textContent,'✓');assert.match(pathDom.window.document.querySelector('[data-progress-label]').textContent,/33%/);
 w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.querySelectorAll('input:checked').length,0);assert.equal(JSON.parse(w.localStorage.getItem('brainilab_learning_v1:guest'))[lesson.slug].version,quiz.version);
+// Every navigational link carries the explicit new-tab policy.
+for(const a of w.document.querySelectorAll('a[href]')){assert.equal(a.target,'_blank');assert.ok(a.relList.contains('noopener'));}
 dom.window.close();pathDom.window.close();
+// Every current Academy lesson has a working in-article lab.
+for(const article of articles.filter(a=>a.quiz)){
+ const labDom=new JSDOM(renderPage(template,articles,article,paths),{url:'https://brainilabgames.com/learn/'+article.slug+'/',runScripts:'outside-only'}),lw=labDom.window;
+ lw.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
+ const lab=lw.document.querySelector('[data-academy-lab]');assert.ok(lab,article.slug);assert.ok(lab.querySelector('[data-lab-output]').textContent.length>25);
+ const input=lab.querySelector('input,select');if(input){input.value=input.type==='range'?input.max:input.type==='number'?'2000':'1';input.dispatchEvent(new lw.Event('input',{bubbles:true}));assert.ok(lab.querySelector('[data-lab-output]').textContent.length>20);}
+ if(article.slug==='multiply-by-11-in-your-head'){const cell=lab.querySelector('[data-r="8"][data-c="2"]');cell.click();assert.match(lab.querySelector('.lab-equation').textContent,/8 × 2 = 16/);assert.equal(lab.querySelectorAll('button.is-product').length,1);cell.dispatchEvent(new lw.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.match(lab.querySelector('.lab-equation').textContent,/8 × 3 = 24/);}
+ if(article.slug==='mental-math-round-and-adjust'){for(let i=0;i<4;i++)lab.querySelector('[data-step]').click();assert.match(lab.querySelector('[data-lab-output]').textContent,/65 real stickers/);}
+ labDom.window.close();
+}
 // Account switches must not reuse guest answers, and old server versions must not erase current local completion.
 const accountDom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),aw=accountDom.window;
 aw.localStorage.setItem('brainilab_learning_v1:account-a',stored);
 const client={auth:{getSession:async()=>({data:{session:{user:{id:'account-a'}}}})},from:()=>({select:()=>({eq:async(_,id)=>({data:id==='account-a'?[{article_slug:lesson.slug,quiz_version:'old-version',score:1,total:3}]:[]})})}),rpc:async()=>({data:{}})};
 aw.BrainiBackendAuth={getClient:()=>client};aw.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));await new Promise(r=>setTimeout(r,10));
 assert.match(aw.document.querySelector('[data-progress-label]').textContent,/33%/);
-quiz.questions.forEach((q,i)=>aw.document.querySelector(`[name="question-${i}"][value="${q.answer}"]`).checked=true);
-aw.document.querySelector('form[data-lesson-quiz]').dispatchEvent(new aw.Event('submit',{cancelable:true}));await new Promise(r=>setTimeout(r,10));
+await playRound(aw,quiz,true);
 aw.dispatchEvent(new aw.CustomEvent('brainilab:backend-auth',{detail:{session:{user:{id:'account-b'}}}}));await new Promise(r=>setTimeout(r,10));
-assert.match(aw.document.querySelector('[data-progress-label]').textContent,/0%/);assert.equal(aw.document.querySelectorAll('input:checked,input:disabled').length,0);assert.equal(aw.document.querySelector('[type=submit]').hidden,false);accountDom.window.close();
+assert.match(aw.document.querySelector('[data-progress-label]').textContent,/0%/);assert.equal(aw.document.querySelectorAll('input:checked').length,0);assert.equal(aw.document.querySelectorAll('fieldset:not([hidden]) input:disabled').length,0);assert.equal(aw.document.querySelector('[type=submit]').hidden,false);accountDom.window.close();
 // Admin: edit person/socials, path order and selected author without touching production.
 const admin=new JSDOM('<div id="root"></div>',{url:'https://brainilabgames.com/admin/',runScripts:'outside-only'}),a=admin.window;a.structuredClone=structuredClone;a.confirm=()=>true;
 const ar=authors.map(document=>({slug:document.slug,revision:1,document})),pr=paths.map(document=>({slug:document.slug,revision:1,document,published_revision:1}));let saved;

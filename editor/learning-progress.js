@@ -1,4 +1,7 @@
 import {gradeQuiz,pathProgress} from '../lib/learning-model.js';
+import {initLabs} from './academy-labs.js';
+initLabs();
+const resetters=new Map();
 // Each account gets its own local cache. Anonymous reading never signs a user in.
 let records={},account='guest',sb=null,epoch=0,pending=null,identified=false;
 const key=()=>`brainilab_learning_v1:${account}`;
@@ -16,7 +19,7 @@ function note(text){document.querySelectorAll('[data-progress-storage]').forEach
 async function identify(session){
  const next=session?.user&&!session.user.is_anonymous?session.user.id:'guest';if(identified&&next===account)return;identified=true;
  const token=++epoch;account=next;pending=null;load();paint();
- blocks.forEach(el=>{const form=el.querySelector('form');form.reset();form.querySelectorAll('input,button').forEach(e=>e.disabled=false);form.querySelector('[type=submit]').hidden=false;form.querySelector('[data-quiz-retry]').hidden=true;el.querySelectorAll('[data-explanation]').forEach(e=>e.hidden=true);el.querySelector('[data-sync-retry]').hidden=true;el.querySelector('[data-quiz-result]').textContent='';});
+ blocks.forEach(el=>resetters.get(el)?.());
  if(account==='guest'){note('Your progress is saved on this device. Finish a quick quiz to tick off a chapter.');return;}
  try{
   const result=await sb.from('learn_progress').select('article_slug,quiz_version,score,total').eq('user_id',account);
@@ -25,24 +28,44 @@ async function identify(session){
  }catch{if(token===epoch)note('Account progress could not be loaded. Local progress is still available; reload to try again.');}
 }
 async function sync(el,quiz,answers,token){
- let error;try{({error}=await sb.rpc('complete_learn_lesson',{p_slug:el.dataset.quizSlug,p_version:quiz.version,p_answers:answers}));}catch(e){error=e;}
+ let error,data;try{({error,data}=await sb.rpc('complete_learn_lesson',{p_slug:el.dataset.quizSlug,p_version:quiz.version,p_answers:answers}));}catch(e){error=e;}
  if(token!==epoch)return;
  if(error){pending={el,quiz,answers,token};el.querySelector('[data-sync-retry]').hidden=false;el.querySelector('[data-quiz-result]').append(document.createTextNode(' Saved on this browser only. Account sync failed; use Retry saving.'));}
- else{pending=null;el.querySelector('[data-sync-retry]').hidden=true;el.querySelector('[data-quiz-result]').append(document.createTextNode(' Saved to your account.'));}
+ else{pending=null;el.querySelector('[data-sync-retry]').hidden=true;el.querySelector('[data-quiz-result]').append(document.createTextNode(data?.xp_awarded>0?` +${data.xp_awarded} XP added to your account. Ranking points stay unchanged.`:' Saved to your account. This lesson’s XP has already been collected.'));void window.BrainiProgression?.sync?.();}
 }
 for(const el of blocks){
- const quiz=JSON.parse(el.querySelector('[data-quiz-data]').textContent),form=el.querySelector('form'),result=el.querySelector('[data-quiz-result]');form.hidden=false;
+ const quiz=JSON.parse(el.querySelector('[data-quiz-data]').textContent),form=el.querySelector('form'),result=el.querySelector('[data-quiz-result]');
+ const fields=[...form.querySelectorAll('fieldset')],submit=form.querySelector('[type=submit]'),next=form.querySelector('[data-quiz-next]'),retry=form.querySelector('[data-quiz-retry]');
+ let index=0,answers=[],checked=false,finished=false;
+ form.hidden=false;
+ function show(){
+  fields.forEach((field,i)=>{field.hidden=i!==index;field.querySelectorAll('input').forEach(input=>input.disabled=i!==index||checked||finished);});
+  form.querySelector('[data-question-counter]').textContent=finished?'Round complete':`Question ${index+1} of ${quiz.questions.length}`;
+  form.querySelector('[data-round-progress]').value=answers.length;
+  submit.hidden=checked||finished;submit.disabled=false;next.hidden=!checked||finished;next.textContent=index===fields.length-1?'Finish lesson ✓':'Next question →';retry.hidden=!finished;
+ }
+ function reset(){
+  index=0;answers=[];checked=false;finished=false;pending=null;form.reset();form.querySelectorAll('button').forEach(b=>b.disabled=false);
+  form.querySelectorAll('.answer').forEach(label=>label.classList.remove('correct','wrong'));
+  el.querySelectorAll('[data-explanation]').forEach(e=>e.hidden=true);el.querySelector('[data-sync-retry]').hidden=true;result.textContent='';show();
+ }
+ resetters.set(el,reset);reset();
  form.addEventListener('submit',async event=>{
-  event.preventDefault();await sessionReady;const submit=form.querySelector('[type=submit]');if(submit.disabled)return;
-  const answers=quiz.questions.map((_,i)=>Number(new FormData(form).get('question-'+i))),token=epoch;
-  if(!form.reportValidity())return;
-  const score=gradeQuiz(quiz,answers);records[el.dataset.quizSlug]={version:quiz.version,...score};const persisted=save();paint();
-  form.querySelectorAll('input').forEach(input=>input.disabled=true);submit.disabled=true;submit.hidden=true;form.querySelector('[data-quiz-retry]').hidden=false;
-  quiz.questions.forEach((q,i)=>{const out=el.querySelector(`[data-explanation="${i}"]`);out.hidden=false;out.textContent=`${answers[i]===q.answer?'Correct.':'Answer: '+ 'ABCD'[q.answer]+'.'} ${q.explanation}`;});
-  result.textContent=`${score.score} of ${score.total} correct. Round completed ✓. Read the explanations and revisit any answer you want to practise.${persisted?'':' Browser storage is unavailable; progress lasts only for this page visit.'}`;result.focus();
-  if(account!=='guest'&&sb)await sync(el,quiz,answers,token);
+  event.preventDefault();const started=epoch;await sessionReady;if(started!==epoch||checked||finished)return;
+  const selected=fields[index].querySelector('input:checked');if(!selected){form.reportValidity();return;}
+  const answer=Number(selected.value),q=quiz.questions[index];answers.push(answer);checked=true;
+  fields[index].querySelectorAll('label').forEach((label,j)=>{label.classList.toggle('correct',j===q.answer);label.classList.toggle('wrong',j===answer&&answer!==q.answer);});
+  const explanation=el.querySelector(`[data-explanation="${index}"]`);explanation.hidden=false;explanation.textContent=`${answer===q.answer?'Correct!':'The answer is '+ 'ABCD'[q.answer]+'.'} ${q.explanation}`;show();next.focus();
  });
- form.querySelector('[data-quiz-retry]').onclick=()=>{form.reset();form.querySelectorAll('input,button').forEach(e=>e.disabled=false);form.querySelector('[type=submit]').hidden=false;form.querySelector('[data-quiz-retry]').hidden=true;el.querySelectorAll('[data-explanation]').forEach(e=>e.hidden=true);result.textContent='Your completed lesson stays saved while you practise again.';form.querySelector('input').focus();};
+ next.onclick=async()=>{
+  if(!checked||finished)return;
+  if(index<fields.length-1){index++;checked=false;show();fields[index].querySelector('legend').focus();return;}
+  finished=true;const token=epoch,score=gradeQuiz(quiz,answers);records[el.dataset.quizSlug]={version:quiz.version,...score};const persisted=save();paint();show();
+  fields.forEach(field=>field.hidden=false);
+  result.textContent=`${score.score} of ${score.total} correct. Lesson completed ✓. You can practise again whenever you like.${account==='guest'?' Sign in and complete the round to collect your 40 XP.':''}${persisted?'':' Browser storage is unavailable; progress lasts only for this page visit.'}`;result.focus();
+  if(account!=='guest'&&sb)await sync(el,quiz,answers,token);
+ };
+ retry.onclick=()=>{reset();result.textContent='Your completed lesson stays saved while you practise again. Replays do not earn more XP.';fields[0].querySelector('legend').focus();};
  el.querySelector('[data-sync-retry]').onclick=async()=>{if(!pending||pending.el!==el)return;const button=el.querySelector('[data-sync-retry]');button.disabled=true;try{await sync(el,pending.quiz,pending.answers,pending.token);}finally{button.disabled=false;}};
 }
 load();paint();

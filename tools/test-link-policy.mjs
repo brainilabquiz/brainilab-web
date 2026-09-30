@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+import {newTabLinks} from '../lib/link-policy.js';
+const source=`<a rel="author" href="/about/">Author</a><a href='#part' target='_self'>Part</a><script>const template='<a href="/example/">Example</a>';</script><style>a:after{content:'<a href="/x/">'}</style>`;
+const transformed=newTabLinks(source);
+assert.ok(transformed.includes('rel="author noopener noreferrer"'));
+assert.ok(transformed.includes("<a href='#part' target=\"_blank\""));
+assert.ok(transformed.includes(`<script>const template='<a href="/example/">Example</a>';</script>`));
+assert.equal(newTabLinks(transformed),transformed);
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const dom=new JSDOM(transformed,{runScripts:'outside-only',url:'https://brainilabgames.com/'});
+dom.window.eval(readFileSync('assets/js/link-policy.js','utf8'));
+const link=dom.window.document.createElement('a');link.href='/learn/';dom.window.document.body.append(link);
+await new Promise(r=>setTimeout(r,0));assert.equal(link.target,'_blank');assert.ok(link.relList.contains('noopener'));dom.window.close();
+console.log('PASS: new-tab links preserve author semantics, inline code, idempotence and dynamically added anchors.');
