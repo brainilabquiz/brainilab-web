@@ -11,6 +11,7 @@ admin.state.sb={rpc:async(name,args)=>{
  if(name==='admin_add_brainiword_word')return new Promise(resolve=>resolveAdd=()=>resolve({data:{}}));
  if(name==='admin_get_content_pools')return {data:{brainiword:{rows:[]}}};
  if(name==='admin_content_health_overview')return {data:{rows:[]}};
+ if(name==='admin_get_daily_health')return {data:{exists:true,healthy:true,date:'2026-10-02',daily_number:35,status:'ready',game_health:[{game_id:'connections',role:'Main Daily',count:3,expected:3,ready:true},{game_id:'numberroute',role:'Optional extra',count:3,expected:3,ready:true},{game_id:'sequence',role:'Optional extra',count:10,expected:10,ready:true}],daily_rules:{rules_version:'daily-choice-v1'}}};
  if(name.includes('rankings'))return {data:{rows:[],total_players:0}};
  if(name==='admin_list_questions')return {data:{rows:[],total:0}};
  return {data:[]};
@@ -28,4 +29,12 @@ assert.equal(w.document.querySelector('#aRankCountry').disabled,true);
 w.document.querySelector('#aRankMetric').value='streak';w.document.querySelector('#aRankMetric').dispatchEvent(new w.Event('change'));
 assert.equal(w.document.querySelector('#aRankGame').disabled,true);assert.equal(w.document.querySelector('#aRankPeriod').disabled,true);
 assert.ok(!w.document.querySelector('#adminContent').textContent.includes('Could not load'));
-dom.window.close();console.log('PASS: compact import library, relevant pool controls, duplicate-submit protection, complete game filter and honest streak/country controls.');
+await admin.navigate('daily');await settle();
+for(const title of ['Brain Mix','BrainiWord','Order Up','Topic Rush']){
+ const heading=[...w.document.querySelectorAll('#dailyHealthBody h2')].find(e=>e.textContent===title);
+ assert.ok(heading?.closest('[hidden]'),title+' must not be visible outside the selected Daily');
+}
+assert.equal(w.document.querySelectorAll('[data-daily-pool]').length,3);
+w.document.querySelector('[data-daily-pool="numberroute"]').click();await settle();
+assert.equal(admin.state.poolTab,'numberroute');assert.ok(w.document.querySelector('[data-pool="numberroute"]').classList.contains('active'));
+dom.window.close();console.log('PASS: compact imports, pool controls, duplicate submits, ranking filters, scheduled Daily panels and working pool shortcuts.');

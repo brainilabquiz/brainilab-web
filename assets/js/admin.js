@@ -728,6 +728,9 @@ window.BrainiAdmin=(function(){
         <div class="admin-daily-score">
           ${(h.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected)).join('')}
         </div>
+        <div class="admin-toolbar">
+          ${(h.game_health||[]).filter(g=>!['brainmix','brainiword','orderup','topicrush'].includes(g.game_id)).map(g=>`<button class="admin-button" data-daily-pool="${esc(g.game_id)}">Review ${esc(GAME_LABELS[g.game_id]||g.game_id)} pool</button>`).join('')}
+        </div>
 
         <div class="admin-mini-grid" ${h.game_health?.some(g=>g.game_id==='brainmix')?'':'hidden'}>
           <div class="admin-mini-card"><span>Easy</span><strong>${num(h.brainmix?.easy)}</strong></div>
@@ -758,8 +761,8 @@ window.BrainiAdmin=(function(){
         `:""}
       </section>
 
-      <div class="admin-panels">
-        <section class="admin-panel">
+      <div class="admin-panels" ${h.game_health?.some(g=>['brainmix','brainiword'].includes(g.game_id))?'':'hidden'}>
+        <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='brainmix')?'':'hidden'}>
           <div class="admin-panel-head"><div><h2>Brain Mix</h2><p>4 Easy · 4 Medium · 2 Hard</p></div></div>
           <div class="admin-question-list">
             ${(h.brainmix?.questions||[]).map(q=>`
@@ -775,7 +778,7 @@ window.BrainiAdmin=(function(){
           </div>
         </section>
 
-        <section class="admin-panel">
+        <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='brainiword')?'':'hidden'}>
           <div class="admin-panel-head"><div><h2>BrainiWord</h2><p>Secret is visible only inside Admin.</p></div></div>
           <div class="admin-mini-card"><span>Today's word</span><strong class="admin-code">${esc(h.brainiword?.word||"—")}</strong></div>
           <div class="admin-panel-head" style="margin-top:15px"><div><h2>Generated</h2></div></div>
@@ -787,7 +790,7 @@ window.BrainiAdmin=(function(){
         </section>
       </div>
 
-      <div class="admin-panels">
+      <div class="admin-panels" ${h.game_health?.some(g=>['orderup','topicrush'].includes(g.game_id))?'':'hidden'}>
         <section class="admin-panel" ${h.game_health?.some(g=>g.game_id==='orderup')?'':'hidden'}>
           <div class="admin-panel-head">
             <div>
@@ -830,6 +833,7 @@ window.BrainiAdmin=(function(){
     `;
 
     body.querySelector("[data-regenerate]")?.addEventListener("click",()=>regenerateDaily(date));
+    body.querySelectorAll('[data-daily-pool]').forEach(btn=>{btn.onclick=safeAction(()=>{state.poolTab=btn.dataset.dailyPool;return navigate('content');});});
     body.querySelectorAll("[data-open-q]").forEach(btn=>{
       btn.onclick=safeAction(()=>openQuestionEditor(btn.dataset.openQ));
     });
