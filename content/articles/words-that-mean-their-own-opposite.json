@@ -1,0 +1,65 @@
+{
+  "slug": "words-that-mean-their-own-opposite",
+  "topic": "Words & puzzles",
+  "title": "How can a word mean its own opposite?",
+  "description": "Dust can mean adding something or taking it away. Meet contronyms, the words that pull in two directions, and try a few examples.",
+  "sections": [
+    {
+      "id": "two-jobs",
+      "title": "One instruction, two very different jobs",
+      "html": "<p>Dust the shelf. Dust the biscuits with sugar. In the first job, you are removing tiny particles. In the second, you are adding them.</p><p>English has a name for words with opposing meanings: <strong>contronyms</strong>. You may also see them called <em>Janus words</em>. The surprising part is that we can often understand them without noticing the contradiction. The rest of the sentence does the work.</p>"
+    },
+    {
+      "id": "dust",
+      "title": "Dust: put it on or take it off?",
+      "html": "<p>Merriam-Webster records both senses of the verb <em>dust</em>: clearing dust away and sprinkling a surface with fine particles.</p><p>Compare these two instructions:</p><ul><li><strong>Dust the model spaceship before putting it on display.</strong> You want a cleaner spaceship.</li><li><strong>Dust the dough with flour before rolling it.</strong> You want a light coating.</li></ul><p>The word has not changed. Its object and the surrounding instructions tell you which action makes sense. If someone just said “dust it” and pointed towards a crowded kitchen counter, you might reasonably ask what they meant.</p>"
+    },
+    {
+      "id": "fast",
+      "title": "Fast can move—or stay firmly put",
+      "html": "<p>A fast cyclist moves quickly. A wheel stuck fast cannot move at all. The dictionary includes both rapid movement and being firmly fixed among the meanings of <em>fast</em>.</p><p>That does not mean every use is interchangeable. You would not normally call a stuck wheel “a fast wheel” and expect someone to understand that it cannot turn. Familiar phrases matter as much as the individual word.</p><p>Nor is every word with two meanings a contronym. A <em>bat</em> can be an animal or sporting equipment, but those meanings are different rather than opposite.</p>"
+    },
+    {
+      "id": "try-it",
+      "title": "Can you spot the direction?",
+      "html": "<p>Read this little scene: <strong>“The runner moved fast, but the gate was held fast by a rusty bolt.”</strong> Which use describes movement, and which describes the lack of it?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p>The runner moves <strong>quickly</strong>. The gate is held <strong>firmly in place</strong>. The same spelling helps describe opposite situations.</p></details><p>Now write two instructions using <em>dust</em>, one for cleaning and one for cooking. Add enough context that a reader cannot confuse them.</p><p>That habit of trying another meaning is also useful when you <a href=\"/learn/connections-puzzles-find-the-hidden-link/\">look for the link in a Connections puzzle</a>. A familiar-looking word may have another job waiting for it.</p>"
+    }
+  ],
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "All games",
+    "url": "/games/"
+  },
+  "related": [
+    "connections-puzzles-find-the-hidden-link"
+  ],
+  "practice": "Ready to look at familiar clues in a different way? Try Connections.",
+  "sources": [
+    {
+      "name": "Merriam-Webster — Words that are their own opposites",
+      "url": "https://www.merriam-webster.com/wordplay/words-own-opposites"
+    },
+    {
+      "name": "Merriam-Webster — Dust",
+      "url": "https://www.merriam-webster.com/dictionary/dust"
+    },
+    {
+      "name": "Merriam-Webster — Fast",
+      "url": "https://www.merriam-webster.com/dictionary/fast"
+    }
+  ],
+  "status": "published",
+  "order": 26,
+  "publishedAt": "2026-09-30T17:06:40.272Z",
+  "cover": {
+    "src": "/assets/images/learn/words-that-mean-their-own-opposite.webp",
+    "small": "/assets/images/learn/words-that-mean-their-own-opposite-small.webp",
+    "thumbnail": "/assets/images/learn/words-that-mean-their-own-opposite-thumb.webp",
+    "alt": "The word DUST between two cards: remove particles from a shelf, or add a dusting to dough",
+    "credit": "Original explanatory illustration by BrainiLab; schematic, not a historical photograph.",
+    "position": 50
+  }
+}

@@ -25,7 +25,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  assert.equal(visible().length,0);assert.equal(d.querySelector('.learn-empty').hidden,false);
  d.querySelector('.learn-search-clear').click();
  assert.equal(select.value,'Sports');assert.equal(d.activeElement,input);
- assert.equal(visible().length,2);assert.ok(d.querySelector('.learn-search-clear').hidden);
+ assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);assert.ok(d.querySelector('.learn-search-clear').hidden);
  d.querySelector('[data-topic-filter="__latest"]').click();
  input.value='bubble wrap';input.dispatchEvent(new w.Event('input'));
  assert.equal(visible().length,1,'Latest search also finds older articles');

@@ -8,16 +8,46 @@
       "hubSlug": "everyday-inventions-and-the-problems-they-solved",
       "hubTitle": "10 everyday inventions and the problems they solved",
       "members": [
-        {"slug": "was-bubble-wrap-invented-as-wallpaper", "angle": "A textured wall covering finds a role in protective packaging."},
-        {"slug": "how-post-it-notes-were-invented", "angle": "A removable adhesive keeps a bookmark in place and becomes a note."},
-        {"slug": "how-hook-and-loop-fasteners-work", "angle": "Investigate how burrs inspired a reusable fastening system."},
-        {"slug": "why-zippers-have-interlocking-teeth", "angle": "Explain how rows of teeth make a closure that can reopen."},
-        {"slug": "how-safety-pins-got-their-clasp", "angle": "Investigate how a clasp covers a sharp point while holding fabric."},
-        {"slug": "why-ballpoint-pens-have-a-tiny-ball", "angle": "Explain the rolling ball that transfers ink to paper."},
-        {"slug": "why-pencils-have-erasers", "angle": "Investigate the combination of writing and correcting in one tool."},
-        {"slug": "how-corrugated-cardboard-protects-parcels", "angle": "Explain how a fluted layer gives a lightweight sheet structure."},
-        {"slug": "why-can-openers-came-after-cans", "angle": "Investigate the gap between a storage container and a convenient opening tool."},
-        {"slug": "how-drinking-straws-got-their-bend", "angle": "Investigate how a flexible section changed the use of a drinking straw."}
+        {
+          "slug": "was-bubble-wrap-invented-as-wallpaper",
+          "angle": "A textured wall covering finds a role in protective packaging."
+        },
+        {
+          "slug": "how-post-it-notes-were-invented",
+          "angle": "A removable adhesive keeps a bookmark in place and becomes a note."
+        },
+        {
+          "slug": "how-hook-and-loop-fasteners-work",
+          "angle": "Investigate how burrs inspired a reusable fastening system."
+        },
+        {
+          "slug": "why-zippers-have-interlocking-teeth",
+          "angle": "Explain how rows of teeth make a closure that can reopen."
+        },
+        {
+          "slug": "how-safety-pins-got-their-clasp",
+          "angle": "Investigate how a clasp covers a sharp point while holding fabric."
+        },
+        {
+          "slug": "why-ballpoint-pens-have-a-tiny-ball",
+          "angle": "Explain the rolling ball that transfers ink to paper."
+        },
+        {
+          "slug": "why-pencils-have-erasers",
+          "angle": "Investigate the combination of writing and correcting in one tool."
+        },
+        {
+          "slug": "how-corrugated-cardboard-protects-parcels",
+          "angle": "Explain how a fluted layer gives a lightweight sheet structure."
+        },
+        {
+          "slug": "why-can-openers-came-after-cans",
+          "angle": "Investigate the gap between a storage container and a convenient opening tool."
+        },
+        {
+          "slug": "how-drinking-straws-got-their-bend",
+          "angle": "Investigate how a flexible section changed the use of a drinking straw."
+        }
       ]
     },
     {
@@ -27,26 +57,295 @@
       "hubSlug": "mental-maths-and-number-puzzles-guide",
       "hubTitle": "Mental maths and number puzzles: 10 ways to get started",
       "members": [
-        {"slug": "mental-percentages-without-a-calculator", "angle": "Build percentages from manageable parts."},
-        {"slug": "multiply-by-11-in-your-head", "angle": "Use place value to multiply by eleven."},
-        {"slug": "mental-math-round-and-adjust", "angle": "Round to a convenient value and compensate."},
-        {"slug": "divide-by-five-in-your-head", "angle": "Double a number and divide by ten; explain why it works."},
-        {"slug": "square-numbers-ending-in-five", "angle": "Use the tens part and its successor; explain the limits and proof."},
-        {"slug": "make-ten-mental-addition", "angle": "Regroup addition into tens with original practice examples."},
-        {"slug": "check-division-with-multiplication", "angle": "Check quotients and remainders by reversing the operation."},
-        {"slug": "number-sequences-look-at-the-gaps", "angle": "Use differences to investigate a numerical pattern."},
-        {"slug": "how-to-play-number-route", "angle": "Follow the running total and operation choices in a game."},
-        {"slug": "five-number-puzzles-printable", "angle": "Apply the skills in five worked paper puzzles."}
+        {
+          "slug": "mental-percentages-without-a-calculator",
+          "angle": "Build percentages from manageable parts."
+        },
+        {
+          "slug": "multiply-by-11-in-your-head",
+          "angle": "Use place value to multiply by eleven."
+        },
+        {
+          "slug": "mental-math-round-and-adjust",
+          "angle": "Round to a convenient value and compensate."
+        },
+        {
+          "slug": "divide-by-five-in-your-head",
+          "angle": "Double a number and divide by ten; explain why it works."
+        },
+        {
+          "slug": "square-numbers-ending-in-five",
+          "angle": "Use the tens part and its successor; explain the limits and proof."
+        },
+        {
+          "slug": "make-ten-mental-addition",
+          "angle": "Regroup addition into tens with original practice examples."
+        },
+        {
+          "slug": "check-division-with-multiplication",
+          "angle": "Check quotients and remainders by reversing the operation."
+        },
+        {
+          "slug": "number-sequences-look-at-the-gaps",
+          "angle": "Use differences to investigate a numerical pattern."
+        },
+        {
+          "slug": "how-to-play-number-route",
+          "angle": "Follow the running total and operation choices in a game."
+        },
+        {
+          "slug": "five-number-puzzles-printable",
+          "angle": "Apply the skills in five worked paper puzzles."
+        }
+      ]
+    },
+    {
+      "id": "word-meanings-and-connections-1",
+      "topic": "Words & puzzles",
+      "readerQuestion": "How can I recognise different relationships between words and use them to solve a connection?",
+      "hubSlug": "word-meanings-and-connections-guide",
+      "hubTitle": "Words with a twist: 10 ways to understand a connection",
+      "members": [
+        {
+          "slug": "connections-puzzles-find-the-hidden-link",
+          "angle": "Test one shared relationship against every clue."
+        },
+        {
+          "slug": "words-that-mean-their-own-opposite",
+          "angle": "Use context to distinguish opposing meanings of a contronym."
+        },
+        {
+          "slug": "homophones-same-sound-different-meaning",
+          "angle": "Separate sound from spelling with original paired clues."
+        },
+        {
+          "slug": "homographs-same-spelling-different-meaning",
+          "angle": "Recognise identical spellings with distinct meanings and pronunciations."
+        },
+        {
+          "slug": "polysemy-one-word-related-meanings",
+          "angle": "Trace related senses without treating every ambiguity as a contronym."
+        },
+        {
+          "slug": "compound-word-connections",
+          "angle": "Find a missing word that can complete several compounds."
+        },
+        {
+          "slug": "words-hidden-inside-other-words",
+          "angle": "Recognise a shared substring while distinguishing letters from meaning."
+        },
+        {
+          "slug": "anagrams-change-the-order",
+          "angle": "Check letter counts when rearranging words."
+        },
+        {
+          "slug": "category-or-association-word-puzzles",
+          "angle": "Distinguish belonging to a category from merely suggesting it."
+        },
+        {
+          "slug": "figurative-language-in-word-clues",
+          "angle": "Recognise literal and figurative readings of the same clue."
+        }
+      ]
+    },
+    {
+      "id": "remembering-what-you-learn-1",
+      "topic": "Learning",
+      "readerQuestion": "How can I turn a short piece of reading or quiz feedback into something I can check and recall later?",
+      "hubSlug": "remembering-what-you-learn-guide",
+      "hubTitle": "From curiosity to recall: 10 ways to work with what you learn",
+      "members": [
+        {
+          "slug": "remember-quiz-answers-tomorrow",
+          "angle": "Try retrieval after learning and compare the answer with feedback."
+        },
+        {
+          "slug": "can-a-wrong-guess-help-you-learn",
+          "angle": "Attempt a question before studying the correct explanation; distinguish pretesting."
+        },
+        {
+          "slug": "space-your-quiz-reviews",
+          "angle": "Compare spaced and immediate review with a modest practical schedule."
+        },
+        {
+          "slug": "recognising-is-not-recalling",
+          "angle": "Distinguish selecting a familiar answer from producing one without choices."
+        },
+        {
+          "slug": "explain-an-answer-in-your-own-words",
+          "angle": "Use self-explanation without confusing fluency with accuracy."
+        },
+        {
+          "slug": "make-a-useful-flashcard",
+          "angle": "Turn one verified fact into a focused question and checkable answer."
+        },
+        {
+          "slug": "compare-confusable-facts-side-by-side",
+          "angle": "Contrast two facts likely to be mixed up with discriminating features."
+        },
+        {
+          "slug": "confidence-is-not-a-memory-test",
+          "angle": "Record confidence before checking rather than judging by familiarity."
+        },
+        {
+          "slug": "keep-a-small-error-notebook",
+          "angle": "Track corrected misconceptions without rehearsing the error alone."
+        },
+        {
+          "slug": "when-a-memory-cue-needs-checking",
+          "angle": "Use a mnemonic as a cue while retaining a verified explanation."
+        }
+      ]
+    },
+    {
+      "id": "understanding-a-tennis-match-1",
+      "topic": "Sports",
+      "readerQuestion": "What am I seeing during a tennis match, from the ball and court to the score and interruptions?",
+      "hubSlug": "understanding-a-tennis-match-guide",
+      "hubTitle": "Watching tennis: 10 details that make a match easier to follow",
+      "members": [
+        {
+          "slug": "how-to-read-a-tennis-score",
+          "angle": "Read points, games, sets and advantage on the scoreboard."
+        },
+        {
+          "slug": "why-tennis-balls-are-yellow",
+          "angle": "Distinguish television visibility, the 1972 rule change and Wimbledon's 1986 adoption."
+        },
+        {
+          "slug": "why-tennis-players-change-ends",
+          "angle": "Explain changeovers and distinguish set and tie-break patterns using current rules."
+        },
+        {
+          "slug": "why-tennis-courts-have-doubles-lines",
+          "angle": "Map singles and doubles court boundaries with an original diagram."
+        },
+        {
+          "slug": "where-a-tennis-serve-must-land",
+          "angle": "Explain service boxes and alternating sides with a diagram."
+        },
+        {
+          "slug": "what-a-let-means-in-tennis",
+          "angle": "Distinguish a let from a fault and verify format exceptions."
+        },
+        {
+          "slug": "when-tennis-balls-are-changed",
+          "angle": "Explain replacement intervals and distinguish event practice from universal rules."
+        },
+        {
+          "slug": "why-tennis-courts-play-differently",
+          "angle": "Compare surfaces without unsupported claims about every event."
+        },
+        {
+          "slug": "who-serves-next-in-a-tie-break",
+          "angle": "Walk through service order separately from the basic scoring guide."
+        },
+        {
+          "slug": "what-happens-when-a-tennis-ball-touches-a-line",
+          "angle": "Explain boundary decisions and review technology without claiming all events use one system."
+        }
+      ]
+    },
+    {
+      "id": "how-calendars-count-time-1",
+      "topic": "History",
+      "readerQuestion": "How do calendar rules turn passing days into dates, years and centuries, and why do some dates look surprising?",
+      "hubSlug": "how-calendars-count-time-guide",
+      "hubTitle": "Why dates get tricky: 10 guides to calendars and time",
+      "members": [
+        {
+          "slug": "which-century-is-that-year",
+          "angle": "Locate the boundary between numbered centuries."
+        },
+        {
+          "slug": "why-2100-is-not-a-leap-year",
+          "angle": "Apply the Gregorian century exception to leap years."
+        },
+        {
+          "slug": "why-britain-skipped-eleven-days-in-1752",
+          "angle": "Separate omitted date labels from elapsed time in the British reform."
+        },
+        {
+          "slug": "why-months-have-different-lengths",
+          "angle": "Investigate historical month lengths without repeating popular calendar myths."
+        },
+        {
+          "slug": "why-february-has-fewer-days",
+          "angle": "Research February's place in the calendar separately from leap-day rules."
+        },
+        {
+          "slug": "old-style-and-new-style-dates",
+          "angle": "Read dual dates in historical records while distinguishing different places."
+        },
+        {
+          "slug": "why-new-year-once-began-in-march",
+          "angle": "Explain the legal year boundary and local exceptions."
+        },
+        {
+          "slug": "why-easter-changes-date",
+          "angle": "Explain the calendar calculation without equating ecclesiastical tables with observations."
+        },
+        {
+          "slug": "iso-week-years-can-cross-january",
+          "angle": "Distinguish week-based years from calendar years using a worked example."
+        },
+        {
+          "slug": "lunar-and-solar-calendars",
+          "angle": "Compare what the two systems track without implying a universal calendar."
+        }
       ]
     }
   ],
   "nextCategoryArticles": [
-    {"topic": "Words & puzzles", "workingTitle": "One word, two meanings: when a puzzle clue misleads you", "futureBlock": "Word meanings and connections", "intent": "Interpret ambiguous clues with original examples; complement the existing Connections guide."},
-    {"topic": "Learning", "workingTitle": "Why rereading feels easier than remembering", "futureBlock": "Remembering what you learn", "intent": "Explain familiarity versus retrieval with a small exercise; distinguish from the existing quiz-memory guide."},
-    {"topic": "Getting started", "workingTitle": "Which BrainiLab game should you try first?", "futureBlock": "Finding your next brain game", "intent": "Choose by mechanics and mood; do not repeat Daily or Anytime."},
-    {"topic": "Sports", "workingTitle": "Why do tennis players change ends?", "futureBlock": "Understanding a tennis match", "intent": "Explain changeovers; complement the existing tennis scoring article."},
-    {"topic": "History", "workingTitle": "Did Britain really skip 11 days in 1752?", "futureBlock": "How calendars count time", "intent": "Explain a calendar transition alongside centuries and leap years."},
-    {"topic": "Geography", "workingTitle": "Ireland or Côte d’Ivoire? Check the colour order", "futureBlock": "Telling similar flags apart", "intent": "Teach a specific flag distinction using the hoist; complement the flag-learning guide."},
-    {"topic": "Science & nature", "workingTitle": "Why are flamingos pink?", "futureBlock": "Surprising animal adaptations", "intent": "Explain dietary pigments; build an animal series alongside octopus anatomy."}
+    {
+      "topic": "Words & puzzles",
+      "workingTitle": "One word, two meanings: when a puzzle clue misleads you",
+      "futureBlock": "Word meanings and connections",
+      "intent": "Interpret ambiguous clues with original examples; complement the existing Connections guide."
+    },
+    {
+      "topic": "Learning",
+      "workingTitle": "Why rereading feels easier than remembering",
+      "futureBlock": "Remembering what you learn",
+      "intent": "Explain familiarity versus retrieval with a small exercise; distinguish from the existing quiz-memory guide."
+    },
+    {
+      "topic": "Getting started",
+      "workingTitle": "Which BrainiLab game should you try first?",
+      "futureBlock": "Finding your next brain game",
+      "intent": "Choose by mechanics and mood; do not repeat Daily or Anytime."
+    },
+    {
+      "topic": "Sports",
+      "workingTitle": "Why do tennis players change ends?",
+      "futureBlock": "Understanding a tennis match",
+      "intent": "Explain changeovers; complement the existing tennis scoring article."
+    },
+    {
+      "topic": "History",
+      "workingTitle": "Did Britain really skip 11 days in 1752?",
+      "futureBlock": "How calendars count time",
+      "intent": "Explain a calendar transition alongside centuries and leap years."
+    },
+    {
+      "topic": "Geography",
+      "workingTitle": "Ireland or Côte d’Ivoire? Check the colour order",
+      "futureBlock": "Telling similar flags apart",
+      "intent": "Teach a specific flag distinction using the hoist; complement the flag-learning guide."
+    },
+    {
+      "topic": "Science & nature",
+      "workingTitle": "Why are flamingos pink?",
+      "futureBlock": "Surprising animal adaptations",
+      "intent": "Explain dietary pigments; build an animal series alongside octopus anatomy."
+    }
+  ],
+  "releaseNotes": [
+    {
+      "date": "2026-09-30",
+      "kind": "explicit-user-request",
+      "supportingArticles": 6,
+      "note": "One-off batch requested by the user after the daily article. Daily automation remains at one article; planned members are provisional until researched."
+    }
   ]
 }
