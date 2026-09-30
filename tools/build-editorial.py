@@ -80,10 +80,10 @@ def page(path, title, description, body, schema, cover=None):
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.26.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
+<link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v={'41.32.0' if path == '/learn/' else '41.31.0'}"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
 <script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script>
 <script defer src="/assets/js/shell.bundle.js?v=41.26.0"></script>
-{'<script defer src="/assets/js/learn-library.js?v=41.30.0"></script>' if path == '/learn/' else ''}
+{'<script defer src="/assets/js/learn-library.js?v=41.32.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 </head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
 {header}<main id="main-content">{body}</main>{footer}<div class="toast" role="status"></div></body></html>'''
@@ -100,12 +100,12 @@ for i,a in enumerate(articles):
     latest=latest_by_topic[a['topic']]==a['slug']
     library_parts.append(card(a,i<3).replace('class="learn-card"', 'class="learn-card" data-latest-topic' if latest else 'class="learn-card" hidden', 1))
 library=''.join(library_parts)
-resource_promo='<p class="learn-resource-link"><a href="/learn/five-number-puzzles-printable/">Take a puzzle break: five free printable number puzzles →</a></p>' if 'five-number-puzzles-printable' in by_slug else ''
+random_article='<div class="learn-surprise" hidden><a class="learn-surprise-button" data-random-article href="/learn/" aria-label="Surprise me — read a random article">Surprise me <span aria-hidden="true">→</span></a></div>'
 page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geography, history, numbers and word puzzles. Short reads with worked examples, a quick question and a related game.', f'''
 <div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Learn</span></nav>
 <header class="learn-hero"><div><h1>A little more to discover.</h1><p>Curious questions, clear answers and a few things to try.</p></div>
 <div class="learn-search" hidden><label for="learn-search">Find an article</label><div class="learn-search-field"><input type="search" id="learn-search" placeholder="Try Moon, flags, numbers…" autocomplete="off" aria-controls="learn-articles"/><button type="button" class="learn-search-clear" aria-label="Clear search" hidden>Clear</button></div></div></header>
-{resource_promo}<label class="learn-topic-select" hidden>Browse articles<select id="learn-topic" aria-controls="learn-articles"><option value="__latest">Latest by topic ({len(topics)})</option><option value="">All articles ({len(articles)})</option>{''.join(f'<option value="{escape(t,quote=True)}">{escape(t)} ({sum(a["topic"]==t for a in articles)})</option>' for t in topics)}</select></label><nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="__latest" aria-pressed="true">Latest by topic <span class="topic-total">{len(topics)}</span></button><button type="button" data-topic-filter="" aria-pressed="false">All articles <span class="topic-total">{len(articles)}</span></button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)} <span class="topic-total">{sum(a["topic"]==t for a in articles)}</span></button>' for t in topics)}</nav>
+{random_article}<label class="learn-topic-select" hidden>Browse articles<select id="learn-topic" aria-controls="learn-articles"><option value="__latest">Latest by topic ({len(topics)})</option><option value="">All articles ({len(articles)})</option>{''.join(f'<option value="{escape(t,quote=True)}">{escape(t)} ({sum(a["topic"]==t for a in articles)})</option>' for t in topics)}</select></label><nav class="topic-nav" aria-label="Filter articles by topic" hidden><button type="button" data-topic-filter="__latest" aria-pressed="true">Latest by topic <span class="topic-total">{len(topics)}</span></button><button type="button" data-topic-filter="" aria-pressed="false">All articles <span class="topic-total">{len(articles)}</span></button>{''.join(f'<button type="button" data-topic-filter="{escape(t,quote=True)}" aria-pressed="false">{escape(t)} <span class="topic-total">{sum(a["topic"]==t for a in articles)}</span></button>' for t in topics)}</nav>
 <p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(topics)} articles · latest in each topic</p>
 <noscript><style>.library-grid .learn-card[hidden]{{display:flex!important}}</style><p>All articles are shown below. Enable JavaScript to use search and topic filters.</p></noscript><div class="learn-grid library-grid" id="learn-articles">{library}</div>
 <div class="learn-empty" hidden><h2>No articles found</h2><p>Try another word or browse all topics.</p><button type="button" data-clear-filters>Show all articles</button></div>

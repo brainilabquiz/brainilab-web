@@ -3,6 +3,25 @@
   const grid=document.querySelector('#learn-articles');
   if(!grid)return;
   const cards=[...grid.querySelectorAll('.learn-card')];
+  const surprise=document.querySelector('[data-random-article]');
+  const articlePaths=[...new Set(cards.map(card=>card.querySelector('h3 a')?.getAttribute('href'))
+    .filter(path=>/^\/learn\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(path||'')))];
+  let lastArticle='';
+  function randomArticle(){
+    try{lastArticle=sessionStorage.getItem('brainilab:last-surprise-article')||lastArticle;}catch{}
+    const choices=articlePaths.length>1?articlePaths.filter(path=>path!==lastArticle):articlePaths;
+    return choices[Math.floor(Math.random()*choices.length)];
+  }
+  if(surprise&&articlePaths.length){
+    surprise.href=randomArticle();
+    surprise.parentElement.hidden=false;
+    surprise.addEventListener('click',()=>{
+      lastArticle=randomArticle();
+      surprise.href=lastArticle;
+      try{sessionStorage.setItem('brainilab:last-surprise-article',lastArticle);}catch{}
+    });
+    window.addEventListener('pageshow',()=>{surprise.href=randomArticle();});
+  }
   const input=document.querySelector('#learn-search');
   const nav=document.querySelector('.topic-nav');
   const count=document.querySelector('#learn-count');

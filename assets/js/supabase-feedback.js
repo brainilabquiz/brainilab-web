@@ -32,7 +32,10 @@ window.BrainiFeedback=(function(){
     );
 
     if(error) throw error;
-    return data||{ok:true};
+    if(data?.ok!==true || typeof data.suggestion_id!=="string" || !data.suggestion_id){
+      throw new Error("Your message could not be confirmed. Please try again.");
+    }
+    return data;
   }
 
   return {configured,submit};

@@ -15,12 +15,16 @@ for(const query of ['?type=numbers','?type=words','?type=quizzes','?type=private
 const plain=new JSDOM(read('games/index.html'));assert.equal(plain.window.document.querySelectorAll('[data-anytime-game][hidden]').length,0);assert.equal(plain.window.document.querySelector('[data-game-filters]').hidden,true);plain.window.close();
 const d=page('suggestions/index.html','/suggestions/?context=post-game&game=worldflags','assets/js/suggestions-ui.js'),w=d.window,doc=w.document;
 assert.equal(doc.querySelector('h1').textContent,'How was your game?');assert.equal(doc.getElementById('feedbackGame').textContent,'About World Flags');
+assert.ok([...doc.querySelectorAll('[data-feedback-return]')].every(link=>link.pathname==='/geography/world-flags-quiz/'));
+assert.equal(doc.querySelector('.suggestions-reply').open,false);
 const form=doc.getElementById('suggestionsForm'),message=form.elements.message,submit=()=>form.dispatchEvent(new w.Event('submit',{cancelable:true}));
 let calls=0,resolve,reject,payload;
 w.BrainiFeedback={submit:async p=>{calls++;payload=p;return new Promise((yes,no)=>{resolve=yes;reject=no;});}};
 submit();assert.equal(calls,0);assert.equal(doc.activeElement,message);
 message.value='The clue was hard to read on my phone.';submit();submit();assert.equal(calls,1);assert.equal(form.querySelector('[type="submit"]').disabled,true);assert.match(payload.message,/^\[After playing World Flags\]/);
 reject(new Error('private server detail'));await new Promise(r=>setTimeout(r,0));assert.equal(form.hidden,false);assert.equal(message.value,'The clue was hard to read on my phone.');assert.ok(!doc.getElementById('suggestionsError').textContent.includes('private'));
+submit();resolve(null);await new Promise(r=>setTimeout(r,0));assert.equal(form.hidden,false,'An empty receipt must not show success');
+form.elements.email.dispatchEvent(new w.Event('invalid'));assert.equal(doc.querySelector('.suggestions-reply').open,true);
 let sent=0;w.addEventListener('brainilab:feedbacksent',()=>sent++);submit();resolve({ok:true});await new Promise(r=>setTimeout(r,0));assert.equal(form.hidden,true);assert.equal(doc.getElementById('suggestionsSuccess').hidden,false);assert.equal(sent,1);assert.equal(doc.activeElement,doc.getElementById('suggestionsSuccess'));
 doc.getElementById('suggestAnother').click();assert.equal(message.value,'');assert.equal(form.elements.type.value,'improvement');assert.equal(form.hidden,false);w.close();
 const invalid=page('suggestions/index.html','/suggestions/?context=post-game&game=%3Cimg%3E','assets/js/suggestions-ui.js');assert.equal(invalid.window.document.getElementById('feedbackGame').hidden,true);invalid.window.close();

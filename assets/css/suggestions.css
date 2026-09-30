@@ -63,3 +63,18 @@
   .suggestions-success{grid-template-columns:auto 1fr}
   .suggestions-success button{grid-column:1/-1}
 }
+
+/* Keep optional details out of the main writing flow. */
+.suggestions-copy h1{font-size:clamp(28px,5vw,36px)}
+.suggestions-main .section{padding-block:32px}
+.suggestions-reply{margin-bottom:12px}
+.suggestions-reply summary{display:list-item;cursor:pointer;padding:12px 0;color:var(--navy);font-size:14px;font-weight:700;min-height:44px;box-sizing:border-box}
+.suggestions-reply summary span{color:var(--muted);font-weight:400;margin-left:8px}
+.suggestions-reply .suggestions-field{margin-top:8px}
+.suggestions-field :is(select,textarea,input){font-size:16px}
+.suggestions-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.suggestions-return{padding:12px 0;color:var(--navy);font-size:14px;text-underline-offset:3px}
+.suggestions-success .suggestions-actions{grid-column:1/-1}
+.suggestions-main :is(a,button,input,textarea,select,summary):focus-visible{outline:3px solid #3fab34;outline-offset:3px}
+.suggestions-success-icon img{width:24px;height:24px}
+@media(max-width:420px){.suggestions-card{padding:18px}.suggestions-actions{align-items:stretch;flex-direction:column}.suggestions-actions>*{text-align:center}.suggestions-success{padding:16px}}

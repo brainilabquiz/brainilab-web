@@ -45,3 +45,10 @@
 /* Compact covers keep the title and topic visible together. */
 .article-header>p.article-byline{font-size:12px;line-height:1.8;color:#655d54;margin:16px 0 0;max-width:none}.article-byline a{color:#2d296e;text-decoration:underline;text-underline-offset:3px}.learn-feed-link{font-size:13px;margin:24px 0 0;color:#2d296e}
 .library-grid .learn-card-art{aspect-ratio:2.4/1}.library-grid .learn-card-art img{object-position:center 45%}.library-grid .learn-card-copy{padding:17px 19px}.library-grid .learn-card-copy>p:not(.eyebrow){margin-bottom:12px}.library-grid{gap:22px}.library-grid .learn-card-art:has(img[src*="moon"] ) img{object-position:center 20%}.library-grid .learn-card-art:has(img[src*="flags"]) img{object-position:center 42%}@media(max-width:600px){.library-grid .learn-card-art{aspect-ratio:2.5/1}}
+
+/* One compact discovery action, using every published article. */
+.learn-surprise[hidden]{display:none!important}
+.learn-surprise{margin:0 0 20px}
+.learn-surprise-button{display:inline-flex;align-items:center;gap:16px;min-height:44px;padding:10px 18px;border:1px solid #e6c216;border-radius:12px;background:var(--brand-yellow,#fdd81c);color:var(--brand-blue,#2d296e);font-size:14px;font-weight:750;line-height:1.5;text-decoration:none;box-sizing:border-box}
+.learn-surprise-button:hover{background:#ffe75b}
+.learn-surprise-button:focus-visible{outline:3px solid var(--brand-blue,#2d296e);outline-offset:3px}
