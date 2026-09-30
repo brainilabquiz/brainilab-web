@@ -33,7 +33,8 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  select.value='Sports';select.dispatchEvent(new w.Event('change'));
  assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);
  assert.ok(visible().every(e=>e.dataset.topic==='Sports'));
- assert.equal(d.querySelector('[data-topic-filter="Sports"]').getAttribute('aria-pressed'),'true');
+ assert.equal(d.querySelector('.topic-nav'),null);
+ assert.equal(select.closest('label').hidden,false);
  input.value='zzzzzz';input.dispatchEvent(new w.Event('input'));
  assert.equal(visible().length,0);assert.equal(d.querySelector('.learn-empty').hidden,false);
  surprise.click();assert.ok(links.includes(surprise.getAttribute('href')),'Random discovery still works with no search matches');
@@ -47,7 +48,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  d.querySelector('.learn-search-clear').click();
  assert.equal(select.value,'Sports');assert.equal(d.activeElement,input);
  assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);assert.ok(d.querySelector('.learn-search-clear').hidden);
- d.querySelector('[data-topic-filter="__latest"]').click();
+ select.value='__latest';select.dispatchEvent(new w.Event('change'));
  input.value='bubble wrap';input.dispatchEvent(new w.Event('input'));
  assert.equal(visible().length,1,'Latest search also finds older articles');
  assert.ok(visible()[0].querySelector('a[href="/learn/was-bubble-wrap-invented-as-wallpaper/"]'));
