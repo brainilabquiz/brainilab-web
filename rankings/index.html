@@ -11,8 +11,8 @@
 <link href="../assets/brand/iso-multicolor.png" rel="icon"/>
 <link href="../assets/css/site.css?v=41.26.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BrainiLab Rankings","url":"https://brainilabgames.com/rankings/","description":"Player, friend and group rankings for BrainiLab quiz games."}</script>
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/rankings.bundle.js?v=41.26.0"></script>
-<link href="../assets/css/rankings.css?v=41.26.0" rel="stylesheet"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.27.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.26.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.26.0"></script><script defer="" src="../assets/js/rankings.bundle.js?v=41.34.0"></script>
+<link href="../assets/css/rankings.css?v=41.34.0" rel="stylesheet"/>
 </head>
 <body class="rankings-page">
 <header class="topbar">
@@ -28,41 +28,19 @@
 <main class="rankings-shell">
 <div class="wrap">
 <div class="rankings-title-row">
-<div><h1>Rankings</h1><p>A little friendly competition.</p></div>
-<a class="rankings-group-link" href="../groups/index.html"><span>🛡️</span><strong>My group</strong><small>Create or manage group</small></a>
+<div class="rankings-title"><span class="rankings-title-mark" aria-hidden="true"><img src="/assets/icons/product/ranking-trophy.svg" width="40" height="40" alt=""/></span><div><h1>Rankings</h1><p>A little friendly competition.</p></div></div>
+<a class="rankings-group-link" href="../groups/index.html"><strong>My groups <span aria-hidden="true">↗</span></strong></a>
 </div>
 <div aria-label="Ranking type" class="ranking-mode-tabs">
-<button class="active" data-ranking-mode="individual" type="button">👤 Individual</button>
-<button data-ranking-mode="friends" type="button">🤝 Friends</button>
-<button data-ranking-mode="group" type="button">🛡️ Groups</button>
+<button class="active" data-ranking-mode="individual" type="button" aria-pressed="true"><svg class="ranking-tab-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg>Everyone</button>
+<button data-ranking-mode="friends" type="button" aria-pressed="false"><svg class="ranking-tab-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2m2-15a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 5v1"/></svg>Friends</button>
+<button data-ranking-mode="group" type="button" aria-pressed="false"><svg class="ranking-tab-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 8 4v6c0 4-4 7-8 9-4-2-8-5-8-9V7l8-4Z"/><path d="m8 12 3 3 5-6"/></svg>Groups</button>
 </div>
 <section aria-label="Ranking filters" class="ranking-filters">
 <div class="ranking-filter">
-<label for="rankingRegion">Region</label>
-<select id="rankingRegion">
-<option value="global">Global</option>
-<option value="country">My country</option>
-</select>
-</div>
-<div class="ranking-filter">
-<label for="rankingPeriod">Period</label>
-<select id="rankingPeriod">
-<option value="daily">Daily</option>
-<option value="weekly">Weekly</option>
-<option value="monthly">Monthly</option>
-</select>
-</div>
-<div class="ranking-filter">
-<label for="rankingMetric">Metric</label>
-<select id="rankingMetric">
-<option value="score">Score</option>
-<option value="streak">Streak</option>
-</select>
-</div>
-<div class="ranking-filter">
 <label for="rankingGame">Game</label>
 <select id="rankingGame">
-<option value="all">Daily Brain Score</option>
+<option value="all">Daily total</option>
 <option value="brainmix">Brain Mix</option>
 <option value="orderup">Order Up</option>
 <option value="topicrush">Topic Rush</option>
@@ -81,6 +59,28 @@
 <option value="numberroute">Number Route</option>
 <option value="sequence">Sequence</option>
 
+</select>
+</div>
+<div class="ranking-filter">
+<label for="rankingPeriod">Period</label>
+<select id="rankingPeriod">
+<option value="daily">Today</option>
+<option value="weekly">This week</option>
+<option value="monthly">This month</option>
+</select>
+</div>
+<div class="ranking-filter">
+<label for="rankingRegion">Where</label>
+<select id="rankingRegion">
+<option value="global">Global</option>
+<option value="country">My country</option>
+</select>
+</div>
+<div class="ranking-filter">
+<label for="rankingMetric">Rank by</label>
+<select id="rankingMetric">
+<option value="score">Score</option>
+<option value="streak">Streak</option>
 </select>
 </div>
 </section>

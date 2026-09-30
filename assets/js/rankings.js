@@ -47,7 +47,7 @@ window.BrainiRankings=(function(){
   function currentPeriodLabel(){
     if(state.metric==="streak") return "Current";
 
-    return state.period[0].toUpperCase()+state.period.slice(1);
+    return {daily:"Today",weekly:"This week",monthly:"This month"}[state.period];
   }
 
   function syncControls(){
@@ -157,41 +157,11 @@ window.BrainiRankings=(function(){
     return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:escapeText(initial)}</span>`;
   }
 
-  function podiumCard(row,place){
-    const avatar=state.mode==="group"
-      ? crestHtml(row.crest)
-      : playerAvatar(row,false);
-
-    return `<article class="podium-card ${
-      place===1?"first":place===2?"second":"third"
-    } ${row.isMe?"is-me":""}">
-      <div class="podium-medal">
-        ${BrainiIcons.product("medal-achievement","podium-medal-icon")}
-        <strong>${place}</strong>
-      </div>
-
-      ${avatar}
-
-      <strong class="podium-name">${escapeText(row.name)}</strong>
-
-      <span class="podium-country">
-        ${countryFlag(row.country)} ${escapeText(row.country||"")}
-      </span>
-
-      <span class="podium-score">${scoreText(row)}</span>
-
-      ${state.mode==="group"
-        ? `<small>${row.members||0}/5 members</small>`
-        : ""
-      }
-    </article>`;
-  }
-
   function tableRow(row){
     const identity=state.mode==="group"
       ? `${crestHtml(row.crest)}
          <div>
-           <strong>${escapeText(row.name)}</strong>
+           <strong>${escapeText(row.name)}${row.isMe?'<em class="ranking-you">You</em>':''}</strong>
            <small>
              ${countryFlag(row.country)} ${escapeText(row.country||"")}
              · ${row.members||0}/5 members
@@ -199,32 +169,34 @@ window.BrainiRankings=(function(){
          </div>`
       : `${playerAvatar(row,true)}
          <div>
-           <strong>${escapeText(row.name)}</strong>
+           <strong>${escapeText(row.name)}${row.isMe?'<em class="ranking-you">You</em>':''}</strong>
            <small>
              ${countryFlag(row.country)} ${escapeText(row.country||"")}
              ${row.level?` · ${BrainiProgressUI?.tier?.(row.level)?.name||"Level"} Lv ${row.level}`:""}
            </small>
          </div>`;
 
-    return `<div class="ranking-row ${
+    const rank=Number(row.rank);
+    return `<div role="row" class="ranking-row ${
       row.isMe?"is-me":""
-    } ${Number(row.rank)<=10?"top-ten":""}">
-      <span class="ranking-position">#${row.rank}</span>
-      <div class="ranking-identity">${identity}</div>
-      <span class="ranking-row-score">${scoreText(row)}</span>
+    } ${rank>=1&&rank<=3?"place-"+rank:""}">
+      <span class="ranking-position" role="cell" aria-label="Rank ${rank}"><span>${rank}</span></span>
+      <div class="ranking-identity" role="cell">${identity}</div>
+      <span class="ranking-row-score" role="cell">${scoreText(row)}</span>
     </div>`;
   }
 
-  function personalRankMarkup(user,visibleRanks,data){
+  function personalRankMarkup(user,data){
     const me=user||data?.user;
     const title=state.mode==="group"?"Your team":"Your position";
     if(state.mode==="individual" && !data?.leaderboardEnabled) return "";
     const ahead=(data?.rows||[]).filter(r=>Number(r.score)>Number(me?.score||0)).at(-1);
     const gap=me&&ahead?Number(ahead.score)-Number(me.score):0;
     return `<section class="ranking-personal" aria-label="${title}">
-      <div><span>${title}</span><strong>${me?'#'+Number(me.rank):'Ready when you are'}</strong></div>
+      <div><span>${title}</span><strong>${me?'#'+Number(me.rank):'Not ranked yet'}</strong></div>
       <div class="ranking-personal-score"><b>${me?scoreText(me):'—'}</b><span>${escapeText(data?.metricLabel||'Points')}</span></div>
-      <p>${me?(Number(me.rank)===1?'You’re sharing the lead or setting the pace.':gap?`${gap.toLocaleString()} ${state.metric==='streak'?'days':'points'} to match the next score.`:'Your position includes everyone in this selection.'):'Finish a game to put your first score on the board.'}</p>
+      <p>${me?(Number(me.rank)===1?'You’re at the top of this board.':gap?`${gap.toLocaleString()} ${state.metric==='streak'?'days':'points'} to match the next score.`:'Your position includes everyone in this selection.'):'No score in this selection yet.'}</p>
+      <a class="ranking-personal-link" href="${state.mode==='group'?'/groups/':state.metric==='streak'||state.gameId==='all'||['brainmix','orderup','topicrush','brainiword'].includes(state.gameId)?'/daily-quiz/':'/games/'}">${state.mode==='group'?'View your team':state.metric==='streak'||state.gameId==='all'||['brainmix','orderup','topicrush','brainiword'].includes(state.gameId)?'Play the Daily':'Find a game'} <span aria-hidden="true">→</span></a>
     </section>`;
   }
 
@@ -247,7 +219,7 @@ window.BrainiRankings=(function(){
     return `<details class="ranking-rules"><summary>How points work <span>${summary}</span></summary>
       <div><p><strong>Rankings:</strong> From 1 October 2026, Daily Brain Score combines the main Daily (up to 2,500) and one optional extra (up to 1,000). Earlier days retain their original scores. Weekly and monthly boards add the days in that calendar period. Individual game boards use Daily contributions for Daily-only games and accumulated game points for games with Anytime play.</p>
       <p><strong>XP & levels:</strong> XP is your personal progress and does not decide your ranking. Your first three verified games of each kind per UTC day earn 50 XP plus 5 per correct answer, up to 300 XP each. More games can still improve your score. Completing the main Daily adds 250 XP. The extra is optional.</p>
-      <p><strong>Streaks:</strong> Complete at least one Daily game each day. Days reset at 00:00 UTC; weeks start on Monday and months on the first. Equal scores share the same position.</p>
+      <p><strong>Streaks:</strong> Complete the main Daily each day to keep your streak. The optional extra does not maintain it. Days reset at 00:00 UTC; weeks start on Monday and months on the first. Equal scores share the same position.</p>
       ${state.mode==='group'?'<p><strong>Teams:</strong> Groups need 3–5 members. The top three contributors count towards the group score.</p>':''}
       </div></details>`;
   }
@@ -346,14 +318,28 @@ window.BrainiRankings=(function(){
   function rankingEmptyMarkup(data){
     if(state.mode==='friends')return `<div class="ranking-friends-empty"><h2>A little friendly competition</h2><p>Connect with friends to compare your scores here.</p><a class="btn-secondary" href="/profile/#friends">Find your friends</a></div>`;
     const daily=state.gameId==='all'||state.metric==='streak'||['brainmix','orderup','topicrush','brainiword'].includes(state.gameId);
-    return `<div class="ranking-friends-empty ranking-no-scores"><span class="ranking-empty-mark" aria-hidden="true">${BrainiIcons.product('rankings','ranking-empty-icon')}</span><h2>A fresh board. Your move.</h2><p>No scores in this selection yet.</p><a class="btn" href="${daily?'/daily-quiz/':'/games/'}">${daily?'Play today’s games':'Find a game'} →</a>${state.period==='daily'&&state.metric==='score'?'<button type="button" class="ranking-month-link" data-ranking-month>See this month’s scores</button>':''}</div>`;
+    return `<div class="ranking-friends-empty ranking-no-scores"><span class="ranking-empty-mark" aria-hidden="true"><img class="ranking-empty-icon" src="/assets/icons/product/ranking-trophy.svg" width="44" height="44" alt=""/></span><h2>A fresh board. Your move.</h2><p>No scores in this selection yet.</p><a class="btn" href="${daily?'/daily-quiz/':'/games/'}">${daily?'Play the Daily':'Find a game'} →</a>${state.period==='daily'&&state.metric==='score'?'<button type="button" class="ranking-month-link" data-ranking-month>See this month’s scores</button>':''}</div>`;
   }
 
   function loadingMarkup(){
-    return `<div class="ranking-loading" aria-live="polite">
-      <span class="ranking-loading-dot"></span>
-      <strong>Loading rankings…</strong>
-    </div>`;
+    return `<div class="ranking-skeleton" role="status"><span class="ranking-loading-label">Loading rankings…</span><div aria-hidden="true">${Array.from({length:4},()=>'<div class="ranking-skeleton-row"><i></i><b></b><span></span></div>').join('')}</div></div>`;
+  }
+
+  function progressPanelMarkup(data){
+    if(state.mode==='group')return '';
+    return `<div class="ranking-progress"><h2>Your progress</h2>${progressionMarkup()}<details class="ranking-streak-details"><summary>Your Daily streak <span aria-hidden="true">+</span></summary><div data-braini-continuity="compact">${window.BrainiContinuity?.markup?.({compact:true})||''}</div></details>${individualPrivacyMarkup(data)}</div>`;
+  }
+
+  function boardMarkup(data,rows){
+    const total=Number(data.totalPlayers||rows.length),teams=state.mode==='group';
+    const title=state.metric==='streak'?'Current streaks':state.gameId==='all'?'Daily Brain Score':$('#rankingGame')?.selectedOptions?.[0]?.textContent||'Leaderboard';
+    const visible=rows.slice(0,state.expanded?100:10);
+    const personal=personalRankMarkup(data.user,data);
+    return `<div class="ranking-layout"><div class="ranking-main"><section class="ranking-board" aria-label="Leaderboard">
+      <header class="ranking-board-heading"><div><p class="ranking-board-period">${currentPeriodLabel()}${state.mode==='friends'?' · Friends':state.region==='country'?' · My country':' · Global'}</p><h2 id="rankingBoardTitle">${escapeText(title)}</h2></div><span class="ranking-player-count">${total.toLocaleString()} ${teams?(total===1?'team':'teams'):(total===1?'player':'players')}</span></header>
+      ${rows.length?`<div class="ranking-list" role="table" aria-labelledby="rankingBoardTitle"><div role="row" class="ranking-list-head"><span role="columnheader">Rank</span><span role="columnheader">${teams?'Team':'Player'}</span><span role="columnheader">${escapeText(data.metricLabel||'Points')}</span></div>${visible.map(tableRow).join('')}</div>`:rankingEmptyMarkup(data)}
+      ${rows.length>10?`<div class="ranking-more-wrap"><button class="ranking-more" data-rank-more aria-expanded="${state.expanded}">${state.expanded?'Show top 10':teams?'Show up to 100 teams':'Show up to 100 players'}</button></div>`:''}
+      </section>${rulesMarkup()}</div><aside class="ranking-sidebar" aria-label="Your ranking and progress">${personal}${progressPanelMarkup(data)}</aside></div>`;
   }
 
   function errorMarkup(error){
@@ -617,25 +603,7 @@ window.BrainiRankings=(function(){
       }
     }
 
-    const privacy=individualPrivacyMarkup(data);
-
-    if(rows.length===0){
-      root.innerHTML=`${progressionMarkup()}<div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div>${rankingEmptyMarkup(data)}${rulesMarkup()}${privacy}`;
-      bindDynamicActions(root);
-      return;
-    }
-
-    const limit=state.expanded?100:10;
-    const visible=rows.slice(0,limit);
-    const visibleRanks=new Set(
-      visible.map(r=>Number(r.rank))
-    );
-
-    root.innerHTML=`${personalRankMarkup(data.user,visibleRanks,data)}${progressionMarkup()}<div data-braini-continuity>${window.BrainiContinuity?.markup?.()||''}</div>
-      <div class="ranking-board-heading"><h2>${state.metric==='streak'?'Current streaks':escapeText($('#rankingGame')?.selectedOptions?.[0]?.textContent||'Leaderboard')}</h2><span>${Number(data.totalPlayers||rows.length).toLocaleString()} ${state.mode==='group'?'teams':'players'} · ${currentPeriodLabel()}</span></div>
-      <section class="ranking-list" aria-label="Leaderboard"><div class="ranking-list-head"><span>Rank</span><span>${state.mode==='group'?'Team':'Player'}</span><span>${escapeText(data.metricLabel||'Points')}</span></div>${visible.map(tableRow).join('')}</section>
-      ${rows.length>10?`<div class="ranking-more-wrap"><button class="ranking-more" data-rank-more>${state.expanded?'Show top 10':'Show up to 100 players'}</button></div>`:''}
-      ${rulesMarkup()}${privacy}`;
+    root.innerHTML=boardMarkup(data,rows);
 
     bindDynamicActions(root);
   }
