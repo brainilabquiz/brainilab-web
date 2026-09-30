@@ -33,7 +33,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  const academy=[...d.querySelectorAll('[data-format=academy]')];
  if(academy.length){
   assert.deepEqual([...d.querySelectorAll('.learn-card:not([hidden])')].slice(0,6).map(c=>c.dataset.format),['article','academy','article','academy','article','academy']);
-  d.querySelector('[data-format-filter=academy]').click();assert.equal(visible().length,0);assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,3);
+  d.querySelector('[data-format-filter=academy]').click();assert.equal(visible().length,0);assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,4);
   assert.equal(d.querySelector('[data-format-filter=academy]').getAttribute('aria-pressed'),'true');
   input.value='calendar';input.dispatchEvent(new w.Event('input'));assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,1);
   input.value='';input.dispatchEvent(new w.Event('input'));d.querySelector('[data-format-filter=article]').click();assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,0);

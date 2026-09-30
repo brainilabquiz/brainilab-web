@@ -1,0 +1,67 @@
+{
+  "slug": "maths-from-zero",
+  "title": "Maths from zero: little numbers, big ideas",
+  "description": "Start with a few counters. Learn to add, take away and make equal groups through three short lessons you can play with at your own pace.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-09-30T20:47:45.854827+00:00",
+  "updatedAt": "2026-09-30T20:47:45.854827+00:00",
+  "coverArticle": "addition-putting-things-together",
+  "introduction": "<p>Maths starts with things you can see and count. Bring a few buttons or just use the activities here. We’ll join little piles, take some away, and find out why equal groups are so useful.</p><p>There is no clock to beat. Try an idea, change something, and see what happens. These three chapters are your first steps; bigger numbers and fractions can come later.</p>",
+  "prerequisites": "No arithmetic background. Start by counting the counters one at a time.",
+  "outcomes": [
+    "Model addition with two small piles.",
+    "Model subtraction and check it by adding.",
+    "Connect equal groups to multiplication."
+  ],
+  "lessons": [
+    {
+      "slug": "addition-putting-things-together",
+      "level": "1 · Put things together",
+      "objective": "Join two piles and discover what the plus sign means."
+    },
+    {
+      "slug": "subtraction-how-many-are-left",
+      "level": "2 · Take some away",
+      "objective": "Remove counters and check what is left."
+    },
+    {
+      "slug": "multiplication-equal-groups",
+      "level": "3 · Make equal groups",
+      "objective": "Build groups and explore a times table by touch or hover."
+    }
+  ],
+  "sources": [
+    {
+      "name": "OpenStax — Add Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-2-add-whole-numbers"
+    },
+    {
+      "name": "OpenStax — Subtract Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-3-subtract-whole-numbers"
+    },
+    {
+      "name": "OpenStax — Multiply Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-4-multiply-whole-numbers"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Add",
+      "definition": "Put amounts together to find a total."
+    },
+    {
+      "term": "Subtract",
+      "definition": "Find what remains when an amount is taken away."
+    },
+    {
+      "term": "Equal groups",
+      "definition": "Groups that each contain the same amount."
+    },
+    {
+      "term": "Zero",
+      "definition": "The number we use for none."
+    }
+  ]
+}

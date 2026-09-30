@@ -3,6 +3,7 @@ function options(label,values){return `<label>${label}<select>${values.map((v,i)
 export function initLabs(){
  for(const el of document.querySelectorAll('[data-academy-lab]')){
   const kind=el.dataset.academyLab,controls=el.querySelector('[data-lab-controls]'),visual=el.querySelector('[data-lab-visual]'),out=el.querySelector('[data-lab-output]');
+  if(['add-basics','subtract-basics','groups-basics'].includes(kind)){beginnerLab(el,kind,controls,visual,out);continue;}
   let step=0;
   const config={round:'<button type="button" data-step>Show the next step</button><button type="button" data-reset>Start again</button>',multiply:slider('Stickers in each group',1,20,3),percent:slider('Squares to colour',0,100,25),century:'<label>Year (CE)<input type="number" min="1" max="9999" value="2000" step="1" /></label>',leap:'<label>Year (Gregorian calendar)<input type="number" min="1" max="9999" value="2100" step="1" /></label>',calendar:slider('Move forward one day at a time',0,4,0),moon:options('Choose a phase',['New Moon','First quarter','Full Moon','Last quarter']),seasons:options('Choose a month',['June','December']),clocks:slider('UTC hour',0,23,12)};
   if(!config[kind])continue;controls.innerHTML=config[kind];controls.hidden=false;
@@ -37,6 +38,35 @@ export function initLabs(){
   controls.querySelector('[data-step]')?.addEventListener('click',()=>{step=Math.min(4,step+1);paint();});controls.querySelector('[data-reset]')?.addEventListener('click',()=>{step=0;paint();});paint();
   if(kind==='multiply')multiplicationTable(el);
  }
+}
+function beginnerLab(el,kind,controls,visual,out){
+ const adding=kind==='add-basics',subtracting=kind==='subtract-basics';
+ let removed=0,revealed=false;
+ controls.hidden=false;
+ controls.innerHTML=subtracting?`${slider('Counters to start with',0,12,6)}<button type="button" data-take>Take one away</button><button type="button" data-back>Put one back</button>`:`${slider(adding?'First pile':'Number of groups',0,adding?10:6,adding?2:3)}${slider(adding?'Second pile':'Counters in each group',0,adding?10:6,adding?3:2)}<button type="button" data-reveal>Show the total</button>`;
+ const inputs=[...controls.querySelectorAll('input')];
+ function counters(n,shape='',start=0){return Array.from({length:n},(_,i)=>`<span class="lab-counter ${shape}">${i+1+start}</span>`).join('');}
+ function paint(){
+  const [a,b]=inputs.map(input=>Number(input.value));
+  if(subtracting){
+   removed=Math.min(removed,a);const left=a-removed;
+   visual.innerHTML=`<div class="lab-pile"><strong>Started with ${a}</strong><div class="lab-countable">${counters(left)}${counters(removed,'is-removed',left)}</div><strong class="lab-number">${left} left</strong></div>`;
+   out.textContent=`Start with ${a} counters. Take away ${removed}. ${left} remain. ${a} − ${removed} = ${left}. Check: ${left} + ${removed} = ${a}.`;
+   controls.querySelector('[data-take]').disabled=left===0;controls.querySelector('[data-back]').disabled=removed===0;
+  }else{
+   const total=adding?a+b:a*b;
+   visual.innerHTML=adding?`<div class="lab-two-piles"><div class="lab-pile"><strong>First pile: ${a}</strong><div class="lab-countable">${counters(a)}</div></div><div class="lab-pile second-pile"><strong>Second pile: ${b}</strong><div class="lab-countable">${counters(b,'is-square')}</div></div></div>`:`<div class="lab-equal-groups">${Array.from({length:a},(_,i)=>`<div class="lab-pile"><strong>Group ${i+1}</strong><div class="lab-countable">${counters(b)}</div>${b===0?'<span>Empty</span>':''}</div>`).join('')}</div>`;
+   if(revealed)visual.insertAdjacentHTML('beforeend',`<strong class="lab-number">${total} altogether</strong>`);
+   out.textContent=adding?`First pile: ${a} counters. Second pile: ${b} counters. ${revealed?`Put them together: ${a} + ${b} = ${total}. There are ${total} altogether.`:'Count both piles, then show the total to check.'}`:`${a} ${a===1?'group':'groups'}, with ${b} counters in each. ${revealed?`${a} × ${b} = ${total}. ${a===0?'No groups means no counters.':b===0?'All the groups are empty.':`Count by groups: ${Array.from({length:a},(_,i)=>(i+1)*b).join(', ')}.`}`:'Count what you have, then show the total to check.'}`;
+   controls.querySelector('[data-reveal]').disabled=revealed;
+  }
+  inputs.forEach(input=>input.setAttribute('aria-valuetext',`${input.value} ${adding?'counters':subtracting?'starting counters':input===inputs[0]?'groups':'counters per group'}`));
+ }
+ controls.addEventListener('input',()=>{removed=0;revealed=false;paint();});
+ controls.querySelector('[data-take]')?.addEventListener('click',()=>{removed++;paint();});
+ controls.querySelector('[data-back]')?.addEventListener('click',()=>{removed--;paint();});
+ controls.querySelector('[data-reveal]')?.addEventListener('click',()=>{revealed=true;paint();});
+ paint();if(kind==='groups-basics')multiplicationTable(el);
 }
 function multiplicationTable(el){
  const box=document.createElement('div');box.className='lab-times-table';
