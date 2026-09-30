@@ -6,6 +6,7 @@ const tick=()=>new Promise(r=>setTimeout(r,0));
 function setup(game){
  const dom=new JSDOM(readFileSync(`games/${game}/index.html`,'utf8'),{url:`https://brainilabgames.com/games/${game}/?archive=2026-09-07`,runScripts:'outside-only'}),w=dom.window;
  let saves=0,resolveSave,rejectSave;
+ w.HTMLElement.prototype.scrollIntoView=function(options){this.dataset.scrolled=options.block+':'+options.behavior;};
  w.BrainiData={dailyNumberForDate:()=>10,api:{submitGameResult:(_id,payload)=>{saves++;return new Promise((resolve,reject)=>{resolveSave=()=>resolve({...payload,clientResultId:'qa',cloudSyncStatus:'local_only'});rejectSave=reject;});}}};
  w.BrainiShare={open:()=>{}};w.BrainiContinuity={rewardMarkup:()=>'<p>Practice: no XP or streak change.</p>'};
  w.eval(readFileSync('assets/js/post-game.js','utf8'));w.eval(readFileSync('assets/js/puzzle-results.js','utf8'));
@@ -33,6 +34,7 @@ assert.ok(w.document.querySelector('.post-game'));assert.equal(w.document.queryS
 assert.equal(w.document.querySelector('.puzzle-round-review').open,false);
 assert.equal(w.document.querySelectorAll('.puzzle-round-review article').length,3);
 assert.equal(w.document.activeElement,w.document.querySelector('.post-score'));
+assert.equal(w.document.querySelector('.puzzle-result-panel').dataset.scrolled,'start:instant','result must be brought into view without animation');
 t.resolve();await tick();assert.match(w.document.querySelector('[data-result-reward]').textContent,/Practice/);w.close();
 // Number Route exposes the last operation again after a checker error, without losing the route.
 t=setup('number-route');w=t.w;fail=true;

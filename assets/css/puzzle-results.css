@@ -1,4 +1,5 @@
 /* Match the existing result presentation without a second nested game card. */
+.puzzle-result-panel{scroll-margin-top:112px}
 .discovery-entry :is(.connections-result,.labgame-result):has(.post-game){background:transparent;border:0;padding:0;width:100%;max-width:680px;margin:24px auto}
 .puzzle-round-review{text-align:left;border-block:1px solid #e4dfd5;margin:20px 0}
 .puzzle-round-review summary{padding:16px 4px;cursor:pointer;color:#2d296e;font-weight:700;font-size:15px}
