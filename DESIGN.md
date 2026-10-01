@@ -52,5 +52,5 @@ Run production integrity and the affected presentation tests before publishing.
 
 Verified: 79 styled entry points and 5 untouched redirects. All 35 article templates and all public page families checked at desktop and 375–390px mobile widths without page overflow. Games filter and mobile navigation checked interactively. Guest admin login inspected; authenticated administrative workflows were not exercised. Source comparison confirms unchanged text, metadata, script references and navigation links across all 84 HTML entries. Existing library, Academy, rankings, groups, profile, home, link-policy and SEO suites pass. Production build: 622 files, 84 HTML integrity checks.
 
-## Academy continuity, 1 October 2026
+## Academy continuity, 1 October 2026
 The quiz completion panel uses a pale green surface inside the navy quiz, a clear chapter count and the first unfinished lesson as the next action. Confirmed new XP is yellow; guest, previously earned and failed-sync states have distinct honest messages. Course completion can lead from arithmetic to fractions and then mental maths. Decimal grids use the existing accessible native controls; column filling connects tenths to hundredths. No new dependencies or scoring changes.
