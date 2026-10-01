@@ -12,6 +12,9 @@ for(const el of blocks)versions.set(el.dataset.quizSlug,JSON.parse(el.querySelec
 function load(){try{const v=JSON.parse(localStorage.getItem(key())||'{}');records=v&&typeof v==='object'&&!Array.isArray(v)?v:{};}catch{records={};}}
 function save(){try{localStorage.setItem(key(),JSON.stringify(records));return true;}catch{return false;}}
 function paint(){
+ let visibleCourses=0;
+ document.querySelectorAll('[data-resume-course]').forEach(el=>{const p=pathProgress(JSON.parse(el.querySelector('[data-path-progress]').dataset.lessons),records);el.hidden=p.completed===0;if(!el.hidden)visibleCourses++;});
+ const empty=document.querySelector('[data-resume-empty]');if(empty)empty.hidden=visibleCourses>0;
  document.querySelectorAll('[data-path-progress]').forEach(el=>{const p=pathProgress(JSON.parse(el.dataset.lessons),records);el.querySelector('[data-progress-label]').textContent=`${p.completed} of ${p.total} lessons completed · ${p.percent}%`;el.querySelector('progress').value=p.percent;});
  document.querySelectorAll('[data-lesson]').forEach(el=>{const done=records[el.dataset.lesson]?.version===el.dataset.version,n=el.querySelector('[data-lesson-number]');n.textContent=done?'✓':n.dataset.lessonNumber;n.setAttribute('aria-label',done?'Completed':'Lesson '+n.dataset.lessonNumber);el.classList.toggle('is-complete',done);el.querySelector('[data-lesson-status]').textContent=done?'Completed · revisit anytime':'Ready when you are';});
  document.querySelectorAll('[data-continue]').forEach(el=>{const lessons=JSON.parse(el.dataset.lessons),next=lessons.find(l=>records[l.slug]?.version!==l.version);el.href=next?'/learn/'+next.slug+'/':'/learn/'+lessons[0].slug+'/';el.textContent=next?(lessons[0]===next?'Start learning →':'Continue learning →'):'Revisit the lessons →';});
@@ -46,7 +49,7 @@ for(const el of blocks){
   submit.hidden=checked||finished;submit.disabled=false;next.hidden=!checked||finished;next.textContent=index===fields.length-1?'Finish lesson ✓':'Next question →';retry.hidden=!finished;
  }
  function reset(){
-  index=0;answers=[];checked=false;finished=false;pending=null;el.dataset.round=String(Number(el.dataset.round||0)+1);el.querySelector('[data-completion-panel]').hidden=true;completionXP(el,'');form.reset();form.querySelectorAll('button').forEach(b=>b.disabled=false);
+  index=0;answers=[];checked=false;finished=false;pending=null;el.dataset.round=String(Number(el.dataset.round||0)+1);el.querySelector('[data-completion-panel]').hidden=true;completionXP(el,'');el.querySelector('[data-review-round]').setAttribute('aria-expanded','false');el.querySelector('[data-review-round]').textContent='Review your answers';form.reset();form.querySelectorAll('button').forEach(b=>b.disabled=false);
   form.querySelectorAll('.answer').forEach(label=>label.classList.remove('correct','wrong'));
   el.querySelectorAll('[data-explanation]').forEach(e=>e.hidden=true);el.querySelector('[data-sync-retry]').hidden=true;result.textContent='';show();
  }
@@ -62,10 +65,11 @@ for(const el of blocks){
   if(!checked||finished)return;
   if(index<fields.length-1){index++;checked=false;show();fields[index].querySelector('legend').focus();return;}
   finished=true;const token=epoch,score=gradeQuiz(quiz,answers);records[el.dataset.quizSlug]={version:quiz.version,...score};const persisted=save();paint();show();
-  fields.forEach(field=>field.hidden=false);
+  fields.forEach(field=>field.hidden=true);
   result.textContent=`${score.score} of ${score.total} correct. Lesson completed ✓. You can practise again whenever you like.${persisted?'':' Browser storage is unavailable; progress lasts only for this page visit.'}`;paintCompletion(el,records);completionXP(el,account==='guest'?'Progress saved on this device. Sign in and complete the round to earn 40 account XP.':'Saving to your account…',account==='guest'?'guest':'pending');result.focus();
   if(account!=='guest'&&sb)await sync(el,quiz,answers,token);
  };
+ el.querySelector('[data-review-round]').onclick=()=>{const button=el.querySelector('[data-review-round]'),open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));button.textContent=open?'Hide answers':'Review your answers';fields.forEach(field=>field.hidden=!open);if(open)fields[0].querySelector('legend').focus();};
  retry.onclick=()=>{reset();fields[0].querySelector('legend').focus();};
  el.querySelector('[data-sync-retry]').onclick=async()=>{if(!pending||pending.el!==el)return;const button=el.querySelector('[data-sync-retry]');button.disabled=true;try{await sync(el,pending.quiz,pending.answers,pending.token);}finally{button.disabled=false;}};
 }

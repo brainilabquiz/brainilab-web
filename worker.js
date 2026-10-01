@@ -65,7 +65,7 @@ export default {
       canonical.pathname=canonical.pathname.replace(/\/index\.html$/,'/');
       if(canonical.href!==url.href)return Response.redirect(canonical.href,308);
     }
-    if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/about/','/about/index.html'].includes(url.pathname)){
+    if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/about/','/about/index.html','/profile/','/profile/index.html'].includes(url.pathname)){
       const response=await serveLearn(request,env,ctx,caches.default);
       const secured=new Response(response.body,response);
       secured.headers.set('X-Content-Type-Options','nosniff');

@@ -3,7 +3,9 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {libraryBody,prepareArticle} from '../lib/learn-content.js';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
-const articles=readdirSync('content/articles').map(file=>prepareArticle(JSON.parse(readFileSync('content/articles/'+file,'utf8'))));
+const documents=readdirSync('content/articles').map(file=>JSON.parse(readFileSync('content/articles/'+file,'utf8')));
+const articles=documents.filter(a=>a.status==='published').map(prepareArticle);
+for(const draft of documents.filter(a=>a.status!=='published'))assert.ok(!readFileSync('learn/index.html','utf8').includes('/learn/'+draft.slug+'/'),'Private drafts must not appear in the library');
 const topics=new Set(articles.map(a=>a.topic));
 // The build and live Worker both expose the same progressive enhancement contract.
 for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)]){

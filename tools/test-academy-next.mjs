@@ -25,7 +25,13 @@ assert.equal(w.document.querySelector('[data-completion-panel]').hidden,false);
 assert.match(w.document.querySelector('[data-completion-progress]').textContent,/1 of 6.*17%/);
 assert.equal(w.document.querySelector('[data-completion-next]').getAttribute('href'),'/learn/fractions-equal-parts/');
 assert.match(w.document.querySelector('[data-completion-xp]').textContent,/Sign in/);
+const review=w.document.querySelector('[data-review-round]');
+assert.equal(w.document.querySelectorAll('fieldset:not([hidden])').length,0);
+review.click();assert.equal(review.getAttribute('aria-expanded'),'true');
+assert.equal(w.document.querySelectorAll('fieldset:not([hidden])').length,article.quiz.questions.length);
 w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.querySelector('[data-completion-panel]').hidden,true);
+assert.equal(review.getAttribute('aria-expanded'),'false');assert.equal(review.textContent,'Review your answers');
+assert.equal(w.document.querySelectorAll('fieldset:not([hidden])').length,1);
 guest.window.close();
 // A full course offers its successor; failed sync never claims XP, retries replace the message.
 const signed=dom(),sw=signed.window;const saved={};for(const l of course.lessons.slice(0,-1)){saved[l.slug]={version:articles.find(a=>a.slug===l.slug).quiz.version,score:3,total:3};}
