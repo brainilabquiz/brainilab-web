@@ -88,8 +88,8 @@ def page(path, title, description, body, schema, cover=None):
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.41.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
 <link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v={'41.33.0' if path == '/learn/' else '41.31.0'}"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
-<script defer src="/assets/js/consent.bundle.js?v=41.28.0"></script>
-<script defer src="/assets/js/shell.bundle.js?v=41.43.0"></script>
+<script defer src="/assets/js/consent.bundle.js?v=41.29.0"></script>
+<script defer src="/assets/js/shell.bundle.js?v=41.44.0"></script>
 {'<script defer src="/assets/js/learn-library.js?v=41.34.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 <link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
@@ -117,7 +117,7 @@ page('/learn/', 'Learn: curious questions, clear answers', 'Explore science, geo
 <p class="learn-count" role="status" aria-live="polite" id="learn-count">{len(topics)} articles · latest in each topic</p>
 <noscript><style>.library-grid .learn-card[hidden]{{display:flex!important}}</style><p>All articles are shown below. Enable JavaScript to use search and topic filters.</p></noscript><div class="learn-grid library-grid" id="learn-articles">{library}</div>
 <div class="learn-empty" hidden><h2>No articles found</h2><p>Try another word or browse all topics.</p><button type="button" data-clear-filters>Show all articles</button></div>
-<p class="learn-footer-link">In the mood to play? <a href="/games/">Browse the games →</a></p></div>''', {'@type':'CollectionPage','name':'BrainiLab Learn','url':BASE+'/learn/','description':'Short reads on science, geography, history and puzzles','hasPart':[{'@type':'Article','headline':a['title'],'url':BASE+'/learn/'+a['slug']+'/','image':BASE+a['cover']['src']} for a in articles]})
+<p class="learn-footer-link">In the mood to play? <a href="/games/">Browse the games →</a></p></div>''', {'@type':'CollectionPage','name':'BrainiLab Learn','url':BASE+'/learn/','description':'Explore curious articles and beginner-friendly BrainiLab Academy courses. Read, try interactive examples and test what you learn in a quick quiz','hasPart':[{'@type':'Article','headline':a['title'],'url':BASE+'/learn/'+a['slug']+'/','image':BASE+a['cover']['src']} for a in articles]})
 
 for a in articles:
     toc = ''.join(f'<li><a href="#{s["id"]}">{escape(s["title"])}</a></li>' for s in a['sections'])

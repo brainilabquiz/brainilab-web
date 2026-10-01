@@ -8,6 +8,7 @@ import gsc_sync as api
 from report_gsc import build_report
 from handoff import build_handoff
 from openseo import attach
+from measurement import attach_measurement
 
 
 def run(inventory, now=None):
@@ -21,7 +22,7 @@ def run(inventory, now=None):
         sha=hashlib.sha256(report_path.read_bytes()).hexdigest()
         if all(state.get(k)==v for k,v in expected.items()) and state.get('sha256')==sha:
             previous=json.loads(report_path.read_text(encoding='utf-8'))
-            enriched=attach(previous,api.PRIVATE)
+            enriched=attach_measurement(attach(previous,api.PRIVATE),api.PRIVATE)
             if enriched!=previous:
                 api.private_write(report_path,enriched)
                 state['sha256']=hashlib.sha256(report_path.read_bytes()).hexdigest()
@@ -29,7 +30,7 @@ def run(inventory, now=None):
             api.private_write(api.PRIVATE/'codex-handoff.json',build_handoff(enriched))
             return {**state,'reused':True,'remoteImport':'Verify separately; reuse does not skip pending import.'}
     api.sync(expected['start'],expected['end'],api.PRIVATE/'growth.sqlite')
-    report=attach(build_report(api.PRIVATE/'growth.sqlite',inventory),api.PRIVATE)
+    report=attach_measurement(attach(build_report(api.PRIVATE/'growth.sqlite',inventory),api.PRIVATE),api.PRIVATE)
     api.private_write(report_path,report)
     api.private_write(api.PRIVATE/'codex-handoff.json',build_handoff(report))
     state={**expected,'sha256':hashlib.sha256(report_path.read_bytes()).hexdigest(),'report':str(report_path),'exportedAt':now.isoformat()}

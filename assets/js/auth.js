@@ -194,6 +194,8 @@ window.BrainiAuth = (function(){
             if(password!==confirm) throw new Error("Passwords do not match.");
 
             const data=await backend.signUpWithEmail(email,password);
+            // A confirmation email request is not a completed account registration.
+            window.BrainiSiteAnalytics?.registrationRequest('email');
             pendingEmail=email;
 
             if(data?.session){

@@ -53,3 +53,14 @@
 }
 @media(prefers-reduced-motion:reduce){.games-library-page .anytime-game-card{transition:none}}
 
+
+/* Separate format and topic choices; keep every available option visible. */
+.game-topic-filters[hidden],.game-topic-filters button[hidden]{display:none!important}
+.game-format-filters{border-bottom:1px solid #ded9e9;padding-bottom:12px;margin-bottom:12px}
+.game-format-filters button{border-radius:12px;min-width:96px;font-size:16px}
+.game-format-filters button[aria-pressed="true"]{background:#ffe014;border-color:#ffe014;color:#2d296e}
+.game-topic-directory{margin-block:24px}.game-topic-directory a{display:inline-block;padding-block:10px;text-underline-offset:4px}
+
+.games-library-page .game-starters{margin-top:24px}
+.games-library-page .game-starters[hidden]{display:none!important}
+@media(max-width:480px){.game-format-filters button{flex:1;min-width:0;padding-inline:8px}}

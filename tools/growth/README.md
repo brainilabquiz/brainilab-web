@@ -55,6 +55,30 @@ search demand never replaces first-party clicks. No credentials enter the site.
 
 ## Validation commands
 
+## Measurement baseline (2026-10-01)
+
+`measurement.py` attaches the private `data/measurement-latest.json` observation
+to both fresh exports and same-day reuse. The current observation comes from the
+signed-in GA4 Traffic acquisition report (3–30 September 2026, all users, 100%
+of available data): 43 sessions, all Direct, 36 engaged sessions, 922 events.
+It is a manually checked snapshot, not an API synchronization or an organic
+conversion funnel. The dashboard preserves the separate GSC dates.
+
+Consenting public visits now include `growth_entry_channel` and
+`growth_entry_path` diagnostic parameters. Browser attribution expires after
+30 minutes without measured activity and clears on consent withdrawal.
+These simplified channels are not Google's official channel classification.
+The Europe pilot emits `practice_start`/`practice_complete`; scored games keep
+their existing `game_start`/`game_complete` events. Email sign-up requests emit
+`registration_request` only after a successful request, never `sign_up`.
+An email request or sign-in is not evidence of a newly verified account.
+
+Next: verify processed GA4 events, obtain an explicitly authorized read-only
+GA4 API connection if unattended import is wanted, and design a verified
+registration signal before claiming completed registration attribution.
+Do not reuse the Search Console token for a broader scope or mark unknown
+conversion counts as zero. No analytics data or credentials are public assets.
+
 `python -m unittest discover -s tools/growth -v`
 
 `node tools/test-admin-growth.mjs` (uses the existing private test environment's JSDOM_MODULE when jsdom is not installed locally).

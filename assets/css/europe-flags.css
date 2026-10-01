@@ -1,0 +1,9 @@
+#europeQuiz .question-flag-emoji{width:88px;height:66px;object-fit:contain;vertical-align:middle}
+#europeQuiz [data-europe-result]{scroll-margin-top:90px}
+#europeQuiz .europe-review{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0;padding:0;list-style:none;text-align:left}
+#europeQuiz .europe-review li{display:flex;align-items:flex-start;gap:14px;background:#fff;color:#29245f;border-radius:12px;padding:18px;line-height:1.5}
+#europeQuiz .europe-review img{flex:none;object-fit:contain}
+#europeQuiz .europe-review p{font-size:1rem;margin:6px 0;color:#35334e}
+#europeQuiz .europe-review small{font-size:.85rem;color:#59576a}
+#europeQuiz [data-europe-result]>a:not(.btn){display:inline-block;color:#fff;margin:12px;text-underline-offset:4px}
+@media(max-width:680px){#europeQuiz .europe-review{grid-template-columns:1fr}#europeQuiz .question-flag-emoji{display:block;margin:12px auto}#europeQuiz .europe-review li{padding:14px;gap:10px}#europeQuiz .europe-review img{width:48px;height:36px}}
