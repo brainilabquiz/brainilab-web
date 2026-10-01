@@ -2,10 +2,15 @@
   {
     "slug": "biel-sarda",
     "name": "Biel Sardà",
-    "role": "",
-    "biography": "",
-    "photo": "",
-    "socials": [],
+    "role": "Content & learning at BrainiLab",
+    "biography": "I’m Biel. I help shape BrainiLab’s games, articles and Academy courses, from choosing topics to making the website clearer and easier to use. I like a question that makes you pause, try something and discover why the answer works.\n\nI work as an audiovisual producer on events worldwide, and I studied psychology at the University of Vic – Central University of Catalonia. At BrainiLab, I bring those interests into short challenges and practical lessons that you can explore at your own pace.",
+    "photo": "/assets/images/learn/biel-sarda-portrait.webp",
+    "socials": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/biel-sard%C3%A0-sanabra-9538061a8/"
+      }
+    ],
     "visible": true,
     "active": true
   }
