@@ -42,6 +42,17 @@ Before any write, save a private backup and inspect Git changes and the opportun
 
 Follow-up needs equal, non-overlapping post-publication periods in Search Console Pacific dates. A successful release is not a demonstrated SEO improvement. Record completed cycles in `outputs/BrainiLab-Growth-seguiment.md` and update the resume point.
 
+## OpenSEO research integration
+
+The Growth report accepts a separate validated OpenSEO snapshot and the admin
+shows project context, site audit and keyword workflows with their real state.
+Read [OPENSEO.md](OPENSEO.md) before running them. `openseo.py record` preserves
+history and guards against stale writes; rerunning the daily exporter refreshes
+provider evidence even when Google's same-day report is reused. The Codex handoff
+contains research tasks plus reviewed execution tasks. Missing tools or results
+remain explicitly unverified. Installation is not a completed audit, and estimated
+search demand never replaces first-party clicks. No credentials enter the site.
+
 ## Validation commands
 
 `python -m unittest discover -s tools/growth -v`
