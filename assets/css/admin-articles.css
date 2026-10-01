@@ -14,3 +14,6 @@
 #article-video-preview .related-video:focus-visible{outline:3px solid #2d296e;outline-offset:3px}
 #article-video-preview .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 #article-video-game{width:auto;min-height:auto}
+/* Keep article actions below the admin header instead of hiding under it. */
+@media(min-width:761px){.article-editor-actions{top:86px}}
+@media(min-width:651px) and (max-width:760px){.article-editor-actions{top:140px}}
