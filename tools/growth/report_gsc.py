@@ -7,6 +7,7 @@ from pathlib import Path
 import sqlite3
 from gsc_import import summarize
 from discovery import discover, health_audit
+from openseo import attach
 
 
 ROOT = Path(__file__).resolve().parent
@@ -64,6 +65,6 @@ if __name__ == '__main__':
     parser.add_argument('--inventory', required=True, help='Path to the private public-audit snapshot JSON')
     parser.add_argument('--output', default=str(ROOT/'data/growth-report.json'))
     args = parser.parse_args()
-    result = build_report(args.database, args.inventory)
+    result = attach(build_report(args.database, args.inventory), Path(args.database).parent)
     Path(args.output).write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print(json.dumps({'summary':result['propertySummary'], 'pilots':[{k:o[k] for k in ('name','status','pageEvidence','queryEvidence')} for o in result['opportunities']]}, ensure_ascii=False, indent=2))
