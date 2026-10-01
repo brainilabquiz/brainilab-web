@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LINK = '<link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>'
 TOPICS = {'general-knowledge', 'geography', 'history', 'science', 'sports'}
 inventory = []
-for name in subprocess.check_output(['git', 'ls-files', '*.html'], cwd=ROOT, text=True).splitlines():
+for name in sorted(set(subprocess.check_output(['git', 'ls-files', '*.html'], cwd=ROOT, text=True).splitlines())):
     if name.startswith('tools/'):
         continue
     path = ROOT / name
