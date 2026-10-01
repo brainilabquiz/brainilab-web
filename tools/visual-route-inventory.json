@@ -1,0 +1,422 @@
+[
+  {
+    "path": "404.html",
+    "kind": "error",
+    "visualLayer": true
+  },
+  {
+    "path": "about/index.html",
+    "kind": "info",
+    "visualLayer": true
+  },
+  {
+    "path": "admin/index.html",
+    "kind": "admin",
+    "visualLayer": true
+  },
+  {
+    "path": "auth/reset-password/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "categories/index.html",
+    "kind": "redirect",
+    "visualLayer": false
+  },
+  {
+    "path": "cookies/index.html",
+    "kind": "info",
+    "visualLayer": true
+  },
+  {
+    "path": "daily-quiz/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "games/brain-mix/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/brainiword/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/connections/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/flag-dash/index.html",
+    "kind": "redirect",
+    "visualLayer": false
+  },
+  {
+    "path": "games/higher-lower/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "games/map-hunt/index.html",
+    "kind": "redirect",
+    "visualLayer": false
+  },
+  {
+    "path": "games/math-rush/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/number-route/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/odd-one-out/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/order-up/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/sequence/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/survival/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/topic-rush/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "games/try-first/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "general-knowledge/general-knowledge-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "general-knowledge/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "geography/flags/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "geography/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "geography/world-capitals-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "geography/world-flags-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "groups/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "history/history-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "history/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "leaderboards/index.html",
+    "kind": "redirect",
+    "visualLayer": false
+  },
+  {
+    "path": "learn/addition-putting-things-together/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/can-a-wrong-guess-help-you-learn/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/connections-puzzles-find-the-hidden-link/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/counting-seconds-after-lightning/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/daily-or-anytime/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/five-number-puzzles-printable/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-hook-and-loop-fasteners-work/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-post-it-notes-were-invented/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-to-learn-world-flags/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-to-play-number-route/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-to-read-a-tennis-score/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/how-to-read-roman-numerals/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/mental-math-round-and-adjust/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/mental-percentages-without-a-calculator/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/multiplication-equal-groups/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/multiply-by-11-in-your-head/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/number-sequences-look-at-the-gaps/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/paths/calendars-explained/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/paths/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/paths/maths-from-zero/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/paths/mental-maths-foundations/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/paths/sun-moon-and-time/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/remember-quiz-answers-tomorrow/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/repeated-letters-in-five-letter-word-games/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/stalactites-vs-stalagmites/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/subtraction-how-many-are-left/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/was-bubble-wrap-invented-as-wallpaper/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/what-olympic-rings-mean/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/what-really-causes-seasons/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/which-century-is-that-year/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-2100-is-not-a-leap-year/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-ballpoint-pens-have-a-tiny-ball/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-britain-skipped-eleven-days-in-1752/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-canberra-is-australias-capital/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-greenland-looks-so-big/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-octopuses-have-three-hearts/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-tennis-balls-are-yellow/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-the-moon-changes-shape/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/why-time-zones-get-messy/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "learn/words-that-mean-their-own-opposite/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "plus/index.html",
+    "kind": "info",
+    "visualLayer": true
+  },
+  {
+    "path": "privacy/index.html",
+    "kind": "info",
+    "visualLayer": true
+  },
+  {
+    "path": "profile/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "profile/plus/index.html",
+    "kind": "redirect",
+    "visualLayer": false
+  },
+  {
+    "path": "rankings/index.html",
+    "kind": "public",
+    "visualLayer": true
+  },
+  {
+    "path": "science/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "science/science-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "sports/index.html",
+    "kind": "topic",
+    "visualLayer": true
+  },
+  {
+    "path": "sports/sports-quiz/index.html",
+    "kind": "play",
+    "visualLayer": true
+  },
+  {
+    "path": "suggestions/index.html",
+    "kind": "public",
+    "visualLayer": true
+  }
+]

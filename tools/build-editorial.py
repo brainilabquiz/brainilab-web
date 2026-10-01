@@ -92,7 +92,8 @@ def page(path, title, description, body, schema, cover=None):
 <script defer src="/assets/js/shell.bundle.js?v=41.40.0"></script>
 {'<script defer src="/assets/js/learn-library.js?v=41.34.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
-</head><body class="editorial-page"><a class="editorial-skip" href="#main-content">Skip to main content</a>
+<link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
+</head><body class="editorial-page braini-visual"><a class="editorial-skip" href="#main-content">Skip to main content</a>
 {header}<main id="main-content">{body}</main>{footer}<div class="toast" role="status"></div></body></html>'''
     target = ROOT/path.strip('/')/'index.html'
     target.parent.mkdir(parents=True, exist_ok=True)
