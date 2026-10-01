@@ -4,8 +4,9 @@ import {coverImage} from '../lib/cover-images.js';
 import {quizFields,collectQuiz,authorSelect} from './quiz-fields.js';
 import {validQuiz} from '../lib/learning-model.js';
 import {uploadCover} from './cover-upload.js';
+import {videoEditor,bindVideoEditor} from './article-video.js';
 let authors=[];
-let context,rows=[],active=null,dirty=false,busy=false,coverSelection=null;
+let context,rows=[],active=null,dirty=false,busy=false,coverSelection=null,videoSelection=null;
 const $=selector=>context.root.querySelector(selector);
 const slugify=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100);
 const topics=['Everyday inventions','Geography','Getting started','History','Learning','Numbers & logic','Science & nature','Sports','Words & puzzles'];
@@ -19,7 +20,7 @@ function setStatus(message,error=false){const el=$('#article-save-state');if(el)
 async function guarded(fn){if(busy)return;busy=true;context.root.querySelectorAll('[data-save],#article-upload').forEach(e=>e.disabled=true);try{await fn();}catch(error){setStatus(error.message||String(error),true);context.toast(error.message||'Could not save');}finally{busy=false;context.root.querySelectorAll('[data-save],#article-upload').forEach(e=>e.disabled=false);}}
 async function load(){[rows,authors]=await Promise.all([context.rpc('admin_list_learn_articles'),context.rpc('admin_list_learning_entities',{p_kind:'author'})]);authors=authors||[];}
 function listing(){
- active=null;dirty=false;context.root.oninput=null;context.root.onchange=null;
+ active=null;dirty=false;videoSelection=null;context.root.oninput=null;context.root.onchange=null;
  context.root.innerHTML=`<div class="admin-panel"><div class="article-list-toolbar"><p>${rows.filter(r=>r.published_revision).length} published · ${rows.filter(r=>r.revision!==r.published_revision).length} drafts / changes</p><button type="button" class="admin-button primary" id="article-new">+ New article</button></div><div class="article-list-toolbar">${field('article-search','Search articles')}<label class="article-field">Category<select id="article-category"><option value="">All categories</option>${[...new Set(rows.map(r=>r.document.topic).filter(Boolean))].sort().map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></label><label class="article-field">Status<select id="article-status"><option value="">All</option><option value="published">Published</option><option value="draft">Drafts / changes</option></select></label></div><p id="article-list-count" class="article-help" role="status"></p><div id="article-list"></div></div>`;
  $('#article-new').onclick=()=>openArticle(null);
  $('#article-search').oninput=renderRows;$('#article-status').onchange=renderRows;$('#article-category').onchange=renderRows;renderRows();
@@ -37,7 +38,7 @@ function sectionMarkup(section,index){return `<section class="article-section" d
 function sourceMarkup(source,index){return `<div class="article-source" data-source>${field('source-name-'+index,'Source name',source.name,'text','data-source-name')}${field('source-url-'+index,'Source URL',source.url,'url','data-source-url placeholder="https://…"')}<button type="button" data-remove-source aria-label="Remove source ${index+1}">Remove</button></div>`;}
 function collect(){
  const value=id=>$('#'+id).value.trim();
- return {...active.document,authorId:value('editor-author'),quiz:collectQuiz(context.root,active.document.quiz),slug:value('article-slug'),title:value('article-title'),topic:value('article-topic'),description:value('article-description'),practice:value('article-practice'),order:Number(value('article-order')),
+ return {...active.document,video:videoSelection?.collect()??null,authorId:value('editor-author'),quiz:collectQuiz(context.root,active.document.quiz),slug:value('article-slug'),title:value('article-title'),topic:value('article-topic'),description:value('article-description'),practice:value('article-practice'),order:Number(value('article-order')),
  cover:{...(coverSelection?.src===value('article-cover-url')?coverSelection:{}),src:value('article-cover-url'),alt:value('article-cover-alt'),credit:value('article-cover-credit'),position:Number(value('article-cover-position'))},
  game:{name:value('article-game-name'),url:value('article-game-url')},hub:{name:value('article-hub-name'),url:value('article-hub-url')},
  sections:[...context.root.querySelectorAll('[data-section]')].map((section,i)=>({id:section.querySelector('[data-section-id]').value||slugify(section.querySelector('[data-section-title]').value)||'section-'+(i+1),title:section.querySelector('[data-section-title]').value.trim(),html:cleanHtml(section.querySelector('[data-rich]').innerHTML)})),
@@ -57,6 +58,8 @@ ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &am
 <aside><div class="admin-panel"><h2>Cover</h2><div class="article-cover-preview"><img id="article-cover-preview" src="${safeCover(a.cover?.src)?esc(a.cover.src):'/assets/brand/iso-multicolor.png'}" alt="Cover crop preview" style="object-position:center ${Number(a.cover?.position??45)}%"/></div><label class="article-field">Use an existing cover<select id="article-cover-pick"><option value="">Choose a cover…</option>${covers.map(c=>`<option value="${esc(c.cover.src)}">${esc(c.title)}</option>`).join('')}</select></label><label class="article-field">Upload photo<input id="article-upload" type="file" accept="image/jpeg,image/png,image/webp"/></label><p class="article-help">JPG, PNG or WebP. Images are resized before upload. Uploaded covers are public.</p>${field('article-cover-url','Cover URL',a.cover?.src)}${field('article-cover-position','Vertical crop position',a.cover?.position??45,'range','min="0" max="100"')}${area('article-cover-alt','Describe the image (alt text)',a.cover?.alt,2)}${field('article-cover-credit','Photo credit',a.cover?.credit)}</div>
 <details class="admin-panel article-settings"><summary>Publishing &amp; history</summary>${field('article-order','Order within the same publication date',a.order??999,'number','min="0" max="9999"')}<p class="article-help">Edits stay private until Publish. Changes appear on the website within about a minute.</p>${active.published_revision?`<a href="/learn/${esc(a.slug)}/" target="_blank" rel="noopener">Open published article ↗</a><button type="button" class="admin-button" data-save="unpublish">Move published article to draft</button>`:''}<button type="button" class="admin-button" id="article-history" ${active.revision?'':'disabled'}>Version history</button><div id="article-history-list"></div></details></aside></div><dialog id="article-preview-dialog"><div><strong>Article preview · not published</strong><button type="button" class="admin-button" id="article-preview-close">Close</button></div><iframe title="Article preview" sandbox=""></iframe></dialog></div>`;
  context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('afterbegin','<details id="article-checks" class="admin-panel article-readiness"></details>');
+ context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('beforeend',videoEditor(a.video));
+ videoSelection=bindVideoEditor(context,a.video,markDirty);
  renderChecks();
  dirty=!!documentOverride;
  context.root.oninput=markDirty;context.root.onchange=markDirty;
@@ -83,6 +86,7 @@ ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &am
  $('#article-upload').onchange=()=>guarded(async()=>{const file=$('#article-upload').files[0];if(!file)return;setStatus('Preparing cover and thumbnails…');const uploaded=await uploadCover(file,context.sb.storage.from('learn-covers'));coverSelection=uploaded;$('#article-cover-url').value=uploaded.src;updateCover();markDirty();setStatus('Cover and thumbnails uploaded · save your draft to keep this selection.');});
  context.root.querySelectorAll('[data-save]').forEach(button=>button.onclick=()=>guarded(async()=>{
   const action=button.dataset.save;if(action==='unpublish'&&!confirm('Remove this article from the public library? Its draft and history will remain.'))return;
+  if(action!=='unpublish')videoSelection?.validate();
   const a=collect();if(action==='publish'){
    if(a.quiz&&!validQuiz(a.quiz))throw Error('The quick round needs 2–8 complete questions, four distinct choices and explanations.');
    if(!a.sections.length||a.sections.some(s=>!s.title||!s.html.replace(/<[^>]*>/g,'').trim()))throw Error('Each section needs a heading and text before publishing.');

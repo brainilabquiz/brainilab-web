@@ -5889,3 +5889,23 @@ main > section.section,
 }
 
 .friend-preview{display:flex;align-items:center;gap:14px;background:#f7f2e7;border:1px solid #e9dfc9;border-radius:16px;padding:15px;margin:16px 0}.friend-preview[hidden]{display:none}.friend-preview-art{display:grid;place-items:center;width:62px;height:62px;flex:none}.friend-preview-art img{width:60px;height:60px}.friend-preview strong{display:block;font-size:20px;color:#30296f}.friend-preview div>span{display:block;margin-top:5px;font-size:14px;color:#62596a}
+
+/* A quiet invitation to watch: the game and the article keep their primary action. */
+.related-video,.article-body a.related-video{display:grid;grid-template-columns:minmax(108px,160px) minmax(0,1fr);align-items:center;gap:18px;margin:22px 0;padding:12px;border:1px solid #dfd6c7;border-radius:16px;background:#fffdf8;color:var(--navy);text-decoration:none;font-family:Montserrat,system-ui,sans-serif;text-align:left;line-height:1.4;transition:border-color .15s,background .15s}
+.related-video:hover{border-color:var(--navy);background:#fff9e4}
+.related-video:focus-visible{outline:3px solid var(--navy);outline-offset:4px}
+.related-video-art{display:block;position:relative;isolation:isolate;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:var(--navy)}
+.related-video-art img{display:block;width:100%;height:100%;object-fit:cover}
+.related-video-art img[hidden]{display:none}
+.related-video-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:36px;height:30px;border-radius:8px;color:var(--navy);background:var(--yellow)}
+.related-video-copy{display:grid;gap:6px;min-width:0}
+.related-video-label{font-size:11px;font-weight:750;color:#655d70;line-height:1.4}
+.related-video-copy strong{font-family:Pally,Montserrat,system-ui,sans-serif;font-size:20px;line-height:1.2;overflow-wrap:anywhere;letter-spacing:-.015em}
+.related-video-link{font-size:12px;font-weight:750;color:var(--navy);line-height:1.5}
+.related-video .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.post-game .related-video{margin:18px 0 4px}
+#article-video-preview .related-video{grid-template-columns:1fr;gap:10px;padding:10px}
+#article-video-preview .related-video-copy strong{font-size:18px}
+@media(max-width:480px){.related-video,.article-body a.related-video{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:10px}.related-video-copy strong{font-size:17px}.related-video-label{font-size:10px}.related-video-link{font-size:11px}}
+@media(max-width:360px){.related-video,.article-body a.related-video{grid-template-columns:80px minmax(0,1fr);gap:10px}.related-video-copy strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.related-video{transition:none}}
