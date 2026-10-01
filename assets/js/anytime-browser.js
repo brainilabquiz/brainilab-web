@@ -83,7 +83,7 @@ window.BrainiAnytimeBrowser=(function(){
           </div>
           <div class="anytime-status">${bestLabel(game.id)}</div>
           <div class="anytime-difficulty-label">${game.difficultyLabel||"Play anytime"}</div>
-          <div class="difficulty-actions single-action"><a href="${siteUrl(game.base)}">${game.action||`Play ${game.name}`}</a></div>
+          <div class="difficulty-actions single-action"><a aria-label="Play ${game.name}" href="${siteUrl(game.base)}">${game.action||`Play ${game.name}`}</a></div>
         </article>`;
     }
 
@@ -127,7 +127,7 @@ window.BrainiAnytimeBrowser=(function(){
               : `<span class="anytime-browser-kicker">PLAY ANYTIME</span>`
             }
 
-            <h2>${daily ? "More games, whenever you want" : "Pick another quiz"}</h2>
+            <h2>${daily ? "A little more to explore" : "Pick another quiz"}</h2>
 
             <p>${daily
               ? "These quizzes are replayable and earn XP, but they do not change today’s Daily Brain Score."
@@ -139,7 +139,7 @@ window.BrainiAnytimeBrowser=(function(){
         </div>
 
         <div class="anytime-grid">
-          ${GAMES.map(card).join("")}
+          ${(daily?GAMES.filter(g=>['generalknowledge','worldflags','numberroute'].includes(g.id)).map(g=>({...g,action:'Play'})):GAMES).map(card).join("")}
         </div>
       </section>
     `;
