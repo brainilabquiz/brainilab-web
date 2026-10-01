@@ -1400,6 +1400,26 @@ window.BrainiProfileSections=(function(){
     }
   }
 
+  function dailyProgress(daily){
+    const day=daily.key||BrainiData.dateForDailyNumber(daily.number),model=BrainiDailyRules.model(day);
+    const completed=new Set(daily.completedGames||[]);
+    if(model.version!=='daily-choice-v1')return {legacy:true,text:`${completed.size} of ${model.maxGames} games completed`,label:'Open today’s games',href:'/daily-quiz/'};
+    const main=completed.has(model.primary),bonus=model.choices.includes(daily.bonusChoice)?daily.bonusChoice:null,extra=!!bonus&&completed.has(bonus);
+    return {main,extra,mainText:main?'Complete':'Ready to play',extraText:extra?'Complete':bonus?'Ready to continue':'Optional',
+      label:!main?'Play today’s Daily':extra?'See today’s results':bonus?'Continue your extra':'Choose an optional extra',href:main&&!extra?'/daily-quiz/#daily-extras':'/daily-quiz/'};
+  }
+  function hydrateDailyProgress(){
+    const root=document.querySelector('[data-profile-daily-summary]');if(!root)return;
+    const state=dailyProgress(BrainiData.daily());root.replaceChildren();
+    if(state.legacy){root.textContent=state.text;}else{
+      for(const [label,value,done] of [['Main Daily',state.mainText,state.main],['Extra game',state.extraText,state.extra]]){
+        const row=document.createElement('div'),name=document.createElement('strong'),status=document.createElement('span');
+        name.textContent=label;status.textContent=value;row.className=done?'is-complete':'';row.append(name,status);root.append(row);
+      }
+    }
+    const action=document.querySelector('[data-profile-daily-action]');if(action){action.textContent=state.label+' →';action.href=state.href;}
+  }
+
   function hydrateRankHero(){
     const root=document.querySelector("[data-profile-rank-hero]");
     if(!root || !window.BrainiProgressUI) return;
@@ -1424,6 +1444,7 @@ window.BrainiProfileSections=(function(){
     }
     window.BrainiContinuity?.render?.();
     hydrateRecentGames();
+    hydrateDailyProgress();
   }
 
 
@@ -1527,5 +1548,5 @@ window.BrainiProfileSections=(function(){
 
   document.addEventListener("DOMContentLoaded",bind);
 
-  return {show,hydrateRankHero};
+  return {show,hydrateRankHero,dailyProgress,hydrateDailyProgress};
 })();
