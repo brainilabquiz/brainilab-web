@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createRequire} from 'node:module';
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+const d=new JSDOM('<main><a href="/games/">Keep playing</a><div id="invite"></div></main>',{url:'https://brainilabgames.com/geography/europe-flags-quiz/',runScripts:'outside-only'}),w=d.window,root=w.document.querySelector('#invite');
+let status='guest',opened=[],events=[];
+w.BrainiData={authState:()=>({status})};w.BrainiSiteAnalytics={accountPrompt:(...args)=>events.push(args)};
+w.eval(readFileSync('assets/js/post-game.js','utf8'));
+w.BrainiPostGame.inviteAccount(root,{practice:true,gameId:'europeflags'});
+assert.match(root.textContent,/This practice round stays on this page/);assert.equal(opened.length,0);
+w.BrainiPostGame.inviteAccount(root,{practice:true,gameId:'europeflags'});assert.equal(root.querySelectorAll('[data-join-account]').length,1);
+const flush=()=>new Promise(r=>setTimeout(r,0));
+root.querySelector('[data-join-account]').click();await flush();assert.equal(root.querySelector('[data-account-error]').hidden,false);assert.equal(root.querySelector('[data-join-account]').disabled,false);assert.equal(events.length,1);
+w.BrainiPerf={ensureCloud:async()=>{w.BrainiAuth={open:opts=>opened.push(opts)};return true;}};
+root.querySelector('[data-join-account]').click();await flush();assert.equal(opened[0].mode,'signup');assert.equal(opened[0].source,'practice_result');assert.equal(events.at(-1)[0],'open');
+root.querySelector('[data-dismiss-account]').click();assert.equal(root.hidden,true);assert.equal(w.document.activeElement.tagName,'A');
+w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(root.hidden,true);
+const second=w.document.createElement('div');w.document.body.append(second);status='authenticated';w.BrainiPostGame.inviteAccount(second);assert.equal(second.hidden,true);assert.equal(second.children.length,0);
+status='guest';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(second.hidden,false);
+status='authenticated';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(second.hidden,true);assert.equal(second.children.length,0);w.close();
+
+const a=new JSDOM('<title>Public quiz</title>',{url:'https://brainilabgames.com/geography/',referrer:'https://www.google.com/',runScripts:'outside-only'}),aw=a.window;
+aw.eval(readFileSync('assets/js/site-analytics.js','utf8'));
+aw.BrainiSiteAnalytics.accountPrompt('click','game_result','worldflags');assert.equal(aw.dataLayer,undefined);
+aw.BrainiSiteAnalytics.setConsent(true);aw.BrainiSiteAnalytics.accountPrompt('click','game_result','worldflags');aw.BrainiSiteAnalytics.accountPrompt('open','game_result','worldflags');
+aw.dispatchEvent(new aw.CustomEvent('brainilab:discovery',{detail:{type:'games',topic:'geography'}}));
+let log=aw.dataLayer.filter(e=>e[0]==='event');assert.deepEqual(Array.from(log,e=>e[1]),['page_view','account_prompt_click','account_prompt_open','game_filter']);assert.equal(log[1][2].growth_entry_channel,'organic_search');assert.equal(log.at(-1)[2].game_topic,'geography');
+const before=aw.dataLayer.length;aw.BrainiSiteAnalytics.accountPrompt('sign_up','game_result','worldflags');aw.BrainiSiteAnalytics.accountPrompt('click','secret@example.com','worldflags');aw.BrainiSiteAnalytics.accountPrompt('click','game_result','secret@example.com');assert.equal(aw.dataLayer.length,before);
+aw.BrainiSiteAnalytics.setConsent(false);const after=aw.dataLayer.length;aw.BrainiSiteAnalytics.accountPrompt('open','game_result','worldflags');assert.equal(aw.dataLayer.length,after);aw.close();
+
+const g=new JSDOM(readFileSync('geography/index.html','utf8'));
+const entries=[...g.window.document.querySelectorAll('.geo-choice')];assert.equal(entries.length,3);assert.ok(entries[0].querySelector('a[href="/geography/europe-flags-quiz/"]'));
+const schema=JSON.parse(g.window.document.querySelector('[type="application/ld+json"]').textContent);assert.equal(schema['@graph'].find(x=>x['@type']==='ItemList').itemListElement.length,3);
+assert.equal(g.window.document.querySelectorAll('h1').length,1);g.window.close();
+console.log('PASS: voluntary guest invitation, lazy auth, error/retry, dismissal, signed-in suppression, consent, allowlisted attribution, no false registrations, crawlable geography entries.');

@@ -89,13 +89,17 @@ window.BrainiSiteAnalytics=(()=>{
   });
   window.addEventListener('brainilab:datachange',event=>{if(!allowed()||event.detail?.type!=='game_result')return;const {gameId,result}=event.detail;if(!result||result.practice||result.tryFirst||result.dailyReplayBlocked||!result.clientResultId||completed.has(result.clientResultId)||!/^[a-z0-9]{1,30}$/.test(gameId||''))return;completed.add(result.clientResultId);send('game_complete',{game_id:gameId,mode:result.dailyNumber!=null?'daily':'anytime'});});
   window.addEventListener('brainilab:friendchallenge',event=>{if(['copy','share'].includes(event.detail?.method))send('friend_challenge_share',{method:event.detail.method});});
-  window.addEventListener('brainilab:discovery',event=>{if(['all','quizzes','words','numbers'].includes(event.detail?.type))send('game_filter',{game_type:event.detail.type});});
+  window.addEventListener('brainilab:discovery',event=>{if(['all','games','quizzes','words','numbers'].includes(event.detail?.type)){const params={game_type:event.detail.type};if(['all','words','numbers','knowledge','general','geography','science','history','sports'].includes(event.detail?.topic))params.game_topic=event.detail.topic;send('game_filter',params);}});
   window.addEventListener('brainilab:feedbacksent',event=>{if(['site','post-game'].includes(event.detail?.source))send('feedback_submit',{source:event.detail.source});});
   window.addEventListener('storage',event=>{if(event.key!==key&&event.key!==null)return;choice=read();if(choice)activate();else revoke();});
   // Reading signal = at least 30 seconds visible AND halfway through the article.
   const timer=setInterval(()=>{if(articleRead||!safe()){clearInterval(timer);return;}const article=document.querySelector('.article-body');if(!article){clearInterval(timer);return;}if(allowed()&&!document.hidden)activeSeconds++;if(activeSeconds>=30&&article.getBoundingClientRect().top+article.offsetHeight/2<=innerHeight){articleRead=true;send('article_read',{article_slug:path().split('/')[2]});clearInterval(timer);}},1000);
   if(choice===true)activate();else revoke();
-  return {setConsent,gameStart,practiceComplete,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
+  function accountPrompt(action,placement,gameId){
+    if(!['click','open'].includes(action)||!['game_result','practice_result'].includes(placement)||!['brainmix','brainiword','orderup','topicrush','generalknowledge','connections','survival','oddoneout','higherlower','mathrush','numberroute','sequence','worldflags','europeflags','worldcapitals','science','history','sports'].includes(gameId))return;
+    send('account_prompt_'+action,{placement,game_id:gameId});
+  }
+  return {setConsent,gameStart,practiceComplete,accountPrompt,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
 })();
 
 /* ===== meta-pixel.js ===== */
