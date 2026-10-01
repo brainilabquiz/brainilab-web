@@ -259,28 +259,33 @@ window.BrainiGamesLibrary=(function(){
 
 /* ===== game-discovery.js ===== */
 
-/* A small, shareable filter over the existing catalogue; every card stays in HTML. */
+/* Separate format and topic filters. All cards stay in crawlable HTML. */
 document.addEventListener('DOMContentLoaded',()=>{
- const controls=document.querySelector('[data-game-filters]');
- if(!controls)return;
- const groups={all:null,quizzes:['brainmix','orderup','topicrush','generalknowledge','survival','higherlower','worldflags','worldcapitals','science','history','sports'],words:['brainiword','connections','oddoneout'],numbers:['mathrush','numberroute','sequence']};
- const cards=[...document.querySelectorAll('[data-anytime-game]')];
- const count=document.querySelector('[data-game-filter-count]');
- function apply(type,update=false){
-  if(!Object.hasOwn(groups,type))type='all';
-  let visible=0;
-  cards.forEach(card=>{card.hidden=!!groups[type]&&!groups[type].includes(card.dataset.anytimeGame);if(!card.hidden)visible++;});
-  controls.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.gameFilter===type)));
-  if(count){count.hidden=false;count.textContent=`${visible} ${visible===1?'game':'games'}`;}
+ const controls=document.querySelector('[data-game-filters]'),topics=document.querySelector('[data-game-topics]');
+ if(!controls||!topics)return;
+ const cards=[...document.querySelectorAll('[data-anytime-game]')],count=document.querySelector('[data-game-filter-count]');
+ const topicButtons=[...topics.querySelectorAll('[data-game-topic]')];
+ let type='all',topic='all';
+ const inType=card=>type==='all'||card.dataset.gameKind===type;
+ function apply(update=false){
+  if(!['all','games','quizzes'].includes(type))type='all';
+  const available=new Set(cards.filter(inType).map(card=>card.dataset.gameTopic));
+  if(topic!=='all'&&!available.has(topic))topic='all';
+  cards.forEach(card=>card.hidden=!inType(card)||(topic!=='all'&&card.dataset.gameTopic!==topic));
+  controls.querySelectorAll('[data-game-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.gameFilter===type)));
+  topicButtons.forEach(b=>{b.hidden=b.dataset.gameTopic!=='all'&&!available.has(b.dataset.gameTopic);b.setAttribute('aria-pressed',String(b.dataset.gameTopic===topic));});
+  const visible=cards.filter(card=>!card.hidden),games=visible.filter(card=>card.dataset.gameKind==='games').length,quizzes=visible.length-games;
+  const starters=document.querySelector('.game-starters');if(starters)starters.hidden=type!=='all'||topic!=='all';
+  count.hidden=false;count.textContent=[games?games+' '+(games===1?'game':'games'):'',quizzes?quizzes+' '+(quizzes===1?'quiz':'quizzes'):''].filter(Boolean).join(' · ')||'Nothing here yet. Try another topic.';
   if(update){
-   const url=new URL(location.href);if(type==='all')url.searchParams.delete('type');else url.searchParams.set('type',type);
-   // A filter is a view, not a new page or a new history entry.
+   const url=new URL(location.href);for(const [key,value] of [['type',type],['topic',topic]]){if(value==='all')url.searchParams.delete(key);else url.searchParams.set(key,value);}
    try{history.replaceState(history.state,'',url);}catch{}
    window.dispatchEvent(new CustomEvent('brainilab:discovery',{detail:{type}}));
   }
  }
- controls.hidden=false;
- const read=()=>{const q=new URLSearchParams(location.search);apply(q.getAll('type').length===1?q.get('type'):'all');};
- controls.addEventListener('click',event=>{const button=event.target.closest('button[data-game-filter]');if(button)apply(button.dataset.gameFilter,true);});
+ function read(){const q=new URLSearchParams(location.search);type=q.getAll('type').length===1?q.get('type'):'all';topic=q.getAll('topic').length===1?q.get('topic'):'all';if(['words','numbers'].includes(type)){topic=type;type='games';}apply();}
+ controls.hidden=false;topics.hidden=false;
+ controls.addEventListener('click',e=>{const b=e.target.closest('[data-game-filter]');if(b){type=b.dataset.gameFilter;topic='all';apply(true);}});
+ topics.addEventListener('click',e=>{const b=e.target.closest('[data-game-topic]');if(b){topic=b.dataset.gameTopic;apply(true);}});
  window.addEventListener('popstate',read);read();
 });
