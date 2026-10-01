@@ -40,7 +40,7 @@ const expanded=structuredClone(data);
 expanded.report.document.discovery=[{name:'Example <img src=x onerror=alert(1)>',url:opportunity.url,kind:'Game',action:'Review snippet',pageEvidence:{impressions:10,clicks:0,position:4},queryEvidence:[{value:'number route',impressions:2,clicks:0}],brief:{finding:'Exact page evidence',checks:['Check sources']},pageSourceSnapshot:'fixture',conversionGoal:'Completed games'}];
 await GrowthAdmin.render({root,rpc:async()=>structuredClone(expanded)});
 assert.equal(root.querySelectorAll('img').length,0);
-assert.match(root.textContent,/Organic attribution not connected/);
+assert.match(root.textContent,/Completed registration attribution is not available yet/);
 const search=root.querySelector('[data-research-filter]');search.value='nothing';search.dispatchEvent(new dom.window.Event('input'));
 assert.equal(root.querySelector('[data-lead]').hidden,true);
 search.value='number route';search.dispatchEvent(new dom.window.Event('input'));
