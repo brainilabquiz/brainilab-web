@@ -70,3 +70,5 @@ Academy quizzes use the Brain Mix visual language and one question at a time, wi
 Only external HTTP(S) links open a new tab with `target="_blank"` and `rel="noopener noreferrer"` (preserve semantic tokens such as author/me). Internal pages, chapter links, fragment anchors and mail/tel links keep normal same-tab behaviour. Apply during server rendering/static deployment and to dynamic shell links. Use buttons for actions.
 
 Topic scope includes practical skills as well as curiosity: foundational to college-level mathematics, SEO, regional driving knowledge, maps and US state capitals. Build coherent prerequisite sequences. See `ACADEMY_CURRICULUM.md` for the staged plan; planned courses are not published courses and do not increment article/HUB counts.
+
+Review `content/editorial-priorities-2026-10-01.json` alongside the cluster inventory. It records the latest observed Search Console window and researched priorities; planned briefs are not publications. Reuse published Academy lessons when they already cover a planned angle instead of writing a duplicate under another slug. Preserve the daily quota when progressing toward a hub.

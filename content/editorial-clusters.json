@@ -78,7 +78,7 @@
           "angle": "Use the tens part and its successor; explain the limits and proof."
         },
         {
-          "slug": "make-ten-mental-addition",
+          "slug": "make-ten-mental-maths",
           "angle": "Regroup addition into tens with original practice examples."
         },
         {
@@ -315,15 +315,15 @@
           "angle": "Connect equal groups, repeated addition and a times table."
         },
         {
-          "slug": "division-sharing-fairly",
+          "slug": "division-sharing-equally",
           "angle": "Share objects equally and explain leftovers."
         },
         {
-          "slug": "place-value-ones-tens-hundreds",
-          "angle": "Build larger numbers from grouped counters."
+          "slug": "tens-and-ones",
+          "angle": "Build two-digit numbers from bundles of ten and single counters."
         },
         {
-          "slug": "fractions-equal-parts-of-a-whole",
+          "slug": "fractions-equal-parts",
           "angle": "Name equal pieces and link sharing to fractions."
         },
         {
@@ -395,6 +395,12 @@
       "kind": "explicit-user-request",
       "supportingArticles": 6,
       "note": "One-off batch requested by the user after the daily article. Daily automation remains at one article; planned members are provisional until researched."
+    },
+    {
+      "date": "2026-10-01",
+      "kind": "explicit-user-request",
+      "supportingArticles": 1,
+      "note": "Extend the existing fractions Academy course with a beginner decimal lesson. Existing division/fraction lessons from PR60 are reused, not duplicated. Daily cadence stays one article."
     }
   ]
 }

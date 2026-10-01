@@ -5,6 +5,7 @@ function options(label,values){return `<label>${label}<select>${values.map((v,i)
 export function initLabs(){
  for(const el of document.querySelectorAll('[data-academy-lab]')){
   const kind=el.dataset.academyLab,controls=el.querySelector('[data-lab-controls]'),visual=el.querySelector('[data-lab-visual]'),out=el.querySelector('[data-lab-output]');
+  if(kind==='decimals'){decimalLab(controls,visual,out);continue;}
   if(foundationLab(kind,controls,visual,out))continue;
   if(['add-basics','subtract-basics','groups-basics'].includes(kind)){beginnerLab(el,kind,controls,visual,out);continue;}
   let step=0;
@@ -83,3 +84,4 @@ function multiplicationTable(el){
  function highlight(button){const r=Number(button.dataset.r),c=Number(button.dataset.c);for(const cell of cells){const active=cell===button;cell.classList.toggle('is-row',Number(cell.dataset.r)===r);cell.classList.toggle('is-col',Number(cell.dataset.c)===c);cell.classList.toggle('is-product',active);cell.tabIndex=active?0:-1;}box.querySelectorAll('th').forEach(th=>th.classList.toggle('is-factor',Number(th.dataset.row)===r||Number(th.dataset.col)===c));result.textContent=`${r} × ${c} = ${r*c}. ${r} groups of ${c} make ${r*c}.`;}
  for(const button of cells){for(const event of ['pointerover','focus','click'])button.addEventListener(event,()=>highlight(button));button.addEventListener('keydown',e=>{const moves={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]},move=moves[e.key];if(move){e.preventDefault();const r=Math.max(0,Math.min(12,Number(button.dataset.r)+move[0])),c=Math.max(0,Math.min(12,Number(button.dataset.c)+move[1]));cells[r*13+c].focus();}});}highlight(cells[8*13+2]);
 }
+import {decimalLab} from './academy-decimals.js';
