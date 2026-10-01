@@ -1,0 +1,79 @@
+{
+  "slug": "patterns-and-reasoning",
+  "title": "Patterns and reasoning",
+  "description": "Notice a repeat, test a rule and separate a good guess from a conclusion that must follow. Five small lessons build a careful way to solve puzzles.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "coverArticle": "spotting-repeating-patterns",
+  "introduction": "<p>Notice a repeat, test a rule and separate a good guess from a conclusion that must follow. Five small lessons build a careful way to solve puzzles.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
+  "prerequisites": "Basic counting. No previous logic lessons needed.",
+  "lessons": [
+    {
+      "slug": "spotting-repeating-patterns",
+      "level": "1 · Notice the repeat",
+      "objective": "Find the repeating unit before predicting the next item."
+    },
+    {
+      "slug": "number-patterns-check-every-step",
+      "level": "2 · Test the rule",
+      "objective": "Check a proposed number rule against every step."
+    },
+    {
+      "slug": "rotation-or-reflection",
+      "level": "3 · Change your viewpoint",
+      "objective": "Distinguish turning a shape from reflecting it."
+    },
+    {
+      "slug": "sorting-with-two-rules",
+      "level": "4 · Combine two conditions",
+      "objective": "Sort objects by two rules at once."
+    },
+    {
+      "slug": "logic-what-must-be-true",
+      "level": "5 · Draw a conclusion",
+      "objective": "Identify what must follow from the stated facts."
+    }
+  ],
+  "outcomes": [
+    "Find the repeating unit before predicting the next item.",
+    "Check a proposed number rule against every step.",
+    "Distinguish turning a shape from reflecting it.",
+    "Sort objects by two rules at once.",
+    "Identify what must follow from the stated facts."
+  ],
+  "glossary": [
+    {
+      "term": "Repeating unit",
+      "definition": "The smallest block repeated to make a pattern."
+    },
+    {
+      "term": "Reflection",
+      "definition": "A flip across a mirror line."
+    },
+    {
+      "term": "Intersection",
+      "definition": "The objects belonging to both groups."
+    },
+    {
+      "term": "Deduction",
+      "definition": "A conclusion that follows from the facts and rules given."
+    }
+  ],
+  "sources": [
+    {
+      "name": "Math is Fun — Number Patterns",
+      "url": "https://www.mathsisfun.com/numberpatterns.html"
+    },
+    {
+      "name": "Math is Fun — Rotation",
+      "url": "https://www.mathsisfun.com/geometry/rotation.html"
+    },
+    {
+      "name": "Math is Fun — Sets and Venn Diagrams",
+      "url": "https://www.mathsisfun.com/sets/venn-diagrams.html"
+    }
+  ]
+}

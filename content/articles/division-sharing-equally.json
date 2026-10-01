@@ -1,0 +1,97 @@
+{
+  "slug": "division-sharing-equally",
+  "title": "Division: give everyone the same amount",
+  "description": "Share a pile into equal groups, check by multiplying, and notice what happens when something is left over.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "order": 42,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/division-sharing-equally.webp",
+    "small": "/assets/images/learn/division-sharing-equally-small.webp",
+    "thumbnail": "/assets/images/learn/division-sharing-equally-thumb.webp",
+    "alt": "Wooden counters shared between three small bowls",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/maths-from-zero/",
+    "name": "Maths from zero: little numbers, big ideas"
+  },
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "multiplication-equal-groups"
+  ],
+  "sources": [
+    {
+      "name": "OpenStax — Divide Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+    }
+  ],
+  "sections": [
+    {
+      "id": "one-for-you-one-for-me",
+      "title": "One for you, one for me",
+      "html": "<p>You have 12 counters and three bowls. Put one counter in each bowl, then repeat. After four rounds, each bowl contains four counters and the original pile is empty.</p><p>That is <strong>12 ÷ 3 = 4</strong>: twelve shared equally among three groups gives four in each group. The division sign asks us to split an amount into equal shares in this example.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Choose how many counters you have and how many bowls will share them. The activity gives each bowl the same number and keeps any leftovers to one side.</p><p>Try 13 counters and three bowls. Each bowl can still receive four whole counters, but one remains. We say the answer is four each with a <strong>remainder</strong> of one. We are keeping these counters whole; in other situations, a leftover item might be cut into fractional parts.</p>"
+    },
+    {
+      "id": "use-multiplication-to-check",
+      "title": "Use multiplication to check",
+      "html": "<p>For the first example, three bowls with four counters each contain 3 × 4 = 12 counters. Multiplication rebuilds the original pile.</p><p>With a remainder, include it in the check: 3 × 4 + 1 = 13. If your check does not return the starting amount, something was missed or counted twice. The remainder must also be smaller than the number of bowls, or everyone could receive another counter.</p>"
+    },
+    {
+      "id": "read-what-the-answer-means",
+      "title": "Read what the answer means",
+      "html": "<p>“Twelve counters shared among three people” asks how many each person gets. “Twelve counters packed in groups of three” asks how many groups you can make. Both use 12 ÷ 3, but the answer describes a different thing.</p><p>Zero counters shared among three bowls gives zero in every bowl. Sharing among zero bowls is not an ordinary division we can perform, so this activity always uses at least one bowl. Read the story as well as the numbers.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "15 counters are shared equally among 3 bowls. How many go in each?",
+        "options": [
+          "3",
+          "5",
+          "12",
+          "18"
+        ],
+        "answer": 1,
+        "explanation": "Five in each of three bowls uses all fifteen counters."
+      },
+      {
+        "prompt": "14 counters are shared among 4 bowls, keeping counters whole. What happens?",
+        "options": [
+          "4 each, none left",
+          "2 each, 6 left",
+          "3 each, 2 left",
+          "3 each, none left"
+        ],
+        "answer": 2,
+        "explanation": "Four groups of three use twelve counters, leaving two."
+      },
+      {
+        "prompt": "Which check matches 13 shared among 3 bowls: 4 each and 1 left?",
+        "options": [
+          "3 × 4 + 1 = 13",
+          "3 + 4 + 1 = 13",
+          "13 × 3 = 4",
+          "4 − 1 = 13"
+        ],
+        "answer": 0,
+        "explanation": "Rebuild the three equal shares, then add the leftover counter."
+      }
+    ]
+  }
+}

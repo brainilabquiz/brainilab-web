@@ -1,0 +1,83 @@
+{
+  "slug": "fractions-from-zero",
+  "title": "Fractions, one piece at a time",
+  "description": "Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "coverArticle": "fractions-equal-parts",
+  "introduction": "<p>Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
+  "prerequisites": "Comfort with counting, addition and equal sharing. Maths from zero is a useful starting point.",
+  "lessons": [
+    {
+      "slug": "fractions-equal-parts",
+      "level": "1 · Check the pieces",
+      "objective": "Recognise equal parts of the same whole."
+    },
+    {
+      "slug": "reading-a-fraction",
+      "level": "2 · Read the two numbers",
+      "objective": "Explain the numerator and denominator using a picture."
+    },
+    {
+      "slug": "equivalent-fractions-same-amount",
+      "level": "3 · Change the pieces",
+      "objective": "Show why different fractions can describe the same amount."
+    },
+    {
+      "slug": "comparing-fractions-visually",
+      "level": "4 · Compare fairly",
+      "objective": "Compare fractions using equal-sized wholes."
+    },
+    {
+      "slug": "adding-fractions-same-pieces",
+      "level": "5 · Put it together",
+      "objective": "Add fractions whose pieces have the same size."
+    }
+  ],
+  "outcomes": [
+    "Recognise equal parts of the same whole.",
+    "Explain the numerator and denominator using a picture.",
+    "Show why different fractions can describe the same amount.",
+    "Compare fractions using equal-sized wholes.",
+    "Add fractions whose pieces have the same size."
+  ],
+  "glossary": [
+    {
+      "term": "Whole",
+      "definition": "The complete amount used as the reference."
+    },
+    {
+      "term": "Numerator",
+      "definition": "The number of selected equal parts."
+    },
+    {
+      "term": "Denominator",
+      "definition": "The number of equal parts making one whole."
+    },
+    {
+      "term": "Equivalent",
+      "definition": "Describing the same amount, even with different-sized pieces."
+    }
+  ],
+  "sources": [
+    {
+      "name": "Math is Fun — Fractions",
+      "url": "https://www.mathsisfun.com/fractions.html"
+    },
+    {
+      "name": "Math is Fun — Equivalent Fractions",
+      "url": "https://www.mathsisfun.com/equivalent_fractions.html"
+    },
+    {
+      "name": "Math is Fun — Comparing Fractions",
+      "url": "https://www.mathsisfun.com/comparing-fractions.html"
+    },
+    {
+      "name": "Math is Fun — Adding Fractions",
+      "url": "https://www.mathsisfun.com/fractions_addition.html"
+    }
+  ]
+}

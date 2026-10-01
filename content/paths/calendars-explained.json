@@ -5,18 +5,23 @@
   "status": "published",
   "lessons": [
     {
+      "slug": "days-months-and-years",
+      "level": "1 · Start with the units",
+      "objective": "Separate the weekday cycle from month and year lengths."
+    },
+    {
       "slug": "which-century-is-that-year",
-      "level": "1 · Foundations",
+      "level": "2 · Foundations",
       "objective": "Put years into boxes of one hundred."
     },
     {
       "slug": "why-2100-is-not-a-leap-year",
-      "level": "2 · Build on it",
+      "level": "3 · Build on it",
       "objective": "Find out why February sometimes gets an extra day."
     },
     {
       "slug": "why-britain-skipped-eleven-days-in-1752",
-      "level": "3 · Add historical context",
+      "level": "4 · Add historical context",
       "objective": "Discover how a date jumped forward while life went on as usual."
     }
   ],
@@ -58,14 +63,15 @@
     }
   ],
   "outcomes": [
+    "Distinguish a seven-day week from a calendar month.",
     "Place a positive CE year in its century.",
     "Apply the Gregorian leap-year exception.",
     "Distinguish a calendar date change from elapsed time."
   ],
-  "updatedAt": "2026-09-30T19:26:19.706917+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
   "description": "Centuries, leap years and eleven missing days: untangle the oddities of our calendar, one short read at a time.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "which-century-is-that-year",
-  "introduction": "<p>Why does 1900 belong to the 19th century? Why does February sometimes get an extra day? Start with boxes of one hundred years, then follow the small rules behind some surprising dates.</p>",
+  "introduction": "<p>Start with a week and a month. Then zoom out to centuries, test the rules for leap years and discover why a real calendar once skipped eleven date labels.</p>",
   "prerequisites": "No previous history reading required. The century examples use positive CE years."
 }

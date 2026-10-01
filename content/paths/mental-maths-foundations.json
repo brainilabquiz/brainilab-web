@@ -5,18 +5,28 @@
   "status": "published",
   "lessons": [
     {
+      "slug": "make-ten-mental-maths",
+      "level": "1 · Find a friendly ten",
+      "objective": "Split an addition so the first step reaches ten."
+    },
+    {
       "slug": "mental-math-round-and-adjust",
-      "level": "1 · Foundations",
+      "level": "2 · Foundations",
       "objective": "Move a few counters and see why an awkward sum gets easier."
     },
     {
+      "slug": "doubling-and-halving",
+      "level": "3 · Keep the total",
+      "objective": "Double one factor and halve the other without changing the product."
+    },
+    {
       "slug": "multiply-by-11-in-your-head",
-      "level": "2 · Build on it",
+      "level": "4 · Build on it",
       "objective": "Count ten bags of sweets, then add the last bag."
     },
     {
       "slug": "mental-percentages-without-a-calculator",
-      "level": "3 · Put it together",
+      "level": "5 · Put it together",
       "objective": "See what half, a quarter and ten percent look like."
     }
   ],
@@ -50,11 +60,13 @@
     }
   ],
   "outcomes": [
-    "Explain the correction after rounding a number.",
-    "Multiply by 11 and handle a carry.",
-    "Build percentages from tenths, halves and quarters."
+    "Bridge to ten when adding.",
+    "Explain a rounding correction.",
+    "Keep a product unchanged by doubling and halving.",
+    "Multiply by eleven.",
+    "Build simple percentages from familiar parts."
   ],
-  "updatedAt": "2026-09-30T19:26:19.758102+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
   "description": "Turn awkward sums into easier ones. Start with counters and sweets, then explore what percentages really mean.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "mental-math-round-and-adjust",

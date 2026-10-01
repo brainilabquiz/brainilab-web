@@ -1,0 +1,97 @@
+{
+  "slug": "days-months-and-years",
+  "title": "Days, months and years are different kinds of count",
+  "description": "Start with a week on a calendar, then separate the repeating weekday cycle from the changing lengths of months.",
+  "topic": "History",
+  "status": "published",
+  "order": 45,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/days-months-and-years.webp",
+    "small": "/assets/images/learn/days-months-and-years-small.webp",
+    "thumbnail": "/assets/images/learn/days-months-and-years-thumb.webp",
+    "alt": "A paper desk calendar beside an analogue clock",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/calendars-explained/",
+    "name": "Make sense of years and calendars"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "which-century-is-that-year"
+  ],
+  "sources": [
+    {
+      "name": "US Naval Observatory — Introduction to Calendars",
+      "url": "https://aa.usno.navy.mil/faq/calendars"
+    }
+  ],
+  "sections": [
+    {
+      "id": "two-counts-on-one-page",
+      "title": "Two counts on one page",
+      "html": "<p>A calendar date and a weekday answer different questions. “The 15th” tells you where you are within a month. “Tuesday” names a place in the repeating seven-day week. A month can begin on any weekday.</p><p>After Sunday comes Monday even when the month changes. The weekday cycle carries on; it does not restart at the beginning of each month.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Move forward from an imaginary Monday. After seven days you arrive at another Monday. After eight, you reach Tuesday. The activity counts elapsed days, so the starting Monday is day zero.</p><p>This distinction matters when a question says “after three days”. Monday to Tuesday is one day, Tuesday to Wednesday is two, and Wednesday to Thursday is three. Counting the starting day as the first elapsed day would shift the answer.</p>"
+    },
+    {
+      "id": "a-month-is-not-four-weeks",
+      "title": "A month is not four weeks",
+      "html": "<p>Four weeks contain 28 days. In the Gregorian calendar, months have 28, 29, 30 or 31 days. A 30-day month is four weeks plus two days; it is not an exact number of weeks.</p><p>An ordinary Gregorian year contains 365 days, and a leap year contains 366. The calendar arranges months to keep the year in step with the seasons. February supplies the extra day in a leap year.</p>"
+    },
+    {
+      "id": "keep-the-units-in-view",
+      "title": "Keep the units in view",
+      "html": "<p>“Two months” is not always the same number of elapsed days. January and February differ in length, and February can change in a leap year. When exact timing matters, use the actual dates instead of assuming every month has thirty days.</p><p>With days and years separated, we can next group years into centuries. The rule for a century is a counting convention; the leap-year rule solves a different problem.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "How many days are in four weeks?",
+        "options": [
+          "24",
+          "28",
+          "30",
+          "31"
+        ],
+        "answer": 1,
+        "explanation": "Four groups of seven days give twenty-eight."
+      },
+      {
+        "prompt": "Starting on Monday, which weekday is three days later?",
+        "options": [
+          "Wednesday",
+          "Friday",
+          "Thursday",
+          "Monday"
+        ],
+        "answer": 2,
+        "explanation": "Tuesday is one day later, Wednesday two and Thursday three."
+      },
+      {
+        "prompt": "Does the weekday cycle restart when a month changes?",
+        "options": [
+          "Yes, on Monday",
+          "Yes, on Sunday",
+          "Only in leap years",
+          "No"
+        ],
+        "answer": 3,
+        "explanation": "Weekdays keep repeating in their seven-day order across month boundaries."
+      }
+    ]
+  }
+}
