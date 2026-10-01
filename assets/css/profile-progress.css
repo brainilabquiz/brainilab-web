@@ -42,3 +42,5 @@
 @media(max-width:600px){.profile-guest-note{align-items:flex-start;flex-direction:column;gap:12px;padding:16px}.profile-guest-note .btn-light{width:100%}}
 
 .profile-page .profile-progress-avatar{width:76px;height:76px}.profile-page .profile-rank-progress{height:12px;border-radius:20px;box-shadow:inset 0 1px 2px #30296f10}.profile-page .profile-rank-progress span{border-radius:inherit;position:relative}.profile-page .profile-rank-progress span:after{content:"";position:absolute;inset:2px 3px auto;height:2px;border-radius:5px;background:#ffffff65}@media(max-width:700px){.profile-page .profile-progress-avatar{width:54px;height:54px}}
+
+.profile-daily-summary{display:grid;gap:8px;margin:16px 0}.profile-daily-summary>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;background:#f5f2eb;border-radius:10px;font-size:14px}.profile-daily-summary>div>span{font-size:13px;color:#625d70;text-align:right}.profile-daily-summary>.is-complete{background:#eef6e8}.profile-daily-summary>.is-complete>span{color:#2f7026;font-weight:700}

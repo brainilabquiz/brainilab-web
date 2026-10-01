@@ -1,0 +1,15 @@
+import {readFileSync} from 'node:fs';import {pathToFileURL} from 'node:url';import assert from 'node:assert/strict';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const dom=new JSDOM('<div data-profile-daily-summary></div><a data-profile-daily-action></a>',{url:'https://brainilabgames.com/profile/?section=progress',runScripts:'outside-only'}),w=dom.window;
+let daily={key:'2026-10-01',number:34,completedGames:[],bonusChoice:null};w.BrainiData={daily:()=>daily};
+for(const f of ['daily-rules','profile-sections'])w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
+const api=w.BrainiProfileSections,root=w.document.querySelector('[data-profile-daily-summary]'),link=w.document.querySelector('a');
+api.hydrateDailyProgress();assert.match(root.textContent,/Main DailyReady to play/);assert.match(root.textContent,/Extra gameOptional/);assert.equal(link.pathname,'/daily-quiz/');assert.equal(root.children.length,2);
+daily.completedGames=['brainmix'];api.hydrateDailyProgress();assert.equal(root.querySelectorAll('.is-complete').length,1);assert.match(link.textContent,/Choose an optional extra/);assert.equal(link.hash,'#daily-extras');
+daily.bonusChoice='brainiword';api.hydrateDailyProgress();assert.match(root.textContent,/Ready to continue/);assert.match(link.textContent,/Continue your extra/);
+daily.completedGames.push('brainiword');api.hydrateDailyProgress();assert.equal(root.querySelectorAll('.is-complete').length,2);assert.match(link.textContent,/See today’s results/);assert.equal(link.hash,'');
+daily={key:'2026-10-02',number:35,completedGames:[],bonusChoice:null};api.hydrateDailyProgress();assert.equal(root.querySelectorAll('.is-complete').length,0);assert.match(root.textContent,/Optional/);
+daily={key:'2026-10-01',completedGames:['brainiword'],bonusChoice:'brainiword'};api.hydrateDailyProgress();assert.match(link.textContent,/Play today’s Daily/);assert.equal(root.firstElementChild.className,'');
+daily={key:'2026-09-30',completedGames:['brainmix']};api.hydrateDailyProgress();assert.equal(root.textContent,'1 of 4 games completed');
+assert.ok(!readFileSync('profile/index.html','utf8').includes('of 4 games completed'));
+w.close();console.log('PASS: profile main/extra status, chosen extra, completion, next-day reset, extra cannot replace main, legacy period and no hard-coded four-game target.');
