@@ -33,6 +33,7 @@ window.BrainiAdmin=(function(){
     articles:["Content","Articles"],
     paths:["Content","BrainiLab Academy"],
     people:["Content","People & authors"],
+    growth:["Business","Growth"],
     analytics:["Gameplay","Game Analytics"],
     users:["Accounts","Users"],
     rankings:["Competition","Rankings"],
@@ -150,6 +151,7 @@ window.BrainiAdmin=(function(){
     articles:"content",
     paths:"content",
     people:"content",
+    growth:"content",
     analytics:"results",
     users:"users",
     rankings:"rankings",
@@ -399,6 +401,7 @@ window.BrainiAdmin=(function(){
   }
 
   function navigate(view,{replace=false}={}){
+    if(state.currentView==='growth'&&window.BrainiGrowth){if(!window.BrainiGrowth.canLeave())return;window.BrainiGrowth.reset();}
     if(['paths','people'].includes(state.currentView)&&window.BrainiLearningAdmin){if(!window.BrainiLearningAdmin.canLeave())return;window.BrainiLearningAdmin.reset();}
     if(state.currentView==='articles' && window.BrainiArticles){if(!window.BrainiArticles.canLeave())return;window.BrainiArticles.reset();}
     if(state.rendering){state.pendingView={view,replace};return;}
@@ -455,6 +458,7 @@ window.BrainiAdmin=(function(){
       paths:()=>window.BrainiLearningAdmin.render({kind:'path',sb:state.sb,rpc,root:$('#adminContent'),toast}),
       people:()=>window.BrainiLearningAdmin.render({kind:'author',sb:state.sb,rpc,root:$('#adminContent'),toast}),
       articles:()=>window.BrainiArticles.render({sb:state.sb,rpc,root:$('#adminContent'),toast}),
+      growth:()=>window.BrainiGrowth.render({rpc,root:$('#adminContent')}),
       analytics:renderAnalytics,
       users:renderUsers,
       rankings:renderRankings,
@@ -3642,6 +3646,7 @@ window.BrainiAdmin=(function(){
     });
 
     state.sb.auth.onAuthStateChange(()=>{
+      window.BrainiGrowth?.reset();
       setTimeout(async()=>{
         try{
           const ok=await resolveAccess();
