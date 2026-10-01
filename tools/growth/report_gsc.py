@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sqlite3
 from gsc_import import summarize
+from discovery import discover, health_audit
 
 
 ROOT = Path(__file__).resolve().parent
@@ -33,7 +34,8 @@ def build_report(database, inventory):
         raise ValueError('No unfiltered BrainiLab property snapshot')
     base = max(candidates, key=lambda s:s['capturedAt'])
     data = base['data']
-    public = {p['url']:p for p in json.loads(Path(inventory).read_text(encoding='utf-8'))['pages']}
+    audit = json.loads(Path(inventory).read_text(encoding='utf-8'))
+    public = {p['url']:p for p in audit['pages']}
     opportunities = []
     for url, plan in PILOTS.items():
         page = next((r for r in data['tables']['page'] if r['value']==url), None)
@@ -42,7 +44,18 @@ def build_report(database, inventory):
         known = public.get(url)
         opportunities.append({**plan, 'url':url, 'status':'ready_for_research' if page and filtered and known else 'insufficient_data', 'confidence':'Low: small historical sample; no causal conclusion.', 'pageEvidence':page, 'pageSourceSnapshot':base['id'], 'querySourceSnapshot':filtered['id'] if filtered else None, 'queryEvidence':filtered['data']['tables']['query'] if filtered else None, 'queryCoverage':summarize(filtered['data']) if filtered else None, 'currentTitle':known.get('titles') if known else None, 'existingLearnLinks':[link for link in known['internalLinks'] if '/learn/' in link] if known else [], 'monthlySearchVolume':None, 'keywordDifficulty':None, 'estimatedTrafficGain':None, 'approvalRequiredForContentProposal':True})
     api = data.get('sourceType') == 'google_search_console_api'
-    return {'generatedAt':datetime.now(timezone.utc).isoformat(), 'property':data['property'], 'source':'Google Search Console API, read-only, final data' if api else 'Official Google Search Console CSV ZIP exports, imported locally', 'availablePeriod':data['availablePeriod'], 'filters':data['filters'], 'propertySnapshot':base['id'], 'propertySummary':summarize(data), 'rowCounts':{k:len(v) for k,v in data['tables'].items()}, 'sources':[{'snapshotId':s['id'],'capturedAt':s['capturedAt'],'rawSha256':s['rawSha256'],'filters':s['data']['filters']} for s in snapshots], 'opportunities':opportunities, 'limitations':data['limitations']+['Compare the report dates with the verified publication date before evaluating a change.', 'Filtered query rows are not a full query-by-page matrix and do not establish cannibalization.', 'No paid keyword estimates are included.']}
+    leads = discover(data, public, base['id'])
+    existing = {o['url'] for o in opportunities}
+    opportunities.extend(o for o in leads if o['url'] not in existing)
+    connection = {'status':'unverified'}
+    status_file = Path(database).parent/'connection-status.json'
+    if api and status_file.exists():
+        saved = json.loads(status_file.read_text(encoding='utf-8'))
+        if saved.get('status')=='verified' and saved.get('period')=={k:data['availablePeriod'][k] for k in ('start','end')}:
+            connection = {k:saved[k] for k in ('status','lastSuccessfulSync','scope')}
+    health = {**health_audit(public), 'checkedAt':audit.get('checkedAt')}
+    snapshots = [s for s in snapshots if s['data']['availablePeriod']==data['availablePeriod'] and s['data'].get('sourceType')==data.get('sourceType')]
+    return {'discovery':leads, 'health':health, 'connection':connection, 'generatedAt':datetime.now(timezone.utc).isoformat(), 'property':data['property'], 'source':'Google Search Console API, read-only, final data' if api else 'Official Google Search Console CSV ZIP exports, imported locally', 'availablePeriod':data['availablePeriod'], 'filters':data['filters'], 'propertySnapshot':base['id'], 'propertySummary':summarize(data), 'rowCounts':{k:len(v) for k,v in data['tables'].items()}, 'sources':[{'snapshotId':s['id'],'capturedAt':s['capturedAt'],'rawSha256':s['rawSha256'],'filters':s['data']['filters']} for s in snapshots], 'opportunities':opportunities, 'limitations':data['limitations']+['Compare the report dates with the verified publication date before evaluating a change.', 'Visible query/page pairs cover only rows returned by Google; missing pairs are not zero demand and do not establish cannibalization.', 'No paid keyword estimates are included.']}
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ import secrets
 import time
 from urllib.parse import urlencode, urlsplit, parse_qs, quote
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from gsc_import import import_snapshot, digest
 
 SCOPE='https://www.googleapis.com/auth/webmasters.readonly'
@@ -44,6 +44,8 @@ def request_json(url, payload, token=None, form=False):
                 continue
             # Do not expose Google bodies, authorization codes or tokens.
             raise RuntimeError(f'Google returned HTTP {error.code}. Check API access/authorization; the last successful data was retained.') from None
+        except (URLError, TimeoutError, OSError):
+            raise RuntimeError('Google could not be reached. The last successful data was retained.') from None
 
 
 def private_write(path, value):
@@ -114,9 +116,10 @@ def access_token():
 
 
 def query(token,start,end,dimension,page=None,transport=request_json):
+    dimensions=dimension if isinstance(dimension,list) else [dimension]
     rows=[];seen=set()
     for offset in (0,PAGE_SIZE):
-        payload={'startDate':start,'endDate':end,'dimensions':[dimension],'type':'web','dataState':'final','rowLimit':PAGE_SIZE,'startRow':offset,'aggregationType':'auto'}
+        payload={'startDate':start,'endDate':end,'dimensions':dimensions,'type':'web','dataState':'final','rowLimit':PAGE_SIZE,'startRow':offset,'aggregationType':'auto'}
         if page:
             payload['dimensionFilterGroups']=[{'filters':[{'dimension':'page','operator':'equals','expression':page}]}]
         data=transport('https://www.googleapis.com/webmasters/v3/sites/'+quote(PROPERTY,safe='')+'/searchAnalytics/query',payload,token)
@@ -124,10 +127,11 @@ def query(token,start,end,dimension,page=None,transport=request_json):
         if not isinstance(batch,list):
             raise ValueError('Unexpected Google rows')
         for row in batch:
-            if not isinstance(row.get('keys'),list) or len(row['keys'])!=1 or row['keys'][0] in seen:
+            if not isinstance(row.get('keys'),list) or len(row['keys'])!=len(dimensions):
                 raise ValueError('Invalid or duplicate Google dimension row')
-            key=row['keys'][0]
-            if not isinstance(key,str) or not key:raise ValueError('Invalid Google dimension key')
+            if any(not isinstance(k,str) or not k for k in row['keys']):raise ValueError('Invalid Google dimension key')
+            key=row['keys'][0] if len(dimensions)==1 else json.dumps(row['keys'],ensure_ascii=False)
+            if key in seen:raise ValueError('Duplicate Google dimension row')
             if dimension=='date' and not date.fromisoformat(start)<=date.fromisoformat(key)<=date.fromisoformat(end):raise ValueError('Date outside requested period')
             seen.add(key)
             metrics={m:row.get(m) for m in ('clicks','impressions','ctr','position')}
@@ -140,7 +144,7 @@ def query(token,start,end,dimension,page=None,transport=request_json):
                 metrics[count]=int(metrics[count])
             if metrics['impressions']==0:
                 metrics['ctr']=metrics['position']=None
-            rows.append({'value':key,**metrics})
+            rows.append({'value':key,**(dict(zip(dimensions,row['keys'])) if len(dimensions)>1 else {}),**metrics})
         if len(batch)<PAGE_SIZE:
             return sorted(rows,key=lambda r:r['value'])
     raise RuntimeError('Row cap reached. Narrow the period before importing; no partial snapshot saved.')
@@ -153,6 +157,8 @@ def collect(token,start,end,transport=request_json):
     snapshots=[]
     for page in [None,*PAGES]:
         tables={d:query(token,start,end,d,page,transport) for d in ('date','query','page','country','device')}
+        if page is None:
+            tables['queryPage']=query(token,start,end,['query','page'],transport=transport)
         # API omits zero-traffic dates. Make that explicit, never confuse missing query rows with zero.
         by_date={r['value']:r for r in tables['date']}
         tables['date']=[by_date.get((first+timedelta(days=i)).isoformat(),{'value':(first+timedelta(days=i)).isoformat(),'clicks':0,'impressions':0,'ctr':None,'position':None}) for i in range((last-first).days+1)]
@@ -179,6 +185,6 @@ if __name__=='__main__':
         elif args.action=='sync':
             if not args.start or not args.end:raise ValueError('Sync needs --start and --end.')
             sync(args.start,args.end,args.database)
-        else:print(json.dumps({'clientConfigured':(PRIVATE/'google-client.json').exists(),'authorizationStored':(PRIVATE/'google-token.json').exists(),'automaticSchedulingEnabled':False}))
+        else:print(json.dumps({'clientConfigured':(PRIVATE/'google-client.json').exists(),'authorizationStored':(PRIVATE/'google-token.json').exists(),'scheduleManagedBy':'Codex app; inspect the Growth heartbeat for its current status'}))
     except (RuntimeError,ValueError,FileNotFoundError) as error:
         print(str(error));raise SystemExit(1)
