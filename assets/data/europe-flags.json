@@ -1,0 +1,102 @@
+[
+  {
+    "code": "at",
+    "name": "Austria",
+    "clue": "Three horizontal bands: red, white, red."
+  },
+  {
+    "code": "be",
+    "name": "Belgium",
+    "clue": "Vertical bands: black, yellow, red."
+  },
+  {
+    "code": "bg",
+    "name": "Bulgaria",
+    "clue": "Horizontal bands: white, green, red."
+  },
+  {
+    "code": "ch",
+    "name": "Switzerland",
+    "clue": "A white cross on a red square."
+  },
+  {
+    "code": "cz",
+    "name": "Czechia",
+    "clue": "A blue triangle beside white and red bands."
+  },
+  {
+    "code": "de",
+    "name": "Germany",
+    "clue": "Horizontal bands: black, red, gold."
+  },
+  {
+    "code": "dk",
+    "name": "Denmark",
+    "clue": "A white cross on red, shifted towards the flagpole."
+  },
+  {
+    "code": "es",
+    "name": "Spain",
+    "clue": "Red, yellow, red, with a wider yellow band and a coat of arms."
+  },
+  {
+    "code": "fi",
+    "name": "Finland",
+    "clue": "A blue cross on white."
+  },
+  {
+    "code": "fr",
+    "name": "France",
+    "clue": "Vertical bands: blue, white, red."
+  },
+  {
+    "code": "gr",
+    "name": "Greece",
+    "clue": "Blue and white stripes, with a white cross in a blue corner."
+  },
+  {
+    "code": "hu",
+    "name": "Hungary",
+    "clue": "Horizontal bands: red, white, green."
+  },
+  {
+    "code": "ie",
+    "name": "Ireland",
+    "clue": "Vertical bands: green, white, orange."
+  },
+  {
+    "code": "it",
+    "name": "Italy",
+    "clue": "Vertical bands: green, white, red."
+  },
+  {
+    "code": "nl",
+    "name": "Netherlands",
+    "clue": "Horizontal bands: red, white, blue."
+  },
+  {
+    "code": "no",
+    "name": "Norway",
+    "clue": "A blue cross outlined in white on a red background."
+  },
+  {
+    "code": "pl",
+    "name": "Poland",
+    "clue": "Two horizontal bands: white above red."
+  },
+  {
+    "code": "pt",
+    "name": "Portugal",
+    "clue": "Green and red with a coat of arms where the colours meet."
+  },
+  {
+    "code": "ro",
+    "name": "Romania",
+    "clue": "Vertical bands: blue, yellow, red."
+  },
+  {
+    "code": "se",
+    "name": "Sweden",
+    "clue": "A yellow cross on blue."
+  }
+]

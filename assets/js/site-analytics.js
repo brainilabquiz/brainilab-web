@@ -6,8 +6,33 @@ window.BrainiSiteAnalytics=(()=>{
   const completed=new Set();
   // Game-owned round objects deduplicate starts without retaining player identifiers.
   const started=new WeakSet();
+  const finishedPractice=new WeakSet(),entryKey='brainilab_growth_entry_v1';
+  let entry=null;
+  function entryContext(){
+    const now=Date.now();let old=entry;try{old=JSON.parse(localStorage.getItem(entryKey))||entry;}catch{}
+    const channels=['organic_search','paid','social','referral','direct','unknown'];
+    if(old&&channels.includes(old.channel)&&typeof old.path==='string'&&old.path.length<180&&/^\/(?:[a-z0-9-]+\/)*$/.test(old.path)&&now>=old.startedAt&&now>=old.lastAt&&now-old.lastAt<1800000){entry={channel:old.channel,path:old.path,startedAt:old.startedAt,lastAt:now};}
+    else{
+      let host='';try{host=new URL(document.referrer).hostname;}catch{}
+      const query=new URLSearchParams(location.search);
+      const searchHosts=/^(?:(?:www|search)\.)?(?:google\.(?:com|es|co\.uk|fr|de|it|ca|com\.au)|bing\.com|duckduckgo\.com|search\.yahoo\.com|ecosia\.org|search\.brave\.com)$/;
+      const channel=['gclid','dclid','msclkid'].some(k=>query.has(k))?'paid':campaign().campaign_source?'social':searchHosts.test(host)?'organic_search':host&&!['brainilabgames.com','www.brainilabgames.com'].includes(host)?'referral':host?'unknown':'direct';
+      const landing=/^\/(?:[a-z0-9-]+\/)*$/.test(path())&&path().length<180?path():'/';
+      entry={channel,path:landing,startedAt:now,lastAt:now};
+    }
+    try{localStorage.setItem(entryKey,JSON.stringify(entry));}catch{}
+    return entry;
+  }
+  function practiceComplete(gameId,round){
+    if(gameId!=='europeflags'||!allowed()||!round||typeof round!=='object'||!started.has(round)||finishedPractice.has(round))return;
+    finishedPractice.add(round);send('practice_complete',{game_id:gameId});
+  }
   const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword']);
   function gameStart(gameId,round,mode='anytime'){
+    if(gameId==='europeflags'&&mode==='practice'){
+      if(!allowed()||!round||typeof round!=='object'||started.has(round))return;
+      started.add(round);send('practice_start',{game_id:gameId});return;
+    }
     if(!allowed()||!measuredGames.has(gameId)||!round||typeof round!=='object'||started.has(round)||!['daily','anytime'].includes(mode))return;
     started.add(round);send('game_start',{game_id:gameId,mode});
   }
@@ -28,7 +53,7 @@ window.BrainiSiteAnalytics=(()=>{
     return data;
   }
   function tag(){window.dataLayer.push(arguments);}
-  function send(name,params={}){if(!allowed()||!loaded)return;tag('event',name,{send_to:id,page_location:location.origin+path(),page_title:document.title,page_referrer:referrer(),...params});}
+  function send(name,params={}){if(!allowed()||!loaded)return;const context=entryContext();tag('event',name,{send_to:id,page_location:location.origin+path(),page_title:document.title,page_referrer:referrer(),growth_entry_channel:context.channel,growth_entry_path:context.path,...params});}
   function referrer(){try{return document.referrer?new URL(document.referrer).origin:'';}catch{return '';}}
   function activate(){
     if(!allowed())return;
@@ -43,6 +68,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});if(path()==='/daily-quiz/'&&new URLSearchParams(location.search).getAll('friend').length===1&&new URLSearchParams(location.search).get('friend')===new Date().toISOString().slice(0,10))send('friend_challenge_open');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
   }
   function revoke(){
+    entry=null;try{localStorage.removeItem(entryKey);}catch{}
     window['ga-disable-'+id]=true;
     if(loaded){window.dataLayer=window.dataLayer.filter(item=>item[0]!=='event');tag('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});}
     for(const cookie of document.cookie.split(';')){const name=cookie.split('=')[0].trim();if(!/^_ga(?:_|$)|^_gid$|^_gat/.test(name))continue;for(const domain of ['',location.hostname,'.brainilabgames.com'])document.cookie=name+'=; Max-Age=0; Path=/; SameSite=Lax'+(domain?'; Domain='+domain:'');}
@@ -67,5 +93,5 @@ window.BrainiSiteAnalytics=(()=>{
   // Reading signal = at least 30 seconds visible AND halfway through the article.
   const timer=setInterval(()=>{if(articleRead||!safe()){clearInterval(timer);return;}const article=document.querySelector('.article-body');if(!article){clearInterval(timer);return;}if(allowed()&&!document.hidden)activeSeconds++;if(activeSeconds>=30&&article.getBoundingClientRect().top+article.offsetHeight/2<=innerHeight){articleRead=true;send('article_read',{article_slug:path().split('/')[2]});clearInterval(timer);}},1000);
   if(choice===true)activate();else revoke();
-  return {setConsent,gameStart,needsConsent:()=>choice===null,isAllowed:()=>choice===true};
+  return {setConsent,gameStart,practiceComplete,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
 })();
