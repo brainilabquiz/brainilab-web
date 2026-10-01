@@ -3,7 +3,10 @@ export function quizFields(quiz){return `<details class="article-settings" open>
 export function collectQuiz(root,previous){
  const questions=[...root.querySelectorAll('[data-question]')].map(el=>({prompt:el.querySelector('[data-prompt]').value.trim(),options:[...el.querySelectorAll('[data-option]')].map(i=>i.value.trim()),answer:Number(el.querySelector('[data-answer]').value),explanation:el.querySelector('[data-explanation]').value.trim()}));
  if(!questions.length)return null;
- return {version:JSON.stringify(questions)===JSON.stringify(previous?.questions)?previous.version:crypto.randomUUID(),questions};
+ // PostgreSQL JSONB can reorder object keys. Compare the question values in a
+ // stable field order so editing a cover/video does not reset lesson progress.
+ const normalized=Array.isArray(previous?.questions)?previous.questions.map(q=>({prompt:String(q.prompt??'').trim(),options:(Array.isArray(q.options)?q.options:[]).map(o=>String(o).trim()),answer:Number(q.answer),explanation:String(q.explanation??'').trim()})):null;
+ return {version:previous?.version&&JSON.stringify(questions)===JSON.stringify(normalized)?previous.version:crypto.randomUUID(),questions};
 }
 export function authorSelect(authors,current='biel-sarda'){
  return `<label class="article-field">Author<select id="editor-author"><option value="">BrainiLab (legacy credit)</option>${authors.filter(a=>a.document.active!==false||a.slug===current).map(a=>`<option value="${a.slug}" ${a.slug===current?'selected':''}>${esc(a.document.name)}${a.document.visible?' · Team':' · Contributor'}</option>`).join('')}</select></label>`;

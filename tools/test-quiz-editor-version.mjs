@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {quizFields,collectQuiz} from '../editor/quiz-fields.js';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const quiz={version:'original-lesson',questions:[{answer:1,options:['1','2','3','4'],explanation:'One more than one.',prompt:'1 + 1?'}]};
+const dom=new JSDOM(quizFields(quiz)),root=dom.window.document.body;
+assert.equal(collectQuiz(root,quiz).version,quiz.version,'JSONB key order must not reset the lesson');
+root.querySelector('[data-prompt]').value=' 1 + 1? ';
+assert.equal(collectQuiz(root,quiz).version,quiz.version,'Whitespace normalization is not a new question');
+root.querySelector('[data-answer]').value='2';
+assert.notEqual(collectQuiz(root,quiz).version,quiz.version,'Changed answers must invalidate old completion');
+root.querySelector('[data-answer]').value='1';root.querySelector('[data-explanation]').value='A different explanation.';
+assert.notEqual(collectQuiz(root,quiz).version,quiz.version);
+dom.window.close();console.log('PASS quiz versions: database key order and unchanged fields preserve progress; changed content creates a new version.');
