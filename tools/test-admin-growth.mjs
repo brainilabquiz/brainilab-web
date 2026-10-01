@@ -30,3 +30,21 @@ form=root.querySelector('[data-growth-form]');form.elements.note.value='A review
 let resolve;const pending=GrowthAdmin.render({root,rpc:()=>new Promise(r=>resolve=r)});GrowthAdmin.reset();resolve(data);await pending;assert.equal(root.children.length,0);
 await GrowthAdmin.render({root,rpc:async()=>({report:null,reports:[],opportunities:[],events:[]})});assert.match(root.textContent,/Start with your first report/);GrowthAdmin.reset();
 console.log('Growth: safe rendering, filters, empty state, non-overlapping comparisons, filter matching and stale-auth response passed.');
+
+const {connectionText,briefText}=await import('../editor/growth-tools.js');
+assert.match(connectionText({}),/No verified/);
+const connected={connection:{status:'verified',scope:'https://www.googleapis.com/auth/webmasters.readonly',lastSuccessfulSync:'2026-10-01T08:00:00Z'}};
+assert.match(connectionText(connected,Date.parse('2026-10-01T09:00:00Z')),/connection verified/);
+assert.match(connectionText(connected,Date.parse('2026-10-04T09:00:00Z')),/48 hours/);
+const expanded=structuredClone(data);
+expanded.report.document.discovery=[{name:'Example <img src=x onerror=alert(1)>',url:opportunity.url,kind:'Game',action:'Review snippet',pageEvidence:{impressions:10,clicks:0,position:4},queryEvidence:[{value:'number route',impressions:2,clicks:0}],brief:{finding:'Exact page evidence',checks:['Check sources']},pageSourceSnapshot:'fixture',conversionGoal:'Completed games'}];
+await GrowthAdmin.render({root,rpc:async()=>structuredClone(expanded)});
+assert.equal(root.querySelectorAll('img').length,0);
+assert.match(root.textContent,/Organic attribution not connected/);
+const search=root.querySelector('[data-research-filter]');search.value='nothing';search.dispatchEvent(new dom.window.Event('input'));
+assert.equal(root.querySelector('[data-lead]').hidden,true);
+search.value='number route';search.dispatchEvent(new dom.window.Event('input'));
+assert.equal(root.querySelector('[data-lead]').hidden,false);
+assert.match(briefText(expanded.report.document.discovery[0],expanded.report.document),/Snapshot: fixture/);
+GrowthAdmin.reset();
+console.log('Growth tools: honest sync status, safe query filtering, missing attribution and evidence-linked brief export passed.');
