@@ -1,0 +1,97 @@
+{
+  "slug": "logic-what-must-be-true",
+  "title": "Could be true is not the same as must be true",
+  "description": "Use small groups and counterexamples to separate a guaranteed conclusion from a tempting guess.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "order": 56,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/logic-what-must-be-true.webp",
+    "small": "/assets/images/learn/logic-what-must-be-true-small.webp",
+    "thumbnail": "/assets/images/learn/logic-what-must-be-true-thumb.webp",
+    "alt": "A magnifying glass beside red wooden circles and a square",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/patterns-and-reasoning/",
+    "name": "Patterns and reasoning"
+  },
+  "game": {
+    "url": "/reasoning/",
+    "name": "Reasoning Challenge"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "sorting-with-two-rules"
+  ],
+  "sources": [
+    {
+      "name": "Math is Fun — Sets and Venn Diagrams",
+      "url": "https://www.mathsisfun.com/sets/venn-diagrams.html"
+    }
+  ],
+  "sections": [
+    {
+      "id": "start-with-exactly-what-you-know",
+      "title": "Start with exactly what you know",
+      "html": "<p>Suppose every amber token is round. You find an amber token. It must be round, because the rule covers every amber token.</p><p>Now suppose you find a round token. Must it be amber? No. The rule did not say that only amber tokens are round. A round blue token would fit the original rule too.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Choose a statement about a tiny collection and test a conclusion. The activity shows a possible arrangement that fits the starting rule. Change the arrangement and look for a counterexample.</p><p>If one allowed arrangement makes a conclusion false, that conclusion is not guaranteed. It might still be possible. “Not guaranteed” is different from “impossible”.</p>"
+    },
+    {
+      "id": "some-does-not-mean-all",
+      "title": "Some does not mean all",
+      "html": "<p>“Some round tokens are striped” tells you that at least one token is both round and striped. It does not tell you that every round token is striped. It also does not tell you how many plain round tokens exist.</p><p>Similarly, “all amber tokens are round” describes a relationship between groups. Without also saying an amber token exists, that sentence alone does not prove that the collection contains one. The examples in our activity make existence explicit.</p>"
+    },
+    {
+      "id": "before-the-challenge",
+      "title": "Before the challenge",
+      "html": "<p>Read each condition, check the direction of the relationship, and separate what is guaranteed from what is merely compatible. A quick sketch of a few objects can expose a mistaken reversal.</p><p>You can now try the <a href=\"/reasoning/\">Reasoning Challenge</a>. It gives a score for its own questions and explains each answer. It is a puzzle activity, not a clinical assessment or a measurement of IQ. Take your time; understanding the explanation matters more than rushing.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "Every amber token is round. This token is amber. What must be true?",
+        "options": [
+          "It is striped",
+          "It is round",
+          "Every round token is amber",
+          "There is only one token"
+        ],
+        "answer": 1,
+        "explanation": "The stated rule applies directly to this amber token."
+      },
+      {
+        "prompt": "Every amber token is round. A token is round. Must it be amber?",
+        "options": [
+          "Yes",
+          "Only on weekdays",
+          "No",
+          "Yes if it is large"
+        ],
+        "answer": 2,
+        "explanation": "A round token of another colour is compatible with the rule."
+      },
+      {
+        "prompt": "What is enough to disprove a guaranteed conclusion?",
+        "options": [
+          "An unrelated example",
+          "A guess",
+          "A popular answer",
+          "One allowed counterexample"
+        ],
+        "answer": 3,
+        "explanation": "A conclusion is not guaranteed if a case satisfying the premises makes it false."
+      }
+    ]
+  }
+}

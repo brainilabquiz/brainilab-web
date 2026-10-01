@@ -1,9 +1,11 @@
 import {equation,clockFace,moonScene,seasonsScene,centuryScene,leapScene,enhanceControls,updateControls} from './academy-visuals.js';
+import {foundationLab} from './academy-foundations.js';
 function slider(label,min,max,value){return `<label class="lab-range"><span class="lab-control-label">${label}<b data-range-value aria-hidden="true">${value}</b></span><input aria-label="${label}" type="range" min="${min}" max="${max}" value="${value}" /></label>`;}
 function options(label,values){return `<label>${label}<select>${values.map((v,i)=>`<option value="${i}">${v}</option>`).join('')}</select></label>`;}
 export function initLabs(){
  for(const el of document.querySelectorAll('[data-academy-lab]')){
   const kind=el.dataset.academyLab,controls=el.querySelector('[data-lab-controls]'),visual=el.querySelector('[data-lab-visual]'),out=el.querySelector('[data-lab-output]');
+  if(foundationLab(kind,controls,visual,out))continue;
   if(['add-basics','subtract-basics','groups-basics'].includes(kind)){beginnerLab(el,kind,controls,visual,out);continue;}
   let step=0;
   const config={round:'<button type="button" data-step>Show the next step</button><button type="button" data-reset>Start again</button>',multiply:slider('Stickers in each group',1,20,3),percent:slider('Squares to colour',0,100,25),century:'<label>Year (CE)<input type="number" min="1" max="9999" value="2000" step="1" /></label>',leap:'<label>Year (Gregorian calendar)<input type="number" min="1" max="9999" value="2100" step="1" /></label>',calendar:slider('Move forward one day at a time',0,4,0),moon:options('Choose a phase',['New Moon','First quarter','Full Moon','Last quarter']),seasons:options('Choose a month',['June','December']),clocks:slider('UTC hour',0,23,12)};

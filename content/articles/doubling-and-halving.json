@@ -1,0 +1,98 @@
+{
+  "slug": "doubling-and-halving",
+  "title": "Double one number, halve the other",
+  "description": "See why four groups of six can become two groups of twelve without changing the total.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "order": 44,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/doubling-and-halving.webp",
+    "small": "/assets/images/learn/doubling-and-halving-small.webp",
+    "thumbnail": "/assets/images/learn/doubling-and-halving-thumb.webp",
+    "alt": "A hand moving a strawberry between two plates",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/mental-maths-foundations/",
+    "name": "Make numbers easier to work with"
+  },
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "mental-math-round-and-adjust",
+    "multiply-by-11-in-your-head"
+  ],
+  "sources": [
+    {
+      "name": "OpenStax — Properties of Real Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties"
+    }
+  ],
+  "sections": [
+    {
+      "id": "repack-the-same-objects",
+      "title": "Repack the same objects",
+      "html": "<p>Four small bags each hold six counters. Empty two bags into one larger bag, and do the same with the other two. You now have two larger bags, each containing twelve.</p><p>The amount is unchanged: <strong>4 × 6 = 2 × 12 = 24</strong>. You halved the number of bags and doubled what goes into each bag. This is a repacking trick, not a new way to create counters.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Choose an even number of groups and a number of counters in each. Compare the original arrangement with one that has half as many groups, each twice as full.</p><p>For 6 × 5, pair the six groups into three groups of ten. Three tens are thirty, so 6 × 5 is also thirty. The second arrangement may be easier to count even though both show the same objects.</p>"
+    },
+    {
+      "id": "change-both-factors-together",
+      "title": "Change both factors together",
+      "html": "<p>The two numbers in a multiplication are called <strong>factors</strong>. If you double one but leave the other unchanged, you double the total. The total stays the same only because the other factor is halved at the same time.</p><p>Our activity uses even numbers of groups so that halving produces a whole number of groups. Later, fractions let us discuss other cases. For now, keep the repacking concrete.</p>"
+    },
+    {
+      "id": "choose-a-friendlier-calculation",
+      "title": "Choose a friendlier calculation",
+      "html": "<p>Consider 16 × 5. Halve sixteen to eight and double five to ten. Eight tens are eighty. You can check by adding sixteen five times, but the regrouping uses fewer steps.</p><p>This does not automatically make every multiplication easier. If the transformed numbers feel less familiar, keep the original calculation. The useful question is “which arrangement can I count confidently?”</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "Which calculation has the same total as 6 × 5?",
+        "options": [
+          "3 × 10",
+          "3 × 5",
+          "12 × 5",
+          "6 × 10"
+        ],
+        "answer": 0,
+        "explanation": "Halve six to three and double five to ten."
+      },
+      {
+        "prompt": "If you double one factor and change nothing else, the total…",
+        "options": [
+          "stays the same",
+          "is halved",
+          "doubles",
+          "becomes zero"
+        ],
+        "answer": 2,
+        "explanation": "Keeping the other factor unchanged creates twice as many objects."
+      },
+      {
+        "prompt": "Using this strategy, 16 × 5 becomes…",
+        "options": [
+          "8 × 5",
+          "16 × 10",
+          "8 × 10",
+          "32 × 10"
+        ],
+        "answer": 2,
+        "explanation": "Half of sixteen is eight; double five is ten. The product is eighty."
+      }
+    ]
+  }
+}

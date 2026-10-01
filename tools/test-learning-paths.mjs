@@ -12,7 +12,7 @@ const lesson=articles.find(a=>a.slug===paths[0].lessons[0].slug),quiz=lesson.qui
 assert.equal(validQuiz(quiz),true);assert.throws(()=>gradeQuiz(quiz,[0]));assert.equal(gradeQuiz(quiz,quiz.questions.map(q=>q.answer)).score,3);
 assert.equal(validQuiz({...quiz,questions:[...quiz.questions,{prompt:'Missing',options:['A','A','B','C'],answer:0,explanation:'Duplicate'}]}),false);
 const ls=paths[0].lessons.map(l=>({slug:l.slug,version:articles.find(a=>a.slug===l.slug).quiz.version}));
-assert.equal(pathProgress(ls,{[ls[0].slug]:{version:ls[0].version}}).percent,33);assert.equal(pathProgress(ls,{[ls[0].slug]:{version:'outdated'}}).percent,0);
+assert.equal(pathProgress(ls,{[ls[0].slug]:{version:ls[0].version}}).percent,Math.round(100/ls.length));assert.equal(pathProgress(ls,{[ls[0].slug]:{version:'outdated'}}).percent,0);
 assert.equal(readyPaths(paths,articles.filter(a=>a.slug!==lesson.slug)).length,paths.length-1);
 assert.ok(cleanHtml('<table><caption>Compare</caption><tr><th scope="col">A</th><td onclick="bad()">B</td></tr></table>').includes('<th scope="col">'));assert.ok(!cleanHtml('<table onclick="bad()"><tr><td style="color:red">x</td></tr></table>').includes('onclick'));
 const html=renderPage(template,articles,lesson,paths);assert.equal((html.match(/src="\/assets\/js\/learning-paths.bundle/g)||[]).length,1);assert.match(html,/By <a[^>]+href="\/about\/#biel-sarda"[^>]*>Biel Sardà<\/a>/);assert.ok(html.includes('data-lesson-quiz'));
@@ -42,7 +42,7 @@ await playRound(w,quiz);
 assert.match(w.document.querySelector('[data-quiz-result]').textContent,/3 of 3 correct/);assert.ok([...w.document.querySelectorAll('[data-explanation]')].every(e=>!e.hidden));
 const stored=w.localStorage.getItem('brainilab_learning_v1:guest');assert.equal(JSON.parse(stored)[lesson.slug].version,quiz.version);
 const pathDom=new JSDOM(renderLearningPage(template,{articles,paths,authors,path:paths[0]}),{url:'https://brainilabgames.com/learn/paths/',runScripts:'outside-only'});pathDom.window.localStorage.setItem('brainilab_learning_v1:guest',stored);pathDom.window.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
-assert.equal(pathDom.window.document.querySelector('[data-lesson-number]').textContent,'✓');assert.match(pathDom.window.document.querySelector('[data-progress-label]').textContent,/33%/);
+assert.equal(pathDom.window.document.querySelector('[data-lesson-number]').textContent,'✓');assert.match(pathDom.window.document.querySelector('[data-progress-label]').textContent,new RegExp(Math.round(100/ls.length)+'%'));
 w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.querySelectorAll('input:checked').length,0);assert.equal(JSON.parse(w.localStorage.getItem('brainilab_learning_v1:guest'))[lesson.slug].version,quiz.version);
 // Every navigational link carries the explicit new-tab policy.
 for(const a of w.document.querySelectorAll('a[href]')){const external=/^https?:$/.test(a.protocol)&&a.hostname.replace(/^www\./,'')!=='brainilabgames.com';assert.equal(a.target,external?'_blank':'');assert.equal(a.relList.contains('noopener'),external);}
@@ -62,7 +62,7 @@ const accountDom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.
 aw.localStorage.setItem('brainilab_learning_v1:account-a',stored);
 const client={auth:{getSession:async()=>({data:{session:{user:{id:'account-a'}}}})},from:()=>({select:()=>({eq:async(_,id)=>({data:id==='account-a'?[{article_slug:lesson.slug,quiz_version:'old-version',score:1,total:3}]:[]})})}),rpc:async()=>({data:{}})};
 aw.BrainiBackendAuth={getClient:()=>client};aw.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));await new Promise(r=>setTimeout(r,10));
-assert.match(aw.document.querySelector('[data-progress-label]').textContent,/33%/);
+assert.match(aw.document.querySelector('[data-progress-label]').textContent,new RegExp(Math.round(100/ls.length)+'%'));
 await playRound(aw,quiz,true);
 aw.dispatchEvent(new aw.CustomEvent('brainilab:backend-auth',{detail:{session:{user:{id:'account-b'}}}}));await new Promise(r=>setTimeout(r,10));
 assert.match(aw.document.querySelector('[data-progress-label]').textContent,/0%/);assert.equal(aw.document.querySelectorAll('input:checked').length,0);assert.equal(aw.document.querySelectorAll('fieldset:not([hidden]) input:disabled').length,0);assert.equal(aw.document.querySelector('[type=submit]').hidden,false);accountDom.window.close();

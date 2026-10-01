@@ -1,0 +1,98 @@
+{
+  "slug": "sorting-with-two-rules",
+  "title": "One object can belong to two groups",
+  "description": "Sort by shape and colour, then explore why “and” and “or” select different objects.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "order": 55,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/sorting-with-two-rules.webp",
+    "small": "/assets/images/learn/sorting-with-two-rules-small.webp",
+    "thumbnail": "/assets/images/learn/sorting-with-two-rules-thumb.webp",
+    "alt": "Red and blue wooden circles and squares on cream paper",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/patterns-and-reasoning/",
+    "name": "Patterns and reasoning"
+  },
+  "game": {
+    "url": "/reasoning/",
+    "name": "Reasoning Challenge"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "rotation-or-reflection",
+    "logic-what-must-be-true"
+  ],
+  "sources": [
+    {
+      "name": "Math is Fun — Sets and Venn Diagrams",
+      "url": "https://www.mathsisfun.com/sets/venn-diagrams.html"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-round-red-button-fits-twice",
+      "title": "A round red button fits twice",
+      "html": "<p>Put all red objects in one group and all round objects in another. A red round button fits both descriptions. A blue square fits neither. There is no need to force every object into exactly one group.</p><p>A <strong>set</strong> is a collection described by a rule. Here the rules are “is red” and “is round”. The shared part contains objects that meet both rules.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Choose a rule below and see which objects qualify. The labels include shape and colour, so you can follow the activity without relying on colour alone.</p><p>“Red <strong>and</strong> round” selects only objects with both properties. “Red <strong>or</strong> round” selects objects with at least one property, including objects with both. This is the inclusive meaning of “or” used in the activity.</p>"
+    },
+    {
+      "id": "a-word-can-change-the-answer",
+      "title": "A word can change the answer",
+      "html": "<p>A red square satisfies “red or round” because it is red. It does not satisfy “red and round” because it is not round. Read the connecting word before counting.</p><p>In everyday speech, “or” can sometimes mean one choice but not both. A well-written puzzle should tell you when that exclusive meaning is intended. Do not assume the two meanings are interchangeable.</p>"
+    },
+    {
+      "id": "keep-the-rule-separate-from-the-examples",
+      "title": "Keep the rule separate from the examples",
+      "html": "<p>Seeing two red round objects does not prove that every red object is round. The red square is a counterexample: one object that breaks that claim.</p><p>Try inventing another object for each region: red only, round only, both and neither. Being able to produce a counterexample is often more useful than collecting more examples that happen to fit.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "Which object satisfies “red and round”?",
+        "options": [
+          "Blue circle",
+          "Red circle",
+          "Red square",
+          "Blue square"
+        ],
+        "answer": 1,
+        "explanation": "It must satisfy both properties."
+      },
+      {
+        "prompt": "Does a red square satisfy inclusive “red or round”?",
+        "options": [
+          "No",
+          "Only if it is small",
+          "Yes",
+          "Only if every object is red"
+        ],
+        "answer": 2,
+        "explanation": "Being red is enough; inclusive or needs at least one condition."
+      },
+      {
+        "prompt": "What disproves “every red object is round”?",
+        "options": [
+          "A red circle",
+          "Another red circle",
+          "A blue circle",
+          "A red square"
+        ],
+        "answer": 3,
+        "explanation": "The red square is red but not round, so it is a counterexample."
+      }
+    ]
+  }
+}

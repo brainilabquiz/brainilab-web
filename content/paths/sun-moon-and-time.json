@@ -5,18 +5,23 @@
   "status": "published",
   "lessons": [
     {
+      "slug": "why-day-turns-into-night",
+      "level": "1 · Start with Earth",
+      "objective": "Turn a model Earth and follow a place from light into darkness."
+    },
+    {
       "slug": "why-the-moon-changes-shape",
-      "level": "1 · Foundations",
+      "level": "2 · Foundations",
       "objective": "Picture a ball beside a lamp to understand the Moon’s changing face."
     },
     {
       "slug": "what-really-causes-seasons",
-      "level": "2 · Build on it",
+      "level": "3 · Build on it",
       "objective": "See how Earth’s little lean changes the sunlight we get."
     },
     {
       "slug": "why-time-zones-get-messy",
-      "level": "3 · Apply and distinguish",
+      "level": "4 · Apply and distinguish",
       "objective": "Follow three clocks to understand why places use different times."
     }
   ],
@@ -54,12 +59,13 @@
     }
   ],
   "outcomes": [
+    "Connect day and night to Earth’s rotation.",
     "Explain lunar phases without confusing them with eclipses.",
     "Connect seasons to tilt, sunlight angle and daylight.",
     "Distinguish a time zone from its current UTC offset."
   ],
-  "updatedAt": "2026-09-30T19:26:19.759104+00:00",
-  "description": "Why does the Moon look different, what makes summer warmer, and why is your afternoon someone else’s morning? Follow three everyday questions.",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "description": "Start with day and night, then explore Moon phases, seasons and the clocks we use around the world.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "why-the-moon-changes-shape",
   "introduction": "<p>You do not need a telescope or any astronomy lessons to begin. A ball beside a lamp, the changing evening light and a call to a faraway friend will help us make sense of the sky and our clocks.</p>",

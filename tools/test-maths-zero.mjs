@@ -5,8 +5,8 @@ import {pathProgress} from '../lib/learning-model.js';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const path=JSON.parse(readFileSync('content/paths/maths-from-zero.json','utf8'));
 const lessons=path.lessons.map(l=>({...l,version:'maths-zero-v1'})),done={};
-for(let i=0;i<3;i++){done[lessons[i].slug]={version:lessons[i].version};assert.equal(pathProgress(lessons,done).percent,[33,67,100][i]);}
-for(const lesson of path.lessons){
+for(let i=0;i<lessons.length;i++){done[lessons[i].slug]={version:lessons[i].version};assert.equal(pathProgress(lessons,done).percent,Math.round((i+1)/lessons.length*100));}
+for(const lesson of path.lessons.filter(l=>['addition-putting-things-together','subtraction-how-many-are-left','multiplication-equal-groups'].includes(l.slug))){
  const dom=new JSDOM(readFileSync(`learn/${lesson.slug}/index.html`,'utf8'),{url:`https://brainilabgames.com/learn/${lesson.slug}/`,runScripts:'outside-only'}),w=dom.window;
  w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
  const lab=w.document.querySelector('[data-academy-lab]'),inputs=[...lab.querySelectorAll('input[type=range]')],output=lab.querySelector('[data-lab-output]');

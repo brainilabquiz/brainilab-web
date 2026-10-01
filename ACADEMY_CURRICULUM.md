@@ -54,3 +54,10 @@ Activities are part of teaching; trying them is not a ranked match. Final comple
 ## First beginner course — 30 September 2026
 
 `maths-from-zero` supplies the first three introductory chapters: addition with two piles, subtraction with removable counters, and multiplication with equal groups and an accessible times table. Each has an original photographic cover, beginner copy and a three-question round. This is a complete three-lesson starter course, not the whole college curriculum. Division and later levels remain planned. The separate `arithmetic-from-zero-1` editorial block has 3 of 10 supporting pieces; its additional HUB remains unpublished.
+
+
+## October expansion
+
+The four existing courses now contain 6, 5, 4 and 4 lessons respectively. Fractions from zero and Patterns and reasoning add five lessons each, for 29 lessons across six courses. Course length follows prerequisites, not a three-chapter template. Existing lesson slugs, quizzes and versions are unchanged, preserving completion and one-time XP. Seventeen new original lessons each have a photographic cover, interactive activity and three-question check.
+
+The separate `/reasoning/` practice challenge contains twelve original puzzles with explanations and a score out of twelve. It is not an IQ assessment, has no normative claims, does not modify XP/rankings, and stores only the current attempt in tab session storage. Repeat attempts use the same puzzles.

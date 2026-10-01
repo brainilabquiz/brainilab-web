@@ -1,0 +1,98 @@
+{
+  "slug": "reading-a-fraction",
+  "title": "Two numbers, one fraction",
+  "description": "The bottom number names the pieces. The top number counts how many of them you have.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "order": 48,
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "cover": {
+    "src": "/assets/images/learn/reading-a-fraction.webp",
+    "small": "/assets/images/learn/reading-a-fraction-small.webp",
+    "thumbnail": "/assets/images/learn/reading-a-fraction-thumb.webp",
+    "alt": "A segmented chocolate bar with a few squares set beside it",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab."
+  },
+  "hub": {
+    "url": "/learn/paths/fractions-from-zero/",
+    "name": "Fractions, one piece at a time"
+  },
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "related": [
+    "fractions-equal-parts",
+    "equivalent-fractions-same-amount"
+  ],
+  "sources": [
+    {
+      "name": "Math is Fun — Fractions",
+      "url": "https://www.mathsisfun.com/fractions.html"
+    }
+  ],
+  "sections": [
+    {
+      "id": "read-the-picture-first",
+      "title": "Read the picture first",
+      "html": "<p>A strip is divided into five equal parts. Three parts are shaded. Say “three fifths” and write <strong>3/5</strong>. The slash separates two jobs: counting selected parts and naming their size.</p><p>The bottom number, five, is the <strong>denominator</strong>. It tells you the whole was divided into five equal parts. The top number, three, is the <strong>numerator</strong>. It tells you three of those parts are selected.</p>"
+    },
+    {
+      "id": "explore",
+      "title": "Try it yourself",
+      "html": "<p>Keep the denominator at five and change the numerator from zero to five. Every step selects one more fifth. The pieces do not change size.</p><p>Now select one part and change the denominator. One half, one third and one fifth all have a numerator of one, but the selected pieces have different sizes. Their names tell you what sort of piece is being counted.</p>"
+    },
+    {
+      "id": "nothing-and-everything",
+      "title": "Nothing and everything",
+      "html": "<p>Zero fifths, written 0/5, means none of the five parts is selected. Five fifths, written 5/5, means every part is selected, so you have one whole.</p><p>A denominator cannot be zero in these fractions. “Divide the whole into zero equal parts” does not give a usable size of piece. The activity therefore starts at two parts.</p>"
+    },
+    {
+      "id": "avoid-a-tempting-shortcut",
+      "title": "Avoid a tempting shortcut",
+      "html": "<p>Three fifths does not mean three objects plus five objects. It means three pieces, each one fifth of a whole. Saying the fraction aloud can help you remember that relationship.</p><p>Try drawing seven equal boxes in a row and shading two. The fraction is 2/7 even if you separate the shaded boxes. Their positions do not change how many equal parts are selected.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "academy-oct-v1",
+    "questions": [
+      {
+        "prompt": "In 3/5, which number tells you how many equal parts make the whole?",
+        "options": [
+          "3",
+          "5",
+          "8",
+          "2"
+        ],
+        "answer": 1,
+        "explanation": "The denominator, five, names the size of the parts."
+      },
+      {
+        "prompt": "What does 0/6 show?",
+        "options": [
+          "Six wholes",
+          "One whole",
+          "No selected parts",
+          "An impossible numerator"
+        ],
+        "answer": 2,
+        "explanation": "Zero selected sixths means none of the whole is selected."
+      },
+      {
+        "prompt": "How much is 7/7 of a whole?",
+        "options": [
+          "One whole",
+          "One seventh",
+          "Seven wholes",
+          "Zero"
+        ],
+        "answer": 0,
+        "explanation": "All seven of the seven equal parts are present."
+      }
+    ]
+  }
+}
