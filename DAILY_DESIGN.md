@@ -1,0 +1,9 @@
+# Daily discovery design
+
+Redesign preserves BrainiLab's existing identity and /daily-quiz/ route. Audience: returning players and first-time quiz visitors. Playful, readable and compact. DESIGN_VARIANCE 5 / MOTION_INTENSITY 3 / VISUAL_DENSITY 5. Native HTML/CSS and existing JS components, Pally headings, Montserrat body, navy ink and yellow primary actions. Existing multicolour game accents and illustrations are brand assets, not a new visual system.
+
+Audit: the old hero and full-width streak pushed the game controls down; cards used tiny copy and icons; two long rule explanations mixed the legacy and new Daily models; thirteen Anytime cards repeated Games. Preserve canonical/metadata, shared rule selection, game/practice URLs, completion locks, friend invitation and account data. No changes to scoring, auth or database.
+
+New hierarchy: date and short headline; games first beside score/streak summary; three Anytime suggestions and a link to the full library; three concise expandable explanations. On narrow screens games precede the summary. The four-game legacy model and main-plus-extra model both render through the existing Journey component, enhanced only inside the overview. Rules follow the actual resolved model. Error, no-JS/loading, partial, complete and locked-extra states are covered.
+
+Preflight: existing multi-accent brand explicitly preserved; light theme throughout; existing icon family; actions >=44px; visible focus, reduced-motion-safe hover; semantic headings and details; no new dependencies or decorative illustration. Static SEO and URLs preserved. No invented progress or stock testimonials. Meaningful score totals and UTC date retained because they describe real product state. Browser checks cover desktop, mobile and a local fixture for the next-day model.
