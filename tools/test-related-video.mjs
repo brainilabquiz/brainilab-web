@@ -1,0 +1,68 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+import {youtubeId,cleanVideo,videoCard,relatedVideo} from '../lib/video-card.js';
+import {adminVideoInfo} from '../lib/video-admin.js';
+import {CHANNEL} from '../lib/youtube-playlist.js';
+import {articleBody,prepareArticle} from '../lib/learn-content.js';
+import {videoEditor,bindVideoEditor} from '../editor/article-video.js';
+import worker from '../worker.js';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const id='1ISNNEhgCPw',video={id,title:'Earth & Space Quiz: Can You Get 50/50?'};
+for(const url of [id,'https://youtu.be/'+id+'?si=abc','https://www.youtube.com/watch?v='+id+'&list=abc','https://www.youtube.com/shorts/'+id])assert.equal(youtubeId(url),id);
+for(const url of ['https://youtube.com.evil.test/watch?v='+id,'javascript:alert(1)','https://youtube.com/playlist?list='+id,'https://evil.test/'+id,'https://user@youtube.com/watch?v='+id,'https://youtube.com:444/watch?v='+id])assert.equal(youtubeId(url),null);
+assert.equal(videoCard({id:'invalid',title:'Video'}),'');
+assert.equal(cleanVideo({id,title:''}),null);
+const card=new JSDOM(videoCard({...video,title:'<img src=x onerror=alert(1)>'}));
+assert.equal(card.window.document.querySelector('strong img'),null);
+assert.equal(card.window.document.querySelector('a').href,'https://www.youtube.com/watch?v='+id);
+assert.equal(card.window.document.querySelector('img').getAttribute('src'),'/api/youtube-thumbnail/'+id);
+const article=prepareArticle({...JSON.parse(readFileSync('content/articles/why-day-turns-into-night.json','utf8')),video});
+assert.ok(articleBody(article,[article]).includes('data-related-video="article"'));
+const selected={...article,video:{...video,showAfterGame:true},updatedAt:'2026-10-01'};
+assert.equal(relatedVideo([selected],'generalknowledge').id,id);
+assert.equal(relatedVideo([selected],'mathrush'),null);
+assert.equal(relatedVideo([article],'generalknowledge'),null);
+assert.equal(relatedVideo([selected],'__proto__'),null);
+assert.equal(relatedVideo([selected,{...selected,slug:'newer',updatedAt:'2026-10-02',video:{id:'abcdefghijk',title:'Another',showAfterGame:true}}],'generalknowledge').id,'abcdefghijk');
+// Authentication and channel restrictions run before exposing any metadata or using API quota.
+const request=new Request('https://brainilabgames.com/api/admin/video-info?id='+id,{headers:{Authorization:'Bearer '+ 'a'.repeat(32)}});
+let calls=[];
+const validAdmin={admin:true,authenticated:true,role:'editor',mfa_satisfied:true};
+const item={id,snippet:{title:video.title,channelId:CHANNEL,publishedAt:'2026-09-30',liveBroadcastContent:'none'},status:{privacyStatus:'public',uploadStatus:'processed'}};
+const upstream=(admin=validAdmin,v=item)=>async(url,options)=>{calls.push({url,options});return Response.json(String(url).includes('/rpc/')?admin:{items:v?[v]:[]});};
+assert.equal((await adminVideoInfo(new Request(request.url),'key',upstream())).status,401);assert.equal(calls.length,0);
+for(const admin of [{...validAdmin,admin:false},{...validAdmin,role:'viewer'},{...validAdmin,mfa_satisfied:false}]){calls=[];assert.equal((await adminVideoInfo(request,'key',upstream(admin))).status,403);assert.equal(calls.length,1);}
+for(const v of [null,{...item,snippet:{...item.snippet,channelId:'other'}},{...item,status:{...item.status,privacyStatus:'private'}},{...item,snippet:{...item.snippet,liveBroadcastContent:'upcoming'}}])assert.equal((await adminVideoInfo(request,'key',upstream(validAdmin,v))).status,422);
+calls=[];const success=await adminVideoInfo(request,'test-key',upstream());assert.equal(success.status,200);assert.equal(success.headers.get('cache-control'),'no-store');assert.equal((await success.json()).video.id,id);assert.equal(calls[1].options.headers,undefined,'Admin bearer token never sent to Google');
+assert.equal((await adminVideoInfo(request,'key',async()=>{throw Error('secret');})).status,503);
+// Optional result suggestions cannot block or overwrite a later round, and failures remain empty.
+const dom=new JSDOM('<div id="result"></div>',{url:'https://brainilabgames.com/',runScripts:'outside-only'}),w=dom.window;
+w.AbortSignal=AbortSignal;let resolveFirst;w.fetch=()=>new Promise(resolve=>{resolveFirst=resolve;});
+const bundle=readFileSync('assets/js/shell.bundle.js','utf8').split('/* related-video bundle */')[1];assert.ok(bundle);w.eval(bundle);
+const slot=w.document.querySelector('#result');const first=w.BrainiRelatedVideo.mount(slot,{gameId:'generalknowledge'});
+await w.BrainiRelatedVideo.mount(slot,{gameId:'invalid'});resolveFirst(Response.json({video}));await first;assert.equal(slot.children.length,0);
+await w.BrainiRelatedVideo.mount(slot,{gameId:'generalknowledge'});assert.equal(slot.hidden,false);assert.equal(slot.querySelectorAll('a').length,1);
+slot.querySelector('img').dispatchEvent(new w.Event('error'));assert.equal(slot.querySelector('img').hidden,true);
+w.fetch=async()=>{throw Error('offline');};await w.BrainiRelatedVideo.mount(slot,{gameId:'mathrush'});assert.equal(slot.hidden,true);
+// Admin selection: load, draft collection, invalid replacement, removal. No iframe or external image.
+slot.innerHTML=videoEditor(null);let edits=0;const savedFetch=globalThis.fetch;
+globalThis.fetch=async()=>Response.json({video});
+const selection=bindVideoEditor({root:slot,sb:{auth:{getSession:async()=>({data:{session:{access_token:'fake'}}})}}},null,()=>edits++);
+slot.querySelector('#article-video-url').value='https://youtu.be/'+id;
+assert.throws(()=>selection.validate(),/Load and check/);
+await slot.querySelector('#article-video-check').onclick();selection.validate();assert.equal(selection.collect().id,id);
+slot.querySelector('#article-video-game').checked=true;assert.equal(selection.collect().showAfterGame,true);
+slot.querySelector('#article-video-url').value='https://youtu.be/abcdefghijk';assert.throws(()=>selection.validate());
+slot.querySelector('#article-video-remove').click();assert.equal(selection.collect(),null);assert.equal(slot.querySelector('#article-video-preview').children.length,0);assert.equal(edits,2);
+// Public routes see only published documents. No fallback recommendation for unrelated games.
+globalThis.caches={default:{match:async()=>null,put:async()=>{}}};
+globalThis.fetch=async()=>Response.json([{document:selected}]);
+let route=await worker.fetch(new Request('https://brainilabgames.com/api/related-video?game=generalknowledge'),{},{waitUntil(){}});
+assert.equal(route.status,200);assert.equal((await route.json()).video.id,id);
+route=await worker.fetch(new Request('https://brainilabgames.com/api/related-video?game=mathrush'),{},{waitUntil(){}});assert.equal((await route.json()).video,null);
+route=await worker.fetch(new Request('https://brainilabgames.com/api/related-video?game=__proto__'),{},{waitUntil(){}});assert.equal(route.status,400);
+globalThis.fetch=async()=>{throw Error('offline');};route=await worker.fetch(new Request('https://brainilabgames.com/api/related-video?game=mathrush'),{},{waitUntil(){}});assert.equal(route.status,503);assert.equal((await route.json()).video,null);
+route=await worker.fetch(new Request('https://brainilabgames.com/api/admin/video-info?id='+id),{},{waitUntil(){}});assert.equal(route.status,401);
+globalThis.fetch=savedFetch;delete globalThis.caches;w.close();card.window.close();
+console.log('PASS related video: safe URLs/HTML, article rendering, game relevance, admin authentication/MFA/channel checks, stale response isolation, graceful failure, editor load/remove.');
