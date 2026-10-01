@@ -1,0 +1,61 @@
+{
+  "slug": "divide-by-five-in-your-head",
+  "title": "Dividing by five? Try doubling first",
+  "description": "Turn a division by five into a doubling and a division by ten. See why it works, then try a few small puzzles.",
+  "topic": "Numbers & logic",
+  "status": "draft",
+  "order": 80,
+  "authorId": "biel-sarda",
+  "publishedAt": null,
+  "updatedAt": "2026-10-01T16:00:00Z",
+  "cover": {
+    "src": "/assets/images/learn/divide-by-five-in-your-head.webp",
+    "small": "/assets/images/learn/divide-by-five-in-your-head-small.webp",
+    "thumbnail": "/assets/images/learn/divide-by-five-in-your-head-thumb.webp",
+    "alt": "Wooden counting tokens in small terracotta bowls on a linen table",
+    "position": 50,
+    "credit": "AI-generated photorealistic illustration created for BrainiLab."
+  },
+  "game": {
+    "url": "/games/number-route/",
+    "name": "Number Route"
+  },
+  "hub": {
+    "url": "/learn/paths/mental-maths-foundations/",
+    "name": "Mental maths foundations"
+  },
+  "sections": [
+    {
+      "id": "five-at-a-time",
+      "title": "How many groups of five?",
+      "html": "<p>You have 35 tokens and put five in each little bowl. How many bowls do you fill? Seven: five, ten, fifteen, twenty, twenty-five, thirty, thirty-five.</p><p>That is one meaning of <strong>35 ÷ 5</strong>: how many groups of five fit into 35? If division still feels unfamiliar, begin with <a href=\"/learn/division-sharing-equally/\">sharing and grouping</a>. You do not need a trick to understand the question.</p>"
+    },
+    {
+      "id": "double-both",
+      "title": "Make the groups easier to count",
+      "html": "<p>Imagine making an identical copy of every token in every bowl. Each bowl now holds ten tokens instead of five. The total is 70, but there are still seven bowls.</p><p>So we can count groups of ten in 70 instead of groups of five in 35. We doubled both the total and the number in each group; the number of groups stayed the same.</p><p>That gives the shortcut: <strong>to divide by five, double the number and then divide by ten.</strong> For 85 ÷ 5, first double 85 to get 170. Then divide 170 by ten to get 17. Check it: 17 groups of five contain 85.</p>"
+    },
+    {
+      "id": "your-turn",
+      "title": "Three bowls of practice",
+      "html": "<p>Try each one before opening the answer. Say the doubled number out loud if that helps you keep the two steps separate.</p><ol><li>45 ÷ 5</li><li>120 ÷ 5</li><li>32 ÷ 5</li></ol><details class=\"practice-answer\"><summary>Show the steps</summary><p><strong>45:</strong> double to 90, then divide by ten: <strong>9</strong>.</p><p><strong>120:</strong> double to 240, then divide by ten: <strong>24</strong>.</p><p><strong>32:</strong> double to 64, then divide by ten: <strong>6.4</strong>. This last answer is not a whole number. If you only want complete groups of five tokens, you get six groups with two tokens left over.</p></details>"
+    },
+    {
+      "id": "puzzle-check",
+      "title": "Useful shortcuts still need a check",
+      "html": "<p>Dividing by ten changes the place value; it does not mean “remove the last digit”. Removing the 4 from 64 would give the wrong answer. The <a href=\"/learn/decimals-money-and-parts-of-ten/\">decimal lesson</a> shows what the dot is doing.</p><p>Number Route keeps division steps whole-number in its Easy format. The calculation 32 ÷ 5 is valid arithmetic, but it would not be an allowed step there. Understanding the game’s rule saves you from trying to force a decimal into a whole-number route.</p><p>Use the shortcut when it makes a calculation clearer. If you already know 25 ÷ 5 is 5, you can simply use that fact. A shortcut is a choice, not another rule to memorise before you are allowed to play.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "OpenStax — Divide Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+    }
+  ],
+  "related": [
+    "division-sharing-equally",
+    "doubling-and-halving",
+    "how-to-play-number-route"
+  ],
+  "practice": "Try Number Route. Keep the numbers in order and check that each division leaves a whole number."
+}

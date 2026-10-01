@@ -1,6 +1,6 @@
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import {prepareArticle,renderPage} from '../lib/learn-content.js';
-import {enrichAuthors,renderLearningPage,teamSection} from '../lib/learning-render.js';
+import {enrichAuthors,renderLearningPage,teamSection,resumeSection,learningAssets} from '../lib/learning-render.js';
 import {readyPaths} from '../lib/learning-model.js';
 import {learnFeed} from '../lib/learn-seo.js';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -14,6 +14,10 @@ await writeFile('learn/feed.xml',learnFeed(articles));
 for(const a of articles)await writeFile(`learn/${a.slug}/index.html`,renderPage(template,articles,a,paths));
 await mkdir('learn/paths',{recursive:true});await writeFile('learn/paths/index.html',renderLearningPage(template,{articles,paths,authors}));
 for(const path of paths){await mkdir(`learn/paths/${path.slug}`,{recursive:true});await writeFile(`learn/paths/${path.slug}/index.html`,renderLearningPage(template,{articles,paths,authors,path}));}
+let profile=await readFile('profile/index.html','utf8');
+profile=profile.replace(/<!-- academy-resume:start -->[\s\S]*?<!-- academy-resume:end -->/,()=>`<!-- academy-resume:start -->${resumeSection(paths,articles)}<!-- academy-resume:end -->`);
+profile=profile.replace(/<link rel="stylesheet" href="\/assets\/css\/learning-paths\.css[^"]*"\/>/g,'').replace(/<script defer src="\/assets\/js\/learning-paths\.bundle\.js[^"]*"><\/script>/g,'').replace('</head>',learningAssets+'</head>');
+await writeFile('profile/index.html',profile);
 let about=await readFile('about/index.html','utf8');about=about.replace(/<!-- team:start -->[\s\S]*?<!-- team:end -->/,()=>`<!-- team:start -->${teamSection(authors)}<!-- team:end -->`);await writeFile('about/index.html',about);
 let sitemap=await readFile('sitemap.xml','utf8');sitemap=sitemap.replace(/<url>\s*<loc>https:\/\/brainilabgames\.com\/learn\/paths\/(?:[^<]*)<\/loc>\s*<\/url>/g,'');sitemap=sitemap.replace('</urlset>',['/learn/paths/',...paths.map(p=>'/learn/paths/'+p.slug+'/')].map(p=>`<url><loc>https://brainilabgames.com${p}</loc></url>`).join('')+'</urlset>');await writeFile('sitemap.xml',sitemap);
 console.log(`Rendered ${paths.length} learning paths and ${authors.length} author profiles using shared production templates.`);

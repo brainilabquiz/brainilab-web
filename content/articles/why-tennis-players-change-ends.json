@@ -1,0 +1,64 @@
+{
+  "slug": "why-tennis-players-change-ends",
+  "title": "When do tennis players change ends? Count the games",
+  "description": "The players switch ends, but not after every game. Use a few scoreboard examples to spot the standard changeover pattern.",
+  "topic": "Sports",
+  "status": "draft",
+  "order": 80,
+  "authorId": "biel-sarda",
+  "publishedAt": null,
+  "updatedAt": "2026-10-01T16:00:00Z",
+  "cover": {
+    "src": "/assets/images/learn/why-tennis-players-change-ends.webp",
+    "small": "/assets/images/learn/why-tennis-players-change-ends-small.webp",
+    "thumbnail": "/assets/images/learn/why-tennis-players-change-ends-thumb.webp",
+    "alt": "A tennis racket and yellow ball beside an empty sunlit tennis court",
+    "position": 50,
+    "credit": "AI-generated photorealistic illustration created for BrainiLab."
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "hub": {
+    "url": "/sports/",
+    "name": "Sports quizzes"
+  },
+  "sections": [
+    {
+      "id": "watch-the-walk",
+      "title": "There is a pattern to that walk",
+      "html": "<p>One game finishes and both players cross the court. The next game finishes and they stay where they are. If you have ever wondered whether you missed an announcement, watch the game count instead.</p><p>Under the standard rule, players change ends after game <strong>1, 3, 5</strong> and each later odd-numbered game in a set. At the end of a set, they change if its total game count is odd; if it is even, they wait until the first game of the next set is over.</p>"
+    },
+    {
+      "id": "scoreboard",
+      "title": "Add both sides of the scoreboard",
+      "html": "<p>A score of <strong>3–2</strong> means five games have finished, so it is time to switch. At <strong>3–3</strong>, six have finished: stay at the same ends. When a set ends <strong>6–4</strong>, the total is ten, so the end-of-set exception applies.</p><p>For a spectator, the useful habit is to look at the set score, not the points inside the current game. If those layers are confusing, start with <a href=\"/learn/how-to-read-a-tennis-score/\">our guide to reading a tennis score</a>.</p>"
+    },
+    {
+      "id": "tiebreak",
+      "title": "A tie-break uses a different count",
+      "html": "<p>In a standard tie-break, the switch comes after every six points in total. So <strong>4–2</strong> triggers a change; <strong>4–3</strong> does not. Approved alternative procedures exist, so check the format used by the event.</p><p>Changing ends also changes which way a player faces the sun or wind. The two ends are not necessarily identical places to play, even when the painted lines match.</p>"
+    },
+    {
+      "id": "spot-it",
+      "title": "Spot the next switch",
+      "html": "<p>Try this while watching a match: before the last point of a game, add one to the number of completed games. Predict whether the players will cross over. Then compare your prediction with what happens.</p><p>Keep the experiment small. Follow just one set, jot down the game scores, and mark a little arrow whenever the ends change. You will have a record you can explain instead of a rule you half remember.</p><p>Curious about another detail hiding in plain sight? Find out <a href=\"/learn/why-tennis-balls-are-yellow/\">why tennis balls are yellow</a>, then try the Sports Quiz.</p>"
+    }
+  ],
+  "sources": [
+    {
+      "name": "ITF — 2026 Rules of Tennis, Rule 10 and Appendix VI",
+      "url": "https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf"
+    },
+    {
+      "name": "ITF — Tennis glossary",
+      "url": "https://www.itftennis.com/en/about-us/organisation/tennis-glossary/"
+    }
+  ],
+  "related": [
+    "how-to-read-a-tennis-score",
+    "why-tennis-balls-are-yellow"
+  ],
+  "practice": "Try a Sports Quiz and see which other details you recognise."
+}

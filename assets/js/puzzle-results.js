@@ -1,21 +1,13 @@
 /* Show the completed puzzle before any network work; only confirmed saves earn progress. */
 window.BrainiPuzzleResults = (() => {
   function show(container, {gameId, name, result, next, metrics, guide, summary}) {
-    window.BrainiPostGame.mount(container, {gameId, name, result, next, metrics});
+    window.BrainiPostGame.mount(container, {gameId, name, result, next, metrics, guide});
     container.querySelector('.post-score-label').textContent = 'rounds solved';
     container.querySelector('.post-message').textContent = summary;
-    if (guide) {
-      const link = document.createElement('a');
-      link.className = 'post-guide';
-      link.dataset.postAction = 'guide';
-      link.href = guide.href;
-      link.textContent = guide.title + ' →';
-      container.querySelector('.post-footer').before(link);
-    }
     const reward = container.querySelector('[data-result-reward]');
     reward.setAttribute('role', 'status');
     const practice = result.practice || result.tryFirst;
-    if (!practice) reward.textContent = 'Saving your result…';
+    if (!practice) reward.textContent = 'Saving your resultâ€¦';
     container.classList.add('puzzle-result-panel');
     container.scrollIntoView?.({block: 'start', behavior: 'instant'});
     let saving = false, saved = false;
