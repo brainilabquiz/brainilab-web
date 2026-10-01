@@ -45,3 +45,15 @@ w.dispatchEvent(new w.CustomEvent('brainilab:feedbacksent',{detail:{source:'priv
 w.dispatchEvent(new w.CustomEvent('brainilab:discovery',{detail:{type:'private@example.com'}}));
 assert.equal(w.dataLayer.length,before);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
 console.log('PASS: discovery and feedback analytics require consent and omit message/email/arbitrary values.');
+for(const placement of ['article','post_game','home']){
+ w=page('https://brainilabgames.com/learn/moon/');
+ const link=w.document.createElement('a');link.href='https://www.youtube.com/watch?v=1ISNNEhgCPw&private=do-not-send';
+ if(placement==='home')link.dataset.latestVideo='';else link.dataset.relatedVideo=placement;
+ w.document.body.append(link);const click=()=>link.dispatchEvent(new w.MouseEvent('click',{bubbles:true}));
+ click();assert.equal(w.dataLayer,undefined);w.BrainiSiteAnalytics.setConsent(true);click();
+ const events=w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='video_click');
+ assert.equal(events.length,1);assert.equal(events[0][2].placement,placement);assert.equal(events[0][2].video_id,'1ISNNEhgCPw');
+ assert.ok(!JSON.stringify(w.dataLayer).includes('do-not-send'));
+ w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='video_click').length,0);w.close();
+}
+console.log('PASS video clicks: consent required, three precise placements, no arbitrary URL parameters, withdrawal respected.');

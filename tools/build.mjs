@@ -7,6 +7,10 @@ import path from 'node:path';
 import './check-site-integrity.mjs';
 
 const root=path.resolve('.');
+const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
+const videoMarker='/* related-video bundle */';
+const shellSource=await readFile('assets/js/shell.bundle.js','utf8');
+await writeFile('assets/js/shell.bundle.js',shellSource.split(videoMarker)[0].trimEnd()+'\n'+videoMarker+'\n'+videoBundle.outputFiles[0].text);
 await build({entryPoints:['editor/admin-growth.js'],outfile:'assets/js/admin-growth.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/reasoning.js'],outfile:'assets/js/reasoning.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/admin-articles.js'],outfile:'assets/js/admin-articles.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});

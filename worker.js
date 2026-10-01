@@ -1,4 +1,6 @@
-import {serveLearn} from './lib/learn-worker.js';
+import {serveLearn,publishedArticles} from './lib/learn-worker.js';
+import {VIDEO_GAMES,relatedVideo,cleanVideo} from './lib/video-card.js';
+import {adminVideoInfo} from './lib/video-admin.js';
 import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './lib/youtube-playlist.js';
 // Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
 const FRESH_MS=15*60*1000;
@@ -77,6 +79,20 @@ export default {
     if(url.pathname.startsWith('/api/')){
       if(request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET'}});
       if(url.pathname==='/api/latest-video')return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
+      if(url.pathname==='/api/admin/video-info')return adminVideoInfo(request,env.YOUTUBE_API_KEY||'');
+      if(url.pathname==='/api/related-video'){
+        const game=url.searchParams.get('game');
+        if(!Object.hasOwn(VIDEO_GAMES,game))return json({error:'Unknown game'},400,0);
+        try{
+          const articles=await publishedArticles(request,ctx,caches.default);
+          let video=relatedVideo(articles,game);
+          if(!video&&game==='generalknowledge'){
+            const latest=await (await latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'')).json();
+            if(!latest.stale&&!latest.unavailable)video=cleanVideo(latest);
+          }
+          return json({video},200,60);
+        }catch{return json({video:null},503,0);}
+      }
       const match=url.pathname.match(/^\/api\/youtube-thumbnail\/([-\w]{11})$/);
       if(match){
         const key=new Request(new URL(url.pathname+'?thumbnail=320-webp-v2',url.origin));
