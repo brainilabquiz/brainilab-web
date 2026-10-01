@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-01",
+  "kind": "editorial-priority-review",
+  "quotaPerDay": 1,
+  "academyRelease": "Explicitly authorised decimal chapter; reuse division and fractions already published by PR60.",
+  "gsc": {
+    "selectedPeriod": "6 months",
+    "availableFrom": "2026-08-29",
+    "availableThrough": "2026-09-28",
+    "clicks": 5,
+    "impressions": 303,
+    "ctrPercent": 1.7,
+    "averagePosition": 21.7,
+    "pages": [
+      {
+        "path": "/games/number-route/",
+        "clicks": 0,
+        "impressions": 87
+      },
+      {
+        "path": "/games/connections/",
+        "clicks": 0,
+        "impressions": 66
+      },
+      {
+        "path": "/games/math-rush/",
+        "clicks": 1,
+        "impressions": 40
+      }
+    ],
+    "limits": "Small sample; none of today's Academy/visual changes can be evaluated with these dates. No demand volume, cannibalisation or uplift inferred."
+  },
+  "firstHub": {
+    "block": "mental-maths-and-number-puzzles-1",
+    "count": 7,
+    "slug": "mental-maths-and-number-puzzles-guide",
+    "publishWhen": "All ten supporting articles are reviewed and live; release tenth, hub and return links together.",
+    "sections": [
+      {
+        "heading": "See the number in smaller parts",
+        "members": [
+          "make-ten-mental-maths",
+          "mental-math-round-and-adjust",
+          "mental-percentages-without-a-calculator"
+        ]
+      },
+      {
+        "heading": "Understand the shortcut before using it",
+        "members": [
+          "multiply-by-11-in-your-head",
+          "divide-by-five-in-your-head",
+          "square-numbers-ending-in-five"
+        ]
+      },
+      {
+        "heading": "Check a result and use it in a puzzle",
+        "members": [
+          "check-division-with-multiplication",
+          "number-sequences-look-at-the-gaps",
+          "how-to-play-number-route",
+          "five-number-puzzles-printable"
+        ]
+      }
+    ],
+    "nextBriefs": [
+      {
+        "slug": "divide-by-five-in-your-head",
+        "approach": "First show groups of five with objects, then doubling and ten groups. Explain why, not a formula chain.",
+        "source": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+      },
+      {
+        "slug": "check-division-with-multiplication",
+        "approach": "Check an answer and remainder rather than reteaching fair sharing; link back to division-sharing-equally.",
+        "source": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+      },
+      {
+        "slug": "square-numbers-ending-in-five",
+        "approach": "Teach what a square number is first, use an area model, optional harder explanation. Hold as draft unless beginner review passes.",
+        "sourceStatus": "Further research and differentiation needed before writing."
+      }
+    ]
+  },
+  "nextQueue": [
+    {
+      "topic": "Sports",
+      "slug": "why-tennis-players-change-ends",
+      "reason": "Thin category; planned complementary tennis piece."
+    },
+    {
+      "topic": "Numbers & logic",
+      "slug": "divide-by-five-in-your-head",
+      "reason": "Advance coherent first hub, with link to Number Route."
+    },
+    {
+      "topic": "Words & puzzles",
+      "slug": "homophones-same-sound-different-meaning",
+      "reason": "Thin category and complementary Connections reading; verify dictionary examples."
+    },
+    {
+      "topic": "Numbers & logic",
+      "slug": "check-division-with-multiplication",
+      "reason": "Work toward hub with a distinct checking angle."
+    }
+  ],
+  "notScheduledNewAutomation": true,
+  "nextGscReview": "2026-10-08"
+}

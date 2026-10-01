@@ -1,15 +1,8 @@
 {
   "slug": "fractions-from-zero",
   "title": "Fractions, one piece at a time",
-  "description": "Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.",
   "topic": "Numbers & logic",
   "status": "published",
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "coverArticle": "fractions-equal-parts",
-  "introduction": "<p>Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
-  "prerequisites": "Comfort with counting, addition and equal sharing. Maths from zero is a useful starting point.",
   "lessons": [
     {
       "slug": "fractions-equal-parts",
@@ -35,15 +28,36 @@
       "slug": "adding-fractions-same-pieces",
       "level": "5 · Put it together",
       "objective": "Add fractions whose pieces have the same size."
+    },
+    {
+      "slug": "decimals-money-and-parts-of-ten",
+      "level": "6 · Meet the decimal point",
+      "objective": "Use tenths and hundredths to write the same amount in a new way."
     }
   ],
-  "outcomes": [
-    "Recognise equal parts of the same whole.",
-    "Explain the numerator and denominator using a picture.",
-    "Show why different fractions can describe the same amount.",
-    "Compare fractions using equal-sized wholes.",
-    "Add fractions whose pieces have the same size."
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/fractions.html",
+      "name": "Math is Fun — Fractions"
+    },
+    {
+      "url": "https://www.mathsisfun.com/equivalent_fractions.html",
+      "name": "Math is Fun — Equivalent Fractions"
+    },
+    {
+      "url": "https://www.mathsisfun.com/comparing-fractions.html",
+      "name": "Math is Fun — Comparing Fractions"
+    },
+    {
+      "url": "https://www.mathsisfun.com/fractions_addition.html",
+      "name": "Math is Fun — Adding Fractions"
+    },
+    {
+      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals"
+    }
   ],
+  "authorId": "biel-sarda",
   "glossary": [
     {
       "term": "Whole",
@@ -60,24 +74,23 @@
     {
       "term": "Equivalent",
       "definition": "Describing the same amount, even with different-sized pieces."
+    },
+    {
+      "term": "Decimal point",
+      "definition": "The mark separating whole-number places from tenths, hundredths and smaller places."
     }
   ],
-  "sources": [
-    {
-      "name": "Math is Fun — Fractions",
-      "url": "https://www.mathsisfun.com/fractions.html"
-    },
-    {
-      "name": "Math is Fun — Equivalent Fractions",
-      "url": "https://www.mathsisfun.com/equivalent_fractions.html"
-    },
-    {
-      "name": "Math is Fun — Comparing Fractions",
-      "url": "https://www.mathsisfun.com/comparing-fractions.html"
-    },
-    {
-      "name": "Math is Fun — Adding Fractions",
-      "url": "https://www.mathsisfun.com/fractions_addition.html"
-    }
-  ]
+  "outcomes": [
+    "Recognise equal parts of the same whole.",
+    "Explain the numerator and denominator using a picture.",
+    "Show why different fractions can describe the same amount.",
+    "Compare fractions using equal-sized wholes.",
+    "Add fractions whose pieces have the same size."
+  ],
+  "updatedAt": "2026-10-01T14:50:47.063Z",
+  "description": "Explore equal pieces, compare and add fractions, then meet decimals. Six short lessons with pictures and activities you can change.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00",
+  "coverArticle": "fractions-equal-parts",
+  "introduction": "<p>Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
+  "prerequisites": "Comfort with counting, addition and equal sharing. Maths from zero is a useful starting point."
 }
