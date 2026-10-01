@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const again=document.createElement('a');again.className='btn';again.href=location.pathname;again.target='_blank';again.rel='noopener noreferrer';again.textContent='Try another round →';
     const next=document.createElement('a');next.href='/geography/world-flags-quiz/';next.target='_blank';next.rel='noopener noreferrer';next.textContent='Explore World Flags →';
     result.append(h,p,note,list,again,document.createTextNode(' '),next);result.focus();
+    const invitation=document.createElement('div');invitation.dataset.accountInvite='';note.after(invitation);window.BrainiPostGame?.inviteAccount(invitation,{practice:true,gameId:'europeflags'});
     window.BrainiSiteAnalytics?.practiceComplete('europeflags',round);
    }});
    root.querySelector('[data-q]').setAttribute('tabindex','-1');root.querySelector('[data-q]').focus();

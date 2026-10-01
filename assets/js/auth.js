@@ -11,6 +11,7 @@ window.BrainiAuth = (function(){
   let pendingEmail="";
   let emailMode="signup";
   let postAuthTarget=null;
+  let returnFocus=null;
 
   function toast(msg){
     if(typeof window.showToast==="function"){ window.showToast(msg); return; }
@@ -49,6 +50,13 @@ window.BrainiAuth = (function(){
     modal.querySelector(".auth-close").onclick=close;
     modal.addEventListener("click",e=>{if(e.target===modal)close()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape" && modal.classList.contains("show")) close()});
+    modal.addEventListener('keydown',e=>{
+      if(e.key!=='Tab')return;
+      const nodes=[...modal.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled)')].filter(el=>el.getClientRects().length);
+      const first=nodes[0],last=nodes.at(-1);if(!first)return;
+      if(e.shiftKey&&(document.activeElement===first||document.activeElement===modal)){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    });
     return modal;
   }
 
@@ -79,7 +87,7 @@ window.BrainiAuth = (function(){
       <div class="auth-brandmark">B</div>
       <div class="auth-kicker">Free BrainiLab account</div>
       <h2 id="authTitle">Save your progress</h2>
-      <p class="auth-lead">Create an account or sign in to connect your BrainiLab identity.</p>
+      <p class="auth-lead">Your games and Academy progress, together in one free account.</p>
 
       <div class="auth-keep">
         <div><strong>${stats[0]}</strong><span>kept on device</span></div>
@@ -282,17 +290,20 @@ window.BrainiAuth = (function(){
   }
 
   function open(opts={}){
+    returnFocus=document.activeElement;
+    emailMode=opts.mode==='signin'?'signin':'signup';
     postAuthTarget=opts.target||null;
     currentStep="options";
     render();
     modal.classList.add("show");
-    modal.focus();
+    modal.querySelector('.auth-close').focus();
     BrainiData.api.track("auth_prompt_opened",{source:opts.source||"unknown"});
   }
 
   function close(){
     if(!modal) return;
     modal.classList.remove("show");
+    if(returnFocus?.isConnected)returnFocus.focus();
   }
 
   async function hydrateHeader(){
@@ -349,7 +360,7 @@ window.BrainiAuth = (function(){
   async function addSavePrompt(container,source="game_result"){
     if(!container) return;
     const auth=await BrainiData.api.getAuthState();
-    if(auth.status==="authenticated" || container.querySelector(".save-progress-card")) return;
+    if(auth.status==="authenticated" || container.querySelector(".save-progress-card,[data-account-invite]")) return;
 
     const wrap=document.createElement("div");
     wrap.innerHTML=savePromptMarkup();

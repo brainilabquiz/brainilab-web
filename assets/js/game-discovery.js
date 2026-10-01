@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(update){
    const url=new URL(location.href);for(const [key,value] of [['type',type],['topic',topic]]){if(value==='all')url.searchParams.delete(key);else url.searchParams.set(key,value);}
    try{history.replaceState(history.state,'',url);}catch{}
-   window.dispatchEvent(new CustomEvent('brainilab:discovery',{detail:{type}}));
+   window.dispatchEvent(new CustomEvent('brainilab:discovery',{detail:{type,topic}}));
   }
  }
  function read(){const q=new URLSearchParams(location.search);type=q.getAll('type').length===1?q.get('type'):'all';topic=q.getAll('topic').length===1?q.get('topic'):'all';if(['words','numbers'].includes(type)){topic=type;type='games';}apply();}

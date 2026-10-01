@@ -4,6 +4,32 @@ window.BrainiPostGame=(()=>{
  const number=value=>Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
  const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
  const mounted=new Map();
+ const invitations=new Map(),dismissed=new WeakSet();
+ function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
+  if(!container)return;
+  for(const root of invitations.keys())if(!root.isConnected)invitations.delete(root);
+  invitations.set(container,{practice,gameId});
+  const signedIn=window.BrainiData?.authState?.()?.status==='authenticated';
+  if(signedIn||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
+  if(container.querySelector('[data-join-account]'))return;
+  container.hidden=false;
+  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Make it your BrainiLab</p><h3>Your progress, wherever you play.</h3><p>Keep your game progress across devices and come back to your Academy lessons with a free account.</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
+  container.querySelector('[data-dismiss-account]').onclick=()=>{dismissed.add(container);container.hidden=true;const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');fallback?.focus();};
+  container.querySelector('[data-join-account]').onclick=async event=>{
+   const button=event.currentTarget,error=container.querySelector('[data-account-error]');
+   button.disabled=true;error.hidden=true;
+   window.BrainiSiteAnalytics?.accountPrompt?.('click',practice?'practice_result':'game_result',gameId);
+   try{
+    if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
+    if(!window.BrainiAuth?.open)throw Error('Sign-in unavailable');
+    window.BrainiAuth.open({source:practice?'practice_result':'game_result',mode:'signup'});
+    window.BrainiSiteAnalytics?.accountPrompt?.('open',practice?'practice_result':'game_result',gameId);
+   }catch{error.hidden=false;error.textContent='We couldn’t open sign-in. Please try again. Your result is still here.';}
+   finally{button.disabled=false;}
+  };
+ }
+ function refreshInvitations(){for(const [root,options]of invitations){if(!root.isConnected){invitations.delete(root);continue;}inviteAccount(root,options);}}
+ window.addEventListener('brainilab:authchange',refreshInvitations);
  const guides={worldflags:{slug:'how-to-learn-world-flags',title:'Spot the clues in a flag'},generalknowledge:{slug:'why-2100-is-not-a-leap-year',title:'The leap-year rule with a twist'},mathrush:{slug:'multiply-by-11-in-your-head',title:'Try a mental-maths shortcut'}};
  function review(answers=[]){
   if(!answers.length)return '';
@@ -60,6 +86,7 @@ window.BrainiPostGame=(()=>{
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel||((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${number(points).toLocaleString('en-GB')}</strong> ${!practice&&result.dailyNumber?'Daily points':'Quiz Points'}${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   const liveOptions={...options,gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);
+  const invitation=document.createElement('div');invitation.dataset.accountInvite='';container.querySelector('.post-actions').after(invitation);inviteAccount(invitation,{practice:!!practice,gameId});
   const videoSlot=document.createElement('div');videoSlot.hidden=true;videoSlot.dataset.resultVideo='';
   container.querySelector('.post-footer').before(videoSlot);
   window.BrainiRelatedVideo?.mount(videoSlot,{gameId});
@@ -68,5 +95,5 @@ window.BrainiPostGame=(()=>{
  }
  function refresh(){for(const [root,options]of mounted){if(!root.isConnected||!root.querySelector('.post-actions')){mounted.delete(root);continue;}actionMarkup(root,options);}}
  window.addEventListener('brainilab:progressionchange',refresh);window.addEventListener('brainilab:daychange',refresh);
- return {mount,review,nextDaily,localStatus,refresh};
+ return {mount,review,nextDaily,localStatus,refresh,inviteAccount};
 })();

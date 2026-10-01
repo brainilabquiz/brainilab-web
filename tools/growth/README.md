@@ -82,3 +82,13 @@ conversion counts as zero. No analytics data or credentials are public assets.
 `python -m unittest discover -s tools/growth -v`
 
 `node tools/test-admin-growth.mjs` (uses the existing private test environment's JSDOM_MODULE when jsdom is not installed locally).
+
+## 2026-10-01 discovery and voluntary account experiment
+
+Geography now gives Europe Flags, World Flags and World Capitals distinct, crawlable entry points and links to relevant reading. Google guidance reviewed: https://developers.google.com/search/docs/fundamentals/creating-helpful-content and https://developers.google.com/search/docs/crawling-indexing/links-crawlable . Existing URLs and canonical targets remain; this is not proof of indexing or increased traffic.
+
+Guest result screens offer an optional free-account invitation. Europe practice remains local and unranked; the invitation does not promise to save that round. Signed-in users do not see it. Dismissal and loading failures preserve the result.
+
+With statistics consent, account_prompt_click records the voluntary CTA click and account_prompt_open records successful form opening. Only allowlisted placement/game values plus the existing coarse arrival channel/path are sent. game_filter now includes the Games format and an allowlisted topic. Registration requests, verified registrations, existing sign-ins and paid subscriptions remain separate; no new sign_up event is inferred.
+
+Evaluate after enough consented visits: organic arrivals -> play/completion -> invitation click -> form opening -> email request. Actual new-account attribution and automatic GA4 ingestion remain pending. No historical counts are backfilled, and no SEO or conversion uplift is claimed on publication day.
