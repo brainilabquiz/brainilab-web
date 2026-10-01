@@ -3626,7 +3626,7 @@ window.BrainiMonetization=(function(){
                 <span>BrainiLab+</span>
                 <strong>${planName()}</strong>
                 <p>
-                  No ads anywhere in BrainiLab.
+                  Thank you for supporting our website and YouTube channel.
                   ${
                     scheduledToCancel()
                       ? (
@@ -3683,9 +3683,9 @@ window.BrainiMonetization=(function(){
           <div class="plus-account-card">
             <div>
               <span>BrainiLab+</span>
-              <strong>Support the games you enjoy</strong>
+              <strong>Support the creators behind BrainiLab</strong>
               <p>
-                Support new questions, Daily games and improvements.
+                Help us create quizzes and videos and improve the website.
                 See what membership includes today.
               </p>
             </div>
@@ -3751,7 +3751,7 @@ window.BrainiMonetization=(function(){
           <span>YOUR MEMBERSHIP</span>
           <h2>BrainiLab+ is active</h2>
           <p>
-            Thank you for supporting BrainiLab. Your ad-free entitlement remains active.
+            Thank you for helping us create more content and improve BrainiLab. Your membership is active.
             ${scheduledToCancel()
               ? (
                   dateText(cancellationDate())
@@ -3793,7 +3793,7 @@ window.BrainiMonetization=(function(){
               class="btn-light"
               data-plus-checkout="monthly"
             >
-              ${logged?"Choose monthly":"Log in to upgrade"}
+              ${logged?"Support BrainiLab monthly":"Log in to support us"}
             </button>
           </article>
 
@@ -3808,7 +3808,7 @@ window.BrainiMonetization=(function(){
               class="btn"
               data-plus-checkout="yearly"
             >
-              ${logged?"Choose annual":"Log in to upgrade"}
+              ${logged?"Support BrainiLab yearly":"Log in to support us"}
             </button>
           </article>
         </div>
@@ -3817,11 +3817,13 @@ window.BrainiMonetization=(function(){
 
     root.innerHTML=`
       <section class="plus-hero">
-        <span>BrainiLab+</span>
-        <h1>Support your daily dose of curiosity.</h1>
+        <span>BrainiLab+ · Support the creators</span>
+        <h1>Help us build more BrainiLab.</h1>
         <p>
-          BrainiLab+ is an optional membership that helps fund new questions,
-          Daily games and improvements. The games remain free to play.
+          Enjoy our quizzes, games, and videos? BrainiLab+ is a way to support
+          the people who make them. Your membership helps us create more content,
+          improve the website, and keep building our YouTube channel.
+          Our existing free games and videos remain available to everyone.
         </p>
       </section>
 
@@ -3834,15 +3836,15 @@ window.BrainiMonetization=(function(){
           <strong>Ad-free when ads are enabled</strong>
           <p>
             If display advertising is enabled, an active Plus membership
-            keeps it out of your games.
+            keeps it off the BrainiLab website. This does not remove ads on YouTube.
           </p>
         </article>
 
         <article>
-          <strong>Support BrainiLab</strong>
+          <strong>Help the creators keep building</strong>
           <p>
-            Help fund new questions, Daily games
-            and product improvements.
+            Help us spend more time researching quizzes, creating videos,
+            and improving the games and website.
           </p>
         </article>
 
@@ -3867,10 +3869,10 @@ window.BrainiMonetization=(function(){
       ${action}
 
       <div class="plus-fineprint">
-        <strong>Simple membership.</strong>
+        <strong>Ongoing support, on your terms.</strong>
         <span>
           Monthly: ${monthly}. Annual: ${yearly}.
-          Subscriptions renew until cancelled. Manage your subscription
+          Subscriptions renew until canceled. Manage or cancel your subscription
           through your account; billing is handled by Stripe.
         </span>
       </div>
