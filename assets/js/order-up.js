@@ -509,89 +509,10 @@ window.BrainiOrderUp=(function(){
     }
 
     async function showResult(result){
-      intro.hidden=true;
-      game.hidden=true;
-      loading.hidden=true;
-      resultBox.hidden=false;
-
-      const score=archiveMode?Number(result.score||0):BrainiData.dailyPointsForResult('orderup',result);
-      const dailyMax=archiveMode?2500:BrainiDailyRules.max('orderup',content.challengeDate);
-      const accuracy=Number(result.accuracy||0);
-
-      resultBox.innerHTML=`
-        <div class="simple-game-result">
-          <div class="simple-result-kicker">
-            ${archiveMode?"Order Up · Complete ✓":`Daily #${content.dailyNumber} · Order Up · Complete ✓`}
-          </div>
-
-          <h2>
-            ${score.toLocaleString()}
-            / ${dailyMax.toLocaleString('en-GB')}
-          </h2>
-
-          <p>
-            ${Math.round(accuracy)}%
-            order accuracy
-            · 2 rounds complete
-          </p>
-
-          ${archiveMode?`
-            
-            <div class="simple-result-actions archive-result-actions">
-              <a class="simple-result-play" href="${localHref("../../games/index.html#order-up")}">Play another Order Up</a>
-              <a class="simple-result-share archive-result-other" href="${localHref("../../games/index.html")}">Choose another game</a>
-            </div>
-          `:`
-            <div class="simple-result-actions">
-              <a class="simple-result-play" href="${localHref("../../daily-quiz/index.html")}">Continue Daily</a>
-              <button class="simple-result-share" type="button" data-ou-share>Share result</button>
-              <a class="simple-result-progress" href="${localHref("../../profile/index.html?section=progress")}">See my progress</a>
-            </div>
-            <div data-ou-daily-journey></div>
-          `}
-        </div>`;
-
-      resultBox
-        .querySelector("[data-ou-share]")
-        ?.addEventListener(
-          "click",
-          ()=>BrainiShare.open(
-            "orderup",
-            result
-          )
-        );
-
-      if(!archiveMode && window.BrainiDailyJourney){
-        const status=
-          await BrainiDailyHub.resolve(
-            content.dailyNumber
-          );
-
-        const primary=
-          resultBox.querySelector(
-            ".simple-result-play"
-          );
-
-        if(
-          primary &&
-          status.completedCount===4
-        ){
-          primary.href=
-            localHref("../../games/index.html");
-          primary.textContent=
-            "Play an anytime quiz";
-        }
-
-        await BrainiDailyJourney.render(
-          resultBox.querySelector(
-            "[data-ou-daily-journey]"
-          ),
-          {
-            status,
-            currentGame:"orderup"
-          }
-        );
-      }
+      intro.hidden=true;game.hidden=true;loading.hidden=true;resultBox.hidden=false;
+      const options={gameId:'orderup',name:'Order Up',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},headline:Math.round(Number(result.accuracy)||0)+'%',scoreLabel:'order accuracy',summary:'Two rounds complete.',next:{href:'/games/',label:'Find another game'}};
+      BrainiPostGame.mount(resultBox,options);
+      if(!archiveMode){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
     }
 
     async function start(){

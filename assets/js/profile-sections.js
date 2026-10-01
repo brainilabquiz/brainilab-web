@@ -59,11 +59,12 @@ window.BrainiProfileSections=(function(){
     if(!root || !window.BrainiProgressUI) return;
 
     const p=BrainiData.player();
-    const tier=BrainiProgressUI.tier(p.level||1);
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
+    const tier=BrainiProgressUI.tier(progress.level);
+    let photo="";try{const url=new URL(p.avatarUrl);if(url.protocol==="https:")photo=url.href.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;",'\'':"&#39;"}[c]));}catch{}
 
     root.innerHTML=`
-      <div class="profile-level-medallion" aria-hidden="true">${progress.level}</div>
+      <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>
       <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
         <p>${Number(p.xp||0).toLocaleString()} XP earned</p>
         <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><span style="width:${progress.percent}%"></span></div>
