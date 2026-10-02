@@ -201,7 +201,9 @@ window.BrainiAuth = (function(){
             const confirm=view.querySelector("#brainilabAuthPasswordConfirm")?.value||"";
             if(password!==confirm) throw new Error("Passwords do not match.");
 
+            window.BrainiGrowthConversions?.prepare();
             const data=await backend.signUpWithEmail(email,password);
+            void window.BrainiGrowthConversions?.flush();
             // A confirmation email request is not a completed account registration.
             window.BrainiSiteAnalytics?.registrationRequest('email');
             pendingEmail=email;
@@ -283,6 +285,7 @@ window.BrainiAuth = (function(){
         throw new Error("This sign-in provider is not available.");
       }
       const backend=await requireBackend();
+      window.BrainiGrowthConversions?.prepare();
       await backend.signInWithGoogle();
     }catch(err){
       toast(err.message||"Could not sign in.");

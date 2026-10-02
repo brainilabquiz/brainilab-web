@@ -73,9 +73,9 @@ their existing `game_start`/`game_complete` events. Email sign-up requests emit
 `registration_request` only after a successful request, never `sign_up`.
 An email request or sign-in is not evidence of a newly verified account.
 
-Next: verify processed GA4 events, obtain an explicitly authorized read-only
-GA4 API connection if unattended import is wanted, and design a verified
-registration signal before claiming completed registration attribution.
+Next: verify processed GA4 events and obtain an explicitly authorized read-only
+GA4 API connection if unattended import is wanted. Confirmed-account measurement
+is now implemented separately as described below.
 Do not reuse the Search Console token for a broader scope or mark unknown
 conversion counts as zero. No analytics data or credentials are public assets.
 
@@ -91,4 +91,45 @@ Guest result screens offer an optional free-account invitation. Europe practice 
 
 With statistics consent, account_prompt_click records the voluntary CTA click and account_prompt_open records successful form opening. Only allowlisted placement/game values plus the existing coarse arrival channel/path are sent. game_filter now includes the Games format and an allowlisted topic. Registration requests, verified registrations, existing sign-ins and paid subscriptions remain separate; no new sign_up event is inferred.
 
-Evaluate after enough consented visits: organic arrivals -> play/completion -> invitation click -> form opening -> email request. Actual new-account attribution and automatic GA4 ingestion remain pending. No historical counts are backfilled, and no SEO or conversion uplift is claimed on publication day.
+Evaluate after enough consented visits: organic arrivals -> play/completion -> invitation click -> form opening -> email request. Automatic GA4 ingestion remains pending. No historical counts are backfilled, and no SEO or conversion uplift is claimed on publication day.
+
+## Confirmed accounts (2026-10-02)
+
+Growth reads a private Supabase Auth confirmation ledger through the existing
+owner/editor workspace RPC and MFA gate. It counts retained, email-confirmed,
+non-anonymous accounts, excluding every account listed in `admin_users`.
+The initial snapshot is a baseline, never a claim of new acquisition.
+A trigger records the first confirmation once, including anonymous-to-permanent
+transitions; repeat sign-ins and later email changes do not add registrations.
+Account deletion cascades to this ledger and its optional arrival record.
+Capture failures do not block registration; the report exposes missing-ledger gaps.
+
+With existing statistics consent, email/Google signup saves only a coarse channel,
+public landing path and timestamps in the browser for up to seven days. After
+authentication, an RPC derives the account from `auth.uid()` and attaches the
+arrival only to an eligible new confirmation. It rejects baseline/team accounts,
+private paths and invalid timing; each account accepts one arrival. Revocation
+clears pending storage and attempts to remove the signed-in account's attribution.
+No account identifier is sent to Google Analytics and no GA4 `sign_up` is inferred.
+
+The aggregate panel uses the last 30 UTC dates and explicitly shows when capture
+started: earlier dates have no new-confirmation coverage. Browser channels are
+self-reported diagnostic signals, not Google's attribution or causal evidence.
+Cross-device confirmation, no consent, expired context or unavailable services
+can leave confirmed accounts unattributed. Historical counts are not reconstructed.
+Current totals represent retained accounts, not all-time gross registrations.
+
+Migration `20261002042236_growth_confirmed_accounts.sql` was applied on 2 October.
+Initial verified baseline: four nonstaff accounts, two excluded team accounts and
+five excluded anonymous profiles; zero new confirmations at the initial check.
+Three RLS-enabled private tables intentionally have no direct client policies or
+table grants. Only guarded RPCs can access them.
+
+Validation: `node tools/test-growth-confirmed.mjs` covers consent, eligibility,
+expiry, retry, revocation races and aggregate rendering. The rollback-only
+`tools/growth/test-confirmed-accounts.sql` checks the real trigger on a temporary
+fixture table and account-scoped RPCs without creating or modifying Auth users.
+It must be run through an authorized database management connection. All temporary
+ledger changes roll back. No real new human signup was observed during these tests.
+Live browser review was unavailable because Computer Use could not reliably
+identify the current browser URL; do not present DOM tests as visual verification.
