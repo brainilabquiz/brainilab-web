@@ -68,12 +68,12 @@ window.BrainiSiteAnalytics=(()=>{
     if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});if(path()==='/daily-quiz/'&&new URLSearchParams(location.search).getAll('friend').length===1&&new URLSearchParams(location.search).get('friend')===new Date().toISOString().slice(0,10))send('friend_challenge_open');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
   }
   function revoke(){
-    entry=null;try{localStorage.removeItem(entryKey);}catch{}
+    entry=null;try{localStorage.removeItem(entryKey);localStorage.removeItem('brainilab_registration_arrival_v1');}catch{}
     window['ga-disable-'+id]=true;
     if(loaded){window.dataLayer=window.dataLayer.filter(item=>item[0]!=='event');tag('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});}
     for(const cookie of document.cookie.split(';')){const name=cookie.split('=')[0].trim();if(!/^_ga(?:_|$)|^_gid$|^_gat/.test(name))continue;for(const domain of ['',location.hostname,'.brainilabgames.com'])document.cookie=name+'=; Max-Age=0; Path=/; SameSite=Lax'+(domain?'; Domain='+domain:'');}
   }
-  function setConsent(allowedChoice){choice=allowedChoice===true;try{localStorage.setItem(key,JSON.stringify({allowed:choice,at:Date.now()}));}catch{}if(choice)activate();else revoke();}
+  function setConsent(allowedChoice){choice=allowedChoice===true;try{localStorage.setItem(key,JSON.stringify({allowed:choice,at:Date.now()}));}catch{}if(choice)activate();else revoke();window.dispatchEvent(new Event('brainilab:statistics-consent'));}
   document.addEventListener('click',event=>{
     if(!allowed())return;const a=event.target.closest?.('a[href]');if(!a)return;
     let url;try{url=new URL(a.href);}catch{return;}
@@ -100,5 +100,5 @@ window.BrainiSiteAnalytics=(()=>{
     if(!['click','open'].includes(action)||!['game_result','practice_result'].includes(placement)||!['brainmix','brainiword','orderup','topicrush','generalknowledge','connections','survival','oddoneout','higherlower','mathrush','numberroute','sequence','worldflags','europeflags','worldcapitals','science','history','sports'].includes(gameId))return;
     send('account_prompt_'+action,{placement,game_id:gameId});
   }
-  return {setConsent,gameStart,practiceComplete,accountPrompt,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
+  return {setConsent,gameStart,practiceComplete,accountPrompt,registrationContext:()=>allowed()?{...entryContext()}:null,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
 })();

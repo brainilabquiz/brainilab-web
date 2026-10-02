@@ -1,5 +1,6 @@
 import {toolsHTML,bindTools,connectionText} from './growth-tools.js';
 import {openSEOHTML,bindOpenSEO,evidenceLink} from './growth-openseo.js';
+import {confirmationsHTML} from './growth-confirmations.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=value=>{try{const u=new URL(value);return u.protocol==='https:'&&['brainilabgames.com','github.com','developers.google.com'].includes(u.hostname)?u.href:null;}catch{return null;}};
 const link=(url,text)=>safeURL(url)?`<a href="${esc(safeURL(url))}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>`:esc(text);
@@ -35,6 +36,7 @@ function proposalCard(o){
 function draw(){
  context.root.innerHTML=`<div class="growth-workspace" data-growth>${summary()}${toolsHTML(workspace.report?.document)}<div class="growth-toolbar"><h2>Decisions & follow-up</h2><label>Show<select data-growth-filter><option value="all">All decisions</option>${Object.entries(labels).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label></div><div class="growth-proposals">${workspace.opportunities.map(proposalCard).join('')||'<p>No proposals yet. Import a report with evidence-linked opportunities.</p>'}</div><p data-growth-empty hidden>No proposals match this filter.</p><section class="growth-import admin-panel"><h2>Data & connection</h2><p>${esc(connectionText(workspace.report?.document))} No Google credentials are stored in this page.</p><form data-growth-import><label>Growth report JSON<input type="file" name="report" accept="application/json,.json" required/></label><button class="admin-button" type="submit">Import report</button></form><details><summary>Set up the read-only Google connection</summary><p>Use the private Search Console connector with a Google OAuth desktop client and the <code>webmasters.readonly</code> scope. An owner must authorize that connection in Google. Keep the client file and refresh token on the private machine, outside the website.</p><p>The prepared connector exports to the same importer. The daily local exporter reuses a verified same-day report. Importing it preserves earlier decisions and their baselines.</p>${link('https://developers.google.com/webmaster-tools/v1/how-tos/authorizing','Google authorization documentation ↗')}</details><p class="growth-small">Imports add a dated report and new opportunities. Existing decisions and their original baselines are preserved.</p></section><p data-growth-status role="status" aria-live="polite"></p></div>`;
  const root=context.root;
+ root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',confirmationsHTML(workspace.confirmedAccounts));
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',openSEOHTML(workspace.report?.document));
  bindOpenSEO(root);
  workspace.opportunities.filter(o=>o.proposal?.provider==='openseo').forEach(o=>{
