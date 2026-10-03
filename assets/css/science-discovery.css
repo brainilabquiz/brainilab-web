@@ -1,0 +1,33 @@
+/* Science discovery uses the shared brand tokens and existing quiz cards. */
+.science-page .science-intro{padding-block:24px 16px}
+.science-page .science-intro h1{font-size:clamp(32px,4.2vw,48px);line-height:1.12;margin:8px 0 16px}
+.science-page .science-intro p{max-width:65ch;line-height:1.65}
+.science-page .science-kicker{color:var(--navy);font-size:13px;font-weight:800;letter-spacing:.04em}
+.science-page .science-note{color:var(--muted);font-size:14px}
+.science-page .science-choices{padding-top:16px}
+.braini-visual.science-page .science-choices .card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.science-page .science-choices .card{min-height:0}
+.science-page .science-choices .card-meta{color:var(--muted)}
+.science-page .science-guide{font-size:14px;line-height:1.6;margin:20px 0 0}
+.science-page .science-guide a,.science-page .science-all{font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.science-page .science-explore{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:start;padding-block:24px 32px}
+.science-page .science-explore h2{font-size:clamp(24px,3vw,30px);line-height:1.25;margin:6px 0 20px}
+.science-page .science-reading{display:grid;gap:16px}
+.science-page .science-reading a{display:grid;grid-template-columns:104px 1fr;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.science-page .science-reading img{display:block;width:104px;height:88px;object-fit:cover;border-radius:8px}
+.science-page .science-reading small{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.science-page .science-reading strong{font-size:17px;line-height:1.4}
+.science-page .science-reading a:hover strong{text-decoration:underline;text-underline-offset:4px}
+.science-page .science-academy{background:var(--navy);color:white;border-radius:16px;padding:28px;border-top:4px solid var(--green)}
+.science-page .science-academy .science-kicker{color:var(--yellow)}
+.science-page .science-academy h3{color:white;font-size:26px;line-height:1.25;margin:12px 0}
+.science-page .science-academy p{line-height:1.65;font-weight:400}
+.science-page .science-academy .btn{display:inline-flex;margin-top:8px}
+.science-page .science-all{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-size:14px}
+@media(max-width:700px){
+  .braini-visual.science-page .science-choices .card-grid{grid-template-columns:1fr}
+  .science-page .science-explore{grid-template-columns:1fr;gap:24px}
+  .science-page .science-reading a{grid-template-columns:80px 1fr;gap:12px}
+  .science-page .science-reading img{width:80px;height:80px}
+  .science-page .science-academy{padding:24px}
+}
