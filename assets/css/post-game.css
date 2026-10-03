@@ -8,6 +8,7 @@
 .post-account-invite [data-account-error]{margin:12px 0 0;color:#8d2323}
 @media(max-width:480px){.post-account-invite{padding:16px}.post-account-actions{flex-direction:column}.post-account-actions button{width:100%}}
 .post-game .post-feedback{margin:14px 0 0;font-size:13px}.post-feedback a{display:inline-block;padding:10px;color:#2d296e;text-underline-offset:3px}
+.labgame-result{scroll-margin-top:7rem}
 .post-game{max-width:680px;margin:0 auto;padding:30px;text-align:center;background:#fffdf8;color:#211e38;border:1px solid #e4dfd5;border-radius:22px;box-sizing:border-box}
 .post-game .post-kicker{margin:0 0 18px;color:#2d296e;font-size:12px;font-weight:750;letter-spacing:.04em}
 .post-game .post-score{font-size:clamp(42px,8vw,68px);line-height:1.1;margin:0;color:#2d296e;letter-spacing:-.04em;outline:none}
