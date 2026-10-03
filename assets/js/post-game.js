@@ -67,6 +67,8 @@ window.BrainiPostGame=(()=>{
   const challengeFirst=primary.complete&&invite;
   const label=reviewFirst?'Review your answers':challengeFirst?'Challenge a friend':primary.label;
   const root=container.querySelector('.post-actions');
+  const focused=document.activeElement,restoreFocus=root.contains(focused);
+  const focusedAction=restoreFocus?focused.dataset.postAction:null;
   root.innerHTML=`${reviewFirst||challengeFirst?`<button type="button" class="post-primary" data-post-action="${reviewFirst?'review':'challenge'}">${label} <span aria-hidden="true">→</span></button>`:`<a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(label)} <span aria-hidden="true">→</span></a>`}${reviewFirst||challengeFirst?`<a class="post-secondary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)}</a>`:`<button type="button" class="post-share">${invite?'Challenge a friend':'Share result'}</button>`}`;
   root.querySelector('[data-post-action="review"]')?.addEventListener('click',()=>{const d=container.querySelector('[data-post-missed]');if(d){d.open=true;d.querySelector('summary').focus();d.scrollIntoView?.({block:'nearest',behavior:'instant'});}});
   const share=event=>invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
@@ -74,6 +76,7 @@ window.BrainiPostGame=(()=>{
   const note=container.querySelector('.post-next-note');
   note.textContent=status?.model?.version==='daily-choice-v1'&&status.games?.[status.model.primary]?.completed&&!primary.complete?'Your Daily is done. The extra is up to you.':'';
   note.hidden=!note.textContent;
+  if(restoreFocus){const target=focusedAction?Array.from(root.querySelectorAll('[data-post-action]')).find(el=>el.dataset.postAction===focusedAction):root.querySelector('.post-share');(target||root.querySelector('.post-primary'))?.focus({preventScroll:true});}
  }
  function mount(container,options={}){
   if(!container)return;
@@ -95,5 +98,50 @@ window.BrainiPostGame=(()=>{
  }
  function refresh(){for(const [root,options]of mounted){if(!root.isConnected||!root.querySelector('.post-actions')){mounted.delete(root);continue;}actionMarkup(root,options);}}
  window.addEventListener('brainilab:progressionchange',refresh);window.addEventListener('brainilab:daychange',refresh);
- return {mount,review,nextDaily,localStatus,refresh,inviteAccount};
+ // Render first. Saving and verification must never hold the completed round on screen.
+ async function complete(container,options,{save,verify}={}){
+  const result=options.result;
+  const practice=!!(result.practice||result.tryFirst||new URLSearchParams(location.search).get('try')==='1');
+  result.practice=practice;
+  mount(container,options);
+  container.scrollIntoView?.({block:'start',behavior:'instant'});
+  const reward=container.querySelector('[data-result-reward]');
+  const current=()=>container.contains(reward);
+  const renderReward=()=>{
+   if(!current())return;
+   reward.dataset.resultReward=practice?'':result.clientResultId||'';
+   reward.innerHTML=window.BrainiContinuity?.rewardMarkup?.({...result,gameId:options.gameId,practice})||'';
+   window.BrainiContinuity?.animateReward?.(reward);
+  };
+  if(!practice)reward.textContent='Saving your result…';
+  const timer=!practice?setTimeout(()=>{if(current())reward.textContent='Saving is taking longer than usual. Your result is shown above.';},8000):null;
+  let confirmed;
+  try{
+   confirmed=await save();
+   if(!confirmed)throw Error('Result unavailable');
+  }catch{
+   if(current()&&!practice)reward.textContent='Your score is shown above. Progress could not be saved; please check your connection.';
+   return null;
+  }finally{clearTimeout(timer);}
+  Object.assign(result,confirmed,{practice});
+  renderReward();
+  refresh();
+  try{
+   const verified=await verify?.(confirmed);
+   if(verified){
+    Object.assign(result,verified,{practice});
+    if(current()){
+     const score=container.querySelector('.post-score');
+     score.innerHTML=`${number(result.correct)}<span> / ${number(result.total)}</span>`;
+     const points=!practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
+     container.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
+     container.querySelectorAll('.post-metrics div').forEach(stat=>{if(stat.querySelector('dt')?.textContent==='Accuracy')stat.querySelector('dd').textContent=number(result.accuracy)+'%';});
+    }
+   }
+  }catch{/* Saved results stay visible when verification is temporarily unavailable. */}
+  renderReward();
+  refresh();
+  return result;
+ }
+ return {mount,complete,review,nextDaily,localStatus,refresh,inviteAccount};
 })();

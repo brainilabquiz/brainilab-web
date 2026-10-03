@@ -56,7 +56,7 @@ window.BrainiOddOneOut=(function(){
     try{
       const {data,error}=await client().rpc("verify_brainilab_odd_one_out_result",{p_client_result_id:result.clientResultId,p_rounds:rows});
       if(error)throw error;
-      await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{});
+      return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{});
     }catch(e){console.warn(e)}
   }
 
@@ -92,11 +92,12 @@ window.BrainiOddOneOut=(function(){
       if(!dailyMode)void syncHistory(details.map(x=>x.puzzleId)).catch(()=>{});
       healthTracker?.complete(details.map((x,i)=>({contentId:x.puzzleId,position:i+1,attempts:1,isCorrect:x.correct,score:x.correct?100:0})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000));
-      let result;try{result=await BrainiData.api.submitGameResult("oddoneout",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
-      }catch{result={score,correct,total:ROUNDS,accuracy:correct*10,practice:archiveMode,saveFailed:true};}
-      await verify(result,details);
+      const payload={score,correct,total:ROUNDS,accuracy:correct*10,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
       stage.hidden=true;resultEl.hidden=false;
-      BrainiPostGame.mount(resultEl,{result,gameId:'oddoneout',name:'Odd One Out',metrics:[{label:'Accuracy',value:correct*10+'%'}],next:{href:'/games/odd-one-out/',label:'Play again'}});if(result.saveFailed){const reward=resultEl.querySelector('[data-result-reward]');if(reward)reward.textContent='Your score is shown above. Progress could not be saved; please check your connection.';};
+      await BrainiPostGame.complete(resultEl,{result:payload,gameId:'oddoneout',name:'Odd One Out',metrics:[{label:'Accuracy',value:correct*10+'%'}],next:{href:'/games/odd-one-out/',label:'Play again'}},{
+        save:()=>BrainiData.api.submitGameResult('oddoneout',payload),
+        verify:confirmed=>verify(confirmed,details)
+      });
     }
     start.onclick=async()=>{if(start.disabled)return;
       start.disabled=true;intro.hidden=true;loading.hidden=false;
