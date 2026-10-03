@@ -15,7 +15,7 @@ window.BrainiDailyCompletionGuard=(function(){
   function showLock(){
     if(locked)return;locked=true;
     const shell=document.querySelector(".labgame-shell");if(!shell)return;
-    shell.innerHTML=`<div class="daily-completed-state simple-daily-result"><div class="daily-completed-kicker simple-result-kicker-row"><span>Daily #${Number(dailyNumber)||""}</span><strong>Completed ✓</strong></div><h1>Already played today</h1><p class="daily-completed-lead">This Daily result is locked. Each scored Daily game can only be completed once.</p><div class="simple-result-actions"><a class="simple-result-play" href="../../daily-quiz/">Continue Daily</a><a class="simple-result-progress" href="../index.html">Play Anytime</a></div></div>`;
+    shell.innerHTML=`<div class="daily-completed-state simple-daily-result"><div class="daily-completed-kicker simple-result-kicker-row"><span>Daily #${Number(dailyNumber)||""}</span><strong>Completed ✓</strong></div><h1>Already played today</h1><p class="daily-completed-lead">This Daily result is locked. Each scored Daily game can only be completed once.</p><div class="simple-result-actions"><a class="simple-result-play" href="../../daily-quiz/">Back to Daily</a><a class="simple-result-progress" href="../index.html">Play Anytime</a></div></div>`;
   }
   async function check(){
     if(await window.BrainiDailyChoiceGuard?.check?.())return true;

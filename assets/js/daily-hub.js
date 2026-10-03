@@ -149,8 +149,8 @@ window.BrainiDailyHub=(function(){
         };
 
         const modern=window.BrainiDailyRules?.active(BrainiData.dateForDailyNumber(dailyNumber));
-        const verified=result?.answersVerified||result?.dailyGameVerificationStatus==='verified'||result?.dailyAnswerVerificationStatus==='verified';
-        const completed=completedFromState||!!result&&!result.practice&&(!modern||verified);
+        const verified=result?.answersVerified||result?.answerVerificationStatus==='verified'||result?.dailyGameVerificationStatus==='verified'||result?.dailyAnswerVerificationStatus==='verified';
+        const completed=(completedFromState&&!result)||!!result&&!result.practice&&(!modern||verified);
         games[gameId]={
           id:gameId,
           completed,

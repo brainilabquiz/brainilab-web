@@ -38,12 +38,19 @@ window.BrainiPostGame=(()=>{
   const items=list=>list.map(a=>`<article class="post-answer"><h4>${number(a.position)}. ${esc(a.questionText)}</h4><p class="post-answer-choice">${a.isCorrect?'Correct':a.skipped?'Skipped':'Your answer: '+esc(a.selectedAnswer??'No answer')}</p><p><strong>${esc(a.correctAnswer||'Answer unavailable')}</strong></p>${a.explanation?`<p>${esc(a.explanation)}</p>`:''}</article>`).join('');
   return `<div class="post-review">${missed.length?`<details data-post-missed><summary>Review ${missed.length} ${missed.length===1?'answer':'answers'} to revisit</summary>${items(missed)}</details>`:''}${correct.length?`<details><summary>${missed.length?'Your correct answers':'Review your answers'} · ${correct.length}</summary>${items(correct)}</details>`:''}</div>`;
  }
+ const owner=()=>window.BrainiData?.authState?.()?.user?.id||window.BrainiData?.getState?.()?.auth?.user?.id||'guest';
+ const verified=r=>r?.answersVerified===true||r?.answerVerificationStatus==='verified'||r?.dailyGameVerificationStatus==='verified'||r?.dailyAnswerVerificationStatus==='verified';
  function localStatus(result){
   if(!result.dailyNumber||result.practice||result.tryFirst)return null;
   const d=window.BrainiData?.daily?.(),day=window.BrainiData?.dateForDailyNumber?.(result.dailyNumber);
   if(!d||Number(d.number)!==Number(result.dailyNumber)||day!==new Date().toISOString().slice(0,10))return null;
   const model=window.BrainiDailyRules?.model(day),ids=window.BrainiData.dailyGameIdsForNumber?.(d.number)||[];
-  return {dailyNumber:d.number,model,bonusChoice:d.bonusChoice,brainScore:d.brainScore,completedCount:d.completedGames?.length||0,dailyIds:ids,games:Object.fromEntries(ids.map(id=>[id,{completed:d.completedGames?.includes(id),points:d.dailyBreakdown?.[id]?.points||0}]))};
+  const games=Object.fromEntries(ids.map(id=>{
+   const recent=window.BrainiData.recentResults?.(id)?.find(r=>!r.practice&&Number(r.dailyNumber)===Number(d.number));
+   const completed=!!d.completedGames?.includes(id)&&(!recent||verified(recent));
+   return [id,{completed,points:d.dailyBreakdown?.[id]?.points||0}];
+  }));
+  return {dailyNumber:d.number,model,bonusChoice:d.bonusChoice,brainScore:d.brainScore,completedCount:Object.values(games).filter(g=>g.completed).length,dailyIds:ids,games};
  }
  function nextDaily(status){
   if(status?.model?.version==='daily-choice-v1'){
@@ -59,11 +66,20 @@ window.BrainiPostGame=(()=>{
  function actionMarkup(container,options){
   const {result={},gameId,status:provided,next}=options,practice=result.practice||result.tryFirst;
   const providedDay=provided?.dailyNumber&&window.BrainiData?.dateForDailyNumber?.(provided.dailyNumber);
-  const status=practice?null:localStatus(result)||(providedDay&&providedDay!==new Date().toISOString().slice(0,10)?null:provided);
-  const invite=!practice&&status&&window.BrainiFriendChallenge?.buildInvite(status);
-  const primary=status&&!practice?nextDaily(status):next||{href:'/games/',label:'Find another game'};
+  const today=new Date().toISOString().slice(0,10),sameOwner=options.owner===owner();
+  const resultDay=result.dailyNumber&&window.BrainiData?.dateForDailyNumber?.(result.dailyNumber);
+  let status=practice||!sameOwner?null:localStatus(result);
+  // A resolved cloud status can be newer than the local cache; only merge the same Daily/account.
+  if(!practice&&sameOwner&&providedDay===today&&Number(provided.dailyNumber)===Number(result.dailyNumber)){
+   const games={...provided.games,...status?.games};
+   for(const [id,g]of Object.entries(provided.games||{}))if(g.completed)games[id]={...games[id],...g};
+   status={...provided,...status,games,bonusChoice:status?.bonusChoice||provided.bonusChoice};
+  }
+  const pending=!practice&&resultDay===today&&(!sameOwner||!status?.games?.[gameId]?.completed);
+  const invite=!practice&&!pending&&status&&window.BrainiFriendChallenge?.buildInvite(status);
+  const primary=pending?{href:'/daily-quiz/',label:'Back to Daily'}:status&&!practice?nextDaily(status):result.dailyNumber&&!practice?{href:'/daily-quiz/',label:'See today’s Daily'}:next||{href:'/games/',label:'Find another game'};
   const missed=(result.answerDetails||[]).filter(a=>!a.isCorrect).length;
-  const reviewFirst=!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
+  const reviewFirst=!pending&&!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
   const challengeFirst=primary.complete&&invite;
   const label=reviewFirst?'Review your answers':challengeFirst?'Challenge a friend':primary.label;
   const root=container.querySelector('.post-actions');
@@ -74,7 +90,7 @@ window.BrainiPostGame=(()=>{
   const share=event=>invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
   root.querySelector('.post-share')?.addEventListener('click',share);root.querySelector('[data-post-action="challenge"]')?.addEventListener('click',share);
   const note=container.querySelector('.post-next-note');
-  note.textContent=status?.model?.version==='daily-choice-v1'&&status.games?.[status.model.primary]?.completed&&!primary.complete?'Your Daily is done. The extra is up to you.':'';
+  note.textContent=!pending&&status?.model?.version==='daily-choice-v1'&&status.games?.[status.model.primary]?.completed&&!primary.complete?'Your Daily is done. The extra is up to you.':'';
   note.hidden=!note.textContent;
   if(restoreFocus){const target=focusedAction?Array.from(root.querySelectorAll('[data-post-action]')).find(el=>el.dataset.postAction===focusedAction):root.querySelector('.post-share');(target||root.querySelector('.post-primary'))?.focus({preventScroll:true});}
  }
@@ -88,7 +104,7 @@ window.BrainiPostGame=(()=>{
   const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Five short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel||((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${number(points).toLocaleString('en-GB')}</strong> ${!practice&&result.dailyNumber?'Daily points':'Quiz Points'}${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
-  const liveOptions={...options,gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);
+  const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);
   const invitation=document.createElement('div');invitation.dataset.accountInvite='';container.querySelector('.post-actions').after(invitation);inviteAccount(invitation,{practice:!!practice,gameId});
   const videoSlot=document.createElement('div');videoSlot.hidden=true;videoSlot.dataset.resultVideo='';
   container.querySelector('.post-footer').before(videoSlot);
@@ -96,8 +112,21 @@ window.BrainiPostGame=(()=>{
   window.BrainiContinuity?.animateReward?.(container.querySelector('[data-result-reward]'));
   if(focus)container.querySelector('.post-score').focus({preventScroll:true});
  }
- function refresh(){for(const [root,options]of mounted){if(!root.isConnected||!root.querySelector('.post-actions')){mounted.delete(root);continue;}actionMarkup(root,options);}}
- window.addEventListener('brainilab:progressionchange',refresh);window.addEventListener('brainilab:daychange',refresh);
+ function refresh(){for(const [root,options]of mounted){
+  if(!root.isConnected||!root.querySelector('.post-actions')){mounted.delete(root);continue;}
+  const result=options.result;
+  if(options.owner===owner()&&!result.practice&&result.clientResultId){
+   const canonical=window.BrainiData?.recentResults?.(options.gameId)?.find(r=>r.clientResultId===result.clientResultId);
+   if(verified(canonical)){
+    Object.assign(result,canonical);
+    if(!options.headline)root.querySelector('.post-score').innerHTML=options.timed?String(number(result.correct)):`${number(result.correct)}<span> / ${number(result.total)}</span>`;
+    const points=result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
+    root.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
+   }
+  }
+  actionMarkup(root,options);
+ }}
+ window.addEventListener('brainilab:progressionchange',refresh);window.addEventListener('brainilab:daychange',refresh);window.addEventListener('brainilab:datachange',refresh);window.addEventListener('brainilab:authchange',refresh);
  // Render first. Saving and verification must never hold the completed round on screen.
  async function complete(container,options,{save,verify}={}){
   const result=options.result;
@@ -132,7 +161,7 @@ window.BrainiPostGame=(()=>{
     Object.assign(result,verified,{practice});
     if(current()){
      const score=container.querySelector('.post-score');
-     score.innerHTML=`${number(result.correct)}<span> / ${number(result.total)}</span>`;
+     if(!options.headline)score.innerHTML=options.timed?String(number(result.correct)):`${number(result.correct)}<span> / ${number(result.total)}</span>`;
      const points=!practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
      container.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
      container.querySelectorAll('.post-metrics div').forEach(stat=>{if(stat.querySelector('dt')?.textContent==='Accuracy')stat.querySelector('dd').textContent=number(result.accuracy)+'%';});
