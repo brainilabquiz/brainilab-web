@@ -28,6 +28,12 @@ const resolve=w.BrainiDailyHub.resolve;w.console.error=()=>{};w.BrainiDailyHub.r
 // A slower refresh must never replace a newer account/day state.
 let release;w.BrainiDailyHub.resolve=()=>new Promise(r=>{release=r});const pending=w.BrainiDailyOverview.render();w.BrainiDailyHub.resolve=resolve;await w.BrainiDailyOverview.render();release({...status,brainScore:999});await pending;assert.match(d.querySelector('.daily-score-value').textContent,/2,500/);
 // Optional local fixture, outside public build inputs, for tomorrow's layout checks.
+let scrolls=0;w.HTMLElement.prototype.scrollIntoView=function(){scrolls++;};
+w.history.replaceState(null,'','#daily-extras');await w.BrainiDailyOverview.render();
+assert.equal(scrolls,1);assert.equal(d.activeElement.id,'daily-extras');
+await w.BrainiDailyOverview.render();assert.equal(scrolls,1,'background refresh must not keep scrolling the page');
+w.history.replaceState(null,'','/daily-quiz/');w.dispatchEvent(new w.Event('hashchange'));
+w.history.replaceState(null,'','#daily-extras');w.dispatchEvent(new w.Event('hashchange'));assert.equal(scrolls,2);
 if(process.argv.includes('--fixture')){
  const initial={...status,brainScore:0,games:{},bonusChoice:null};
  const setup=`window.BrainiDailyHub={resolve:async()=>(${JSON.stringify(initial)})};window.BrainiData={dateForDailyNumber:()=>"2026-10-01",todayKey:()=>"2026-10-01",dailyGameIdsForNumber:()=>[],dailyGameIdsForDate:()=>[],recentResults:()=>[],personalBest:()=>null};window.BrainiContinuity={markup:()=>''};`;

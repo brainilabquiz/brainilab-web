@@ -1,6 +1,13 @@
 /* Daily discovery. Rules and saved results remain in the shared Daily contract. */
 window.BrainiDailyOverview=(function(){
-  let revision=0;
+  let revision=0,fragmentHandled=false;
+  function revealExtra(){
+    if(location.hash!=='#daily-extras'){fragmentHandled=false;return;}
+    const target=document.getElementById('daily-extras');
+    if(fragmentHandled||!target)return;
+    fragmentHandled=true;target.tabIndex=-1;
+    target.focus({preventScroll:true});target.scrollIntoView?.({block:'start',behavior:'instant'});
+  }
   const descriptions={brainmix:'Ten questions. A little bit of everything.',orderup:'Put the clues in order, one list at a time.',topicrush:'One topic. How many answers can you find?',connections:'Look for the link hiding between the clues.',oddoneout:'Four possibilities. Which one does not belong?',higherlower:'Compare two facts. Trust your instincts, then find out.',mathrush:'Quick sums, small numbers, one minute on the clock.',numberroute:'Four numbers. Find a way to reach the target.',sequence:'Spot the pattern and find the missing number.',brainiword:'Five letters. Five tries. One word to discover.'};
   const points=n=>Math.max(0,Number(n)||0).toLocaleString('en-GB');
   function decorateJourney(container,status){
@@ -40,7 +47,7 @@ window.BrainiDailyOverview=(function(){
       const intro=done?'Your result is saved. Stay for another game, or come back for tomorrow’s challenge.':choice?'One fresh challenge for your streak. An optional extra when you fancy more.':'Four fresh puzzles. Pick one, get curious, and see what you discover.';
       root.innerHTML='<header class="daily-discovery-header"><div><p class="daily-date">Daily #'+Number(status.dailyNumber)+' <span>·</span> <time datetime="'+day+'">'+date+'</time></p><h1>'+title+'</h1><p class="daily-intro">'+intro+'</p></div><a class="daily-progress-link" href="/profile/?section=progress">My progress ↗</a></header><div class="daily-dashboard"><div class="daily-play-panel" id="todays-games"><div data-daily-journey-hub></div></div><aside class="daily-side" aria-label="Your Daily progress"><section class="daily-score-summary"><h2>Your day so far</h2><p class="daily-score-value"><strong>'+points(status.brainScore)+'</strong><span> / '+points(choice?status.model.maxScore:10000)+'</span></p><p>Daily ranking points</p><p class="daily-completion '+(done?'is-complete':'')+'">'+(done?'✓ ':'')+progress+'</p><a href="/rankings/">View rankings →</a></section><div data-braini-continuity>'+(window.BrainiContinuity?.markup?.()||'')+'</div><details class="daily-points-guide"><summary>How points and XP work</summary>'+rules(choice)+'<p>New challenges arrive at 00:00 UTC.</p></details></aside></div>';
       await BrainiDailyJourney.render(root.querySelector('[data-daily-journey-hub]'),{status});if(request!==revision)return;
-      decorateJourney(root,status);guide(choice);
+      decorateJourney(root,status);guide(choice);revealExtra();
     }catch(err){
       if(request!==revision)return;console.error('Daily overview:',err);
       root.innerHTML='<section class="daily-load-error"><h1>A small pause in today’s play.</h1><p>We could not load the Daily. Check your connection and try again.</p><button type="button" data-daily-retry>Try again</button><a href="/games/">Explore the games</a></section>';
@@ -48,6 +55,7 @@ window.BrainiDailyOverview=(function(){
     }finally{if(request===revision)root.removeAttribute('aria-busy');}
   }
   document.addEventListener('DOMContentLoaded',render);
+  window.addEventListener('hashchange',()=>{fragmentHandled=false;revealExtra();});
   for(const event of ['brainilab:datachange','brainilab:progressionchange','brainilab:daychange'])window.addEventListener(event,render);
   return {render};
 })();
