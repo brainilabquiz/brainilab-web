@@ -56,7 +56,7 @@ window.BrainiHigherLower=(function(){
     return {correct:!!data?.correct,direction:data?.direction,label:data?.label||typeOf(r)[data?.direction]||"",rightValue:Number(data?.right_value),explanation:data?.explanation||""};
   }
   async function syncHistory(ids){try{BrainiData.recordAnytimeHistory?.("higherlower",ids)}catch{};if(!configured())return;const s=await BrainiBackendAuth?.getSession?.();if(!s?.user)return;const cloud=ids.filter(x=>/^[0-9a-f-]{36}$/i.test(x));if(cloud.length)try{await client().rpc("record_brainilab_higher_lower_history",{p_pair_ids:cloud})}catch(e){console.warn(e)}}
-  async function verify(result,details){if(!configured()||result?.cloudSyncStatus!=="synced")return;const s=await BrainiBackendAuth?.getSession?.();if(!s?.user)return;const rows=details.filter(x=>/^[0-9a-f-]{36}$/i.test(x.pairId)).map(x=>({pair_id:x.pairId,choice:x.choice}));if(rows.length!==ROUNDS)return;try{const {data,error}=await client().rpc("verify_brainilab_higher_lower_result",{p_client_result_id:result.clientResultId,p_rounds:rows});if(error)throw error;await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn(e)}}
+  async function verify(result,details){if(!configured()||result?.cloudSyncStatus!=="synced")return;const s=await BrainiBackendAuth?.getSession?.();if(!s?.user)return;const rows=details.filter(x=>/^[0-9a-f-]{36}$/i.test(x.pairId)).map(x=>({pair_id:x.pairId,choice:x.choice}));if(rows.length!==ROUNDS)return;try{const {data,error}=await client().rpc("verify_brainilab_higher_lower_result",{p_client_result_id:result.clientResultId,p_rounds:rows});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn(e)}}
 
   async function mount(root){
     if(scoringDaily && await window.BrainiDailyCompletionGuard?.check?.()) return;
@@ -83,10 +83,12 @@ window.BrainiHigherLower=(function(){
       if(finished)return;finished=true;if(!dailyMode)void syncHistory(details.map(x=>x.pairId)).catch(()=>{});
       healthTracker?.complete(details.map((x,i)=>({contentId:x.pairId,position:i+1,attempts:1,isCorrect:x.correct,score:x.correct?100:0})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000));
-      let result;try{result=await BrainiData.api.submitGameResult("higherlower",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
-      }catch{result={score,correct,total:ROUNDS,accuracy:correct*10,practice:archiveMode,saveFailed:true};}
-      await verify(result,details);stage.hidden=true;resultEl.hidden=false;
-      BrainiPostGame.mount(resultEl,{result,gameId:'higherlower',name:'Higher or Lower',metrics:[{label:'Accuracy',value:correct*10+'%'},{label:'Best combo',value:bestCombo}],next:{href:'/games/higher-lower/',label:'Play again'}});if(result.saveFailed){const reward=resultEl.querySelector('[data-result-reward]');if(reward)reward.textContent='Your score is shown above. Progress could not be saved; please check your connection.';};
+      const payload={score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
+      stage.hidden=true;resultEl.hidden=false;
+      await BrainiPostGame.complete(resultEl,{result:payload,gameId:'higherlower',name:'Higher or Lower',metrics:[{label:'Accuracy',value:correct*10+'%'},{label:'Best combo',value:bestCombo}],next:{href:'/games/higher-lower/',label:'Play again'}},{
+        save:()=>BrainiData.api.submitGameResult('higherlower',payload),
+        verify:confirmed=>verify(confirmed,details)
+      });
     }
     start.onclick=async()=>{if(start.disabled)return;
       start.disabled=true;intro.hidden=true;loading.hidden=false;const x=await load();rounds=x.rounds;source=x.source;loading.hidden=true;

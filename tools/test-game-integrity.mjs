@@ -33,7 +33,7 @@ for(const [query,count,right] of [['?archive=2026-09-07',3,1],['?daily=2026-10-0
 console.log('PASS Connections: 3/20 rounds, one answer, real correctness, zero score, archive/Daily, repeated input.');
 // Shared single-answer games: wrong answers cannot be corrected, early/double Next ignored, save failure visible.
 for(const [slug,module,pack,selector] of [['sequence','BrainiSequence','sequence-puzzles','[data-answers] button'],['odd-one-out','BrainiOddOneOut','odd-one-out-puzzles','[data-items] button'],['higher-lower','BrainiHigherLower','higher-lower-pairs','[data-higher]'],['survival','BrainiSurvival','quiz-packs','[data-answers] button']]){
- const t=setup(slug),{w,q}=t;t.load(pack);t.load(slug);
+ const t=setup(slug,''),{w,q}=t;t.load(pack);t.load(slug);
  w.BrainiData.api.submitGameResult=async(game,p)=>{t.saves.push({game,...p});throw Error('offline');};
  await w[module].mount(q('[data-intro]').parentElement);q('[data-start]').click();await tick();
  q('[data-next]').click();assert.equal(q('[data-next]').hidden,true);
