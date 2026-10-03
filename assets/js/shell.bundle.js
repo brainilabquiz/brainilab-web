@@ -681,7 +681,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
           : `${res.correct||0} answers`;
       }
       else if(gameId==="brainiword") label=res.won ? `${res.attempts}/5 tries` : "Not solved";
-      else if(gameId==="connections") label=`${Number(res.attempts||0)} total attempts`;
+      else if(gameId==="connections") label=`${Number(res.correct||0)} / ${Number(res.total||0)} correct`;
       else if(gameId==="oddoneout") label=`${Number(res.correct||0)}/${Number(res.total||10)} correct`;
       else if(gameId==="higherlower") label=`${Number(res.correct||0)}/${Number(res.total||10)} correct`;
       else if(gameId==="mathrush") label=`${Number(res.correct||0)} correct · ${Number(res.bestCombo||0)} best combo`;
@@ -717,6 +717,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     result.verifiedCorrect=verification.correct_answers ?? result.correct ?? null;
     result.verifiedTotal=verification.total_questions ?? result.total ?? null;
     result.verifiedAccuracy=verification.accuracy ?? result.accuracy ?? null;
+
+    if(Number.isFinite(verification.score) && verification.score>=0) result.score=verification.score;
 
     // Make verified correctness the local canonical correctness too.
     if(result.verifiedCorrect!==null) result.correct=result.verifiedCorrect;

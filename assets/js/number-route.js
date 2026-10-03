@@ -34,7 +34,7 @@ window.BrainiNumberRoute=(function(){
       const save=BrainiPuzzleResults.show(resultEl,{
         gameId:'numberroute',name:'Number Route',result:{...payload,practice},
         summary:solved===ROUNDS?'Every target reached. Nicely done.':'Your routes are complete. Ready for another set?',
-        metrics:[{label:'Accuracy',value:accuracy+'%'},{label:'Skipped',value:details.filter(x=>x.skipped).length},{label:'First try',value:details.filter(x=>x.correct&&x.attempts===1).length}],
+        metrics:[{label:'Targets reached',value:accuracy+'%'},{label:'Skipped',value:details.filter(x=>x.skipped).length},{label:'First try',value:details.filter(x=>x.correct&&x.attempts===1).length}],
         next:{href:scoringDaily?'/daily-quiz/':archiveMode?'/games/':'/games/number-route/'+(practice?'?try=1':''),label:scoringDaily?'See today’s Daily':archiveMode?'Choose another game':'Play another set'},
         guide:{href:'/learn/how-to-play-number-route/',title:'Find a route, one operation at a time'}
       });

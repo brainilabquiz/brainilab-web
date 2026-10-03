@@ -51,7 +51,7 @@ window.BrainiMathRush=(function(){
     function consume(value,skipped=false){if(ended||answerLocked)return;if(performance.now()-started>=60000){finish();return}const op=current();if(!op)return;answerLocked=true;let ok=false;if(!skipped){attempted++;ok=Number(value)===Number(op.answer)}
       if(skipped){combo=0;feedback.textContent="Skipped"}else if(ok===true){correct++;combo++;bestCombo=Math.max(bestCombo,combo);score+=100+Math.min(100,Math.max(0,combo-1)*10);feedback.textContent="Correct ✓"}else if(ok===false){combo=0;feedback.textContent="Not quite"}else{combo=0;feedback.textContent="Not quite"}
       answers.push({position:op.position,answer:skipped?null:Number(value),skipped,correct:skipped?null:ok});healthTracker?.checkpoint(Math.min(LIMIT,idx+1));setTimeout(advance,70)}
-    form.onsubmit=e=>{e.preventDefault();const raw=input.value.trim();if(raw==="")return;consume(Number(raw),false)};
+    form.onsubmit=e=>{e.preventDefault();const raw=input.value.trim();if(raw===""||!Number.isFinite(Number(raw))||!Number.isInteger(Number(raw)))return;consume(Number(raw),false)};
     skip.onclick=()=>consume(null,true);
     async function finish(){
       if(ended)return;
@@ -59,9 +59,9 @@ window.BrainiMathRush=(function(){
       const timeSec=Math.min(60,Math.max(1,Math.round((performance.now()-started)/1000)));
       const accuracy=attempted?Math.round(correct/attempted*100):0,skips=answers.filter(x=>x.skipped).length;
       healthTracker?.complete(answers.slice(0,60).map((x,i)=>({contentId:`${data.seed}:${x.position}`,position:i+1,attempts:1,isCorrect:x.correct,skipped:x.skipped,score:x.correct?100:0})));
-      const payload={score,correct,total:attempted,accuracy,timeSec,bestCombo,skips,seed:data.seed,contentSource:data.source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
+      const payload={score,correct,total:attempted,accuracy,timeSec,bestCombo,skips,seed:data.seed,contentSource:data.source,dailyNumber:scoringDaily&&answers.length?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode||answers.length===0,challengeDate:dailyDate||null};
       const answerDetails=answers.map(a=>({position:a.position,questionText:data.operations.find(o=>o.position===a.position)?.display||'Calculation',selectedAnswer:a.answer,isCorrect:a.correct===true,skipped:a.skipped,correctAnswer:String(data.operations.find(o=>o.position===a.position)?.answer??'')}));
-      const practice=archiveMode||PARAMS.get('try')==='1';
+      const practice=payload.practice||PARAMS.get('try')==='1';
       BrainiPostGame.mount(resultEl,{result:{...payload,practice,answerDetails},gameId:'mathrush',name:archiveMode?'Math Rush · Past Daily':scoringDaily?'Math Rush · Daily':'Math Rush',timed:true,metrics:[{label:'Accuracy',value:accuracy+'%'},{label:'Best combo',value:bestCombo},{label:'Skipped',value:skips}],next:{href:scoringDaily?'/daily-quiz/':archiveMode?'/games/':'/games/math-rush/'+(practice?'?try=1':''),label:scoringDaily?'Continue Daily':archiveMode?'Choose another game':'Play again'}});
       const rewardEl=resultEl.querySelector('[data-result-reward]');
       if(!practice)rewardEl.textContent='Saving your result…';
@@ -73,7 +73,7 @@ window.BrainiMathRush=(function(){
         BrainiPostGame.refresh();
       }catch(error){rewardEl.textContent='Your score is shown above. Progress could not be saved; please check your connection.';console.warn('Math Rush result saving failed');}
     }
-    start.onclick=async()=>{start.disabled=true;intro.hidden=true;loading.hidden=false;data=await load();loading.hidden=true;if(!data?.operations?.length){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"mathrush",contentType:"mathrush",contentIds:data.operations.slice(0,60).map(x=>String(x.id)),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;stage.hidden=false;if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("mathrush",analyticsRound,scoringDaily?"daily":"anytime");started=performance.now();let remaining=60;timeEl.textContent=remaining;progress.style.width="100%";render();timer=setInterval(()=>{remaining=Math.max(0,Math.ceil((60000-(performance.now()-started))/1000));timeEl.textContent=Math.max(0,remaining);progress.style.width=`${Math.max(0,remaining/60*100)}%`;if(remaining<=0)finish()},1000)};
+    start.onclick=async()=>{if(start.disabled)return;start.disabled=true;intro.hidden=true;loading.hidden=false;data=await load();loading.hidden=true;if(!data?.operations?.length){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"mathrush",contentType:"mathrush",contentIds:data.operations.slice(0,60).map(x=>String(x.id)),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;stage.hidden=false;if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("mathrush",analyticsRound,scoringDaily?"daily":"anytime");started=performance.now();let remaining=60;timeEl.textContent=remaining;progress.style.width="100%";render();timer=setInterval(()=>{remaining=Math.max(0,Math.ceil((60000-(performance.now()-started))/1000));timeEl.textContent=Math.max(0,remaining);progress.style.width=`${Math.max(0,remaining/60*100)}%`;if(remaining<=0)finish()},1000)};
   }
   return {mount,localOperations};
 })();
