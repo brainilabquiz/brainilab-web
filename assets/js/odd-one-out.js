@@ -77,27 +77,28 @@ window.BrainiOddOneOut=(function(){
       r.items.forEach((txt,i)=>{const b=document.createElement("button");b.className="labgame-answer odd-item";b.textContent=txt;b.onclick=()=>choose(r,i,b);items.appendChild(b)});
     }
     async function choose(r,i,b){
-      if(locked)return;
+      if(finished||locked||!next.hidden)return;
       locked=true;[...items.children].forEach(x=>x.disabled=true);feedback.textContent="Checking…";
       let x;try{x=await check(r,i)}catch(e){locked=false;[...items.children].forEach(x=>x.disabled=false);feedback.textContent="Could not check that answer.";return}
       details.push({puzzleId:r.id,selectedIndex:i,correct:x.correct});
       [...items.children].forEach((el,j)=>{if(j===x.correctIndex)el.classList.add("correct")});
       if(x.correct){correct++;score+=100;b.classList.add("correct");feedback.innerHTML=`<strong>✓ Correct · +100 pts</strong><span>${esc(x.explanation)}</span>`}
       else{b.classList.add("wrong");feedback.innerHTML=`<strong style="color:#ff9b96">Not this one</strong><span>${esc(x.explanation)}</span>`}
-      progress.style.width=`${((idx+1)/ROUNDS)*100}%`;scoreEl.textContent=`${score} / 1,000`;next.textContent=idx===ROUNDS-1?"See result":"Next round";next.hidden=false;locked=false;
+      progress.style.width=`${((idx+1)/ROUNDS)*100}%`;scoreEl.textContent=`${score} / 1,000`;next.textContent=idx===ROUNDS-1?"See result":"Next round";next.hidden=false;locked=true;
     }
-    next.onclick=()=>idx===ROUNDS-1?finish():(idx++,render());
+    next.onclick=()=>{if(finished||next.hidden)return;next.hidden=true;idx===ROUNDS-1?finish():(idx++,render())};
     async function finish(){
       if(finished)return;finished=true;
-      if(!dailyMode) await syncHistory(details.map(x=>x.puzzleId));
+      if(!dailyMode)void syncHistory(details.map(x=>x.puzzleId)).catch(()=>{});
       healthTracker?.complete(details.map((x,i)=>({contentId:x.puzzleId,position:i+1,attempts:1,isCorrect:x.correct,score:x.correct?100:0})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000));
-      let result=await BrainiData.api.submitGameResult("oddoneout",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
+      let result;try{result=await BrainiData.api.submitGameResult("oddoneout",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
+      }catch{result={score,correct,total:ROUNDS,accuracy:correct*10,practice:archiveMode,saveFailed:true};}
       await verify(result,details);
       stage.hidden=true;resultEl.hidden=false;
-      BrainiPostGame.mount(resultEl,{result,gameId:'oddoneout',name:'Odd One Out',metrics:[{label:'Accuracy',value:correct*10+'%'}],next:{href:'/games/odd-one-out/',label:'Play again'}});
+      BrainiPostGame.mount(resultEl,{result,gameId:'oddoneout',name:'Odd One Out',metrics:[{label:'Accuracy',value:correct*10+'%'}],next:{href:'/games/odd-one-out/',label:'Play again'}});if(result.saveFailed){const reward=resultEl.querySelector('[data-result-reward]');if(reward)reward.textContent='Your score is shown above. Progress could not be saved; please check your connection.';};
     }
-    start.onclick=async()=>{
+    start.onclick=async()=>{if(start.disabled)return;
       start.disabled=true;intro.hidden=true;loading.hidden=false;
       const x=await load();rounds=x.rounds;source=x.source;loading.hidden=true;
       if(rounds.length!==ROUNDS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}

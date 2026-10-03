@@ -22,10 +22,10 @@ w.eval(readFileSync('assets/js/connections.js','utf8'));await w.BrainiConnection
 w.document.querySelector('[data-connections-start]').click();await tick();
 w.document.querySelector('[data-choice-id="yes"]').click();await tick();
 assert.match(w.document.querySelector('[data-connections-feedback]').textContent,/Could not check/);
-assert.match(w.document.querySelector('[data-connections-attempts]').textContent,/Attempt 1/);
+assert.match(w.document.querySelector('[data-connections-attempts]').textContent,/One answer/);
 for(let i=0;i<3;i++){
  w.document.querySelector('[data-choice-id="yes"]').click();await tick();
- assert.match(w.document.querySelector('[data-connections-attempts]').textContent,/Solved in 1 attempt/);
+ assert.match(w.document.querySelector('[data-connections-attempts]').textContent,/Correct · \+1,000 pts/);
  w.document.querySelector('[data-connections-next]').click();
 }
 w.document.querySelector('[data-connections-next]').click();await tick();

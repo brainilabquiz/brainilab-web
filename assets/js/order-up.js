@@ -94,6 +94,7 @@ window.BrainiOrderUp=(function(){
     let selectedIds=[];
     let roundResults=[];
     let checking=false;
+    let finishing=false;
     let healthTracker=null;
 
     const archiveDate=BrainiData.pastDailyDate?.(new URLSearchParams(location.search).get("archive"));
@@ -234,7 +235,7 @@ window.BrainiOrderUp=(function(){
         .querySelectorAll("[data-order-choice]")
         .forEach(button=>{
           button.onclick=async()=>{
-            if(checking) return;
+            if(checking || finishing || roundResults[roundIndex]) return;
 
             const id=button.dataset.orderChoice;
 
@@ -406,14 +407,20 @@ window.BrainiOrderUp=(function(){
         feedback.innerHTML=`
           <span class="daily-game-error">
             Could not check this round.
-            Refresh and try again.
+            Your order is kept. Retry checking when you’re connected.
           </span>`;
 
         renderChoices();
+        nextBtn.hidden=false;
+        nextBtn.disabled=false;
+        nextBtn.textContent="Retry checking";
+        nextBtn.dataset.action="retry";
       }
     }
 
     async function finish(){
+      if(finishing)return;
+      finishing=true;
       const totalScore=
         roundResults.reduce(
           (sum,x)=>sum+Number(x.score||0),
@@ -447,10 +454,7 @@ window.BrainiOrderUp=(function(){
         score:Number(x.score||0)
       })));
 
-      let result=
-        await BrainiData.api.submitGameResult(
-          "orderup",
-          {
+      const payload={
             score:totalScore,
             correct:exact,
             total:20,
@@ -473,8 +477,14 @@ window.BrainiOrderUp=(function(){
               content.challengeDate,
             dailyContentSource:
               content.source
-          }
-        );
+          };
+      let result;
+      try{result=await BrainiData.api.submitGameResult("orderup",payload);}
+      catch{
+        await showResult({...payload,saveFailed:true});
+        resultBox.querySelector('[data-result-reward]').textContent='Your score is shown above. Progress could not be saved; please check your connection.';
+        return;
+      }
 
       if(content.source==="supabase" && !archiveMode){
         try{
@@ -512,7 +522,7 @@ window.BrainiOrderUp=(function(){
       intro.hidden=true;game.hidden=true;loading.hidden=true;resultBox.hidden=false;
       const options={gameId:'orderup',name:'Order Up',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},headline:Math.round(Number(result.accuracy)||0)+'%',scoreLabel:'order accuracy',summary:'Two rounds complete.',next:{href:'/games/',label:'Find another game'}};
       BrainiPostGame.mount(resultBox,options);
-      if(!archiveMode){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
+      if(!archiveMode&&!result.saveFailed){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
     }
 
     async function start(){
@@ -568,7 +578,7 @@ window.BrainiOrderUp=(function(){
 
         if(
           selectedIds.length===10 &&
-          !roundResults[roundIndex]
+          selectedIds.every(id=>round().items.some(item=>item.itemId===id))
         ){
           await submitRound();
         }
@@ -587,6 +597,8 @@ window.BrainiOrderUp=(function(){
     }
 
     nextBtn.onclick=async()=>{
+      if(nextBtn.hidden||nextBtn.disabled||finishing)return;
+      if(nextBtn.dataset.action==="retry"){nextBtn.hidden=true;await submitRound();return;}
       if(
         nextBtn.dataset.action==="next"
       ){

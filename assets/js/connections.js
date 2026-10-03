@@ -2,7 +2,7 @@
    20 rounds Play Anytime; Daily/Past Daily use 3 rounds. Unseen puzzles are prioritised.
 */
 window.BrainiConnections=(function(){
-  const SCORE_BY_ATTEMPT=[1000,700,400,200];
+  const POINTS_PER_ROUND=1000;
   const DAILY_ROUNDS=3,ANYTIME_ROUNDS=20;
   const PARAMS=new URLSearchParams(location.search);
   const dailyDate=PARAMS.get("daily")||PARAMS.get("archive")||null;
@@ -112,8 +112,9 @@ window.BrainiConnections=(function(){
       const correct=index===round.correct;
       return {
         correct,
-        answer:correct?round.choices[round.correct]?.text:null,
-        explanation:correct?round.explanation:null
+        answer:round.choices[round.correct]?.text,
+        correctChoiceId:round.choices[round.correct]?.id,
+        explanation:round.explanation
       };
     }
 
@@ -127,6 +128,7 @@ window.BrainiConnections=(function(){
     return {
       correct:!!data?.correct,
       answer:data?.answer||null,
+      correctChoiceId:data?.correct_choice_id||null,
       explanation:data?.explanation||null
     };
   }
@@ -204,7 +206,7 @@ window.BrainiConnections=(function(){
       locked=false;
       roundCount.textContent=`Round ${roundIndex+1} of ${ROUND_COUNT}`;
       scoreEl.textContent=`${totalScore.toLocaleString()} / ${MAX_SCORE.toLocaleString()}`;
-      attemptsEl.textContent="Attempt 1 · 1,000 pts available";
+      attemptsEl.textContent="One answer · 1,000 pts";
       promptEl.textContent=round.prompt||"What connects these?";
       progress.style.width=`${(roundIndex/ROUND_COUNT)*100}%`;
       feedbackEl.innerHTML="";
@@ -250,41 +252,38 @@ window.BrainiConnections=(function(){
       detail.attemptedChoiceIds.push(choice.id);
       roundDetails[roundIndex]=detail;
 
-      if(checked.correct){
-        const gained=SCORE_BY_ATTEMPT[Math.min(attempts,4)-1]||200;
-        detail.score=gained;
-        detail.answer=checked.answer||choice.text;
-        detail.explanation=checked.explanation||"";
-        totalScore+=gained;
-        button.classList.add("correct");
-        choicesEl.querySelectorAll("button").forEach(x=>x.disabled=true);
-        scoreEl.textContent=`${totalScore.toLocaleString()} / ${MAX_SCORE.toLocaleString()}`;
-        attemptsEl.textContent=`Solved in ${attempts} attempt${attempts===1?"":"s"} · +${gained.toLocaleString()} pts`;
-        feedbackEl.innerHTML=`<strong>✓ ${escapeHtml(checked.answer||choice.text)}</strong>${checked.explanation?`<span>${escapeHtml(checked.explanation)}</span>`:""}`;
-        progress.style.width=`${((roundIndex+1)/ROUND_COUNT)*100}%`;
-        next.hidden=false;
-        locked=false;
-      }else{
-        button.classList.add("wrong");
-        const nextScore=SCORE_BY_ATTEMPT[Math.min(attempts,3)]||200;
-        attemptsEl.textContent=`Attempt ${Math.min(attempts+1,4)} · ${nextScore.toLocaleString()} pts available`;
-        feedbackEl.innerHTML=`<span>Not that connection. Try again.</span>`;
-        locked=false;
-      }
+      detail.correct=checked.correct===true;
+      detail.answer=checked.answer||(detail.correct?choice.text:"");
+      detail.explanation=checked.explanation||"";
+      detail.score=detail.correct?POINTS_PER_ROUND:0;
+      totalScore+=detail.score;
+      choicesEl.querySelectorAll("button").forEach(el=>{
+        el.disabled=true;
+        if(el.dataset.choiceId===checked.correctChoiceId)el.classList.add("correct");
+      });
+      button.classList.add(detail.correct?"correct":"wrong");
+      scoreEl.textContent=`${totalScore.toLocaleString()} / ${MAX_SCORE.toLocaleString()}`;
+      attemptsEl.textContent=detail.correct?"Correct · +1,000 pts":"Not this time · 0 pts";
+      feedbackEl.innerHTML=`<strong>${detail.correct?'✓':'Correct connection:'} ${escapeHtml(detail.answer||'See the next round')}</strong>${detail.explanation?`<span>${escapeHtml(detail.explanation)}</span>`:""}`;
+      progress.style.width=`${((roundIndex+1)/ROUND_COUNT)*100}%`;
+      next.hidden=false;
+      // A checked answer closes the round, including an incorrect answer.
+      locked=true;
     }
 
     async function finish(){
       if(finished)return;
       finished=true;next.disabled=true;
       const timeSec=Math.max(1,Math.round((performance.now()-startedAt)/1000));
+      const correct=roundDetails.filter(r=>r.correct).length;
       const totalAttempts=roundDetails.reduce((sum,x)=>sum+Number(x?.attempts||0),0);
       if(!dailyMode) recordLocalHistory(roundDetails);
-      healthTracker?.complete(roundDetails.map((r,i)=>({contentId:r.puzzleId,position:i+1,attempts:r.attempts,isCorrect:true,score:r.score})));
+      healthTracker?.complete(roundDetails.map((r,i)=>({contentId:r.puzzleId,position:i+1,attempts:r.attempts,isCorrect:r.correct,score:r.score})));
       const payload={
         score:totalScore,
-        correct:ROUND_COUNT,
+        correct,
         total:ROUND_COUNT,
-        accuracy:100,
+        accuracy:Math.round(correct/ROUND_COUNT*100),
         timeSec,
         attempts:totalAttempts,
         roundDetails,
@@ -297,16 +296,15 @@ window.BrainiConnections=(function(){
       const practice=archiveMode||PARAMS.get('try')==='1';
       const result={...payload,practice};
       game.hidden=true;resultEl.hidden=false;
-      const firstTry=roundDetails.filter(r=>r.attempts===1).length;
       const save=BrainiPuzzleResults.show(resultEl,{
         gameId:'connections',name:'Connections',result,
-        summary:firstTry===ROUND_COUNT?'Every link on the first try. Nicely done.':'You found every link. See which ones took a second look.',
-        metrics:[{label:'First try',value:firstTry},{label:'Attempts',value:totalAttempts}],
+        summary:correct===ROUND_COUNT?'Every connection correct. Nicely done.':`${correct} of ${ROUND_COUNT} connections correct. Take a look at the ones you missed.`,
+        metrics:[{label:'Correct',value:correct},{label:'Missed',value:ROUND_COUNT-correct}],
         next:{href:scoringDaily?'/daily-quiz/':archiveMode?'/games/':'/games/connections/'+(practice?'?try=1':''),label:scoringDaily?'See today’s Daily':archiveMode?'Choose another game':'Play another set'},
         guide:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Test a link against every clue'}
       });
       const review=document.createElement('details');review.className='puzzle-round-review';
-      review.innerHTML=`<summary>Review ${ROUND_COUNT} connections</summary>${roundDetails.map((r,i)=>`<article><strong>${escapeHtml(rounds[i].clues.join(' · '))}</strong><p>${escapeHtml(r.answer)} · ${r.attempts} attempt${r.attempts===1?'':'s'}</p>${r.explanation?`<p>${escapeHtml(r.explanation)}</p>`:''}</article>`).join('')}`;
+      review.innerHTML=`<summary>Review ${ROUND_COUNT} connections</summary>${roundDetails.map((r,i)=>`<article><strong>${escapeHtml(rounds[i].clues.join(' · '))}</strong><p>${escapeHtml(r.answer)} · ${r.correct?"Correct":"Missed"}</p>${r.explanation?`<p>${escapeHtml(r.explanation)}</p>`:''}</article>`).join('')}`;
       resultEl.querySelector('.post-guide').before(review);
       const confirmed=await save(payload);
       if(confirmed)await verifyCloudResult(confirmed,roundDetails);

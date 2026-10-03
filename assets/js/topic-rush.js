@@ -292,7 +292,6 @@ window.BrainiTopicRush=(function(){
       const guess=input.value.trim();
       if(!guess) return;
 
-      totalGuesses++;
       const guessKey=guess.toLowerCase();
       if(pendingGuesses.has(guessKey)){
         input.value="";
@@ -300,6 +299,7 @@ window.BrainiTopicRush=(function(){
         return;
       }
 
+      totalGuesses++;
       input.value="";
       pendingGuesses.add(guessKey);
       pendingChecks++;
@@ -364,10 +364,10 @@ window.BrainiTopicRush=(function(){
 
       healthTracker?.complete([{contentId:content.topicId,position:1,attempts:Math.max(1,totalGuesses),isCorrect:correct>=target,skipped:false,score}]);
 
-      let result=await BrainiData.api.submitGameResult("topicrush",{
+      const payload={
         score,
         correct,
-        total:target,
+        total:Math.max(target,correct),
         accuracy:Math.min(100,Math.round(correct/target*100)),
         timeSec:Number(content.durationSeconds||60),
         topicTitle:content.title,
@@ -380,7 +380,14 @@ window.BrainiTopicRush=(function(){
         practice:archiveMode,
         challengeDate:content.challengeDate,
         dailyContentSource:content.source
-      });
+      };
+      let result;
+      try{result=await BrainiData.api.submitGameResult("topicrush",payload);}
+      catch{
+        await showResult({...payload,saveFailed:true});
+        resultBox.querySelector('[data-result-reward]').textContent='Your score is shown above. Progress could not be saved; please check your connection.';
+        return;
+      }
 
       if(content.source==="supabase" && !archiveMode){
         try{
@@ -406,7 +413,7 @@ window.BrainiTopicRush=(function(){
       if(timer)clearInterval(timer);loading.hidden=true;intro.hidden=true;play.hidden=true;resultBox.hidden=false;
       const options={gameId:'topicrush',name:'Topic Rush',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},timed:true,scoreLabel:'answers found',summary:content.title,next:{href:'/games/',label:'Find another game'}};
       BrainiPostGame.mount(resultBox,options);
-      if(!archiveMode){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
+      if(!archiveMode&&!result.saveFailed){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
     }
 
     startBtn.addEventListener("click",start);

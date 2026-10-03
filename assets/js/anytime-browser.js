@@ -34,7 +34,7 @@ window.BrainiAnytimeBrowser=(function(){
 
   const GAMES=[
     {id:"generalknowledge",name:"General Knowledge",icon:"mixed-general-knowledge",accent:"accent-yellow",copy:"A mixed quiz across everyday knowledge.",base:"/general-knowledge/general-knowledge-quiz/"},
-    {id:"connections",name:"Connections",gameIcon:"connections",accent:"",copy:"Find the common link across 4–8 clues over a 20-round challenge.",base:"/games/connections/",single:true,difficultyLabel:"20 rounds · score by attempts",action:"Play Connections"},
+    {id:"connections",name:"Connections",gameIcon:"connections",accent:"",copy:"Find the common link across 4–8 clues over a 20-round challenge.",base:"/games/connections/",single:true,difficultyLabel:"20 rounds · one answer each",action:"Play Connections"},
     {id:"survival",name:"Survival",gameIcon:"survival",accent:"accent-red",copy:"Three lives. Questions get harder until you run out of lives or clear the challenge.",base:"/games/survival/",single:true,difficultyLabel:"3 lives · adaptive difficulty",action:"Play Survival"},
     {id:"oddoneout",name:"Odd One Out",gameIcon:"odd-one-out",accent:"accent-green",copy:"Spot the one item that does not belong across ten quick rounds.",base:"/games/odd-one-out/",single:true,difficultyLabel:"10 rounds · one outsider",action:"Play Odd One Out"},
     {id:"higherlower",name:"Higher or Lower",gameIcon:"higher-lower",accent:"accent-orange",copy:"Compare real facts and decide which side is older, bigger, faster, higher and more.",base:"/games/higher-lower/",single:true,difficultyLabel:"10 comparisons · build a combo",action:"Play Higher or Lower"},

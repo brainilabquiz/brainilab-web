@@ -71,23 +71,24 @@ window.BrainiHigherLower=(function(){
       firstBtn.textContent=cfg.first;secondBtn.textContent=cfg.second;feedback.innerHTML="";firstBtn.disabled=secondBtn.disabled=false;next.hidden=true;scoreEl.textContent=`${score.toLocaleString()} pts`;progress.style.width=`${(idx/ROUNDS)*100}%`;
     }
     async function choose(choice){
-      if(locked)return;locked=true;firstBtn.disabled=secondBtn.disabled=true;feedback.textContent="Checking…";const r=rounds[idx];let x;
+      if(finished||locked||!next.hidden)return;locked=true;firstBtn.disabled=secondBtn.disabled=true;feedback.textContent="Checking…";const r=rounds[idx];let x;
       try{x=await check(r,choice)}catch(e){locked=false;firstBtn.disabled=secondBtn.disabled=false;feedback.textContent="Could not check that answer.";return}
       details.push({pairId:r.id,choice,correct:x.correct});right.querySelector(".hl-value").textContent=formatValue(x.rightValue,r.unit);
       if(x.correct){correct++;combo++;bestCombo=Math.max(bestCombo,combo);const gain=points(combo);score+=gain;feedback.innerHTML=`<strong>✓ ${esc(x.label)} · +${gain} pts</strong><span>${esc(x.explanation)}</span>`}
       else{combo=0;feedback.innerHTML=`<strong style="color:#ff9b96">${esc(x.label)}</strong><span>${esc(x.explanation)}</span>`}
-      scoreEl.textContent=`${score.toLocaleString()} pts`;progress.style.width=`${((idx+1)/ROUNDS)*100}%`;next.textContent=idx===ROUNDS-1?"See result":"Next comparison";next.hidden=false;locked=false;
+      scoreEl.textContent=`${score.toLocaleString()} pts`;progress.style.width=`${((idx+1)/ROUNDS)*100}%`;next.textContent=idx===ROUNDS-1?"See result":"Next comparison";next.hidden=false;locked=true;
     }
-    firstBtn.onclick=()=>choose("first");secondBtn.onclick=()=>choose("second");next.onclick=()=>idx===ROUNDS-1?finish():(idx++,render());
+    firstBtn.onclick=()=>choose("first");secondBtn.onclick=()=>choose("second");next.onclick=()=>{if(finished||next.hidden)return;next.hidden=true;idx===ROUNDS-1?finish():(idx++,render())};
     async function finish(){
-      if(finished)return;finished=true;if(!dailyMode)await syncHistory(details.map(x=>x.pairId));
+      if(finished)return;finished=true;if(!dailyMode)void syncHistory(details.map(x=>x.pairId)).catch(()=>{});
       healthTracker?.complete(details.map((x,i)=>({contentId:x.pairId,position:i+1,attempts:1,isCorrect:x.correct,score:x.correct?100:0})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000));
-      let result=await BrainiData.api.submitGameResult("higherlower",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
+      let result;try{result=await BrainiData.api.submitGameResult("higherlower",{score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null});
+      }catch{result={score,correct,total:ROUNDS,accuracy:correct*10,practice:archiveMode,saveFailed:true};}
       await verify(result,details);stage.hidden=true;resultEl.hidden=false;
-      BrainiPostGame.mount(resultEl,{result,gameId:'higherlower',name:'Higher or Lower',metrics:[{label:'Accuracy',value:correct*10+'%'},{label:'Best combo',value:bestCombo}],next:{href:'/games/higher-lower/',label:'Play again'}});
+      BrainiPostGame.mount(resultEl,{result,gameId:'higherlower',name:'Higher or Lower',metrics:[{label:'Accuracy',value:correct*10+'%'},{label:'Best combo',value:bestCombo}],next:{href:'/games/higher-lower/',label:'Play again'}});if(result.saveFailed){const reward=resultEl.querySelector('[data-result-reward]');if(reward)reward.textContent='Your score is shown above. Progress could not be saved; please check your connection.';};
     }
-    start.onclick=async()=>{
+    start.onclick=async()=>{if(start.disabled)return;
       start.disabled=true;intro.hidden=true;loading.hidden=false;const x=await load();rounds=x.rounds;source=x.source;loading.hidden=true;
       if(rounds.length!==ROUNDS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}
       healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"higherlower",contentType:"higherlower",contentIds:rounds.map(r=>r.id),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;
