@@ -1,0 +1,26 @@
+import {readFileSync} from 'node:fs';import {pathToFileURL} from 'node:url';import assert from 'node:assert/strict';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const w=new JSDOM('<main></main>',{url:'https://brainilabgames.com/',runScripts:'outside-only'}).window,root=w.document.querySelector('main');
+let today=new Date().toISOString().slice(0,10),user='me',recent=[],daily={number:42,completedGames:[],bonusChoice:null};
+w.BrainiData={authState:()=>({status:'authenticated',user:{id:user}}),daily:()=>daily,dateForDailyNumber:n=>n===42?today:'2026-09-01',dailyGameIdsForNumber:()=>['mathrush','sequence','brainiword'],recentResults:id=>recent.filter(r=>r.gameId===id)};
+w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',primary:'mathrush',choices:['sequence','brainiword']})};
+w.BrainiFriendChallenge={buildInvite:()=>null};
+w.eval(readFileSync('assets/js/post-game.js','utf8'));
+const result={dailyNumber:42,gameId:'mathrush',correct:10,total:12,score:900,clientResultId:'main'};
+const mount=(r=result,status)=>w.BrainiPostGame.mount(root,{gameId:r.gameId,result:r,status,next:{href:'/daily-quiz/',label:'Continue Daily'}});
+const label=()=>root.querySelector('.post-primary').textContent.trim().replace(/ →$/,'');
+const event=()=>w.dispatchEvent(new w.Event('brainilab:datachange'));
+mount();assert.equal(label(),'Back to Daily');
+daily.completedGames=['mathrush'];recent=[{...result}];event();assert.equal(label(),'Back to Daily','optimistic local completion is not confirmation');
+recent[0].answerVerificationStatus='verified';event();assert.equal(label(),'Choose an optional extra');assert.ok(root.querySelector('.post-primary').href.endsWith('#daily-extras'));
+daily.bonusChoice='sequence';event();assert.equal(label(),'Continue your extra');
+const extra={...result,gameId:'sequence',clientResultId:'extra',answerVerificationStatus:'pending'};recent.push(extra);daily.completedGames.push('sequence');mount(extra);assert.equal(label(),'Back to Daily','pending extra cannot suggest playing again');
+recent[1].answerVerificationStatus='verified';event();assert.equal(label(),'Find another game');assert.equal(root.querySelector('.post-next-note').hidden,true);
+// Cloud-confirmed status must survive a lagging local cache.
+daily={number:42,completedGames:[],bonusChoice:null};recent=[];
+mount(result,{dailyNumber:42,model:w.BrainiDailyRules.model(),games:{mathrush:{completed:true}},bonusChoice:null});assert.equal(label(),'Choose an optional extra');
+user='other';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(label(),'Back to Daily');
+user='me';mount({...result,practice:true});assert.doesNotMatch(root.querySelector('.post-next-note').textContent,/Daily/);
+mount({...result,dailyNumber:41});assert.equal(label(),'See today’s Daily');
+mount();today='2026-09-01';w.dispatchEvent(new w.Event('brainilab:daychange'));assert.equal(label(),'See today’s Daily');
+w.close();console.log('PASS result buttons: pending/verified main, reserved extra, pending/verified extra, cloud cache lag, account isolation, practice, archive and day rollover.');

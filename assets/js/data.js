@@ -422,7 +422,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     if(gameId==="connections") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0)/3000*2500)));
     if(gameId==="oddoneout") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0)/1000*2500)));
     if(gameId==="higherlower") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0)/1700*2500)));
-    if(gameId==="mathrush") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0))));
+    if(gameId==="mathrush") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0)*(payload.scoringVersion==='mathrush-v2'||String(payload.seed||'').startsWith('v2:')?2500/6000:1))));
     if(gameId==="numberroute") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0))));
     if(gameId==="sequence") return Math.min(2500,Math.max(0,Math.round(Number(payload.score||0))));
     return 0;

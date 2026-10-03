@@ -39,4 +39,16 @@ Read-only production bank audit: 118 Connections, 54 Sequence, 112 Higher/Lower,
 
 ## Limits
 
+## Scoring and result follow-up — 3 October 2026
+
+New Math Rush requests use versioned seeds: 60 distinct calculations, 15 of each operator, no mirrored addition/multiplication duplicates, and whole-number divisions without divisor/answer 1. The deterministic client and server generators match. New scoring is `max(0, 100 × correct − 50 × wrong)`; skips give zero and combos are descriptive only. Daily contribution is proportional to the actual 6,000-point maximum, then weighted to the main/extra cap. Legacy seeds and already verified scores retain their original rules.
+
+Number Route's Daily deducts 100 points per failed route in addition to the existing time deduction, with the existing 200-point solved-route floor. This closes the full-score-with-fast-errors case. Anytime already deducts for extra attempts. Both verifiers lock the result and preserve already verified scores; no historical player rows are rewritten by the migration.
+
+Post-game buttons use confirmed Daily state: pending → Back to Daily; main confirmed → choose/continue the optional extra; extra confirmed → find another game (or share the friend challenge). They refresh on data changes, reconcile newer cloud confirmation, ignore another account's state and stop using yesterday's actions after UTC rollover. Verified canonical scores also replace provisional displayed scores.
+
+The other engines retain their existing rules reviewed above: fixed-question mistakes/skips earn zero, Order Up uses correct relative pairs, BrainiWord rewards fewer accepted guesses, and Topic Rush counts unique accepted words toward a stated target (rejected words consume time but do not deduct points). No blanket scoring-rule change was applied to these different game formats.
+
+New regression checks: `test-scoring-v2.mjs` (isolated PostgreSQL, 100 generator seeds, server/client parity, score penalties and legacy safety), `test-math-rush-ui.mjs` (real DOM engines and main/extra contributions), and `test-post-game-actions.mjs` (pending, verified, account, date and stale-cache states).
+
 This is a gameplay and result-integrity audit, not a claim of comprehensive anti-cheat. Existing stateless answer checkers and client-reported timing are not server-issued, single-use play sessions. Deliberate API manipulation / refresh before an unfinished run would need a separate persisted-attempt design; browser locks alone cannot prevent that. Completed Daily locking, extra selection, XP caps and historical results remain covered by their existing database tests.
