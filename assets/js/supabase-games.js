@@ -11,6 +11,8 @@
 */
 window.BrainiCloudGames = (function(){
   let syncing=false;
+  let syncJob=null;
+  let retryWhenFinished=false;
   let lastError=null;
   const pendingSaves=new Map();
 
@@ -40,7 +42,7 @@ window.BrainiCloudGames = (function(){
   function compactPayload(result={}){
     const blocked=new Set([
       "id","clientResultId","cloudSyncStatus","cloudSessionId",
-      "cloudResultId","cloudSyncedAt","recordedAtStep","results","answerDetails"
+      "cloudResultId","cloudSyncedAt","recordedAtStep","ownerUserId","results","answerDetails"
     ]);
 
     const payload={};
@@ -50,7 +52,7 @@ window.BrainiCloudGames = (function(){
 
       if(Array.isArray(value)){
         // Keep small game-specific arrays such as BrainiWord pattern.
-        if(value.length<=40) payload[key]=value;
+        if(value.length<=(key==="mathAnswers"?60:40)) payload[key]=value;
         return;
       }
 
@@ -78,6 +80,32 @@ window.BrainiCloudGames = (function(){
     return session?.user||null;
   }
 
+  function localUserId(){
+    const auth=window.BrainiData?.authState?.();
+    return auth?.user?.id||auth?.guestUserId||null;
+  }
+
+  function ownsResult(result,userId){
+    const stored=window.BrainiData?.recentResults?.().find(r=>r.clientResultId===result.clientResultId);
+    return !!stored&&localUserId()===userId&&stored.ownerUserId===userId;
+  }
+
+  async function resultRpc(name,args,userId){
+    if(localUserId()!==userId)throw new Error('Player changed.');
+    const controller=new AbortController();let timer;
+    const changed=()=>{if(localUserId()!==userId)controller.abort();};
+    window.addEventListener('brainilab:authchange',changed);
+    try{
+      let call=client().rpc(name,args);
+      if(call.abortSignal)call=call.abortSignal(controller.signal);
+      const response=await Promise.race([call,new Promise((_,reject)=>{
+        timer=setTimeout(()=>{controller.abort();reject(new Error('Connection timed out. Your result is still saved.'));},12000);
+      })]);
+      if(localUserId()!==userId)throw new Error('Player changed.');
+      return response;
+    }finally{clearTimeout(timer);window.removeEventListener('brainilab:authchange',changed);}
+  }
+
   async function saveCompletedResult(gameId,result){
     const key=result?.clientResultId;
     if(key && pendingSaves.has(key)) return pendingSaves.get(key);
@@ -93,9 +121,15 @@ window.BrainiCloudGames = (function(){
     if(result?.practice || result?.tryFirst){
       return {saved:false,reason:"practice"};
     }
+    const ownerBefore=result?.ownerUserId||localUserId();
     const session=await BrainiBackendAuth.ensurePlayerSession();
     const user=session?.user;
     if(!user) return {saved:false,reason:"not_authenticated"};
+    if(ownerBefore&&ownerBefore!==user.id)return {saved:false,reason:"player_changed"};
+    const bound=await BrainiData.api.bindResultOwner(result.clientResultId,user.id);
+    if(!bound||!ownsResult(bound,user.id))return {saved:false,reason:"player_changed"};
+    result=bound;
+    if(result.cloudSyncStatus==='synced')return {saved:true,alreadyExisted:true};
 
     if(!result?.clientResultId){
       throw new Error("Missing client result ID.");
@@ -117,7 +151,7 @@ window.BrainiCloudGames = (function(){
     const accuracy=cleanNumber(result.accuracy);
     const percentile=cleanNumber(result.percentile);
 
-    const {data,error}=await sb.rpc("submit_brainilab_game_result",{
+    const {data,error}=await resultRpc("submit_brainilab_game_result",{
       p_client_result_id:result.clientResultId,
       p_game_id:gameId,
       p_played_at:result.playedAt||new Date().toISOString(),
@@ -134,7 +168,7 @@ window.BrainiCloudGames = (function(){
         : pack.setNumber,
       p_result_payload:compactPayload(result),
       p_answer_correctness:correctnessArray(result)
-    });
+    },user.id);
 
     if(error){
       lastError=error;
@@ -142,6 +176,8 @@ window.BrainiCloudGames = (function(){
     }
 
     const row=Array.isArray(data)?data[0]:data;
+    if(!row?.session_id||!row?.result_id)throw new Error("Incomplete save response. Your result is still saved on this device.");
+    if(!ownsResult(result,user.id))return {saved:false,reason:"player_changed"};
     const cloud={
       sessionId:row?.session_id||null,
       resultId:row?.result_id||null,
@@ -150,7 +186,7 @@ window.BrainiCloudGames = (function(){
 
     await BrainiData.api.markResultCloudSynced(result.clientResultId,cloud);
     // Automatic enrollment may have just changed an older account's profile.
-    await window.BrainiProfiles?.sync?.();
+    void Promise.resolve(window.BrainiProfiles?.sync?.()).catch(()=>{});
 
     window.dispatchEvent(new CustomEvent("brainilab:cloudgame",{
       detail:{type:"result_synced",gameId,clientResultId:result.clientResultId,cloud}
@@ -159,8 +195,18 @@ window.BrainiCloudGames = (function(){
     return {saved:true,...cloud};
   }
 
-  async function syncPendingResults(){
-    if(syncing || !configured()) return {synced:0,failed:0};
+  function syncPendingResults(){
+    if(syncJob)return syncJob;
+    const job=runPendingResults();syncJob=job;
+    void job.finally(()=>{
+      if(syncJob===job)syncJob=null;
+      if(retryWhenFinished){retryWhenFinished=false;void syncPendingResults().catch(error=>{lastError=error;});}
+    }).catch(()=>{});
+    return job;
+  }
+
+  async function runPendingResults(){
+    if(!configured()||navigator.onLine===false)return {synced:0,failed:0};
     syncing=true;
     let synced=0;
     let failed=0;
@@ -169,6 +215,7 @@ window.BrainiCloudGames = (function(){
       const pending=await BrainiData.api.getPendingCloudResults();
 
       for(const result of pending){
+        if(navigator.onLine===false)break;
         try{
           const response=await saveCompletedResult(result.gameId,result);
           if(response.saved) synced++;
@@ -189,7 +236,8 @@ window.BrainiCloudGames = (function(){
       }));
     }
 
-    return {synced,failed};
+    const checked=await window.BrainiResultRecovery?.sync?.()||{verified:0,failed:0};
+    return {synced,verified:checked.verified,failed:failed+checked.failed};
   }
 
   async function getMyRecentResults(limit=20){
@@ -244,7 +292,14 @@ window.BrainiCloudGames = (function(){
     return syncing;
   }
 
+  window.addEventListener('online',()=>{
+    if(syncJob){retryWhenFinished=true;return;}
+    void syncPendingResults().catch(error=>{lastError=error;});
+  });
+
   return {
+    ownsResult,
+    resultRpc,
     configured,
     saveCompletedResult,
     syncPendingResults,

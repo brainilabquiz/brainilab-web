@@ -35,7 +35,8 @@ function harness(){
     return {data:{prepared:true}};
   }};
   const context=vm.createContext({console:{warn(){},error(){}},crypto:webcrypto,URL,URLSearchParams,Date,Math,JSON,Uint8Array,
-    localStorage:store,sessionStorage:store,setTimeout,clearTimeout,
+    localStorage:store,sessionStorage:store,setTimeout,clearTimeout,AbortController,
+    addEventListener(){},removeEventListener(){},
     location:{search:'',origin:'https://brainilab.example',href:'https://brainilab.example/',hostname:'brainilab.example',protocol:'https:',host:'brainilab.example'},
     document:{querySelector:()=>null},navigator:{},CustomEvent:class{constructor(type,opts){this.type=type;this.detail=opts?.detail;}},
     dispatchEvent:e=>events.push(e),BRAINI_SUPABASE:{url:'https://example.supabase.co',publishableKey:'public-test-key-long-enough'},
@@ -71,6 +72,7 @@ function harness(){
   check(prepare<login && login<claim,'claim is prepared before login and consumed after authentication');
   check(!h.storage.has('brainilab_guest_claim_v1') && c.BrainiData.isAuthenticated(),'successful merge clears claim and enables registered account UI');
   check(c.BrainiData.recentResults().some(r=>r.clientResultId===result.clientResultId),'unique guest progress survives login');
+  check(c.BrainiData.recentResults().find(r=>r.clientResultId===result.clientResultId).ownerUserId===h.account.id,'successful server claim transfers the recovery owner');
   await c.BrainiBackendAuth.signOut();
   check(c.BrainiData.recentResults().length===0 && !c.BrainiBackendAuth.hasPlayerSession(),'sign-out isolates previous account progress from a new guest');
 }

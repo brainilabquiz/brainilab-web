@@ -47,7 +47,7 @@ window.BrainiBackendAuth = (function(){
       const claim=readGuestClaim();
       const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
       if(error) throw error;
-      await BrainiData.api.completeGuestClaim?.(data||{});
+      await BrainiData.api.completeGuestClaim?.({...data,fromUserId:claim.guestId,toUserId:session.user.id});
       localStorage.removeItem(guestClaimKey);
     })();
     try{await claimPromise;}finally{claimPromise=null;}

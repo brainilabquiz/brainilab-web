@@ -28,7 +28,7 @@ window.BrainiNumberRoute=(function(){
       if(finished)return;finished=true;next.disabled=true;
       healthTracker?.complete(details.map((x,i)=>({contentId:x.puzzleId,position:i+1,attempts:x.attempts,isCorrect:x.correct,skipped:x.skipped,score:x.score,responseTimeMs:x.responseTimeMs})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000)),accuracy=Math.round(solved/ROUNDS*100);
-      const payload={score,correct:solved,total:ROUNDS,accuracy,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
+      const payload={roundDetails:details,score,correct:solved,total:ROUNDS,accuracy,timeSec,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
       const practice=archiveMode||PARAMS.get('try')==='1';
       stage.hidden=true;resultEl.hidden=false;
       const save=BrainiPuzzleResults.show(resultEl,{

@@ -541,6 +541,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
         delete parsed.daily.dailyBreakdown.flagdash;
       }
 
+      const resultOwner=parsed.auth?.user?.id||parsed.auth?.guestUserId||null;
+      (parsed.recentResults||[]).forEach(r=>{if(r.ownerUserId===undefined)r.ownerUserId=resultOwner;});
       return Object.assign(clone(defaultState),parsed);
     }catch(e){
       return clone(defaultState);
@@ -893,6 +895,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     );
   }
 
+  function bindResultOwner(clientResultId,userId){
+    const result=state.recentResults.find(r=>r.clientResultId===clientResultId);
+    const current=state.auth?.user?.id||state.auth?.guestUserId||null;
+    if(!result||current!==userId||(result.ownerUserId&&result.ownerUserId!==userId))return null;
+    result.ownerUserId=userId;save();return clone(result);
+  }
+
   function markResultCloudSynced(clientResultId,cloud={}){
     const result=state.recentResults.find(r=>r.clientResultId===clientResultId);
     if(!result) return null;
@@ -979,6 +988,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
       id:"r-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
       clientResultId:makeClientResultId(),
       recordedAtStep:3,
+      ownerUserId:state.auth?.user?.id||state.auth?.guestUserId||null,
       cloudSyncStatus:"pending",
       gameId,
       playedAt:new Date().toISOString(),
@@ -1520,7 +1530,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function syncExternalGuestUser(user){
     if(!user?.id || !user.is_anonymous) throw new Error("Invalid guest player.");
-    if(state.auth?.status==="authenticated") resetPlayerIdentity();
+    if(state.auth?.status==="authenticated" || (state.auth?.guestUserId && state.auth.guestUserId!==user.id)) resetPlayerIdentity();
     if(state.auth?.guestUserId===user.id) return authState();
     state.auth={...state.auth,status:"guest",user:null,provider:null,
       guestUserId:user.id,cloudSync:true};
@@ -1532,6 +1542,9 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   function completeGuestClaim(claim){
     const skipped=new Set(claim.skipped_client_result_ids||[]);
     state.recentResults=state.recentResults.filter(r=>!skipped.has(r.clientResultId));
+    if(claim.claimed&&claim.fromUserId&&claim.toUserId){
+      state.recentResults.forEach(r=>{if(r.ownerUserId===claim.fromUserId)r.ownerUserId=claim.toUserId;});
+    }
     save();
   }
 
@@ -1797,6 +1810,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     getDaily: async () => daily(),
     getPersonalBest: async gameId => personalBest(gameId),
     getRecentResults: async gameId => recentResults(gameId),
+    bindResultOwner: async (id,userId) => bindResultOwner(id,userId),
     getPendingCloudResults: async () => pendingCloudResults(),
     syncDailyChallengeMeta: async daily => syncDailyChallengeMeta(daily),
     getPendingDailyVerifications: async () => pendingDailyVerifications(),
@@ -3078,7 +3092,7 @@ window.BrainiPerf=(function(){
 
     cloudPromise=(async()=>{
       await ensureSupabase();
-      await loadScript(new URL(`cloud.bundle.js?v=41.51.0`,jsBase).href);
+      await loadScript(new URL(`cloud.bundle.js?v=41.52.0`,jsBase).href);
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
     })();

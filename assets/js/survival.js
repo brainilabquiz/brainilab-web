@@ -73,7 +73,7 @@ window.BrainiSurvival=(function(){
     next.onclick=()=>{if(finished||next.hidden)return;next.hidden=true;if(lives<=0||idx>=questions.length-1)finish();else{idx++;render()}};
     async function finish(){if(finished)return;finished=true;const played=details.length,timeSec=Math.max(1,Math.round((performance.now()-started)/1000));try{BrainiData.recordAnytimeHistory?.("survival",details.map(x=>x.questionId))}catch{}
       healthTracker?.complete(details.map((x,i)=>({contentId:x.questionId,position:i+1,attempts:1,isCorrect:x.isCorrect,responseTimeMs:x.responseTimeMs})));
-      const payload={score,correct,total:played,accuracy:played?Math.round(correct/played*100):0,timeSec,livesRemaining:lives,bestCombo:null,contentSource:source};
+      const payload={survivalAnswers:details,score,correct,total:played,accuracy:played?Math.round(correct/played*100):0,timeSec,livesRemaining:lives,bestCombo:null,contentSource:source};
       stage.hidden=true;resultEl.hidden=false;
       await BrainiPostGame.complete(resultEl,{result:payload,gameId:'survival',name:'Survival',metrics:[{label:'Questions faced',value:played},{label:'Lives left',value:Math.max(0,lives)}],next:{href:'/games/survival/',label:'Play again'}},{
         save:()=>BrainiData.api.submitGameResult('survival',payload),
