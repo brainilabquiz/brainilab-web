@@ -3,6 +3,7 @@ import {readdir,readFile} from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 import './test-daily-choice.mjs';
+import './test-game-icon-assets.mjs';
 let scripts=0,pages=0;
 async function scan(dir){
  for(const entry of await readdir(dir,{withFileTypes:true})){
@@ -25,7 +26,7 @@ async function scan(dir){
 await scan('.');
 const shell=(await readFile('assets/js/shell.bundle.js','utf8')).replaceAll('\r\n','\n');
 if(shell.indexOf('window.BrainiDailyRules=')>shell.indexOf('window.BrainiData'))throw Error('Daily rules must load before data');
-for(const file of ['daily-rules.js','daily-choice-guard.js','data.js']){
+for(const file of ['daily-rules.js','daily-choice-guard.js','data.js','icon-system.js']){
  const source=(await readFile('assets/js/'+file,'utf8')).replaceAll('\r\n','\n').trim();if(!shell.includes(source))throw Error('Stale shell bundle: '+file);
 }
 console.log(`PASS site integrity: ${scripts} scripts, ${pages} HTML pages, inline JS/JSON, merge conflicts and shell consistency.`);
