@@ -14,12 +14,9 @@ const tick=()=>new Promise(r=>setTimeout(r,10));
 async function round(w){for(let i=0;i<article.quiz.questions.length;i++){w.document.querySelector(`[name="question-${i}"][value="${article.quiz.questions[i].answer}"]`).checked=true;w.document.querySelector('form[data-lesson-quiz]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await tick();w.document.querySelector('[data-quiz-next]').click();await tick();}}
 function dom(){return new JSDOM(html,{url:'https://brainilabgames.com/learn/'+article.slug+'/',runScripts:'outside-only'});}
 const guest=dom(),w=guest.window;w.eval(bundle);await tick();
-const lab=w.document.querySelector('[data-academy-lab=decimals]'),slider=lab.querySelector('input'),mode=lab.querySelector('select'),output=lab.querySelector('[data-lab-output]');
-assert.equal(lab.querySelectorAll('.is-filled').length,50);
-mode.value='100';mode.dispatchEvent(new w.Event('change'));assert.equal(slider.value,'50');assert.match(output.textContent,/0.50/);
-slider.value='5';slider.dispatchEvent(new w.Event('input'));assert.equal(lab.querySelectorAll('.is-filled').length,5);assert.match(output.textContent,/smaller than 0.5/);
-mode.value='10';mode.dispatchEvent(new w.Event('change'));assert.match(output.textContent,/rounds to the nearest/);assert.equal(slider.value,'1');
-for(const n of [0,10]){slider.value=n;slider.dispatchEvent(new w.Event('input'));assert.equal(lab.querySelectorAll('.is-filled').length,n*10);}
+assert.equal(w.document.querySelector('[data-academy-lab]'),null);
+assert.equal(w.document.querySelector('.article-optional').open,false);
+w.document.querySelector('.article-optional').open=true;
 await round(w);
 assert.equal(w.document.querySelector('[data-completion-panel]').hidden,false);
 assert.match(w.document.querySelector('[data-completion-progress]').textContent,/1 of 6.*17%/);
@@ -49,4 +46,4 @@ client.rpc=async()=>({data:{xp_awarded:0}});sw.document.querySelector('[data-qui
 assert.match(sw.document.querySelector('[data-completion-xp]').textContent,/already earned/);
 sw.dispatchEvent(new sw.CustomEvent('brainilab:backend-auth',{detail:{session:null}}));await tick();assert.equal(sw.document.querySelector('[data-completion-panel]').hidden,true);
 signed.window.close();
-console.log('PASS: decimal values/mode/bounds; guest progress; gaps; whole-course next step; XP failure/retry/replay and account switch.');
+console.log('PASS: folded optional quiz; guest progress; gaps; whole-course next step; XP failure/retry/replay and account switch.');

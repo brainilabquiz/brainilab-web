@@ -1,11 +1,12 @@
+import {labBundle,labMarkup} from './academy-lab-fixture.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const manifest=JSON.parse(readFileSync('tools/academy-new-manifest.json','utf8'));
 for(const {slug,kind} of manifest){
- const dom=new JSDOM(readFileSync(`learn/${slug}/index.html`,'utf8'),{url:`https://brainilabgames.com/learn/${slug}/`,runScripts:'outside-only'}),w=dom.window;
- w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));const lab=w.document.querySelector('[data-academy-lab]'),out=lab.querySelector('[data-lab-output]'),inputs=[...lab.querySelectorAll('input,select')];
+ const dom=new JSDOM(labMarkup(slug),{url:`https://brainilabgames.com/learn/${slug}/`,runScripts:'outside-only'}),w=dom.window;
+ w.eval(labBundle);const lab=w.document.querySelector('[data-academy-lab]'),out=lab.querySelector('[data-lab-output]'),inputs=[...lab.querySelectorAll('input,select')];
  const set=(i,value)=>{inputs[i].value=value;inputs[i].dispatchEvent(new w.Event('input',{bubbles:true}));};
  assert.equal(lab.dataset.academyLab,kind);assert.ok(out.textContent.length>25,slug);
  if(kind==='sharing'){assert.match(out.textContent,/4 in each bowl, with 1 left over/);set(0,0);assert.match(out.textContent,/0 in each bowl, with 0 left over/);}

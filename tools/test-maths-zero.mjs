@@ -1,3 +1,4 @@
+import {labBundle,labMarkup} from './academy-lab-fixture.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
@@ -7,8 +8,8 @@ const path=JSON.parse(readFileSync('content/paths/maths-from-zero.json','utf8'))
 const lessons=path.lessons.map(l=>({...l,version:'maths-zero-v1'})),done={};
 for(let i=0;i<lessons.length;i++){done[lessons[i].slug]={version:lessons[i].version};assert.equal(pathProgress(lessons,done).percent,Math.round((i+1)/lessons.length*100));}
 for(const lesson of path.lessons.filter(l=>['addition-putting-things-together','subtraction-how-many-are-left','multiplication-equal-groups'].includes(l.slug))){
- const dom=new JSDOM(readFileSync(`learn/${lesson.slug}/index.html`,'utf8'),{url:`https://brainilabgames.com/learn/${lesson.slug}/`,runScripts:'outside-only'}),w=dom.window;
- w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
+ const dom=new JSDOM(labMarkup(lesson.slug),{url:`https://brainilabgames.com/learn/${lesson.slug}/`,runScripts:'outside-only'}),w=dom.window;
+ w.eval(labBundle);
  const lab=w.document.querySelector('[data-academy-lab]'),inputs=[...lab.querySelectorAll('input[type=range]')],output=lab.querySelector('[data-lab-output]');
  const set=(i,value)=>{inputs[i].value=value;inputs[i].dispatchEvent(new w.Event('input',{bubbles:true}));};
  if(lab.dataset.academyLab==='add-basics'){
@@ -32,7 +33,10 @@ for(const lesson of path.lessons.filter(l=>['addition-putting-things-together','
   const cell=lab.querySelector('[data-r="8"][data-c="2"]');cell.click();assert.match(lab.querySelector('.lab-equation').textContent,/8 × 2 = 16/);
   cell.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.match(lab.querySelector('.lab-equation').textContent,/8 × 3 = 24/);
  }
- assert.ok(w.document.querySelector('nav[aria-label="Course chapters"]'));assert.ok(w.document.querySelector('[data-lesson-quiz]'));
+ const page=new JSDOM(readFileSync(`learn/${lesson.slug}/index.html`,'utf8')).window.document;
+ assert.equal(page.querySelector('[data-academy-lab]'),null);
+ assert.equal(page.querySelector('.article-sidebar'),null);
+ assert.ok(page.querySelector('.article-optional [data-lesson-quiz]'));
  dom.window.close();
 }
 console.log('Maths from zero: all three labs, zero/max boundaries, reveal/reset, table keyboard and 33/67/100 completion passed.');

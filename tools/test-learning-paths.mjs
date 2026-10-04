@@ -48,15 +48,16 @@ w.document.querySelector('[data-quiz-retry]').click();assert.equal(w.document.qu
 // Every navigational link carries the explicit new-tab policy.
 for(const a of w.document.querySelectorAll('a[href]')){const external=/^https?:$/.test(a.protocol)&&a.hostname.replace(/^www\./,'')!=='brainilabgames.com';assert.equal(a.target,external?'_blank':'');assert.equal(a.relList.contains('noopener'),external);}
 dom.window.close();pathDom.window.close();
-// Every current Academy lesson has a working in-article lab.
-for(const article of articles.filter(a=>a.quiz)){
- const labDom=new JSDOM(renderPage(template,articles,article,paths),{url:'https://brainilabgames.com/learn/'+article.slug+'/',runScripts:'outside-only'}),lw=labDom.window;
- lw.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
- const lab=lw.document.querySelector('[data-academy-lab]');assert.ok(lab,article.slug);assert.ok(lab.querySelector('[data-lab-output]').textContent.length>25);
- const input=lab.querySelector('input,select');if(input){input.value=input.type==='range'?input.max:input.type==='number'?'2000':'1';input.dispatchEvent(new lw.Event('input',{bubbles:true}));assert.ok(lab.querySelector('[data-lab-output]').textContent.length>20);}
- if(article.slug==='multiply-by-11-in-your-head'){const cell=lab.querySelector('[data-r="8"][data-c="2"]');cell.click();assert.match(lab.querySelector('.lab-equation').textContent,/8 × 2 = 16/);assert.equal(lab.querySelectorAll('button.is-product').length,1);cell.dispatchEvent(new lw.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.match(lab.querySelector('.lab-equation').textContent,/8 × 3 = 24/);}
- if(article.slug==='mental-math-round-and-adjust'){for(let i=0;i<4;i++)lab.querySelector('[data-step]').click();assert.match(lab.querySelector('[data-lab-output]').textContent,/65 real stickers/);}
- labDom.window.close();
+// All articles stay readable: no injected labs or sticky chapter menus.
+for(const article of articles){
+ const doc=new JSDOM(renderPage(template,articles,article,paths)).window.document;
+ assert.equal(doc.querySelector('[data-academy-lab]'),null,article.slug);
+ assert.equal(doc.querySelector('.article-sidebar'),null,article.slug);
+ assert.equal(doc.querySelectorAll('.article-next li').length<=2,true);
+ for(const fold of doc.querySelectorAll('.article-fold'))assert.equal(fold.open,false);
+ assert.equal(doc.querySelectorAll('.article-body>section').length,article.sections.length);
+ if(article.quiz)assert.ok(doc.querySelector('details.article-optional [data-lesson-quiz]'));
+ assert.ok(doc.querySelector('.article-cover img'));
 }
 // Account switches must not reuse guest answers, and old server versions must not erase current local completion.
 const accountDom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),aw=accountDom.window;
