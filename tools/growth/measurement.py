@@ -1,5 +1,6 @@
 """Attach a dated, private GA4 observation without pretending it is a live API sync."""
 import json
+from acquisition import validate as validate_acquisition
 from content_measurement import attach_content
 from datetime import date, datetime
 
@@ -10,6 +11,12 @@ def attach_measurement(report, private):
     if not path.exists():
         return report
     value = json.loads(path.read_text(encoding='utf-8'))
+    if value.get('mode') == 'api_snapshot':
+        clean = validate_acquisition(value)
+        previous = report.get('measurement')
+        if previous and datetime.fromisoformat(previous['observedAt']) > datetime.fromisoformat(clean['observedAt']):
+            return report
+        return {**report, 'measurement': clean}
     if value.get('source') != 'GA4 traffic acquisition UI' or value.get('mode') != 'manual_snapshot':
         raise ValueError('Unsupported measurement source')
     period = value['period']
@@ -26,4 +33,7 @@ def attach_measurement(report, private):
     # guessed organic conversion count. A missing channel row is not a funnel.
     clean = {k: value[k] for k in ['source','mode','observedAt','sessions','directSessions','engagedSessions','events']}
     clean['period'] = {k: period[k] for k in ['start','end']}
+    previous = report.get('measurement')
+    if previous and datetime.fromisoformat(previous['observedAt']) > datetime.fromisoformat(clean['observedAt']):
+        return report
     return {**report, 'measurement': clean}

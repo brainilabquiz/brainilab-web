@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),{JSDOM}=require(process.env.JSDOM_MODULE||'jsdom');
+const {measurementHTML}=await import('../editor/growth-measurement.js');
+const dom=new JSDOM('<main></main>'),root=dom.window.document.querySelector('main');
+const m={schemaVersion:2,property:'555562532',source:'GA4 Data API',mode:'api_snapshot',observedAt:'2026-10-04T10:00:00Z',period:{start:'2026-09-05',end:'2026-10-02'},timezone:'Europe/Madrid',sessions:10,engagedSessions:5,events:40,channels:[{label:'Organic Search',sessions:8,engagedSessions:4}],sources:[{label:'<img src=x onerror=alert(1)>',sessions:8,engagedSessions:4}],quality:{thresholded:true}};
+root.innerHTML=measurementHTML({measurement:m},Date.parse('2026-10-07'));
+assert.match(root.textContent,/Where people find us/);assert.match(root.textContent,/Older than 48 hours/);assert.match(root.textContent,/thresholding/);
+assert.match(root.textContent,/Organic Search/);assert.match(root.textContent,/not a person-by-person conversion funnel/);
+assert.equal(root.querySelectorAll('img,script').length,0);assert.equal(root.querySelectorAll('table caption').length,2);
+assert.ok([...root.querySelectorAll('.growth-table')].every(x=>x.tabIndex===0));
+root.innerHTML=measurementHTML({measurement:{...m,sessions:null,channels:[],sources:[]}},Date.parse('2026-10-04T11:00:00Z'));
+assert.match(root.textContent,/Not measured/);assert.match(root.textContent,/Missing rows are not inferred zeros/);assert.doesNotMatch(root.textContent,/Older than 48 hours/);
+root.innerHTML=measurementHTML({measurement:{mode:'manual_snapshot',source:'GA4 traffic acquisition UI',sessions:43,directSessions:43,engagedSessions:36,events:922}});
+assert.match(root.textContent,/not an automatic GA4 sync/);assert.doesNotMatch(root.textContent,/Where people find us/);
+console.log('Acquisition: source modes, missing metrics, freshness, quality warnings, safe labels and keyboard-accessible tables passed.');

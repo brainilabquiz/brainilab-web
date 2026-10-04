@@ -57,6 +57,33 @@ search demand never replaces first-party clicks. No credentials enter the site.
 
 ## Measurement baseline (2026-10-01)
 
+### Automatic acquisition (2026-10-04)
+
+`python tools/growth/ga4_acquisition.py --private PRIVATE_DATA_DIR` refreshes
+aggregate sessions, engaged sessions and events, plus GA4 session channels and
+source/medium rows. It uses the existing separate Analytics read-only token;
+no new OAuth, scope, tracking event or visitor identifier is required. Defaults:
+28 property-calendar dates ending two UTC days ago. The actual property timezone
+is taken from the API and displayed separately from Search Console dates.
+
+All three queries must complete with consistent pagination, headers and timezone
+before replacing `measurement-latest.json`. Successful same-day/per-period runs
+are reused. Errors preserve the previous snapshot; a concurrent file change
+aborts replacement. Prior observations are retained in private measurement-history.
+The exporter accepts legacy manual observations and API schema version 2, strips
+unrecognized fields, and never replaces a newer attached observation with an older
+one. Unreturned channel rows are absent, not inferred zeros. API totals are queried
+separately; the UI does not sum detailed rows or calculate account conversion rates.
+
+Growth shows channels and sources, collection date, property timezone and quality
+warnings; snapshots older than 48 hours are labeled. Source labels containing
+email-like or malformed values are withheld before persistence. No recipients,
+message text, visitor IDs or tokens are part of this snapshot. Direct is unknown
+referral attribution, not proof of typed-in traffic. Internal testing and consent
+coverage can affect all counts. Today's outreach falls outside the data window.
+Use `test_acquisition.py` and `tools/test-growth-acquisition.mjs` for validation.
+Official dimensions: https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema
+
 ### Content insights (2026-10-04)
 
 Growth now shows a private Content section above opportunities, with search,
@@ -68,8 +95,9 @@ to both new and reused Growth exports through `measurement.py`. The timestamp,
 source and period remain visible. Older observations cannot replace newer ones.
 No counts are embedded in frontend bundles or static public assets.
 
-The initial observation is a manually verified GA4 Pages and screens snapshot,
-not an automatic connection. The existing Search Console scope does not authorize
+The initial observation was a manually verified GA4 Pages and screens snapshot.
+Analytics API collection was authorized and verified on 4 October; the following
+authorization steps are recovery documentation. The Search Console scope does not authorize
 Analytics. After explicit owner approval, use `ga4_content.py authorize --private
 PRIVATE_DATA_DIR` to request only `analytics.readonly` with PKCE/state and a local
 callback. It uses the existing private desktop client but saves a separate
@@ -108,9 +136,9 @@ their existing `game_start`/`game_complete` events. Email sign-up requests emit
 `registration_request` only after a successful request, never `sign_up`.
 An email request or sign-in is not evidence of a newly verified account.
 
-Next: verify processed GA4 events and obtain an explicitly authorized read-only
-GA4 API connection if unattended import is wanted. Confirmed-account measurement
-is now implemented separately as described below.
+Next: verify processed game/account-interest events without presenting aggregate
+event counts as people. Analytics acquisition and content refresh now use the
+authorized read-only connection. Confirmed-account measurement remains separate.
 Do not reuse the Search Console token for a broader scope or mark unknown
 conversion counts as zero. No analytics data or credentials are public assets.
 
