@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/games/",
-    "name": "All games"
+    "url": "/learn/paths/word-detective/",
+    "name": "Word detective: follow the clues"
   },
   "game": {
     "url": "/games/connections/",
@@ -37,6 +37,7 @@
       "name": "Merriam-Webster — Fast"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Ready to look at familiar clues in a different way? Try Connections.",
   "sections": [
     {
@@ -56,12 +57,49 @@
     },
     {
       "id": "try-it",
-      "html": "<p>Read this little scene: <strong>“The runner moved fast, but the gate was held fast by a rusty bolt.”</strong> Which use describes movement, and which describes the lack of it?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p>The runner moves <strong>quickly</strong>. The gate is held <strong>firmly in place</strong>. The same spelling helps describe opposite situations.</p></details><p>Now write two instructions using <em>dust</em>, one for cleaning and one for cooking. Add enough context that a reader cannot confuse them.</p><p>That habit of trying another meaning is also useful when you <a href=\"/learn/connections-puzzles-find-the-hidden-link/\">look for the link in a Connections puzzle</a>. A familiar-looking word may have another job waiting for it.</p>",
+      "html": "<p>Read this little scene: <strong>“The runner moved fast, but the gate was held fast by a rusty bolt.”</strong> Which use describes movement, and which describes the lack of it?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p>The runner moves <strong>quickly</strong>. The gate is held <strong>firmly in place</strong>. The same spelling helps describe opposite situations.</p></details><p>Now write two instructions using <em>dust</em>, one for cleaning and one for cooking. Add enough context that a reader cannot confuse them.</p><p>That habit of trying another meaning is also useful when you <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">look for the link in a Connections puzzle</a>. A familiar-looking word may have another job waiting for it.</p>",
       "title": "Can you spot the direction?"
     }
   ],
-  "updatedAt": "2026-09-30T17:19:01.76865+00:00",
+  "updatedAt": "2026-10-04T11:22:29.978Z",
   "description": "Dust can mean adding something or taking it away. Meet contronyms, the words that pull in two directions, and try a few examples.",
-  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-30T19:19:01.76865+02:00",
+  "quiz": {
+    "version": "word-detective-v1",
+    "questions": [
+      {
+        "prompt": "You dust the shelf to clean it. What are you doing?",
+        "options": [
+          "Adding flour",
+          "Moving it quickly",
+          "Removing dust",
+          "Painting it"
+        ],
+        "answer": 2,
+        "explanation": "In this cleaning instruction, dust means taking the particles away."
+      },
+      {
+        "prompt": "A wheel is stuck fast. What does fast mean here?",
+        "options": [
+          "Firmly fixed in place",
+          "Moving quickly",
+          "Covered in sugar",
+          "Easy to turn"
+        ],
+        "answer": 0,
+        "explanation": "Stuck fast describes something held firmly. The surrounding words tell you which meaning fits."
+      },
+      {
+        "prompt": "Why is bat, meaning an animal or sporting equipment, not a contronym?",
+        "options": [
+          "It has only one meaning",
+          "Its meanings are different, but not opposites",
+          "It must sound different",
+          "All words with two meanings are contronyms"
+        ],
+        "answer": 1,
+        "explanation": "A contronym has opposing meanings. An animal and a piece of sporting equipment are different things, not opposite meanings."
+      }
+    ]
+  }
 }

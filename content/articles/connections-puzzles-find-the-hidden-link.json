@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/games/",
-    "name": "All games"
+    "url": "/learn/paths/word-detective/",
+    "name": "Word detective: follow the clues"
   },
   "game": {
     "url": "/games/connections/",
@@ -18,20 +18,25 @@
   "topic": "Words & puzzles",
   "status": "published",
   "related": [
-    "number-sequences-look-at-the-gaps",
-    "remember-quiz-answers-tomorrow"
+    "homophones-same-sound-different-meaning",
+    "words-that-mean-their-own-opposite"
   ],
   "sources": [
     {
       "url": "/games/connections/",
       "name": "BrainiLab — Connections rules and play"
+    },
+    {
+      "name": "Merriam-Webster — Bark: a tree covering or a sound",
+      "url": "https://www.merriam-webster.com/dictionary/bark"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try a round of Connections and see whether you can find a link that fits the whole set.",
   "sections": [
     {
       "id": "first-association",
-      "html": "<p>Bark, trunk, leaf, root. You probably thought of a tree before reaching the end of the list. Yet bark can also be a dog’s sound, a trunk can hold luggage, and a root can belong to an equation.</p><p>That is what makes a connections puzzle interesting: several meanings may be possible, but one relationship brings the clues together. Your first thought is a good place to start. Check it against the rest of the set before choosing.</p>",
+      "html": "<p>Bark, trunk, leaf, root. You probably thought of a tree before reaching the end of the list. Yet bark can also be a dog’s sound, a trunk can hold luggage, and a root can be part of a plant.</p><p>That is what makes a connections puzzle interesting: several meanings may be possible, but one relationship brings the clues together. Your first thought is a good place to start. Check it against the rest of the set before choosing.</p><p>The dictionary lists both the tree covering and the dog sound under <a href=\"https://www.merriam-webster.com/dictionary/bark\" target=\"_blank\" rel=\"noopener noreferrer\">bark</a>. The clue stays the same; the meaning you choose changes.</p>",
       "title": "Start with the first connection you notice"
     },
     {
@@ -50,8 +55,45 @@
       "title": "Make sense of the answer"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-04T11:22:29.978Z",
   "description": "A word can have more than one meaning. Here’s how to spot the connection that fits every clue.",
   "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "quiz": {
+    "version": "word-detective-v1",
+    "questions": [
+      {
+        "prompt": "Which relationship fits bark, trunk, leaf and root in the tree example?",
+        "options": [
+          "They are all sounds",
+          "They are all pieces of luggage",
+          "They all mean exactly the same thing",
+          "They are parts of a tree"
+        ],
+        "answer": 3,
+        "explanation": "Thinking of a tree gives each clue a place in the same group."
+      },
+      {
+        "prompt": "Three clues fit your idea but the fourth does not. What should you try?",
+        "options": [
+          "Ignore the fourth clue",
+          "Check another meaning and test the link against every clue",
+          "Choose the longest word",
+          "Assume the puzzle has a mistake"
+        ],
+        "answer": 1,
+        "explanation": "Another meaning may make the awkward clue fit. A useful link explains the whole set."
+      },
+      {
+        "prompt": "What links shift, space and return in the computer example?",
+        "options": [
+          "They are keyboard keys",
+          "They are tree parts",
+          "They are homophones",
+          "They are baking ingredients"
+        ],
+        "answer": 0,
+        "explanation": "In the stated computer context, all three name keys on a keyboard."
+      }
+    ]
+  }
 }

@@ -1,11 +1,13 @@
 import {equation,clockFace,moonScene,seasonsScene,centuryScene,leapScene,enhanceControls,updateControls} from './academy-visuals.js';
 import {foundationLab} from './academy-foundations.js';
+import {wordLab} from './academy-words.js';
 function slider(label,min,max,value){return `<label class="lab-range"><span class="lab-control-label">${label}<b data-range-value aria-hidden="true">${value}</b></span><input aria-label="${label}" type="range" min="${min}" max="${max}" value="${value}" /></label>`;}
 function options(label,values){return `<label>${label}<select>${values.map((v,i)=>`<option value="${i}">${v}</option>`).join('')}</select></label>`;}
 export function initLabs(){
  for(const el of document.querySelectorAll('[data-academy-lab]')){
   const kind=el.dataset.academyLab,controls=el.querySelector('[data-lab-controls]'),visual=el.querySelector('[data-lab-visual]'),out=el.querySelector('[data-lab-output]');
   if(kind==='decimals'){decimalLab(controls,visual,out);continue;}
+  if(wordLab(kind,controls,visual,out))continue;
   if(foundationLab(kind,controls,visual,out))continue;
   if(['add-basics','subtract-basics','groups-basics'].includes(kind)){beginnerLab(el,kind,controls,visual,out);continue;}
   let step=0;
