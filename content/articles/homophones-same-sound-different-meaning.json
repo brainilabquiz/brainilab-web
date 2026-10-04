@@ -1,72 +1,89 @@
 {
-  "slug": "homophones-same-sound-different-meaning",
-  "title": "Flour or flower? A tiny word puzzle for your ears",
-  "description": "Meet homophones: words that sound alike but mean different things. Try three paired clues, then test another kind of connection.",
-  "topic": "Words & puzzles",
-  "status": "draft",
-  "order": 80,
-  "authorId": "biel-sarda",
-  "publishedAt": null,
-  "updatedAt": "2026-10-01T16:00:00Z",
-  "cover": {
-    "src": "/assets/images/learn/homophones-same-sound-different-meaning.webp",
-    "small": "/assets/images/learn/homophones-same-sound-different-meaning-small.webp",
-    "thumbnail": "/assets/images/learn/homophones-same-sound-different-meaning-thumb.webp",
-    "alt": "A bowl of flour beside a yellow flower in a small glass vase",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
   },
   "game": {
     "url": "/games/connections/",
     "name": "Connections"
   },
-  "hub": {
-    "url": "/learn/",
-    "name": "Learn"
+  "slug": "homophones-same-sound-different-meaning",
+  "cover": {
+    "alt": "A bowl of flour beside a yellow flower in a small glass vase",
+    "src": "/assets/images/learn/homophones-same-sound-different-meaning.webp",
+    "small": "/assets/images/learn/homophones-same-sound-different-meaning-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/homophones-same-sound-different-meaning-thumb.webp"
   },
-  "sections": [
-    {
-      "id": "same-sound",
-      "title": "A shopping list with a possible misunderstanding",
-      "html": "<p>Someone asks you to bring a flower. You arrive with a bag of flour. The cake might be rescued; the bouquet is another matter.</p><p><strong>Homophones are words pronounced alike that have different meanings.</strong> Their spellings can differ too. Merriam-Webster gives <em>to</em>, <em>too</em> and <em>two</em> as an example. Its entries for <em>flour</em> and <em>flower</em> also show the same pronunciation.</p><p>The useful clue is often outside the word. A vase suggests one meaning; a recipe suggests the other. Try saying a pair aloud, then put each word into a sentence.</p>"
-    },
-    {
-      "id": "paired-clues",
-      "title": "Three pairs to untangle",
-      "html": "<p>Find two different words for each pair of clues. The answers should sound the same. Read them aloud before opening the answer.</p><ol><li>A baking ingredient / something with petals.</li><li>A chess piece that can jump / the time after sunset.</li><li>A number after one / also.</li></ol><details class=\"practice-answer\"><summary>Check the pairs</summary><p><strong>Flour / flower. Knight / night. Two / too.</strong> In the third pair, “I want two biscuits” counts them; “I want a biscuit too” adds another person to the request.</p></details><p>Now write one deliberately silly sentence using both words from a pair. A knight who only rides at night? That works. The aim is to make the meanings distinct even when the sounds are identical.</p>"
-    },
-    {
-      "id": "different-links",
-      "title": "Same sound is only one possible link",
-      "html": "<p>Look at <strong>flour, sugar, butter, eggs</strong>. Their shared link is meaning: they can be baking ingredients. Compare <strong>flour and flower</strong>. That link is sound. “Connected” does not always mean “in the same category”.</p><p>This matters in a word puzzle: test the proposed relationship against every clue. If a sound-based idea fits only half the words, keep looking. Our <a href=\"/learn/connections-puzzles-find-the-hidden-link/\">Connections guide</a> shows how to check a candidate link without making exceptions.</p>"
-    },
-    {
-      "id": "say-it-your-way",
-      "title": "Your pronunciation matters",
-      "html": "<p>A sound-based puzzle depends on how words are pronounced. If a pair does not sound alike in your accent, check the pronunciation guide before deciding you missed something.</p><p>For a different twist, meet <a href=\"/learn/words-that-mean-their-own-opposite/\">words that can mean their own opposite</a>. There the surprise comes from meaning, even when the spelling stays exactly the same.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Merriam-Webster — Homophone",
-      "url": "https://www.merriam-webster.com/dictionary/homophone"
-    },
-    {
-      "name": "Merriam-Webster — Flour",
-      "url": "https://www.merriam-webster.com/dictionary/flour"
-    },
-    {
-      "name": "Merriam-Webster — Flower",
-      "url": "https://www.merriam-webster.com/dictionary/flower"
-    },
-    {
-      "name": "Merriam-Webster — Knight",
-      "url": "https://www.merriam-webster.com/dictionary/knight"
-    }
-  ],
+  "order": 80,
+  "title": "Flour or flower? Same sound, different meanings",
+  "topic": "Words & puzzles",
+  "status": "published",
   "related": [
     "connections-puzzles-find-the-hidden-link",
     "words-that-mean-their-own-opposite"
   ],
-  "practice": "Try Connections and look for a relationship that fits every clue. It might involve meaning, a category or another shared feature."
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/homophone",
+      "name": "Merriam-Webster — Homophone"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/flour",
+      "name": "Merriam-Webster — Flour"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/flower",
+      "name": "Merriam-Webster — Flower"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/knight",
+      "name": "Merriam-Webster — Knight"
+    },
+    {
+      "name": "Merriam-Webster — Night",
+      "url": "https://www.merriam-webster.com/dictionary/night"
+    },
+    {
+      "name": "Merriam-Webster — Two",
+      "url": "https://www.merriam-webster.com/dictionary/two"
+    },
+    {
+      "name": "Merriam-Webster — Too",
+      "url": "https://www.merriam-webster.com/dictionary/too"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try Connections and look for a relationship that fits every clue. It might involve meaning, a category or another shared feature.",
+  "sections": [
+    {
+      "id": "same-sound",
+      "title": "One sound, two very different shopping lists",
+      "html": "<p>Someone asks you to bring a flower. You arrive with a bag of flour. Useful for a cake; less useful for a bouquet.</p><p><strong>Homophones are words that share a pronunciation but have different meanings.</strong> They can have different spellings, too. Say <em>flour</em> and <em>flower</em> aloud: the <a href=\"https://www.merriam-webster.com/dictionary/flour\" target=\"_blank\" rel=\"noopener noreferrer\">flour</a> and <a href=\"https://www.merriam-webster.com/dictionary/flower\" target=\"_blank\" rel=\"noopener noreferrer\">flower</a> entries in Merriam-Webster give them the same pronunciation.</p><p>You do not need to remember a grammar label to spot the trick. Just ask: do these words sound alike, and do they mean different things?</p>"
+    },
+    {
+      "id": "sentence-clues",
+      "title": "Let the rest of the sentence help",
+      "html": "<p>If you hear the word by itself, the sound may not tell you which meaning someone intends. The words around it often do. This is called <strong>context</strong>.</p><div class=\"table-scroll\"><table><caption>Same sound, different jobs</caption><thead><tr><th scope=\"col\">Sentence</th><th scope=\"col\">Word to choose</th><th scope=\"col\">Helpful clue</th></tr></thead><tbody><tr><td>Put the ___ in the vase.</td><td>flower</td><td>A vase holds flowers.</td></tr><tr><td>Stir the ___ into the cake mixture.</td><td>flour</td><td>Flour is a baking ingredient.</td></tr><tr><td>I would like ___ biscuits.</td><td>two</td><td>We are counting biscuits.</td></tr><tr><td>I would like a biscuit ___.</td><td>too</td><td>This person would also like one.</td></tr></tbody></table></div><p>The last two words appear in <a href=\"https://www.merriam-webster.com/dictionary/homophone\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster’s explanation of homophones</a>, alongside <em>to</em>. Matching sounds do not guarantee matching spelling.</p>"
+    },
+    {
+      "id": "paired-clues",
+      "title": "Try three pairs with your ears",
+      "html": "<p>Find one word for each clue. Each pair should sound the same. Say your answers aloud before opening the answers.</p><ol><li>A baking ingredient / something with petals.</li><li>A horse-shaped chess piece / the dark part of the day.</li><li>A number after one / another way to say “also”.</li></ol><details class=\"practice-answer\"><summary>Check the three pairs</summary><p><strong>1. Flour / flower.</strong> One goes into your cake; the other can go in a vase.</p><p><strong>2. Knight / night.</strong> The chess piece is a knight. Night is the time between dusk and dawn. The dictionary gives <a href=\"https://www.merriam-webster.com/dictionary/knight\" target=\"_blank\" rel=\"noopener noreferrer\">knight</a> and <a href=\"https://www.merriam-webster.com/dictionary/night\" target=\"_blank\" rel=\"noopener noreferrer\">night</a> the same pronunciation.</p><p><strong>3. Two / too.</strong> Two counts things. Too can mean also: “I want to come too.”</p></details><p>Now make up a silly sentence using both words from one pair. “The knight only rides at night” keeps the two meanings clear, even though they sound alike.</p>"
+    },
+    {
+      "id": "different-links",
+      "title": "A word puzzle can connect sounds or meanings",
+      "html": "<p>Look at <strong>flour, sugar, butter and eggs</strong>. They belong together because they can all be baking ingredients. Now look at <strong>flour and flower</strong>. This time the connection is sound.</p><p>In a word puzzle, try explaining the relationship in one short sentence. Then check that it fits every clue. Our <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">Connections guide</a> shows how to test a possible link.</p>"
+    },
+    {
+      "id": "say-it-your-way",
+      "title": "Keep listening, not just looking",
+      "html": "<p>Pronunciation can vary between accents. If a suggested pair does not sound alike to you, check the dictionary’s pronunciation or audio before assuming you have misunderstood the puzzle.</p><p>Want a different kind of word surprise? Try <a href=\"/learn/words-that-mean-their-own-opposite/\" target=\"_blank\" rel=\"noopener noreferrer\">words that can mean their own opposite</a>. Their twist is in the meaning.</p>"
+    }
+  ],
+  "updatedAt": "2026-10-04T09:44:37.976Z",
+  "description": "What are homophones? Start with flour and flower, use sentence clues to tell them apart, and try three quick word puzzles.",
+  "publishedAt": "2026-10-04T09:44:37.976Z"
 }
