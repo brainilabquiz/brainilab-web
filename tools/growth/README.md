@@ -57,6 +57,41 @@ search demand never replaces first-party clicks. No credentials enter the site.
 
 ## Measurement baseline (2026-10-01)
 
+### Content insights (2026-10-04)
+
+Growth now shows a private Content section above opportunities, with search,
+content-type filters and ordering by views or active users. Article, Academy
+lesson, course introduction and library rows are distinct; classify lessons
+against the current published Supabase course inventory before importing.
+`content_measurement.py` validates and attaches `data/content-measurement-latest.json`
+to both new and reused Growth exports through `measurement.py`. The timestamp,
+source and period remain visible. Older observations cannot replace newer ones.
+No counts are embedded in frontend bundles or static public assets.
+
+The initial observation is a manually verified GA4 Pages and screens snapshot,
+not an automatic connection. The existing Search Console scope does not authorize
+Analytics. After explicit owner approval, use `ga4_content.py authorize --private
+PRIVATE_DATA_DIR` to request only `analytics.readonly` with PKCE/state and a local
+callback. It uses the existing private desktop client but saves a separate
+`google-analytics-token.json`; the Search Console token is preserved. Enable the
+Google Analytics Data API in the authorized Google project if required. Do not
+run authorization silently or copy tokens into the admin interface.
+
+`python tools/growth/ga4_content.py sync --private PRIVATE_DATA_DIR --start YYYY-MM-DD --end YYYY-MM-DD`
+reads aggregate page views, active users and article_read event counts from
+property 555562532, limited to brainilabgames.com and /learn/. It requires a validated
+inventory snapshot first, rejects partial/unstable results, retains history and
+only replaces the snapshot after both queries succeed. End at least two UTC days
+ago. Refresh inventory from published articles/courses before each collection.
+Then run the daily exporter and the existing backed-up Supabase ingest procedure.
+Authorize and verify the first real API sync before adding it to the daily cycle.
+
+Missing rows/metrics remain null, not inferred zeros. Reading signals are event
+counts, not unique readers or comprehension. Academy completion is unmeasured here;
+course-introduction users cannot be added to lesson users. Samples may include
+internal testing; no organic uplift is inferred. GA4 and GSC have separate dates.
+Official API: https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport
+
 `measurement.py` attaches the private `data/measurement-latest.json` observation
 to both fresh exports and same-day reuse. The current observation comes from the
 signed-in GA4 Traffic acquisition report (3–30 September 2026, all users, 100%

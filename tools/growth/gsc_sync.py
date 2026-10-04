@@ -70,7 +70,7 @@ def client():
     return config
 
 
-def authorize():
+def authorize(scope=SCOPE, token_file='google-token.json', label='Search Console'):
     config=client();state=secrets.token_urlsafe(32);verifier=secrets.token_urlsafe(64)
     challenge=base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')
     result={}
@@ -87,8 +87,8 @@ def authorize():
     with HTTPServer(('127.0.0.1',0),Callback) as server:
         server.timeout=1
         redirect=f'http://127.0.0.1:{server.server_port}/callback'
-        url=AUTH_URL+'?'+urlencode({'client_id':config['client_id'],'redirect_uri':redirect,'response_type':'code','scope':SCOPE,'access_type':'offline','prompt':'consent','state':state,'code_challenge':challenge,'code_challenge_method':'S256'})
-        print('Open this Google authorization URL yourself and approve read-only Search Console access:',flush=True)
+        url=AUTH_URL+'?'+urlencode({'client_id':config['client_id'],'redirect_uri':redirect,'response_type':'code','scope':scope,'access_type':'offline','prompt':'consent','state':state,'code_challenge':challenge,'code_challenge_method':'S256'})
+        print(f'Open this Google authorization URL yourself and approve read-only {label} access:',flush=True)
         print(url,flush=True)
         deadline=time.monotonic()+300
         while not result and time.monotonic()<deadline:
@@ -96,18 +96,18 @@ def authorize():
     if not result.get('code'):
         raise RuntimeError('Authorization was declined or timed out; no token was stored.')
     token=request_json(TOKEN_URL,{'client_id':config['client_id'],'client_secret':config['client_secret'],'code':result['code'],'redirect_uri':redirect,'grant_type':'authorization_code','code_verifier':verifier},form=True)
-    if SCOPE not in token.get('scope','').split() or not token.get('refresh_token'):
+    if scope not in token.get('scope','').split() or not token.get('refresh_token'):
         raise RuntimeError('Read-only scope or offline token missing. Connection not saved.')
-    private_write(PRIVATE/'google-token.json',{'refresh_token':token['refresh_token'],'scope':SCOPE})
+    private_write(PRIVATE/token_file,{'refresh_token':token['refresh_token'],'scope':scope})
     print('Read-only authorization saved privately. Run sync to verify data access.')
 
 
-def access_token():
-    config=client();path=PRIVATE/'google-token.json'
+def access_token(scope=SCOPE, token_file='google-token.json'):
+    config=client();path=PRIVATE/token_file
     if not path.exists():
         raise RuntimeError('Google authorization is still required. Run authorize first.')
     saved=json.loads(path.read_text(encoding='utf-8'))
-    if saved.get('scope')!=SCOPE:
+    if saved.get('scope')!=scope:
         raise RuntimeError('Unexpected stored scope; reconnect with read-only access.')
     result=request_json(TOKEN_URL,{'client_id':config['client_id'],'client_secret':config['client_secret'],'refresh_token':saved['refresh_token'],'grant_type':'refresh_token'},form=True)
     if not result.get('access_token'):
