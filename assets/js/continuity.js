@@ -50,7 +50,14 @@ window.BrainiContinuity=(()=>{
     const summary=window.BrainiProgression?.getCached?.();
     const validOwner=!summary?.progression?.user_id||owner===summary.progression.user_id;
     const reward=validOwner&&summary?.recent_rewards?.find(r=>r.client_result_id===result.clientResultId);
-    if(!reward?.verified)return auth.status==='authenticated'?'<p class="post-reward-note" role="status">Checking your XP. Your result is saved on this device.</p>':'<p class="post-reward-note">Playing as a guest. <a data-post-action="progress" href="/profile/?section=progress">Sign in to keep your progress across devices</a>.</p>';
+    if(!reward?.verified){
+      if(auth.status!=='authenticated')return '<p class="post-reward-note">Playing as a guest. <a data-post-action="progress" href="/profile/?section=progress">Sign in to keep your progress across devices</a>.</p>';
+      const saved=window.BrainiData?.recentResults?.(result.gameId)?.find(r=>r.clientResultId===result.clientResultId)||result;
+      const checked=saved.answersVerified===true||[saved.answerVerificationStatus,saved.dailyAnswerVerificationStatus,saved.dailyGameVerificationStatus].includes('verified');
+      if(window.BrainiProgression?.getLastError?.())return '<p class="post-reward-note">Your result is saved. Progress is temporarily unavailable. <button type="button" class="post-refresh-progress" data-refresh-progress>Refresh progress</button></p>';
+      if(checked)return '<p class="post-reward-note">Result verified. <a href="/profile/?section=progress">See your progress</a>.</p>';
+      return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Result saved. XP is awaiting verification.':'Saved on this device. Waiting to sync.'}</p>`;
+    }
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp),change=changes.get(result.clientResultId),before=change&&BrainiProgressUI.xpProgress(1,change.before),up=before&&progress.level>before.level;
     const player=window.BrainiData?.player?.()||{};let photo='';try{const u=new URL(player.avatarUrl);if(u.protocol==='https:')photo=esc(u.href);}catch{}
     const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>`;
@@ -68,12 +75,20 @@ window.BrainiContinuity=(()=>{
     observeRewards();
     window.BrainiUI?.hydrate?.();
     document.querySelectorAll('[data-braini-continuity]').forEach(el=>{el.innerHTML=markup({compact:el.dataset.brainiContinuity==='compact'});el.hidden=!el.innerHTML;});
-    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward){const html=rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)});if(el.dataset.rewardHtml!==html){el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);}}});
+    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward){const html=rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)});if(el.dataset.rewardHtml!==html){const restoreFocus=el.querySelector('[data-refresh-progress]')===document.activeElement;el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);if(restoreFocus)(el.querySelector('[data-refresh-progress]')||el.querySelector('a'))?.focus({preventScroll:true});}}});
   }
   render(); // Deferred shell runs after HTML parsing, before cloud requests complete.
   document.addEventListener('DOMContentLoaded',render);
   window.addEventListener('brainilab:authchange',render);
   window.addEventListener('brainilab:progressionchange',render);
+  window.addEventListener('brainilab:progressionsync',render);
+  document.addEventListener('click',async event=>{
+    const button=event.target.closest?.('[data-refresh-progress]');
+    if(!button||button.disabled)return;
+    button.disabled=true;button.textContent='Updating…';
+    try{await window.BrainiProgression?.sync?.({fresh:true});}
+    finally{render();if(button.isConnected){button.disabled=false;button.textContent='Refresh progress';}}
+  });
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();const cached=window.BrainiProgression?.getCached?.();if(cached?.continuity?.today!==new Date().toISOString().slice(0,10))window.BrainiProgression?.sync?.();}});
   function scheduleReset(){
     const now=new Date(),next=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1);
