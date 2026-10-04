@@ -9,7 +9,7 @@ w.BrainiData={getState:()=>({auth:{status:'authenticated',user:{id:owner}}}),pla
 w.BrainiIcons={product:()=>'<svg></svg>'};w.BrainiProgression={getCached:()=>summary};w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',primary:'mathrush'})};
 for(const f of ['progression-ui','continuity','post-game'])w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
 const result={clientResultId:'new',gameId:'mathrush',dailyNumber:32,score:1000,correct:8,total:10};
-w.BrainiPostGame.mount(root,{result});assert.match(root.textContent,/Checking your XP/);assert.equal(root.querySelector('[role=progressbar]'),null);
+w.BrainiPostGame.mount(root,{result});assert.match(root.textContent,/Saved on this device/);assert.equal(root.querySelector('[role=progressbar]'),null);
 summary={...summary,progression:{...summary.progression,xp:615,level:6},recent_rewards:[{client_result_id:'new',verified:true,xp:220}]};w.dispatchEvent(new w.Event('brainilab:progressionchange'));
 assert.match(root.textContent,/New level!/);assert.match(root.textContent,/Level 6/);assert.match(root.textContent,/\+220 XP/);assert.equal(root.querySelectorAll('.is-fresh').length,1);
 w.BrainiPostGame.mount(root,{result});assert.equal(root.querySelectorAll('.is-fresh').length,0);

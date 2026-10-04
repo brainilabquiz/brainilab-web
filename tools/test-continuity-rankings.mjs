@@ -19,7 +19,7 @@ assert.equal(w.BrainiContinuity.markup({summary,now:new Date('2026-09-29T00:00:0
 summary.continuity.completed_today=false;
 assert.match(w.BrainiContinuity.markup({summary,now:new Date('2026-09-28T23:15:00Z')}),/0h 45m/);
 assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'done'}),/\+60 XP/);
-assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'pending'}),/Checking your XP/);
+assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'pending'}),/Saved on this device/);
 signedIn=false;assert.match(w.BrainiContinuity.rewardMarkup({clientResultId:'pending'}),/Sign in to keep your progress/);signedIn=true;
 const practice=w.document.createElement('div');practice.dataset.resultReward='';practice.innerHTML=w.BrainiContinuity.rewardMarkup({practice:true});w.document.body.append(practice);w.BrainiContinuity.render();assert.match(practice.textContent,/Practice round/);
 await w.BrainiRankings.render();assert.ok(w.document.querySelector('[data-ranking-month]'));assert.match(w.document.querySelector('#rankingsRoot').textContent,/XP to level 5/);
