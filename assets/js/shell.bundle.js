@@ -53,6 +53,7 @@ window.BrainiIcons=(function(){
   const CATEGORY_BY_GAME={
     generalknowledge:"mixed-general-knowledge",
     worldflags:"world-flags",
+    europeflags:"world-flags",
     worldcapitals:"world-capitals",
     science:"science",
     history:"history",
@@ -71,6 +72,10 @@ window.BrainiIcons=(function(){
     "math-rush":"math-rush",
     numberroute:"number-route",
     "number-route":"number-route",
+    oddoneout:"odd-one-out",
+    higherlower:"higher-lower",
+    flagdash:"world-flags",
+    maphunt:"geography",
     sequence:"sequence"
   };
 
@@ -94,8 +99,7 @@ window.BrainiIcons=(function(){
   }
 
   function game(id,variant="standard",className="braini-game-icon",alt=""){
-    const file=GAME_FILES[id]||id;
-    return img(artPath(file,`${ROOT}/games/${variant}/${file}.svg`),className,alt);
+    return img(gamePath(id,variant),className,alt);
   }
 
   function category(id,className="braini-category-icon",alt=""){
@@ -140,7 +144,7 @@ window.BrainiIcons=(function(){
   }
 
   function gamePath(id,variant="standard"){
-    const file=GAME_FILES[id]||id;
+    const file=GAME_FILES[id]||CATEGORY_BY_GAME[id]||id;
     return artPath(file,`${ROOT}/games/${variant}/${file}.svg`);
   }
 
