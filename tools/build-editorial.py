@@ -87,10 +87,10 @@ def page(path, title, description, body, schema, cover=None):
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.41.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
-<link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v=41.42.0"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
+<link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.31.0"/><link rel="stylesheet" href="/assets/css/editorial.css?v=41.43.0"/><link rel="stylesheet" href="/assets/css/game-entry.css?v=41.24.0"/>
 <script defer src="/assets/js/consent.bundle.js?v=41.31.0"></script>
 <script defer src="/assets/js/shell.bundle.js?v=41.52.0"></script>
-{'<script defer src="/assets/js/learn-library.js?v=41.34.0"></script>' if path == '/learn/' else ''}
+{'<script defer src="/assets/js/learn-library.js?v=41.43.0"></script>' if path == '/learn/' else ''}
 <script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('</', '<\\/')}</script>
 <link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
 </head><body class="editorial-page braini-visual"><a class="editorial-skip" href="#main-content">Skip to main content</a>
