@@ -1,3 +1,4 @@
+import {labBundle,labMarkup} from './academy-lab-fixture.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
@@ -11,7 +12,7 @@ assert.equal(readyPaths([path],articles).length,1);
 const cases=[['homophones-same-sound-different-meaning','sentence-clues',[1,0,0]],['words-that-mean-their-own-opposite','dust',[0,1,1]],['connections-puzzles-find-the-hidden-link','specific-test',[0,1,1]]];
 for(const [slug,section,answers] of cases){
  const dom=new JSDOM(activityFor(slug,section),{url:'https://brainilabgames.com/learn/'+slug+'/',runScripts:'outside-only'}),w=dom.window;
- w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
+ w.eval(labBundle);
  const lab=w.document.querySelector('.academy-lab'),out=lab.querySelector('[data-lab-output]');
  assert.equal(lab.querySelectorAll('[aria-hidden="true"] button').length,0);
  for(const [i,answer] of answers.entries()){

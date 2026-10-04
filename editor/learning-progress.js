@@ -1,7 +1,5 @@
 import {paintCompletion,completionXP} from './academy-completion.js';
 import {gradeQuiz,pathProgress} from '../lib/learning-model.js';
-import {initLabs} from './academy-labs.js';
-initLabs();
 const resetters=new Map();
 // Each account gets its own local cache. Anonymous reading never signs a user in.
 let records={},account='guest',sb=null,epoch=0,pending=null,identified=false;

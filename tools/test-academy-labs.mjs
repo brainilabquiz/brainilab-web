@@ -1,3 +1,4 @@
+import {labBundle,labMarkup} from './academy-lab-fixture.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
@@ -6,7 +7,7 @@ const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const cases=[['mental-percentages-without-a-calculator','meaning','percent'],['which-century-is-that-year','boundary','century'],['why-2100-is-not-a-leap-year','three-checks','leap'],['why-the-moon-changes-shape','quarter','moon'],['what-really-causes-seasons','light-and-time','seasons'],['why-time-zones-get-messy','clock-arithmetic','clocks'],['why-britain-skipped-eleven-days-in-1752','count-the-days','calendar'],['mental-math-round-and-adjust','addition','round'],['multiplication-equal-groups','build-groups','groups-basics']];
 for(const [slug,section,kind] of cases){
  const dom=new JSDOM(activityFor(slug,section),{url:'https://brainilabgames.com/learn/'+slug+'/',runScripts:'outside-only'}),w=dom.window;
- w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
+ w.eval(labBundle);
  const lab=w.document.querySelector('.academy-lab'),input=lab.querySelector('input,select'),out=lab.querySelector('[data-lab-output]'),visual=lab.querySelector('[data-lab-visual]');
  const set=value=>{input.value=value;input.dispatchEvent(new w.Event('input',{bubbles:true}));};
  const click=selector=>lab.querySelector(selector).click();

@@ -31,7 +31,7 @@ def discover(data, public, snapshot_id):
                 'checks':['Reopen the live URL: the title and links in this inventory are an audit snapshot.',
                     'Check which queries match the actual page before choosing an intent: '+(', '.join(queries) if queries else 'research the topic before selecting a keyword')+'. Never target unrelated terms merely because they appeared.',
                     'Use a natural title, a direct opening answer, short sections and reliable linked sources.',
-                    'Add one relevant interactive example when it makes the explanation clearer.',
+                    'Use a short concrete example; add interactive resources only when specifically requested.',
                     'For new articles: Biel Sardà, photorealistic generated cover, related articles and a planned ten-article HUB.',
                     next_step,'Offer BrainiLab+ only where an existing benefit is relevant; do not invent benefits or conversion numbers.',
                     'Verify mobile rendering, facts and links; record publication before comparing equal periods.']},
