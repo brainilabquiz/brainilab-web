@@ -83,7 +83,7 @@ window.BrainiHigherLower=(function(){
       if(finished)return;finished=true;if(!dailyMode)void syncHistory(details.map(x=>x.pairId)).catch(()=>{});
       healthTracker?.complete(details.map((x,i)=>({contentId:x.pairId,position:i+1,attempts:1,isCorrect:x.correct,score:x.correct?100:0})));
       const timeSec=Math.max(1,Math.round((performance.now()-started)/1000));
-      const payload={score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
+      const payload={roundDetails:details,score,correct,total:ROUNDS,accuracy:correct*10,timeSec,bestCombo,contentSource:source,dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,archiveDailyNumber:archiveMode?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null,practice:archiveMode,challengeDate:dailyDate||null};
       stage.hidden=true;resultEl.hidden=false;
       await BrainiPostGame.complete(resultEl,{result:payload,gameId:'higherlower',name:'Higher or Lower',metrics:[{label:'Accuracy',value:correct*10+'%'},{label:'Best combo',value:bestCombo}],next:{href:'/games/higher-lower/',label:'Play again'}},{
         save:()=>BrainiData.api.submitGameResult('higherlower',payload),

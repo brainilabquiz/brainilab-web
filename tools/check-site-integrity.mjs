@@ -29,4 +29,8 @@ if(shell.indexOf('window.BrainiDailyRules=')>shell.indexOf('window.BrainiData'))
 for(const file of ['daily-rules.js','daily-choice-guard.js','data.js','icon-system.js']){
  const source=(await readFile('assets/js/'+file,'utf8')).replaceAll('\r\n','\n').trim();if(!shell.includes(source))throw Error('Stale shell bundle: '+file);
 }
-console.log(`PASS site integrity: ${scripts} scripts, ${pages} HTML pages, inline JS/JSON, merge conflicts and shell consistency.`);
+const cloud=(await readFile('assets/js/cloud.bundle.js','utf8')).replaceAll('\r\n','\n');
+for(const file of ['supabase-games.js','result-recovery.js','supabase-auth.js','supabase-progression.js']){
+ const source=(await readFile('assets/js/'+file,'utf8')).replaceAll('\r\n','\n').trim();if(!cloud.includes(source))throw Error('Stale cloud bundle: '+file);
+}
+console.log(`PASS site integrity: ${scripts} scripts, ${pages} HTML pages, inline JS/JSON, merge conflicts and shell/cloud consistency.`);
