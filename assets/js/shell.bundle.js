@@ -2906,17 +2906,36 @@ window.BrainiPostGame=(()=>{
   note.hidden=!note.textContent;
   if(restoreFocus){const target=focusedAction?Array.from(root.querySelectorAll('[data-post-action]')).find(el=>el.dataset.postAction===focusedAction):root.querySelector('.post-share');(target||root.querySelector('.post-primary'))?.focus({preventScroll:true});}
  }
+ const presentation=(value,result)=>typeof value==='function'?value(result):value;
+ function updatePresentation(root,options){
+  const result=options.result,headline=presentation(options.headline,result),summary=presentation(options.summary,result);
+  const score=root.querySelector('.post-score');
+  if(headline!=null)score.textContent=headline;
+  else score.innerHTML=options.timed?String(number(result.correct)):result.total?`${number(result.correct)}<span> / ${number(result.total)}</span>`:'Round complete';
+  if(summary!=null)root.querySelector('.post-message').textContent=summary;
+  const points=!result.practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
+  root.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
+  root.querySelectorAll('.post-metrics div').forEach(stat=>{if(stat.querySelector('dt')?.textContent==='Accuracy')stat.querySelector('dd').textContent=number(result.accuracy)+'%';});
+ }
+ function resolveStatus(container,options){
+  if(!options.resolveDaily||options.result.practice||!options.result.dailyNumber)return;
+  Promise.resolve().then(()=>window.BrainiDailyHub?.resolve(options.result.dailyNumber)).then(status=>{
+   if(!status||mounted.get(container)!==options||options.owner!==owner()||!container.isConnected)return;
+   options.status=status;actionMarkup(container,options);
+  }).catch(()=>{/* Keep the local result and navigation when the cloud is unavailable. */});
+ }
  function mount(container,options={}){
   if(!container)return;
-  const {result={},gameId='brainmix',name='Brain Mix',difficulty='',ads=false,focus=true,timed=false,metrics=[],headline=null,scoreLabel=null,summary=null}=options;
+  const {result={},gameId='brainmix',name='Brain Mix',difficulty='',ads=false,focus=true,timed=false,metrics=[],scoreLabel=null}=options;
+  const headline=presentation(options.headline,result),summary=presentation(options.summary,result);
   const correct=number(result.correct),total=number(result.total),practice=result.practice||result.tryFirst;
   const points=!practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(gameId,result):number(result.score??result.points);
   const message=summary||(timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Ready for another go?'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. A few new discoveries, too.':'There’s always something new to learn.');
   const art=window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
   const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Five short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
-  container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel||((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${number(points).toLocaleString('en-GB')}</strong> ${!practice&&result.dailyNumber?'Daily points':'Quiz Points'}${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
-  const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);
+  container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${number(points).toLocaleString('en-GB')}</strong> ${!practice&&result.dailyNumber?'Daily points':'Quiz Points'}${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
+  const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);resolveStatus(container,liveOptions);
   const invitation=document.createElement('div');invitation.dataset.accountInvite='';container.querySelector('.post-actions').after(invitation);inviteAccount(invitation,{practice:!!practice,gameId});
   const videoSlot=document.createElement('div');videoSlot.hidden=true;videoSlot.dataset.resultVideo='';
   container.querySelector('.post-footer').before(videoSlot);
@@ -2931,9 +2950,7 @@ window.BrainiPostGame=(()=>{
    const canonical=window.BrainiData?.recentResults?.(options.gameId)?.find(r=>r.clientResultId===result.clientResultId);
    if(verified(canonical)){
     Object.assign(result,canonical);
-    if(!options.headline)root.querySelector('.post-score').innerHTML=options.timed?String(number(result.correct)):`${number(result.correct)}<span> / ${number(result.total)}</span>`;
-    const points=result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
-    root.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
+    updatePresentation(root,options);
    }
   }
   actionMarkup(root,options);
@@ -2945,7 +2962,7 @@ window.BrainiPostGame=(()=>{
   const practice=!!(result.practice||result.tryFirst||new URLSearchParams(location.search).get('try')==='1');
   result.practice=practice;
   mount(container,options);
-  container.scrollIntoView?.({block:'start',behavior:'instant'});
+  container.querySelector('.post-game').scrollIntoView?.({block:'start',behavior:'instant'});
   const reward=container.querySelector('[data-result-reward]');
   const current=()=>container.contains(reward);
   const renderReward=()=>{
@@ -2972,11 +2989,7 @@ window.BrainiPostGame=(()=>{
    if(verified){
     Object.assign(result,verified,{practice});
     if(current()){
-     const score=container.querySelector('.post-score');
-     if(!options.headline)score.innerHTML=options.timed?String(number(result.correct)):`${number(result.correct)}<span> / ${number(result.total)}</span>`;
-     const points=!practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(options.gameId,result):number(result.score);
-     container.querySelector('.post-points strong').textContent=number(points).toLocaleString('en-GB');
-     container.querySelectorAll('.post-metrics div').forEach(stat=>{if(stat.querySelector('dt')?.textContent==='Accuracy')stat.querySelector('dd').textContent=number(result.accuracy)+'%';});
+     updatePresentation(container,options);
     }
    }
   }catch{/* Saved results stay visible when verification is temporarily unavailable. */}
