@@ -48,3 +48,5 @@
 .post-footer{display:flex;justify-content:center;flex-wrap:wrap;column-gap:18px;margin-top:20px;border-top:1px solid #e5ddce;padding-top:8px}.post-footer a,.post-footer .post-browse{display:inline-flex;align-items:center;min-height:44px;font-size:13px;margin:0;color:#625c72;text-underline-offset:3px}
 .labgame-result:has(.post-game),.word-result:has(.post-game){background:transparent;padding:0;border:0}.labgame-result .post-game :is(h2,p){max-width:none}.post-game.is-practice .post-complete{color:#70657b}.post-game.is-practice .post-complete>span{background:#eae4f1;color:#70657b}
 @media(max-width:600px){.post-game{padding:20px 16px;border-radius:20px}.post-heading{margin-bottom:16px}.post-score-panel{padding:18px 12px}.post-art{width:52px;height:52px}.post-art>svg,.post-art>img{width:46px;height:46px}.post-footer{column-gap:14px}}
+
+.post-game{scroll-margin-top:7rem}

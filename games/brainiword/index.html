@@ -26,14 +26,14 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://brainilabgames.com/games/brainiword/#webpage","url":"https://brainilabgames.com/games/brainiword/","name":"BrainiWord \u2014 Daily 5-Letter Word Puzzle | BrainiLab","description":"Play BrainiWord, a free daily five-letter word puzzle. Guess the word in five tries using colour clues for correct, misplaced and absent letters.","isPartOf":{"@id":"https://brainilabgames.com/#website"},"mainEntity":{"@id":"https://brainilabgames.com/games/brainiword/#game"},"inLanguage":"en"},{"@type":"VideoGame","@id":"https://brainilabgames.com/games/brainiword/#game","name":"BrainiWord","description":"A free daily five-letter word puzzle where players have five attempts and receive colour feedback after each guess.","url":"https://brainilabgames.com/games/brainiword/","isAccessibleForFree":true,"inLanguage":"en","publisher":{"@id":"https://brainilabgames.com/#organization"},"genre":["Word puzzle","Daily game","Quiz game"],"gamePlatform":"Web browser","playMode":"SinglePlayer","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://brainilabgames.com/"},{"@type":"ListItem","position":2,"name":"Games","item":"https://brainilabgames.com/games/"},{"@type":"ListItem","position":3,"name":"BrainiWord","item":"https://brainilabgames.com/games/brainiword/"}]}]}</script>
 <!-- BrainiLab data layer -->
 <!-- /BrainiLab data layer -->
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.31.0"></script><script defer="" src="../../assets/js/shell.bundle.js?v=41.49.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.29.0"></script><script defer="" src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/daily.bundle.js?v=41.49.0"></script>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.31.0"></script><script defer="" src="../../assets/js/shell.bundle.js?v=41.50.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../../assets/js/cloud.bundle.js?v=41.29.0"></script><script defer="" src="../../assets/js/content-health.js?v=41.11.0"></script><script defer="" src="../../assets/js/daily.bundle.js?v=41.49.0"></script>
 <meta content="BrainiLab quiz and brain games" property="og:image:alt"/>
 <meta content="BrainiLab quiz and brain games" name="twitter:image:alt"/>
 <link href="https://brainilabgames.com/games/brainiword/" hreflang="en" rel="alternate"/>
 <link href="https://brainilabgames.com/games/brainiword/" hreflang="x-default" rel="alternate"/>
 <meta content="#34327f" name="theme-color"/>
 <meta name="google-adsense-account" content="ca-pub-5613536700850101">
-<link rel="stylesheet" href="/assets/css/post-game.css?v=41.49.1"/><link rel="stylesheet" href="/assets/css/continuity.css?v=41.40.0"/><link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
+<link rel="stylesheet" href="/assets/css/post-game.css?v=41.50.0"/><link rel="stylesheet" href="/assets/css/continuity.css?v=41.40.0"/><link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
 </head>
 <body class="braini-visual play-page">
 <header class="topbar">
@@ -313,65 +313,28 @@
     }]);
     resultGrid.textContent=makeShareGrid();
 
-    if(!brainiDataResult){
-      const existing=archiveMode
-        ? null
-        : existingResult||BrainiData.recentResults("brainiword").find(
-            r=>Number(r.dailyNumber)===Number(content.dailyNumber)
-          );
-
-      if(existing){
-        brainiDataResult=existing;
-      }else{
-        brainiDataResult=await BrainiData.api.submitGameResult("brainiword",{
-          won,
-          attempts:won?guesses.length:5,
-          correct:won?1:0,
-          total:1,
-          accuracy:won?100:0,
-          evaluations,
-          brainiwordGuesses:guesses,
-          dailyChallengeId:content.dailyChallengeId,
-          dailyNumber:archiveMode?null:content.dailyNumber,
-          archiveDailyNumber:archiveMode?content.dailyNumber:null,
-          practice:archiveMode,
-          challengeDate:content.challengeDate,
-          dailyContentSource:content.source
-        });
-
-        if(content.source==="supabase" && !archiveMode){
-          try{
-            await BrainiDailyGames.verifyResult(brainiDataResult,content);
-            brainiDataResult=BrainiData.recentResults("brainiword").find(
-              r=>r.clientResultId===brainiDataResult.clientResultId
-            )||brainiDataResult;
-          }catch(err){
-            console.warn("BrainiWord verification pending:",err.message||err);
-          }
-        }
-      }
-    }
-
-    const status=archiveMode?null:await BrainiDailyHub.resolve(content.dailyNumber);
-    const attempts=Number(
-      brainiDataResult?.attempts
-      || guesses.length
-      || existingResult?.attempts
-      || 5
-    );
-    const practicePoints=won
-      ? ({1:2500,2:2250,3:2000,4:1750,5:1500}[attempts]||1000)
-      : 250;
-    const points=archiveMode
-      ? practicePoints
-      : Number(status?.games.brainiword?.points||0);
-
+    const existing=brainiDataResult||(!archiveMode&&!tryFirstMode&&(existingResult||BrainiData.recentResults("brainiword").find(r=>Number(r.dailyNumber)===Number(content.dailyNumber))));
+    const attempts=existing?.attempts|| (won?guesses.length:5);
+    const payload={won,attempts,correct:won?1:0,total:1,accuracy:won?100:0,
+      score:won?({1:2500,2:2250,3:2000,4:1750,5:1500}[attempts]||1000):250,
+      evaluations,brainiwordGuesses:guesses,dailyChallengeId:content.dailyChallengeId,
+      dailyNumber:archiveMode?null:content.dailyNumber,archiveDailyNumber:archiveMode?content.dailyNumber:null,
+      practice:archiveMode||tryFirstMode,challengeDate:content.challengeDate,dailyContentSource:content.source};
+    const options={gameId:'brainiword',name:'BrainiWord',resolveDaily:true,
+      result:{...payload,...existing,practice:archiveMode||tryFirstMode},
+      headline:r=>r.won?`Solved in ${r.attempts} / 5`:'Not solved',scoreLabel:'',
+      summary:r=>r.won?'You found it. Nicely done.':finalAnswer?`The word was ${finalAnswer}.`:'A new word is waiting tomorrow.',
+      next:{href:'/games/',label:'Find another game'}};
     resultTitle.hidden=true;resultText.hidden=true;
-    BrainiPostGame.mount(resultActions,{gameId:'brainiword',name:'BrainiWord',status,
-      result:{...brainiDataResult,score:points,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},
-      headline:won?`Solved in ${attempts} / 5`:'Not solved',scoreLabel:'',
-      summary:won?'You found it. Nicely done.':finalAnswer?`The word was ${finalAnswer}.`:'A new word is waiting tomorrow.',
-      next:{href:'/games/',label:'Find another game'}});
+    if(existing){BrainiPostGame.mount(resultActions,options);return;}
+    brainiDataResult=await BrainiPostGame.complete(resultActions,options,{
+      save:()=>BrainiData.api.submitGameResult("brainiword",payload),
+      verify:async saved=>{
+        if(content.source!=="supabase"||archiveMode||tryFirstMode)return null;
+        await BrainiDailyGames.verifyResult(saved,content);
+        return BrainiData.recentResults("brainiword").find(r=>r.clientResultId===saved.clientResultId)||saved;
+      }
+    });
   }
 
   async function submitGuess(){
@@ -503,10 +466,10 @@
   buildBoard();
   buildKeyboard();
 
-  const dailyStatus=archiveMode
+  const dailyStatus=archiveMode||tryFirstMode
     ? null
-    : await BrainiDailyHub.resolve(content.dailyNumber,{forceCloud:true});
-  const existing=archiveMode?null:(dailyStatus.games.brainiword?.result||null);
+    : await BrainiDailyHub.resolve(content.dailyNumber,{forceCloud:true}).catch(()=>null);
+  const existing=archiveMode?null:(dailyStatus?.games?.brainiword?.result||null);
 
   const restored=restoreState();
 

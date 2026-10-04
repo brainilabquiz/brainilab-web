@@ -128,7 +128,7 @@ window.BrainiTopicRush=(function(){
     let healthTracker=null;
 
     const saved=read(key);
-    const existing=archiveMode?null:BrainiData.recentResults("topicrush").find(
+    const existing=archiveMode||TRY_FIRST_MODE?null:BrainiData.recentResults("topicrush").find(
       r=>Number(r.dailyNumber)===currentDailyNumber
     );
 
@@ -381,39 +381,26 @@ window.BrainiTopicRush=(function(){
         challengeDate:content.challengeDate,
         dailyContentSource:content.source
       };
-      let result;
-      try{result=await BrainiData.api.submitGameResult("topicrush",payload);}
-      catch{
-        await showResult({...payload,saveFailed:true});
-        resultBox.querySelector('[data-result-reward]').textContent='Your score is shown above. Progress could not be saved; please check your connection.';
-        return;
-      }
-
-      if(content.source==="supabase" && !archiveMode){
-        try{
+      if(timer)clearInterval(timer);loading.hidden=true;intro.hidden=true;play.hidden=true;resultBox.hidden=false;
+      await BrainiPostGame.complete(resultBox,resultOptions(payload),{
+        save:async()=>{
+          const result=await BrainiData.api.submitGameResult("topicrush",payload);
+          if(result)write(key,{dailyNumber:content.dailyNumber,finished:true,resultId:result.id});
+          return result;
+        },
+        verify:async result=>{
+          if(content.source!=="supabase"||archiveMode||TRY_FIRST_MODE)return null;
           await BrainiDailyGames.verifyResult(result,content);
-          result=BrainiData.recentResults("topicrush").find(
-            r=>r.clientResultId===result.clientResultId
-          )||result;
-        }catch(err){
-          console.warn("Topic Rush verification pending:",err.message||err);
+          return BrainiData.recentResults("topicrush").find(r=>r.clientResultId===result.clientResultId)||result;
         }
-      }
-
-      write(key,{
-        dailyNumber:content.dailyNumber,
-        finished:true,
-        resultId:result.id
       });
-
-      await showResult(result);
     }
+
+    function resultOptions(result){return {gameId:'topicrush',name:'Topic Rush',result:{...result,practice:archiveMode||TRY_FIRST_MODE,dailyNumber:archiveMode?null:content.dailyNumber},timed:true,scoreLabel:'answers found',summary:content.title,resolveDaily:true,next:{href:'/games/',label:'Find another game'}};}
 
     async function showResult(result){
       if(timer)clearInterval(timer);loading.hidden=true;intro.hidden=true;play.hidden=true;resultBox.hidden=false;
-      const options={gameId:'topicrush',name:'Topic Rush',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},timed:true,scoreLabel:'answers found',summary:content.title,next:{href:'/games/',label:'Find another game'}};
-      BrainiPostGame.mount(resultBox,options);
-      if(!archiveMode&&!result.saveFailed){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
+      BrainiPostGame.mount(resultBox,resultOptions(result));
     }
 
     startBtn.addEventListener("click",start);

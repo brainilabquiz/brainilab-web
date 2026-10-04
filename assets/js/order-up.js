@@ -112,7 +112,7 @@ window.BrainiOrderUp=(function(){
     }
     const currentDaily=BrainiData.daily();
 
-    const existingLocal=archiveMode?null:BrainiData
+    const existingLocal=archiveMode||TRY_FIRST_MODE?null:BrainiData
       .recentResults("orderup")
       .find(
         r=>Number(r.dailyNumber)===
@@ -478,51 +478,26 @@ window.BrainiOrderUp=(function(){
             dailyContentSource:
               content.source
           };
-      let result;
-      try{result=await BrainiData.api.submitGameResult("orderup",payload);}
-      catch{
-        await showResult({...payload,saveFailed:true});
-        resultBox.querySelector('[data-result-reward]').textContent='Your score is shown above. Progress could not be saved; please check your connection.';
-        return;
-      }
-
-      if(content.source==="supabase" && !archiveMode){
-        try{
-          await BrainiDailyGames
-            .verifyResult(
-              result,
-              content
-            );
-
-          result=
-            BrainiData
-              .recentResults("orderup")
-              .find(
-                r=>r.clientResultId===
-                  result.clientResultId
-              )||result;
-        }catch(err){
-          console.warn(
-            "Order Up verification pending:",
-            err.message||err
-          );
+      intro.hidden=true;game.hidden=true;loading.hidden=true;resultBox.hidden=false;
+      await BrainiPostGame.complete(resultBox,resultOptions(payload),{
+        save:async()=>{
+          const result=await BrainiData.api.submitGameResult("orderup",payload);
+          if(result)write(localKey,{dailyNumber:content.dailyNumber,finished:true,resultId:result.id});
+          return result;
+        },
+        verify:async result=>{
+          if(content.source!=="supabase"||archiveMode||TRY_FIRST_MODE)return null;
+          await BrainiDailyGames.verifyResult(result,content);
+          return BrainiData.recentResults("orderup").find(r=>r.clientResultId===result.clientResultId)||result;
         }
-      }
-
-      write(localKey,{
-        dailyNumber:content.dailyNumber,
-        finished:true,
-        resultId:result.id
       });
-
-      await showResult(result);
     }
+
+    function resultOptions(result){return {gameId:'orderup',name:'Order Up',result:{...result,practice:archiveMode||TRY_FIRST_MODE,dailyNumber:archiveMode?null:content.dailyNumber},headline:r=>Math.round(Number(r.accuracy)||0)+'%',scoreLabel:'order accuracy',summary:'Two rounds complete.',resolveDaily:true,next:{href:'/games/',label:'Find another game'}};}
 
     async function showResult(result){
       intro.hidden=true;game.hidden=true;loading.hidden=true;resultBox.hidden=false;
-      const options={gameId:'orderup',name:'Order Up',result:{...result,practice:archiveMode,dailyNumber:archiveMode?null:content.dailyNumber},headline:Math.round(Number(result.accuracy)||0)+'%',scoreLabel:'order accuracy',summary:'Two rounds complete.',next:{href:'/games/',label:'Find another game'}};
-      BrainiPostGame.mount(resultBox,options);
-      if(!archiveMode&&!result.saveFailed){try{options.status=await BrainiDailyHub.resolve(content.dailyNumber);BrainiPostGame.mount(resultBox,{...options,focus:false});}catch{/* Local results remain visible while offline. */}}
+      BrainiPostGame.mount(resultBox,resultOptions(result));
     }
 
     async function start(){
