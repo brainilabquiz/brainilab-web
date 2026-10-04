@@ -1,9 +1,11 @@
 """Attach a dated, private GA4 observation without pretending it is a live API sync."""
 import json
+from content_measurement import attach_content
 from datetime import date, datetime
 
 
 def attach_measurement(report, private):
+    report = attach_content(report, private)
     path = private / 'measurement-latest.json'
     if not path.exists():
         return report
