@@ -34,12 +34,13 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  assert.equal(select.options.length,topics.size+2);
  const academy=[...d.querySelectorAll('[data-format=academy]')];
  if(academy.length){
-  assert.deepEqual([...d.querySelectorAll('.learn-card:not([hidden])')].slice(0,6).map(c=>c.dataset.format),['article','academy','article','academy','article','academy']);
+  assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,0);
+  assert.ok([...d.querySelectorAll('.learn-card:not([hidden])')].every(c=>c.dataset.format==='article'));
   d.querySelector('[data-format-filter=academy]').click();assert.equal(visible().length,0);assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,academy.length);
   assert.equal(d.querySelector('[data-format-filter=academy]').getAttribute('aria-pressed'),'true');
   input.value='calendar';input.dispatchEvent(new w.Event('input'));assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,1);
   input.value='';input.dispatchEvent(new w.Event('input'));d.querySelector('[data-format-filter=article]').click();assert.equal(d.querySelectorAll('[data-format=academy]:not([hidden])').length,0);
-  d.querySelector('[data-format-filter=all]').click();
+  d.querySelector('[data-format-filter=article]').click();
  }
 
  select.value='Sports';select.dispatchEvent(new w.Event('change'));
@@ -66,8 +67,16 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  assert.ok(visible()[0].querySelector('a[href="/learn/was-bubble-wrap-invented-as-wallpaper/"]'));
  input.value='zzzzzz';input.dispatchEvent(new w.Event('input'));
  d.querySelector('[data-clear-filters]').click();
- assert.equal(visible().length,articles.length);assert.equal(select.value,'');assert.equal(input.value,'');
+ assert.equal(visible().length,Math.min(12,articles.length));assert.equal(select.value,'');assert.equal(input.value,'');
  assert.equal(d.activeElement,input);
+ const more=d.querySelector('[data-show-more]');
+ while(!more.parentElement.hidden){const before=visible().length;more.click();assert.ok(visible().length>before);assert.ok(d.activeElement.matches('.learn-card h3 a'));}
+ assert.equal(visible().length,articles.length);
+ select.value='__latest';select.dispatchEvent(new w.Event('change'));
+ const browse=d.querySelector('[data-browse-topic="Sports"]');browse.click();
+ assert.equal(select.value,'Sports');assert.equal(d.activeElement,select);
+ assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);
+ assert.ok([...d.querySelectorAll('[data-browse-topic]')].every(b=>b.hidden));
  dom.window.close();
 }
 for(const size of [0,1,2]){

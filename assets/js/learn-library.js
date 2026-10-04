@@ -30,29 +30,47 @@
   const normalize=value=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
   const texts=cards.map(card=>normalize(card.textContent));
   const formatButtons=[...document.querySelectorAll('[data-format-filter]')];
-  let topic='__latest',format='all';
+  const heading=document.querySelector('#library-heading');
+  const more=document.querySelector('[data-show-more]');
+  const topicButtons=[...document.querySelectorAll('[data-browse-topic]')];
+  let topic='__latest',format='article',limit=12;
   function render(){
     const terms=normalize(input.value).split(/\s+/).filter(Boolean);
-    let visible=0,articleCount=0,courseCount=0;
-    cards.forEach((card,i)=>{
-      const inTopic=topic==='__latest'?(terms.length>0||card.hasAttribute('data-latest-topic')):(!topic||card.dataset.topic===topic);
-      const match=inTopic&&(format==='all'||card.dataset.format===format)&&terms.every(term=>texts[i].includes(term));
-      card.hidden=!match;
-      if(match){visible++;if(card.dataset.format==='academy')courseCount++;else articleCount++;}
+    const matches=cards.filter((card,i)=>{
+      const inTopic=topic==='__latest'?(format==='academy'||terms.length>0||card.hasAttribute('data-latest-topic')):(!topic||card.dataset.topic===topic);
+      return inTopic&&card.dataset.format===format&&terms.every(term=>texts[i].includes(term));
     });
+    const shown=matches.slice(0,limit),active=new Set(shown);
+    cards.forEach(card=>{card.hidden=!active.has(card);});
+    grid.dataset.view=format;
+    const overview=format==='article'&&topic==='__latest'&&!terms.length;
+    grid.classList.toggle('is-topic-overview',overview);
+    grid.classList.toggle('is-specific-topic',Boolean(topic&&topic!=='__latest'));
+    topicButtons.forEach(button=>{button.hidden=!overview;});
     select.value=topic;
     clearSearch.hidden=!input.value;
-    count.textContent=[...(format!=='academy'?[`${articleCount} article${articleCount===1?'':'s'}`]:[]),...(format!=='article'?[`${courseCount} Academy course${courseCount===1?'':'s'}`]:[])].join(' · ')+(topic&&topic!=='__latest'?' · '+topic:'');
+    const noun=format==='academy'?'course':'article';
+    count.textContent=overview?`${matches.length} topics · ${articlePaths.length} articles`:`${shown.length} of ${matches.length} ${noun}${matches.length===1?'':'s'}`;
+    heading.textContent=terms.length?'Search results':format==='academy'?(topic&&topic!=='__latest'?topic+' courses':'BrainiLab Academy'):(topic==='__latest'?'Latest by topic':topic||'All articles');
     formatButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.formatFilter===format)));
-    empty.hidden=visible!==0;
+    empty.hidden=matches.length!==0;
+    more.parentElement.hidden=shown.length>=matches.length;
+    more.textContent=`Show more ${noun}s`;
   }
+  function reset(){limit=12;render();}
   input.closest('.learn-search').hidden=false;
   const formats=document.querySelector('.learn-format-filters');if(formats)formats.hidden=false;
-  formatButtons.forEach(button=>button.addEventListener('click',()=>{format=button.dataset.formatFilter;render();}));
+  formatButtons.forEach(button=>button.addEventListener('click',()=>{format=button.dataset.formatFilter;topic='__latest';reset();}));
+  topicButtons.forEach(button=>button.addEventListener('click',()=>{topic=button.dataset.browseTopic;input.value='';reset();select.focus();}));
   select.closest('label').hidden=false;
-  input.addEventListener('input',render);
-  select.addEventListener('change',()=>{topic=select.value;render();});
-  clearSearch.addEventListener('click',()=>{input.value='';render();input.focus();});
-  document.querySelector('[data-clear-filters]').addEventListener('click',()=>{topic='';format='all';input.value='';render();input.focus();});
+  input.addEventListener('input',reset);
+  select.addEventListener('change',()=>{topic=select.value;reset();});
+  clearSearch.addEventListener('click',()=>{input.value='';reset();input.focus();});
+  more.addEventListener('click',()=>{
+    const previouslyVisible=new Set(cards.filter(card=>!card.hidden));
+    limit+=12;render();
+    cards.find(card=>!card.hidden&&!previouslyVisible.has(card))?.querySelector('h3 a')?.focus();
+  });
+  document.querySelector('[data-clear-filters]').addEventListener('click',()=>{topic='';input.value='';reset();input.focus();});
   render();
 })();
