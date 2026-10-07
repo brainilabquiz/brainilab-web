@@ -1,21 +1,4 @@
 {
-  "slug": "number-patterns-check-every-step",
-  "title": "Number patterns: check every jump",
-  "description": "A sequence can add, multiply or alternate. Learn to test the rule instead of trusting the first guess.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 53,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/number-patterns-check-every-step.webp",
-    "small": "/assets/images/learn/number-patterns-check-every-step-small.webp",
-    "thumbnail": "/assets/images/learn/number-patterns-check-every-step-thumb.webp",
-    "alt": "Wooden blocks arranged in growing rows beside a notebook",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/patterns-and-reasoning/",
     "name": "Patterns and reasoning"
@@ -24,43 +7,11 @@
     "url": "/reasoning/",
     "name": "Reasoning Challenge"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "spotting-repeating-patterns",
-    "rotation-or-reflection"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Number Patterns",
-      "url": "https://www.mathsisfun.com/numberpatterns.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "write-down-the-changes",
-      "title": "Write down the changes",
-      "html": "<p>Consider 4, 7, 10, 13. The changes are +3, +3 and +3. If the rule says to keep adding three, the next number is sixteen. Checking the gaps gives a reason for the answer.</p><p>Compare 3, 6, 12, 24. The gaps are not constant, but each number is twice the previous one. The next number under that rule is forty-eight. Addition and multiplication describe different changes.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose a rule and reveal one term at a time. The activity displays the rule so that you can check what it predicts. Try the constant jump first, then doubling, then alternating jumps.</p><p>For an alternating +2, +5 rule starting at 1, the terms are 1, 3, 8, 10, 15. Keep track of which jump comes next. Using +2 every time would explain the first change but fail at the second.</p>"
-    },
-    {
-      "id": "short-lists-do-not-prove-a-unique-rule",
-      "title": "Short lists do not prove a unique rule",
-      "html": "<p>A few numbers do not uniquely determine every future term. Many different rules can fit a short beginning. Puzzle questions often ask for a simple intended rule, but that is a convention, not a mathematical guarantee.</p><p>In these exercises, the rule family is stated or the explanation identifies the intended rule. If two answer options genuinely fit the stated conditions, the question needs improving rather than blaming the player.</p>"
-    },
-    {
-      "id": "use-a-scratch-line",
-      "title": "Use a scratch line",
-      "html": "<p>Write the numbers on one line and the changes underneath. For multiplication, compare ratios instead of differences. If a rule alternates, mark its two steps separately.</p><p>The habit is simple: propose, check, predict. First propose a rule, then check all available steps, and only then use it to predict the next term. This also helps with visual patterns.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 2,
         "prompt": "Using +3 each time, what follows 4, 7, 10, 13?",
         "options": [
           "14",
@@ -68,10 +19,10 @@
           "16",
           "26"
         ],
-        "answer": 2,
         "explanation": "Thirteen plus three is sixteen."
       },
       {
+        "answer": 1,
         "prompt": "Using doubling, what follows 3, 6, 12, 24?",
         "options": [
           "27",
@@ -79,10 +30,10 @@
           "30",
           "36"
         ],
-        "answer": 1,
         "explanation": "Doubling twenty-four gives forty-eight."
       },
       {
+        "answer": 2,
         "prompt": "Does a short list of numbers always prove one unique continuation?",
         "options": [
           "Yes, always",
@@ -90,9 +41,58 @@
           "No",
           "Only if all terms are even"
         ],
-        "answer": 2,
         "explanation": "Several rules can fit the same short list; the stated rule or conditions matter."
       }
     ]
-  }
+  },
+  "slug": "number-patterns-check-every-step",
+  "cover": {
+    "alt": "Wooden blocks arranged in growing rows beside a notebook",
+    "src": "/assets/images/learn/number-patterns-check-every-step.webp",
+    "small": "/assets/images/learn/number-patterns-check-every-step-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/number-patterns-check-every-step-thumb.webp"
+  },
+  "order": 53,
+  "title": "Number patterns: check every jump",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "spotting-repeating-patterns",
+    "rotation-or-reflection"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/numberpatterns.html",
+      "name": "Math is Fun — Number Patterns"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "write-down-the-changes",
+      "html": "<p>Consider 4, 7, 10, 13. The changes are +3, +3 and +3. If the rule says to keep adding three, the next number is sixteen. Checking the gaps gives a reason for the answer.</p><p>Compare 3, 6, 12, 24. The gaps are not constant, but each number is twice the previous one. The next number under that rule is forty-eight. Addition and multiplication describe different changes.</p>",
+      "title": "Write down the changes"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Write 4, 7, 10, 13 on paper and mark each jump underneath. Then try 3, 6, 12, 24. Can you describe each change before predicting the next number?</p><p>For an alternating +2, +5 rule starting at 1, the terms are 1, 3, 8, 10, 15. Keep track of which jump comes next. Using +2 every time would explain the first change but fail at the second.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "short-lists-do-not-prove-a-unique-rule",
+      "html": "<p>A few numbers do not uniquely determine every future term. Many different rules can fit a short beginning. Puzzle questions often ask for a simple intended rule, but that is a convention, not a mathematical guarantee.</p><p>In these exercises, the rule family is stated or the explanation identifies the intended rule. If two answer options genuinely fit the stated conditions, the question needs improving rather than blaming the player.</p>",
+      "title": "Short lists do not prove a unique rule"
+    },
+    {
+      "id": "use-a-scratch-line",
+      "html": "<p>Write the numbers on one line and the changes underneath. For multiplication, compare ratios instead of differences. If a rule alternates, mark its two steps separately.</p><p>The habit is simple: propose, check, predict. First propose a rule, then check all available steps, and only then use it to predict the next term. This also helps with visual patterns.</p>",
+      "title": "Use a scratch line"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "A sequence can add, multiply or alternate. Learn to test the rule instead of trusting the first guess.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

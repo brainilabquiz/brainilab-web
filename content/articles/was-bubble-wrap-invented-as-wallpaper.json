@@ -21,8 +21,8 @@
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
-    "why-canberra-is-australias-capital",
-    "what-olympic-rings-mean"
+    "how-post-it-notes-were-invented",
+    "how-hook-and-loop-fasteners-work"
   ],
   "sources": [
     {
@@ -34,6 +34,7 @@
       "name": "Sealed Air — The origins of Bubble Wrap"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Fancy another unexpected fact? Try a round of General Knowledge.",
   "sections": [
     {
@@ -59,5 +60,5 @@
   ],
   "description": "Before it protected parcels, bubble wrap was meant to decorate walls. The familiar packing material began with a very different plan.",
   "publishedAt": "2026-09-29T20:20:36Z",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-07T16:54:30Z"
 }

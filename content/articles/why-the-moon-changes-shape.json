@@ -11,6 +11,7 @@
     "version": "beginner-20260930",
     "questions": [
       {
+        "answer": 2,
         "prompt": "Why does the Moon usually look different from night to night?",
         "options": [
           "It breaks into pieces",
@@ -18,10 +19,10 @@
           "We see different amounts of its sunlit half",
           "It makes more of its own light"
         ],
-        "answer": 2,
         "explanation": "The Moon stays round. Its journey around Earth changes our view of its bright side."
       },
       {
+        "answer": 0,
         "prompt": "What does “waxing” mean?",
         "options": [
           "The bright part we see is getting bigger",
@@ -29,10 +30,10 @@
           "The Moon is getting smaller",
           "The bright part is shrinking"
         ],
-        "answer": 0,
         "explanation": "Waxing describes a growing bright part as seen from Earth, not a change in the Moon’s size."
       },
       {
+        "answer": 3,
         "prompt": "At first quarter, how much of the Moon’s face looks bright?",
         "options": [
           "None",
@@ -40,7 +41,6 @@
           "All of it",
           "About half"
         ],
-        "answer": 3,
         "explanation": "The word quarter refers to progress through the cycle. About half of the face looks bright."
       }
     ]
@@ -57,7 +57,7 @@
   "topic": "Science & nature",
   "status": "published",
   "related": [
-    "remember-quiz-answers-tomorrow",
+    "why-day-turns-into-night",
     "what-really-causes-seasons"
   ],
   "sources": [
@@ -71,36 +71,36 @@
   "sections": [
     {
       "id": "same-moon",
-      "title": "The Moon stays round",
-      "html": "<p>A crescent Moon looks like a thin smile. A full Moon looks like a bright circle. But the Moon has not grown a new piece or lost a bite.</p><p><strong>The Moon stays round.</strong> It looks different because we see different amounts of its bright side.</p><p>The Moon does not make its own light like the Sun. Sunlight falls on it, and some of that light reaches our eyes.</p>"
+      "html": "<p>A crescent Moon looks like a thin smile. A full Moon looks like a bright circle. But the Moon has not grown a new piece or lost a bite.</p><p><strong>The Moon stays round.</strong> It looks different because we see different amounts of its bright side.</p><p>The Moon does not make its own light like the Sun. Sunlight falls on it, and some of that light reaches our eyes.</p>",
+      "title": "The Moon stays round"
     },
     {
       "id": "light",
-      "title": "Picture a ball beside a lamp",
-      "html": "<p>Hold a ball near a lamp. The side facing the lamp is bright; the other side is dark.</p><p>The Sun lights the Moon in a similar way: roughly half is sunlit. As the Moon travels around Earth, our view of that bright half changes.</p><p>Sometimes we see a lot of it. Sometimes we see only a thin slice. We call those different views the Moon’s <strong>phases</strong>.</p>"
+      "html": "<p>Hold a ball near a lamp. The side facing the lamp is bright; the other side is dark.</p><p>The Sun lights the Moon in a similar way: roughly half is sunlit. As the Moon travels around Earth, our view of that bright half changes.</p><p>Sometimes we see a lot of it. Sometimes we see only a thin slice. We call those different views the Moon’s <strong>phases</strong>.</p>",
+      "title": "Picture a ball beside a lamp"
     },
     {
       "id": "quarter",
-      "title": "Three names that can sound confusing",
-      "html": "<p><strong>Waxing</strong> means the bright part we see is getting bigger from night to night. <strong>Waning</strong> means it is getting smaller. The Moon itself is not growing or shrinking.</p><p><strong>First quarter</strong> is a trickier name. At that stage, about half of the Moon’s face looks bright. “Quarter” means it is about a quarter of the way through its cycle of phases—not that only a quarter looks lit.</p>"
+      "html": "<p><strong>Waxing</strong> means the bright part we see is getting bigger from night to night. <strong>Waning</strong> means it is getting smaller. The Moon itself is not growing or shrinking.</p><p><strong>First quarter</strong> is a trickier name. At that stage, about half of the Moon’s face looks bright. “Quarter” means it is about a quarter of the way through its cycle of phases—not that only a quarter looks lit.</p>",
+      "title": "Three names that can sound confusing"
     },
     {
       "id": "at-a-glance",
-      "title": "What can we see?",
-      "html": "<div class=\"table-scroll\"><table><caption>Different views of the same Moon</caption><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">What its face looks like from Earth</th></tr></thead><tbody><tr><td>New Moon</td><td>Almost none of the bright half faces us</td></tr><tr><td>First quarter</td><td>About half of the face looks bright</td></tr><tr><td>Full Moon</td><td>Almost all of the face looks bright</td></tr></tbody></table></div>"
+      "html": "<div class=\"table-scroll\"><table><caption>Different views of the same Moon</caption><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">What its face looks like from Earth</th></tr></thead><tbody><tr><td>New Moon</td><td>Almost none of the bright half faces us</td></tr><tr><td>First quarter</td><td>About half of the face looks bright</td></tr><tr><td>Full Moon</td><td>Almost all of the face looks bright</td></tr></tbody></table></div>",
+      "title": "What can we see?"
     },
     {
       "id": "say-it",
-      "title": "Is Earth’s shadow covering it?",
-      "html": "<p>Usually, no. The ordinary phases come from our changing view of the sunlit half.</p><p>Sometimes Earth does cast its shadow on the Moon. That special event is a <strong>lunar eclipse</strong>. It is different from the normal monthly phases.</p>"
+      "html": "<p>Usually, no. The ordinary phases come from our changing view of the sunlit half.</p><p>Sometimes Earth does cast its shadow on the Moon. That special event is a <strong>lunar eclipse</strong>. It is different from the normal monthly phases.</p>",
+      "title": "Is Earth’s shadow covering it?"
     },
     {
       "id": "notebook",
-      "title": "Try noticing it for yourself",
-      "html": "<p>When you can see the Moon, draw its bright shape and write down the time. Look again on another clear evening.</p><p>Is the bright part bigger or smaller? You do not need to remember every phase name to start spotting the pattern.</p><p>The Moon may be in a different place or may not be visible at your chosen time. That is fine: look again another day.</p>"
+      "html": "<p>When you can see the Moon, draw its bright shape and write down the time. Look again on another clear evening.</p><p>Is the bright part bigger or smaller? You do not need to remember every phase name to start spotting the pattern.</p><p>The Moon may be in a different place or may not be visible at your chosen time. That is fine: look again another day.</p>",
+      "title": "Try noticing it for yourself"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "One night it looks like a thin smile; another night it is a bright circle. The Moon stays round. What changes is how much of its sunlit side we can see.",
   "publishedAt": "2026-09-23T19:51:37+00:00"
 }

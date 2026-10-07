@@ -1,21 +1,4 @@
 {
-  "slug": "decimals-money-and-parts-of-ten",
-  "title": "Decimals: what does the dot mean?",
-  "description": "Start with one ribbon and ten equal pieces. Discover tenths, hundredths and why 0.5 and 0.50 show the same amount, with a grid you can change.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 54,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T14:50:46.890Z",
-  "updatedAt": "2026-10-01T14:50:47.063Z",
-  "cover": {
-    "src": "/assets/images/learn/decimals-money-and-parts-of-ten.webp",
-    "small": "/assets/images/learn/decimals-money-and-parts-of-ten-small.webp",
-    "thumbnail": "/assets/images/learn/decimals-money-and-parts-of-ten-thumb.webp",
-    "alt": "A hand pointing with a yellow pencil at a wooden ruler beside a green ribbon",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/fractions-from-zero/",
     "name": "Fractions, one piece at a time"
@@ -24,53 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Take your time with the grid and quick round. Math Rush is an optional whole-number challenge for another day.",
-  "related": [
-    "reading-a-fraction",
-    "equivalent-fractions-same-amount"
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals"
-    }
-  ],
-  "sections": [
-    {
-      "id": "one-ribbon",
-      "title": "One ribbon, ten equal pieces",
-      "html": "<p>Imagine a ribbon that is exactly one metre long. Cut it into <strong>ten equal pieces</strong>. Pick up one piece. You are holding one tenth of the original ribbon.</p><p>You can write that fraction as <strong>1/10</strong>. You can also write it as <strong>0.1</strong>. These are two names for the same length.</p><p>The dot is called the <strong>decimal point</strong>. Here, the zero on its left means there are no complete metres. The 1 just after the dot counts tenths of a metre.</p>"
-    },
-    {
-      "id": "five-pieces",
-      "title": "Put five little pieces together",
-      "html": "<p>Line up five of your ten pieces. They reach halfway along the original ribbon.</p><ul><li>As a fraction of the whole ribbon, that is <strong>5/10</strong>.</li><li>As a decimal, it is <strong>0.5</strong>.</li><li>In everyday words, it is <strong>one half</strong>.</li></ul><p>Read 0.5 as “zero point five”. The point does not mean “add” or “multiply”. It separates the whole-number part from the smaller parts.</p>"
-    },
-    {
-      "id": "try-decimals",
-      "title": "Colour a little, then a little more",
-      "html": "<p>The square below represents <strong>one whole</strong>. It has ten equal columns. In tenths mode, each step colours one more column.</p><p>Try colouring five columns. Then switch to hundredths without moving the slider. The coloured amount stays the same, but now you can count the tiny squares inside it.</p>"
-    },
-    {
-      "id": "smaller-pieces",
-      "title": "A tenth can be split again",
-      "html": "<p>Cut each of the ten ribbon pieces into ten smaller, equal pieces. You now have <strong>100 tiny pieces</strong> altogether. Each is one hundredth of the original ribbon.</p><p>One hundredth is written <strong>0.01</strong>. The first place after the point counts tenths; the second counts hundredths.</p><div class=\"table-scroll\"><table><caption>Read one place at a time</caption><thead><tr><th scope=\"col\">Number</th><th scope=\"col\">What it means</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths altogether</td></tr></tbody></table></div><p>Try 25 hundredths in the activity. You have coloured one quarter of the whole square.</p>"
-    },
-    {
-      "id": "same-amount",
-      "title": "Why 0.5 and 0.50 match",
-      "html": "<p>Five columns contain fifty tiny squares. So <strong>five tenths and fifty hundredths cover the same amount</strong>. That is why 0.5 equals 0.50.</p><p>The extra zero at the end does not add any length. But its position matters: <strong>0.05</strong> means only five hundredths. That is much smaller than five tenths. Compare 5 and 50 in hundredths mode to see the difference.</p><p>If this feels familiar, you have already met the idea in <a href=\"/learn/equivalent-fractions-same-amount/\">different fractions that describe the same amount</a>.</p>"
-    },
-    {
-      "id": "whole-and-part",
-      "title": "What if there is a whole ribbon too?",
-      "html": "<p>Take one complete metre of ribbon, then add three of the tenth-metre pieces. You have <strong>1.3 metres</strong>: one whole metre and three tenths more.</p><p>For now, that is enough. Locate the point, look at each place, and think about the size of the pieces. You do not need a long calculation to understand a decimal.</p>"
-    }
-  ],
   "quiz": {
     "version": "decimals-basics-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "One whole ribbon is cut into ten equal pieces. What decimal describes one piece of that whole?",
         "options": [
           "0.01",
@@ -78,10 +19,10 @@
           "1.0",
           "10.0"
         ],
-        "answer": 1,
         "explanation": "One piece out of ten is one tenth. The first place after the decimal point counts tenths, so we write 0.1."
       },
       {
+        "answer": 2,
         "prompt": "Which decimal is the same amount as 0.5?",
         "options": [
           "0.05",
@@ -89,10 +30,10 @@
           "0.50",
           "0.15"
         ],
-        "answer": 2,
         "explanation": "Five tenths fill the same space as fifty hundredths. The final zero in 0.50 does not change that amount."
       },
       {
+        "answer": 3,
         "prompt": "What does 1.3 metres mean?",
         "options": [
           "Thirteen whole metres",
@@ -100,9 +41,68 @@
           "Three whole metres and one tenth",
           "One whole metre and three tenths"
         ],
-        "answer": 3,
         "explanation": "The 1 before the point counts whole metres. The 3 just after it counts tenths of a metre."
       }
     ]
-  }
+  },
+  "slug": "decimals-money-and-parts-of-ten",
+  "cover": {
+    "alt": "A hand pointing with a yellow pencil at a wooden ruler beside a green ribbon",
+    "src": "/assets/images/learn/decimals-money-and-parts-of-ten.webp",
+    "small": "/assets/images/learn/decimals-money-and-parts-of-ten-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/decimals-money-and-parts-of-ten-thumb.webp"
+  },
+  "order": 54,
+  "title": "Decimals: what does the dot mean?",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "reading-a-fraction",
+    "equivalent-fractions-same-amount"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals",
+      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Take your time with the grid and quick round. Math Rush is an optional whole-number challenge for another day.",
+  "sections": [
+    {
+      "id": "one-ribbon",
+      "html": "<p>Imagine a ribbon that is exactly one metre long. Cut it into <strong>ten equal pieces</strong>. Pick up one piece. You are holding one tenth of the original ribbon.</p><p>You can write that fraction as <strong>1/10</strong>. You can also write it as <strong>0.1</strong>. These are two names for the same length.</p><p>The dot is called the <strong>decimal point</strong>. Here, the zero on its left means there are no complete metres. The 1 just after the dot counts tenths of a metre.</p>",
+      "title": "One ribbon, ten equal pieces"
+    },
+    {
+      "id": "five-pieces",
+      "html": "<p>Line up five of your ten pieces. They reach halfway along the original ribbon.</p><ul><li>As a fraction of the whole ribbon, that is <strong>5/10</strong>.</li><li>As a decimal, it is <strong>0.5</strong>.</li><li>In everyday words, it is <strong>one half</strong>.</li></ul><p>Read 0.5 as “zero point five”. The point does not mean “add” or “multiply”. It separates the whole-number part from the smaller parts.</p>",
+      "title": "Put five little pieces together"
+    },
+    {
+      "id": "try-decimals",
+      "html": "<p>Draw a square divided into ten equal columns. Shade five columns: half the square is coloured, so the shaded amount is <strong>0.5</strong>.</p><p>Divide each column into ten equal little squares. Your shaded half now covers 50 of the 100 squares: <strong>0.50</strong>. The drawing changed its divisions, not its shaded amount.</p>",
+      "title": "Colour a little, then a little more"
+    },
+    {
+      "id": "smaller-pieces",
+      "html": "<p>Cut each of the ten ribbon pieces into ten smaller, equal pieces. You now have <strong>100 tiny pieces</strong> altogether. Each is one hundredth of the original ribbon.</p><p>One hundredth is written <strong>0.01</strong>. The first place after the point counts tenths; the second counts hundredths.</p><div class=\"table-scroll\"><table><caption>Read one place at a time</caption><thead><tr><th scope=\"col\">Number</th><th scope=\"col\">What it means</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths altogether</td></tr></tbody></table></div><p>Shade 25 of the 100 little squares on paper. You have coloured one quarter of the whole square.</p>",
+      "title": "A tenth can be split again"
+    },
+    {
+      "id": "same-amount",
+      "html": "<p>Five columns contain fifty tiny squares. So <strong>five tenths and fifty hundredths cover the same amount</strong>. That is why 0.5 equals 0.50.</p><p>The extra zero at the end does not add any length. But its position matters: <strong>0.05</strong> means only five hundredths. That is much smaller than five tenths. Compare five shaded little squares with fifty to see the difference.</p><p>If this feels familiar, you have already met the idea in <a href=\"/learn/equivalent-fractions-same-amount/\">different fractions that describe the same amount</a>.</p>",
+      "title": "Why 0.5 and 0.50 match"
+    },
+    {
+      "id": "whole-and-part",
+      "html": "<p>Take one complete metre of ribbon, then add three of the tenth-metre pieces. You have <strong>1.3 metres</strong>: one whole metre and three tenths more.</p><p>For now, that is enough. Locate the point, look at each place, and think about the size of the pieces. You do not need a long calculation to understand a decimal.</p>",
+      "title": "What if there is a whole ribbon too?"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Understand decimal place value with tenths and hundredths. See why 0.5 equals 0.50, why 0.05 is different, and how to read a number such as 1.3.",
+  "publishedAt": "2026-10-01T15:18:01.509497+00:00"
 }

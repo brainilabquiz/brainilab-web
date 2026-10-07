@@ -18,8 +18,8 @@
   "topic": "Learning",
   "status": "published",
   "related": [
-    "why-octopuses-have-three-hearts",
-    "how-to-learn-world-flags"
+    "confidence-is-not-a-memory-test",
+    "can-a-wrong-guess-help-you-learn"
   ],
   "sources": [
     {
@@ -27,6 +27,7 @@
       "name": "Roediger & Karpicke — The power of testing memory (research review)"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Play General Knowledge and pick one interesting answer to revisit later.",
   "sections": [
     {
@@ -50,8 +51,7 @@
       "title": "Keep it manageable"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "An answer can feel obvious as soon as you see it. Try recalling it later, without the clues, to see what has stuck.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

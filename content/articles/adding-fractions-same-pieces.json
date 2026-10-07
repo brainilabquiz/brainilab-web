@@ -1,21 +1,4 @@
 {
-  "slug": "adding-fractions-same-pieces",
-  "title": "Add fractions by matching the pieces",
-  "description": "Put thirds with thirds, then see how equivalent fractions let halves and quarters work together.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 51,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/adding-fractions-same-pieces.webp",
-    "small": "/assets/images/learn/adding-fractions-same-pieces-small.webp",
-    "thumbnail": "/assets/images/learn/adding-fractions-same-pieces-thumb.webp",
-    "alt": "Yellow measuring cups beside a bowl of flour",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/fractions-from-zero/",
     "name": "Fractions, one piece at a time"
@@ -24,42 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "comparing-fractions-visually"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Adding Fractions",
-      "url": "https://www.mathsisfun.com/fractions_addition.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "count-pieces-of-one-size",
-      "title": "Count pieces of one size",
-      "html": "<p>You have two eighths of a paper strip and receive three more eighths. All the pieces match, so you now have five eighths: <strong>2/8 + 3/8 = 5/8</strong>.</p><p>The denominator stays eight because the pieces are still eighths. It does not become sixteen just because two groups were combined. You are counting more pieces of the same size.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose the number of equal pieces in a whole, then choose how many pieces each pile contributes. The strips show the two amounts and their combined total.</p><p>Try three quarters plus two quarters. Five quarter-pieces make one whole and one extra quarter: 5/4 = 1 1/4. A fraction can be larger than one; the numerator is allowed to exceed the denominator.</p>"
-    },
-    {
-      "id": "match-sizes-before-adding",
-      "title": "Match sizes before adding",
-      "html": "<p>One half and one quarter are not the same kind of piece. Rename the half as two quarters. Then 2/4 + 1/4 = 3/4. The answer is three quarters, not two sixths.</p><p>For one third plus one sixth, turn the third into two sixths. Now 2/6 + 1/6 = 3/6, which is one half. Equivalent fractions let you count matching pieces.</p>"
-    },
-    {
-      "id": "check-whether-the-answer-makes-sense",
-      "title": "Check whether the answer makes sense",
-      "html": "<p>Adding two positive fractions gives a result larger than either starting amount. If your answer to one half plus one quarter is smaller than a half, stop and check the pieces.</p><p>Before the quiz, explain an example aloud: “These are eighths. I have two, then three more, making five eighths.” Naming the pieces keeps the denominator’s job clear. You now have the foundations for percentages and recipe measurements.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 2,
         "prompt": "What is 2/8 + 3/8?",
         "options": [
           "5/16",
@@ -67,10 +19,10 @@
           "5/8",
           "1/8"
         ],
-        "answer": 2,
         "explanation": "Add the number of eighths; the pieces remain eighths."
       },
       {
+        "answer": 1,
         "prompt": "What is 1/2 + 1/4?",
         "options": [
           "2/6",
@@ -78,10 +30,10 @@
           "1/6",
           "1/8"
         ],
-        "answer": 1,
         "explanation": "Rename one half as two quarters, then add one quarter."
       },
       {
+        "answer": 3,
         "prompt": "What does 5/4 mean?",
         "options": [
           "Five wholes",
@@ -89,9 +41,57 @@
           "Exactly one whole",
           "One whole and one quarter"
         ],
-        "answer": 3,
         "explanation": "Four quarters make a whole; the fifth quarter is extra."
       }
     ]
-  }
+  },
+  "slug": "adding-fractions-same-pieces",
+  "cover": {
+    "alt": "Yellow measuring cups beside a bowl of flour",
+    "src": "/assets/images/learn/adding-fractions-same-pieces.webp",
+    "small": "/assets/images/learn/adding-fractions-same-pieces-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/adding-fractions-same-pieces-thumb.webp"
+  },
+  "order": 51,
+  "title": "How to add fractions with the same denominator",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "comparing-fractions-visually"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/fractions_addition.html",
+      "name": "Math is Fun — Adding Fractions"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "count-pieces-of-one-size",
+      "html": "<p>You have two eighths of a paper strip and receive three more eighths. All the pieces match, so you now have five eighths: <strong>2/8 + 3/8 = 5/8</strong>.</p><p>The denominator stays eight because the pieces are still eighths. It does not become sixteen just because two groups were combined. You are counting more pieces of the same size.</p>",
+      "title": "Count pieces of one size"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw two identical strips and divide each into four equal parts. Shade three parts on the first and two on the second. Count all the shaded quarter-pieces together.</p><p>Try three quarters plus two quarters. Five quarter-pieces make one whole and one extra quarter: 5/4 = 1 1/4. A fraction can be larger than one; the numerator is allowed to exceed the denominator.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "match-sizes-before-adding",
+      "html": "<p>One half and one quarter are not the same kind of piece. Rename the half as two quarters. Then 2/4 + 1/4 = 3/4. The answer is three quarters, not two sixths.</p><p>For one third plus one sixth, turn the third into two sixths. Now 2/6 + 1/6 = 3/6, which is one half. Equivalent fractions let you count matching pieces.</p>",
+      "title": "Match sizes before adding"
+    },
+    {
+      "id": "check-whether-the-answer-makes-sense",
+      "html": "<p>Adding two positive fractions gives a result larger than either starting amount. If your answer to one half plus one quarter is smaller than a half, stop and check the pieces.</p><p>Before the quiz, explain an example aloud: “These are eighths. I have two, then three more, making five eighths.” Naming the pieces keeps the denominator’s job clear. You now have the foundations for percentages and recipe measurements.</p>",
+      "title": "Check whether the answer makes sense"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Put thirds with thirds, then see how equivalent fractions let halves and quarters work together.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

@@ -21,8 +21,8 @@
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
-    "how-hook-and-loop-fasteners-work",
-    "how-post-it-notes-were-invented"
+    "why-zippers-have-interlocking-teeth",
+    "how-hook-and-loop-fasteners-work"
   ],
   "sources": [
     {
@@ -34,11 +34,12 @@
       "name": "BIC — Cristal ball material, point size and line width (2011 product description)"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try General Knowledge for more questions about familiar things and surprising ideas.",
   "sections": [
     {
       "id": "rolling-tip",
-      "html": "<p>Draw a short line with a ballpoint pen. The tip may look like a fixed metal point, but a tiny ball turns as it travels over the paper.</p><p>The ball sits in a socket, with ink supplied from the pen’s reservoir behind it. As it rotates, it picks up ink and transfers it to the page. That small moving part gives the pen its name.</p>",
+      "html": "<p><strong>The tiny ball rolls ink onto the paper as you write.</strong> A ballpoint pen’s tip looks like a fixed metal point, but the ball turns as it travels across the page.</p><p>The ball sits in a socket, with ink supplied from the pen’s reservoir behind it. As it rotates, it picks up ink and transfers it to the page. That small moving part gives the pen its name.</p>",
       "title": "The point is a moving part"
     },
     {
@@ -53,12 +54,11 @@
     },
     {
       "id": "draw-the-journey",
-      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\">the hooks and loops in a reusable fastener</a>.</p>",
+      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\">the hooks and loops in a reusable fastener</a>.</p><p>Your bag has another small moving part doing a big job: <a href=\"/learn/why-zippers-have-interlocking-teeth/\">the slider that joins a zipper’s teeth</a>.</p>",
       "title": "Can you sketch the ink’s journey?"
     }
   ],
-  "updatedAt": "2026-09-30T17:19:01.76865+00:00",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
-  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

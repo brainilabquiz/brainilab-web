@@ -1,21 +1,4 @@
 {
-  "slug": "subtraction-how-many-are-left",
-  "title": "Subtraction: what is left when you take some away?",
-  "description": "Start with a small pile, take a few away, and count what remains. Try it yourself, then use addition to check your answer.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 34,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-09-30T20:47:45.854827+00:00",
-  "updatedAt": "2026-09-30T20:47:45.854827+00:00",
-  "cover": {
-    "src": "/assets/images/learn/subtraction-how-many-are-left.webp",
-    "small": "/assets/images/learn/subtraction-how-many-are-left-small.webp",
-    "thumbnail": "/assets/images/learn/subtraction-how-many-are-left-thumb.webp",
-    "alt": "A hand lifting a strawberry from a plate",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/maths-from-zero/",
     "name": "Maths from zero"
@@ -24,48 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Ready for a faster challenge? Math Rush is optional; come back to these counters whenever you need them.",
-  "related": [
-    "addition-putting-things-together",
-    "multiplication-equal-groups"
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Subtract Whole Numbers",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/1-3-subtract-whole-numbers"
-    }
-  ],
-  "sections": [
-    {
-      "id": "start-with-a-pile",
-      "title": "Start with what you have",
-      "html": "<p>Imagine <strong>6 strawberries</strong> on a plate. You eat <strong>2</strong>. How many are still on the plate?</p><p>Take away one strawberry: five remain. Take away another: four remain. There are <strong>4 left</strong>.</p><p>This is one way to understand <strong>subtraction</strong>: start with an amount, take some away, and find what remains. If you would like to practise counting first, start with <a href=\"/learn/addition-putting-things-together/\">our addition lesson</a>.</p>"
-    },
-    {
-      "id": "try-taking-away",
-      "title": "Take a counter away",
-      "html": "<p>Our counters stand in for the strawberries. Choose your starting pile, then press “Take one away”. Each press crosses out one counter.</p><p>Count only the counters that are still there. Crossed-out ones show what you removed; they no longer belong in the answer. Try starting with six and taking away two.</p>"
-    },
-    {
-      "id": "minus-sign",
-      "title": "Meet the minus sign",
-      "html": "<p>We write our strawberry story as <strong>6 − 2 = 4</strong>. Read it as “six minus two equals four”.</p><div class=\"table-scroll\"><table><caption>Follow the story from left to right</caption><thead><tr><th scope=\"col\">Part</th><th scope=\"col\">What it tells you</th></tr></thead><tbody><tr><td>6</td><td>The amount you start with.</td></tr><tr><td>− 2</td><td>Take away two.</td></tr><tr><td>= 4</td><td>Four remain.</td></tr></tbody></table></div><p>The sign <strong>−</strong> means minus. The answer to a subtraction is also called the <strong>difference</strong>.</p>"
-    },
-    {
-      "id": "check-it",
-      "title": "Put them back to check",
-      "html": "<p>You think four strawberries remain. How could you check?</p><ol><li>Start with those four remaining strawberries.</li><li>Pretend to put the two you ate back on the plate.</li><li>Count again. You have six, the amount you started with.</li></ol><p>That check is <strong>4 + 2 = 6</strong>. Adding back what you took away should return you to the starting amount.</p>"
-    },
-    {
-      "id": "zero-left",
-      "title": "Sometimes the answer is nothing",
-      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>This activity only lets you remove counters you have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\">see how equal groups make counting quicker</a>.</p>"
-    }
-  ],
   "quiz": {
     "version": "maths-zero-v1",
     "questions": [
       {
+        "answer": 0,
         "prompt": "Six strawberries are on a plate. You eat two. How many remain?",
         "options": [
           "4",
@@ -73,10 +19,10 @@
           "6",
           "8"
         ],
-        "answer": 0,
         "explanation": "Remove one to leave five, then another to leave four."
       },
       {
+        "answer": 2,
         "prompt": "You start with 3 counters and take away all 3. How many remain?",
         "options": [
           "3",
@@ -84,10 +30,10 @@
           "0",
           "1"
         ],
-        "answer": 2,
         "explanation": "Every counter has been removed. None remain, and we write that as zero."
       },
       {
+        "answer": 1,
         "prompt": "Which check shows that 6 − 2 = 4 makes sense?",
         "options": [
           "4 + 6 = 10",
@@ -95,9 +41,63 @@
           "6 + 2 = 8",
           "2 + 2 = 4"
         ],
-        "answer": 1,
         "explanation": "Put the two removed counters back with the four remaining ones. You return to six."
       }
     ]
-  }
+  },
+  "slug": "subtraction-how-many-are-left",
+  "cover": {
+    "alt": "A hand lifting a strawberry from a plate",
+    "src": "/assets/images/learn/subtraction-how-many-are-left.webp",
+    "small": "/assets/images/learn/subtraction-how-many-are-left-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/subtraction-how-many-are-left-thumb.webp"
+  },
+  "order": 34,
+  "title": "Subtraction: what is left when you take some away?",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "addition-putting-things-together",
+    "multiplication-equal-groups"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-3-subtract-whole-numbers",
+      "name": "OpenStax — Subtract Whole Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few calculations in Math Rush, or take your time with the examples above.",
+  "sections": [
+    {
+      "id": "start-with-a-pile",
+      "html": "<p>Imagine <strong>6 strawberries</strong> on a plate. You eat <strong>2</strong>. How many are still on the plate?</p><p>Take away one strawberry: five remain. Take away another: four remain. There are <strong>4 left</strong>.</p><p>This is one way to understand <strong>subtraction</strong>: start with an amount, take some away, and find what remains. If you would like to practise counting first, start with <a href=\"/learn/addition-putting-things-together/\">our addition lesson</a>.</p>",
+      "title": "Start with what you have"
+    },
+    {
+      "id": "try-taking-away",
+      "html": "<p>Draw six small circles on paper to stand for the strawberries. Cross out two. Count only the circles that have not been crossed out.</p><p>The two crossed-out circles show what you removed. Four remain, so <strong>6 − 2 = 4</strong>. Try the same idea with five circles and one crossed out.</p>",
+      "title": "Take a counter away"
+    },
+    {
+      "id": "minus-sign",
+      "html": "<p>We write our strawberry story as <strong>6 − 2 = 4</strong>. Read it as “six minus two equals four”.</p><div class=\"table-scroll\"><table><caption>Follow the story from left to right</caption><thead><tr><th scope=\"col\">Part</th><th scope=\"col\">What it tells you</th></tr></thead><tbody><tr><td>6</td><td>The amount you start with.</td></tr><tr><td>− 2</td><td>Take away two.</td></tr><tr><td>= 4</td><td>Four remain.</td></tr></tbody></table></div><p>The sign <strong>−</strong> means minus. The answer to a subtraction is also called the <strong>difference</strong>.</p>",
+      "title": "Meet the minus sign"
+    },
+    {
+      "id": "check-it",
+      "html": "<p>You think four strawberries remain. How could you check?</p><ol><li>Start with those four remaining strawberries.</li><li>Pretend to put the two you ate back on the plate.</li><li>Count again. You have six, the amount you started with.</li></ol><p>That check is <strong>4 + 2 = 6</strong>. Adding back what you took away should return you to the starting amount.</p>",
+      "title": "Put them back to check"
+    },
+    {
+      "id": "zero-left",
+      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>These examples remove only counters you already have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\">see how equal groups make counting quicker</a>.</p>",
+      "title": "Sometimes the answer is nothing"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Start with a small pile, take a few away, and count what remains. Try it yourself, then use addition to check your answer.",
+  "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }

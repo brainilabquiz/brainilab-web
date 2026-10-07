@@ -1,21 +1,4 @@
 {
-  "slug": "multiplication-equal-groups",
-  "title": "Multiplication starts with equal groups",
-  "description": "A few bowls of fruit can explain multiplication. Build equal groups, count them, and explore a times table without memorising it first.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 35,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-09-30T20:47:45.854827+00:00",
-  "updatedAt": "2026-09-30T20:47:45.854827+00:00",
-  "cover": {
-    "src": "/assets/images/learn/multiplication-equal-groups.webp",
-    "small": "/assets/images/learn/multiplication-equal-groups-small.webp",
-    "thumbnail": "/assets/images/learn/multiplication-equal-groups-thumb.webp",
-    "alt": "Three bowls with two clementines in each bowl",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/maths-from-zero/",
     "name": "Maths from zero"
@@ -24,48 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Ready for a faster challenge? Math Rush is optional; come back to these counters whenever you need them.",
-  "related": [
-    "addition-putting-things-together",
-    "subtraction-how-many-are-left"
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Multiply Whole Numbers",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/1-4-multiply-whole-numbers"
-    }
-  ],
-  "sections": [
-    {
-      "id": "same-in-each",
-      "title": "Three bowls, two pieces of fruit in each",
-      "html": "<p>Imagine <strong>3 bowls</strong>. Put <strong>2 clementines in every bowl</strong>. Each bowl has the same amount: that is what “equal groups” means.</p><ol><li>The first bowl gives you two clementines.</li><li>The second bowl adds two more. You now have four.</li><li>The third bowl adds another two. You now have six.</li></ol><p>You could write this as <strong>2 + 2 + 2 = 6</strong>. Multiplication gives us a shorter way to describe those equal groups.</p>"
-    },
-    {
-      "id": "build-groups",
-      "title": "Build your own groups",
-      "html": "<p>Choose a number of groups and how many counters belong in each. Each outline is one group. Before showing the total, count the counters or add one group at a time.</p><p>Try 3 groups of 2 first. Then keep 3 groups but put 4 in each. More counters in every group means more counters altogether.</p><p>The table below lets you explore bigger examples too. Choose a cell to highlight its row and column. You do not need to learn the whole table today.</p>"
-    },
-    {
-      "id": "times-sign",
-      "title": "A shorter way to write equal groups",
-      "html": "<p>The sign <strong>×</strong> means “times”. In this lesson, <strong>3 × 2</strong> means “three groups of two”. We counted six clementines, so <strong>3 × 2 = 6</strong>.</p><p>The answer to a multiplication is called the <strong>product</strong>. Here, the product is six. You may see an asterisk, <strong>*</strong>, used for multiplication on a computer.</p><div class=\"table-scroll\"><table><caption>Different groups can give the same total</caption><thead><tr><th scope=\"col\">Groups</th><th scope=\"col\">In each group</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><td>3</td><td>2</td><td>6</td></tr><tr><td>2</td><td>3</td><td>6</td></tr><tr><td>1</td><td>6</td><td>6</td></tr></tbody></table></div><p>The arrangement changes, but the total stays six. You can check this by moving six real counters into those groups.</p>"
-    },
-    {
-      "id": "equal-matters",
-      "title": "The groups must really be equal",
-      "html": "<p>Suppose one bowl has 2 clementines and another has 3. That is <strong>not</strong> two groups of two. The bowls hold different amounts.</p><p>Add the actual amounts instead: two and three make five. The equal-groups shortcut only fits when every group has the same size.</p><p>What about three empty bowls? Each holds zero clementines. Altogether there are still none: <strong>3 × 0 = 0</strong>.</p>"
-    },
-    {
-      "id": "your-next-step",
-      "title": "Try four pairs",
-      "html": "<p>There are four pairs of socks. A pair means two socks. How many socks are there?</p><details class=\"practice-answer\"><summary>Show me the steps</summary><p>Count two socks for each pair: 2, then 4, then 6, then 8. Four groups of two make <strong>8 socks</strong>.</p></details><p>You have now met adding, taking away and equal groups. Take your time with the short round below. You can return to any activity whenever you like.</p><p>For a later challenge, <a href=\"/learn/multiply-by-11-in-your-head/\">try counting ten groups and one more</a>. For now, understanding the small groups is enough.</p>"
-    }
-  ],
   "quiz": {
     "version": "maths-zero-v1",
     "questions": [
       {
+        "answer": 3,
         "prompt": "Three bowls each hold 2 clementines. How many clementines are there?",
         "options": [
           "5",
@@ -73,10 +19,10 @@
           "3",
           "6"
         ],
-        "answer": 3,
         "explanation": "Count two in the first bowl, two more to make four, and two more to make six."
       },
       {
+        "answer": 0,
         "prompt": "Which story matches 4 × 2 in this lesson?",
         "options": [
           "Four pairs of socks",
@@ -84,10 +30,10 @@
           "Four socks beside two socks",
           "Two empty bowls"
         ],
-        "answer": 0,
         "explanation": "Each pair holds two socks. Four equal pairs contain eight socks."
       },
       {
+        "answer": 2,
         "prompt": "Three bowls each hold 0 clementines. How many clementines are there?",
         "options": [
           "3",
@@ -95,9 +41,63 @@
           "0",
           "6"
         ],
-        "answer": 2,
         "explanation": "All three bowls are empty. Empty groups still contain no clementines."
       }
     ]
-  }
+  },
+  "slug": "multiplication-equal-groups",
+  "cover": {
+    "alt": "Three bowls with two clementines in each bowl",
+    "src": "/assets/images/learn/multiplication-equal-groups.webp",
+    "small": "/assets/images/learn/multiplication-equal-groups-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/multiplication-equal-groups-thumb.webp"
+  },
+  "order": 35,
+  "title": "Multiplication starts with equal groups",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "division-sharing-equally",
+    "doubling-and-halving"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-4-multiply-whole-numbers",
+      "name": "OpenStax — Multiply Whole Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Ready for a faster challenge? Math Rush is optional; come back to these counters whenever you need them.",
+  "sections": [
+    {
+      "id": "same-in-each",
+      "html": "<p>Imagine <strong>3 bowls</strong>. Put <strong>2 clementines in every bowl</strong>. Each bowl has the same amount: that is what “equal groups” means.</p><ol><li>The first bowl gives you two clementines.</li><li>The second bowl adds two more. You now have four.</li><li>The third bowl adds another two. You now have six.</li></ol><p>You could write this as <strong>2 + 2 + 2 = 6</strong>. Multiplication gives us a shorter way to describe those equal groups.</p>",
+      "title": "Three bowls, two pieces of fruit in each"
+    },
+    {
+      "id": "build-groups",
+      "html": "<p>Draw three circles and put two dots in each. Count the dots or add one group at a time: two, four, six.</p><p>Keep the three circles but put four dots in each. Now you have twelve. More dots in every group means more dots altogether.</p>",
+      "title": "Build your own groups"
+    },
+    {
+      "id": "times-sign",
+      "html": "<p>The sign <strong>×</strong> means “times”. In this lesson, <strong>3 × 2</strong> means “three groups of two”. We counted six clementines, so <strong>3 × 2 = 6</strong>.</p><p>The answer to a multiplication is called the <strong>product</strong>. Here, the product is six. You may see an asterisk, <strong>*</strong>, used for multiplication on a computer.</p><div class=\"table-scroll\"><table><caption>Different groups can give the same total</caption><thead><tr><th scope=\"col\">Groups</th><th scope=\"col\">In each group</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><td>3</td><td>2</td><td>6</td></tr><tr><td>2</td><td>3</td><td>6</td></tr><tr><td>1</td><td>6</td><td>6</td></tr></tbody></table></div><p>The arrangement changes, but the total stays six. You can check this by moving six real counters into those groups.</p>",
+      "title": "A shorter way to write equal groups"
+    },
+    {
+      "id": "equal-matters",
+      "html": "<p>Suppose one bowl has 2 clementines and another has 3. That is <strong>not</strong> two groups of two. The bowls hold different amounts.</p><p>Add the actual amounts instead: two and three make five. The equal-groups shortcut only fits when every group has the same size.</p><p>What about three empty bowls? Each holds zero clementines. Altogether there are still none: <strong>3 × 0 = 0</strong>.</p>",
+      "title": "The groups must really be equal"
+    },
+    {
+      "id": "your-next-step",
+      "html": "<p>There are four pairs of socks. A pair means two socks. How many socks are there?</p><details class=\"practice-answer\"><summary>Show me the steps</summary><p>Count two socks for each pair: 2, then 4, then 6, then 8. Four groups of two make <strong>8 socks</strong>.</p></details><p>You have now met adding, taking away and equal groups. If a sum feels slippery, sketch the groups before counting them.</p><p>For a later challenge, <a href=\"/learn/multiply-by-11-in-your-head/\">try counting ten groups and one more</a>. For now, understanding the small groups is enough.</p>",
+      "title": "Try four pairs"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "A few bowls of fruit can explain multiplication. Build equal groups, count them, and explore a times table without memorising it first.",
+  "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }

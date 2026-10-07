@@ -1,21 +1,4 @@
 {
-  "slug": "why-day-turns-into-night",
-  "title": "Day and night: take a turn with Earth",
-  "description": "Use a lamp and a globe to separate Earth’s daily rotation from its yearly journey around the Sun.",
-  "topic": "Science & nature",
-  "status": "published",
-  "order": 46,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/why-day-turns-into-night.webp",
-    "small": "/assets/images/learn/why-day-turns-into-night-small.webp",
-    "thumbnail": "/assets/images/learn/why-day-turns-into-night-thumb.webp",
-    "alt": "A tabletop globe illuminated from one side by a desk lamp",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/sun-moon-and-time/",
     "name": "From the Moon to the time on your clock"
@@ -24,42 +7,11 @@
     "url": "/general-knowledge/general-knowledge-quiz/",
     "name": "General Knowledge"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "why-the-moon-changes-shape"
-  ],
-  "sources": [
-    {
-      "name": "NASA Science — Facts About Earth",
-      "url": "https://science.nasa.gov/earth/facts/"
-    }
-  ],
-  "sections": [
-    {
-      "id": "keep-the-lamp-still",
-      "title": "Keep the lamp still",
-      "html": "<p>Imagine a globe beside a lamp in a dark room. The side facing the lamp is lit. The side facing away is in shadow. Put a small sticker on the globe and slowly turn it.</p><p>When the sticker faces the light, its place is in daytime. When it turns away, that place is in nighttime. The Sun does not need to circle Earth every day for this change to happen: Earth rotates.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Turn the marker around the simplified Earth below. The light always arrives from the left. Notice when the marker enters the lit half and when it moves into the dark half.</p><p>The drawing is a model, not a live map or a sunrise forecast. It leaves out latitude, the atmosphere and the tilt of Earth. Those details affect real daylight, but the simple model makes the daily turning easier to see.</p>"
-    },
-    {
-      "id": "a-spin-and-a-journey",
-      "title": "A spin and a journey",
-      "html": "<p>A <strong>rotation</strong> is a turn around an axis, like the globe spinning on its stand. An <strong>orbit</strong> is a journey around another object. Earth rotates while it also travels around the Sun.</p><p>A solar day is about 24 hours; Earth’s trip around the Sun takes about a year. Mixing up these two motions makes it hard to explain why night happens every day while seasons change over months.</p>"
-    },
-    {
-      "id": "why-someone-else-is-awake",
-      "title": "Why someone else is awake",
-      "html": "<p>Two places on different sides of Earth do not face the Sun at the same time. Your evening can be someone else’s morning. Clock systems help people organise this difference, but the turning Earth comes first.</p><p>Next, move the lamp-and-ball idea to the Moon. Half of the Moon is normally lit by the Sun too, yet the amount of that lit half visible from Earth changes through the month.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 0,
         "prompt": "What mainly causes a place to move from day into night?",
         "options": [
           "Earth rotating",
@@ -67,10 +19,10 @@
           "Earth completing a yearly orbit",
           "The Moon covering the Sun every evening"
         ],
-        "answer": 0,
         "explanation": "Earth carries the place away from the side facing the Sun."
       },
       {
+        "answer": 1,
         "prompt": "A journey around another object is called…",
         "options": [
           "a phase",
@@ -78,10 +30,10 @@
           "a weekday",
           "a century"
         ],
-        "answer": 1,
         "explanation": "An orbit is the journey; rotation is a spin."
       },
       {
+        "answer": 2,
         "prompt": "Is the activity a live sunrise prediction for your location?",
         "options": [
           "Yes, for all latitudes",
@@ -89,9 +41,63 @@
           "No, it is a simplified model",
           "Yes, to the minute"
         ],
-        "answer": 2,
         "explanation": "The model deliberately leaves out location and several details of real daylight."
       }
     ]
-  }
+  },
+  "slug": "why-day-turns-into-night",
+  "cover": {
+    "alt": "A tabletop globe illuminated from one side by a desk lamp",
+    "src": "/assets/images/learn/why-day-turns-into-night.webp",
+    "small": "/assets/images/learn/why-day-turns-into-night-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-day-turns-into-night-thumb.webp"
+  },
+  "order": 46,
+  "title": "Why do we have day and night?",
+  "topic": "Science & nature",
+  "video": {
+    "id": "1ISNNEhgCPw",
+    "title": "Earth & Space Quiz: Can You Get 50/50?",
+    "showAfterGame": false
+  },
+  "status": "published",
+  "related": [
+    "why-the-moon-changes-shape",
+    "why-time-zones-get-messy"
+  ],
+  "sources": [
+    {
+      "url": "https://science.nasa.gov/earth/facts/",
+      "name": "NASA Science — Facts About Earth"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "keep-the-lamp-still",
+      "html": "<p><strong>We have day and night because Earth rotates.</strong> A place has daylight while it faces the Sun and night while it faces away. Picture a globe beside a lamp: put a sticker on the globe and slowly turn it.</p><p>When the sticker faces the light, its place is in daytime. When it turns away, that place is in nighttime. The Sun does not need to circle Earth every day for this change to happen: Earth rotates.</p>",
+      "title": "Keep the lamp still"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Place a sticker on a globe or ball and shine a lamp from one side. Slowly turn the ball while leaving the lamp still. Watch the sticker move into the light and back into shadow.</p><p>This lamp-and-ball example is a model, not a live map or a sunrise forecast. It leaves out latitude, the atmosphere and the tilt of Earth. Those details affect real daylight, but the simple model makes the daily turning easier to see.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "a-spin-and-a-journey",
+      "html": "<p>A <strong>rotation</strong> is a turn around an axis, like the globe spinning on its stand. An <strong>orbit</strong> is a journey around another object. Earth rotates while it also travels around the Sun.</p><p>A solar day is about 24 hours; Earth’s trip around the Sun takes about a year. Mixing up these two motions makes it hard to explain why night happens every day while seasons change over months.</p>",
+      "title": "A spin and a journey"
+    },
+    {
+      "id": "why-someone-else-is-awake",
+      "html": "<p>Two places on different sides of Earth do not face the Sun at the same time. Your evening can be someone else’s morning. Clock systems help people organise this difference, but the turning Earth comes first.</p><p>Next, move the lamp-and-ball idea to the Moon. Half of the Moon is normally lit by the Sun too, yet the amount of that lit half visible from Earth changes through the month.</p>",
+      "title": "Why someone else is awake"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Use a lamp and a globe to separate Earth’s daily rotation from its yearly journey around the Sun.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

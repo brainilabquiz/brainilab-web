@@ -1,21 +1,4 @@
 {
-  "slug": "fractions-equal-parts",
-  "title": "Before the fraction, check the pieces",
-  "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 47,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/fractions-equal-parts.webp",
-    "small": "/assets/images/learn/fractions-equal-parts-small.webp",
-    "thumbnail": "/assets/images/learn/fractions-equal-parts-thumb.webp",
-    "alt": "A round flatbread cut into four wedges on a ceramic plate",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/fractions-from-zero/",
     "name": "Fractions, one piece at a time"
@@ -24,42 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "reading-a-fraction"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Fractions",
-      "url": "https://www.mathsisfun.com/fractions.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "one-sandwich-two-people",
-      "title": "One sandwich, two people",
-      "html": "<p>You and a friend share a rectangular sandwich. A cut down the middle can give each of you an equal amount. Each share is one half of the sandwich.</p><p>Now imagine a cut very close to one edge. There are still two pieces, but one is much larger. Calling either piece “a half” would hide that difference. Fractions such as halves and quarters describe <strong>equal parts of a chosen whole</strong>.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose how many equal parts divide the strip, then choose how many parts are shaded. The entire strip is one whole. Four equal parts make quarters; eight make eighths.</p><p>Look at one piece when there are two parts, then one piece when there are eight. More equal parts mean each individual part is smaller, as long as the whole stays the same size.</p>"
-    },
-    {
-      "id": "always-name-the-whole",
-      "title": "Always name the whole",
-      "html": "<p>Half a small sandwich and half a large sandwich are both halves, but they may contain different amounts of food. “A half” describes a relationship to a whole, not a fixed size by itself.</p><p>In the activities in this course, comparison strips have the same length. That makes comparing their shaded fractions fair. If the wholes changed size without warning, the picture could be misleading.</p>"
-    },
-    {
-      "id": "make-your-own-example",
-      "title": "Make your own example",
-      "html": "<p>Fold a strip of paper into two equal sections, then fold it again to make four. Unfold it and check the sections. Two of the four sections cover the same length as one of the two original sections.</p><p>Do not worry about the written fraction yet. First get comfortable describing the picture: how many equal parts make the whole, and how many of those parts are selected? The next lesson gives those two counts their names.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "A whole is split into four equal parts. One part is…",
         "options": [
           "a half",
@@ -67,10 +19,10 @@
           "a whole",
           "four wholes"
         ],
-        "answer": 1,
         "explanation": "Quarter is the name for one of four equal parts."
       },
       {
+        "answer": 2,
         "prompt": "A sandwich is cut into one big piece and one small piece. Are both halves?",
         "options": [
           "Yes, because there are two",
@@ -78,10 +30,10 @@
           "No, the shares are unequal",
           "Only if they are apart"
         ],
-        "answer": 2,
         "explanation": "Two pieces count as halves only when they are equal shares of the whole."
       },
       {
+        "answer": 2,
         "prompt": "For the same whole, which single part is larger?",
         "options": [
           "One eighth",
@@ -89,9 +41,57 @@
           "One half",
           "There is no way to compare"
         ],
-        "answer": 2,
         "explanation": "Splitting into two gives larger pieces than splitting the same whole into eight."
       }
     ]
-  }
+  },
+  "slug": "fractions-equal-parts",
+  "cover": {
+    "alt": "A round flatbread cut into four wedges on a ceramic plate",
+    "src": "/assets/images/learn/fractions-equal-parts.webp",
+    "small": "/assets/images/learn/fractions-equal-parts-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/fractions-equal-parts-thumb.webp"
+  },
+  "order": 47,
+  "title": "Why fractions need equal parts of the same whole",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "reading-a-fraction"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/fractions.html",
+      "name": "Math is Fun — Fractions"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "one-sandwich-two-people",
+      "html": "<p>You and a friend share a rectangular sandwich. A cut down the middle can give each of you an equal amount. Each share is one half of the sandwich.</p><p>Now imagine a cut very close to one edge. There are still two pieces, but one is much larger. Calling either piece “a half” would hide that difference. Fractions such as halves and quarters describe <strong>equal parts of a chosen whole</strong>.</p>",
+      "title": "One sandwich, two people"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw two identical strips. Divide the first into two equal parts and the second into eight. Shade one part of each strip and compare their sizes.</p><p>Look at one piece when there are two parts, then one piece when there are eight. More equal parts mean each individual part is smaller, as long as the whole stays the same size.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "always-name-the-whole",
+      "html": "<p>Half a small sandwich and half a large sandwich are both halves, but they may contain different amounts of food. “A half” describes a relationship to a whole, not a fixed size by itself.</p><p>In the activities in this course, comparison strips have the same length. That makes comparing their shaded fractions fair. If the wholes changed size without warning, the picture could be misleading.</p>",
+      "title": "Always name the whole"
+    },
+    {
+      "id": "make-your-own-example",
+      "html": "<p>Fold a strip of paper into two equal sections, then fold it again to make four. Unfold it and check the sections. Two of the four sections cover the same length as one of the two original sections.</p><p>Do not worry about the written fraction yet. First get comfortable describing the picture: how many equal parts make the whole, and how many of those parts are selected? The next lesson gives those two counts their names.</p>",
+      "title": "Make your own example"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

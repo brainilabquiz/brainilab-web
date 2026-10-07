@@ -11,6 +11,7 @@
     "version": "beginner-20260930",
     "questions": [
       {
+        "answer": 1,
         "prompt": "What does 50% mean?",
         "options": [
           "All of something",
@@ -18,10 +19,10 @@
           "Exactly fifty objects every time",
           "One object"
         ],
-        "answer": 1,
         "explanation": "Fifty out of one hundred is half. Half of ten is five; half of eighty is forty."
       },
       {
+        "answer": 3,
         "prompt": "You share 80 oranges equally among ten baskets. Each basket has eight. What is 10% of the oranges?",
         "options": [
           "80 oranges",
@@ -29,10 +30,10 @@
           "10 oranges",
           "8 oranges"
         ],
-        "answer": 3,
         "explanation": "Ten percent is one tenth. One of the ten equal baskets contains eight oranges."
       },
       {
+        "answer": 0,
         "prompt": "Of the same 80 oranges, 10% is eight and 5% is four. How many oranges is 15%?",
         "options": [
           "12",
@@ -40,7 +41,6 @@
           "8",
           "15"
         ],
-        "answer": 0,
         "explanation": "Fifteen percent is ten percent plus five percent of the same starting amount. Eight plus four is twelve."
       }
     ]
@@ -56,8 +56,8 @@
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
-    "number-sequences-look-at-the-gaps",
-    "counting-seconds-after-lightning"
+    "decimals-money-and-parts-of-ten",
+    "equivalent-fractions-same-amount"
   ],
   "sources": [
     {
@@ -70,36 +70,36 @@
   "sections": [
     {
       "id": "meaning",
-      "title": "Percent means “out of one hundred”",
-      "html": "<p>Imagine a tray with <strong>100 little squares</strong>. Colour in 50 of them. You have coloured half the tray.</p><p>You can say “50 out of 100”, or write <strong>50%</strong>. The symbol <strong>%</strong> means “percent”. Fifty percent means fifty out of every hundred: <strong>half</strong>.</p><p>Colour in 25 squares instead and you have coloured <strong>one quarter</strong> of the tray. That is 25%. Colour all one hundred squares and you have 100%: the whole tray.</p>"
+      "html": "<p>Imagine a tray with <strong>100 little squares</strong>. Colour in 50 of them. You have coloured half the tray.</p><p>You can say “50 out of 100”, or write <strong>50%</strong>. The symbol <strong>%</strong> means “percent”. Fifty percent means fifty out of every hundred: <strong>half</strong>.</p><p>Colour in 25 squares instead and you have coloured <strong>one quarter</strong> of the tray. That is 25%. Colour all one hundred squares and you have 100%: the whole tray.</p>",
+      "title": "Percent means “out of one hundred”"
     },
     {
       "id": "useful-pieces",
-      "title": "The tray does not have to contain 100 things",
-      "html": "<p>A percentage describes a <strong>share</strong>, not a fixed number of objects.</p><p>Half of 10 oranges is 5 oranges. Half of 80 oranges is 40 oranges. Both are <strong>50%</strong> of the oranges you started with, even though the number of oranges is different.</p><p>So whenever you see a percentage, ask: <strong>a share of what?</strong> In our next examples, we will always start with 80 oranges.</p>"
+      "html": "<p>A percentage describes a <strong>share</strong>, not a fixed number of objects.</p><p>Half of 10 oranges is 5 oranges. Half of 80 oranges is 40 oranges. Both are <strong>50%</strong> of the oranges you started with, even though the number of oranges is different.</p><p>So whenever you see a percentage, ask: <strong>a share of what?</strong> In our next examples, we will always start with 80 oranges.</p>",
+      "title": "The tray does not have to contain 100 things"
     },
     {
       "id": "ten-first",
-      "title": "Find 10% by making ten equal groups",
-      "html": "<p>On a tray of 100 squares, 10 coloured squares take up one of ten equal groups. That is why <strong>10% means one tenth</strong>.</p><ol><li>Imagine sorting our <strong>80 oranges into ten equal baskets</strong>.</li><li>Each basket holds <strong>8 oranges</strong>. Ten baskets of eight make eighty.</li><li>One basket is one tenth of all the oranges. So <strong>10% of 80 is 8</strong>.</li></ol><p>In maths, sharing equally is called <strong>division</strong>. The sign ÷ means “divide”. You can write the basket step as 80 ÷ 10 = 8.</p>"
+      "html": "<p>On a tray of 100 squares, 10 coloured squares take up one of ten equal groups. That is why <strong>10% means one tenth</strong>.</p><ol><li>Imagine sorting our <strong>80 oranges into ten equal baskets</strong>.</li><li>Each basket holds <strong>8 oranges</strong>. Ten baskets of eight make eighty.</li><li>One basket is one tenth of all the oranges. So <strong>10% of 80 is 8</strong>.</li></ol><p>In maths, sharing equally is called <strong>division</strong>. The sign ÷ means “divide”. You can write the basket step as 80 ÷ 10 = 8.</p>",
+      "title": "Find 10% by making ten equal groups"
     },
     {
       "id": "build-fifteen",
-      "title": "How do we find 15%?",
-      "html": "<p>Fifteen percent is ten percent and another five percent. Keep using the <strong>same original 80 oranges</strong>.</p><ol><li>We already found 10%: that is <strong>8 oranges</strong>.</li><li>Five is half of ten, so 5% is half as much. Half of eight is <strong>4 oranges</strong>.</li><li>Add the two shares: eight oranges and four oranges make <strong>12 oranges</strong>.</li></ol><p>So <strong>15% of 80 is 12</strong>. We built the answer from two smaller, easier pieces.</p>"
+      "html": "<p>Fifteen percent is ten percent and another five percent. Keep using the <strong>same original 80 oranges</strong>.</p><ol><li>We already found 10%: that is <strong>8 oranges</strong>.</li><li>Five is half of ten, so 5% is half as much. Half of eight is <strong>4 oranges</strong>.</li><li>Add the two shares: eight oranges and four oranges make <strong>12 oranges</strong>.</li></ol><p>So <strong>15% of 80 is 12</strong>. We built the answer from two smaller, easier pieces.</p>",
+      "title": "How do we find 15%?"
     },
     {
       "id": "quarter",
-      "title": "One quarter is another useful starting point",
-      "html": "<p>We saw that 25% is one quarter. To find 25% of our 80 oranges, split them into <strong>four equal baskets</strong>.</p><p>Each basket holds 20 oranges. So <strong>25% of 80 is 20</strong>.</p><details class=\"practice-answer\"><summary>If there are 20 oranges, how many is 50%?</summary><p>Fifty percent means half. Split 20 oranges into two equal groups. Each group has <strong>10 oranges</strong>.</p></details>"
+      "html": "<p>We saw that 25% is one quarter. To find 25% of our 80 oranges, split them into <strong>four equal baskets</strong>.</p><p>Each basket holds 20 oranges. So <strong>25% of 80 is 20</strong>.</p><details class=\"practice-answer\"><summary>If there are 20 oranges, how many is 50%?</summary><p>Fifty percent means half. Split 20 oranges into two equal groups. Each group has <strong>10 oranges</strong>.</p></details>",
+      "title": "One quarter is another useful starting point"
     },
     {
       "id": "at-a-glance",
-      "title": "Keep the original amount in view",
-      "html": "<div class=\"table-scroll\"><table><caption>Each row starts with the same 80 oranges</caption><thead><tr><th scope=\"col\">Share</th><th scope=\"col\">Picture it as…</th><th scope=\"col\">Oranges</th></tr></thead><tbody><tr><td>50%</td><td>Half of all the oranges</td><td>40</td></tr><tr><td>25%</td><td>One of four equal groups</td><td>20</td></tr><tr><td>10%</td><td>One of ten equal groups</td><td>8</td></tr><tr><td>5%</td><td>Half as much as the 10% share</td><td>4</td></tr><tr><td>15%</td><td>The 10% share plus the 5% share</td><td>12</td></tr></tbody></table></div><p>You do not need to memorise the whole table. Start with half, then practise making ten equal groups. The other pieces can come later.</p>"
+      "html": "<div class=\"table-scroll\"><table><caption>Each row starts with the same 80 oranges</caption><thead><tr><th scope=\"col\">Share</th><th scope=\"col\">Picture it as…</th><th scope=\"col\">Oranges</th></tr></thead><tbody><tr><td>50%</td><td>Half of all the oranges</td><td>40</td></tr><tr><td>25%</td><td>One of four equal groups</td><td>20</td></tr><tr><td>10%</td><td>One of ten equal groups</td><td>8</td></tr><tr><td>5%</td><td>Half as much as the 10% share</td><td>4</td></tr><tr><td>15%</td><td>The 10% share plus the 5% share</td><td>12</td></tr></tbody></table></div><p>You do not need to memorise the whole table. Start with half, then practise making ten equal groups. The other pieces can come later.</p>",
+      "title": "Keep the original amount in view"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Percentages are a way to describe a part of something. Start with shaded squares, then use halves and small equal groups to make sense of the numbers.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

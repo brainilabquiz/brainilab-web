@@ -1,21 +1,4 @@
 {
-  "slug": "comparing-fractions-visually",
-  "title": "Which fraction is bigger? Start with the whole",
-  "description": "Compare equal-size strips before relying on the written numbers, and learn two useful shortcuts.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 50,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/comparing-fractions-visually.webp",
-    "small": "/assets/images/learn/comparing-fractions-visually-small.webp",
-    "thumbnail": "/assets/images/learn/comparing-fractions-visually-thumb.webp",
-    "alt": "Different-sized flatbread wedges on two matching plates",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/fractions-from-zero/",
     "name": "Fractions, one piece at a time"
@@ -24,43 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "equivalent-fractions-same-amount",
-    "adding-fractions-same-pieces"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Comparing Fractions",
-      "url": "https://www.mathsisfun.com/comparing-fractions.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "use-the-same-starting-size",
-      "title": "Use the same starting size",
-      "html": "<p>Imagine two identical chocolate bars. One person has three fifths of a bar and another has two fifths. Because every fifth has the same size, three fifths is more.</p><p>That gives a simple rule: when the denominators are equal, compare the numerators. You are counting the same kind of piece. Four sevenths is more than two sevenths for the same reason.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Change the selected parts on two strips of equal length. First keep both denominators the same. Then try one half against one quarter.</p><p>One half is larger even though two is smaller than four. With one selected part in each fraction, a larger denominator means the whole was split into more, smaller pieces. The bottom number is not a score where higher always wins.</p>"
-    },
-    {
-      "id": "find-a-shared-kind-of-piece",
-      "title": "Find a shared kind of piece",
-      "html": "<p>What about 2/3 and 3/4? The numerators and denominators both differ, so neither simple shortcut is enough. Rename both fractions in twelfths: 2/3 = 8/12 and 3/4 = 9/12.</p><p>Now the pieces match. Nine twelfths is more than eight twelfths, so three quarters is larger than two thirds. The equivalent fractions changed the labels, not the original amounts.</p>"
-    },
-    {
-      "id": "use-a-halfway-check",
-      "title": "Use a halfway check",
-      "html": "<p>A half can help you estimate. Three eighths is below a half because four eighths would be a half. Five eighths is above a half. This quick check can rule out an answer before you do a longer calculation.</p><p>Keep the whole in mind: half a large cake may be more food than three quarters of a small cake. Our strip comparisons use equal wholes, which is why the fraction values alone are enough.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "Which is larger for the same whole?",
         "options": [
           "2/7",
@@ -68,10 +19,10 @@
           "They are equal",
           "Neither can be compared"
         ],
-        "answer": 1,
         "explanation": "Both use sevenths; four such pieces exceed two."
       },
       {
+        "answer": 2,
         "prompt": "Which is larger: 1/2 or 1/4 of the same whole?",
         "options": [
           "1/4",
@@ -79,10 +30,10 @@
           "1/2",
           "It depends on the colour"
         ],
-        "answer": 2,
         "explanation": "Halves are larger pieces than quarters."
       },
       {
+        "answer": 3,
         "prompt": "Which is larger: 2/3 or 3/4?",
         "options": [
           "2/3",
@@ -90,9 +41,58 @@
           "Both exceed one",
           "3/4"
         ],
-        "answer": 3,
         "explanation": "They are 8/12 and 9/12 respectively, so three quarters is larger."
       }
     ]
-  }
+  },
+  "slug": "comparing-fractions-visually",
+  "cover": {
+    "alt": "Different-sized flatbread wedges on two matching plates",
+    "src": "/assets/images/learn/comparing-fractions-visually.webp",
+    "small": "/assets/images/learn/comparing-fractions-visually-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/comparing-fractions-visually-thumb.webp"
+  },
+  "order": 50,
+  "title": "Which fraction is bigger? Start with the whole",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "equivalent-fractions-same-amount",
+    "adding-fractions-same-pieces"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/comparing-fractions.html",
+      "name": "Math is Fun — Comparing Fractions"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "use-the-same-starting-size",
+      "html": "<p>Imagine two identical chocolate bars. One person has three fifths of a bar and another has two fifths. Because every fifth has the same size, three fifths is more.</p><p>That gives a simple rule: when the denominators are equal, compare the numerators. You are counting the same kind of piece. Four sevenths is more than two sevenths for the same reason.</p>",
+      "title": "Use the same starting size"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw two strips of equal length. Divide one into two equal parts and the other into four. Shade one part of each strip. Which shaded piece is longer?</p><p>One half is larger even though two is smaller than four. With one selected part in each fraction, a larger denominator means the whole was split into more, smaller pieces. The bottom number is not a score where higher always wins.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "find-a-shared-kind-of-piece",
+      "html": "<p>What about 2/3 and 3/4? The numerators and denominators both differ, so neither simple shortcut is enough. Rename both fractions in twelfths: 2/3 = 8/12 and 3/4 = 9/12.</p><p>Now the pieces match. Nine twelfths is more than eight twelfths, so three quarters is larger than two thirds. The equivalent fractions changed the labels, not the original amounts.</p>",
+      "title": "Find a shared kind of piece"
+    },
+    {
+      "id": "use-a-halfway-check",
+      "html": "<p>A half can help you estimate. Three eighths is below a half because four eighths would be a half. Five eighths is above a half. This quick check can rule out an answer before you do a longer calculation.</p><p>Keep the whole in mind: half a large cake may be more food than three quarters of a small cake. Our strip comparisons use equal wholes, which is why the fraction values alone are enough.</p>",
+      "title": "Use a halfway check"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Compare equal-size strips before relying on the written numbers, and learn two useful shortcuts.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
