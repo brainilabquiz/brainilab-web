@@ -1,6 +1,7 @@
 """Build an evidence-linked work queue for the authorized Codex heartbeat."""
 import hashlib
 from openseo import research_tasks
+from search_intent import enrich_tasks
 
 def build_handoff(report):
     tasks=[];seen=set()
@@ -40,5 +41,13 @@ def build_handoff(report):
             'Record actual results through tools/growth/openseo.py record with the expected previous hash; export again to import into Growth.',
             'A queued workflow is not a completed audit. New content uses the existing editorial quota.'],
         'delivery':'Existing Codex chat heartbeat at 09:15 Europe/Madrid; local computer and app required.',
-        'maxChangesPerRun':1,'tasks':tasks,'liveStateRequired':True,
+        'maxChangesPerRun':1,'tasks':enrich_tasks(tasks),'liveStateRequired':True,
+        'acquisitionPolicy':'Satisfy a real reading, learning or playing need on an existing page. Intent briefs are research candidates, not forecasts or permission to repeat completed work. Prefer acquisition and feedback over cosmetic edits; never create filler or duplicate pages for keyword variants.',
+        'gapReview':'Compare real BrainiLab offerings with the current published inventory before declaring a missing page. Verify query intent and existing coverage; do not adopt a fixed page count, invent local services, reviews or experience, or rewrite to evade AI detectors. Research, outline, factual review, assets, tests and public verification remain separate gates; generated is not published.',
+        'aiSearchReview':[
+            'Answer first in clear self-contained sections; name the actual subject and cite reliable sources. Change dates only for real updates, never to simulate freshness.',
+            'Check search crawler access separately from training permissions. An allowed robots.txt file does not prove WAF access, indexing or an AI citation. Never weaken Cloudflare security to chase visibility.',
+            'Keep observed AI referral traffic, dated answer citations, bot visits and voluntary self-reported discovery separate. Missing referral data is unknown, not zero; Direct is not proof of AI traffic.',
+            'For an authorized YouTube draft, answer one concrete search need with a demonstration, an existing destination and honest title/description/chapters that match the actual video.',
+            'When collecting authorized feedback, optionally ask How did you find BrainiLab? Keep the response voluntary and separate from measured attribution. Do not create another signup barrier.'],
         'guard':'Read current opportunities before executing. Skip dismissed, published and monitoring. Resume approved unfinished work before starting another task. Do not infer execution from this queue.'}

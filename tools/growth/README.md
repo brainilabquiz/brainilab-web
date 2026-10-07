@@ -44,6 +44,38 @@ Follow-up needs equal, non-overlapping post-publication periods in Search Consol
 
 ## OpenSEO research integration
 
+### Search intent and acquisition briefs (2026-10-07)
+
+Each Codex task now carries an `acquisitionBrief`: the reader's need, an existing
+destination, query-fit evidence, a useful next step, and a measurement plan.
+`search_intent.py` contains a small reviewed route map for existing number games,
+flag quizzes and the beginner maths course. Exact phrases are conservative
+research candidates, not an automatic judgment about intent. Unknown/ambiguous
+queries remain visible for research. A query such as "number route" alone does
+not prove a game search; cross-page rows cannot establish a match.
+
+Matching observed candidates precede other observed leads; provider-only ideas
+follow them. Sorting is stable within each tier. Current remote decisions still
+take precedence: resume approved work and skip published/monitoring/dismissed.
+Task IDs, evidence, original baselines and the one-change limit are preserved.
+No extra dashboard, tracking, database schema or content quota is introduced.
+
+Group equivalent searches into an existing destination rather than a new page
+per wording. Preserve distinct useful scopes such as Europe and World Flags.
+Informational articles remain valuable: answer the reader before suggesting
+practice. Confirm the live page and intent before any change. The measurement
+plan is explicitly not observed results: search clicks, reading signals, games,
+confirmed accounts and subscriptions are separate stages with separate coverage.
+Do not infer Academy completion from an article_read event.
+
+Distribution briefs require one destination and a specific feedback question;
+check the launch log and the actual human authorization before sending anything.
+Do not buy ranking links, create filler to reach word counts, invent expertise,
+or treat AI-generated audiences/keywords as measured demand. There is no special
+schema requirement for Google's AI features. Source review and decisions:
+[video application notes](VIDEO-APPLICATION-2026-10-07.md).
+Validate with `python -m unittest discover -s tools/growth -p "test_*.py"`.
+
 The Growth report accepts a separate validated OpenSEO snapshot and the admin
 shows project context, site audit and keyword workflows with their real state.
 Read [OPENSEO.md](OPENSEO.md) before running them. `openseo.py record` preserves
