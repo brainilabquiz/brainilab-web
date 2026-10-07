@@ -7,6 +7,44 @@
     "url": "/games/connections/",
     "name": "Connections"
   },
+  "quiz": {
+    "version": "word-detective-v1",
+    "questions": [
+      {
+        "answer": 1,
+        "prompt": "Which word belongs in “Stir the ___ into the cake mixture”?",
+        "options": [
+          "flower",
+          "flour",
+          "knight",
+          "night"
+        ],
+        "explanation": "Flour is the baking ingredient. The cake mixture gives you the clue."
+      },
+      {
+        "answer": 2,
+        "prompt": "What makes flour and flower homophones?",
+        "options": [
+          "They have the same meaning",
+          "They have the same spelling",
+          "They share a pronunciation but have different meanings",
+          "They are opposites"
+        ],
+        "explanation": "Listen to the sound, then compare the meanings: a baking ingredient and something with petals."
+      },
+      {
+        "answer": 1,
+        "prompt": "In “I would like a biscuit too”, what does too mean?",
+        "options": [
+          "Exactly two biscuits",
+          "Also",
+          "A chess piece",
+          "A baking ingredient"
+        ],
+        "explanation": "Too can mean also. The sentence is about wanting a biscuit as well, rather than counting two."
+      }
+    ]
+  },
   "slug": "homophones-same-sound-different-meaning",
   "cover": {
     "alt": "A bowl of flour beside a yellow flower in a small glass vase",
@@ -17,7 +55,7 @@
     "thumbnail": "/assets/images/learn/homophones-same-sound-different-meaning-thumb.webp"
   },
   "order": 80,
-  "title": "Flour or flower? Same sound, different meanings",
+  "title": "What are homophones? Flour, flower and other sound-alikes",
   "topic": "Words & puzzles",
   "status": "published",
   "related": [
@@ -52,6 +90,10 @@
     {
       "url": "https://www.merriam-webster.com/dictionary/too",
       "name": "Merriam-Webster — Too"
+    },
+    {
+      "url": "https://www.merriam-webster.com/grammar/homophones-vs-homographs-vs-homonyms",
+      "name": "Merriam-Webster — Homophones, homographs and homonyms"
     }
   ],
   "authorId": "biel-sarda",
@@ -59,13 +101,13 @@
   "sections": [
     {
       "id": "same-sound",
-      "html": "<p>Someone asks you to bring a flower. You arrive with a bag of flour. Useful for a cake; less useful for a bouquet.</p><p><strong>Homophones are words that share a pronunciation but have different meanings.</strong> They can have different spellings, too. Say <em>flour</em> and <em>flower</em> aloud: the <a href=\"https://www.merriam-webster.com/dictionary/flour\" target=\"_blank\" rel=\"noopener noreferrer\">flour</a> and <a href=\"https://www.merriam-webster.com/dictionary/flower\" target=\"_blank\" rel=\"noopener noreferrer\">flower</a> entries in Merriam-Webster give them the same pronunciation.</p><p>You do not need to remember a grammar label to spot the trick. Just ask: do these words sound alike, and do they mean different things?</p>",
-      "title": "One sound, two very different shopping lists"
+      "html": "<p><strong>Homophones are words that sound the same but have different meanings.</strong> <em>Flour</em> is a baking ingredient; a <em>flower</em> has petals. Same sound, very different shopping lists.</p><p>Turn up with flour when someone wanted a flower and you have the beginning of a cake, but a rather disappointing bouquet.</p><p>The <a href=\"https://www.merriam-webster.com/dictionary/flour\">flour</a> and <a href=\"https://www.merriam-webster.com/dictionary/flower\">flower</a> dictionary entries give the same pronunciation. Other pairs include <strong>knight/night</strong> and <strong>two/too</strong>.</p>",
+      "title": "Same sound, different meaning"
     },
     {
       "id": "sentence-clues",
-      "html": "<p>If you hear the word by itself, the sound may not tell you which meaning someone intends. The words around it often do. This is called <strong>context</strong>.</p><div class=\"table-scroll\"><table><caption>Same sound, different jobs</caption><thead><tr><th scope=\"col\">Sentence</th><th scope=\"col\">Word to choose</th><th scope=\"col\">Helpful clue</th></tr></thead><tbody><tr><td>Put the ___ in the vase.</td><td>flower</td><td>A vase holds flowers.</td></tr><tr><td>Stir the ___ into the cake mixture.</td><td>flour</td><td>Flour is a baking ingredient.</td></tr><tr><td>I would like ___ biscuits.</td><td>two</td><td>We are counting biscuits.</td></tr><tr><td>I would like a biscuit ___.</td><td>too</td><td>This person would also like one.</td></tr></tbody></table></div><p>The last two words appear in <a href=\"https://www.merriam-webster.com/dictionary/homophone\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster’s explanation of homophones</a>, alongside <em>to</em>. Matching sounds do not guarantee matching spelling.</p>",
-      "title": "Let the rest of the sentence help"
+      "html": "<p><strong>Use the meaning of the whole sentence.</strong> The surrounding words provide context: a vase suggests a flower, while a cake recipe suggests flour.</p><div class=\"table-scroll\"><table><caption>Same sound, different jobs</caption><thead><tr><th scope=\"col\">Sentence</th><th scope=\"col\">Word to choose</th><th scope=\"col\">Helpful clue</th></tr></thead><tbody><tr><td>Put the ___ in the vase.</td><td>flower</td><td>A vase holds flowers.</td></tr><tr><td>Stir the ___ into the cake mixture.</td><td>flour</td><td>Flour is a baking ingredient.</td></tr><tr><td>I would like ___ biscuits.</td><td>two</td><td>We are counting biscuits.</td></tr><tr><td>I would like a biscuit ___.</td><td>too</td><td>This person would also like one.</td></tr></tbody></table></div><p>The last two words appear in <a href=\"https://www.merriam-webster.com/dictionary/homophone\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster’s explanation of homophones</a>, alongside <em>to</em>. Matching sounds do not guarantee matching spelling.</p>",
+      "title": "How do you choose the right spelling?"
     },
     {
       "id": "paired-clues",
@@ -79,49 +121,11 @@
     },
     {
       "id": "say-it-your-way",
-      "html": "<p>Pronunciation can vary between accents. If a suggested pair does not sound alike to you, check the dictionary’s pronunciation or audio before assuming you have misunderstood the puzzle.</p><p>Want a different kind of word surprise? Try <a href=\"/learn/words-that-mean-their-own-opposite/\" target=\"_blank\" rel=\"noopener noreferrer\">words that can mean their own opposite</a>. Their twist is in the meaning.</p>",
-      "title": "Keep listening, not just looking"
+      "html": "<p><strong>Homophones share a sound; homographs share a spelling.</strong> The terms can overlap. Merriam-Webster’s <a href=\"https://www.merriam-webster.com/grammar/homophones-vs-homographs-vs-homonyms\">guide to the different word pairs</a> explains the distinction.</p><p>Accents matter, too. A pair that sounds identical to one speaker may sound different to another. Check a dictionary’s audio if a puzzle’s suggested pair does not work in your accent.</p><p>For a different word surprise, try <a href=\"/learn/words-that-mean-their-own-opposite/\">words that can mean their own opposite</a>. This time the twist is in the meaning.</p>",
+      "title": "What about words that look alike?"
     }
   ],
-  "updatedAt": "2026-10-04T11:22:29.978Z",
-  "description": "What are homophones? Start with flour and flower, use sentence clues to tell them apart, and try three quick word puzzles.",
-  "publishedAt": "2026-10-04T11:50:12.954706+02:00",
-  "quiz": {
-    "version": "word-detective-v1",
-    "questions": [
-      {
-        "prompt": "Which word belongs in “Stir the ___ into the cake mixture”?",
-        "options": [
-          "flower",
-          "flour",
-          "knight",
-          "night"
-        ],
-        "answer": 1,
-        "explanation": "Flour is the baking ingredient. The cake mixture gives you the clue."
-      },
-      {
-        "prompt": "What makes flour and flower homophones?",
-        "options": [
-          "They have the same meaning",
-          "They have the same spelling",
-          "They share a pronunciation but have different meanings",
-          "They are opposites"
-        ],
-        "answer": 2,
-        "explanation": "Listen to the sound, then compare the meanings: a baking ingredient and something with petals."
-      },
-      {
-        "prompt": "In “I would like a biscuit too”, what does too mean?",
-        "options": [
-          "Exactly two biscuits",
-          "Also",
-          "A chess piece",
-          "A baking ingredient"
-        ],
-        "answer": 1,
-        "explanation": "Too can mean also. The sentence is about wanting a biscuit as well, rather than counting two."
-      }
-    ]
-  }
+  "updatedAt": "2026-10-07T16:21:00Z",
+  "description": "Homophones sound alike but mean different things. Untangle flour and flower, knight and night, then use a sentence clue to choose the right word.",
+  "publishedAt": "2026-10-04T09:50:12.954706+00:00"
 }

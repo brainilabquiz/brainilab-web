@@ -21,7 +21,7 @@
   "topic": "Sports",
   "status": "published",
   "related": [
-    "how-to-read-a-tennis-score",
+    "why-golf-balls-have-dimples",
     "how-to-learn-world-flags"
   ],
   "sources": [
@@ -30,31 +30,31 @@
       "name": "International Olympic Committee — What is the meaning of the Olympic rings?"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Ready for another sporting question? Try the Sports Quiz.",
   "sections": [
     {
       "id": "the-trap",
-      "html": "<p>You may have learnt that each Olympic ring colour belongs to a different continent. It is a familiar explanation, but the International Olympic Committee says there is no official colour-to-continent match.</p>",
-      "title": "Does each colour represent a continent?"
+      "title": "What do the five rings represent?",
+      "html": "<p><strong>The five Olympic rings represent the union of five continents and athletes meeting from around the world.</strong> The symbol works as a whole: there is no official rule assigning one ring colour to each continent.</p><p>That second point is the quiz trap. A neat colour-coded map is easy to remember, which does not make it the official explanation. The <a href=\"https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings\">International Olympic Committee’s answer</a> explicitly rejects that colour-to-continent match.</p>"
     },
     {
       "id": "whole-symbol",
-      "html": "<p>The interlocking rings represent the union of five continents and athletes coming together from around the world. Their meaning lies in the whole symbol, rather than in five separate colour labels.</p>",
-      "title": "What the five rings represent"
+      "title": "Five rings, rather than five labels",
+      "html": "<p>Think of the linked rings as a picture of people coming together. Separating the colours into a list of continent labels misses the point of the interlocking design.</p><p>It is a useful habit for any symbol question: check whether the meaning belongs to the whole design or to each piece individually.</p>"
     },
     {
       "id": "why-colours",
-      "html": "<p>Pierre de Coubertin designed the rings in 1913. According to the IOC, blue, yellow, black, green and red, together with the white background, represented the colours found in the national flags of that time.</p><p>That makes the white background part of the design’s story too, even though it is easy to overlook.</p>",
+      "html": "<p>Pierre de Coubertin created the rings in 1913. The IOC explains that blue, yellow, black, green and red, together with the white background, represented the colours found in national flags at the time.</p><p>White is easy to forget because it sits behind the rings. The background still belongs to the story.</p>",
       "title": "Why these colours?"
     },
     {
       "id": "three-statements",
-      "html": "<p>Which statement is correct?</p><ol><li>Each ring colour stands for a particular continent.</li><li>The five rings together represent the union of five continents.</li></ol><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>Statement 2.</strong> The rings express unity; the individual colours do not label continents.</p></details>",
-      "title": "A quick check"
+      "html": "<p>If a friend asks which continent the blue ring stands for, the helpful answer is: <strong>none is officially assigned to it.</strong> The five rings together express unity.</p><p>One way to remember the distinction: linked rings bring athletes together; coloured labels would split them apart. It is a memory cue, not a new official meaning.</p><p>Curious about another sporting design? The <a href=\"/learn/why-golf-balls-have-dimples/\">little dents on a golf ball</a> have a surprisingly practical job.</p>",
+      "title": "The answer to keep in your pocket"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
-  "description": "Five rings, five colours and one common misconception. Here’s the story behind the Olympic symbol.",
-  "publishedAt": "2026-09-29T06:03:00Z",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-07T16:21:00Z",
+  "description": "The Olympic rings represent unity, but their colours do not label individual continents. Discover the flag-colour story behind the familiar symbol.",
+  "publishedAt": "2026-09-29T06:03:00Z"
 }
