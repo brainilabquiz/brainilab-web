@@ -13,6 +13,19 @@ assert.equal(crumbs.itemListElement.length,3);assert.ok(crumbs.itemListElement[2
 assert.match(html,/class="article-byline"/);assert.ok(html.includes('datetime="'+a.publishedAt+'"'));
 assert.match(html,/name="twitter:image"/);assert.ok(html.includes(a.cover.src));assert.match(html,/max-image-preview:large/);
 assert.ok(graph[0].sameAs.includes('https://www.tiktok.com/@brainilabquiz'));
+// The Worker renders a generated HTML template again. Metadata must not accumulate.
+const rerendered=renderPage(html,[a],a);
+for(const page of [html,rerendered]){
+ assert.equal((page.match(/type="application\/rss\+xml"/g)||[]).length,1);
+ assert.equal((page.match(/property="article:published_time"/g)||[]).length,1);
+ assert.equal((page.match(/property="article:modified_time"/g)||[]).length,1);
+ assert.equal((page.match(/name="twitter:title"/g)||[]).length,1);
+}
+assert.equal(article.url,article.mainEntityOfPage);
+const localSource={...a,sources:[{name:'Game rules',url:'/games/sequence/'}]};
+const localGraph=JSON.parse(renderPage(template,[localSource],localSource).match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
+assert.deepEqual(localGraph.find(n=>n['@type']==='Article').citation,['https://brainilabgames.com/games/sequence/']);
+assert.ok(!renderPage(rerendered,[a],null).includes('property="article:published_time"'));
 const env={ASSETS:{fetch:async()=>new Response(template)}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
 const feed=new Request('https://brainilabgames.com/learn/feed.xml');
 let response=await serveLearn(feed,env,ctx,cache,async()=>new Response(JSON.stringify([{document:a}])));

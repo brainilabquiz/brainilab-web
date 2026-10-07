@@ -11,6 +11,7 @@
     "version": "beginner-20260930",
     "questions": [
       {
+        "answer": 1,
         "prompt": "What is the main reason for Earth’s seasons?",
         "options": [
           "The Moon changing shape",
@@ -18,10 +19,10 @@
           "The Sun changing size",
           "Earth stopping its spin"
         ],
-        "answer": 1,
         "explanation": "The tilt changes the angle of sunlight and the number of daylight hours through the year."
       },
       {
+        "answer": 2,
         "prompt": "When the northern half of Earth has summer, what season does the southern half have?",
         "options": [
           "Summer",
@@ -29,10 +30,10 @@
           "Winter",
           "Always autumn"
         ],
-        "answer": 2,
         "explanation": "The northern half leans towards the Sun while the southern half leans away, so their summer and winter are opposite."
       },
       {
+        "answer": 0,
         "prompt": "Which pair helps explain summer warmth?",
         "options": [
           "Longer days and more direct sunlight",
@@ -40,7 +41,6 @@
           "A bigger Moon and darker nights",
           "The Sun coming closer to only one country"
         ],
-        "answer": 0,
         "explanation": "More direct sunlight and more daylight hours help the ground warm up."
       }
     ]
@@ -70,36 +70,36 @@
   "sections": [
     {
       "id": "tempting-answer",
-      "title": "Earth spins with a little lean",
-      "html": "<p>Imagine a spinning globe. A line through its middle, from the North Pole to the South Pole, is its <strong>axis</strong>. It is an imaginary line, not a real pole running through Earth.</p><p>Earth spins on this line as it travels around the Sun. The line is tilted: Earth has a little lean.</p><p>That lean is the main reason we have seasons. At one part of the year, the northern half of Earth leans towards the Sun. About six months later, the southern half does.</p>"
+      "html": "<p><strong>Summer is warmer mainly because Earth’s tilted axis gives your hemisphere more direct sunlight and longer days.</strong> The axis is an imaginary line through the North and South Poles: picture a spinning globe with a little lean.</p><p>Earth spins on this line as it travels around the Sun. The line is tilted: Earth has a little lean.</p><p>That lean is the main reason we have seasons. At one part of the year, the northern half of Earth leans towards the Sun. About six months later, the southern half does.</p>",
+      "title": "Earth spins with a little lean"
     },
     {
       "id": "halves",
-      "title": "What does “hemisphere” mean?",
-      "html": "<p>A <strong>hemisphere</strong> is half of a sphere. Here, it means half of Earth.</p><p>The <strong>Northern Hemisphere</strong> is the half north of the equator, the imaginary line around Earth’s middle. The <strong>Southern Hemisphere</strong> is the half south of it.</p><p>When the northern half leans towards the Sun, the southern half leans away. That is why their summer and winter happen at opposite times.</p>"
+      "html": "<p>A <strong>hemisphere</strong> is half of a sphere. Here, it means half of Earth.</p><p>The <strong>Northern Hemisphere</strong> is the half north of the equator, the imaginary line around Earth’s middle. The <strong>Southern Hemisphere</strong> is the half south of it.</p><p>When the northern half leans towards the Sun, the southern half leans away. That is why their summer and winter happen at opposite times.</p>",
+      "title": "What does “hemisphere” mean?"
     },
     {
       "id": "light-and-time",
-      "title": "Two things help summer feel warmer",
-      "html": "<ol><li><strong>Sunlight hits more directly.</strong> Picture a torch shining straight down on a table. Its light makes a small, bright patch. Tilt the torch and the light spreads over a larger patch. Sunlight arriving at a low angle is spread out too.</li><li><strong>The days are longer.</strong> There are more hours of daylight for the ground to warm up.</li></ol><p>These changes help explain summer warmth. A particular summer day can still be cold or rainy: daily weather can vary.</p>"
+      "html": "<ol><li><strong>Sunlight hits more directly.</strong> Picture a torch shining straight down on a table. Its light makes a small, bright patch. Tilt the torch and the light spreads over a larger patch. Sunlight arriving at a low angle is spread out too.</li><li><strong>The days are longer.</strong> There are more hours of daylight for the ground to warm up.</li></ol><p>These changes help explain summer warmth. A particular summer day can still be cold or rainy: daily weather can vary.</p>",
+      "title": "Two things help summer feel warmer"
     },
     {
       "id": "at-a-glance",
-      "title": "One planet, opposite seasons",
-      "html": "<div class=\"table-scroll\"><table><caption>Compare the two halves of Earth</caption><thead><tr><th scope=\"col\">Northern half</th><th scope=\"col\">Southern half</th></tr></thead><tbody><tr><td>Summer: longer days, more direct sunlight</td><td>Winter: shorter days, less direct sunlight</td></tr><tr><td>Winter: shorter days, less direct sunlight</td><td>Summer: longer days, more direct sunlight</td></tr></tbody></table></div>"
+      "html": "<div class=\"table-scroll\"><table><caption>Compare the two halves of Earth</caption><thead><tr><th scope=\"col\">Northern half</th><th scope=\"col\">Southern half</th></tr></thead><tbody><tr><td>Summer: longer days, more direct sunlight</td><td>Winter: shorter days, less direct sunlight</td></tr><tr><td>Winter: shorter days, less direct sunlight</td><td>Summer: longer days, more direct sunlight</td></tr></tbody></table></div>",
+      "title": "One planet, opposite seasons"
     },
     {
       "id": "test-explanation",
-      "title": "Is summer just when Earth is closer to the Sun?",
-      "html": "<p>No. Earth’s distance from the Sun changes a little during the year, but it does not explain why one half of Earth has summer while the other has winter.</p><p><strong>The tilt explains that difference.</strong> It changes the sunlight reaching each half through the year.</p>"
+      "html": "<p>No. Earth’s distance from the Sun changes a little during the year, but it does not explain why one half of Earth has summer while the other has winter.</p><p><strong>The tilt explains that difference.</strong> It changes the sunlight reaching each half through the year.</p>",
+      "title": "Is summer just when Earth is closer to the Sun?"
     },
     {
       "id": "next-walk",
-      "title": "Look for a small clue outdoors",
-      "html": "<p>Over a few weeks, notice whether it gets dark earlier or later. Those changing daylight hours are one clue to the seasonal pattern.</p><p>You do not need to look at the Sun. Simply noticing when daylight ends is enough.</p>"
+      "html": "<p>Over a few weeks, notice whether it gets dark earlier or later. Those changing daylight hours are one clue to the seasonal pattern.</p><p>You do not need to look at the Sun. Simply noticing when daylight ends is enough.</p>",
+      "title": "Look for a small clue outdoors"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Earth leans as it travels around the Sun. That small tilt changes how much sunlight reaches us—and how long it stays light each day.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

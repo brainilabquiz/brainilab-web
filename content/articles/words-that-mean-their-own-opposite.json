@@ -7,6 +7,44 @@
     "url": "/games/connections/",
     "name": "Connections"
   },
+  "quiz": {
+    "version": "word-detective-v1",
+    "questions": [
+      {
+        "answer": 2,
+        "prompt": "You dust the shelf to clean it. What are you doing?",
+        "options": [
+          "Adding flour",
+          "Moving it quickly",
+          "Removing dust",
+          "Painting it"
+        ],
+        "explanation": "In this cleaning instruction, dust means taking the particles away."
+      },
+      {
+        "answer": 0,
+        "prompt": "A wheel is stuck fast. What does fast mean here?",
+        "options": [
+          "Firmly fixed in place",
+          "Moving quickly",
+          "Covered in sugar",
+          "Easy to turn"
+        ],
+        "explanation": "Stuck fast describes something held firmly. The surrounding words tell you which meaning fits."
+      },
+      {
+        "answer": 1,
+        "prompt": "Why is bat, meaning an animal or sporting equipment, not a contronym?",
+        "options": [
+          "It has only one meaning",
+          "Its meanings are different, but not opposites",
+          "It must sound different",
+          "All words with two meanings are contronyms"
+        ],
+        "explanation": "A contronym has opposing meanings. An animal and a piece of sporting equipment are different things, not opposite meanings."
+      }
+    ]
+  },
   "slug": "words-that-mean-their-own-opposite",
   "cover": {
     "alt": "Flour dusted over dough beside a sieve and cleaning cloth on a wooden worktop",
@@ -21,7 +59,8 @@
   "topic": "Words & puzzles",
   "status": "published",
   "related": [
-    "connections-puzzles-find-the-hidden-link"
+    "homophones-same-sound-different-meaning",
+    "repeated-letters-in-five-letter-word-games"
   ],
   "sources": [
     {
@@ -61,45 +100,7 @@
       "title": "Can you spot the direction?"
     }
   ],
-  "updatedAt": "2026-10-04T11:22:29.978Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Dust can mean adding something or taking it away. Meet contronyms, the words that pull in two directions, and try a few examples.",
-  "publishedAt": "2026-09-30T19:19:01.76865+02:00",
-  "quiz": {
-    "version": "word-detective-v1",
-    "questions": [
-      {
-        "prompt": "You dust the shelf to clean it. What are you doing?",
-        "options": [
-          "Adding flour",
-          "Moving it quickly",
-          "Removing dust",
-          "Painting it"
-        ],
-        "answer": 2,
-        "explanation": "In this cleaning instruction, dust means taking the particles away."
-      },
-      {
-        "prompt": "A wheel is stuck fast. What does fast mean here?",
-        "options": [
-          "Firmly fixed in place",
-          "Moving quickly",
-          "Covered in sugar",
-          "Easy to turn"
-        ],
-        "answer": 0,
-        "explanation": "Stuck fast describes something held firmly. The surrounding words tell you which meaning fits."
-      },
-      {
-        "prompt": "Why is bat, meaning an animal or sporting equipment, not a contronym?",
-        "options": [
-          "It has only one meaning",
-          "Its meanings are different, but not opposites",
-          "It must sound different",
-          "All words with two meanings are contronyms"
-        ],
-        "answer": 1,
-        "explanation": "A contronym has opposing meanings. An animal and a piece of sporting equipment are different things, not opposite meanings."
-      }
-    ]
-  }
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

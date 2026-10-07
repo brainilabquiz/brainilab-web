@@ -18,8 +18,8 @@
   "topic": "Science & nature",
   "status": "published",
   "related": [
-    "remember-quiz-answers-tomorrow",
-    "why-the-moon-changes-shape"
+    "why-are-flamingos-pink",
+    "stalactites-vs-stalagmites"
   ],
   "sources": [
     {
@@ -27,6 +27,7 @@
       "name": "Natural History Museum — Octopuses keep surprising us"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Discover more animal facts in Science Quiz.",
   "sections": [
     {
@@ -41,12 +42,11 @@
     },
     {
       "id": "rebuild",
-      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details>",
+      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details><p>For another colour surprise, <a href=\"/learn/why-are-flamingos-pink/\">a flamingo’s pink feathers start with its food</a>.</p>",
       "title": "Can you remember the arrangement?"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Two hearts send blood to the gills, while a third supplies the body. And that blood has an unusual colour.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

@@ -1,21 +1,4 @@
 {
-  "slug": "equivalent-fractions-same-amount",
-  "title": "Different pieces, the same amount",
-  "description": "Split each piece again and watch the numbers change while the shaded amount stays still.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 49,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/equivalent-fractions-same-amount.webp",
-    "small": "/assets/images/learn/equivalent-fractions-same-amount-small.webp",
-    "thumbnail": "/assets/images/learn/equivalent-fractions-same-amount-thumb.webp",
-    "alt": "Two paper strips with different accordion folds",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/fractions-from-zero/",
     "name": "Fractions, one piece at a time"
@@ -24,43 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "reading-a-fraction",
-    "comparing-fractions-visually"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Equivalent Fractions",
-      "url": "https://www.mathsisfun.com/equivalent_fractions.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "a-second-fold-changes-the-labels",
-      "title": "A second fold changes the labels",
-      "html": "<p>Fold a paper strip in half and shade one half. Fold it again so the whole strip has four equal sections. The shaded area now covers two sections.</p><p>You can describe that same area as <strong>1/2 or 2/4</strong>. These are equivalent fractions: different written fractions with the same value. Folding did not add or remove any shaded paper.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose a multiplier for the number of pieces. The top strip stays as one half. The bottom strip cuts both the selected half and the unselected half into more equal parts.</p><p>With a multiplier of three, each original half becomes three smaller pieces. There are six pieces in the whole and three selected pieces: 1/2 = 3/6. Both strips cover exactly the same length.</p>"
-    },
-    {
-      "id": "change-both-numbers-in-the-same-way",
-      "title": "Change both numbers in the same way",
-      "html": "<p>To create an equivalent fraction, multiply the numerator and denominator by the same positive whole number. Starting from 2/3, multiplying both by two gives 4/6. Each third has been split into two sixths.</p><p>Adding the same number to the top and bottom does not follow this rule. For example, 1/2 and 2/3 are different amounts. A quick sketch makes that difference visible.</p>"
-    },
-    {
-      "id": "you-can-go-back-to-larger-pieces",
-      "title": "You can go back to larger pieces",
-      "html": "<p>Four eighths can be regrouped as two quarters, then one half. We call writing the fraction with smaller whole-number terms <strong>simplifying</strong>. Its value stays the same.</p><p>A useful check is to ask whether both numbers were divided by the same number with whole-number results. For 6/8, dividing both by two gives 3/4. Dividing only the numerator would change the amount.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 2,
         "prompt": "Which fraction equals 1/2?",
         "options": [
           "1/4",
@@ -68,10 +19,10 @@
           "3/6",
           "2/5"
         ],
-        "answer": 2,
         "explanation": "Three of six equal parts cover half of the whole."
       },
       {
+        "answer": 1,
         "prompt": "To turn 2/3 into sixths, what do you do?",
         "options": [
           "Double only the bottom",
@@ -79,10 +30,10 @@
           "Add three to both",
           "Double only the top"
         ],
-        "answer": 1,
         "explanation": "Each third splits into two sixths, giving four sixths."
       },
       {
+        "answer": 3,
         "prompt": "What happens to the value when 6/8 is simplified to 3/4?",
         "options": [
           "It doubles",
@@ -90,9 +41,58 @@
           "It becomes zero",
           "It stays the same"
         ],
-        "answer": 3,
         "explanation": "Both numbers were divided by two, so the amount is unchanged."
       }
     ]
-  }
+  },
+  "slug": "equivalent-fractions-same-amount",
+  "cover": {
+    "alt": "Two paper strips with different accordion folds",
+    "src": "/assets/images/learn/equivalent-fractions-same-amount.webp",
+    "small": "/assets/images/learn/equivalent-fractions-same-amount-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/equivalent-fractions-same-amount-thumb.webp"
+  },
+  "order": 49,
+  "title": "Equivalent fractions: different pieces, the same amount",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "comparing-fractions-visually",
+    "decimals-money-and-parts-of-ten"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/equivalent_fractions.html",
+      "name": "Math is Fun — Equivalent Fractions"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "a-second-fold-changes-the-labels",
+      "html": "<p>Fold a paper strip in half and shade one half. Fold it again so the whole strip has four equal sections. The shaded area now covers two sections.</p><p>You can describe that same area as <strong>1/2 or 2/4</strong>. These are equivalent fractions: different written fractions with the same value. Folding did not add or remove any shaded paper.</p>",
+      "title": "A second fold changes the labels"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw two identical strips and shade half of each. Leave the first in two equal parts. Divide the second into six equal parts, keeping its shaded area unchanged.</p><p>Each original half becomes three smaller pieces. There are six pieces in the whole and three selected pieces: 1/2 = 3/6. Both strips cover exactly the same length.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "change-both-numbers-in-the-same-way",
+      "html": "<p>To create an equivalent fraction, multiply the numerator and denominator by the same positive whole number. Starting from 2/3, multiplying both by two gives 4/6. Each third has been split into two sixths.</p><p>Adding the same number to the top and bottom does not follow this rule. For example, 1/2 and 2/3 are different amounts. A quick sketch makes that difference visible.</p>",
+      "title": "Change both numbers in the same way"
+    },
+    {
+      "id": "you-can-go-back-to-larger-pieces",
+      "html": "<p>Four eighths can be regrouped as two quarters, then one half. We call writing the fraction with smaller whole-number terms <strong>simplifying</strong>. Its value stays the same.</p><p>A useful check is to ask whether both numbers were divided by the same number with whole-number results. For 6/8, dividing both by two gives 3/4. Dividing only the numerator would change the amount.</p>",
+      "title": "You can go back to larger pieces"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Split each piece again and watch the numbers change while the shaded amount stays still.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

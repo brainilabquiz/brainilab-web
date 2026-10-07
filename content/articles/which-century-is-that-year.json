@@ -11,6 +11,7 @@
     "version": "beginner-20260930",
     "questions": [
       {
+        "answer": 1,
         "prompt": "A box holds years 1 through 100. Where does year 101 go?",
         "options": [
           "In the first box",
@@ -18,10 +19,10 @@
           "In the tenth box",
           "It has no box"
         ],
-        "answer": 1,
         "explanation": "The first box is full at year 100. Year 101 starts the second group of one hundred years."
       },
       {
+        "answer": 1,
         "prompt": "The 19th century runs from 1801 to 1900. Which century contains 1900?",
         "options": [
           "18th",
@@ -29,10 +30,10 @@
           "20th",
           "21st"
         ],
-        "answer": 1,
         "explanation": "1900 is the last year of the 19th century. The next century starts in 1901."
       },
       {
+        "answer": 3,
         "prompt": "Which year began the 21st century?",
         "options": [
           "1901",
@@ -40,7 +41,6 @@
           "2000",
           "2001"
         ],
-        "answer": 3,
         "explanation": "The 20th century ended in 2000. The next year, 2001, began the 21st."
       }
     ]
@@ -56,8 +56,8 @@
   "topic": "History",
   "status": "published",
   "related": [
-    "how-to-read-roman-numerals",
-    "remember-quiz-answers-tomorrow"
+    "days-months-and-years",
+    "how-to-read-roman-numerals"
   ],
   "sources": [
     {
@@ -70,26 +70,26 @@
   "sections": [
     {
       "id": "shelf",
-      "title": "One century holds one hundred years",
-      "html": "<p>A <strong>century</strong> is a period of one hundred years. When we say “the first century”, we mean the first numbered group of one hundred years.</p><p>Imagine a box that holds 100 year cards. Put cards 1, 2, 3 and so on into it. Card <strong>100</strong> fills the last space. Card <strong>101</strong> must go in the next box.</p><p>The second box holds years 101 to 200. The third holds 201 to 300. Each box is one century.</p>"
+      "html": "<p>A <strong>century</strong> is a period of one hundred years. When we say “the first century”, we mean the first numbered group of one hundred years.</p><p>Imagine a box that holds 100 year cards. Put cards 1, 2, 3 and so on into it. Card <strong>100</strong> fills the last space. Card <strong>101</strong> must go in the next box.</p><p>The second box holds years 101 to 200. The third holds 201 to 300. Each box is one century.</p>",
+      "title": "One century holds one hundred years"
     },
     {
       "id": "boundary",
-      "title": "Why 1900 belongs in the nineteenth box",
-      "html": "<p>Following the same pattern, the nineteenth box starts at <strong>1801</strong> and finishes at <strong>1900</strong>. That is the <strong>19th century</strong>.</p><p>The twentieth box starts with the very next card: <strong>1901</strong>. It finishes at 2000.</p><p>It feels odd because 1900 and 1901 both start with “19”. But one is the last card in a full box, and the other is the first card in a new one.</p>"
+      "html": "<p>Following the same pattern, the nineteenth box starts at <strong>1801</strong> and finishes at <strong>1900</strong>. That is the <strong>19th century</strong>.</p><p>The twentieth box starts with the very next card: <strong>1901</strong>. It finishes at 2000.</p><p>It feels odd because 1900 and 1901 both start with “19”. But one is the last card in a full box, and the other is the first card in a new one.</p>",
+      "title": "Why 1900 belongs in the nineteenth box"
     },
     {
       "id": "at-a-glance",
-      "title": "Three boxes you will often meet",
-      "html": "<div class=\"table-scroll\"><table><caption>First and last years in each century</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year</th><th scope=\"col\">Last year</th></tr></thead><tbody><tr><td>19th century</td><td>1801</td><td>1900</td></tr><tr><td>20th century</td><td>1901</td><td>2000</td></tr><tr><td>21st century</td><td>2001</td><td>2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>. The year 2000 was the final year of the twentieth box.</p>"
+      "html": "<div class=\"table-scroll\"><table><caption>First and last years in each century</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year</th><th scope=\"col\">Last year</th></tr></thead><tbody><tr><td>19th century</td><td>1801</td><td>1900</td></tr><tr><td>20th century</td><td>1901</td><td>2000</td></tr><tr><td>21st century</td><td>2001</td><td>2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>. The year 2000 was the final year of the twentieth box.</p>",
+      "title": "Three boxes you will often meet"
     },
     {
       "id": "reading-dates",
-      "title": "Try a date on the edge",
-      "html": "<p>The 16th century runs from 1501 to 1600. Where should the next year, <strong>1601</strong>, go?</p><details class=\"practice-answer\"><summary>Open the next box</summary><p>Into the <strong>17th century</strong>. The old box finished with 1600, so 1601 starts a new one.</p></details><p>You may see <strong>CE</strong> after a year. It means “Common Era”; <strong>AD</strong> is another label used for the same year numbering. In this numbering, the first century begins with year 1, not year 0.</p><p>This article uses those year numbers. Dates marked BCE or BC describe earlier years and need a separate explanation.</p>"
+      "html": "<p>The 16th century runs from 1501 to 1600. Where should the next year, <strong>1601</strong>, go?</p><details class=\"practice-answer\"><summary>Open the next box</summary><p>Into the <strong>17th century</strong>. The old box finished with 1600, so 1601 starts a new one.</p></details><p>You may see <strong>CE</strong> after a year. It means “Common Era”; <strong>AD</strong> is another label used for the same year numbering. In this numbering, the first century begins with year 1, not year 0.</p><p>This article uses those year numbers. Dates marked BCE or BC describe earlier years and need a separate explanation.</p>",
+      "title": "Try a date on the edge"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "A century is a group of one hundred years. Imagine putting the years into numbered boxes and the awkward dates start to make sense.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

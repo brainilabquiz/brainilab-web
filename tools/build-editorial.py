@@ -45,9 +45,14 @@ for a in articles:
         assert a.get(key), f"Missing {key} in {a['slug']}"
     cover=a['cover']
     assert cover.get('alt') and cover.get('credit'), f"Missing cover description/credit in {a['slug']}"
-    assert cover['src'].startswith('/assets/images/learn/') and '..' not in cover['src'] and cover['src'].endswith('.webp')
-    for image in (cover['src'],cover['src'].replace('.webp','-small.webp')):
-        assert (ROOT/image.lstrip('/')).is_file(), f'Missing cover: {image}'
+    # The editor can publish immutable covers in the approved Storage bucket.
+    # Keep the static build compatible with the production renderer's allowlist.
+    if cover['src'].startswith('/assets/images/learn/'):
+        assert '..' not in cover['src'] and cover['src'].endswith('.webp')
+        for image in (cover['src'],cover.get('small',cover['src'].replace('.webp','-small.webp'))):
+            assert (ROOT/image.lstrip('/')).is_file(), f'Missing cover: {image}'
+    else:
+        assert re.fullmatch(r'https://wvgcdlxebbybthyuajgb\.supabase\.co/storage/v1/object/public/learn-covers/[a-zA-Z0-9_/-]+\.(?:webp|png|jpe?g)',cover['src']), f'Invalid cover: {a["slug"]}'
     ids = [section['id'] for section in a['sections']]
     assert len(ids) == len(set(ids)) and all(re.fullmatch(r'[a-z0-9-]+', i) for i in ids)
     for link in (a['game'], a['hub']):
@@ -60,8 +65,10 @@ for a in articles:
     a['minutes'] = max(1, math.ceil(words/200))
 
 def card(a, eager=False):
+    src=a['cover']['src']
+    small=a['cover'].get('small',src.replace('.webp','-small.webp') if src.startswith('/') else src)
     return f'''<article class="learn-card" data-topic="{escape(a['topic'], quote=True)}">
-      <div class="learn-card-art"><img src="{escape(a['cover']['src'].replace('.webp','-small.webp'))}" alt="{escape(a['cover']['alt'], quote=True)}" width="480" height="320" loading="{'eager' if eager else 'lazy'}" decoding="async"/></div>
+      <div class="learn-card-art"><img src="{escape(small)}" alt="{escape(a['cover']['alt'], quote=True)}" width="480" height="320" loading="{'eager' if eager else 'lazy'}" decoding="async"/></div>
       <div class="learn-card-copy"><p class="eyebrow">{escape(a['topic'])} <span>· {a['minutes']} min read</span></p>
       <h3><a href="/learn/{a['slug']}/">{escape(a['title'])}</a></h3>
       <p>{escape(a['description'])}</p><span class="learn-card-label" aria-hidden="true">Read the guide ↗</span></div>
@@ -70,6 +77,7 @@ def card(a, eager=False):
 def page(path, title, description, body, schema, cover=None):
     url = BASE + path
     cover=cover or {'src':'/assets/brand/og-card.png','alt':'BrainiLab quiz and brain games'}
+    image=BASE+cover['src'] if cover['src'].startswith('/') else cover['src']
     graph = {'@context': 'https://schema.org', '@graph': [schema, {'@type':'BreadcrumbList','itemListElement':[
         {'@type':'ListItem','position':1,'name':'Home','item':BASE+'/'},
         {'@type':'ListItem','position':2,'name':'Learn','item':BASE+'/learn/'}
@@ -83,7 +91,7 @@ def page(path, title, description, body, schema, cover=None):
 <meta name="robots" content="index,follow"/><link rel="canonical" href="{url}"/>
 <meta property="og:type" content="{'website' if path == '/learn/' else 'article'}"/><meta property="og:title" content="{escape(title, quote=True)}"/>
 <meta property="og:description" content="{escape(description, quote=True)}"/><meta property="og:url" content="{url}"/>
-<meta property="og:image" content="{BASE}{escape(cover['src'])}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
+<meta property="og:image" content="{escape(image)}"/><meta property="og:image:alt" content="{escape(cover['alt'], quote=True)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="/assets/brand/iso-multicolor.png"/>
 <link rel="stylesheet" href="/assets/css/site.css?v=41.41.0"/><link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>

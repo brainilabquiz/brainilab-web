@@ -1,21 +1,4 @@
 {
-  "slug": "spotting-repeating-patterns",
-  "title": "Find the repeat before guessing the next shape",
-  "description": "Look for a complete repeating unit, check it against every item, and avoid guessing from just the last two shapes.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 52,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/spotting-repeating-patterns.webp",
-    "small": "/assets/images/learn/spotting-repeating-patterns-small.webp",
-    "thumbnail": "/assets/images/learn/spotting-repeating-patterns-thumb.webp",
-    "alt": "An alternating row of yellow wooden circles and navy squares",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/patterns-and-reasoning/",
     "name": "Patterns and reasoning"
@@ -24,42 +7,11 @@
     "url": "/reasoning/",
     "name": "Reasoning Challenge"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "number-patterns-check-every-step"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Number Patterns",
-      "url": "https://www.mathsisfun.com/numberpatterns.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "a-rhythm-you-can-point-to",
-      "title": "A rhythm you can point to",
-      "html": "<p>Lay out a round button, a square tile and another round button. Repeat the same three objects: round, square, round; round, square, round. The unit has three positions, even though two contain the same shape.</p><p>A <strong>repeating pattern</strong> uses a unit again and again. Finding the whole unit is more reliable than looking only at the last pair. Two rounds can meet where one unit ends and another begins.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose a two-position or three-position repeating unit. Reveal the next item, then check where it sits inside the unit. Shape labels are provided as well as colours.</p><p>Point to the start of each repeated unit. If your proposed unit does not account for every displayed object, revise it. A good explanation covers the whole example, not just the answer you want to pick.</p>"
-    },
-    {
-      "id": "separate-a-repeat-from-growth",
-      "title": "Separate a repeat from growth",
-      "html": "<p>Round, square, round, square repeats. A pile of one counter, then two, then three grows. Both have structure, but “repeat the same unit” explains only the first.</p><p>When a puzzle states that a repeating rule is being used, that is useful information. Without a stated rule, a short list can often be continued in several ways. In this course, activities tell you which sort of rule to examine.</p>"
-    },
-    {
-      "id": "make-the-explanation-part-of-the-answer",
-      "title": "Make the explanation part of the answer",
-      "html": "<p>Instead of saying only “square”, say “the two-item unit is round then square, and the next position is the square”. That makes your reasoning easy to check.</p><p>If you get a question wrong, compare your proposed rule with the earlier items. The next lesson applies the same habit to number sequences: identify a rule and test every step.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 2,
         "prompt": "The rule repeats circle, square. After circle, square, circle comes…",
         "options": [
           "triangle",
@@ -67,10 +19,10 @@
           "square",
           "star"
         ],
-        "answer": 2,
         "explanation": "The next position is the square in the two-item unit."
       },
       {
+        "answer": 1,
         "prompt": "Which check is most useful?",
         "options": [
           "Look only at the final item",
@@ -78,10 +30,10 @@
           "Choose the brightest shape",
           "Always use a two-item unit"
         ],
-        "answer": 1,
         "explanation": "A repeating unit should explain the whole displayed pattern."
       },
       {
+        "answer": 2,
         "prompt": "Is 1 counter, then 2, then 3 an unchanged repeating pile?",
         "options": [
           "Yes",
@@ -89,9 +41,57 @@
           "No, the amount grows",
           "It contains no possible rule"
         ],
-        "answer": 2,
         "explanation": "The pile changes size; it is a growing pattern rather than one unchanged pile repeated."
       }
     ]
-  }
+  },
+  "slug": "spotting-repeating-patterns",
+  "cover": {
+    "alt": "An alternating row of yellow wooden circles and navy squares",
+    "src": "/assets/images/learn/spotting-repeating-patterns.webp",
+    "small": "/assets/images/learn/spotting-repeating-patterns-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/spotting-repeating-patterns-thumb.webp"
+  },
+  "order": 52,
+  "title": "Find the repeat before guessing the next shape",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "number-patterns-check-every-step"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/numberpatterns.html",
+      "name": "Math is Fun — Number Patterns"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "a-rhythm-you-can-point-to",
+      "html": "<p>Lay out a round button, a square tile and another round button. Repeat the same three objects: round, square, round; round, square, round. The unit has three positions, even though two contain the same shape.</p><p>A <strong>repeating pattern</strong> uses a unit again and again. Finding the whole unit is more reliable than looking only at the last pair. Two rounds can meet where one unit ends and another begins.</p>",
+      "title": "A rhythm you can point to"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Write circle, square, circle; circle, square, circle. Cover the final shape with your hand and predict it. Then underline each complete three-position unit.</p><p>Point to the start of each repeated unit. If your proposed unit does not account for every object in your written pattern, revise it. A good explanation covers the whole example, not just the answer you want to pick.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "separate-a-repeat-from-growth",
+      "html": "<p>Round, square, round, square repeats. A pile of one counter, then two, then three grows. Both have structure, but “repeat the same unit” explains only the first.</p><p>When a puzzle states that a repeating rule is being used, that is useful information. Without a stated rule, a short list can often be continued in several ways. In this course, activities tell you which sort of rule to examine.</p>",
+      "title": "Separate a repeat from growth"
+    },
+    {
+      "id": "make-the-explanation-part-of-the-answer",
+      "html": "<p>Instead of saying only “square”, say “the two-item unit is round then square, and the next position is the square”. That makes your reasoning easy to check.</p><p>If you get a question wrong, compare your proposed rule with the earlier items. The next lesson applies the same habit to number sequences: identify a rule and test every step.</p>",
+      "title": "Make the explanation part of the answer"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Look for a complete repeating unit, check it against every item, and avoid guessing from just the last two shapes.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

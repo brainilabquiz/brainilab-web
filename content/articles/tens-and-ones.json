@@ -1,21 +1,4 @@
 {
-  "slug": "tens-and-ones",
-  "title": "Why 23 means two tens and three ones",
-  "description": "Bundle ten little cubes into one group and discover how the position of a digit changes its value.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 41,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/tens-and-ones.webp",
-    "small": "/assets/images/learn/tens-and-ones-small.webp",
-    "thumbnail": "/assets/images/learn/tens-and-ones-thumb.webp",
-    "alt": "A long wooden counting rod and loose wooden cubes",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/maths-from-zero/",
     "name": "Maths from zero: little numbers, big ideas"
@@ -24,43 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "counting-and-zero",
-    "addition-putting-things-together"
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Introduction to Whole Numbers",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers"
-    }
-  ],
-  "sections": [
-    {
-      "id": "make-a-bundle",
-      "title": "Make a bundle",
-      "html": "<p>Counting 23 loose objects one at a time works, but it is easy to lose your place. Make a bundle of ten, then another bundle of ten. Three objects remain loose. You now have <strong>two tens and three ones</strong>.</p><p>The bundles have not created new objects. Two bundles contain 20 objects altogether, and the three loose ones bring the total to 23. You can check by unpacking every bundle and counting all the objects.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Choose a number below. Long rods represent ten units each; small cubes represent single units. Look at 19, then change it to 20. Nine loose units disappear because another full ten has been made.</p><p>Compare 23 with 32. Both numbers use the same two digits, but they mean different amounts: 23 has two tens, while 32 has three tens. The place occupied by each digit matters.</p>"
-    },
-    {
-      "id": "a-zero-can-hold-a-place",
-      "title": "A zero can hold a place",
-      "html": "<p>In 30, the three means three tens and the zero means no loose ones. Removing that zero would leave 3, which is only three ones. Zero is doing a useful job even though there are no little cubes to draw.</p><p>We call this <strong>place value</strong>. For the numbers in this activity, the rightmost digit counts ones and the digit immediately to its left counts tens. Larger numbers continue with hundreds and thousands, but two places are enough for now.</p>"
-    },
-    {
-      "id": "read-the-amount-not-just-the-digits",
-      "title": "Read the amount, not just the digits",
-      "html": "<p>For 47, say “four tens and seven ones” before saying “forty-seven”. For 8, there are no complete tens and eight ones. A one-digit number still fits the same idea.</p><p>Try making 26 with small objects. Trade one bundle of ten for ten loose objects. The total stays 26. This exchange will become useful when you add or subtract across a ten.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "What does the 4 represent in 47?",
         "options": [
           "4 ones",
@@ -68,10 +19,10 @@
           "400",
           "7"
         ],
-        "answer": 1,
         "explanation": "It is in the tens place: four tens are forty."
       },
       {
+        "answer": 3,
         "prompt": "Which number has 3 tens and 2 ones?",
         "options": [
           "23",
@@ -79,10 +30,10 @@
           "302",
           "32"
         ],
-        "answer": 3,
         "explanation": "Three tens make 30; two more ones make 32."
       },
       {
+        "answer": 2,
         "prompt": "How many loose ones are shown by the ones digit in 50?",
         "options": [
           "5",
@@ -90,9 +41,58 @@
           "0",
           "50"
         ],
-        "answer": 2,
         "explanation": "The zero holds the ones place. All fifty units are in five complete tens."
       }
     ]
-  }
+  },
+  "slug": "tens-and-ones",
+  "cover": {
+    "alt": "A long wooden counting rod and loose wooden cubes",
+    "src": "/assets/images/learn/tens-and-ones.webp",
+    "small": "/assets/images/learn/tens-and-ones-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/tens-and-ones-thumb.webp"
+  },
+  "order": 41,
+  "title": "Why 23 means two tens and three ones",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "counting-and-zero",
+    "addition-putting-things-together"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers",
+      "name": "OpenStax — Introduction to Whole Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "make-a-bundle",
+      "html": "<p>Counting 23 loose objects one at a time works, but it is easy to lose your place. Make a bundle of ten, then another bundle of ten. Three objects remain loose. You now have <strong>two tens and three ones</strong>.</p><p>The bundles have not created new objects. Two bundles contain 20 objects altogether, and the three loose ones bring the total to 23. You can check by unpacking every bundle and counting all the objects.</p>",
+      "title": "Make a bundle"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw 19 little marks. Circle ten to make one bundle, leaving nine loose marks. Add one more: you can now circle a second bundle of ten, making 20 altogether.</p><p>Compare 23 with 32. Both numbers use the same two digits, but they mean different amounts: 23 has two tens, while 32 has three tens. The place occupied by each digit matters.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "a-zero-can-hold-a-place",
+      "html": "<p>In 30, the three means three tens and the zero means no loose ones. Removing that zero would leave 3, which is only three ones. Zero is doing a useful job even though there are no little cubes to draw.</p><p>We call this <strong>place value</strong>. For these two-digit numbers, the rightmost digit counts ones and the digit immediately to its left counts tens. Larger numbers continue with hundreds and thousands, but two places are enough for now.</p>",
+      "title": "A zero can hold a place"
+    },
+    {
+      "id": "read-the-amount-not-just-the-digits",
+      "html": "<p>For 47, say “four tens and seven ones” before saying “forty-seven”. For 8, there are no complete tens and eight ones. A one-digit number still fits the same idea.</p><p>Try making 26 with small objects. Trade one bundle of ten for ten loose objects. The total stays 26. This exchange will become useful when you add or subtract across a ten.</p>",
+      "title": "Read the amount, not just the digits"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Bundle ten little cubes into one group and discover how the position of a digit changes its value.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

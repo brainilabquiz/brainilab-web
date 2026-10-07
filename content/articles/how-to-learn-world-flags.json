@@ -18,7 +18,8 @@
   "topic": "Geography",
   "status": "published",
   "related": [
-    "daily-or-anytime"
+    "nepal-flag-shape",
+    "confidence-is-not-a-memory-test"
   ],
   "sources": [
     {
@@ -26,6 +27,7 @@
       "name": "Italian Presidency — The Italian Tricolour Flag"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Put your eye for detail to the test in World Flags.",
   "sections": [
     {
@@ -50,12 +52,11 @@
     },
     {
       "id": "review",
-      "html": "<p>After a World Flags round, jot down two or three answers you were unsure about, including lucky guesses. Note the detail that distinguishes each flag.</p><p>Before your next round, look at those flags again and try naming them without the labels. Once they feel familiar, add a few more or explore the same countries in World Capitals.</p>",
+      "html": "<p>After a World Flags round, jot down two or three answers you were unsure about, including lucky guesses. Note the detail that distinguishes each flag.</p><p>Before your next round, look at those flags again and try naming them without the labels. Once they feel familiar, add a few more or explore the same countries in World Capitals.</p><p>Start with the outline of <a href=\"/learn/nepal-flag-shape/\">Nepal’s double-pennant flag</a>. It is a useful example of recognising a design before studying its colours.</p>",
       "title": "Keep a short list for next time"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Start with a few flags, notice their distinctive details and compare the pairs that keep catching you out.",
-  "publishedAt": "2026-09-23T15:00:00Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T15:00:00Z"
 }

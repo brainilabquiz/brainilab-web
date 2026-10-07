@@ -1,21 +1,4 @@
 {
-  "slug": "counting-and-zero",
-  "title": "Counting starts with one object at a time",
-  "description": "Move a few counters, keep track of each one, and see why an empty pile still has a number.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 40,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/counting-and-zero.webp",
-    "small": "/assets/images/learn/counting-and-zero-small.webp",
-    "thumbnail": "/assets/images/learn/counting-and-zero-thumb.webp",
-    "alt": "Five wooden counters beside an empty ceramic bowl",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/maths-from-zero/",
     "name": "Maths from zero: little numbers, big ideas"
@@ -24,42 +7,11 @@
     "url": "/games/math-rush/",
     "name": "Math Rush"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "tens-and-ones"
-  ],
-  "sources": [
-    {
-      "name": "OpenStax — Introduction to Whole Numbers",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers"
-    }
-  ],
-  "sections": [
-    {
-      "id": "a-small-pile-is-enough",
-      "title": "A small pile is enough",
-      "html": "<p>Put a few buttons beside an empty cup. Touch one button and say “one”. Move it into the cup. Touch the next and say “two”. Moving each object helps you keep track: nothing gets counted twice, and nothing gets missed.</p><p>The last number you say tells you <strong>how many</strong> objects you counted. If the last number is five, the cup holds five buttons. The number describes the amount, not the shape, colour or arrangement of the buttons.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Change the number of counters below. Count each one once, then compare your count with the number shown. Move all the way down to zero. The empty space is part of the activity: it means there are no counters.</p><p>Try arranging five real objects in a line, then in a little circle. Count again. Unless you added or removed something, the amount is still five. Spreading a pile out can make it look bigger without changing its number.</p>"
-    },
-    {
-      "id": "zero-is-useful",
-      "title": "Zero is useful",
-      "html": "<p>An empty cup has <strong>zero</strong> buttons. Zero is not a forgotten answer; it tells us the amount is none. If someone gives you three buttons, you can describe the change as going from zero to three.</p><p>Be careful about what you are counting. Two pairs of socks contain four socks. “How many pairs?” and “How many socks?” are different questions. Decide what counts as one object before you begin.</p>"
-    },
-    {
-      "id": "a-quick-check-before-moving-on",
-      "title": "A quick check before moving on",
-      "html": "<p>Place six small objects on a table. Slide each into a second pile as you count. Then count back into the first pile. Getting six both times is a useful check that you counted every object once.</p><p>Next we will bundle objects into tens. You will still be counting the same things; grouping them simply makes a larger amount easier to read.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "An empty bowl contains how many counters?",
         "options": [
           "1",
@@ -67,10 +19,10 @@
           "10",
           "It has no possible answer"
         ],
-        "answer": 1,
         "explanation": "Zero is the number for none."
       },
       {
+        "answer": 2,
         "prompt": "You spread 5 buttons farther apart without adding any. How many are there?",
         "options": [
           "10",
@@ -78,10 +30,10 @@
           "5",
           "0"
         ],
-        "answer": 2,
         "explanation": "The arrangement changed, but the amount did not."
       },
       {
+        "answer": 3,
         "prompt": "What helps you count a pile accurately?",
         "options": [
           "Count the biggest object twice",
@@ -89,9 +41,58 @@
           "Guess from the space it takes up",
           "Touch or move each object once"
         ],
-        "answer": 3,
         "explanation": "Tracking each object avoids both missing it and counting it twice."
       }
     ]
-  }
+  },
+  "slug": "counting-and-zero",
+  "cover": {
+    "alt": "Five wooden counters beside an empty ceramic bowl",
+    "src": "/assets/images/learn/counting-and-zero.webp",
+    "small": "/assets/images/learn/counting-and-zero-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/counting-and-zero-thumb.webp"
+  },
+  "order": 40,
+  "title": "Counting starts with one object at a time",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "tens-and-ones",
+    "addition-putting-things-together"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers",
+      "name": "OpenStax — Introduction to Whole Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "a-small-pile-is-enough",
+      "html": "<p>Put a few buttons beside an empty cup. Touch one button and say “one”. Move it into the cup. Touch the next and say “two”. Moving each object helps you keep track: nothing gets counted twice, and nothing gets missed.</p><p>The last number you say tells you <strong>how many</strong> objects you counted. If the last number is five, the cup holds five buttons. The number describes the amount, not the shape, colour or arrangement of the buttons.</p>",
+      "title": "A small pile is enough"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Place five small objects on a table. Move one at a time into a cup, counting each once. When the table is empty, it has zero objects left.</p><p>Try arranging five real objects in a line, then in a little circle. Count again. Unless you added or removed something, the amount is still five. Spreading a pile out can make it look bigger without changing its number.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "zero-is-useful",
+      "html": "<p>An empty cup has <strong>zero</strong> buttons. Zero is not a forgotten answer; it tells us the amount is none. If someone gives you three buttons, you can describe the change as going from zero to three.</p><p>Be careful about what you are counting. Two pairs of socks contain four socks. “How many pairs?” and “How many socks?” are different questions. Decide what counts as one object before you begin.</p>",
+      "title": "Zero is useful"
+    },
+    {
+      "id": "a-quick-check-before-moving-on",
+      "html": "<p>Place six small objects on a table. Slide each into a second pile as you count. Then count back into the first pile. Getting six both times is a useful check that you counted every object once.</p><p>Next we will bundle objects into tens. You will still be counting the same things; grouping them simply makes a larger amount easier to read.</p>",
+      "title": "A quick check before moving on"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Move a few counters, keep track of each one, and see why an empty pile still has a number.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

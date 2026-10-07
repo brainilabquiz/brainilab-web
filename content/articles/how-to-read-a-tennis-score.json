@@ -10,17 +10,19 @@
   "slug": "how-to-read-a-tennis-score",
   "cover": {
     "alt": "Two tennis balls beside a racket on a sunlit green court",
-    "src": "/assets/images/learn/how-to-read-a-tennis-score.webp",
+    "src": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0.webp",
+    "small": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0-640.webp",
     "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 55
+    "position": 55,
+    "thumbnail": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0-320.webp"
   },
   "order": 16,
   "title": "How tennis scoring works, from love to deuce",
   "topic": "Sports",
   "status": "published",
   "related": [
-    "mental-percentages-without-a-calculator",
-    "remember-quiz-answers-tomorrow"
+    "why-tennis-players-change-ends",
+    "why-tennis-balls-are-yellow"
   ],
   "sources": [
     {
@@ -32,6 +34,7 @@
       "name": "LTA — Scoring in a set, game and tie-break"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try the Sports Quiz for questions from tennis and beyond.",
   "sections": [
     {
@@ -51,12 +54,11 @@
     },
     {
       "id": "practice",
-      "html": "<p>You are serving at 30–40 and win the next point. What is the score now?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>Deuce.</strong> You have each won three points. With advantage scoring, either player now needs two points in a row to win the game.</p></details><p>Once you know who is serving and whether you are looking at points, games or sets, the scoreboard becomes much easier to follow.</p>",
+      "html": "<p>You are serving at 30–40 and win the next point. What is the score now?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>Deuce.</strong> You have each won three points. With advantage scoring, either player now needs two points in a row to win the game.</p></details><p>Once you know who is serving and whether you are looking at points, games or sets, the scoreboard becomes much easier to follow.</p><p>Once you can count the games, you can also predict <a href=\"/learn/why-tennis-players-change-ends/\">when the players will change ends</a>.</p>",
       "title": "Call the next score"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "What does 30–40 mean, and what happens at deuce? Follow the points through a game, a set and a tie-break.",
-  "publishedAt": "2026-09-28T18:48:21.926724+00:00",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-28T18:48:21.926724+00:00"
 }

@@ -18,8 +18,8 @@
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
-    "mental-percentages-without-a-calculator",
-    "connections-puzzles-find-the-hidden-link"
+    "number-patterns-check-every-step",
+    "spotting-repeating-patterns"
   ],
   "sources": [
     {
@@ -31,6 +31,7 @@
       "name": "BrainiLab — Sequence rules and play"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try these approaches in a round of Sequence.",
   "sections": [
     {
@@ -54,8 +55,7 @@
       "title": "Could another answer work?"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "Look at the gaps, try multiplication and check alternate terms. Four approaches to finding what comes next.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

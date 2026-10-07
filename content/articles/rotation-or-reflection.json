@@ -1,21 +1,4 @@
 {
-  "slug": "rotation-or-reflection",
-  "title": "Turning a shape is not the same as flipping it",
-  "description": "Use an asymmetric shape to tell a rotation from a mirror reflection, one movement at a time.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "order": 54,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "cover": {
-    "src": "/assets/images/learn/rotation-or-reflection.webp",
-    "small": "/assets/images/learn/rotation-or-reflection-small.webp",
-    "thumbnail": "/assets/images/learn/rotation-or-reflection-thumb.webp",
-    "alt": "A navy L-shaped wooden piece beside a mirror",
-    "position": 50,
-    "credit": "AI-generated photorealistic image created for BrainiLab."
-  },
   "hub": {
     "url": "/learn/paths/patterns-and-reasoning/",
     "name": "Patterns and reasoning"
@@ -24,43 +7,11 @@
     "url": "/reasoning/",
     "name": "Reasoning Challenge"
   },
-  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
-  "related": [
-    "number-patterns-check-every-step",
-    "sorting-with-two-rules"
-  ],
-  "sources": [
-    {
-      "name": "Math is Fun — Rotation",
-      "url": "https://www.mathsisfun.com/geometry/rotation.html"
-    }
-  ],
-  "sections": [
-    {
-      "id": "try-it-with-a-paper-shape",
-      "title": "Try it with a paper shape",
-      "html": "<p>Cut an L shape from paper. Turn it a quarter-turn on the table. Its size and outline stay the same, but it points a different way. This is a <strong>rotation</strong>.</p><p>Now imagine looking at it in a mirror. The bend changes sides. That is a <strong>reflection</strong>. A shape with a clearly marked corner makes the difference easier to notice than a plain circle would.</p>"
-    },
-    {
-      "id": "explore",
-      "title": "Try it yourself",
-      "html": "<p>Use the quarter-turn button to rotate the L. Four quarter-turns bring it back to its starting orientation. Use the mirror button to reflect it from left to right.</p><p>Follow the small dot as well as the outside edge. The dot is attached to the shape, so it moves with it. This prevents a symmetric-looking outline from hiding what changed.</p>"
-    },
-    {
-      "id": "use-the-direction-in-the-question",
-      "title": "Use the direction in the question",
-      "html": "<p>A clockwise quarter-turn follows the direction of clock hands. A half-turn rotates through two quarter-turns. A full turn is four quarter-turns, or 360 degrees.</p><p>A reflection needs a mirror line. In this activity the mirror line is vertical, so left and right switch. A horizontal mirror would switch top and bottom instead.</p>"
-    },
-    {
-      "id": "check-features-not-a-vague-impression",
-      "title": "Check features, not a vague impression",
-      "html": "<p>Look for a short arm, a long arm and a marked corner. Track where each feature moves. If only one feature matches your prediction, you may have turned the shape the wrong way or imagined a reflection.</p><p>Some shapes, such as a square without a mark, can look unchanged after certain movements. That does not mean no movement happened. Distinctive features make a reasoning question less ambiguous.</p>"
-    }
-  ],
   "quiz": {
     "version": "academy-oct-v1",
     "questions": [
       {
+        "answer": 2,
         "prompt": "How many quarter-turns make a full turn?",
         "options": [
           "2",
@@ -68,10 +19,10 @@
           "4",
           "8"
         ],
-        "answer": 2,
         "explanation": "Each quarter-turn is one of four equal parts of a full turn."
       },
       {
+        "answer": 0,
         "prompt": "A reflection in a vertical mirror switches…",
         "options": [
           "left and right",
@@ -79,10 +30,10 @@
           "the number of corners",
           "the size"
         ],
-        "answer": 0,
         "explanation": "The mirror reverses left and right relative to its vertical line."
       },
       {
+        "answer": 1,
         "prompt": "Why add a dot to a shape?",
         "options": [
           "To increase its area",
@@ -90,9 +41,58 @@
           "To make all turns equal",
           "To prevent rotation"
         ],
-        "answer": 1,
         "explanation": "The mark helps distinguish movements that otherwise look similar."
       }
     ]
-  }
+  },
+  "slug": "rotation-or-reflection",
+  "cover": {
+    "alt": "A navy L-shaped wooden piece beside a mirror",
+    "src": "/assets/images/learn/rotation-or-reflection.webp",
+    "small": "/assets/images/learn/rotation-or-reflection-small.webp",
+    "credit": "AI-generated photorealistic image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/rotation-or-reflection-thumb.webp"
+  },
+  "order": 54,
+  "title": "Rotation vs reflection: turning or flipping a shape?",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "number-patterns-check-every-step",
+    "sorting-with-two-rules"
+  ],
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/geometry/rotation.html",
+      "name": "Math is Fun — Rotation"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few problems at your own pace, then return to any explanation you want to revisit.",
+  "sections": [
+    {
+      "id": "try-it-with-a-paper-shape",
+      "html": "<p>Cut an L shape from paper. Turn it a quarter-turn on the table. Its size and outline stay the same, but it points a different way. This is a <strong>rotation</strong>.</p><p>Now imagine looking at it in a mirror. The bend changes sides. That is a <strong>reflection</strong>. A shape with a clearly marked corner makes the difference easier to notice than a plain circle would.</p>",
+      "title": "Try it with a paper shape"
+    },
+    {
+      "id": "explore",
+      "html": "<p>Draw an L on paper and mark one corner with a dot. Turn the paper a quarter-turn on the table. Four quarter-turns return it to its starting position. Then hold it beside a mirror to compare a reflection.</p><p>Follow the small dot as well as the outside edge. The dot is attached to the shape, so it moves with it. This prevents a symmetric-looking outline from hiding what changed.</p>",
+      "title": "Try it yourself"
+    },
+    {
+      "id": "use-the-direction-in-the-question",
+      "html": "<p>A clockwise quarter-turn follows the direction of clock hands. A half-turn rotates through two quarter-turns. A full turn is four quarter-turns, or 360 degrees.</p><p>A reflection needs a mirror line. With a vertical mirror line, left and right switch. A horizontal mirror would switch top and bottom instead.</p>",
+      "title": "Use the direction in the question"
+    },
+    {
+      "id": "check-features-not-a-vague-impression",
+      "html": "<p>Look for a short arm, a long arm and a marked corner. Track where each feature moves. If only one feature matches your prediction, you may have turned the shape the wrong way or imagined a reflection.</p><p>Some shapes, such as a square without a mark, can look unchanged after certain movements. That does not mean no movement happened. Distinctive features make a reasoning question less ambiguous.</p>",
+      "title": "Check features, not a vague impression"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:54:30Z",
+  "description": "Use an asymmetric shape to tell a rotation from a mirror reflection, one movement at a time.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

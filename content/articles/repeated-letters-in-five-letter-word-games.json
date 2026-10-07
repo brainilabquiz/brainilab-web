@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/repeated-letters-in-five-letter-word-games-photo-thumb.webp"
   },
   "order": 26,
-  "title": "Two Ls, two different colours: how repeated letters work",
+  "title": "Repeated letters in word games: why one tile can turn grey",
   "topic": "Words & puzzles",
   "status": "published",
   "related": [
@@ -30,6 +30,7 @@
       "name": "BrainiLab — BrainiWord rules and play"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try BrainiWord. When a letter repeats, compare all its tiles before choosing your next word.",
   "sections": [
     {
@@ -58,8 +59,7 @@
       "title": "A quick note before you play BrainiWord"
     }
   ],
-  "updatedAt": "2026-09-30T17:15:00Z",
+  "updatedAt": "2026-10-07T16:54:30Z",
   "description": "One L turns yellow; the other turns grey. A worked example explains what repeated letters tell you in a five-letter word puzzle.",
-  "publishedAt": "2026-09-30T17:15:00Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-30T17:15:00Z"
 }
