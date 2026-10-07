@@ -1,29 +1,28 @@
 {
+  "hub": {
+    "url": "/games/",
+    "name": "All games"
+  },
+  "game": {
+    "url": "/daily-quiz/",
+    "name": "Today’s Daily"
+  },
   "slug": "challenge-a-friend-without-spoilers",
-  "title": "Challenge a friend to the Daily—without giving the game away",
-  "description": "A score to beat, a cheeky invitation and absolutely no hints. Turn today’s Daily into a friendly little contest.",
+  "cover": {
+    "alt": "Two friends holding phones across a café table with popcorn and coffee",
+    "src": "/assets/images/learn/challenge-a-friend-without-spoilers.webp",
+    "small": "/assets/images/learn/challenge-a-friend-without-spoilers-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/challenge-a-friend-without-spoilers-thumb.webp"
+  },
   "order": 58,
-  "sections": [
-    {
-      "id": "friendly-rivalry",
-      "title": "A small score. A very grand title.",
-      "html": "<p>You have finished today’s Daily. You could quietly admire your score. Or you could appoint yourself Unofficial Champion of the Group Chat and give someone a chance to object.</p><p>A friendly challenge works best when it is easy to join: the same game, a score to beat and no homework. BrainiLab’s <a href=\"/daily-quiz/\">Daily</a> gives everyone the same main challenge for the day.</p>"
-    },
-    {
-      "id": "send-the-challenge",
-      "title": "Make the invitation sound like you",
-      "html": "<p>Finish the main Daily, then choose <strong>Challenge a friend</strong>. The invitation includes your main-game points and a link. You can edit the message before copying it into your own chat, or use the share option when your device offers it.</p><p>Keep the link and score; add a line you would actually send. Something like:</p><blockquote><p>Your turn, Sam. I’m claiming the sofa champion title until you beat this.</p></blockquote><p>Or, for a friend who prefers lower stakes: “Fancy trying this? I want to know which bit catches you out.” A private joke beats a formal announcement every time.</p>"
-    },
-    {
-      "id": "no-spoilers",
-      "title": "Send the score, not the answers",
-      "html": "<p>A screenshot of the questions is a generous gift to your opponent. So is “be careful with the one about planets”. Even a tiny hint changes the challenge.</p><p>Share the invitation or your score, and save the explanation for afterwards. The fun conversation starts when you can both say which answer seemed obvious—and which one absolutely was not.</p><p>For a fair comparison, use your <strong>main-game points</strong>. Optional extras can change the full Daily total, so comparing that against someone who played only the main game would be apples versus apples plus a bonus banana.</p>"
-    },
-    {
-      "id": "keep-it-light",
-      "title": "One round, then bragging rights",
-      "html": "<p>Your friend can play without an account. Try it on the same day: the Daily changes at <strong>00:00 UTC</strong>, and an old invitation leads to the current challenge.</p><p>Compare scores in your chat when you have both finished. A draw can stay a draw. The prize can be choosing the next film, naming the group chat for an hour, or simply a deeply unnecessary victory emoji.</p><p>If your friend does not fancy it today, leave the invitation there. A good challenge feels like an invitation, not a task.</p>"
-    }
+  "title": "How to challenge a friend to BrainiLab’s Daily quiz",
+  "topic": "Getting started",
+  "status": "published",
+  "related": [
+    "daily-or-anytime",
+    "find-your-first-brainilab-game"
   ],
   "sources": [
     {
@@ -31,30 +30,31 @@
       "name": "BrainiLab — Daily and friend invitations"
     }
   ],
-  "game": {
-    "url": "/daily-quiz/",
-    "name": "Today’s Daily"
-  },
-  "practice": "Play today’s main challenge, then invite a friend to beat your score.",
-  "related": [
-    "daily-or-anytime",
-    "find-your-first-brainilab-game"
-  ],
-  "topic": "Getting started",
-  "status": "published",
-  "publishedAt": "2026-10-04T16:00:00Z",
-  "updatedAt": "2026-10-04T16:00:00Z",
   "authorId": "biel-sarda",
-  "hub": {
-    "url": "/games/",
-    "name": "All games"
-  },
-  "cover": {
-    "src": "/assets/images/learn/challenge-a-friend-without-spoilers.webp",
-    "small": "/assets/images/learn/challenge-a-friend-without-spoilers-small.webp",
-    "thumbnail": "/assets/images/learn/challenge-a-friend-without-spoilers-thumb.webp",
-    "alt": "Two friends holding phones across a café table with popcorn and coffee",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  }
+  "practice": "Play today’s main challenge, then invite a friend to beat your score.",
+  "sections": [
+    {
+      "id": "friendly-rivalry",
+      "html": "<p><strong>Finish today’s main Daily, choose “Challenge a friend”, then share the invitation link.</strong> Your friend gets the same main challenge and your score to beat. No account is needed to play.</p><p>You could quietly admire your result. Or you could appoint yourself Unofficial Champion of the Group Chat and give someone a chance to object.</p><p>The <a href=\"/daily-quiz/\">Daily quiz</a> changes each day, so send the challenge while today’s round is still available.</p>",
+      "title": "A small score. A very grand title."
+    },
+    {
+      "id": "send-the-challenge",
+      "html": "<p>Finish the main Daily, then choose <strong>Challenge a friend</strong>. The invitation includes your main-game points and a link. You can edit the message before copying it into your own chat, or use the share option when your device offers it.</p><p>Keep the link and score; add a line you would actually send. Something like:</p><blockquote><p>Your turn, Sam. I’m claiming the sofa champion title until you beat this.</p></blockquote><p>Or, for a friend who prefers lower stakes: “Fancy trying this? I want to know which bit catches you out.” A private joke beats a formal announcement every time.</p>",
+      "title": "Make the invitation sound like you"
+    },
+    {
+      "id": "no-spoilers",
+      "html": "<p>A screenshot of the questions is a generous gift to your opponent. So is “be careful with the one about planets”. Even a tiny hint changes the challenge.</p><p>Share the invitation or your score, and save the explanation for afterwards. The fun conversation starts when you can both say which answer seemed obvious—and which one absolutely was not.</p><p>For a fair comparison, use your <strong>main-game points</strong>. Optional extras can change the full Daily total, so comparing that against someone who played only the main game would be apples versus apples plus a bonus banana.</p>",
+      "title": "Which score should you compare?"
+    },
+    {
+      "id": "keep-it-light",
+      "html": "<p>Your friend can play without an account. Try it on the same day: the Daily changes at <strong>00:00 UTC</strong>, and an old invitation leads to the current challenge.</p><p>Compare scores in your chat when you have both finished. A draw can stay a draw. The prize can be choosing the next film, naming the group chat for an hour, or simply a deeply unnecessary victory emoji.</p><p>If your friend does not fancy it today, leave the invitation there. A good challenge feels like an invitation, not a task.</p>",
+      "title": "Can your friend play tomorrow?"
+    }
+  ],
+  "updatedAt": "2026-10-07T16:21:00Z",
+  "description": "Finish the main Daily, share your score and invite a friend to beat it. A quick guide to sending a personal challenge without spoilers.",
+  "publishedAt": "2026-10-04T16:00:00Z"
 }

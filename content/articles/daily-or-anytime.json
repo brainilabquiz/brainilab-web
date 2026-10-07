@@ -18,7 +18,8 @@
   "topic": "Getting started",
   "status": "published",
   "related": [
-    "how-to-learn-world-flags"
+    "challenge-a-friend-without-spoilers",
+    "find-your-first-brainilab-game"
   ],
   "sources": [
     {
@@ -34,6 +35,7 @@
       "name": "BrainiLab — Membership details"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try today’s main Daily. If you fancy more, choose one optional extra.",
   "sections": [
     {
@@ -43,7 +45,7 @@
     },
     {
       "id": "daily",
-      "html": "<p>From 1 October 2026, the Daily starts with one main game, chosen for everyone that day. Finish it to keep your streak and earn up to 2,500 Daily points. The game changes each day, so tomorrow might bring a word puzzle, a quick calculation or a set of questions.</p><p>Fancy another round? Choose one of the two optional extras. That extra can add up to 1,000 points, bringing the daily maximum to 3,500. Your choice is fixed when you open the extra, but skipping it does not affect your streak.</p><p>Daily points are separate from an individual game’s raw score and from XP. Previous days keep their original scores. Past Daily rounds are practice and do not replace today’s challenge.</p>",
+      "html": "<p><strong>The Daily starts with one main game, shared by everyone that day.</strong> Finish it to keep your streak. Tomorrow might bring a word puzzle, a quick calculation or a set of questions.</p><p>Fancy another round? Choose one of the two optional extras. The main game can earn up to 2,500 Daily points; the extra adds up to 1,000. Skipping the extra does not affect your streak, and opening one fixes your choice for the day.</p><p>Past Daily rounds are practice. To keep today’s streak, play today’s main game.</p>",
       "title": "One Daily, with room for one more"
     },
     {
@@ -53,17 +55,16 @@
     },
     {
       "id": "result",
-      "html": "<p>Perhaps a flag caught your attention, or an answer reminded you of something you would like to know more about. Follow a related guide, try another topic, or share your result with a friend.</p><p>There is no need to turn every mistake into homework. One interesting answer can be enough to bring you back for another round.</p>",
+      "html": "<p>Perhaps a flag caught your attention, or an answer reminded you of something you would like to know more about. Follow a related article or try another topic.</p><p>Want some friendly competition? <a href=\"/learn/challenge-a-friend-without-spoilers/\">Send a Daily challenge to a friend</a>, compare your main-game scores and keep the answers to yourself until you have both played.</p>",
       "title": "See where a round takes you"
     },
     {
       "id": "return",
-      "html": "<p>You can work through the Daily set, spend a few minutes on a favourite quiz, or leave the next challenge for tomorrow.</p><p>BrainiLab+ is optional support for the project. It does not provide extra points, attempts or ranking advantages. The membership page explains the current benefits and advertising status; an upgrade is not required to play.</p>",
-      "title": "Come back when you feel like it"
+      "html": "<p>One Daily game can be enough. Or pick an Anytime quiz on a favourite topic and see where it takes you.</p><p>BrainiLab+ is optional. It does not provide extra points, attempts or ranking advantages. The <a href=\"/plus/\">membership page</a> explains the current benefits; an upgrade is not required to play.</p>",
+      "title": "Play at your own pace"
     }
   ],
-  "updatedAt": "2026-09-30T05:15:07Z",
+  "updatedAt": "2026-10-07T16:21:00Z",
   "description": "Take on today’s shared challenges or choose a quiz on a favourite topic. A quick guide to finding your next game.",
-  "publishedAt": "2026-09-23T15:00:00Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T15:00:00Z"
 }
