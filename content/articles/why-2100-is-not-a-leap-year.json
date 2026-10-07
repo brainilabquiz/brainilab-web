@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/why-2100-is-not-a-leap-year-thumb.webp"
   },
   "order": 17,
-  "title": "Why will 2100 skip its leap day?",
+  "title": "Why isn't 2100 a leap year?",
   "topic": "History",
   "status": "published",
   "related": [
@@ -102,6 +102,6 @@
     }
   ],
   "updatedAt": "2026-09-30T19:26:19.699889+00:00",
-  "description": "Most of us learn that a leap year comes every four years. There is a small extra rule, and the year 2100 is where it matters.",
+  "description": "2100 will not have 29 February. See why years ending in 00 need an extra calendar check, with a simple comparison of 2000, 2100 and 2400.",
   "publishedAt": "2026-09-29T06:00:00Z"
 }
