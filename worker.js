@@ -1,5 +1,5 @@
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
-import {renderNews} from './lib/breaking-news.js';
+import {renderNews,freshNews} from './lib/breaking-news.js';
 import {newsEdition} from './lib/news-refresh.js';
 export {BreakingNewsStore} from './lib/news-refresh.js';
 import {VIDEO_GAMES,relatedVideo,cleanVideo} from './lib/video-card.js';
@@ -91,6 +91,11 @@ export default {
     }
     if(url.pathname.startsWith('/api/')){
       if(request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET'}});
+      if(url.pathname==='/api/breaking-news'){
+        const edition=url.hostname==='brainilabgames.com'?await newsEdition(env):null;
+        const stories=freshNews(edition);
+        return json({generatedAt:edition?.generatedAt||null,stories,serviceStatus:edition?.serviceStatus||'unavailable'},stories.length?200:503,15);
+      }
       if(url.pathname==='/api/latest-video')return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
       if(url.pathname==='/api/admin/video-info')return adminVideoInfo(request,env.YOUTUBE_API_KEY||'');
       if(url.pathname==='/api/related-video'){
