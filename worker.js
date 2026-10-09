@@ -68,7 +68,7 @@ export default {
     const url=new URL(request.url);
     if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
       if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
-      const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/index.html',url),request));
+      const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/',url),request));
       if(request.method==='HEAD')return response;
       const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
       const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
