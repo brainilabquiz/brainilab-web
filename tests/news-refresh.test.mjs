@@ -35,3 +35,10 @@ test('edition reads do not retry missing credentials or paid failures',async()=>
     await store.fetch(new Request('https://news.internal/edition'));assert.equal(alarms,0);
   }
 });
+test('failure diagnostics exclude prose and are never exposed publicly',async()=>{
+  const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});
+  await store.refresh(now,async()=>Response.json({error:{code:'unsupported_parameter',type:'invalid_request_error',param:'tools[0].filters',message:'private response prose'}},{status:400}));
+  assert.deepEqual(s.data.get('api-diagnostic'),{checkedAt:new Date(now).toISOString(),httpStatus:400,code:'unsupported_parameter',type:'invalid_request_error',param:'tools[0].filters'});
+  const reply=await(await store.fetch(new Request('https://news.internal/edition'))).json();
+  assert.equal(reply['api-diagnostic'],undefined);assert.equal(reply.serviceStatus,'api-error');
+});
