@@ -87,6 +87,10 @@ window.BrainiSiteAnalytics=(()=>{
     if(url.origin===location.origin&&url.pathname==='/assets/resources/five-number-puzzles.pdf')send('resource_download',{resource_id:'five_number_puzzles'});
     if(url.origin===location.origin&&a.closest('.article-practice,.sidebar-game'))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
     if(url.origin===location.origin&&a.closest('[data-game-guides]')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('game_guide_click',{article_slug:url.pathname.split('/')[2],game_path:path()});
+    if(url.origin===location.origin&&a.closest('.topic-discovery')&&['/general-knowledge/','/history/','/sports/'].includes(path())){
+      if(a.matches('.topic-level'))send('topic_game_click',{topic_path:path(),difficulty:['easy','medium','hard'].includes(url.searchParams.get('difficulty'))?url.searchParams.get('difficulty'):'unknown'});
+      if(a.closest('.topic-reading')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('topic_article_click',{topic_path:path(),article_slug:url.pathname.split('/')[2]});
+    }
     if(url.origin===location.origin&&a.closest('.post-game')&&['next','guide','progress','browse','feedback'].includes(a.dataset.postAction))send('post_game_action',{action:a.dataset.postAction});
     if(url.origin===location.origin&&url.pathname.startsWith('/suggestions'))send('feedback_open',{source:a.closest('.post-game')?'post-game':path().startsWith('/learn/')?'learn':'site'});
   });

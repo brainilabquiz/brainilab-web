@@ -57,3 +57,18 @@ for(const placement of ['article','post_game','home']){
  w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='video_click').length,0);w.close();
 }
 console.log('PASS video clicks: consent required, three precise placements, no arbitrary URL parameters, withdrawal respected.');
+{
+ const w=page('https://brainilabgames.com/history/');
+ w.document.body.innerHTML='<main class="topic-discovery"><a class="topic-level" href="/history/history-quiz/?difficulty=easy&email=do-not-send">Play</a><div class="topic-reading"><a href="/learn/which-century-is-that-year/">Read</a></div></main>';
+ const links=[...w.document.querySelectorAll('a')];
+ const click=()=>links.forEach(a=>a.dispatchEvent(new w.MouseEvent('click',{bubbles:true})));
+ click();assert.equal(w.dataLayer,undefined);
+ w.BrainiSiteAnalytics.setConsent(true);click();
+ const events=w.dataLayer.filter(x=>x[0]==='event'&&x[1].startsWith('topic_'));
+ assert.deepEqual(Array.from(events,x=>x[1]),['topic_game_click','topic_article_click']);
+ assert.equal(events[0][2].difficulty,'easy');assert.equal(events[1][2].article_slug,'which-century-is-that-year');
+ assert.ok(!JSON.stringify(events).includes('do-not-send'));
+ w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1].startsWith('topic_')).length,0);
+ w.close();
+}
+console.log('PASS topic discovery measurement: consent, approved fields, no query data, withdrawal.');

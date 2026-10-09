@@ -3092,7 +3092,7 @@ window.BrainiPerf=(function(){
 
     cloudPromise=(async()=>{
       await ensureSupabase();
-      await loadScript(new URL(`cloud.bundle.js?v=41.52.0`,jsBase).href);
+      await loadScript(new URL(`cloud.bundle.js?v=41.53.0`,jsBase).href);
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
     })();
