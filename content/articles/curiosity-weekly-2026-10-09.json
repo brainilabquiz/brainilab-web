@@ -1,163 +1,68 @@
 {
-  "slug": "curiosity-weekly-2026-10-09",
-  "title": "20 curious detours from this week’s trending searches",
-  "description": "A festival ticket with free milk, a city-sized astronomy lesson and a river with two names. A light tour through this week’s international search trends.",
-  "topic": "Curiosity",
-  "status": "published",
-  "authorId": "biel-sarda",
-  "order": 65,
-  "publishedAt": "2026-10-09T16:03:10Z",
-  "updatedAt": "2026-10-09T16:03:10Z",
-  "cover": {
-    "src": "/assets/images/learn/curiosity-weekly-20261009.webp",
-    "small": "/assets/images/learn/curiosity-weekly-20261009-small.webp",
-    "thumbnail": "/assets/images/learn/curiosity-weekly-20261009-thumb.webp",
-    "alt": "A telescope beside a window, a globe, a notebook and a tennis ball in a warm reading corner",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 50
-  },
   "hub": {
-    "url": "/general-knowledge/",
-    "name": "General Knowledge"
+    "url": "/science/",
+    "name": "Science"
   },
   "game": {
-    "url": "/general-knowledge/general-knowledge-quiz/",
-    "name": "General Knowledge Quiz"
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
   },
-  "practice": "Follow your curiosity with a round of general knowledge.",
+  "slug": "curiosity-weekly-2026-10-09",
+  "cover": {
+    "alt": "A telescope beside a window, a globe, a notebook and a tennis ball in a warm reading corner",
+    "src": "/assets/images/learn/curiosity-weekly-20261009.webp",
+    "small": "/assets/images/learn/curiosity-weekly-20261009-small.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/curiosity-weekly-20261009-thumb.webp"
+  },
+  "order": 65,
+  "title": "Why does the Sun stay up at midnight in Norway?",
+  "topic": "Curiosity",
+  "status": "published",
   "related": [
-    "curiosity-daily-2026-10-09",
-    "why-canberra-is-australias-capital"
+    "what-really-causes-seasons",
+    "why-the-moon-changes-shape"
   ],
   "sources": [
-    {
-      "name": "Google Trends — United States, seven-day capture on 9 October 2026",
-      "url": "https://trends.google.com/trending?geo=US&hours=168"
-    },
-    {
-      "name": "Google Trends — United Kingdom, seven-day capture on 9 October 2026",
-      "url": "https://trends.google.com/trending?geo=GB&hours=168"
-    },
-    {
-      "name": "Google Trends — Spain, seven-day capture on 9 October 2026",
-      "url": "https://trends.google.com/trending?geo=ES&hours=168"
-    },
-    {
-      "name": "Google Trends — India, seven-day capture on 9 October 2026",
-      "url": "https://trends.google.com/trending?geo=IN&hours=168"
-    },
-    {
-      "name": "Met Office — Reading a weather forecast",
-      "url": "https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean"
-    },
-    {
-      "name": "Met Office — Factors that influence UK winters",
-      "url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons/winter/factors-that-influence-uk-winters"
-    },
-    {
-      "name": "National Weather Service — How thunder forms",
-      "url": "https://www.weather.gov/safety/lightning-science-thunder"
-    },
-    {
-      "name": "Incredible India — Jantar Mantar, Jaipur",
-      "url": "https://www.incredibleindia.gov.in/en/rajasthan/jaipur/jantar-mantar"
-    },
-    {
-      "name": "UNESCO — Old City of Dubrovnik",
-      "url": "https://whc.unesco.org/en/list/095/"
-    },
-    {
-      "name": "Czech Ministry of Foreign Affairs — Czechia and Czech Republic",
-      "url": "https://mzv.gov.cz/jnp/en/foreign_relations/public_diplomacy/czechia_vs_czech_republic/index.html"
-    },
-    {
-      "name": "Porto-Novo municipality — About the city",
-      "url": "https://porto-novo.mairie.bj/decouverte"
-    },
     {
       "name": "Visit Norway — The midnight sun",
       "url": "https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/"
     },
     {
-      "name": "Spain’s tourism board — Ceuta",
-      "url": "https://www.spain.info/en/region/ceuta/"
+      "name": "NASA — Seasons on Earth, Mars, and beyond",
+      "url": "https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/"
     },
     {
-      "name": "Glastonbury Festival — 1970",
-      "url": "https://www.glastonburyfestivals.co.uk/history/history-1970/"
-    },
-    {
-      "name": "Smithsonian National Postal Museum — The Penny Black",
-      "url": "https://postalmuseum.si.edu/exhibition/the-queen%E2%80%99s-own-postal-reforms-that-transformed-the-mail-the-worlds-first-postage-stamps"
-    },
-    {
-      "name": "Jeffrey Archer — Book catalogue",
-      "url": "https://www.jeffreyarcher.com/wp-content/uploads/2022/10/JA_catalogue_interactive_v_8_0_min.pdf"
-    },
-    {
-      "name": "Stephen King — Carrie",
-      "url": "https://stephenking.com/works/novel/carrie.html"
-    },
-    {
-      "name": "Twitch — How to use emotes",
-      "url": "https://help.twitch.tv/s/article/how-to-use-emotes?language=en_US"
-    },
-    {
-      "name": "ATP Tour — Alcaraz’s first week at No. 1",
-      "url": "https://www.atptour.com/en/news/alcaraz-number-one-club-rise"
-    },
-    {
-      "name": "MLB — The Dodgers’ name",
-      "url": "https://www.mlb.com/dodgers/news/los-angeles-dodgers-team-name-history"
-    },
-    {
-      "name": "National Park Service — Rio Grande foundation document",
-      "url": "https://www.nps.gov/bibe/learn/management/upload/RIGR_FD_2016-508.pdf"
-    },
-    {
-      "name": "ICC — The three formats of cricket",
-      "url": "https://www.icc-cricket.com/about/cricket/game-formats/the-three-formats"
-    },
-    {
-      "name": "ICC — Women’s World Cup history",
-      "url": "https://www.icc-cricket.com/news/icc-womens-world-cup-history"
+      "name": "Met Office — Reading a weather forecast",
+      "url": "https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few more questions about the world around you.",
   "sections": [
     {
-      "id": "a-small-detour",
-      "title": "A small detour through the search box",
-      "html": "<p>Sometimes the interesting part of a search is one step beyond the answer you came for. This week’s detours take us through weather, maps, books and games—twenty chances to say “I didn’t know that”.</p><p>Selected from rising searches in the US, UK, Spain and India, using Google Trends’ rolling seven-day view captured on <strong>9 October 2026</strong>. These are curiosity picks, not a ranking of the world’s most frequent searches.</p>"
+      "id": "midnight-without-sunset",
+      "title": "Midnight, but the day is still here",
+      "html": "<p>Imagine finishing dinner in northern Norway, taking a long walk and checking your watch. It is almost midnight. The Sun is still above the horizon. You have not accidentally slept through an entire day.</p><p>During part of the summer, places north of the Arctic Circle experience the midnight sun: Earth keeps turning, but the Sun does not dip below the horizon. The clue is the angle at which our planet spins.</p>"
     },
     {
-      "id": "detour-1",
-      "title": "Start with the sky",
-      "html": "<p><strong><a href=\"https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean\">Weather tomorrow</a>.</strong> A rain percentage describes a chance, not the fraction of the day you must spend under an umbrella. The Met Office’s guide explains how to read it for a particular place and period. One small distinction makes that forecast much more useful.</p><p><strong><a href=\"https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean\">Temperature</a>.</strong> The air temperature and the “feels like” number answer different questions. Wind and humidity affect the latter. If two weather apps seem to disagree, first check that you are comparing the same kind of number.</p><p><strong><a href=\"https://weather.metoffice.gov.uk/learn-about/weather/seasons/winter/factors-that-influence-uk-winters\">El Niño and the polar vortex</a>.</strong> These are parts of a connected climate system, not a simple winter thermostat. The Met Office describes several competing influences on UK winters. A dramatic seasonal headline is not a reliable forecast for your street on a particular Tuesday.</p><p><strong><a href=\"https://www.weather.gov/safety/lightning-science-thunder\">Tormenta: the sound after the flash</a>.</strong> Thunder is not clouds bumping together. Lightning rapidly heats the air, which expands and produces the sound wave. A storm gives you a striking example of one event arriving by light before it arrives by sound.</p>"
+      "id": "a-tilted-spin",
+      "title": "A spin that never carries you into darkness",
+      "html": "<p>Earth’s axis is tilted by about 23 degrees. As the planet travels around the Sun, that tilt gives each hemisphere its turn leaning towards the sunlight. <a href=\"https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/\">NASA’s explanation of the seasons</a> connects this tilt with the changing length of our days.</p><p>In the far north during summer, the daily rotation can carry a place around in a circle that stays entirely on the sunlit side of Earth. The planet completes its turn; that place simply never crosses into the dark half.</p><p>Think of a tiny mark near the top of a tilted globe. With a lamp shining towards that end, turn the globe slowly. The mark can travel all the way round without losing the light. That is the useful picture behind the midnight sun.</p>"
     },
     {
-      "id": "detour-2",
-      "title": "Take the long way round the map",
-      "html": "<p><strong><a href=\"https://www.incredibleindia.gov.in/en/rajasthan/jaipur/jantar-mantar\">Jantar Mantar</a>.</strong> A search name can lead from today’s conversation to an eighteenth-century observatory. At Jaipur’s Jantar Mantar, large built instruments were designed to observe the sky. Some scientific equipment is big enough to walk around.</p><p><strong><a href=\"https://whc.unesco.org/en/list/095/\">Croatia vs England</a>.</strong> Put the score aside for a moment and visit Dubrovnik on a map. Its Old City is a UNESCO World Heritage site on the Adriatic coast. A football fixture can be the start of a much slower trip.</p><p><strong><a href=\"https://mzv.gov.cz/jnp/en/foreign_relations/public_diplomacy/czechia_vs_czech_republic/index.html\">England vs Czechia</a>.</strong> Czechia and the Czech Republic name the same country. One is the short form, the other the formal name. Seeing the shorter version on a scoreboard does not mean a new country has appeared.</p><p><strong><a href=\"https://porto-novo.mairie.bj/decouverte\">Argentina vs Benin</a>.</strong> A capital-city curveball: Benin’s capital is Porto-Novo. It is easy for a familiar city name to crowd out the correct answer. The municipality’s own introduction gives the capital’s identity plainly.</p>"
+      "id": "how-long-does-it-last",
+      "title": "Head farther north and the day gets longer",
+      "html": "<p>The effect lasts longer as you move towards the pole. <a href=\"https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/\">Visit Norway’s guide</a> gives Tromsø a midnight-sun season from about 20 May to 22 July. Farther north, Svalbard’s stretches roughly from 20 April to 22 August.</p><p>Those dates describe a summer phenomenon. Norway does not have midnight sunshine all year, and its southern cities do not share the far north’s round-the-clock Sun.</p><p>There is an opposite chapter too. When the northern hemisphere leans away from the Sun, places far enough north spend part of winter without a sunrise. The same tilt can produce both extremes.</p>"
     },
     {
-      "id": "detour-3",
-      "title": "Tiny pieces of cultural history",
-      "html": "<p><strong><a href=\"https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/\">Portugal vs Norway</a>.</strong> Northern Norway has a summer party trick: the midnight sun. Earth’s tilted axis can keep the Sun above the horizon through the night north of the Arctic Circle. This is a summer phenomenon, not a description of Norway in October.</p><p><strong><a href=\"https://www.spain.info/en/region/ceuta/\">Ceuta</a>.</strong> Look beyond the mainland outline when thinking about Spain. Ceuta’s coast sits where Atlantic and Mediterranean waters meet. Spain’s tourism board also points visitors towards its Royal Walls: geography and history in one small stop.</p><p><strong><a href=\"https://www.glastonburyfestivals.co.uk/history/history-1970/\">Glastonbury Festival tickets</a>.</strong> The first festival, in 1970, charged £1 and included free milk from the farm. That detail is more memorable than a long list of headliners. Festival history sometimes begins with a very practical perk.</p><p><strong><a href=\"https://postalmuseum.si.edu/exhibition/the-queen%E2%80%99s-own-postal-reforms-that-transformed-the-mail-the-worlds-first-postage-stamps\">Royal Mail</a>.</strong> The Penny Black became valid for postage on 6 May 1840. The Smithsonian keeps an example deliberately posted the day before. Even a tiny rectangle of paper can have an early adopter.</p>"
-    },
-    {
-      "id": "detour-4",
-      "title": "A book, a chat and a sporting milestone",
-      "html": "<p><strong><a href=\"https://www.jeffreyarcher.com/wp-content/uploads/2022/10/JA_catalogue_interactive_v_8_0_min.pdf\">Jeffrey Archer</a>.</strong> <em>Kane and Abel</em> first appeared in 1979. A title can stay recognisable for decades while its readers keep changing. If the name rings a bell, check the book rather than assuming you have already read it.</p><p><strong><a href=\"https://stephenking.com/works/novel/carrie.html\">Carrie TV show</a>.</strong> The screen search leads back to a book: Stephen King’s <em>Carrie</em> was published on 5 April 1974. Whatever version brings you to a story, its original publication date can be a surprise.</p><p><strong><a href=\"https://help.twitch.tv/s/article/how-to-use-emotes?language=en_US\">Twitch</a>.</strong> The tiny pictures filling a Twitch chat are emotes. Twitch distinguishes global emotes from channel-specific ones. A chat can look like a secret language until you learn that some of its vocabulary belongs to a particular community.</p><p><strong><a href=\"https://www.atptour.com/en/news/alcaraz-number-one-club-rise\">Carlos Alcaraz</a>.</strong> Alcaraz first reached No. 1 in the ATP rankings in September 2022, aged nineteen—the youngest player to do so. Keep the achievement and its date together: a historical milestone is different from a live ranking.</p>"
-    },
-    {
-      "id": "detour-5",
-      "title": "The stories hiding behind a fixture",
-      "html": "<p><strong><a href=\"https://www.mlb.com/dodgers/news/los-angeles-dodgers-team-name-history\">Braves vs Dodgers</a>.</strong> The Dodgers’ name reaches back to Brooklyn’s “Trolley Dodgers”. A modern team name can carry a trace of an earlier home.</p><p><strong><a href=\"https://www.nps.gov/bibe/learn/management/upload/RIGR_FD_2016-508.pdf\">USA vs Mexico</a>.</strong> One river, two familiar names: Rio Grande and Río Bravo del Norte. It forms part of the US–Mexico border. Names on opposite sides of a map can describe the same stretch of water.</p><p><strong><a href=\"https://www.icc-cricket.com/about/cricket/game-formats/the-three-formats\">India vs Pakistan</a>.</strong> Before comparing cricket scores, check the format. Twenty20 uses up to twenty overs per side; a standard One-Day International uses fifty. A number that looks modest in one format can mean something quite different in another.</p><p><strong><a href=\"https://www.icc-cricket.com/news/icc-womens-world-cup-history\">Bangladesh vs Australia</a>.</strong> The first Women’s Cricket World Cup took place in 1973, two years before the first men’s event. That reverses an easy assumption about sporting history. England’s women were the first winners.</p>"
-    },
-    {
-      "id": "one-more-question",
-      "title": "Which detail will stick?",
-      "html": "<p>Pick one thing you did not know and tell it to someone in a sentence. Or try the <a href=\"/general-knowledge/general-knowledge-quiz/\">General Knowledge Quiz</a> and see where your curiosity takes you next.</p>"
+      "id": "daylight-isnt-a-weather-forecast",
+      "title": "A bright night can still be chilly",
+      "html": "<p>Before packing for a midnight walk, check the weather tomorrow as well as the daylight hours. The Sun being above the horizon does not guarantee a clear sky or a warm evening.</p><p>Temperature and daylight tell you different things. And the forecast’s “feels like” temperature also takes factors such as wind and humidity into account, as the <a href=\"https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean\">Met Office explains</a>. A bright sky is not a substitute for a jacket.</p><p>Perhaps that is what makes the midnight sun so strange: the clock says one thing, the light suggests another, and both are right. If that tilted globe has you curious, take a closer look at <a href=\"/learn/what-really-causes-seasons/\">what causes the seasons</a>.</p>"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-09T16:34:33.051771Z",
+  "description": "Imagine checking the clock at midnight and finding the Sun still above the sea. A small tilt of our planet makes this northern summer surprise possible.",
+  "publishedAt": "2026-10-09T16:03:10Z"
 }
