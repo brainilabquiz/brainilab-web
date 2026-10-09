@@ -9,6 +9,11 @@ window.BrainiMobileUI=(function(){
   }
 
   function bootNav(){
+    if(!document.querySelector('[data-news-nav-style]')){
+      const style=document.createElement('style');style.dataset.newsNavStyle='';
+      style.textContent='.topbar .links .news-nav-link{color:#ae201b!important;border:1px solid #e52720!important;border-radius:999px;padding:7px 11px;white-space:nowrap;animation:news-nav-aura 4s ease-in-out infinite}@keyframes news-nav-aura{0%,100%{box-shadow:0 0 0 2px #e5272008}50%{box-shadow:0 0 0 4px #e5272018}}@media(prefers-reduced-motion:reduce){.topbar .links .news-nav-link{animation:none}}';
+      document.head.append(style);
+    }
     document.querySelectorAll('.topbar .nav').forEach(shell=>{
       const nav=shell.querySelector('.links');
       const button=shell.querySelector('[data-mobile-menu]');
