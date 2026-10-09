@@ -1,0 +1,18 @@
+.breaking-news{margin-block:28px}
+.breaking-news__card{background:#fff;border:1px solid #e52720;border-radius:20px;padding:24px;box-shadow:0 0 0 4px #e5272008;animation:news-aura 4s ease-in-out infinite}
+.breaking-news__header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}
+.breaking-news__label{font-size:12px;font-weight:800;color:#ae201b;text-transform:uppercase;letter-spacing:.08em}
+.breaking-news h2{margin:5px 0 0;color:#2d296e;font-size:clamp(24px,3vw,32px)}
+.breaking-news__header p{font-size:13px;line-height:1.6;margin:0;color:#56536b}
+.breaking-news__list{list-style:none;counter-reset:news;margin:0;padding:0}
+.breaking-news__list li{counter-increment:news;display:grid;grid-template-columns:26px 1fr auto;gap:16px;align-items:start;padding:16px 0;border-top:1px solid #efe9ea}
+.breaking-news__list li::before{content:counter(news,decimal-leading-zero);color:#b42720;font-size:13px;font-weight:800;padding-top:3px}
+.breaking-news h3{font-size:17px;line-height:1.35;color:#2d296e;margin:0 0 6px}
+.breaking-news__list p{font-size:14px;line-height:1.65;margin:0;color:#48455e;max-width:78ch}
+.breaking-news__list a{font-size:13px;font-weight:700;color:#a8241d;min-height:44px;display:inline-flex;align-items:center;gap:5px;text-decoration:underline;text-underline-offset:4px}
+.breaking-news a:focus-visible{outline:3px solid #2d296e;outline-offset:4px;border-radius:4px}
+.breaking-news__note{font-size:12px;color:#696578;margin:8px 0 0}
+.breaking-news__sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes news-aura{0%,100%{box-shadow:0 0 0 4px #e5272008,0 0 12px #e5272008}50%{box-shadow:0 0 0 6px #e5272010,0 0 24px #e5272016}}
+@media(max-width:640px){.breaking-news__card{padding:20px 16px}.breaking-news__header{display:block}.breaking-news__header p{margin-top:10px}.breaking-news__list li{grid-template-columns:22px 1fr;gap:10px}.breaking-news__list a{grid-column:2;justify-self:start}.breaking-news h3{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.breaking-news__card{animation:none}}

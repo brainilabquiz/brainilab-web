@@ -1,4 +1,7 @@
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
+import {renderNews} from './lib/breaking-news.js';
+import {newsEdition} from './lib/news-refresh.js';
+export {BreakingNewsStore} from './lib/news-refresh.js';
 import {VIDEO_GAMES,relatedVideo,cleanVideo} from './lib/video-card.js';
 import {adminVideoInfo} from './lib/video-admin.js';
 import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './lib/youtube-playlist.js';
@@ -55,6 +58,11 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
   }
 }
 export default {
+  async scheduled(event,env,ctx){
+    if(!env.BREAKING_NEWS)return;
+    const store=env.BREAKING_NEWS.get(env.BREAKING_NEWS.idFromName('world-news-v1'));
+    ctx.waitUntil(store.fetch('https://news.internal/refresh',{method:'POST'}));
+  },
   async fetch(request,env,ctx){
     const url=new URL(request.url);
     // Consolidate production entry points before rendering or caching HTML.
@@ -68,7 +76,12 @@ export default {
       if(canonical.href!==url.href)return Response.redirect(canonical.href,308);
     }
     if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/about/','/about/index.html','/profile/','/profile/index.html'].includes(url.pathname)){
-      const response=await serveLearn(request,env,ctx,caches.default);
+      let response=await serveLearn(request,env,ctx,caches.default);
+      if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
+        const html=await response.text(),news=url.hostname==='brainilabgames.com'?renderNews(await newsEdition(env)):'';
+        const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
+        response=new Response(html.replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
+      }
       const secured=new Response(response.body,response);
       secured.headers.set('X-Content-Type-Options','nosniff');
       secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
