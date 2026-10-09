@@ -2,10 +2,12 @@
 import json
 from acquisition import validate as validate_acquisition
 from content_measurement import attach_content
+from search_performance import attach_search
 from datetime import date, datetime
 
 
 def attach_measurement(report, private):
+    report = attach_search(report, private)
     report = attach_content(report, private)
     path = private / 'measurement-latest.json'
     if not path.exists():
