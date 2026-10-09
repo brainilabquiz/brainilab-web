@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/spotting-repeating-patterns-thumb.webp"
   },
   "order": 52,
-  "title": "Find the repeat before guessing the next shape",
+  "title": "Repeating patterns: find the smallest unit",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -63,8 +63,8 @@
   ],
   "sources": [
     {
-      "url": "https://www.mathsisfun.com/numberpatterns.html",
-      "name": "Math is Fun — Number Patterns"
+      "url": "https://www.ncetm.org.uk/classroom-resources/ey-pattern/",
+      "name": "NCETM — Pattern: identifying the unit of repeat"
     }
   ],
   "authorId": "biel-sarda",
@@ -72,26 +72,26 @@
   "sections": [
     {
       "id": "a-rhythm-you-can-point-to",
-      "html": "<p>Lay out a round button, a square tile and another round button. Repeat the same three objects: round, square, round; round, square, round. The unit has three positions, even though two contain the same shape.</p><p>A <strong>repeating pattern</strong> uses a unit again and again. Finding the whole unit is more reliable than looking only at the last pair. Two rounds can meet where one unit ends and another begins.</p>",
-      "title": "A rhythm you can point to"
+      "title": "What is the unit of repeat?",
+      "html": "<p><strong>The unit of repeat is the smallest block that can be repeated to make the whole pattern.</strong> In circle, square, circle, square… it is circle–square. Four shapes would work too, but they would not be the smallest block.</p><p>Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the entire scarf.</p>"
     },
     {
       "id": "explore",
-      "html": "<p>Write circle, square, circle; circle, square, circle. Cover the final shape with your hand and predict it. Then underline each complete three-position unit.</p><p>Point to the start of each repeated unit. If your proposed unit does not account for every object in your written pattern, revise it. A good explanation covers the whole example, not just the answer you want to pick.</p>",
-      "title": "Try it yourself"
+      "title": "Find the minimum period",
+      "html": "<p>The <strong>period</strong> is the number of positions before the pattern repeats. For ABABAB, the minimum period is 2: A alone fails, but AB works all the way along.</p><p>Now try AABAABAAB. A fails. AA fails at the third position. AAB works: the minimum period is <strong>3</strong>, even though there are only two different letters.</p><p>Start with a short candidate block, repeat it and compare every position. If one position disagrees, that block does not describe the full example. The <a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\">NCETM guide to patterns</a> explains why finding the smallest unit matters more than naming every item.</p>"
     },
     {
       "id": "separate-a-repeat-from-growth",
-      "html": "<p>Round, square, round, square repeats. A pile of one counter, then two, then three grows. Both have structure, but “repeat the same unit” explains only the first.</p><p>When a puzzle states that a repeating rule is being used, that is useful information. Without a stated rule, a short list can often be continued in several ways. In this course, activities tell you which sort of rule to examine.</p>",
-      "title": "Separate a repeat from growth"
+      "title": "Two circles in a row are not always a mistake",
+      "html": "<p>Try the unit circle–square–circle. Repeat it and you get circle–square–circle | circle–square–circle. Two circles meet at the join. Looking only at that pair could send you down the wrong path.</p><p>A short sequence can also fit several rules. These examples explicitly ask for a repeating rule; they are not proof that any short list has only one possible continuation.</p>"
     },
     {
       "id": "make-the-explanation-part-of-the-answer",
-      "html": "<p>Instead of saying only “square”, say “the two-item unit is round then square, and the next position is the square”. That makes your reasoning easy to check.</p><p>If you get a question wrong, compare your proposed rule with the earlier items. The next lesson applies the same habit to number sequences: identify a rule and test every step.</p>",
-      "title": "Make the explanation part of the answer"
+      "title": "What comes after ABBABBAB?",
+      "html": "<p><strong>B</strong>, if the rule is to repeat ABB. Group it as ABB | ABB | AB: the final group is missing its last B. The visible sequence does not need to end at a complete block.</p><p>A pattern that grows, such as 2, 4, 6, 8, needs a different explanation. Next, try <a href=\"/learn/number-patterns-check-every-step/\">checking every step in a number pattern</a>, or put your eye for patterns to work in the <a href=\"/reasoning/\">Reasoning Challenge</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Look for a complete repeating unit, check it against every item, and avoid guessing from just the last two shapes.",
+  "updatedAt": "2026-10-09T15:05:10Z",
+  "description": "Find the shortest part that repeats in a pattern. Simple examples explain the unit of repeat, the minimum period and how to check what comes next.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
