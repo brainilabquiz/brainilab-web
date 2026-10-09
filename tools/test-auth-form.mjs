@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const dom=new JSDOM('<button id="entry">Join</button>',{url:'https://brainilabgames.com/',runScripts:'outside-only'}),w=dom.window,d=w.document;
+const player={currentStreak:0,totalGames:0,totalQuestions:0};
+let calls=0,finish;
+w.BrainiData={player:()=>player,api:{track(){},getAuthState:async()=>({status:'guest'}),getPlayer:async()=>player}};
+w.BrainiIcons={product:()=>''};
+w.BrainiBackendAuth={init:async()=>{},isConfigured:()=>true,signUpWithEmail:()=>{calls++;return new Promise(resolve=>{finish=resolve;});}};
+w.eval(readFileSync('assets/js/auth.js','utf8'));
+await new Promise(resolve=>setTimeout(resolve,0));
+const open=()=>w.BrainiAuth.open({mode:'signup'});
+const el=id=>d.getElementById('brainilabAuth'+id);
+open();assert.equal(d.querySelector('.auth-keep'),null,'new visitors do not see three empty statistics');
+el('Email').value='reader@example.test';el('Password').value='not-persisted';
+d.querySelector('[data-email-mode="signin"]').click();
+assert.equal(el('Email').value,'reader@example.test');assert.equal(el('Password').value,'');
+assert.equal(d.activeElement.dataset.emailMode,'signin');
+assert.equal(d.activeElement.getAttribute('aria-pressed'),'true');
+d.querySelector('[data-email-mode="signup"]').click();
+const reveal=d.querySelector('[data-show-password]');reveal.click();
+assert.equal(el('Password').type,'text');assert.equal(reveal.getAttribute('aria-label'),'Hide password');
+reveal.click();assert.equal(el('Password').type,'password');
+const form=d.querySelector('form');
+el('Password').value='password123';el('PasswordConfirm').value='different';
+await form.onsubmit({preventDefault(){},currentTarget:form});
+assert.match(d.querySelector('[role="alert"]').textContent,/match/);assert.equal(calls,0);
+assert.equal(form.getAttribute('aria-busy'),'false');
+el('PasswordConfirm').value='password123';
+const pending=form.onsubmit({preventDefault(){},currentTarget:form});
+await Promise.resolve();
+await form.onsubmit({preventDefault(){},currentTarget:form});
+assert.equal(calls,1,'one request while pending');assert.equal(form.getAttribute('aria-busy'),'true');
+assert.equal(d.querySelector('[data-email-mode]').disabled,true);
+finish({session:null});await pending;
+assert.match(d.querySelector('#authTitle').textContent,/Check your email/);
+d.querySelector('[data-back-options]').click();
+assert.equal(d.querySelector('[type="submit"]').disabled,false);
+// A closed/reopened modal must not be replaced by an older request response.
+open();el('Email').value='reader@example.test';el('Password').value=el('PasswordConfirm').value='password123';
+const old=d.querySelector('form'),late=old.onsubmit({preventDefault(){},currentTarget:old});await Promise.resolve();
+w.BrainiAuth.close();open();assert.equal(d.querySelector('[type="submit"]').disabled,true);
+finish({session:null});await late;
+assert.equal(d.querySelector('#authTitle').textContent,'Save your progress');assert.equal(d.querySelector('[type="submit"]').disabled,false);
+player.totalGames=2;open();assert.ok(d.querySelector('.auth-keep'));
+dom.window.close();
+for(const topic of ['general-knowledge','history','sports']){
+ const doc=new JSDOM(readFileSync(`${topic}/index.html`,'utf8')).window.document;
+ assert.equal(doc.querySelectorAll('h1').length,1);
+ assert.equal(doc.querySelectorAll('.topic-level').length,3);
+ assert.equal(doc.querySelectorAll('.topic-reading a').length,2);
+ for(const a of doc.querySelectorAll('.topic-discovery a')){
+  const url=new URL(a.getAttribute('href'),'https://brainilabgames.com');
+  assert.ok(existsSync('.'+url.pathname+'index.html'),a.href);
+ }
+ for(const img of doc.querySelectorAll('.topic-discovery img'))assert.ok(existsSync('.'+img.getAttribute('src')),img.src);
+ assert.doesNotMatch(doc.querySelector('main').textContent,/protected media|finite set|endless question stream/i);
+}
+console.log('PASS auth UX: email retained, passwords cleared between modes, reveal controls, validation, duplicate protection, pending state, stale response, genuine progress; three landing pages and all links/assets.');

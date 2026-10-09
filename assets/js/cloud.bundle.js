@@ -1601,6 +1601,17 @@ window.BrainiAuth = (function(){
   let emailMode="signup";
   let postAuthTarget=null;
   let returnFocus=null;
+  let submissionPending=false;
+
+  function pendingForm(pending){
+    submissionPending=pending;
+    const form=modal?.querySelector('[data-email-form]');
+    if(!form)return;
+    form.setAttribute('aria-busy',String(pending));
+    modal.querySelectorAll('[data-email-form] input,[data-email-form] button,[data-email-mode],[data-provider]').forEach(el=>{el.disabled=pending;});
+    const submit=form.querySelector('[type="submit"]');
+    if(submit)submit.textContent=pending?'Please wait…':emailMode==='signup'?'Create account':'Sign in';
+  }
 
   function toast(msg){
     if(typeof window.showToast==="function"){ window.showToast(msg); return; }
@@ -1673,16 +1684,16 @@ window.BrainiAuth = (function(){
     const stats=statsSummary();
     const signup=emailMode==="signup";
     return `
-      <div class="auth-brandmark">B</div>
+      <img class="auth-brandmark" src="/assets/brand/iso-multicolor.png" alt="" width="52" height="52">
       <div class="auth-kicker">Free BrainiLab account</div>
       <h2 id="authTitle">Save your progress</h2>
       <p class="auth-lead">Your games and Academy progress, together in one free account.</p>
 
-      <div class="auth-keep">
+      ${BrainiData.player().totalGames>0?`<div class="auth-keep">
         <div><strong>${stats[0]}</strong><span>kept on device</span></div>
         <div><strong>${stats[1]}</strong><span>kept on device</span></div>
         <div><strong>${stats[2]}</strong><span>kept on device</span></div>
-      </div>
+      </div>`:''}
 
       <div class="auth-provider-list">
         <button type="button" class="auth-provider auth-google" data-provider="google">
@@ -1692,30 +1703,30 @@ window.BrainiAuth = (function(){
 
       <div class="auth-divider"><span>or</span></div>
 
-      <div class="auth-email-tabs" role="tablist" aria-label="Email account">
-        <button type="button" class="${signup?"active":""}" data-email-mode="signup">Create account</button>
-        <button type="button" class="${!signup?"active":""}" data-email-mode="signin">Sign in</button>
+      <div class="auth-email-tabs" role="group" aria-label="Email account">
+        <button type="button" aria-pressed="${signup}" class="${signup?"active":""}" data-email-mode="signup">Create account</button>
+        <button type="button" aria-pressed="${!signup}" class="${!signup?"active":""}" data-email-mode="signin">Sign in</button>
       </div>
 
       <form class="auth-email-form" data-email-form>
         <label for="brainilabAuthEmail">Email</label>
-        <input class="auth-full-input" id="brainilabAuthEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <input class="auth-full-input" id="brainilabAuthEmail" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="you@example.com" required>
 
         <label for="brainilabAuthPassword">Password</label>
-        <input class="auth-full-input" id="brainilabAuthPassword" type="password" autocomplete="${signup?"new-password":"current-password"}" minlength="8" placeholder="At least 8 characters" required>
+        <div class="auth-password-field"><input class="auth-full-input" id="brainilabAuthPassword" type="password" autocomplete="${signup?"new-password":"current-password"}" minlength="8" placeholder="At least 8 characters" required><button type="button" data-show-password aria-controls="brainilabAuthPassword" aria-pressed="false" aria-label="Show password">Show</button></div>
 
         ${signup?`
           <label for="brainilabAuthPasswordConfirm">Confirm password</label>
-          <input class="auth-full-input" id="brainilabAuthPasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repeat your password" required>
+        <div class="auth-password-field"><input class="auth-full-input" id="brainilabAuthPasswordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repeat your password" required><button type="button" data-show-password aria-controls="brainilabAuthPasswordConfirm" aria-pressed="false" aria-label="Show confirmation password">Show</button></div>
         `:""}
 
         <button class="auth-primary auth-email-submit" type="submit">${signup?"Create account":"Sign in"}</button>
         ${!signup?`<button type="button" class="auth-forgot" data-forgot-password>Forgot password?</button>`:""}
-        <div class="auth-error" data-auth-error></div>
+        <div class="auth-error" data-auth-error role="alert"></div>
       </form>
 
       <button type="button" class="auth-not-now" data-auth-not-now>Not now</button>
-      <p class="auth-prototype-note">Completed guest games appear in rankings under a generated alias. Sign in to keep your progress across devices.</p>
+      <p class="auth-prototype-note">Free to join. You can also keep playing as a guest.</p>
     `;
   }
 
@@ -1767,35 +1778,53 @@ window.BrainiAuth = (function(){
 
       view.querySelectorAll("[data-email-mode]").forEach(btn=>{
         btn.onclick=()=>{
+          const email=view.querySelector('#brainilabAuthEmail').value;
           emailMode=btn.dataset.emailMode;
           render();
+          view.querySelector('#brainilabAuthEmail').value=email;
+          view.querySelector(`[data-email-mode="${emailMode}"]`).focus();
         };
       });
+      view.querySelectorAll('[data-show-password]').forEach(button=>{
+        button.onclick=()=>{
+          const input=view.querySelector('#'+button.getAttribute('aria-controls'));
+          const show=input.type==='password';
+          input.type=show?'text':'password';
+          button.textContent=show?'Hide':'Show';
+          button.setAttribute('aria-pressed',String(show));
+          button.setAttribute('aria-label',`${show?'Hide':'Show'} ${input.id.endsWith('Confirm')?'confirmation password':'password'}`);
+        };
+      });
+      pendingForm(submissionPending);
 
       view.querySelector("[data-auth-not-now]").onclick=close;
 
       view.querySelector("[data-email-form]").onsubmit=async e=>{
         e.preventDefault();
+        if(submissionPending)return;
+        const form=e.currentTarget,mode=emailMode;
         const email=view.querySelector("#brainilabAuthEmail").value.trim();
         const password=view.querySelector("#brainilabAuthPassword").value;
         const error=view.querySelector("[data-auth-error]");
         error.textContent="";
+        pendingForm(true);
 
         try{
           if(password.length<8) throw new Error("Use a password with at least 8 characters.");
 
-          const backend=await requireBackend();
-
-          if(emailMode==="signup"){
+          if(mode==="signup"){
             const confirm=view.querySelector("#brainilabAuthPasswordConfirm")?.value||"";
             if(password!==confirm) throw new Error("Passwords do not match.");
-
+          }
+          const backend=await requireBackend();
+          if(mode==="signup"){
             window.BrainiGrowthConversions?.prepare();
             const data=await backend.signUpWithEmail(email,password);
             void window.BrainiGrowthConversions?.flush();
             // A confirmation email request is not a completed account registration.
             window.BrainiSiteAnalytics?.registrationRequest('email');
             pendingEmail=email;
+            if(!form.isConnected)return;
 
             if(data?.session){
               currentStep="success";
@@ -1808,6 +1837,7 @@ window.BrainiAuth = (function(){
             }
           }else{
             await backend.signInWithEmail(email,password);
+            if(!form.isConnected)return;
             currentStep="success";
             render();
             hydrateHeader();
@@ -1816,6 +1846,8 @@ window.BrainiAuth = (function(){
           }
         }catch(err){
           error.textContent=err.message||"Could not continue.";
+        }finally{
+          pendingForm(false);
         }
       };
 

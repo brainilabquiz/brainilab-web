@@ -1,0 +1,40 @@
+/* Compact entry pages: games first, optional reading below. */
+.topic-discovery{padding-bottom:32px}
+.topic-intro{display:flex;align-items:center;gap:24px;padding-block:24px}
+.topic-intro>img{flex:none;width:80px;height:80px}
+.topic-intro h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 12px}
+.topic-intro p{margin:8px 0;line-height:1.6}
+.topic-discovery .topic-note{font-size:14px;color:var(--muted);line-height:1.6}
+.topic-discovery h2{font-size:24px;line-height:1.3;margin:0 0 20px}
+.topic-start{padding-block:16px 24px}
+.topic-levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.topic-level{display:flex;flex-direction:column;padding:24px;border:1px solid var(--line);border-top:4px solid var(--green);border-radius:16px;background:var(--card);color:var(--ink)}
+.topic-level-medium{border-top-color:var(--yellow)}
+.topic-level-hard{border-top-color:var(--navy)}
+.topic-level-label{font-size:14px;font-weight:800;color:var(--navy)}
+.topic-level h3{font-size:21px;line-height:1.35;margin:12px 0}
+.topic-level p{font-size:16px;line-height:1.6;color:var(--muted);margin:0 0 20px}
+.topic-play{display:flex;justify-content:space-between;gap:12px;margin-top:auto;font-size:16px;font-weight:800;color:var(--navy);min-height:32px;align-items:center}
+.topic-level:hover .topic-play,.topic-reading a:hover strong{text-decoration:underline;text-underline-offset:4px}
+.topic-discovery a:focus-visible,.topic-discovery summary:focus-visible{outline:3px solid var(--navy);outline-offset:4px}
+.topic-explore{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding-block:24px 32px;border-top:1px solid var(--line)}
+.topic-explore p{line-height:1.7;margin:0 0 12px;max-width:55ch}
+.topic-more,.topic-note a{font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.topic-more{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+.topic-reading{display:grid;gap:12px;align-content:start}
+.topic-reading a{display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.topic-reading img{width:80px;height:64px;object-fit:cover;border-radius:8px}
+.topic-reading strong{font-size:17px;line-height:1.45}
+.topic-faq details{border-top:1px solid var(--line)}
+.topic-faq summary{padding-block:16px;cursor:pointer;font-size:16px;font-weight:700}
+.topic-faq p{max-width:70ch;line-height:1.7;margin:0 0 20px}
+@media(max-width:700px){
+ .topic-intro{gap:16px;align-items:flex-start;padding-top:16px}
+ .topic-intro>img{width:48px;height:48px}
+ .topic-levels,.topic-explore{grid-template-columns:1fr}
+ .topic-level{padding:20px}
+ .topic-level h3{margin:8px 0}
+ .topic-level p{margin-bottom:12px}
+ .topic-explore{gap:20px}
+ .topic-reading strong{font-size:16px}
+}

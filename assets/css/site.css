@@ -1526,6 +1526,13 @@ button{cursor:pointer}
 .auth-email-submit{
   margin-top:3px
 }
+.auth-password-field{position:relative;min-width:0}
+.auth-password-field .auth-full-input{padding-right:76px}
+.auth-password-field button{position:absolute;right:4px;top:2px;min-width:64px;min-height:42px;padding:8px;border:0;border-radius:10px;background:transparent;color:var(--navy);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.auth-password-field button:focus-visible,.auth-email-tabs button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.auth-dialog [aria-busy="true"] button,.auth-dialog button:disabled{cursor:wait;opacity:.65}
+.auth-dialog .auth-email-tabs button{font-size:14px;min-height:44px}
+.auth-dialog .auth-prototype-note{font-size:13px;line-height:1.6}
 .auth-forgot{
   justify-self:center;
   margin-top:10px;
