@@ -74,6 +74,10 @@
     {
       "url": "https://www.merriam-webster.com/dictionary/fast",
       "name": "Merriam-Webster — Fast"
+    },
+    {
+      "name": "Merriam-Webster — Homophone",
+      "url": "https://www.merriam-webster.com/dictionary/homophone"
     }
   ],
   "authorId": "biel-sarda",
@@ -81,18 +85,23 @@
   "sections": [
     {
       "id": "two-jobs",
-      "html": "<p>Dust the shelf. Dust the biscuits with sugar. In the first job, you are removing tiny particles. In the second, you are adding them.</p><p>English has a name for words with opposing meanings: <strong>contronyms</strong>. You may also see them called <em>Janus words</em>. The surprising part is that we can often understand them without noticing the contradiction. The rest of the sentence does the work.</p>",
+      "html": "<p><strong>A contronym is a word with two meanings that point in opposite directions.</strong> <em>Dust</em> is one: you can remove dust from a shelf or add a dusting of sugar to a biscuit.</p><p>These words are also called <em>Janus words</em>. <a href=\"https://www.merriam-webster.com/wordplay/words-own-opposites\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster explains the idea</a> with examples. Usually, the rest of the sentence tells you which meaning fits.</p>",
       "title": "One instruction, two very different jobs"
     },
     {
       "id": "dust",
-      "html": "<p>Merriam-Webster records both senses of the verb <em>dust</em>: clearing dust away and sprinkling a surface with fine particles.</p><p>Compare these two instructions:</p><ul><li><strong>Dust the model spaceship before putting it on display.</strong> You want a cleaner spaceship.</li><li><strong>Dust the dough with flour before rolling it.</strong> You want a light coating.</li></ul><p>The word has not changed. Its object and the surrounding instructions tell you which action makes sense. If someone just said “dust it” and pointed towards a crowded kitchen counter, you might reasonably ask what they meant.</p>",
+      "html": "<p><a href=\"https://www.merriam-webster.com/dictionary/dust\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster records both senses of the verb <em>dust</em></a>: clearing dust away and sprinkling a surface with fine particles.</p><p>Compare these two instructions:</p><ul><li><strong>Dust the model spaceship before putting it on display.</strong> You want a cleaner spaceship.</li><li><strong>Dust the dough with flour before rolling it.</strong> You want a light coating.</li></ul><p>The word has not changed. Its object and the surrounding instructions tell you which action makes sense. If someone just said “dust it” and pointed towards a crowded kitchen counter, you might reasonably ask what they meant.</p>",
       "title": "Dust: put it on or take it off?"
     },
     {
       "id": "fast",
-      "html": "<p>A fast cyclist moves quickly. A wheel stuck fast cannot move at all. The dictionary includes both rapid movement and being firmly fixed among the meanings of <em>fast</em>.</p><p>That does not mean every use is interchangeable. You would not normally call a stuck wheel “a fast wheel” and expect someone to understand that it cannot turn. Familiar phrases matter as much as the individual word.</p><p>Nor is every word with two meanings a contronym. A <em>bat</em> can be an animal or sporting equipment, but those meanings are different rather than opposite.</p>",
+      "html": "<p>A fast cyclist moves quickly. A wheel stuck fast cannot move at all. The dictionary includes both rapid movement and being firmly fixed among the <a href=\"https://www.merriam-webster.com/dictionary/fast\" target=\"_blank\" rel=\"noopener noreferrer\">meanings of <em>fast</em></a>.</p><p>That does not mean every use is interchangeable. You would not normally call a stuck wheel “a fast wheel” and expect someone to understand that it cannot turn. Familiar phrases matter as much as the individual word.</p><p>Nor is every word with two meanings a contronym. A <em>bat</em> can be an animal or sporting equipment, but those meanings are different rather than opposite.</p>",
       "title": "Fast can move—or stay firmly put"
+    },
+    {
+      "id": "sound-or-meaning",
+      "title": "Is that the same as a homophone?",
+      "html": "<p>No. A contronym is about opposing meanings of one word. <strong>Homophones are about sound</strong>: <em>flour</em> and <em>flower</em> sound alike but mean different things. Their meanings do not have to be opposites.</p><p>If those two labels are getting tangled, try the <a href=\"/learn/homophones-same-sound-different-meaning/\" target=\"_blank\" rel=\"noopener noreferrer\">flour-or-flower examples</a> first. Then come back to <em>dust</em> and ask whether the sentence means putting something on or taking it off.</p>"
     },
     {
       "id": "try-it",
@@ -100,7 +109,7 @@
       "title": "Can you spot the direction?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T12:24:07.530Z",
   "description": "Dust can mean adding something or taking it away. Meet contronyms, the words that pull in two directions, and try a few examples.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }
