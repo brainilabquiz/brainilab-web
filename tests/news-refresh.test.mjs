@@ -17,3 +17,21 @@ test('failed calls reserve budget and do not erase prior news or retry',async()=
 test('budget exhaustion blocks calls before transmission',async()=>{const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'}),month=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit'}).format(new Date(now));s.data.set('budget:'+month,{cents:MONTHLY_CENTS-RESERVATION_CENTS+1,calls:64});let called=false;await store.refresh(now,async()=>{called=true;});assert.equal(called,false);});
 test('new slots allowed and missing keys never charge budget',async()=>{const s=state(),store=new BreakingNewsStore(s,{});await store.refresh(now);assert.equal(s.data.has('last-slot'),false);store.env.OPENAI_API_KEY='test';await store.refresh(now,async()=>Response.json(result([story])));await store.refresh(now+REFRESH_MS,async()=>Response.json(result([story])));const ledgers=[...s.data.keys()].filter(k=>k.startsWith('budget:'));assert.equal(s.data.get(ledgers[0]).calls,2);});
 test('public edition strips audit, ledger and credential data',async()=>{const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});await store.refresh(now,async()=>Response.json(result([story])));const reply=await(await store.fetch(new Request('https://news.internal/edition'))).json();assert.equal(reply.stories.length,1);assert.equal(reply.stories[0].evidence,undefined);assert.equal(reply.usage,undefined);assert.equal(reply.OPENAI_API_KEY,undefined);});
+
+test('runtime key arrival schedules exactly one recovery without changing reservations',async()=>{
+  const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});
+  s.data.set('bootstrapped',true);s.data.set('status',{code:'missing-key'});
+  s.data.set('last-slot',42);s.data.set('budget:existing',{cents:28,calls:2});
+  let alarms=0;s.storage.setAlarm=async()=>{alarms++;};
+  await Promise.all(Array.from({length:5},()=>store.fetch(new Request('https://news.internal/edition'))));
+  assert.equal(alarms,1);assert.equal(s.data.get('last-slot'),42);
+  assert.deepEqual(s.data.get('budget:existing'),{cents:28,calls:2});
+});
+test('edition reads do not retry missing credentials or paid failures',async()=>{
+  for(const code of ['missing-key','api-quota','invalid-key','refresh-failed']) {
+    const s=state(),store=new BreakingNewsStore(s,code==='missing-key'?{}:{OPENAI_API_KEY:'test'});
+    s.data.set('bootstrapped',true);s.data.set('status',{code});
+    let alarms=0;s.storage.setAlarm=async()=>{alarms++;};
+    await store.fetch(new Request('https://news.internal/edition'));assert.equal(alarms,0);
+  }
+});
