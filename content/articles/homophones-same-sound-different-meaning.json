@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/homophones-same-sound-different-meaning-thumb.webp"
   },
   "order": 80,
-  "title": "What are homophones? Flour, flower and other sound-alikes",
+  "title": "What are homophones? Words that sound the same",
   "topic": "Words & puzzles",
   "status": "published",
   "related": [
@@ -101,7 +101,7 @@
   "sections": [
     {
       "id": "same-sound",
-      "html": "<p><strong>Homophones are words that sound the same but have different meanings.</strong> <em>Flour</em> is a baking ingredient; a <em>flower</em> has petals. Same sound, very different shopping lists.</p><p>Turn up with flour when someone wanted a flower and you have the beginning of a cake, but a rather disappointing bouquet.</p><p>The <a href=\"https://www.merriam-webster.com/dictionary/flour\">flour</a> and <a href=\"https://www.merriam-webster.com/dictionary/flower\">flower</a> dictionary entries give the same pronunciation. Other pairs include <strong>knight/night</strong> and <strong>two/too</strong>.</p>",
+      "html": "<p><strong>Homophones are words that sound the same but have different meanings.</strong> <em>Flour</em> is a baking ingredient; a <em>flower</em> has petals. Same sound, very different shopping lists.</p><p>Turn up with flour when someone wanted a flower and you have the beginning of a cake, but a rather disappointing bouquet.</p><p>The <a href=\"https://www.merriam-webster.com/dictionary/flour\" target=\"_blank\" rel=\"noopener noreferrer\">flour</a> and <a href=\"https://www.merriam-webster.com/dictionary/flower\" target=\"_blank\" rel=\"noopener noreferrer\">flower</a> dictionary entries give the same pronunciation. Other pairs include <strong>knight/night</strong> and <strong>two/too</strong>.</p>",
       "title": "Same sound, different meaning"
     },
     {
@@ -121,11 +121,11 @@
     },
     {
       "id": "say-it-your-way",
-      "html": "<p><strong>Homophones share a sound; homographs share a spelling.</strong> The terms can overlap. Merriam-Webster’s <a href=\"https://www.merriam-webster.com/grammar/homophones-vs-homographs-vs-homonyms\">guide to the different word pairs</a> explains the distinction.</p><p>Accents matter, too. A pair that sounds identical to one speaker may sound different to another. Check a dictionary’s audio if a puzzle’s suggested pair does not work in your accent.</p><p>For a different word surprise, try <a href=\"/learn/words-that-mean-their-own-opposite/\">words that can mean their own opposite</a>. This time the twist is in the meaning.</p>",
+      "html": "<p><strong>Homophones share a sound; homographs share a spelling.</strong> The terms can overlap. Merriam-Webster’s <a href=\"https://www.merriam-webster.com/grammar/homophones-vs-homographs-vs-homonyms\" target=\"_blank\" rel=\"noopener noreferrer\">guide to the different word pairs</a> explains the distinction.</p><p>Accents matter, too. A pair that sounds identical to one speaker may sound different to another. Check a dictionary’s audio if a puzzle’s suggested pair does not work in your accent.</p><p>For a different word surprise, try <a href=\"/learn/words-that-mean-their-own-opposite/\" target=\"_blank\" rel=\"noopener noreferrer\">words that can mean their own opposite</a>. This time the twist is in the meaning.</p>",
       "title": "What about words that look alike?"
     }
   ],
-  "updatedAt": "2026-10-07T16:21:00Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Homophones sound alike but mean different things. Untangle flour and flower, knight and night, then use a sentence clue to choose the right word.",
   "publishedAt": "2026-10-04T09:50:12.954706+00:00"
 }

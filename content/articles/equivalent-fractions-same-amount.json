@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/equivalent-fractions-same-amount-thumb.webp"
   },
   "order": 49,
-  "title": "Equivalent fractions: different pieces, the same amount",
+  "title": "Why 1/2 and 2/4 mean the same amount",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -83,16 +83,16 @@
     },
     {
       "id": "change-both-numbers-in-the-same-way",
-      "html": "<p>To create an equivalent fraction, multiply the numerator and denominator by the same positive whole number. Starting from 2/3, multiplying both by two gives 4/6. Each third has been split into two sixths.</p><p>Adding the same number to the top and bottom does not follow this rule. For example, 1/2 and 2/3 are different amounts. A quick sketch makes that difference visible.</p>",
-      "title": "Change both numbers in the same way"
+      "html": "<p>Draw a strip with three equal pieces and colour two of them. You have coloured <strong>2/3</strong> of the strip.</p><ol><li>Cut each of the three pieces in half.</li><li>The strip now has six equal pieces altogether.</li><li>The coloured part now covers four of those pieces.</li></ol><p>The same coloured amount is now called <strong>4/6</strong>. That is why 2/3 and 4/6 are <strong>equivalent fractions</strong>: they name the same share of the same whole.</p><p>Both numbers doubled because every piece was split in two. The amount of colour stayed the same.</p>",
+      "title": "Smaller pieces, same amount"
     },
     {
       "id": "you-can-go-back-to-larger-pieces",
-      "html": "<p>Four eighths can be regrouped as two quarters, then one half. We call writing the fraction with smaller whole-number terms <strong>simplifying</strong>. Its value stays the same.</p><p>A useful check is to ask whether both numbers were divided by the same number with whole-number results. For 6/8, dividing both by two gives 3/4. Dividing only the numerator would change the amount.</p>",
-      "title": "You can go back to larger pieces"
+      "html": "<p>You can also join small pieces together. Draw eight equal pieces and colour six. That shows <strong>6/8</strong>.</p><ol><li>Put the eight pieces into pairs. There are four pairs.</li><li>The six coloured pieces make three coloured pairs.</li><li>Three of the four pairs are coloured, so the same amount is <strong>3/4</strong>.</li></ol><p>Writing a fraction with smaller numbers like this is called <strong>simplifying</strong>. You have not made the share smaller; you have given it a simpler name.</p><p>In the same way, four of eight pieces cover half the strip. So <strong>4/8 and 1/2</strong> name the same amount.</p>",
+      "title": "Join pieces back together"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Split each piece again and watch the numbers change while the shaded amount stays still.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

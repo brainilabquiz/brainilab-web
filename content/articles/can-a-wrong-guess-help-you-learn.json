@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/can-a-wrong-guess-help-you-learn-photo-thumb.webp"
   },
   "order": 27,
-  "title": "Can a wrong guess help you learn the answer?",
+  "title": "Can a wrong guess help you learn?",
   "topic": "Learning",
   "status": "published",
   "related": [
@@ -30,6 +30,7 @@
       "name": "Richland, Kornell & Kao (2009) — The pretesting effect: five experiments and their limits"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try Sequence and see whether you can explain the pattern behind your answer.",
   "sections": [
     {
@@ -49,12 +50,11 @@
     },
     {
       "id": "small-routine",
-      "html": "<p>Before your next short article, turn its title into a question and write one tentative answer. Then read it and check what you would change.</p><ul><li>Keep the first attempt brief.</li><li>Look for the correct explanation, not just a score.</li><li>Write the corrected answer in your own words.</li></ul><p>You do not need to manufacture a mistake. If you know the answer, use the explanation to check your reasoning. If you do not, leave room to revise it.</p><p>Later, close the page and try recalling what you learned. That is a different step, covered in <a href=\"/learn/remember-quiz-answers-tomorrow/\">our guide to remembering quiz answers</a>. Neither exercise is a promise of a particular result or a proven benefit from playing BrainiLab.</p>",
+      "html": "<p>Before your next short article, turn its title into a question and write one tentative answer. Then read it and check what you would change.</p><ul><li>Keep the first attempt brief.</li><li>Look for the correct explanation, not just a score.</li><li>Write the corrected answer in your own words.</li></ul><p>You do not need to manufacture a mistake. If you know the answer, use the explanation to check your reasoning. If you do not, leave room to revise it.</p><p>Later, close the page and try recalling what you learned. That is a different step, covered in <a href=\"/learn/remember-quiz-answers-tomorrow/\" target=\"_blank\" rel=\"noopener noreferrer\">our guide to remembering quiz answers</a>. Neither exercise is a promise of a particular result or a proven benefit from playing BrainiLab.</p>",
       "title": "Give yourself one question to look out for"
     }
   ],
-  "updatedAt": "2026-09-30T17:19:01.76865+00:00",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Guessing before reading can sometimes help you learn. Try a short question, then see what a pretesting study found—and what it did not.",
-  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

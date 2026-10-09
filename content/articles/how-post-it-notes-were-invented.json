@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/how-post-it-notes-were-invented-photo-thumb.webp"
   },
   "order": 25,
-  "title": "How a slipping bookmark helped invent Post-it Notes",
+  "title": "How were Post-it Notes invented?",
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
@@ -38,6 +38,7 @@
       "name": "National Inventors Hall of Fame — How Art Fry co-invented Post-it Notes"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Curious about the stories behind familiar things? Try a mixed round of General Knowledge.",
   "sections": [
     {
@@ -57,12 +58,11 @@
     },
     {
       "id": "spot-the-design-choice",
-      "html": "<p>Picture two jobs: fixing a loose chair leg and leaving a reminder on a page. A permanent bond makes sense for one. For the other, being able to remove the message is part of the point.</p><p>Try explaining the invention in three steps: <strong>a marker that slips → a grip that releases → a note you can move</strong>. Which step connects the laboratory discovery to an everyday problem?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>The grip that releases.</strong> Fry needed enough hold to keep his bookmark in place, while still being able to move it.</p></details><p>For another object that found an unexpected purpose, discover <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">why bubble wrap began as wallpaper</a>.</p>",
+      "html": "<p>Picture two jobs: fixing a loose chair leg and leaving a reminder on a page. A permanent bond makes sense for one. For the other, being able to remove the message is part of the point.</p><p>Try explaining the invention in three steps: <strong>a marker that slips → a grip that releases → a note you can move</strong>. Which step connects the laboratory discovery to an everyday problem?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p><strong>The grip that releases.</strong> Fry needed enough hold to keep his bookmark in place, while still being able to move it.</p></details><p>For another object that found an unexpected purpose, discover <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\" target=\"_blank\" rel=\"noopener noreferrer\">why bubble wrap began as wallpaper</a>.</p>",
       "title": "Would stronger glue have been better?"
     }
   ],
-  "updatedAt": "2026-09-30T05:28:02.99054+00:00",
-  "description": "A bookmark that kept falling out gave an unusual adhesive a purpose. Meet the two inventors behind Post-it Notes and the problem they solved.",
-  "publishedAt": "2026-09-30T05:28:02.99054+00:00",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "A bookmark kept falling out. A glue was not very sticky. Together, those two problems led to Post-it Notes.",
+  "publishedAt": "2026-09-30T05:28:02.99054+00:00"
 }

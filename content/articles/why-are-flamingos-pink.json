@@ -1,64 +1,64 @@
 {
-  "slug": "why-are-flamingos-pink",
-  "title": "Why are flamingos pink? The colour starts with lunch",
-  "description": "Flamingos get their pink colour from pigments in their food. Meet the tiny organisms behind the feathers—and the surprisingly grey chicks.",
-  "topic": "Science & nature",
-  "order": 60,
-  "sections": [
-    {
-      "id": "short-answer",
-      "title": "Pink is on the menu",
-      "html": "<p><strong>Flamingos are pink because of carotenoids: natural pigments in the algae and small animals they eat.</strong> Their bodies process those pigments, which colour the feathers as they grow.</p><p>The bird looks as though it arrived dressed for a party. Its food supply deserves some of the credit.</p><p>As the <a href=\"https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts\">Smithsonian’s National Zoo explains</a>, the pigments can reach a flamingo through algae or through brine shrimp that have eaten algae. The colour has travelled through a food chain before it reaches those feathers.</p>"
-    },
-    {
-      "id": "baby-flamingos",
-      "title": "Are baby flamingos born pink?",
-      "html": "<p>No. Flamingo chicks hatch with pale, white-grey down. Their familiar adult colour develops over time. A fluffy grey chick beside a pink parent is not a different kind of bird that wandered into the family photograph.</p><p>Young flamingos also start with a straighter bill. Both the colour and that distinctive adult curve take time to develop. Nature does not always deliver the finished costume on day one.</p>"
-    },
-    {
-      "id": "not-just-shrimp",
-      "title": "So is the answer just “shrimp”?",
-      "html": "<p>Shrimp are part of the story, but “they eat shrimp” is an incomplete answer. Flamingo species eat different mixtures of algae and small aquatic animals. The useful thing to remember is the <strong>pigment</strong>, rather than one item on the menu.</p><p>They are filter feeders: water moves through the bill while small food particles are trapped. <a href=\"https://animals.sandiegozoo.org/animals/flamingo\">San Diego Zoo describes</a> how different bill structures suit different-sized foods, from fine algae to small invertebrates.</p><p>At the zoo, a specially prepared diet can supply the pigments too. A flamingo does not need a miniature seafood restaurant to stay pink.</p>"
-    },
-    {
-      "id": "remember-it",
-      "title": "One detail worth keeping",
-      "html": "<p>The next time a flamingo appears in a quiz, think: <strong>food → pigments → feathers</strong>. That gives you the explanation, not just an answer to memorise.</p><p>And if unusual animals are your thing, an <a href=\"/learn/why-octopuses-have-three-hearts/\">octopus with three hearts</a> makes a good next stop. Apparently one perfectly ordinary heart was not enough.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Smithsonian’s National Zoo — Flamingo colour and chicks",
-      "url": "https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts"
-    },
-    {
-      "name": "San Diego Zoo Wildlife Alliance — Flamingo diet and feeding",
-      "url": "https://animals.sandiegozoo.org/animals/flamingo"
-    }
-  ],
-  "game": {
-    "url": "/science/science-quiz/",
-    "name": "Science Quiz"
-  },
   "hub": {
     "url": "/science/",
     "name": "Science"
   },
-  "practice": "Try a few more nature questions in the Science Quiz.",
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "why-are-flamingos-pink",
+  "cover": {
+    "alt": "A pink flamingo standing in shallow lagoon water beside soft green reeds",
+    "src": "/assets/images/learn/why-are-flamingos-pink.webp",
+    "small": "/assets/images/learn/why-are-flamingos-pink-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 45,
+    "thumbnail": "/assets/images/learn/why-are-flamingos-pink-thumb.webp"
+  },
+  "order": 60,
+  "title": "Why are flamingos pink?",
+  "topic": "Science & nature",
+  "status": "published",
   "related": [
     "why-octopuses-have-three-hearts",
     "stalactites-vs-stalagmites"
   ],
-  "status": "published",
-  "publishedAt": "2026-10-07T15:40:00Z",
-  "updatedAt": "2026-10-07T15:40:00Z",
+  "sources": [
+    {
+      "url": "https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts",
+      "name": "Smithsonian’s National Zoo — Flamingo colour and chicks"
+    },
+    {
+      "url": "https://animals.sandiegozoo.org/animals/flamingo",
+      "name": "San Diego Zoo Wildlife Alliance — Flamingo diet and feeding"
+    }
+  ],
   "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/why-are-flamingos-pink.webp",
-    "small": "/assets/images/learn/why-are-flamingos-pink-small.webp",
-    "thumbnail": "/assets/images/learn/why-are-flamingos-pink-thumb.webp",
-    "alt": "A pink flamingo standing in shallow lagoon water beside soft green reeds",
-    "position": 45,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  }
+  "practice": "Try a few more nature questions in the Science Quiz.",
+  "sections": [
+    {
+      "id": "short-answer",
+      "html": "<p><strong>Flamingos are pink because of carotenoids: natural pigments in the algae and small animals they eat.</strong> Their bodies process those pigments, which colour the feathers as they grow.</p><p>The bird looks as though it arrived dressed for a party. Its food supply deserves some of the credit.</p><p>As the <a href=\"https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts\" target=\"_blank\" rel=\"noopener noreferrer\">Smithsonian’s National Zoo explains</a>, the pigments can reach a flamingo through algae or through brine shrimp that have eaten algae. The colour has travelled through a food chain before it reaches those feathers.</p>",
+      "title": "Pink is on the menu"
+    },
+    {
+      "id": "baby-flamingos",
+      "html": "<p>No. Flamingo chicks hatch with pale, white-grey down. Their familiar adult colour develops over time. A fluffy grey chick beside a pink parent is not a different kind of bird that wandered into the family photograph.</p><p>Young flamingos also start with a straighter bill. Both the colour and that distinctive adult curve take time to develop. Nature does not always deliver the finished costume on day one.</p>",
+      "title": "Are baby flamingos born pink?"
+    },
+    {
+      "id": "not-just-shrimp",
+      "html": "<p>Shrimp are part of the story, but “they eat shrimp” is an incomplete answer. Flamingo species eat different mixtures of algae and small aquatic animals. The useful thing to remember is the <strong>pigment</strong>, rather than one item on the menu.</p><p>They are filter feeders: water moves through the bill while small food particles are trapped. <a href=\"https://animals.sandiegozoo.org/animals/flamingo\" target=\"_blank\" rel=\"noopener noreferrer\">San Diego Zoo describes</a> how different bill structures suit different-sized foods, from fine algae to small invertebrates.</p><p>At the zoo, a specially prepared diet can supply the pigments too. A flamingo does not need a miniature seafood restaurant to stay pink.</p>",
+      "title": "So is the answer just “shrimp”?"
+    },
+    {
+      "id": "remember-it",
+      "html": "<p>The next time a flamingo appears in a quiz, think: <strong>food → pigments → feathers</strong>. That gives you the explanation, not just an answer to memorise.</p><p>And if unusual animals are your thing, an <a href=\"/learn/why-octopuses-have-three-hearts/\" target=\"_blank\" rel=\"noopener noreferrer\">octopus with three hearts</a> makes a good next stop. Apparently one perfectly ordinary heart was not enough.</p>",
+      "title": "One detail worth keeping"
+    }
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "A flamingo’s pink colour starts with its food. Find out why its feathers turn pink and why its chicks look so different.",
+  "publishedAt": "2026-10-07T15:40:00Z"
 }

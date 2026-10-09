@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/subtraction-how-many-are-left-thumb.webp"
   },
   "order": 34,
-  "title": "Subtraction: what is left when you take some away?",
+  "title": "How does subtraction work?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,7 +73,7 @@
   "sections": [
     {
       "id": "start-with-a-pile",
-      "html": "<p>Imagine <strong>6 strawberries</strong> on a plate. You eat <strong>2</strong>. How many are still on the plate?</p><p>Take away one strawberry: five remain. Take away another: four remain. There are <strong>4 left</strong>.</p><p>This is one way to understand <strong>subtraction</strong>: start with an amount, take some away, and find what remains. If you would like to practise counting first, start with <a href=\"/learn/addition-putting-things-together/\">our addition lesson</a>.</p>",
+      "html": "<p>Imagine <strong>6 strawberries</strong> on a plate. You eat <strong>2</strong>. How many are still on the plate?</p><p>Take away one strawberry: five remain. Take away another: four remain. There are <strong>4 left</strong>.</p><p>This is one way to understand <strong>subtraction</strong>: start with an amount, take some away, and find what remains. If you would like to practise counting first, start with <a href=\"/learn/addition-putting-things-together/\" target=\"_blank\" rel=\"noopener noreferrer\">our addition lesson</a>.</p>",
       "title": "Start with what you have"
     },
     {
@@ -93,11 +93,11 @@
     },
     {
       "id": "zero-left",
-      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>These examples remove only counters you already have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\">see how equal groups make counting quicker</a>.</p>",
+      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>These examples remove only counters you already have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\" target=\"_blank\" rel=\"noopener noreferrer\">see how equal groups make counting quicker</a>.</p>",
       "title": "Sometimes the answer is nothing"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Start with a small pile, take a few away, and count what remains. Try it yourself, then use addition to check your answer.",
   "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }

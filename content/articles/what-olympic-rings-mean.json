@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/what-olympic-rings-mean-thumb.webp"
   },
   "order": 20,
-  "title": "What do the Olympic rings and their colours mean?",
+  "title": "What do the Olympic rings mean?",
   "topic": "Sports",
   "status": "published",
   "related": [
@@ -35,13 +35,13 @@
   "sections": [
     {
       "id": "the-trap",
-      "title": "What do the five rings represent?",
-      "html": "<p><strong>The five Olympic rings represent the union of five continents and athletes meeting from around the world.</strong> The symbol works as a whole: there is no official rule assigning one ring colour to each continent.</p><p>That second point is the quiz trap. A neat colour-coded map is easy to remember, which does not make it the official explanation. The <a href=\"https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings\">International Olympic Committee’s answer</a> explicitly rejects that colour-to-continent match.</p>"
+      "html": "<p><strong>The five Olympic rings represent the union of five continents and athletes meeting from around the world.</strong> The symbol works as a whole: there is no official rule assigning one ring colour to each continent.</p><p>That second point is the quiz trap. A neat colour-coded map is easy to remember, which does not make it the official explanation. The <a href=\"https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings\" target=\"_blank\" rel=\"noopener noreferrer\">International Olympic Committee’s answer</a> explicitly rejects that colour-to-continent match.</p>",
+      "title": "What do the five rings represent?"
     },
     {
       "id": "whole-symbol",
-      "title": "Five rings, rather than five labels",
-      "html": "<p>Think of the linked rings as a picture of people coming together. Separating the colours into a list of continent labels misses the point of the interlocking design.</p><p>It is a useful habit for any symbol question: check whether the meaning belongs to the whole design or to each piece individually.</p>"
+      "html": "<p>Think of the linked rings as a picture of people coming together. Separating the colours into a list of continent labels misses the point of the interlocking design.</p><p>It is a useful habit for any symbol question: check whether the meaning belongs to the whole design or to each piece individually.</p>",
+      "title": "Five rings, rather than five labels"
     },
     {
       "id": "why-colours",
@@ -50,11 +50,11 @@
     },
     {
       "id": "three-statements",
-      "html": "<p>If a friend asks which continent the blue ring stands for, the helpful answer is: <strong>none is officially assigned to it.</strong> The five rings together express unity.</p><p>One way to remember the distinction: linked rings bring athletes together; coloured labels would split them apart. It is a memory cue, not a new official meaning.</p><p>Curious about another sporting design? The <a href=\"/learn/why-golf-balls-have-dimples/\">little dents on a golf ball</a> have a surprisingly practical job.</p>",
+      "html": "<p>If a friend asks which continent the blue ring stands for, the helpful answer is: <strong>none is officially assigned to it.</strong> The five rings together express unity.</p><p>One way to remember the distinction: linked rings bring athletes together; coloured labels would split them apart. It is a memory cue, not a new official meaning.</p><p>Curious about another sporting design? The <a href=\"/learn/why-golf-balls-have-dimples/\" target=\"_blank\" rel=\"noopener noreferrer\">little dents on a golf ball</a> have a surprisingly practical job.</p>",
       "title": "The answer to keep in your pocket"
     }
   ],
-  "updatedAt": "2026-10-07T16:21:00Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "The Olympic rings represent unity, but their colours do not label individual continents. Discover the flag-colour story behind the familiar symbol.",
   "publishedAt": "2026-09-29T06:03:00Z"
 }

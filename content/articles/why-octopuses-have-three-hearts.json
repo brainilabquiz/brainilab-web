@@ -32,21 +32,21 @@
   "sections": [
     {
       "id": "three-jobs",
-      "html": "<p>An octopus has <strong>three hearts</strong>, each with a part to play in moving blood around its body.</p><p>Two pump blood through the gills, where it picks up oxygen. The third pumps oxygenated blood to the rest of the body. Remembering those jobs makes the number easier to recall: two for the gills, plus one for the body.</p>",
+      "html": "<p>An octopus has <strong>three hearts</strong>, each with a part to play in moving blood around its body.</p><p>An octopus takes oxygen from the water through body parts called <strong>gills</strong>. Two hearts pump blood through those gills, where the blood picks up oxygen. The third heart sends that oxygen-carrying blood around the rest of the body. Remembering those jobs makes the number easier to recall: two for the gills, plus one for the body.</p>",
       "title": "Two for the gills, one for the body"
     },
     {
       "id": "blue-blood",
-      "html": "<p>Octopus blood carries oxygen using a protein called <strong>haemocyanin</strong>, which contains copper. It appears blue when oxygenated.</p><p>Humans use haemoglobin, an iron-containing protein, to carry oxygen. Both proteins do a similar job, but their different chemistry gives blood its different colours.</p>",
+      "html": "<p>Octopus blood carries oxygen using a protein called <strong>haemocyanin</strong>, which contains copper. The blood appears blue when that protein is carrying oxygen.</p><p>Humans use haemoglobin, an iron-containing protein, to carry oxygen. Both proteins do a similar job, but their different chemistry gives blood its different colours.</p>",
       "title": "Why is the blood blue?"
     },
     {
       "id": "rebuild",
-      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details><p>For another colour surprise, <a href=\"/learn/why-are-flamingos-pink/\">a flamingo’s pink feathers start with its food</a>.</p>",
+      "html": "<p>Picture three hearts and label two “gills” and one “body”.</p><details class=\"practice-answer\"><summary>Do all three hearts do the same job?</summary><p><strong>No.</strong> Two send blood through the gills; the third supplies the rest of the body.</p></details><p>For another colour surprise, <a href=\"/learn/why-are-flamingos-pink/\" target=\"_blank\" rel=\"noopener noreferrer\">a flamingo’s pink feathers start with its food</a>.</p>",
       "title": "Can you remember the arrangement?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Two hearts send blood to the gills, while a third supplies the body. And that blood has an unusual colour.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

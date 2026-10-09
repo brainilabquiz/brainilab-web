@@ -1,21 +1,4 @@
 {
-  "slug": "why-tennis-players-change-ends",
-  "title": "Why do tennis players keep changing ends?",
-  "description": "Why do tennis players swap ends, and when? Follow a few simple scores to spot a changeover, understand tie-breaks and see why switching is not always a rest.",
-  "topic": "Sports",
-  "status": "published",
-  "order": 80,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-03T20:01:56Z",
-  "updatedAt": "2026-10-03T20:01:56Z",
-  "cover": {
-    "alt": "A tennis racket and yellow ball beside an empty sunlit tennis court",
-    "src": "/assets/images/learn/why-tennis-players-change-ends.webp",
-    "small": "/assets/images/learn/why-tennis-players-change-ends-small.webp",
-    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
-    "position": 50,
-    "thumbnail": "/assets/images/learn/why-tennis-players-change-ends-thumb.webp"
-  },
   "hub": {
     "url": "/sports/",
     "name": "Sports"
@@ -24,50 +7,67 @@
     "url": "/sports/sports-quiz/",
     "name": "Sports Quiz"
   },
-  "practice": "Fancy another sporting question? Try the Sports Quiz, with a mix of sports beyond tennis.",
+  "slug": "why-tennis-players-change-ends",
+  "cover": {
+    "alt": "A tennis racket and yellow ball beside an empty sunlit tennis court",
+    "src": "/assets/images/learn/why-tennis-players-change-ends.webp",
+    "small": "/assets/images/learn/why-tennis-players-change-ends-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-tennis-players-change-ends-thumb.webp"
+  },
+  "order": 80,
+  "title": "Why do tennis players change ends?",
+  "topic": "Sports",
+  "status": "published",
   "related": [
     "how-to-read-a-tennis-score",
     "why-tennis-balls-are-yellow"
   ],
   "sources": [
     {
-      "name": "ITF — 2026 Rules of Tennis, Rule 10: change of ends",
-      "url": "https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf"
+      "url": "https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf",
+      "name": "ITF — 2026 Rules of Tennis, Rule 10: change of ends"
     },
     {
-      "name": "USTA — 2026 Friend at Court, Rules 10 and 29: tie-breaks and rest periods",
-      "url": "https://www.usta.com/content/dam/usta/officiating/friendatcourt.pdf"
+      "url": "https://www.usta.com/content/dam/usta/officiating/friendatcourt.pdf",
+      "name": "USTA — 2026 Friend at Court, Rules 10 and 29: tie-breaks and rest periods"
     },
     {
-      "name": "USTA — Serving from the wrong end: an example involving the sun",
-      "url": "https://www.usta.com/en/home/improve/tennis-rules/national/what-s-the-call--serving-from-the-wrong-end.html"
+      "url": "https://www.usta.com/en/home/improve/tennis-rules/national/what-s-the-call--serving-from-the-wrong-end.html",
+      "name": "USTA — Serving from the wrong end: an example involving the sun"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Fancy another sporting question? Try the Sports Quiz, with a mix of sports beyond tennis.",
   "sections": [
     {
       "id": "a-different-view",
-      "title": "Same court, different view",
-      "html": "<p>You are watching tennis. A game ends, and both players walk around the net to swap ends of the court. A little later, they do it again. Why?</p><p>Think about facing a low sun. Looking one way can be much harder than looking the other. The <a href=\"https://www.usta.com/en/home/improve/tennis-rules/national/what-s-the-call--serving-from-the-wrong-end.html\" target=\"_blank\" rel=\"noopener noreferrer\">USTA describes exactly this problem</a> in a question about a missed changeover.</p><p>Taking turns at each end means neither player keeps the same view throughout the match. The switching follows a fixed pattern, even indoors.</p>"
+      "html": "<p>You are watching tennis. A game ends, and both players walk around the net to swap ends of the court. A little later, they do it again. Why?</p><p>Think about facing a low sun. Looking one way can be much harder than looking the other. The <a href=\"https://www.usta.com/en/home/improve/tennis-rules/national/what-s-the-call--serving-from-the-wrong-end.html\" target=\"_blank\" rel=\"noopener noreferrer\">USTA describes exactly this problem</a> in a question about a missed changeover.</p><p>Taking turns at each end means neither player keeps the same view throughout the match. The switching follows a fixed pattern, even indoors.</p>",
+      "title": "Same court, different view"
     },
     {
       "id": "count-the-games",
-      "title": "The trick is to count both players’ games",
-      "html": "<p>A <strong>game</strong> is one small contest within a <strong>set</strong>. Players win points to win games, then games to win sets. If the scoreboard feels unfamiliar, start with our <a href=\"/learn/how-to-read-a-tennis-score/\">simple tennis scoring guide</a>.</p><p>Under <a href=\"https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">ITF Rule 10</a>, players swap ends after game 1, then 3, then 5, and so on in each set. Count the games won by <strong>both</strong> players.</p><div class=\"table-scroll\"><table><caption>Spot the next changeover</caption><thead><tr><th scope=\"col\">Games score</th><th scope=\"col\">Games played</th><th scope=\"col\">Swap ends?</th></tr></thead><tbody><tr><td>1–0</td><td>1</td><td>Yes</td></tr><tr><td>1–1</td><td>2</td><td>No</td></tr><tr><td>2–1</td><td>3</td><td>Yes</td></tr><tr><td>3–2</td><td>5</td><td>Yes</td></tr></tbody></table></div><p>At the end of a set, an odd total means another swap. An even total means they wait until the first game of the next set. So a set ending 6–3 means a swap; 6–4 means wait.</p>"
+      "html": "<p>A <strong>game</strong> is one small contest within a <strong>set</strong>. Players win points to win games, then games to win sets. If the scoreboard feels unfamiliar, start with our <a href=\"/learn/how-to-read-a-tennis-score/\" target=\"_blank\" rel=\"noopener noreferrer\">simple tennis scoring guide</a>.</p><p>Under <a href=\"https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">ITF Rule 10</a>, players swap ends after game 1, then 3, then 5, and so on in each set. Count the games won by <strong>both</strong> players.</p><div class=\"table-scroll\"><table><caption>Spot the next changeover</caption><thead><tr><th scope=\"col\">Games score</th><th scope=\"col\">Games played</th><th scope=\"col\">Swap ends?</th></tr></thead><tbody><tr><td>1–0</td><td>1</td><td>Yes</td></tr><tr><td>1–1</td><td>2</td><td>No</td></tr><tr><td>2–1</td><td>3</td><td>Yes</td></tr><tr><td>3–2</td><td>5</td><td>Yes</td></tr></tbody></table></div><p>At the end of a set, an odd total means another swap. An even total means they wait until the first game of the next set. So a set ending 6–3 means a swap; 6–4 means wait.</p>",
+      "title": "The trick is to count both players’ games"
     },
     {
       "id": "tie-breaks-count-points",
-      "title": "In a tie-break, count points instead",
-      "html": "<p>A <strong>tie-break</strong> is a special game used to settle a tied score. Its points go 1, 2, 3, rather than 15, 30, 40.</p><p>The standard pattern is to swap after every <strong>six points in total</strong>: at 4–2, for example, then at 6–6 if play continues. Some competitions use the <strong>Coman</strong> pattern: after the first point, then every four points. Check the event’s format before expecting one pattern everywhere.</p><p>The <a href=\"https://www.usta.com/content/dam/usta/officiating/friendatcourt.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">USTA’s 2026 handbook</a> explains both patterns under Rule 10.</p>"
+      "html": "<p>A <strong>tie-break</strong> is a special game used to settle a tied score. Its points go 1, 2, 3, rather than 15, 30, 40.</p><p>The standard pattern is to swap after every <strong>six points in total</strong>: at 4–2, for example, then at 6–6 if play continues. Some competitions use the <strong>Coman</strong> pattern: after the first point, then every four points. Check the event’s format before expecting one pattern everywhere.</p><p>The <a href=\"https://www.usta.com/content/dam/usta/officiating/friendatcourt.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">USTA’s 2026 handbook</a> explains both patterns under Rule 10.</p>",
+      "title": "In a tie-break, count points instead"
     },
     {
       "id": "switching-is-not-always-a-break",
-      "title": "Why do they sometimes sit down?",
-      "html": "<p>Switching ends does not always include a rest. Under Rule 29 in the same handbook, players keep moving after the first game of a set and during a tie-break.</p><p>Other ordinary changeovers allow up to 90 seconds; a set break allows up to 120 seconds. These are limits between points, not extra time added after reaching the chair.</p>"
+      "html": "<p>Switching ends does not always include a rest. Under Rule 29 in the same handbook, players keep moving after the first game of a set and during a tie-break.</p><p>Other ordinary changeovers allow up to 90 seconds; a set break allows up to 120 seconds. These are limits between points, not extra time added after reaching the chair.</p>",
+      "title": "Why do they sometimes sit down?"
     },
     {
       "id": "your-turn",
-      "title": "Can you spot the next swap?",
-      "html": "<p>Imagine the games score has just become <strong>4–3</strong>. Before opening the answer, count all the games played.</p><details class=\"practice-answer\"><summary>Do the players change ends now?</summary><p>Yes. Four games plus three makes seven. Seven is an odd number, so it is time to switch ends.</p></details><p>Next time you watch a match, try predicting one changeover before the players move. Then look at the ball: <a href=\"/learn/why-tennis-balls-are-yellow/\">its familiar yellow colour has a story too</a>.</p>"
+      "html": "<p>Imagine the games score has just become <strong>4–3</strong>. Before opening the answer, count all the games played.</p><details class=\"practice-answer\"><summary>Do the players change ends now?</summary><p>Yes. Four games plus three makes seven. Seven is an odd number, so it is time to switch ends.</p></details><p>Next time you watch a match, try predicting one changeover before the players move. Then look at the ball: <a href=\"/learn/why-tennis-balls-are-yellow/\" target=\"_blank\" rel=\"noopener noreferrer\">its familiar yellow colour has a story too</a>.</p>",
+      "title": "Can you spot the next swap?"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Why do tennis players swap ends, and when? Follow a few simple scores to spot a changeover, understand tie-breaks and see why switching is not always a rest.",
+  "publishedAt": "2026-10-03T20:10:01.483851+00:00"
 }

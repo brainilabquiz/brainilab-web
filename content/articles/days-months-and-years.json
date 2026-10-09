@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/days-months-and-years-thumb.webp"
   },
   "order": 45,
-  "title": "Days, weeks, months and years: how the counts fit together",
+  "title": "Days, weeks, months and years explained",
   "topic": "History",
   "status": "published",
   "related": [
@@ -77,21 +77,21 @@
     },
     {
       "id": "explore",
-      "html": "<p>Write Monday on paper as your starting day. Seven days later is another Monday; eight days later is Tuesday. We are counting days that have passed, so the starting Monday is day zero.</p><p>This distinction matters when a question says “after three days”. Monday to Tuesday is one day, Tuesday to Wednesday is two, and Wednesday to Thursday is three. Counting the starting day as the first elapsed day would shift the answer.</p>",
+      "html": "<p>Suppose today is Monday. To find the day three days later, move forward one day at a time:</p><ol><li>Tuesday: one day has passed.</li><li>Wednesday: two days have passed.</li><li>Thursday: three days have passed.</li></ol><p>Do not count Monday as a day that has already passed. It is where you start.</p><p>Keep going and you reach Monday again after seven days. After eight days, it is Tuesday.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "a-month-is-not-four-weeks",
-      "html": "<p>Four weeks contain 28 days. In the Gregorian calendar, months have 28, 29, 30 or 31 days. A 30-day month is four weeks plus two days; it is not an exact number of weeks.</p><p>An ordinary Gregorian year contains 365 days, and a leap year contains 366. The calendar arranges months to keep the year in step with the seasons. February supplies the extra day in a leap year.</p>",
+      "html": "<p>Four weeks contain <strong>28 days</strong>. A month can have 28, 29, 30 or 31 days. So a 30-day month lasts four weeks and two more days.</p><p>The calendar widely used today is called the <strong>Gregorian calendar</strong>. An ordinary year has 365 days. A leap year has 366, with the extra day added in February.</p><p>These extra days help keep calendar dates in step with the seasons.</p>",
       "title": "A month is not four weeks"
     },
     {
       "id": "keep-the-units-in-view",
-      "html": "<p>“Two months” is not always the same number of elapsed days. January and February differ in length, and February can change in a leap year. When exact timing matters, use the actual dates instead of assuming every month has thirty days.</p><p>With days and years separated, we can next group years into centuries. The rule for a century is a counting convention; the leap-year rule solves a different problem.</p>",
-      "title": "Keep the units in view"
+      "html": "<p>Two months do not always contain the same number of days. January has more days than February, and February itself is longer in a leap year.</p><p>If you need an exact number of days, check the dates on a calendar. Do not treat every month as thirty days.</p><p>Next, we can put years into groups of one hundred. Each of those groups is a century.</p>",
+      "title": "Need an exact count? Check the dates"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Start with a week on a calendar, then separate the repeating weekday cycle from the changing lengths of months.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Count days from Monday, see why a month is longer than four weeks, and find out when a year gets an extra day.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

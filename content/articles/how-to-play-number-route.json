@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/how-to-play-number-route-thumb.webp"
   },
   "order": 21,
-  "title": "How to play Number Route: follow the running total",
+  "title": "How to play Number Route",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -34,11 +34,12 @@
       "name": "OpenStax — Use the Language of Algebra: order of operations"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
   "sections": [
     {
       "id": "the-rule",
-      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose an operation between each pair. Calculate from left to right until your running total matches the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Here, each button changes the running total immediately. That small difference is where many first attempts go wrong.</p>",
+      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose a maths sign between each pair. Work from left to right, carrying your answer into the next step, until you reach the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Your <strong>running total</strong> is the answer you have reached so far. Here, each button changes it immediately. That small difference is where many first attempts go wrong.</p>",
       "title": "One rule makes this puzzle different"
     },
     {
@@ -48,7 +49,7 @@
     },
     {
       "id": "work-back",
-      "html": "<p>The last number in the example is 4. To finish at 28, the total just before that last step could be 24 if you plan to add, 32 if you plan to subtract, 7 if you plan to multiply, or 112 if you plan to divide.</p><p>Now ask whether the first three numbers can reach one of those values. Seven minus three gives four; multiplying by six gives 24. That makes the final addition a good candidate. Working backwards narrows your search, but you still need to test the whole route forwards.</p>",
+      "html": "<p>The last number is 4 and you want to finish at 28. Think about the last step first:</p><ul><li>To finish by adding 4, you need to reach <strong>24</strong> first.</li><li>To finish by subtracting 4, you need <strong>32</strong>.</li><li>To finish by multiplying by 4, you need <strong>7</strong>.</li><li>To finish by dividing by 4, you need <strong>112</strong>.</li></ul><p>Can the first three numbers reach any of those totals? Try the example above: seven minus three gives four. Four times six gives twenty-four. You can then add the last four to reach twenty-eight.</p><p>Working backwards gives you something to aim for. Check your chosen route from the start before you submit it.</p>",
       "title": "When you get stuck, look at the last number"
     },
     {
@@ -58,11 +59,11 @@
     },
     {
       "id": "try-one",
-      "html": "<p>Use <strong>4, 9, 2, 5</strong>, in that order. The target is <strong>21</strong>. Start by considering what total you need before the final 5.</p><details class=\"practice-answer\"><summary>Show the route and running totals</summary><p>Choose <strong>+, ×, −</strong>. First 4 + 9 = 13, then 13 × 2 = 26, then 26 − 5 = 21. In ordinary notation: <strong>((4 + 9) × 2) − 5 = 21</strong>.</p></details><p>Play Anytime contains ten routes. The Daily format uses three. For a paper version, try the <a href=\"/learn/five-number-puzzles-printable/\">five-puzzle sheet with a separate answer page</a>.</p>",
+      "html": "<p>Use <strong>4, 9, 2, 5</strong>, in that order. The target is <strong>21</strong>. Start by considering what total you need before the final 5.</p><details class=\"practice-answer\"><summary>Show the route and running totals</summary><p>Choose <strong>+, ×, −</strong>. </p><ol><li>Add 9 to 4. You reach <strong>13</strong>.</li><li>Multiply 13 by 2. You reach <strong>26</strong>.</li><li>Subtract 5. You finish at <strong>21</strong>.</li></ol><p>The brackets in <strong>((4 + 9) × 2) − 5 = 21</strong> show those steps in order.</p></details><p>Play Anytime contains ten routes. The Daily format uses three. For a paper version, try the <a href=\"/learn/five-number-puzzles-printable/\" target=\"_blank\" rel=\"noopener noreferrer\">five-puzzle sheet with a separate answer page</a>.</p>",
       "title": "Your turn: reach 21"
     }
   ],
   "description": "Four numbers, three missing signs and one target. Learn the left-to-right rule with a complete example, then try a route yourself.",
   "publishedAt": "2026-09-29T20:12:34.329468Z",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-09T15:53:35Z"
 }

@@ -17,7 +17,7 @@
     "thumbnail": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0-320.webp"
   },
   "order": 16,
-  "title": "How tennis scoring works: love, deuce and sets",
+  "title": "How does tennis scoring work?",
   "topic": "Sports",
   "status": "published",
   "related": [
@@ -39,26 +39,26 @@
   "sections": [
     {
       "id": "score",
-      "title": "What does 30–40 mean in tennis?",
-      "html": "<p><strong>At 30–40, the server has won two points and the receiver three.</strong> When calling the score, say the server’s number first. The labels in a standard game are love (zero), 15 (one point), 30 (two) and 40 (three).</p><p>If the receiver wins the next rally, they win the game. If the server wins, it becomes 40–40: deuce. The <a href=\"https://www.lta.org.uk/play/how-to-get-started/rules-scoring/\">LTA’s scoring guide</a> sets out this progression.</p>"
+      "html": "<p><strong>At 30–40, the server has won two points and the receiver three.</strong> When calling the score, say the server’s number first. Tennis uses special names for the first points:</p><ul><li><strong>Love:</strong> no points yet.</li><li><strong>15:</strong> one point won.</li><li><strong>30:</strong> two points won.</li><li><strong>40:</strong> three points won.</li></ul><p>So 40 does not mean someone has won forty points.</p><p>If the receiver wins the next rally, they win the game. If the server wins, it becomes 40–40: deuce. The <a href=\"https://www.lta.org.uk/play/how-to-get-started/rules-scoring/\" target=\"_blank\" rel=\"noopener noreferrer\">LTA’s scoring guide</a> sets out this progression.</p>",
+      "title": "What does 30–40 mean in tennis?"
     },
     {
       "id": "deuce",
-      "title": "What does deuce mean in tennis?",
-      "html": "<p><strong>Deuce means the players are tied at 40–40.</strong> Under advantage scoring, you need two points in a row from deuce. Win the first and you have <em>advantage</em>. Win the next and you take the game; lose it and you return to deuce.</p><p>For example: you serve at deuce, win one rally and lose the next. Neither player has won the game. You are back at deuce. In a no-ad format, a deciding point replaces this advantage sequence.</p>"
+      "html": "<p><strong>Deuce means the players are tied at 40–40.</strong> Under advantage scoring, you need two points in a row from deuce. Win the first and you have <em>advantage</em>. Win the next and you take the game; lose it and you return to deuce.</p><p>For example: you serve at deuce, win one rally and lose the next. Neither player has won the game. You are back at deuce. Some matches use a different rule called <strong>no-ad scoring</strong>. At deuce, one final point decides the game instead.</p>",
+      "title": "What does deuce mean in tennis?"
     },
     {
       "id": "scoreboard",
-      "title": "Read the scoreboard in layers",
-      "html": "<p><strong>Points build games; games build sets; sets decide the match.</strong> On a scoreboard, identify the player names and the columns for completed sets, current-set games and current-game points. Check who is serving rather than assuming it is the player in the top row.</p><p>If the current games are 4–3 and the points are 30–40, the next rally decides a point in the current game, not the entire set. Keep those two counts separate.</p><p>A usual tie-break set can finish 6–4 or 7–5. At 6–6, a tie-break counts points as 1, 2, 3… A standard seven-point tie-break needs a two-point lead. Formats vary; the <a href=\"https://www.usta.com/en/home/improve/tips-and-instruction/national/tennis-scoring-rules.html\">USTA guide</a> also explains deciding-set exceptions.</p>"
+      "html": "<p><strong>Points build games; games build sets; sets decide the match.</strong> On a scoreboard, identify the player names and the columns for completed sets, current-set games and current-game points. Check who is serving rather than assuming it is the player in the top row.</p><p>If the current games are 4–3 and the points are 30–40, the next rally decides a point in the current game, not the entire set. Keep those two counts separate.</p><p>A usual tie-break set can finish 6–4 or 7–5. At 6–6, a tie-break counts points as 1, 2, 3… A standard seven-point tie-break needs a two-point lead. Formats vary; the <a href=\"https://www.usta.com/en/home/improve/tips-and-instruction/national/tennis-scoring-rules.html\" target=\"_blank\" rel=\"noopener noreferrer\">USTA guide</a> also explains deciding-set exceptions.</p>",
+      "title": "Read the scoreboard in layers"
     },
     {
       "id": "practice",
-      "title": "Call the next score",
-      "html": "<p>You are serving at 30–40 and win the rally. The answer is <strong>deuce</strong>: three points each. Under advantage scoring, you still need two consecutive points to take the game.</p><p>Once you can follow the games, try predicting <a href=\"/learn/why-tennis-players-change-ends/\">when the players will change ends</a>. Or test what you know in the <a href=\"/sports/sports-quiz/\">Sports Quiz</a>.</p>"
+      "html": "<p>You are serving at 30–40 and win the rally. The answer is <strong>deuce</strong>: three points each. Under advantage scoring, you still need two consecutive points to take the game.</p><p>Once you can follow the games, try predicting <a href=\"/learn/why-tennis-players-change-ends/\" target=\"_blank\" rel=\"noopener noreferrer\">when the players will change ends</a>. Or test what you know in the <a href=\"/sports/sports-quiz/\" target=\"_blank\" rel=\"noopener noreferrer\">Sports Quiz</a>.</p>",
+      "title": "Call the next score"
     }
   ],
-  "updatedAt": "2026-10-09T15:30:55Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Read a tennis score step by step: what 30–40 means, how deuce and advantage work, and how points become games, sets and a match.",
   "publishedAt": "2026-09-28T18:48:21.926724+00:00"
 }

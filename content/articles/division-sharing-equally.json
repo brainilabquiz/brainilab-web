@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/division-sharing-equally-thumb.webp"
   },
   "order": 42,
-  "title": "Division: give everyone the same amount",
+  "title": "How division works: sharing equally",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -77,21 +77,21 @@
     },
     {
       "id": "explore",
-      "html": "<p>Take 13 counters and three bowls. Give one counter to each bowl in turn. Stop when you cannot give every bowl another whole counter.</p><p>Try 13 counters and three bowls. Each bowl can still receive four whole counters, but one remains. We say the answer is four each with a <strong>remainder</strong> of one. We are keeping these counters whole; in other situations, a leftover item might be cut into fractional parts.</p>",
+      "html": "<p>Put 13 counters beside three bowls. Give one counter to each bowl, then go round again.</p><p>When each bowl has four counters, you have used twelve. One counter is left on the table. You cannot give that whole counter to all three bowls equally.</p><p>We call the leftover counter the <strong>remainder</strong>. Here, <strong>13 ÷ 3 gives 4 each, with a remainder of 1</strong>.</p><p>Try it with twelve counters instead. This time there is nothing left over.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "use-multiplication-to-check",
-      "html": "<p>For the first example, three bowls with four counters each contain 3 × 4 = 12 counters. Multiplication rebuilds the original pile.</p><p>With a remainder, include it in the check: 3 × 4 + 1 = 13. If your check does not return the starting amount, something was missed or counted twice. The remainder must also be smaller than the number of bowls, or everyone could receive another counter.</p>",
-      "title": "Use multiplication to check"
+      "html": "<p>Check your sharing by counting everything again.</p><ol><li>There are three bowls with four counters in each. That is twelve counters in the bowls.</li><li>Add the one counter still on the table.</li><li>You have thirteen again: the amount you started with.</li></ol><p>Multiplication is a short way to count equal groups, so the check can be written <strong>3 × 4 + 1 = 13</strong>.</p><p>If three or more counters were left over, you could give each bowl another counter. In this example, a finished remainder must be smaller than three.</p>",
+      "title": "Count everything to check"
     },
     {
       "id": "read-what-the-answer-means",
-      "html": "<p>“Twelve counters shared among three people” asks how many each person gets. “Twelve counters packed in groups of three” asks how many groups you can make. Both use 12 ÷ 3, but the answer describes a different thing.</p><p>Zero counters shared among three bowls gives zero in every bowl. Division by zero is undefined in ordinary arithmetic; these sharing examples need at least one bowl. Read the story as well as the numbers.</p>",
-      "title": "Read what the answer means"
+      "html": "<p>Division can answer two everyday questions:</p><ul><li><strong>How many does each person get?</strong> Share twelve counters among three people. Each person gets four.</li><li><strong>How many groups can I make?</strong> Put twelve counters into bags of three. You fill four bags.</li></ul><p>Both use <strong>12 ÷ 3 = 4</strong>, but the answer means something different: four counters each, or four bags.</p><p>Before calculating, say what you are trying to find.</p>",
+      "title": "What does the answer count?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Share a pile into equal groups, check by multiplying, and notice what happens when something is left over.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

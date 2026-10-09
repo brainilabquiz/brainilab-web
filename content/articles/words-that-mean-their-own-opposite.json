@@ -76,8 +76,8 @@
       "name": "Merriam-Webster — Fast"
     },
     {
-      "name": "Merriam-Webster — Homophone",
-      "url": "https://www.merriam-webster.com/dictionary/homophone"
+      "url": "https://www.merriam-webster.com/dictionary/homophone",
+      "name": "Merriam-Webster — Homophone"
     }
   ],
   "authorId": "biel-sarda",
@@ -90,7 +90,7 @@
     },
     {
       "id": "dust",
-      "html": "<p><a href=\"https://www.merriam-webster.com/dictionary/dust\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster records both senses of the verb <em>dust</em></a>: clearing dust away and sprinkling a surface with fine particles.</p><p>Compare these two instructions:</p><ul><li><strong>Dust the model spaceship before putting it on display.</strong> You want a cleaner spaceship.</li><li><strong>Dust the dough with flour before rolling it.</strong> You want a light coating.</li></ul><p>The word has not changed. Its object and the surrounding instructions tell you which action makes sense. If someone just said “dust it” and pointed towards a crowded kitchen counter, you might reasonably ask what they meant.</p>",
+      "html": "<p><a href=\"https://www.merriam-webster.com/dictionary/dust\" target=\"_blank\" rel=\"noopener noreferrer\">Merriam-Webster lists both meanings of <em>dust</em></a>: clearing dust away and sprinkling something with a fine layer, such as flour.</p><p>Compare these two instructions:</p><ul><li><strong>Dust the model spaceship before putting it on display.</strong> You want a cleaner spaceship.</li><li><strong>Dust the dough with flour before rolling it.</strong> You want a light coating.</li></ul><p>The word has not changed. What you are dusting, and the rest of the sentence, tell you which action makes sense. If someone just said “dust it” and pointed towards a crowded kitchen counter, you might reasonably ask what they meant.</p>",
       "title": "Dust: put it on or take it off?"
     },
     {
@@ -100,8 +100,8 @@
     },
     {
       "id": "sound-or-meaning",
-      "title": "Is that the same as a homophone?",
-      "html": "<p>No. A contronym is about opposing meanings of one word. <strong>Homophones are about sound</strong>: <em>flour</em> and <em>flower</em> sound alike but mean different things. Their meanings do not have to be opposites.</p><p>If those two labels are getting tangled, try the <a href=\"/learn/homophones-same-sound-different-meaning/\" target=\"_blank\" rel=\"noopener noreferrer\">flour-or-flower examples</a> first. Then come back to <em>dust</em> and ask whether the sentence means putting something on or taking it off.</p>"
+      "html": "<p>No. A contronym is about opposing meanings of one word. <strong>Homophones are about sound</strong>: <em>flour</em> and <em>flower</em> sound alike but mean different things. Their meanings do not have to be opposites.</p><p>If those two labels are getting tangled, try the <a href=\"/learn/homophones-same-sound-different-meaning/\" target=\"_blank\" rel=\"noopener noreferrer\">flour-or-flower examples</a> first. Then come back to <em>dust</em> and ask whether the sentence means putting something on or taking it off.</p>",
+      "title": "Is that the same as a homophone?"
     },
     {
       "id": "try-it",
@@ -109,7 +109,7 @@
       "title": "Can you spot the direction?"
     }
   ],
-  "updatedAt": "2026-10-09T12:24:07.530Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Dust can mean adding something or taking it away. Meet contronyms, the words that pull in two directions, and try a few examples.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

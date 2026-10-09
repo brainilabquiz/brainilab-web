@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/comparing-fractions-visually-thumb.webp"
   },
   "order": 50,
-  "title": "Which fraction is bigger? Start with the whole",
+  "title": "Which fraction is bigger?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,7 +73,7 @@
   "sections": [
     {
       "id": "use-the-same-starting-size",
-      "html": "<p>Imagine two identical chocolate bars. One person has three fifths of a bar and another has two fifths. Because every fifth has the same size, three fifths is more.</p><p>That gives a simple rule: when the denominators are equal, compare the numerators. You are counting the same kind of piece. Four sevenths is more than two sevenths for the same reason.</p>",
+      "html": "<p>Take two identical chocolate bars. Split each bar into five equal pieces.</p><p>You get three pieces from one bar. A friend gets two pieces from the other. Your share is bigger because the pieces are the same size and you have one more.</p><p>We write those shares as <strong>3/5</strong> and <strong>2/5</strong>. When the bottom numbers match and the wholes are the same size, compare the top numbers.</p>",
       "title": "Use the same starting size"
     },
     {
@@ -83,16 +83,16 @@
     },
     {
       "id": "find-a-shared-kind-of-piece",
-      "html": "<p>What about 2/3 and 3/4? The numerators and denominators both differ, so neither simple shortcut is enough. Rename both fractions in twelfths: 2/3 = 8/12 and 3/4 = 9/12.</p><p>Now the pieces match. Nine twelfths is more than eight twelfths, so three quarters is larger than two thirds. The equivalent fractions changed the labels, not the original amounts.</p>",
-      "title": "Find a shared kind of piece"
+      "html": "<p>Which is bigger: <strong>2/3 or 3/4</strong>? The pieces are different sizes, so counting two pieces against three is not enough.</p><p>Draw two identical strips, each divided into twelve small equal pieces.</p><ol><li>On the first strip, one third covers four small pieces. Two thirds cover eight. Colour those eight pieces.</li><li>On the second strip, one quarter covers three small pieces. Three quarters cover nine. Colour those nine pieces.</li><li>Compare the coloured amounts. Nine small pieces cover more than eight.</li></ol><p>So <strong>3/4 is bigger than 2/3</strong>. We changed how we divided the strips, not the amounts we were comparing.</p>",
+      "title": "Compare using matching pieces"
     },
     {
       "id": "use-a-halfway-check",
-      "html": "<p>A half can help you estimate. Three eighths is below a half because four eighths would be a half. Five eighths is above a half. This quick check can rule out an answer before you do a longer calculation.</p><p>Keep the whole in mind: half a large cake may be more food than three quarters of a small cake. Our strip comparisons use equal wholes, which is why the fraction values alone are enough.</p>",
-      "title": "Use a halfway check"
+      "html": "<p>Halfway is a useful place to start. Draw a strip with eight equal pieces. Four pieces cover half of it.</p><ul><li>Three pieces do not reach halfway, so <strong>3/8 is less than 1/2</strong>.</li><li>Five pieces go past halfway, so <strong>5/8 is more than 1/2</strong>.</li></ul><p>You do not need a new calculation each time. First ask where the coloured amount sits on the strip.</p>",
+      "title": "Is it more or less than half?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Compare equal-size strips before relying on the written numbers, and learn two useful shortcuts.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

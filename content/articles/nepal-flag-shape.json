@@ -1,60 +1,60 @@
 {
-  "slug": "nepal-flag-shape",
-  "title": "What shape is Nepal’s flag? Meet the double pennant",
-  "description": "Nepal’s flag has two joined triangular pennants, a moon and a sun. Its shape even comes with a precise drawing recipe in the constitution.",
-  "topic": "Geography",
-  "order": 61,
-  "sections": [
-    {
-      "id": "double-pennant",
-      "title": "The outline is the first clue",
-      "html": "<p><strong>Nepal’s flag is a double pennant: two joined triangular shapes, one above the other.</strong> It has a straight edge beside the flagpole and two points facing away from it. No, the rest of a rectangular flag has not been cropped out.</p><p>If you are trying to recognise it in a flag quiz, start there. Before checking a colour or a symbol, follow the outside edge with your eyes. That distinctive outline does a lot of the work.</p>"
-    },
-    {
-      "id": "colours-and-symbols",
-      "title": "Two colours, two sky clues",
-      "html": "<p>The main field is crimson, edged in deep blue. A white moon emblem sits in the upper part; a white sun sits below it. <a href=\"https://ag.gov.np/files/Constitution-of-Nepal_2072_Eng_www.moljpa.gov_.npDate-72_11_16.pdf\">Article 8 of Nepal’s Constitution</a> describes the design.</p><p>Here is an easy way to check your memory: which symbol goes at the top? The moon. Remembering that small detail is more useful than staring at the picture until it feels familiar.</p>"
-    },
-    {
-      "id": "geometry-recipe",
-      "title": "The constitution includes the drawing instructions",
-      "html": "<p>The unexpectedly nerdy part is Schedule 1. It gives a geometric construction for the flag, including the outline, the moon, the sun and the blue border.</p><p>There are lines to draw, distances to mark and arcs to construct. The shape is more precise than “draw two triangles and hope for the best”.</p><p>Those construction lines are guides, not extra marks to print on the finished flag. Think of the faint pencil work behind a drawing: useful while making it, absent from the final picture.</p>"
-    },
-    {
-      "id": "spot-it-next-time",
-      "title": "Try looking at shape before colour",
-      "html": "<p>That is a handy approach for other flags too. Notice the outline, then the layout, then one distinctive symbol. You have given yourself three small clues instead of one large blur.</p><p>For the next round, use our <a href=\"/learn/how-to-learn-world-flags/\">guide to learning world flags</a> or head straight to the quiz. Nepal is a good reminder that the first clue might be around the picture rather than inside it.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Government of Nepal — Constitution, Article 8 and Schedule 1 (PDF)",
-      "url": "https://ag.gov.np/files/Constitution-of-Nepal_2072_Eng_www.moljpa.gov_.npDate-72_11_16.pdf"
-    }
-  ],
-  "game": {
-    "url": "/geography/world-flags-quiz/",
-    "name": "World Flags Quiz"
-  },
   "hub": {
     "url": "/geography/flags/",
     "name": "Flags"
   },
-  "practice": "Look for the shape, colours and symbols in World Flags.",
+  "game": {
+    "url": "/geography/world-flags-quiz/",
+    "name": "World Flags Quiz"
+  },
+  "slug": "nepal-flag-shape",
+  "cover": {
+    "alt": "Nepal’s crimson double-pennant flag with a blue border, moon and sun against a mountain landscape",
+    "src": "/assets/images/learn/nepal-flag-shape.webp",
+    "small": "/assets/images/learn/nepal-flag-shape-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/nepal-flag-shape-thumb.webp"
+  },
+  "order": 61,
+  "title": "What shape is Nepal’s flag?",
+  "topic": "Geography",
+  "status": "published",
   "related": [
     "how-to-learn-world-flags",
     "why-greenland-looks-so-big"
   ],
-  "status": "published",
-  "publishedAt": "2026-10-07T15:40:00Z",
-  "updatedAt": "2026-10-07T15:40:00Z",
+  "sources": [
+    {
+      "url": "https://ag.gov.np/files/Constitution-of-Nepal_2072_Eng_www.moljpa.gov_.npDate-72_11_16.pdf",
+      "name": "Government of Nepal — Constitution, Article 8 and Schedule 1 (PDF)"
+    }
+  ],
   "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/nepal-flag-shape.webp",
-    "small": "/assets/images/learn/nepal-flag-shape-small.webp",
-    "thumbnail": "/assets/images/learn/nepal-flag-shape-thumb.webp",
-    "alt": "Nepal’s crimson double-pennant flag with a blue border, moon and sun against a mountain landscape",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  }
+  "practice": "Look for the shape, colours and symbols in World Flags.",
+  "sections": [
+    {
+      "id": "double-pennant",
+      "html": "<p><strong>Nepal’s flag is a double pennant: two joined triangular shapes, one above the other.</strong> It has a straight edge beside the flagpole and two points facing away from it. No, the rest of a rectangular flag has not been cropped out.</p><p>If you are trying to recognise it in a flag quiz, start there. Before checking a colour or a symbol, follow the outside edge with your eyes. That distinctive outline does a lot of the work.</p>",
+      "title": "The outline is the first clue"
+    },
+    {
+      "id": "colours-and-symbols",
+      "html": "<p>The main field is crimson, edged in deep blue. A white moon emblem sits in the upper part; a white sun sits below it. <a href=\"https://ag.gov.np/files/Constitution-of-Nepal_2072_Eng_www.moljpa.gov_.npDate-72_11_16.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Article 8 of Nepal’s Constitution</a> describes the design.</p><p>Here is an easy way to check your memory: which symbol goes at the top? The moon. Remembering that small detail is more useful than staring at the picture until it feels familiar.</p>",
+      "title": "Two colours, two sky clues"
+    },
+    {
+      "id": "geometry-recipe",
+      "html": "<p>The unexpectedly nerdy part is Schedule 1. It gives a geometric construction for the flag, including the outline, the moon, the sun and the blue border.</p><p>There are lines to draw, distances to mark and arcs to construct. The shape is more precise than “draw two triangles and hope for the best”.</p><p>Those construction lines are guides, not extra marks to print on the finished flag. Think of the faint pencil work behind a drawing: useful while making it, absent from the final picture.</p>",
+      "title": "The constitution includes the drawing instructions"
+    },
+    {
+      "id": "spot-it-next-time",
+      "html": "<p>That is a handy approach for other flags too. Notice the outline, then the layout, then one distinctive symbol. You have given yourself three small clues instead of one large blur.</p><p>For the next round, use our <a href=\"/learn/how-to-learn-world-flags/\" target=\"_blank\" rel=\"noopener noreferrer\">guide to learning world flags</a> or head straight to the quiz. Nepal is a good reminder that the first clue might be around the picture rather than inside it.</p>",
+      "title": "Try looking at shape before colour"
+    }
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Most national flags are rectangles. Nepal’s has two pointed parts, a moon and a sun. Learn to spot its unusual shape.",
+  "publishedAt": "2026-10-07T15:40:00Z"
 }
