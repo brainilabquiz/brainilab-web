@@ -1,15 +1,8 @@
 {
   "slug": "word-detective",
   "title": "Word detective: follow the clues",
-  "description": "Flour or flower? A word with two opposite meanings? Follow three short lessons, try the clues yourself and find the link in a word puzzle.",
   "topic": "Words & puzzles",
   "status": "published",
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-04T11:22:29.978Z",
-  "updatedAt": "2026-10-04T11:22:29.978Z",
-  "coverArticle": "homophones-same-sound-different-meaning",
-  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p>Start with that little mix-up, discover words that can pull in opposite directions, then use the same detective habit in a Connections puzzle. Read a little, try an example and check what you have learned. There is no timer.</p>",
-  "prerequisites": "You only need to read short English sentences. We explain each new term as it appears.",
   "lessons": [
     {
       "slug": "homophones-same-sound-different-meaning",
@@ -27,11 +20,25 @@
       "objective": "Test a possible link against every clue in a word puzzle."
     }
   ],
-  "outcomes": [
-    "Use context to choose between homophones.",
-    "Recognise opposing meanings in familiar phrases.",
-    "Explain a connection that fits every clue."
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/homophone",
+      "name": "Merriam-Webster — Homophone"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/dust",
+      "name": "Merriam-Webster — Dust"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/fast",
+      "name": "Merriam-Webster — Fast"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/bark",
+      "name": "Merriam-Webster — Bark"
+    }
   ],
+  "authorId": "biel-sarda",
   "glossary": [
     {
       "term": "Context",
@@ -46,22 +53,15 @@
       "definition": "A word with meanings that can be opposites."
     }
   ],
-  "sources": [
-    {
-      "name": "Merriam-Webster — Homophone",
-      "url": "https://www.merriam-webster.com/dictionary/homophone"
-    },
-    {
-      "name": "Merriam-Webster — Dust",
-      "url": "https://www.merriam-webster.com/dictionary/dust"
-    },
-    {
-      "name": "Merriam-Webster — Fast",
-      "url": "https://www.merriam-webster.com/dictionary/fast"
-    },
-    {
-      "name": "Merriam-Webster — Bark",
-      "url": "https://www.merriam-webster.com/dictionary/bark"
-    }
-  ]
+  "outcomes": [
+    "Use context to choose between homophones.",
+    "Recognise opposing meanings in familiar phrases.",
+    "Explain a connection that fits every clue."
+  ],
+  "updatedAt": "2026-10-09T12:24:07.530Z",
+  "description": "Explore homophones, words with opposite meanings and Connections puzzles. Three short English lessons with examples, interactive clues and quick quizzes.",
+  "publishedAt": "2026-10-04T11:31:17.023592+00:00",
+  "coverArticle": "homophones-same-sound-different-meaning",
+  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Context is your clue: the words around a word help you work out its meaning.</strong> Start with sound-alikes called <a href=\"/learn/homophones-same-sound-different-meaning/\" target=\"_blank\" rel=\"noopener noreferrer\">homophones</a>, meet a word that can <a href=\"/learn/words-that-mean-their-own-opposite/\" target=\"_blank\" rel=\"noopener noreferrer\">mean opposite things</a>, then <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">test a link across a whole set of clues</a>.</p><p>You only need to read short English sentences. Try the examples yourself, then answer a few questions about what you have just read. There is no timer.</p>",
+  "prerequisites": "You only need to read short English sentences. We explain each new term as it appears."
 }
