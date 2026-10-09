@@ -12,6 +12,11 @@ window.BrainiMobileUI=(function(){
     document.querySelectorAll('.topbar .nav').forEach(shell=>{
       const nav=shell.querySelector('.links');
       const button=shell.querySelector('[data-mobile-menu]');
+      if(nav&&!nav.querySelector('.news-nav-link')){
+        const link=document.createElement('a');link.href='/breaking-news/';link.className='news-nav-link';link.textContent='Breaking News';link.target='_blank';link.rel='noopener noreferrer';
+        if(location.pathname.startsWith('/breaking-news'))link.setAttribute('aria-current','page');
+        nav.append(link);
+      }
       if(!nav||!button) return;
 
       if(!nav.id) nav.id='mainNav';

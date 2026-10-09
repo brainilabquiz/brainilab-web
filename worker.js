@@ -66,6 +66,14 @@ export default {
   },
   async fetch(request,env,ctx){
     const url=new URL(request.url);
+    if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
+      if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
+      const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/index.html',url),request));
+      if(request.method==='HEAD')return response;
+      const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
+      const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
+      return new Response(html.replace('<!-- breaking-news -->',()=>renderNews(edition)||'<div class="wrap"><h1>Breaking News</h1><p>No recent stories are available right now. Please check back soon.</p></div>'),{status:response.status,headers});
+    }
     // Consolidate production entry points before rendering or caching HTML.
     // Keep previews and local development on their own origin.
     if(['brainilabgames.com','www.brainilabgames.com'].includes(url.hostname)){
@@ -79,7 +87,7 @@ export default {
     if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/about/','/about/index.html','/profile/','/profile/index.html'].includes(url.pathname)){
       let response=await serveLearn(request,env,ctx,caches.default);
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
-        const html=await response.text(),news=url.hostname==='brainilabgames.com'?renderNews(selectNewsEdition(await newsEdition(env))):'';
+        const html=await response.text(),news='';
         const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
         response=new Response(html.replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
       }

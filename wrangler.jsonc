@@ -11,7 +11,7 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "/", "/index.html", "/learn", "/learn/*", "/sitemap.xml", "/about/", "/about/index.html"],
+    "run_worker_first": ["/api/*", "/", "/index.html", "/breaking-news", "/breaking-news/*", "/learn", "/learn/*", "/sitemap.xml", "/about/", "/about/index.html"],
     "not_found_handling": "404-page"
   }
 }
