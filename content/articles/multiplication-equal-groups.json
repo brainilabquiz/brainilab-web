@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/maths-from-zero/",
-    "name": "Maths from zero"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -97,7 +97,7 @@
       "title": "Try four pairs"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "A few bowls of fruit can explain multiplication. Build equal groups, count them, and explore a times table without memorising it first.",
   "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }

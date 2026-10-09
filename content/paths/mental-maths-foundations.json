@@ -20,13 +20,18 @@
       "objective": "Double one factor and halve the other without changing the product."
     },
     {
+      "slug": "divide-by-five-in-your-head",
+      "level": "4 · Divide by five",
+      "objective": "Double first, divide by ten, and check the result—even with decimals."
+    },
+    {
       "slug": "multiply-by-11-in-your-head",
-      "level": "4 · Build on it",
+      "level": "5 · Build on it",
       "objective": "Count ten bags of sweets, then add the last bag."
     },
     {
       "slug": "mental-percentages-without-a-calculator",
-      "level": "5 · Put it together",
+      "level": "6 · Put it together",
       "objective": "See what half, a quarter and ten percent look like."
     }
   ],
@@ -42,6 +47,18 @@
     {
       "url": "https://openstax.org/books/prealgebra/pages/6-key-concepts",
       "name": "OpenStax — Prealgebra: percent concepts"
+    },
+    {
+      "name": "OpenStax — Divide Whole Numbers",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+    },
+    {
+      "name": "OpenStax — Visualize Fractions",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/4-1-visualize-fractions"
+    },
+    {
+      "name": "OpenStax — Decimal Operations",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-2-decimal-operations"
     }
   ],
   "authorId": "biel-sarda",
@@ -63,10 +80,11 @@
     "Bridge to ten when adding.",
     "Explain a rounding correction.",
     "Keep a product unchanged by doubling and halving.",
+    "Divide by five and explain why doubling helps.",
     "Multiply by eleven.",
     "Build simple percentages from familiar parts."
   ],
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "Turn awkward sums into easier ones. Start with counters and sweets, then explore what percentages really mean.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "mental-math-round-and-adjust",

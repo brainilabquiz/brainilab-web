@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/fractions-from-zero/",
-    "name": "Fractions, one piece at a time"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -91,7 +91,7 @@
       "title": "Make your own example"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/fractions-from-zero/",
-    "name": "Fractions, one piece at a time"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -102,7 +102,7 @@
       "title": "What if there is a whole ribbon too?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "What do the numbers after the dot mean? Cut a ribbon into equal pieces to explore 0.5, 0.05 and 1.3, one step at a time.",
   "publishedAt": "2026-10-01T15:18:01.509497+00:00"
 }

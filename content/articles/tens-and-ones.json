@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/maths-from-zero/",
-    "name": "Maths from zero: little numbers, big ideas"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -92,7 +92,7 @@
       "title": "Read the amount, not just the digits"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "Bundle ten little cubes into one group and discover how the position of a digit changes its value.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

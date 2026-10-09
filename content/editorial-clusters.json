@@ -298,10 +298,14 @@
     {
       "id": "arithmetic-from-zero-1",
       "topic": "Numbers & logic",
-      "readerQuestion": "How do the basic number operations work, from counting objects to fractions and simple expressions?",
+      "readerQuestion": "Where should I start with basic arithmetic, from place value to fractions and decimals?",
       "hubSlug": "arithmetic-from-zero-a-friendly-guide",
-      "hubTitle": "Arithmetic from zero: a friendly guide",
+      "hubTitle": "Basic arithmetic: seven friendly places to start",
       "members": [
+        {
+          "slug": "tens-and-ones",
+          "angle": "Build two-digit numbers from bundles of ten and single counters."
+        },
         {
           "slug": "addition-putting-things-together",
           "angle": "Join small piles; introduce plus, equals and zero."
@@ -319,17 +323,15 @@
           "angle": "Share objects equally and explain leftovers."
         },
         {
-          "slug": "tens-and-ones",
-          "angle": "Build two-digit numbers from bundles of ten and single counters."
-        },
-        {
           "slug": "fractions-equal-parts",
           "angle": "Name equal pieces and link sharing to fractions."
         },
         {
           "slug": "decimals-money-and-parts-of-ten",
           "angle": "Use a ten-by-ten grid to connect decimals and fractions."
-        },
+        }
+      ],
+      "futureMembers": [
         {
           "slug": "negative-numbers-below-zero",
           "angle": "Use a number line to introduce signed values."
@@ -342,7 +344,8 @@
           "slug": "missing-numbers-first-equations",
           "angle": "Use a balance to find one missing number."
         }
-      ]
+      ],
+      "supportingArticlesPerHub": 7
     }
   ],
   "nextCategoryArticles": [
@@ -401,6 +404,13 @@
       "kind": "explicit-user-request",
       "supportingArticles": 1,
       "note": "Extend the existing fractions Academy course with a beginner decimal lesson. Existing division/fraction lessons from PR60 are reused, not duplicated. Daily cadence stays one article."
+    },
+    {
+      "date": "2026-10-09",
+      "kind": "explicit-user-request",
+      "block": "arithmetic-from-zero-1",
+      "supportingArticles": 7,
+      "note": "User explicitly requested a hub of the seven existing articles. Only this block uses seven; other blocks retain their ten-member publication gate. Three future topics remain in futureMembers. The existing divide-by-five draft is completed and published as an Academy lesson."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/maths-from-zero/",
-    "name": "Maths from zero"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -97,7 +97,7 @@
       "title": "What if nobody gives you any more?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "Put two little piles together and count what you have. Try moving counters, learn what + and = mean, and build your first sums.",
   "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }

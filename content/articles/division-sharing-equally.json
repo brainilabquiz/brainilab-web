@@ -1,7 +1,7 @@
 {
   "hub": {
-    "url": "/learn/paths/maths-from-zero/",
-    "name": "Maths from zero: little numbers, big ideas"
+    "url": "/learn/arithmetic-from-zero-a-friendly-guide/",
+    "name": "Basic arithmetic: seven starting points"
   },
   "game": {
     "url": "/games/math-rush/",
@@ -91,7 +91,7 @@
       "title": "What does the answer count?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "description": "Share a pile into equal groups, check by multiplying, and notice what happens when something is left over.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
