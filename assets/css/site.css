@@ -5916,3 +5916,7 @@ main > section.section,
 @media(max-width:480px){.related-video,.article-body a.related-video{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:10px}.related-video-copy strong{font-size:17px}.related-video-label{font-size:10px}.related-video-link{font-size:11px}}
 @media(max-width:360px){.related-video,.article-body a.related-video{grid-template-columns:80px minmax(0,1fr);gap:10px}.related-video-copy strong{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.related-video{transition:none}}
+/* Shared Breaking News entry: calm pulse, with a static reduced-motion state. */
+.topbar .links .news-nav-link{color:#ae201b;border:1px solid #e52720;border-radius:999px;padding:7px 11px;white-space:nowrap;animation:news-nav-aura 4s ease-in-out infinite}
+@keyframes news-nav-aura{0%,100%{box-shadow:0 0 0 2px #e5272008}50%{box-shadow:0 0 0 4px #e5272018}}
+@media(prefers-reduced-motion:reduce){.topbar .links .news-nav-link{animation:none}}
