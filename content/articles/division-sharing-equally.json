@@ -87,11 +87,11 @@
     },
     {
       "id": "read-what-the-answer-means",
-      "html": "<p>Division can answer two everyday questions:</p><ul><li><strong>How many does each person get?</strong> Share twelve counters among three people. Each person gets four.</li><li><strong>How many groups can I make?</strong> Put twelve counters into bags of three. You fill four bags.</li></ul><p>Both use <strong>12 ÷ 3 = 4</strong>, but the answer means something different: four counters each, or four bags.</p><p>Before calculating, say what you are trying to find.</p>",
+      "html": "<p>Division can answer two everyday questions:</p><ul><li><strong>How many does each person get?</strong> Share twelve counters among three people. Each person gets four.</li><li><strong>How many groups can I make?</strong> Put twelve counters into bags of three. You fill four bags.</li></ul><p>Both use <strong>12 ÷ 3 = 4</strong>, but the answer means something different: four counters each, or four bags.</p><p>Before calculating, say what you are trying to find.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
       "title": "What does the answer count?"
     }
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T17:07:39.648546Z",
   "description": "Share a pile into equal groups, check by multiplying, and notice what happens when something is left over.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

@@ -87,11 +87,11 @@
     },
     {
       "id": "make-your-own-example",
-      "html": "<p>Fold a strip of paper into two equal sections, then fold it again to make four. Unfold it and check the sections. Two of the four sections cover the same length as one of the two original sections.</p><p>Do not worry about the written fraction yet. First get comfortable describing the picture: how many equal parts make the whole, and how many of those parts are selected? The next lesson gives those two counts their names.</p>",
+      "html": "<p>Fold a strip of paper into two equal sections, then fold it again to make four. Unfold it and check the sections. Two of the four sections cover the same length as one of the two original sections.</p><p>Do not worry about the written fraction yet. First get comfortable describing the picture: how many equal parts make the whole, and how many of those parts are selected? The next lesson gives those two counts their names.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
       "title": "Make your own example"
     }
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T17:07:39.649548Z",
   "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

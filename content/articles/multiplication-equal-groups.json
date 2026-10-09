@@ -93,11 +93,11 @@
     },
     {
       "id": "your-next-step",
-      "html": "<p>There are four pairs of socks. A pair means two socks. How many socks are there?</p><details class=\"practice-answer\"><summary>Show me the steps</summary><p>Count two socks for each pair: 2, then 4, then 6, then 8. Four groups of two make <strong>8 socks</strong>.</p></details><p>You have now met adding, taking away and equal groups. If a sum feels slippery, sketch the groups before counting them.</p><p>For a later challenge, <a href=\"/learn/multiply-by-11-in-your-head/\">try counting ten groups and one more</a>. For now, understanding the small groups is enough.</p>",
+      "html": "<p>There are four pairs of socks. A pair means two socks. How many socks are there?</p><details class=\"practice-answer\"><summary>Show me the steps</summary><p>Count two socks for each pair: 2, then 4, then 6, then 8. Four groups of two make <strong>8 socks</strong>.</p></details><p>You have now met adding, taking away and equal groups. If a sum feels slippery, sketch the groups before counting them.</p><p>For a later challenge, <a href=\"/learn/multiply-by-11-in-your-head/\">try counting ten groups and one more</a>. For now, understanding the small groups is enough.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
       "title": "Try four pairs"
     }
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T17:07:39.649548Z",
   "description": "A few bowls of fruit can explain multiplication. Build equal groups, count them, and explore a times table without memorising it first.",
   "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }
