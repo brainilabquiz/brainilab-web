@@ -1,0 +1,167 @@
+{
+  "slug": "curiosity-daily-2026-10-09",
+  "title": "From Moon code to meringues: 20 curious searches",
+  "description": "An Apollo software pioneer, an egg’s hidden talents and a few familiar names with surprising pasts. Twenty short detours inspired by 8 October’s searches.",
+  "topic": "Curiosity",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 66,
+  "publishedAt": "2026-10-09T16:03:10Z",
+  "updatedAt": "2026-10-09T16:03:10Z",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-daily-20261009.webp",
+    "small": "/assets/images/learn/curiosity-daily-20261009-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-daily-20261009-thumb.webp",
+    "alt": "A globe, an open book, an egg and a basketball on a sunlit wooden table",
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/general-knowledge/",
+    "name": "General Knowledge"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Follow your curiosity with a round of general knowledge.",
+  "related": [
+    "curiosity-weekly-2026-10-09",
+    "how-to-read-a-tennis-score"
+  ],
+  "sources": [
+    {
+      "name": "Google Trends — United States, 48-hour capture; selected starts on 8 October 2026",
+      "url": "https://trends.google.com/trending?geo=US&hours=48"
+    },
+    {
+      "name": "Google Trends — United Kingdom, 48-hour capture; selected starts on 8 October 2026",
+      "url": "https://trends.google.com/trending?geo=GB&hours=48"
+    },
+    {
+      "name": "Google Trends — Spain, 48-hour capture; selected starts on 8 October 2026",
+      "url": "https://trends.google.com/trending?geo=ES&hours=48"
+    },
+    {
+      "name": "Google Trends — India, 48-hour capture; selected starts on 8 October 2026",
+      "url": "https://trends.google.com/trending?geo=IN&hours=48"
+    },
+    {
+      "name": "United Nations — World Space Week",
+      "url": "https://www.un.org/en/events/spaceweek/"
+    },
+    {
+      "name": "NASA — Margaret Hamilton",
+      "url": "https://science.nasa.gov/people/margaret-hamilton/"
+    },
+    {
+      "name": "Starlink — Technology",
+      "url": "https://starlink.com/technology"
+    },
+    {
+      "name": "UCL — Mathematics and public understanding",
+      "url": "https://www.ucl.ac.uk/research-innovation/case-studies/2022/apr/public-and-media-impact-arising-mathematical-research-ucl"
+    },
+    {
+      "name": "New Directions — Anne Carson",
+      "url": "https://www.ndbooks.com/author/anne-carson/"
+    },
+    {
+      "name": "Official London Theatre — Jonathan Bailey",
+      "url": "https://officiallondontheatre.com/news/our-top-five-jonathan-bailey-west-end-moments/"
+    },
+    {
+      "name": "Official Charts — Hear’Say",
+      "url": "https://www.officialcharts.com/artist/10362/Hearsay/"
+    },
+    {
+      "name": "James Blunt — Biography",
+      "url": "https://jamesblunt.com/james-blunt-biography/"
+    },
+    {
+      "name": "Exploratorium — The science of eggs",
+      "url": "https://annex.exploratorium.edu/cooking/eggs/kitchenlab.html"
+    },
+    {
+      "name": "Mary Berry — Biography",
+      "url": "https://www.maryberry.co.uk/about-mary-berry"
+    },
+    {
+      "name": "IATA — Location codes",
+      "url": "https://www.iata.org/en/iata-repository/pressroom/fact-sheets/fact-sheet-iata-location-codes/"
+    },
+    {
+      "name": "Indian Railways — History and engineering diary",
+      "url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/eff_res/camtech/S%26T%20Engineering/YearWise/Diary%20of%20important%20signalling%20parameters%20and%20safety%20in%20railways.pdf"
+    },
+    {
+      "name": "NFL Football Operations — Football terms",
+      "url": "https://operations.nfl.com/rules-officiating/nfl-football-basics/football-terms"
+    },
+    {
+      "name": "MLB — Walk",
+      "url": "https://www.mlb.com/glossary/standard-stats/walk"
+    },
+    {
+      "name": "FIBA — Official Basketball Rules 2024",
+      "url": "https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2024-v10a.pdf"
+    },
+    {
+      "name": "WNBA — Frequently asked questions",
+      "url": "https://www.wnba.com/faq"
+    },
+    {
+      "name": "Indian Super League — About the competition",
+      "url": "https://www.indiansuperleague.com/about-indian-super-league"
+    },
+    {
+      "name": "All India Football Federation — History",
+      "url": "https://www.the-aiff.com/history"
+    },
+    {
+      "name": "Punjab Kings — The 2021 name change",
+      "url": "https://www.punjabkingsipl.in/news/kings-xi-punjab-is-now-punjab-kings"
+    },
+    {
+      "name": "NBA — Scoring and timing",
+      "url": "https://official.nba.com/rule-no-5-scoring-and-timing/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-small-detour",
+      "title": "A small detour through the search box",
+      "html": "<p>A search box can take you from a Moon mission to a mixing bowl in seconds. Here are twenty small discoveries inspired by searches that began trending on <strong>8 October 2026</strong> in the US, UK, Spain and India.</p><p>This is a curated selection of rising searches, not a worldwide most-searched ranking. The links lead to the facts behind each detour.</p>"
+    },
+    {
+      "id": "detour-1",
+      "title": "A few reasons to look up",
+      "html": "<p><strong><a href=\"https://www.un.org/en/events/spaceweek/\">World Space Week 2026</a>.</strong> A week with its eyes on the sky: 4–10 October. The 2026 theme is <em>Rocket Revolution</em>. It is a good excuse to look past the dramatic launch and wonder what a spacecraft actually does once it gets there.</p><p><strong><a href=\"https://science.nasa.gov/people/margaret-hamilton/\">Margaret Hamilton</a>.</strong> Apollo needed software as well as rockets. Hamilton led the Software Engineering Division at MIT’s Instrumentation Laboratory. That famous photograph of her beside a tower of printouts shows how much invisible work sat behind a trip to the Moon.</p><p><strong><a href=\"https://starlink.com/technology\">Starlink</a>.</strong> Satellite internet does not mean one enormous satellite hovering over every customer. Starlink uses a constellation in low Earth orbit. Think of many moving relay points rather than one distant mast in the sky.</p><p><strong><a href=\"https://www.ucl.ac.uk/research-innovation/case-studies/2022/apr/public-and-media-impact-arising-mathematical-research-ucl\">Hannah Fry</a>.</strong> Maths can begin with a human question: how do we make decisions when an algorithm offers an answer? Fry’s work on communicating mathematics makes a useful change from treating the subject as a page of sums.</p>"
+    },
+    {
+      "id": "detour-2",
+      "title": "Familiar names, less familiar stories",
+      "html": "<p><strong><a href=\"https://www.ndbooks.com/author/anne-carson/\">Anne Carson</a>.</strong> Poetry and translation can share a bookshelf—and a writer. Carson’s books include <em>Autobiography of Red</em> and <em>Antigonick</em>. Her publisher’s catalogue is a tempting route from an unfamiliar name into a very different sort of reading.</p><p><strong><a href=\"https://officiallondontheatre.com/news/our-top-five-jonathan-bailey-west-end-moments/\">Jonathan Bailey</a>.</strong> Before your next “where have I seen him?” moment, try the stage. Bailey won a 2019 Olivier Award for his supporting performance in the musical <em>Company</em>. A screen face can have a whole other career behind it.</p><p><strong><a href=\"https://www.officialcharts.com/artist/10362/Hearsay/\">Hear’Say</a>.</strong> A small time machine for pop fans: <em>Pure and Simple</em> reached No. 1 in the UK. It was one of two chart-topping singles for the group. Sometimes a name in the search box brings a chorus back before the facts arrive.</p><p><strong><a href=\"https://jamesblunt.com/james-blunt-biography/\">James Blunt</a>.</strong> The singer’s earlier job was rather different: British Army captain. His own biography makes that turn in his career explicit. It is a reminder that a familiar voice does not always come with a predictable backstory.</p>"
+    },
+    {
+      "id": "detour-3",
+      "title": "Curiosity in ordinary places",
+      "html": "<p><strong><a href=\"https://annex.exploratorium.edu/cooking/eggs/kitchenlab.html\">Huevo: an egg with a hidden talent</a>.</strong> An egg can help make a sauce, a custard or a cloud of meringue. The Exploratorium explains how yolk helps butter and water stay together, while beaten white becomes foam. Same ingredient, remarkably different jobs.</p><p><strong><a href=\"https://www.maryberry.co.uk/about-mary-berry\">Mary Berry</a>.</strong> Before the television kitchens, there was training at the Cordon Bleu in Paris and Bath School of Home Economics. Berry also worked as a magazine cookery editor. A good recipe has to work on the page as well as on a plate.</p><p><strong><a href=\"https://www.iata.org/en/iata-repository/pressroom/fact-sheets/fact-sheet-iata-location-codes/\">Airport</a>.</strong> Those three letters on a baggage tag are a code, not a tiny spelling test. IATA assigns unique three-letter location codes for commercial airline use. Try recognising the code on an old ticket before reading the destination.</p><p><strong><a href=\"https://indianrailways.gov.in/railwayboard/uploads/directorate/eff_res/camtech/S%26T%20Engineering/YearWise/Diary%20of%20important%20signalling%20parameters%20and%20safety%20in%20railways.pdf\">Railway station</a>.</strong> The Hindi search रेलवे स्टेशन takes this detour to India. Its first commercial passenger train ran from Bombay’s Bori Bunder to Thane in 1853. A modern station board sits at the far end of a much longer transport story.</p>"
+    },
+    {
+      "id": "detour-4",
+      "title": "A friendlier way to read the score",
+      "html": "<p><strong><a href=\"https://operations.nfl.com/rules-officiating/nfl-football-basics/football-terms\">Buccaneers vs Cowboys</a>.</strong> An American-football scoreboard becomes friendlier when you know the scoring units: a touchdown is six points; a field goal is three. The extra-point attempt comes separately. Seven on the board can represent two scoring actions.</p><p><strong><a href=\"https://www.mlb.com/glossary/standard-stats/walk\">Rays vs Yankees</a>.</strong> Baseball has a wonderfully literal reward: four balls give the batter a “walk” to first base.</p><p><strong><a href=\"https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2024-v10a.pdf\">Real Madrid–Partizan</a>.</strong> Basketball has more than one clock. Under FIBA rules, regulation play is four ten-minute quarters. That counts playing time, so the final whistle need not arrive forty minutes after you sit down.</p><p><strong><a href=\"https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2024-v10a.pdf\">Valencia–Hapoel Tel Aviv</a>.</strong> Now watch the smaller countdown. The shot clock normally gives a team 24 seconds to attempt a shot; reset rules depend on what happens next. It stops an attack from becoming an endless game of keep-away.</p>"
+    },
+    {
+      "id": "detour-5",
+      "title": "Old names, new competitions",
+      "html": "<p><strong><a href=\"https://www.wnba.com/faq\">Aces vs Valkyries</a>.</strong> The WNBA’s quarters are ten minutes long. The NBA uses twelve. Same familiar court markings, different length of regulation play: a handy detail when you switch between competitions.</p><p><strong><a href=\"https://www.indiansuperleague.com/about-indian-super-league\">ISL</a>.</strong> The Indian Super League began on 12 October 2014. That makes this a relatively young competition in a country with a much older football story. Three letters can hide a useful distinction between a league and the history of a sport.</p><p><strong><a href=\"https://www.the-aiff.com/history\">IFA Shield final</a>.</strong> For the older chapter, go back to 1911. Mohun Bagan became the first Indian team to win the IFA Shield. That single date helps put the modern league beside a football tradition more than a century deep.</p><p><strong><a href=\"https://www.punjabkingsipl.in/news/kings-xi-punjab-is-now-punjab-kings\">Punjab Kings</a>.</strong> If you remember Kings XI Punjab, your memory is working. The team announced its change to Punjab Kings in February 2021. Old names have a habit of living on in conversation long after the badge changes.</p>"
+    },
+    {
+      "id": "one-more-question",
+      "title": "Which detail will stick?",
+      "html": "<p>Pick one thing you did not know and tell it to someone in a sentence. Or try the <a href=\"/general-knowledge/general-knowledge-quiz/\">General Knowledge Quiz</a> and see where your curiosity takes you next.</p>"
+    }
+  ]
+}
