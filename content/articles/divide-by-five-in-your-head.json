@@ -1,61 +1,112 @@
 {
   "slug": "divide-by-five-in-your-head",
-  "title": "Dividing by five? Try doubling first",
-  "description": "Turn a division by five into a doubling and a division by ten. See why it works, then try a few small puzzles.",
+  "title": "How to divide by 5 in your head: double first",
+  "description": "Five friends, one bill. Learn a quick way to divide by 5, see why it works, and handle decimals without losing a digit.",
   "topic": "Numbers & logic",
-  "status": "draft",
-  "order": 80,
+  "status": "published",
   "authorId": "biel-sarda",
-  "publishedAt": null,
-  "updatedAt": "2026-10-01T16:00:00Z",
+  "order": 80,
+  "publishedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T16:51:49.095291Z",
   "cover": {
-    "src": "/assets/images/learn/divide-by-five-in-your-head.webp",
-    "small": "/assets/images/learn/divide-by-five-in-your-head-small.webp",
-    "thumbnail": "/assets/images/learn/divide-by-five-in-your-head-thumb.webp",
-    "alt": "Wooden counting tokens in small terracotta bowls on a linen table",
+    "src": "/assets/images/learn/divide-by-five-20261009.webp",
+    "small": "/assets/images/learn/divide-by-five-20261009-small.webp",
+    "thumbnail": "/assets/images/learn/divide-by-five-20261009-thumb.webp",
+    "alt": "A hand arranging wooden counters beside ceramic dishes and a notebook",
     "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  },
-  "game": {
-    "url": "/games/number-route/",
-    "name": "Number Route"
+    "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "hub": {
     "url": "/learn/paths/mental-maths-foundations/",
     "name": "Mental maths foundations"
   },
-  "sections": [
-    {
-      "id": "five-at-a-time",
-      "title": "How many groups of five?",
-      "html": "<p>You have 35 tokens and put five in each little bowl. How many bowls do you fill? Seven: five, ten, fifteen, twenty, twenty-five, thirty, thirty-five.</p><p>That is one meaning of <strong>35 ÷ 5</strong>: how many groups of five fit into 35? If division still feels unfamiliar, begin with <a href=\"/learn/division-sharing-equally/\">sharing and grouping</a>. You do not need a trick to understand the question.</p>"
-    },
-    {
-      "id": "double-both",
-      "title": "Make the groups easier to count",
-      "html": "<p>Imagine making an identical copy of every token in every bowl. Each bowl now holds ten tokens instead of five. The total is 70, but there are still seven bowls.</p><p>So we can count groups of ten in 70 instead of groups of five in 35. We doubled both the total and the number in each group; the number of groups stayed the same.</p><p>That gives the shortcut: <strong>to divide by five, double the number and then divide by ten.</strong> For 85 ÷ 5, first double 85 to get 170. Then divide 170 by ten to get 17. Check it: 17 groups of five contain 85.</p>"
-    },
-    {
-      "id": "your-turn",
-      "title": "Three bowls of practice",
-      "html": "<p>Try each one before opening the answer. Say the doubled number out loud if that helps you keep the two steps separate.</p><ol><li>45 ÷ 5</li><li>120 ÷ 5</li><li>32 ÷ 5</li></ol><details class=\"practice-answer\"><summary>Show the steps</summary><p><strong>45:</strong> double to 90, then divide by ten: <strong>9</strong>.</p><p><strong>120:</strong> double to 240, then divide by ten: <strong>24</strong>.</p><p><strong>32:</strong> double to 64, then divide by ten: <strong>6.4</strong>. This last answer is not a whole number. If you only want complete groups of five tokens, you get six groups with two tokens left over.</p></details>"
-    },
-    {
-      "id": "puzzle-check",
-      "title": "Useful shortcuts still need a check",
-      "html": "<p>Dividing by ten changes the place value; it does not mean “remove the last digit”. Removing the 4 from 64 would give the wrong answer. The <a href=\"/learn/decimals-money-and-parts-of-ten/\">decimal lesson</a> shows what the dot is doing.</p><p>Number Route keeps division steps whole-number in its Easy format. The calculation 32 ÷ 5 is valid arithmetic, but it would not be an allowed step there. Understanding the game’s rule saves you from trying to force a decimal into a whole-number route.</p><p>Use the shortcut when it makes a calculation clearer. If you already know 25 ÷ 5 is 5, you can simply use that fact. A shortcut is a choice, not another rule to memorise before you are allowed to play.</p>"
-    }
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
+  },
+  "practice": "Try the idea in Math Rush when you feel ready.",
+  "related": [
+    "doubling-and-halving",
+    "decimals-money-and-parts-of-ten",
+    "arithmetic-from-zero-a-friendly-guide"
   ],
   "sources": [
     {
       "name": "OpenStax — Divide Whole Numbers",
       "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+    },
+    {
+      "name": "OpenStax — Visualize Fractions",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/4-1-visualize-fractions"
+    },
+    {
+      "name": "OpenStax — Decimal Operations",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-2-decimal-operations"
     }
   ],
-  "related": [
-    "division-sharing-equally",
-    "doubling-and-halving",
-    "how-to-play-number-route"
+  "sections": [
+    {
+      "id": "double-then-divide",
+      "title": "How do you divide by 5 in your head?",
+      "html": "<p><strong>Double the number, then divide the result by 10.</strong> For 35 ÷ 5, double 35 to get 70. Divide 70 by 10 and the answer is <strong>7</strong>.</p><p>Imagine five friends splitting a €35 picnic bill equally. Each pays €7. Nothing needs writing down, and nobody has to open the calculator. With an €85 bill, the same two steps give 170, then <strong>€17 each</strong>.</p><p>It sounds slightly backwards: make the number bigger to make the division easier. Here is why that is allowed.</p>"
+    },
+    {
+      "id": "why-it-works",
+      "title": "Why does doubling help?",
+      "html": "<p>Picture 35 wooden counters packed into groups of five. You have seven groups. Now make an identical copy of every counter, keeping each copy in the same group.</p><p>The total doubles to 70. Every group doubles to ten. But the <strong>number of groups stays seven</strong>. Counting groups of ten in 70 gives the same answer as counting groups of five in 35.</p><p>That is the idea behind the <a href=\"https://openstax.org/books/prealgebra-2e/pages/4-1-visualize-fractions\">equivalent fractions property</a>: multiplying the top and bottom by the same nonzero number keeps the value unchanged. Here, <strong>35/5 = 70/10</strong>. We choose doubling because it turns five into a friendly ten.</p>"
+    },
+    {
+      "id": "try-bigger",
+      "title": "A bigger bill, the same two steps",
+      "html": "<p>Try <strong>125 ÷ 5</strong>. First, double 125: 250. Then divide by ten: <strong>25</strong>.</p><p>Dividing by ten makes each digit worth one tenth as much: 250 becomes 25, while 46 becomes 4.6. If place value feels slippery, the <a href=\"/learn/decimals-money-and-parts-of-ten/\">guide to decimals</a> takes it slowly.</p><p>There is a handy check: <strong>multiply your answer by five</strong>. Does it bring you back to the original number? Here, 25 × 5 = 125. A quick check is often more useful than doing the same calculation twice.</p>"
+    },
+    {
+      "id": "when-decimals-appear",
+      "title": "What if the answer is not a whole number?",
+      "html": "<p>The shortcut still works. For <strong>23 ÷ 5</strong>, double 23 to get 46, then divide by ten: <strong>4.6</strong>. A €23 bill shared between five people is €4.60 each.</p><p>Be careful with the tempting instruction “drop the last digit”. Dropping the 6 from 46 would give 4, which is wrong. You are dividing by ten, not deleting part of the number.</p><p>Context matters, too. Share 23 whole sweets between five people without cutting any, and each gets four, with three left over. Money can be split into cents; whole sweets may need a remainder. Both answers describe the same division in different ways.</p>"
+    },
+    {
+      "id": "one-to-keep",
+      "title": "One to try before you go",
+      "html": "<p>A five-pack of notebooks costs €12.50. What does one notebook cost?</p><details class=\"practice-answer\"><summary>Show me the two steps</summary><p>Double 12.50 to get 25. Divide 25 by ten: <strong>€2.50</strong>. Check it with five lots of €2.50: €12.50.</p></details><p>You do not need a new trick for every number. If 50 ÷ 5 already feels obvious, use what you know. Keep this shortcut for the numbers that make you pause, and continue the <a href=\"/learn/paths/mental-maths-foundations/\">mental maths course</a> at your own pace.</p>"
+    }
   ],
-  "practice": "Try Number Route. Keep the numbers in order and check that each division leaves a whole number."
+  "quiz": {
+    "version": "academy-oct9-divide-five-v1",
+    "questions": [
+      {
+        "prompt": "What is 65 ÷ 5?",
+        "options": [
+          "13",
+          "6.5",
+          "130",
+          "60"
+        ],
+        "answer": 0,
+        "explanation": "Double 65 to get 130, then divide by ten: 13. Check: 13 × 5 = 65."
+      },
+      {
+        "prompt": "Why does doubling first work?",
+        "options": [
+          "Division always makes a whole number",
+          "Doubling removes the need to divide",
+          "Doubling both the total and each group size keeps the number of groups the same",
+          "Five and ten mean the same amount"
+        ],
+        "answer": 2,
+        "explanation": "A group of five becomes a group of ten while the total also doubles. The number of groups is unchanged."
+      },
+      {
+        "prompt": "Five friends split a €17 bill equally. How much does each pay?",
+        "options": [
+          "€3.00",
+          "€3.40",
+          "€8.50",
+          "€34.00"
+        ],
+        "answer": 1,
+        "explanation": "Double 17 to get 34. Divide by ten to get 3.4, or €3.40. Five payments of €3.40 total €17."
+      }
+    ]
+  }
 }
