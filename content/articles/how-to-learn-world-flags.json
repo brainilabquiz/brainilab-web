@@ -25,6 +25,14 @@
     {
       "url": "https://www.quirinale.it/it/pagine/italian-tricolour-flag",
       "name": "Italian Presidency — The Italian Tricolour Flag"
+    },
+    {
+      "url": "https://www.elysee.fr/la-presidence/le-drapeau-francais",
+      "name": "French Presidency — The French flag"
+    },
+    {
+      "url": "https://www.royal-house.nl/topics/monarchy/flags/flag-of-the-netherlands",
+      "name": "Royal House of the Netherlands — Dutch flag"
     }
   ],
   "authorId": "biel-sarda",
@@ -32,12 +40,12 @@
   "sections": [
     {
       "id": "start-small",
-      "html": "<p>A page full of flags can soon become a blur of stripes, stars and familiar colours. Pick five to begin with. Look at each design, cover its name and see which countries you can recall.</p><p>You could choose flags from one region or revisit countries you confused in a quiz. A short, familiar set gives you time to notice the details.</p>",
+      "html": "<p><strong>To learn world flags, start with a small set, describe one distinctive detail on each and then hide the country names.</strong> A page full of stripes and stars is much harder to tackle all at once.</p><p>Try five flags from a region you like, or five you confused in a quiz. Five is a manageable starting point, not a magic memory number.</p>",
       "title": "Start with five flags"
     },
     {
       "id": "describe",
-      "html": "<p>Before naming the country, describe what you see:</p><ul><li><strong>Layout:</strong> horizontal stripes, vertical stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones appear, and in what order?</li><li><strong>Symbols:</strong> is there a star, emblem or other detail, and where is it?</li></ul><p>The edge attached to the flagpole is called the <em>hoist</em>. In a standard illustration with the pole on the left, that is where you start reading vertical stripes. Watch out for photographs showing the flag from the other side.</p>",
+      "html": "<p>Before naming the country, look for three things:</p><ul><li><strong>Layout:</strong> horizontal stripes, vertical stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones appear, and in what order?</li><li><strong>Symbols:</strong> is there a star, emblem or other detail, and where is it?</li></ul><p>The edge attached to the pole is the <em>hoist</em>. Standard illustrations usually place it on the left. A photograph taken from behind the flag can reverse the apparent order.</p>",
       "title": "Look at the design in three steps"
     },
     {
@@ -47,16 +55,16 @@
     },
     {
       "id": "compare",
-      "html": "<p>If you keep mixing up two flags, compare their labelled illustrations. Look for a difference you can describe: the order of the stripes, an emblem or the position of a star. Then cover the names and try again.</p><p>Subtle shades can be unreliable in small images. Screens, lighting and image files affect how colours look. For flags distinguished by precise colours or proportions, check an authoritative reference rather than relying on two thumbnails.</p>",
-      "title": "Put confusing pairs side by side"
+      "html": "<p>“Red, white and blue” is a description, but it is not much of an answer. These two flags share those colours:</p><ul><li><strong>France:</strong> vertical bands, blue–white–red from the hoist.</li><li><strong>The Netherlands:</strong> horizontal bands, red–white–blue from top to bottom.</li></ul><p>The stripe direction separates them before you worry about colour shades. The <a href=\"https://www.elysee.fr/la-presidence/le-drapeau-francais\">French Presidency’s flag history</a> explains this distinction; the <a href=\"https://www.royal-house.nl/topics/monarchy/flags/flag-of-the-netherlands\">Dutch Royal House</a> confirms the Dutch colours.</p><p>For harder pairs, use an authoritative labelled reference. Subtle shades can change with screens and lighting, so two tiny thumbnails are not always enough.</p>",
+      "title": "France or the Netherlands? Same colours, different clue"
     },
     {
       "id": "review",
-      "html": "<p>After a World Flags round, jot down two or three answers you were unsure about, including lucky guesses. Note the detail that distinguishes each flag.</p><p>Before your next round, look at those flags again and try naming them without the labels. Once they feel familiar, add a few more or explore the same countries in World Capitals.</p><p>Start with the outline of <a href=\"/learn/nepal-flag-shape/\">Nepal’s double-pennant flag</a>. It is a useful example of recognising a design before studying its colours.</p>",
+      "html": "<p>After a round, note two or three flags you were unsure about, including lucky guesses. Write the clue you missed: “vertical, blue by the pole” is more useful than “remember France”.</p><p>Before your next round, cover the labels and name those flags again. Add a few more once you can explain how you recognise the first set. <a href=\"/learn/confidence-is-not-a-memory-test/\">Recognising an answer and recalling it</a> are different challenges.</p><p>For a design that breaks the rectangle pattern, take a look at <a href=\"/learn/nepal-flag-shape/\">Nepal’s double-pennant flag</a>.</p>",
       "title": "Keep a short list for next time"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Start with a few flags, notice their distinctive details and compare the pairs that keep catching you out.",
+  "updatedAt": "2026-10-09T06:09:09Z",
+  "description": "Learn world flags by spotting layout, colour order and symbols. Compare France with the Netherlands, then test a small set without the labels.",
   "publishedAt": "2026-09-23T15:00:00Z"
 }
