@@ -31,21 +31,22 @@
       "name": "University of Cambridge NRICH — Roman numerals"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Explore more dates and discoveries in History Quiz.",
   "sections": [
     {
       "id": "start-seven",
-      "html": "<p>Roman numerals turn up on clocks, buildings and film credits. A long string of letters can look intimidating, but the usual notation uses just seven symbols:</p><p class=\"number-example\">I = 1 · V = 5 · X = 10 · L = 50<br/>C = 100 · D = 500 · M = 1,000</p><p>When the symbols run from larger to smaller values, add them. VI is 5 + 1, or 6. VIII is 5 + 1 + 1 + 1, or 8.</p>",
+      "html": "<p>Roman numerals are letters used to write numbers. You can spot them on clocks, buildings and film credits. Start with these seven symbols:</p><div class=\"table-scroll\"><table><caption>The seven Roman numeral symbols</caption><thead><tr><th scope=\"col\">Symbol</th><th scope=\"col\">Number</th></tr></thead><tbody><tr><td>I</td><td>1</td></tr><tr><td>V</td><td>5</td></tr><tr><td>X</td><td>10</td></tr><tr><td>L</td><td>50</td></tr><tr><td>C</td><td>100</td></tr><tr><td>D</td><td>500</td></tr><tr><td>M</td><td>1,000</td></tr></tbody></table></div><p>When a smaller symbol follows a larger one, add it. In <strong>VI</strong>, V gives you five and I adds one more. That makes <strong>6</strong>.</p><p>In <strong>VIII</strong>, start with five and add three ones. That makes <strong>8</strong>.</p>",
       "title": "Get to know the seven symbols"
     },
     {
       "id": "pairs",
-      "html": "<p>Some pairs use subtraction. IV means 5 − 1, giving 4; IX means 10 − 1, giving 9. The standard pairs are <strong>IV, IX, XL, XC, CD and CM</strong>: 4, 9, 40, 90, 400 and 900.</p><p>You cannot use any pair you like. For example, 49 is written XLIX: forty plus nine. IL is not the standard form.</p><p>Historical inscriptions sometimes follow different conventions. Clock faces, for instance, often use IIII for four.</p>",
+      "html": "<p>Some pairs work the other way round: a smaller symbol comes first, and you take it away. In <strong>IV</strong>, take one away from five. The answer is <strong>4</strong>.</p><p>These are the usual subtraction pairs:</p><ul><li><strong>IV:</strong> one less than five → 4.</li><li><strong>IX:</strong> one less than ten → 9.</li><li><strong>XL:</strong> ten less than fifty → 40.</li><li><strong>XC:</strong> ten less than one hundred → 90.</li><li><strong>CD:</strong> one hundred less than five hundred → 400.</li><li><strong>CM:</strong> one hundred less than one thousand → 900.</li></ul><p>You cannot invent any pair you like. To write 49, use <strong>XLIX</strong>: XL for forty, then IX for nine. IL is not the usual way to write it.</p><p>Older inscriptions sometimes use different forms. Many clocks show four as <strong>IIII</strong>.</p>",
       "title": "When a smaller symbol comes first"
     },
     {
       "id": "doorway-date",
-      "html": "<p>Take <strong>MCMXLIV</strong>. Split it into M | CM | XL | IV:</p><p>1,000 + 900 + 40 + 4 = <strong>1944</strong>.</p><p>Breaking the date into thousands, hundreds, tens and units makes it easier to read and check.</p><details class=\"practice-answer\"><summary>What year is MMXXVI?</summary><p><strong>2026.</strong> MM is 2,000, XX is 20 and VI is 6.</p></details>",
+      "html": "<p>Try reading <strong>MCMXLIV</strong> on a building. Break it into familiar pieces:</p><ul><li><strong>M</strong> gives 1,000.</li><li><strong>CM</strong> gives 900.</li><li><strong>XL</strong> gives 40.</li><li><strong>IV</strong> gives 4.</li></ul><p>The first two pieces make 1,900. Add forty to reach 1,940, then four more. The year is <strong>1944</strong>.</p><details class=\"practice-answer\"><summary>What year is MMXXVI?</summary><p><strong>2026.</strong> MM gives two thousand. XX adds twenty. VI adds six.</p></details>",
       "title": "Read a date one piece at a time"
     },
     {
@@ -54,8 +55,7 @@
       "title": "Three more to try"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Learn the seven symbols, spot the subtraction pairs and turn a date such as MCMXLIV into a number you recognise.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

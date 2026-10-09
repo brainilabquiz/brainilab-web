@@ -1,29 +1,28 @@
 {
+  "hub": {
+    "url": "/games/",
+    "name": "All games"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
   "slug": "find-your-first-brainilab-game",
-  "title": "Words, numbers or flags? Find your first BrainiLab game",
-  "description": "A quick guide for word detectives, mental-maths sprinters and people who recognise a flag before they remember a name.",
+  "cover": {
+    "alt": "A globe, wooden letter and number tiles, and a yellow pencil on a sunlit desk",
+    "src": "/assets/images/learn/find-your-first-brainilab-game.webp",
+    "small": "/assets/images/learn/find-your-first-brainilab-game-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/find-your-first-brainilab-game-thumb.webp"
+  },
   "order": 57,
-  "sections": [
-    {
-      "id": "pick-a-mood",
-      "title": "What sort of curious are you today?",
-      "html": "<p>You open a page of games. Suddenly choosing a game feels like the first puzzle. Let’s make that part easier.</p><p>Forget choosing the one you ought to be good at. Pick the little moment you enjoy: spotting a connection, landing a quick calculation or recognising a place you have never visited. Here are three ways in.</p>"
-    },
-    {
-      "id": "words",
-      "title": "“Hang on… those things have something in common”",
-      "html": "<p>Try <a href=\"/games/connections/\">Connections</a> if you like finding the idea hiding between clues. Each round gives you a handful of concepts and four possible links. Your job is to choose the connection that fits them all.</p><p>Think <strong>violin, cello, guitar and harp</strong>. The shared idea is string instruments. “Things you play with a bow” almost works—until the guitar turns up and ruins your theory.</p><p>That is the pleasure of this game: a neat answer has to survive every clue, including the awkward one.</p>"
-    },
-    {
-      "id": "numbers",
-      "title": "“I know this. Give me a second”",
-      "html": "<p><a href=\"/games/math-rush/\">Math Rush</a> gives you one minute of quick calculations. It suits the mood where you want a small burst of concentration and a clear finish line.</p><p>If <strong>8 × 7</strong> makes you think “56” before you have finished reading, this might be your stop. If it makes you think “where’s my calculator?”, you are also allowed to choose something else. This is a break, not a surprise exam.</p><p>Accuracy matters as well as speed, so take the extra beat when an operation catches you out.</p>"
-    },
-    {
-      "id": "flags",
-      "title": "“I’ve seen that somewhere”",
-      "html": "<p>Try <a href=\"/geography/world-flags-quiz/\">World Flags</a> if colours and shapes stick in your mind. Perhaps you recognise a flag from football, a holiday or the tiny symbol beside a player’s name.</p><p>Look for one useful detail before guessing: a cross, a stripe order, a star in an unexpected place. You do not have to memorise an atlas before starting.</p><p>Still undecided? Pick whichever description made you want to have a go. One round is enough to find out whether it is your kind of puzzle. The others will still be there.</p>"
-    }
+  "title": "Which BrainiLab game should you try first?",
+  "topic": "Getting started",
+  "status": "published",
+  "related": [
+    "daily-or-anytime",
+    "how-to-learn-world-flags"
   ],
   "sources": [
     {
@@ -39,30 +38,31 @@
       "name": "BrainiLab — World Flags"
     }
   ],
-  "game": {
-    "url": "/games/connections/",
-    "name": "Connections"
-  },
-  "practice": "Follow the clues and find the connection.",
-  "related": [
-    "daily-or-anytime",
-    "how-to-learn-world-flags"
-  ],
-  "topic": "Getting started",
-  "status": "published",
-  "publishedAt": "2026-10-04T16:00:00Z",
-  "updatedAt": "2026-10-04T16:00:00Z",
   "authorId": "biel-sarda",
-  "hub": {
-    "url": "/games/",
-    "name": "All games"
-  },
-  "cover": {
-    "src": "/assets/images/learn/find-your-first-brainilab-game.webp",
-    "small": "/assets/images/learn/find-your-first-brainilab-game-small.webp",
-    "thumbnail": "/assets/images/learn/find-your-first-brainilab-game-thumb.webp",
-    "alt": "A globe, wooden letter and number tiles, and a yellow pencil on a sunlit desk",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  }
+  "practice": "Follow the clues and find the connection.",
+  "sections": [
+    {
+      "id": "pick-a-mood",
+      "html": "<p>You open a page of games. Suddenly choosing a game feels like the first puzzle. Let’s make that part easier.</p><p>Forget choosing the one you ought to be good at. Pick the little moment you enjoy: spotting a connection, landing a quick calculation or recognising a place you have never visited. Here are three ways in.</p>",
+      "title": "What sort of curious are you today?"
+    },
+    {
+      "id": "words",
+      "html": "<p>Try <a href=\"/games/connections/\" target=\"_blank\" rel=\"noopener noreferrer\">Connections</a> if you like finding the idea hiding between clues. Each round gives you a handful of concepts and four possible links. Your job is to choose the connection that fits them all.</p><p>Think <strong>violin, cello, guitar and harp</strong>. The shared idea is string instruments. “Things you play with a bow” almost works—until the guitar turns up and ruins your theory.</p><p>That is the pleasure of this game: a neat answer has to survive every clue, including the awkward one.</p>",
+      "title": "“Hang on… those things have something in common”"
+    },
+    {
+      "id": "numbers",
+      "html": "<p><a href=\"/games/math-rush/\" target=\"_blank\" rel=\"noopener noreferrer\">Math Rush</a> gives you one minute of quick calculations. It suits the mood where you want a small burst of concentration and a clear finish line.</p><p>If <strong>8 × 7</strong> makes you think “56” before you have finished reading, this might be your stop. If it makes you think “where’s my calculator?”, you are also allowed to choose something else. This is a break, not a surprise exam.</p><p>Accuracy matters as well as speed, so take the extra beat when an operation catches you out.</p>",
+      "title": "“I know this. Give me a second”"
+    },
+    {
+      "id": "flags",
+      "html": "<p>Try <a href=\"/geography/world-flags-quiz/\" target=\"_blank\" rel=\"noopener noreferrer\">World Flags</a> if colours and shapes stick in your mind. Perhaps you recognise a flag from football, a holiday or the tiny symbol beside a player’s name.</p><p>Look for one useful detail before guessing: a cross, a stripe order, a star in an unexpected place. You do not have to memorise an atlas before starting.</p><p>Still undecided? Pick whichever description made you want to have a go. One round is enough to find out whether it is your kind of puzzle. The others will still be there.</p>",
+      "title": "“I’ve seen that somewhere”"
+    }
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Do you enjoy words, numbers or flags? Find a game that suits you and see how to play your first round.",
+  "publishedAt": "2026-10-04T16:00:00Z"
 }

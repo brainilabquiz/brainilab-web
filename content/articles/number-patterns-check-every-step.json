@@ -78,21 +78,21 @@
     },
     {
       "id": "explore",
-      "html": "<p>Write 4, 7, 10, 13 on paper and mark each jump underneath. Then try 3, 6, 12, 24. Can you describe each change before predicting the next number?</p><p>For an alternating +2, +5 rule starting at 1, the terms are 1, 3, 8, 10, 15. Keep track of which jump comes next. Using +2 every time would explain the first change but fail at the second.</p>",
+      "html": "<p>Write <strong>4, 7, 10, 13</strong>. Draw a small arrow between each pair and write “add 3” underneath. The same change works at every step.</p><p>Some patterns take turns between two changes. Start at 1 and take turns adding 2, then 5:</p><ol><li>Start at 1. Add 2 to reach 3.</li><li>Add 5 to reach 8.</li><li>Add 2 to reach 10.</li><li>Add 5 to reach 15.</li></ol><p>The numbers are <strong>1, 3, 8, 10, 15</strong>. To continue, the next change is “add 2”.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "short-lists-do-not-prove-a-unique-rule",
-      "html": "<p>A few numbers do not uniquely determine every future term. Many different rules can fit a short beginning. Puzzle questions often ask for a simple intended rule, but that is a convention, not a mathematical guarantee.</p><p>In these exercises, the rule family is stated or the explanation identifies the intended rule. If two answer options genuinely fit the stated conditions, the question needs improving rather than blaming the player.</p>",
-      "title": "Short lists do not prove a unique rule"
+      "html": "<p>A short list does not always tell you what must come next. More than one rule can start with the same numbers.</p><p>For example, after 2, 4, you might add 2 again to get 6. Or you might double 4 to get 8. You need another clue to choose between those rules.</p><p>Read any instructions that come with the puzzle. If it says “keep adding two”, that tells you which rule to use.</p>",
+      "title": "Could another rule work?"
     },
     {
       "id": "use-a-scratch-line",
-      "html": "<p>Write the numbers on one line and the changes underneath. For multiplication, compare ratios instead of differences. If a rule alternates, mark its two steps separately.</p><p>The habit is simple: propose, check, predict. First propose a rule, then check all available steps, and only then use it to predict the next term. This also helps with visual patterns.</p>",
-      "title": "Use a scratch line"
+      "html": "<p>Write the numbers on one line and the changes underneath. Try a simple question: are you adding the same amount each time, or multiplying by the same number?</p><p>Check every jump, not just the first one. If the changes take turns, write them in order so you can see which comes next.</p><p>Once a rule fits all the steps, use it to work out the next number.</p>",
+      "title": "Write down each jump"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "A sequence can add, multiply or alternate. Learn to test the rule instead of trusting the first guess.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Are the numbers adding three, doubling, or taking turns between two changes? Write down each step to find a rule that fits.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

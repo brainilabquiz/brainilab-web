@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/why-ballpoint-pens-have-a-tiny-ball-photo-thumb.webp"
   },
   "order": 31,
-  "title": "Why is there a tiny ball in a ballpoint pen?",
+  "title": "How does a ballpoint pen work?",
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
@@ -39,7 +39,7 @@
   "sections": [
     {
       "id": "rolling-tip",
-      "html": "<p><strong>The tiny ball rolls ink onto the paper as you write.</strong> A ballpoint pen’s tip looks like a fixed metal point, but the ball turns as it travels across the page.</p><p>The ball sits in a socket, with ink supplied from the pen’s reservoir behind it. As it rotates, it picks up ink and transfers it to the page. That small moving part gives the pen its name.</p>",
+      "html": "<p><strong>The tiny ball rolls ink onto the paper as you write.</strong> A ballpoint pen’s tip looks like a fixed metal point, but the ball turns as it travels across the page.</p><p>The ball sits in a small holder called a <strong>socket</strong>. Behind it is the ink supply, called the <strong>reservoir</strong>. As the ball turns, its surface picks up ink and carries it onto the page. That small moving part gives the pen its name.</p>",
       "title": "The point is a moving part"
     },
     {
@@ -49,16 +49,16 @@
     },
     {
       "id": "small-and-tough",
-      "html": "<p>The ball needs to keep its shape while rubbing against paper. For example, BIC describes the tungsten carbide ball used in its Cristal pen as highly resistant. That is a detail of that product, not a claim that every ballpoint uses the same material.</p><p>The same manufacturer’s description gives a useful size comparison: its medium point measures 1.0 millimetre, while the stated line width is 0.4 millimetres. <strong>The ball’s diameter and the width of the mark are different measurements.</strong></p>",
+      "html": "<p>The ball needs to keep its shape while rubbing against paper. For example, BIC says its Cristal pen uses a ball made of <strong>tungsten carbide</strong>, a hard material that resists wear. That is a detail of that product, not a claim that every ballpoint uses the same material.</p><p>The same manufacturer’s description gives a useful size comparison: its medium point measures 1.0 millimetre, while the stated line width is 0.4 millimetres. <strong>The distance across the ball is its <strong>diameter</strong>. It is not the same as the width of the line it draws.</strong></p>",
       "title": "A tiny component has a demanding job"
     },
     {
       "id": "draw-the-journey",
-      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\">the hooks and loops in a reusable fastener</a>.</p><p>Your bag has another small moving part doing a big job: <a href=\"/learn/why-zippers-have-interlocking-teeth/\">the slider that joins a zipper’s teeth</a>.</p>",
+      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\" target=\"_blank\" rel=\"noopener noreferrer\">the hooks and loops in a reusable fastener</a>.</p><p>Your bag has another small moving part doing a big job: <a href=\"/learn/why-zippers-have-interlocking-teeth/\" target=\"_blank\" rel=\"noopener noreferrer\">the slider that joins a zipper’s teeth</a>.</p>",
       "title": "Can you sketch the ink’s journey?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

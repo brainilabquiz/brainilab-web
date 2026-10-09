@@ -1,68 +1,68 @@
 {
-  "slug": "why-golf-balls-have-dimples",
-  "title": "Why do golf balls have dimples? And how many are there?",
-  "description": "A smooth golf ball sounds like an upgrade. The air disagrees. Find out what dimples do and why there is no single correct dimple count.",
-  "topic": "Sports",
-  "order": 59,
-  "sections": [
-    {
-      "id": "short-answer",
-      "title": "The dents help it fly",
-      "html": "<p><strong>Golf balls have dimples because they change the airflow around the ball, reducing drag and helping it travel farther.</strong> Those little dents are doing a job, even if they look like someone got carried away with a very small spoon.</p><p>A perfectly smooth surface sounds faster. For a golf ball moving through the air, that intuition lets you down. The important part is what happens just behind the ball.</p>"
-    },
-    {
-      "id": "airflow",
-      "title": "A little turbulence can be useful",
-      "html": "<p>A thin layer of air travels close to the ball’s surface. Dimples stir up that layer, helping it follow the curved surface farther around before separating. The smaller wake behind the ball means less pressure drag—the resistance associated with that pressure difference.</p><p>That is why roughness can help here. It does not mean that scratching any object makes it faster. Shape, speed and the way air moves all matter, as <a href=\"https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/\">NASA’s sports-aerodynamics explanation</a> shows.</p><p>The useful picture to remember is air staying close to the ball for longer, rather than a ball collecting air in tiny buckets.</p>"
-    },
-    {
-      "id": "dimple-count",
-      "title": "How many dimples are on a golf ball?",
-      "html": "<p><strong>There is no single number for every golf ball.</strong> The count depends on the model. For a concrete example, Titleist’s 2025 Pro V1 design has <strong>388</strong> dimples, while its 2025 Pro V1x has <strong>348</strong>.</p><p>That is not a contest where the bigger number wins. Dimple depth, shape and arrangement also affect flight. Manufacturers design the whole pattern for the behaviour they want.</p><p>If a quiz asks for the exact number without naming a ball, the question is missing a rather important detail. You can politely retire the answer “all of them have 336”.</p>"
-    },
-    {
-      "id": "notice-the-details",
-      "title": "The tiny detail you will notice next time",
-      "html": "<p>Look closely at a ball before someone tees off. The pattern that looks decorative is part of its engineering. You do not need a perfect swing to appreciate that.</p><p>Sport is full of little design decisions hiding in plain sight. Even the <a href=\"/learn/why-tennis-balls-are-yellow/\">colour of a tennis ball</a> has a story.</p>"
-    }
-  ],
-  "sources": [
-    {
-      "name": "NASA — Sports balls and aerodynamics",
-      "url": "https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/"
-    },
-    {
-      "name": "Titleist — The purpose of golf-ball dimples",
-      "url": "https://www.titleist.com/learning-lab/how-its-made/golf-ball-dimples"
-    },
-    {
-      "name": "Titleist — 2025 Pro V1 and Pro V1x specifications",
-      "url": "https://www.titleist.com.sg/teamtitleist/b/tourblog/posts/titleist-introduces-new-2025-pro-v1-and-pro-v1x-golf-balls"
-    }
-  ],
-  "game": {
-    "url": "/sports/sports-quiz/",
-    "name": "Sports Quiz"
-  },
   "hub": {
     "url": "/sports/",
     "name": "Sports"
   },
-  "practice": "See which sporting details you recognise in the Sports Quiz.",
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "slug": "why-golf-balls-have-dimples",
+  "cover": {
+    "alt": "Close-up of a white dimpled golf ball on a wooden tee in sunlit grass",
+    "src": "/assets/images/learn/why-golf-balls-have-dimples.webp",
+    "small": "/assets/images/learn/why-golf-balls-have-dimples-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-golf-balls-have-dimples-thumb.webp"
+  },
+  "order": 59,
+  "title": "Why do golf balls have dimples?",
+  "topic": "Sports",
+  "status": "published",
   "related": [
     "why-tennis-balls-are-yellow",
     "what-olympic-rings-mean"
   ],
-  "status": "published",
-  "publishedAt": "2026-10-07T15:40:00Z",
-  "updatedAt": "2026-10-07T15:40:00Z",
+  "sources": [
+    {
+      "url": "https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/",
+      "name": "NASA — Sports balls and aerodynamics"
+    },
+    {
+      "url": "https://www.titleist.com/learning-lab/how-its-made/golf-ball-dimples",
+      "name": "Titleist — The purpose of golf-ball dimples"
+    },
+    {
+      "url": "https://www.titleist.com.sg/teamtitleist/b/tourblog/posts/titleist-introduces-new-2025-pro-v1-and-pro-v1x-golf-balls",
+      "name": "Titleist — 2025 Pro V1 and Pro V1x specifications"
+    }
+  ],
   "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/why-golf-balls-have-dimples.webp",
-    "small": "/assets/images/learn/why-golf-balls-have-dimples-small.webp",
-    "thumbnail": "/assets/images/learn/why-golf-balls-have-dimples-thumb.webp",
-    "alt": "Close-up of a white dimpled golf ball on a wooden tee in sunlit grass",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab."
-  }
+  "practice": "See which sporting details you recognise in the Sports Quiz.",
+  "sections": [
+    {
+      "id": "short-answer",
+      "html": "<p><strong>Golf balls have dimples because they change the airflow around the ball, reducing drag and helping it travel farther.</strong> Those little dents are doing a job, even if they look like someone got carried away with a very small spoon.</p><p>A perfectly smooth surface sounds faster. For a golf ball moving through the air, that intuition lets you down. The important part is what happens just behind the ball.</p>",
+      "title": "The dents help it fly"
+    },
+    {
+      "id": "airflow",
+      "html": "<p>A thin layer of air travels close to the ball’s surface. Dimples stir up that layer, helping it follow the curved surface farther around before separating. The smaller wake behind the ball means less pressure drag—the resistance associated with that pressure difference.</p><p>That is why roughness can help here. It does not mean that scratching any object makes it faster. Shape, speed and the way air moves all matter, as <a href=\"https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/\" target=\"_blank\" rel=\"noopener noreferrer\">NASA’s sports-aerodynamics explanation</a> shows.</p><p>The useful picture to remember is air staying close to the ball for longer, rather than a ball collecting air in tiny buckets.</p>",
+      "title": "A little turbulence can be useful"
+    },
+    {
+      "id": "dimple-count",
+      "html": "<p><strong>There is no single number for every golf ball.</strong> The count depends on the model. For a concrete example, Titleist’s 2025 Pro V1 design has <strong>388</strong> dimples, while its 2025 Pro V1x has <strong>348</strong>.</p><p>That is not a contest where the bigger number wins. Dimple depth, shape and arrangement also affect flight. Manufacturers design the whole pattern for the behaviour they want.</p><p>If a quiz asks for the exact number without naming a ball, the question is missing a rather important detail. You can politely retire the answer “all of them have 336”.</p>",
+      "title": "How many dimples are on a golf ball?"
+    },
+    {
+      "id": "notice-the-details",
+      "html": "<p>Look closely at a ball before someone tees off. The pattern that looks decorative is part of its engineering. You do not need a perfect swing to appreciate that.</p><p>Sport is full of little design decisions hiding in plain sight. Even the <a href=\"/learn/why-tennis-balls-are-yellow/\" target=\"_blank\" rel=\"noopener noreferrer\">colour of a tennis ball</a> has a story.</p>",
+      "title": "The tiny detail you will notice next time"
+    }
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "A smooth golf ball sounds like an upgrade. The air disagrees. Find out what dimples do and why there is no single correct dimple count.",
+  "publishedAt": "2026-10-07T15:40:00Z"
 }

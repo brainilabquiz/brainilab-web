@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/adding-fractions-same-pieces-thumb.webp"
   },
   "order": 51,
-  "title": "How to add fractions with the same denominator",
+  "title": "How to add fractions, one piece at a time",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -72,26 +72,26 @@
   "sections": [
     {
       "id": "count-pieces-of-one-size",
-      "html": "<p>You have two eighths of a paper strip and receive three more eighths. All the pieces match, so you now have five eighths: <strong>2/8 + 3/8 = 5/8</strong>.</p><p>The denominator stays eight because the pieces are still eighths. It does not become sixteen just because two groups were combined. You are counting more pieces of the same size.</p>",
-      "title": "Count pieces of one size"
+      "html": "<p>Cut a paper strip into <strong>eight equal pieces</strong>. Colour two pieces blue and another three yellow. How many pieces have you coloured altogether?</p><p>Count them: two blue pieces and three yellow pieces make <strong>five pieces</strong>.</p><p>Each piece is one eighth of the strip. We can write the story as <strong>2/8 + 3/8 = 5/8</strong>.</p><p>The bottom number stays 8 because the whole strip still has eight equal pieces. We have counted more pieces; we have not changed their size.</p>",
+      "title": "Start by counting the pieces"
     },
     {
       "id": "explore",
-      "html": "<p>Draw two identical strips and divide each into four equal parts. Shade three parts on the first and two on the second. Count all the shaded quarter-pieces together.</p><p>Try three quarters plus two quarters. Five quarter-pieces make one whole and one extra quarter: 5/4 = 1 1/4. A fraction can be larger than one; the numerator is allowed to exceed the denominator.</p>",
+      "html": "<p>Draw two identical strips and split each into four equal pieces. Each piece is called a <strong>quarter</strong>.</p><ol><li>Colour three quarters of the first strip.</li><li>Colour two quarters of the second strip.</li><li>Count all the coloured quarters. There are five.</li></ol><p>Four quarters fill one whole strip. The fifth quarter is left over. So <strong>5/4</strong> means one whole and one quarter, also written <strong>1 1/4</strong>.</p><p>A fraction can be bigger than one whole. Keep using the same size of piece as you count.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "match-sizes-before-adding",
-      "html": "<p>One half and one quarter are not the same kind of piece. Rename the half as two quarters. Then 2/4 + 1/4 = 3/4. The answer is three quarters, not two sixths.</p><p>For one third plus one sixth, turn the third into two sixths. Now 2/6 + 1/6 = 3/6, which is one half. Equivalent fractions let you count matching pieces.</p>",
-      "title": "Match sizes before adding"
+      "html": "<p>What about <strong>1/2 + 1/4</strong>? A half and a quarter are different-sized pieces of the same whole. We need matching pieces before we count them together.</p><ol><li>Draw a strip and colour half of it.</li><li>Split the whole strip into four equal pieces. Your coloured half now covers two quarters.</li><li>Colour one more quarter. Three of the four pieces are now coloured.</li></ol><p>That gives us <strong>1/2 + 1/4 = 3/4</strong>.</p><p>The same idea works with thirds and sixths. Split each third into two equal pieces: one third becomes two sixths. Add one more sixth and you have three sixths, which cover half the strip.</p>",
+      "title": "Make the pieces the same size"
     },
     {
       "id": "check-whether-the-answer-makes-sense",
-      "html": "<p>Adding two positive fractions gives a result larger than either starting amount. If your answer to one half plus one quarter is smaller than a half, stop and check the pieces.</p><p>Before the quiz, explain an example aloud: “These are eighths. I have two, then three more, making five eighths.” Naming the pieces keeps the denominator’s job clear. You now have the foundations for percentages and recipe measurements.</p>",
-      "title": "Check whether the answer makes sense"
+      "html": "<p>Go back to the picture when an answer looks strange. Adding another piece should give you more than you started with.</p><p>For example, half a strip plus a quarter must cover more than half a strip. An answer of one third would be too small.</p><p>Check three things: are you using the same-sized whole, are the pieces equal, and have you counted the pieces correctly?</p>",
+      "title": "Does your answer fit the picture?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Put thirds with thirds, then see how equivalent fractions let halves and quarters work together.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Colour a few equal pieces, add some more, and count them together. Then try adding halves and quarters with a paper strip.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

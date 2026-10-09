@@ -11,6 +11,7 @@
     "version": "beginner-20260930",
     "questions": [
       {
+        "answer": 0,
         "prompt": "Which story matches multiplying three by four?",
         "options": [
           "Three bags with four sweets in each",
@@ -18,10 +19,10 @@
           "One bag with seven sweets",
           "Four bags with nothing inside"
         ],
-        "answer": 0,
         "explanation": "Multiplication can count equal groups. Three groups of four contain twelve sweets."
       },
       {
+        "answer": 1,
         "prompt": "How can you count eleven equal bags more easily?",
         "options": [
           "Count one bag and stop",
@@ -29,10 +30,10 @@
           "Count ten bags, then take a bag away",
           "Add eleven to the number in one bag"
         ],
-        "answer": 1,
         "explanation": "Eleven bags are ten bags plus one more. Each bag still holds the same number."
       },
       {
+        "answer": 3,
         "prompt": "Ten bags hold 30 sweets. The last bag holds three more. How many are there altogether?",
         "options": [
           "13",
@@ -40,7 +41,6 @@
           "30",
           "33"
         ],
-        "answer": 3,
         "explanation": "Start with the 30 sweets in the first ten bags. Add the last three: 33."
       }
     ]
@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/multiply-by-11-in-your-head-thumb.webp"
   },
   "order": 19,
-  "title": "Multiplying by 11: ten groups, then one more",
+  "title": "An easy way to multiply by 11",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,36 +73,36 @@
   "sections": [
     {
       "id": "one-extra",
-      "title": "What does multiplying mean?",
-      "html": "<p>Imagine <strong>3 bags with 4 sweets in each</strong>. You could count 4 sweets, then another 4, then another 4. That makes <strong>12 sweets</strong>.</p><p>Multiplication is a shorter way to describe equal groups. The sign <strong>×</strong> means “times”. Three groups of four can be written as <strong>3 × 4</strong>.</p><p>Now imagine eleven bags. Rather than counting every bag separately, we can count <strong>ten bags first, then the last bag</strong>.</p>"
+      "html": "<p>Imagine <strong>3 bags with 4 sweets in each</strong>. You could count 4 sweets, then another 4, then another 4. That makes <strong>12 sweets</strong>.</p><p>Multiplication is a shorter way to describe equal groups. The sign <strong>×</strong> means “times”. Three groups of four can be written as <strong>3 × 4</strong>.</p><p>Now imagine eleven bags. Rather than counting every bag separately, we can count <strong>ten bags first, then the last bag</strong>.</p>",
+      "title": "What does multiplying mean?"
     },
     {
       "id": "small-example",
-      "title": "Eleven bags with two sweets each",
-      "html": "<ol><li><strong>Count the first ten bags.</strong> Each has two sweets. Count in twos: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20.</li><li><strong>Open the last bag.</strong> It has two more sweets.</li><li><strong>Add them to the twenty.</strong> Twenty and two make <strong>22</strong>.</li></ol><p>That is why 11 × 2 is 22. The trick works because eleven is ten and one more.</p>"
+      "html": "<ol><li><strong>Count the first ten bags.</strong> Each has two sweets. Count in twos: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20.</li><li><strong>Open the last bag.</strong> It has two more sweets.</li><li><strong>Add them to the twenty.</strong> Twenty and two make <strong>22</strong>.</li></ol><p>That is why 11 × 2 is 22. The trick works because eleven is ten and one more.</p>",
+      "title": "Eleven bags with two sweets each"
     },
     {
       "id": "middle-digit",
-      "title": "Now put 34 sweets in each bag",
-      "html": "<p>The number is bigger, but the idea is exactly the same. We want the sweets in eleven bags, with <strong>34 in each</strong>.</p><ol><li><strong>Ten bags hold 340 sweets.</strong> To see why, split each bag into 30 sweets and 4 sweets. Ten lots of 30 make 300. Ten lots of 4 make 40. Together, that is 340.</li><li><strong>The last bag holds another 34.</strong> Add its 30 sweets first: 340 becomes 370.</li><li><strong>Add its remaining four sweets.</strong> The total becomes <strong>374</strong>.</li></ol><p>Written as one calculation, that is <strong>34 × 11 = 374</strong>. The symbols are just a short way of writing the story about the bags.</p>"
+      "html": "<p>The number is bigger, but the idea is exactly the same. We want the sweets in eleven bags, with <strong>34 in each</strong>.</p><ol><li><strong>Ten bags hold 340 sweets.</strong> To see why, split each bag into 30 sweets and 4 sweets. Ten lots of 30 make 300. Ten lots of 4 make 40. Together, that is 340.</li><li><strong>The last bag holds another 34.</strong> Add its 30 sweets first: 340 becomes 370.</li><li><strong>Add its remaining four sweets.</strong> The total becomes <strong>374</strong>.</li></ol><p>Written as one calculation, that is <strong>34 × 11 = 374</strong>. The symbols are just a short way of writing the story about the bags.</p>",
+      "title": "Now put 34 sweets in each bag"
     },
     {
       "id": "carry",
-      "title": "A bigger example, with no new trick",
-      "html": "<p>What about eleven bags with <strong>78 sweets in each</strong>?</p><ol><li>Ten bags hold <strong>780</strong> sweets.</li><li>Split the last bag’s 78 sweets into 70 and 8. Add the 70 first. From 780, another 20 gets you to 800; the remaining 50 takes you to <strong>850</strong>.</li><li>Add the final eight. That makes <strong>858</strong>.</li></ol><p>There are faster shortcuts with digits, but you do not need them here. Counting ten equal groups and adding one more is enough.</p>"
+      "html": "<p>What about eleven bags with <strong>78 sweets in each</strong>?</p><ol><li>Ten bags hold <strong>780</strong> sweets.</li><li>Split the last bag’s 78 sweets into 70 and 8. Add the 70 first. From 780, another 20 gets you to 800; the remaining 50 takes you to <strong>850</strong>.</li><li>Add the final eight. That makes <strong>858</strong>.</li></ol><p>There are faster shortcuts with digits, but you do not need them here. Counting ten equal groups and adding one more is enough.</p>",
+      "title": "A bigger example, with no new trick"
     },
     {
       "id": "three-practice",
-      "title": "Try eleven bags of three",
-      "html": "<p>Each bag holds three sweets. How many sweets are in eleven bags?</p><details class=\"practice-answer\"><summary>Walk me through it</summary><p>Ten bags of three hold 30 sweets. The last bag adds another 3. Altogether, there are <strong>33 sweets</strong>.</p></details><p>If you get stuck, draw the bags. Understanding why it works is more useful than rushing.</p>"
+      "html": "<p>Each bag holds three sweets. How many sweets are in eleven bags?</p><details class=\"practice-answer\"><summary>Walk me through it</summary><p>Ten bags of three hold 30 sweets. The last bag adds another 3. Altogether, there are <strong>33 sweets</strong>.</p></details><p>If you get stuck, draw the bags. Understanding why it works is more useful than rushing.</p>",
+      "title": "Try eleven bags of three"
     },
     {
       "id": "at-a-glance",
-      "title": "Ten bags, then the last bag",
-      "html": "<div class=\"table-scroll\"><table><caption>The same idea at different sizes</caption><thead><tr><th scope=\"col\">Sweets in each bag</th><th scope=\"col\">First ten bags</th><th scope=\"col\">Last bag</th><th scope=\"col\">Altogether</th></tr></thead><tbody><tr><td>2</td><td>20</td><td>2 more</td><td>22</td></tr><tr><td>34</td><td>340</td><td>34 more</td><td>374</td></tr><tr><td>78</td><td>780</td><td>78 more</td><td>858</td></tr></tbody></table></div><p>Next, <a href=\"/learn/mental-percentages-without-a-calculator/\">discover what a percentage actually means</a>, starting with a tray of one hundred squares.</p>"
+      "html": "<div class=\"table-scroll\"><table><caption>The same idea at different sizes</caption><thead><tr><th scope=\"col\">Sweets in each bag</th><th scope=\"col\">First ten bags</th><th scope=\"col\">Last bag</th><th scope=\"col\">Altogether</th></tr></thead><tbody><tr><td>2</td><td>20</td><td>2 more</td><td>22</td></tr><tr><td>34</td><td>340</td><td>34 more</td><td>374</td></tr><tr><td>78</td><td>780</td><td>78 more</td><td>858</td></tr></tbody></table></div><p>Next, <a href=\"/learn/mental-percentages-without-a-calculator/\" target=\"_blank\" rel=\"noopener noreferrer\">discover what a percentage actually means</a>, starting with a tray of one hundred squares.</p>",
+      "title": "Ten bags, then the last bag"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Picture eleven bags with the same number of sweets in each. Count ten bags first, then add the last one. We’ll take it one step at a time.",
   "publishedAt": "2026-09-29T06:02:00Z"
 }

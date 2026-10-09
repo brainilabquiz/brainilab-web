@@ -73,7 +73,7 @@
   "sections": [
     {
       "id": "repack-the-same-objects",
-      "html": "<p>Four small bags each hold six counters. Empty two bags into one larger bag, and do the same with the other two. You now have two larger bags, each containing twelve.</p><p>The amount is unchanged: <strong>4 × 6 = 2 × 12 = 24</strong>. You halved the number of bags and doubled what goes into each bag. This is a repacking trick, not a new way to create counters.</p>",
+      "html": "<p>Four small bags each hold six counters. We want to make them easier to count without changing how many counters we have.</p><ol><li>Empty the first two bags into one larger bag. Six counters and six more make twelve.</li><li>Do the same with the other two bags. That gives you another bag of twelve.</li><li>You now have two bags of twelve: twenty-four counters altogether.</li></ol><p>So <strong>4 × 6</strong> and <strong>2 × 12</strong> have the same answer: 24.</p><p>There are half as many bags, with twice as much in each bag. No counters have been added or taken away.</p>",
       "title": "Repack the same objects"
     },
     {
@@ -83,16 +83,16 @@
     },
     {
       "id": "change-both-factors-together",
-      "html": "<p>The two numbers in a multiplication are called <strong>factors</strong>. If you double one but leave the other unchanged, you double the total. The total stays the same only because the other factor is halved at the same time.</p><p>These examples use even numbers of groups so that halving produces a whole number of groups. Later, fractions let us discuss other cases. For now, keep the repacking concrete.</p>",
-      "title": "Change both factors together"
+      "html": "<p>The two numbers you multiply are called <strong>factors</strong>. In 4 × 6, the factors are 4 and 6.</p><p>Here, one number counts the bags and the other counts the counters in each bag. To keep the same total, both must change together: half as many bags, twice as much in each.</p><p>If you doubled the counters in each bag but kept all four bags, you would double the total instead.</p><p>For now, use an even number of bags so that you can pair them without one being left over.</p>",
+      "title": "Why both numbers must change"
     },
     {
       "id": "choose-a-friendlier-calculation",
-      "html": "<p>Consider 16 × 5. Halve sixteen to eight and double five to ten. Eight tens are eighty. You can check by adding sixteen five times, but the regrouping uses fewer steps.</p><p>This does not automatically make every multiplication easier. If the transformed numbers feel less familiar, keep the original calculation. The useful question is “which arrangement can I count confidently?”</p>",
-      "title": "Choose a friendlier calculation"
+      "html": "<p>Try <strong>16 × 5</strong>: sixteen bags with five counters in each.</p><ol><li>Pair the bags. Sixteen small bags become eight larger bags.</li><li>Each larger bag holds ten counters: five from each small bag.</li><li>Eight groups of ten make eighty.</li></ol><p>So <strong>16 × 5 = 80</strong>. Counting tens made the job easier.</p><p>Use this method when the new groups feel easier to count. You do not have to use it for every multiplication.</p>",
+      "title": "Try it with groups of five"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "See why four groups of six can become two groups of twelve without changing the total.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

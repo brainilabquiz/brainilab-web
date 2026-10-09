@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/spotting-repeating-patterns-thumb.webp"
   },
   "order": 52,
-  "title": "Repeating patterns: find the smallest unit",
+  "title": "How to spot a repeating pattern",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -72,26 +72,26 @@
   "sections": [
     {
       "id": "a-rhythm-you-can-point-to",
-      "title": "What is the unit of repeat?",
-      "html": "<p><strong>The unit of repeat is the smallest block that can be repeated to make the whole pattern.</strong> In circle, square, circle, square… it is circle–square. Four shapes would work too, but they would not be the smallest block.</p><p>Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the entire scarf.</p>"
+      "html": "<p><strong>The unit of repeat is the smallest block that can be repeated to make the whole pattern.</strong> In circle, square, circle, square… it is circle–square. Four shapes would work too, but they would not be the smallest block.</p><p>Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the entire scarf.</p>",
+      "title": "What is the unit of repeat?"
     },
     {
       "id": "explore",
-      "title": "Find the minimum period",
-      "html": "<p>The <strong>period</strong> is the number of positions before the pattern repeats. For ABABAB, the minimum period is 2: A alone fails, but AB works all the way along.</p><p>Now try AABAABAAB. A fails. AA fails at the third position. AAB works: the minimum period is <strong>3</strong>, even though there are only two different letters.</p><p>Start with a short candidate block, repeat it and compare every position. If one position disagrees, that block does not describe the full example. The <a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\">NCETM guide to patterns</a> explains why finding the smallest unit matters more than naming every item.</p>"
+      "html": "<p>Look at <strong>AB | AB | AB</strong>. The little block AB repeats. It contains two letters, so the pattern repeats every two places. That length is called its <strong>period</strong>. The shortest working length is the <strong>minimum period</strong>.</p><p>Now group <strong>AAB | AAB | AAB</strong>. Repeating just A would miss the B. Repeating AA would miss it too. The smallest block that works is AAB, with three places. Its minimum period is <strong>3</strong>.</p><p>Try a small block first. Repeat it and check each letter against the example. If a letter does not match, try a different block. The <a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\" target=\"_blank\" rel=\"noopener noreferrer\">NCETM guide to patterns</a> explains why finding the smallest unit matters more than naming every item.</p>",
+      "title": "Find the minimum period"
     },
     {
       "id": "separate-a-repeat-from-growth",
-      "title": "Two circles in a row are not always a mistake",
-      "html": "<p>Try the unit circle–square–circle. Repeat it and you get circle–square–circle | circle–square–circle. Two circles meet at the join. Looking only at that pair could send you down the wrong path.</p><p>A short sequence can also fit several rules. These examples explicitly ask for a repeating rule; they are not proof that any short list has only one possible continuation.</p>"
+      "html": "<p>Try the unit circle–square–circle. Repeat it and you get circle–square–circle | circle–square–circle. Two circles meet at the join. Looking only at that pair could send you down the wrong path.</p><p>A short sequence can also fit several rules. These examples ask you to repeat a block. In a different puzzle, the pattern might follow another rule. Read the instructions first.</p>",
+      "title": "Two circles in a row are not always a mistake"
     },
     {
       "id": "make-the-explanation-part-of-the-answer",
-      "title": "What comes after ABBABBAB?",
-      "html": "<p><strong>B</strong>, if the rule is to repeat ABB. Group it as ABB | ABB | AB: the final group is missing its last B. The visible sequence does not need to end at a complete block.</p><p>A pattern that grows, such as 2, 4, 6, 8, needs a different explanation. Next, try <a href=\"/learn/number-patterns-check-every-step/\">checking every step in a number pattern</a>, or put your eye for patterns to work in the <a href=\"/reasoning/\">Reasoning Challenge</a>.</p>"
+      "html": "<p><strong>B</strong>, if the rule is to repeat ABB. Group it as ABB | ABB | AB: the final group is missing its last B. The visible sequence does not need to end at a complete block.</p><p>A pattern that grows, such as 2, 4, 6, 8, needs a different explanation. Next, try <a href=\"/learn/number-patterns-check-every-step/\" target=\"_blank\" rel=\"noopener noreferrer\">checking every step in a number pattern</a>, or put your eye for patterns to work in the <a href=\"/reasoning/\" target=\"_blank\" rel=\"noopener noreferrer\">Reasoning Challenge</a>.</p>",
+      "title": "What comes after ABBABBAB?"
     }
   ],
-  "updatedAt": "2026-10-09T15:05:10Z",
-  "description": "Find the shortest part that repeats in a pattern. Simple examples explain the unit of repeat, the minimum period and how to check what comes next.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Spot the little block that repeats in a row of shapes or letters. Check it against the whole pattern, then try the next step.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

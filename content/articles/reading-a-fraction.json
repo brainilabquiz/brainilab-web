@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/reading-a-fraction-thumb.webp"
   },
   "order": 48,
-  "title": "Numerator and denominator: how to read a fraction",
+  "title": "What do the two numbers in a fraction mean?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,12 +73,12 @@
   "sections": [
     {
       "id": "read-the-picture-first",
-      "html": "<p>A strip is divided into five equal parts. Three parts are shaded. Say “three fifths” and write <strong>3/5</strong>. The slash separates two jobs: counting selected parts and naming their size.</p><p>The bottom number, five, is the <strong>denominator</strong>. It tells you the whole was divided into five equal parts. The top number, three, is the <strong>numerator</strong>. It tells you three of those parts are selected.</p>",
-      "title": "Read the picture first"
+      "html": "<p>Draw a strip and divide it into five equal pieces. Colour three pieces.</p><p>We write that coloured share as <strong>3/5</strong>, said “three fifths”. Each number tells us something:</p><ul><li><strong>5, on the bottom:</strong> the whole strip has five equal pieces.</li><li><strong>3, on the top:</strong> we are counting three of those pieces.</li></ul><p>The top number is called the <strong>numerator</strong>. The bottom number is the <strong>denominator</strong>. Learn what each number does first; the names can come after.</p>",
+      "title": "What does each number tell us?"
     },
     {
       "id": "explore",
-      "html": "<p>Draw a strip with five equal parts. Shade one part at a time, writing 1/5, 2/5 and so on beside it. Each step adds another fifth; the pieces stay the same size.</p><p>Now select one part and change the denominator. One half, one third and one fifth all have a numerator of one, but the selected pieces have different sizes. Their names tell you what sort of piece is being counted.</p>",
+      "html": "<p>Draw three identical strips. Split the first into two equal pieces, the second into three, and the third into five.</p><p>Colour one piece in each strip. You have coloured <strong>1/2</strong>, <strong>1/3</strong> and <strong>1/5</strong>.</p><p>The top number is always 1: you chose one piece. But the pieces are not the same size. Splitting the same whole into more pieces makes each piece smaller.</p>",
       "title": "Try it yourself"
     },
     {
@@ -92,7 +92,7 @@
       "title": "Avoid a tempting shortcut"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "The bottom number names the pieces. The top number counts how many of them you have.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/five-number-puzzles-printable-thumb.webp"
   },
   "order": 23,
-  "title": "5 number puzzles for a coffee break — free printable",
+  "title": "5 number puzzles to print and try",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -34,16 +34,17 @@
       "name": "OpenStax — Use the Language of Algebra: order of operations"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Try a round at your own pace. Use the examples above when you need a starting point.",
   "sections": [
     {
       "id": "get-sheet",
-      "html": "<p><strong>Download five original number puzzles with a separate page of worked solutions.</strong> Each puzzle has exactly one valid sequence of three operators under the rules below. There is no timer, sign-up or email form.</p><div class=\"number-example\"><p><a href=\"/assets/resources/five-number-puzzles.pdf\">Download the free two-page PDF →</a></p><p>Page 1: the puzzles. Page 2: solutions and running totals. A4, with generous margins for printing.</p></div><p>You can also solve every puzzle on this page and open the answers one at a time. These are teaching examples, separate from the Daily challenge.</p>",
+      "html": "<p><strong>Download five original number puzzles with a separate page of worked solutions.</strong> Each puzzle has exactly one valid sequence of three operators under the rules below. There is no timer, sign-up or email form.</p><div class=\"number-example\"><p><a href=\"/assets/resources/five-number-puzzles.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Download the free two-page PDF →</a></p><p>Page 1: the puzzles. Page 2: solutions and running totals. A4, with generous margins for printing.</p></div><p>You can also solve every puzzle on this page and open the answers one at a time. These are teaching examples, separate from the Daily challenge.</p>",
       "title": "Take five puzzles away from the screen"
     },
     {
       "id": "rules",
-      "html": "<p>Use all four numbers in their given order. Put one of <strong>+, −, × or ÷</strong> in each gap. Operators may repeat. Work strictly <strong>left to right</strong>, keeping a running total; division must give a whole number at that step.</p><p>These are Number Route rules. In ordinary written arithmetic, multiplication and division have priority. To avoid that ambiguity when writing your solution, add brackets around each completed step. For a slower introduction, read <a href=\"/learn/how-to-play-number-route/\">the complete Number Route example</a>.</p>",
+      "html": "<p>Use all four numbers in their given order. Put one of <strong>+, −, × or ÷</strong> in each gap. Operators may repeat. Work strictly <strong>left to right</strong>, keeping a running total; division must give a whole number at that step.</p><p>These are Number Route rules. In ordinary written arithmetic, multiplication and division have priority. To avoid that ambiguity when writing your solution, add brackets around each completed step. For a slower introduction, read <a href=\"/learn/how-to-play-number-route/\" target=\"_blank\" rel=\"noopener noreferrer\">the complete Number Route example</a>.</p>",
       "title": "Read this before filling the gaps"
     },
     {
@@ -79,5 +80,5 @@
   ],
   "description": "A pencil, four numbers and a target. Try five original Number Route puzzles online or print the two-page sheet with explained answers.",
   "publishedAt": "2026-09-29T20:12:36.340515Z",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-09T15:53:35Z"
 }

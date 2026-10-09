@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/logic-what-must-be-true-thumb.webp"
   },
   "order": 56,
-  "title": "Must be true vs could be true: a simple logic check",
+  "title": "Is it certain, or just possible?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -72,26 +72,26 @@
   "sections": [
     {
       "id": "start-with-exactly-what-you-know",
-      "html": "<p>Suppose every amber token is round. You find an amber token. It must be round, because the rule covers every amber token.</p><p>Now suppose you find a round token. Must it be amber? No. The rule did not say that only amber tokens are round. A round blue token would fit the original rule too.</p>",
+      "html": "<p>Suppose every amber token is round. Amber is a yellow-orange colour. You find an amber token. It must be round, because the rule covers every amber token.</p><p>Now suppose you find a round token. Must it be amber? No. The rule did not say that only amber tokens are round. A round blue token would fit the original rule too.</p>",
       "title": "Start with exactly what you know"
     },
     {
       "id": "explore",
-      "html": "<p>Start with the rule “all amber tokens are round”. Sketch a round amber token beside a round blue token. Both fit the rule, but the blue one shows why “all round tokens are amber” does not follow.</p><p>If one allowed arrangement makes a conclusion false, that conclusion is not guaranteed. It might still be possible. “Not guaranteed” is different from “impossible”.</p>",
+      "html": "<p>The rule is “all amber tokens are round”. Draw a round amber token and a round blue token. Both are allowed by that rule.</p><p>Now try the claim “all round tokens are amber”. Your blue token shows that this claim can be wrong, even when the original rule is true.</p><p>One example that shows a claim is wrong is called a <strong>counterexample</strong>. You only need one to show that something is not certain.</p><p>“Not certain” does not mean “impossible”. A round token could be amber; we just do not know from its shape alone.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "some-does-not-mean-all",
-      "html": "<p>“Some round tokens are striped” tells you that at least one token is both round and striped. It does not tell you that every round token is striped. It also does not tell you how many plain round tokens exist.</p><p>Similarly, “all amber tokens are round” describes a relationship between groups. Without also saying an amber token exists, that sentence alone does not prove that the collection contains one. In the sketch above, we explicitly included an amber token.</p>",
+      "html": "<p>“Some round tokens are striped” means at least one token is both round and striped. Other round tokens might be plain. We have not been told.</p><p>There is another small trap. The rule “all amber tokens are round” does not tell us whether there are any amber tokens in the bag. A bag containing only blue tokens would not break that rule.</p><p>In our drawing, we know an amber token exists because we drew one.</p>",
       "title": "Some does not mean all"
     },
     {
       "id": "before-the-challenge",
-      "html": "<p>Read each condition, check the direction of the relationship, and separate what is guaranteed from what is merely compatible. A quick sketch of a few objects can expose a mistaken reversal.</p><p>You can now try the <a href=\"/reasoning/\">Reasoning Challenge</a>. It gives a score for its own questions and explains each answer. It is a puzzle activity, not a clinical assessment or a measurement of IQ. Take your time; understanding the explanation matters more than rushing.</p>",
+      "html": "<p>Read the rule slowly. Ask what it tells you for certain, then draw a few objects to check. Be careful about swapping the words around: “all amber tokens are round” is not the same as “all round tokens are amber”.</p><p>You can now try the <a href=\"/reasoning/\" target=\"_blank\" rel=\"noopener noreferrer\">Reasoning Challenge</a>. It gives a score for its own questions and explains each answer. It is a puzzle activity, not a clinical assessment or a measurement of IQ. Take your time; understanding the explanation matters more than rushing.</p>",
       "title": "Before the challenge"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Use small groups and counterexamples to separate a guaranteed conclusion from a tempting guess.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Draw a few coloured tokens to see the difference between something you know for sure and something that could be true.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

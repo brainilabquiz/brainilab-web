@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/sorting-with-two-rules-thumb.webp"
   },
   "order": 55,
-  "title": "AND vs OR: how to sort with two rules",
+  "title": "What is the difference between “and” and “or”?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -78,21 +78,21 @@
     },
     {
       "id": "explore",
-      "html": "<p>Sketch a red circle, a red square and a blue circle. Write their colours beside them. Which objects are red and round? Which are red or round?</p><p>“Red <strong>and</strong> round” selects only objects with both properties. “Red <strong>or</strong> round” selects objects with at least one property, including objects with both. Here “or” includes objects that satisfy both rules.</p>",
+      "html": "<p>Draw a red circle, a red square and a blue circle. Now try two instructions:</p><ul><li><strong>Choose red AND round.</strong> Only the red circle fits. It must be both things at once.</li><li><strong>Choose red OR round.</strong> All three fit. The red square is red, the blue circle is round, and the red circle is both.</li></ul><p>Here, “or” allows either rule or both. This is called <strong>inclusive or</strong>: it includes the objects that fit both rules.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "a-word-can-change-the-answer",
-      "html": "<p>A red square satisfies “red or round” because it is red. It does not satisfy “red and round” because it is not round. Read the connecting word before counting.</p><p>In everyday speech, “or” can sometimes mean one choice but not both. A well-written puzzle should tell you when that exclusive meaning is intended. Do not assume the two meanings are interchangeable.</p>",
+      "html": "<p>A red square fits “red or round” because it is red. It does not fit “red and round” because it is not round. Read the connecting word before counting.</p><p>In everyday speech, “or” can sometimes mean one choice but not both. A puzzle should say if it wants you to choose one but not both. Check the wording before you answer.</p>",
       "title": "A word can change the answer"
     },
     {
       "id": "keep-the-rule-separate-from-the-examples",
-      "html": "<p>Seeing two red round objects does not prove that every red object is round. The red square is a counterexample: one object that breaks that claim.</p><p>Try inventing another object for each region: red only, round only, both and neither. Being able to produce a counterexample is often more useful than collecting more examples that happen to fit.</p>",
+      "html": "<p>Seeing two red round objects does not prove that every red object is round. The red square is a counterexample: one object that breaks that claim.</p><p>Draw one object for each group: red only, round only, both, and neither. This helps you check what the rule allows.</p>",
       "title": "Keep the rule separate from the examples"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Sort by shape and colour, then explore why “and” and “or” select different objects.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

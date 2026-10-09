@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/fractions-equal-parts-thumb.webp"
   },
   "order": 47,
-  "title": "Why fractions need equal parts of the same whole",
+  "title": "Fractions start with equal pieces",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -77,7 +77,7 @@
     },
     {
       "id": "explore",
-      "html": "<p>Draw two identical strips. Divide the first into two equal parts and the second into eight. Shade one part of each strip and compare their sizes.</p><p>Look at one piece when there are two parts, then one piece when there are eight. More equal parts mean each individual part is smaller, as long as the whole stays the same size.</p>",
+      "html": "<p>Draw two identical strips. Divide the first into two equal parts and the second into eight. Shade one part of each strip and compare their sizes.</p><p>Look at one piece when there are two parts, then one piece when there are eight. More equal parts mean each individual part is smaller, as long as the whole stays the same size.</p><p>One of four equal pieces is called <strong>one quarter</strong>. The pieces must be equal: a tiny corner and a huge leftover piece would not be two equal shares.</p>",
       "title": "Try it yourself"
     },
     {
@@ -91,7 +91,7 @@
       "title": "Make your own example"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

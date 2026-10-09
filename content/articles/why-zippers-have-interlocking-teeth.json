@@ -1,21 +1,4 @@
 {
-  "slug": "why-zippers-have-interlocking-teeth",
-  "title": "How does a zipper close a whole bag with one pull?",
-  "description": "Follow the tiny teeth through a zipper’s slider, spot its three main parts, and try a quick challenge with a zip you already own.",
-  "topic": "Everyday inventions",
-  "status": "published",
-  "order": 83,
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-07T15:42:57.012087+00:00",
-  "updatedAt": "2026-10-07T15:42:57.012087+00:00",
-  "cover": {
-    "src": "/assets/images/learn/why-zippers-have-interlocking-teeth.webp",
-    "small": "/assets/images/learn/why-zippers-have-interlocking-teeth-small.webp",
-    "thumbnail": "/assets/images/learn/why-zippers-have-interlocking-teeth-thumb.webp",
-    "alt": "A half-open brass zipper on a green canvas pencil case, with a pencil inside",
-    "position": 50,
-    "credit": "AI-generated photorealistic illustration created for BrainiLab; not a technical diagram."
-  },
   "hub": {
     "url": "/learn/",
     "name": "Learn"
@@ -24,7 +7,19 @@
     "url": "/general-knowledge/general-knowledge-quiz/",
     "name": "General Knowledge"
   },
-  "practice": "Fancy a few more everyday surprises? Try General Knowledge for a mix of topics. The questions are not a test of this article.",
+  "slug": "why-zippers-have-interlocking-teeth",
+  "cover": {
+    "alt": "A half-open brass zipper on a green canvas pencil case, with a pencil inside",
+    "src": "/assets/images/learn/why-zippers-have-interlocking-teeth.webp",
+    "small": "/assets/images/learn/why-zippers-have-interlocking-teeth-small.webp",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab; not a technical diagram.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-zippers-have-interlocking-teeth-thumb.webp"
+  },
+  "order": 83,
+  "title": "How does a zipper work?",
+  "topic": "Everyday inventions",
+  "status": "published",
   "related": [
     "how-hook-and-loop-fasteners-work",
     "why-ballpoint-pens-have-a-tiny-ball",
@@ -32,52 +27,57 @@
   ],
   "sources": [
     {
-      "name": "YKK — The structure of a zipper",
-      "url": "https://www.ykk.com/english/ykk/tech/01.html"
+      "url": "https://www.ykk.com/english/ykk/tech/01.html",
+      "name": "YKK — The structure of a zipper"
     },
     {
-      "name": "YKK — Zipper Usage Instruction Manual, Zipper Structure (page 1)",
-      "url": "https://ykkamericas.com/wp-content/uploads/2021/10/ykk-zipper-instruction-manual-compressed.pdf"
+      "url": "https://ykkamericas.com/wp-content/uploads/2021/10/ykk-zipper-instruction-manual-compressed.pdf",
+      "name": "YKK — Zipper Usage Instruction Manual, Zipper Structure (page 1)"
     },
     {
-      "name": "Gideon Sundback — Separable fastener, US1219881A (1917)",
-      "url": "https://patents.google.com/patent/US1219881A/en"
+      "url": "https://patents.google.com/patent/US1219881A/en",
+      "name": "Gideon Sundback — Separable fastener, US1219881A (1917)"
     },
     {
-      "name": "YKK — Why zippers don’t come open on their own",
-      "url": "https://www.ykk.com/english/ykk/tech/03.html"
+      "url": "https://www.ykk.com/english/ykk/tech/03.html",
+      "name": "YKK — Why zippers don’t come open on their own"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Fancy a few more everyday surprises? Try General Knowledge for a mix of topics. The questions are not a test of this article.",
   "sections": [
     {
       "id": "one-pull",
-      "title": "A little machine hiding on your pencil case",
-      "html": "<p>Closing a bag takes a second. But look closely at the zip: you are joining dozens of tiny pieces without touching each one.</p><p><strong>A zipper closes because its teeth fit together. The sliding part guides them into place, one after another.</strong> Pull it the other way and it separates them again.</p><p>The teeth are also called <strong>elements</strong>. They stay attached to two strips of fabric. <a href=\"https://www.ykk.com/english/ykk/tech/01.html\" target=\"_blank\" rel=\"noopener noreferrer\">YKK’s explanation of zipper construction</a> shows how the pieces work together.</p>"
+      "html": "<p>Closing a bag takes a second. But look closely at the zip: you are joining dozens of tiny pieces without touching each one.</p><p><strong>A zipper closes because its teeth fit together. The sliding part guides them into place, one after another.</strong> Pull it the other way and it separates them again.</p><p>The teeth are also called <strong>elements</strong>. They stay attached to two strips of fabric. <a href=\"https://www.ykk.com/english/ykk/tech/01.html\" target=\"_blank\" rel=\"noopener noreferrer\">YKK’s explanation of zipper construction</a> shows how the pieces work together.</p>",
+      "title": "A little machine hiding on your pencil case"
     },
     {
       "id": "meet-the-parts",
-      "title": "Find these three parts",
-      "html": "<p>Take a look at a zip on a bag or jacket. This little map will help you name what you see.</p><div class=\"table-scroll\"><table><caption>The parts to look for on a zipper</caption><thead><tr><th scope=\"col\">Part</th><th scope=\"col\">Where to look</th><th scope=\"col\">What it does</th></tr></thead><tbody><tr><td>Teeth, or elements</td><td>The rows beside the opening</td><td>Fit together to close the gap</td></tr><tr><td>Slider</td><td>The small body behind the tab you pull</td><td>Guides the teeth together or apart</td></tr><tr><td>Tape</td><td>The fabric strip on each side</td><td>Carries the row of teeth</td></tr></tbody></table></div><p>The pull tab is your handle; it is not the whole slider. You can see both parts labelled in <a href=\"https://ykkamericas.com/wp-content/uploads/2021/10/ykk-zipper-instruction-manual-compressed.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">YKK’s zipper manual (page 1)</a>.</p>"
+      "html": "<p>Take a look at a zip on a bag or jacket. This little map will help you name what you see.</p><div class=\"table-scroll\"><table><caption>The parts to look for on a zipper</caption><thead><tr><th scope=\"col\">Part</th><th scope=\"col\">Where to look</th><th scope=\"col\">What it does</th></tr></thead><tbody><tr><td>Teeth, or elements</td><td>The rows beside the opening</td><td>Fit together to close the gap</td></tr><tr><td>Slider</td><td>The small body behind the tab you pull</td><td>Guides the teeth together or apart</td></tr><tr><td>Tape</td><td>The fabric strip on each side</td><td>Carries the row of teeth</td></tr></tbody></table></div><p>The pull tab is your handle; it is not the whole slider. You can see both parts labelled in <a href=\"https://ykkamericas.com/wp-content/uploads/2021/10/ykk-zipper-instruction-manual-compressed.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">YKK’s zipper manual (page 1)</a>.</p>",
+      "title": "Find these three parts"
     },
     {
       "id": "hidden-y",
-      "title": "Inside the slider is a tiny Y-shaped passage",
-      "html": "<p>Picture the letter <strong>Y</strong>: two arms meet at one stem. Inside the slider, a passage with that shape guides two separate rows into one joined chain.</p><ol><li>As you close the zip, the separate rows enter the wide end.</li><li>The passage brings them together so the teeth fit together.</li><li>The joined teeth come out at the narrow end.</li></ol><p>Opening reverses the trip. One joined chain becomes two rows. The slider controls the movement; the teeth do the holding.</p>"
+      "html": "<p>Picture the letter <strong>Y</strong>: two arms meet at one stem. Inside the slider, a passage with that shape guides two separate rows into one joined chain.</p><ol><li>As you close the zip, the separate rows enter the wide end.</li><li>The passage brings them together so the teeth fit together.</li><li>The joined teeth come out at the narrow end.</li></ol><p>Opening reverses the trip. One joined chain becomes two rows. The slider controls the movement; the teeth do the holding.</p>",
+      "title": "Inside the slider is a tiny Y-shaped passage"
     },
     {
       "id": "old-idea",
-      "title": "The clever bit is in the shape",
-      "html": "<p>A row of smooth beads would not do the same job. The pieces need shapes that engage with their neighbours.</p><p>In <a href=\"https://patents.google.com/patent/US1219881A/en\" target=\"_blank\" rel=\"noopener noreferrer\">Gideon Sundback’s 1917 fastener patent</a>, each tooth has a little hollow on one side and a raised bump on the other. A bump fits into a neighbouring hollow, helping the pieces hold together. The patent describes a sliding device that connects or separates the rows.</p><p>It is a lovely design question: how can something hold together, yet come apart when you want it to? A zip answers it with carefully shaped pieces and a guide.</p>"
+      "html": "<p>A row of smooth beads would not do the same job. The pieces need shapes that engage with their neighbours.</p><p>In <a href=\"https://patents.google.com/patent/US1219881A/en\" target=\"_blank\" rel=\"noopener noreferrer\">Gideon Sundback’s 1917 fastener patent</a>, each tooth has a little hollow on one side and a raised bump on the other. A bump fits into a neighbouring hollow, helping the pieces hold together. The patent describes a sliding device that connects or separates the rows.</p><p>It is a lovely design question: how can something hold together, yet come apart when you want it to? A zip answers it with carefully shaped pieces and a guide.</p>",
+      "title": "The clever bit is in the shape"
     },
     {
       "id": "tiny-lock",
-      "title": "Some zips have a hidden brake, too",
-      "html": "<p>The teeth fitting together and the slider staying put are two different jobs.</p><p>Some sliders include a small locking pin that catches on the teeth. Moving the pull tab releases it. Other locking sliders release when you gently pull the tab, so the details vary. <a href=\"https://www.ykk.com/english/ykk/tech/03.html\" target=\"_blank\" rel=\"noopener noreferrer\">YKK shows both locking designs</a>.</p><p>That is why a zip can move smoothly in your hand but stay where you leave it.</p>"
+      "html": "<p>The teeth fitting together and the slider staying put are two different jobs.</p><p>Some sliders include a small locking pin that catches on the teeth. Moving the pull tab releases it. Other locking sliders release when you gently pull the tab, so the details vary. <a href=\"https://www.ykk.com/english/ykk/tech/03.html\" target=\"_blank\" rel=\"noopener noreferrer\">YKK shows both locking designs</a>.</p><p>That is why a zip can move smoothly in your hand but stay where you leave it.</p>",
+      "title": "Some zips have a hidden brake, too"
     },
     {
       "id": "watch-it-work",
-      "title": "Try a ten-second zipper challenge",
-      "html": "<p>Use an ordinary bag zip that moves freely. Open it halfway, then slowly close a short section. Watch just beside the slider. Stop if fabric catches; there is no need to force it.</p><p><strong>Which part travels along the opening: the teeth or the slider?</strong> Make your choice before revealing the answer.</p><details class=\"practice-answer\"><summary>Show me what to look for</summary><p><strong>The slider travels along the opening.</strong> The teeth remain on their fabric strips, joining as the slider passes. Reverse your hand’s movement and watch the joined section become two rows again.</p></details><p>Now compare it with <a href=\"/learn/how-hook-and-loop-fasteners-work/\" target=\"_blank\" rel=\"noopener noreferrer\">the fastener inspired by a burr</a>. Both let you open and close something repeatedly, but they solve the problem in different ways.</p><p>Another tiny part doing a big job: <a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\" target=\"_blank\" rel=\"noopener noreferrer\">the ball inside a ballpoint pen</a>. Your pencil case is full of small inventions worth a closer look.</p>"
+      "html": "<p>Use an ordinary bag zip that moves freely. Open it halfway, then slowly close a short section. Watch just beside the slider. Stop if fabric catches; there is no need to force it.</p><p><strong>Which part travels along the opening: the teeth or the slider?</strong> Make your choice before revealing the answer.</p><details class=\"practice-answer\"><summary>Show me what to look for</summary><p><strong>The slider travels along the opening.</strong> The teeth remain on their fabric strips, joining as the slider passes. Reverse your hand’s movement and watch the joined section become two rows again.</p></details><p>Now compare it with <a href=\"/learn/how-hook-and-loop-fasteners-work/\" target=\"_blank\" rel=\"noopener noreferrer\">the fastener inspired by a burr</a>. Both let you open and close something repeatedly, but they solve the problem in different ways.</p><p>Another tiny part doing a big job: <a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\" target=\"_blank\" rel=\"noopener noreferrer\">the ball inside a ballpoint pen</a>. Your pencil case is full of small inventions worth a closer look.</p>",
+      "title": "Try a ten-second zipper challenge"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Follow the tiny teeth through a zipper’s slider, spot its three main parts, and try a quick challenge with a zip you already own.",
+  "publishedAt": "2026-10-07T15:47:52.661091+00:00"
 }

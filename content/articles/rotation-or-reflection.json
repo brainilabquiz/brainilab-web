@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/rotation-or-reflection-thumb.webp"
   },
   "order": 54,
-  "title": "Rotation vs reflection: turning or flipping a shape?",
+  "title": "Turning or flipping a shape: what changes?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -78,21 +78,21 @@
     },
     {
       "id": "explore",
-      "html": "<p>Draw an L on paper and mark one corner with a dot. Turn the paper a quarter-turn on the table. Four quarter-turns return it to its starting position. Then hold it beside a mirror to compare a reflection.</p><p>Follow the small dot as well as the outside edge. The dot is attached to the shape, so it moves with it. This prevents a symmetric-looking outline from hiding what changed.</p>",
+      "html": "<p>Draw an L on paper and mark one corner with a dot. Turn the paper a quarter-turn on the table. Four quarter-turns return it to its starting position. Then hold it beside a mirror to compare a reflection.</p><p>Follow the small dot as well as the outside edge. The dot is attached to the shape, so it moves with it. Even if the outside shape looks the same, the dot helps you see how it moved.</p>",
       "title": "Try it yourself"
     },
     {
       "id": "use-the-direction-in-the-question",
-      "html": "<p>A clockwise quarter-turn follows the direction of clock hands. A half-turn rotates through two quarter-turns. A full turn is four quarter-turns, or 360 degrees.</p><p>A reflection needs a mirror line. With a vertical mirror line, left and right switch. A horizontal mirror would switch top and bottom instead.</p>",
+      "html": "<p>A clockwise quarter-turn follows the direction of clock hands. A half-turn rotates through two quarter-turns. A full turn is four quarter-turns. Turns can also be measured in <strong>degrees</strong>: a full turn is 360 degrees.</p><p>For a reflection, imagine a line where the mirror sits. A <strong>vertical</strong> line runs up and down: a reflection across it switches left and right. A <strong>horizontal</strong> line runs across the page: a reflection across it switches top and bottom.</p>",
       "title": "Use the direction in the question"
     },
     {
       "id": "check-features-not-a-vague-impression",
-      "html": "<p>Look for a short arm, a long arm and a marked corner. Track where each feature moves. If only one feature matches your prediction, you may have turned the shape the wrong way or imagined a reflection.</p><p>Some shapes, such as a square without a mark, can look unchanged after certain movements. That does not mean no movement happened. Distinctive features make a reasoning question less ambiguous.</p>",
+      "html": "<p>Look for a short arm, a long arm and a marked corner. Track where each feature moves. If only one feature matches your prediction, you may have turned the shape the wrong way or imagined a reflection.</p><p>Some shapes, such as a square without a mark, can look unchanged after certain movements. That does not mean no movement happened. A dot or a clearly different corner makes it easier to tell what happened.</p>",
       "title": "Check features, not a vague impression"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Use an asymmetric shape to tell a rotation from a mirror reflection, one movement at a time.",
+  "updatedAt": "2026-10-09T15:53:35Z",
+  "description": "Turn a paper shape, then look at it in a mirror. Follow a marked corner to see what changes.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
