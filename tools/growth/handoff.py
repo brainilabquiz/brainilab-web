@@ -32,6 +32,18 @@ def build_handoff(report):
                 'Keep estimated monthly searches separate from observed Search Console clicks.',
                 'Research intent, implement one useful change and verify tests and publication.'],
             'acceptance':['Evidence and source dates verified','No duplicate content','Original baseline retained','Public change verified']})
+    search = report.get('searchPerformance')
+    if search:
+        from search_performance import validate, public_path
+        validate(search)
+        for task in tasks:
+            path = public_path(task['url'])
+            matches = [r for r in search['current']['landingPages'] if r['path'] == path]
+            if matches:
+                task['landingPageObservation'] = {'period':search['current']['period'],
+                    'observedAt':search['observedAt'],'timezone':search['current']['analyticsTimezone'],
+                    'source':'GA4 google / organic','data':matches[0],
+                    'limit':'Session landing-page evidence only. Never attribute these outcomes to a keyword or treat registration requests as confirmed accounts.'}
     return {'schemaVersion':2,'mode':'automatic_codex','authorization':'Owner explicitly authorized detection, execution and publication on 2026-10-01.',
         'researchTasks':research_tasks(report.get('openseo')),
         'researchInstructions':['Use installed openseo:seo-project-setup, openseo:seo-audit and openseo:keyword-research skills in that order.',

@@ -228,3 +228,32 @@ It must be run through an authorized database management connection. All tempora
 ledger changes roll back. No real new human signup was observed during these tests.
 Live browser review was unavailable because Computer Use could not reliably
 identify the current browser URL; do not present DOM tests as visual verification.
+
+## Search intelligence
+
+`search_performance.py --private <existing-private-data-directory>` reuses the
+separate Search Console and Analytics read-only tokens. It collects two adjacent
+28-day periods ending three UTC days ago: observed query/page pairs, property
+totals, countries/devices, Google organic landing sessions and session events,
+and recognised AI referral sources. Paths are normalised (trailing slash and
+query removal); matching query/page rows use impression-weighted position.
+Sensitive or unsupported query rows are withheld. No hidden query recovery,
+keyword-to-session attribution, keyword conversions or AI citations are inferred.
+
+Refresh before `daily_gsc.run`. Collection is all-or-nothing, checks concurrent
+file changes, keeps history and reuses a successful same-day observation. Failures
+must retain the last successful snapshot with its real date. `measurement.py`
+attaches the snapshot to the private report; the existing admin RPC and ingest
+store it without schema or access changes. Never publish private data files.
+The handoff adds separate landing-page evidence to matching existing tasks;
+decision reconciliation and the one-change-per-run limit remain mandatory.
+
+Admin Growth provides query filters, transparent brand/intent rules, equal-period
+comparison, countries/devices, landing outcomes, AI referrals, CSV exports and
+review briefs. Event rows missing from GA4 remain unmeasured. Registration
+requests are not confirmed accounts. Google and Analytics day boundaries differ.
+The local runner must invoke this refresh using published code, then export and
+perform the usual backed-up, revision-checked, idempotent private import.
+
+Checks: `python -m unittest discover -s tools/growth -p 'test_*.py'` and
+`node tools/test-growth-search.mjs` (JSDOM_MODULE can point to an existing jsdom).
