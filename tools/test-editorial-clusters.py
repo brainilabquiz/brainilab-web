@@ -9,7 +9,8 @@ class HubPublicationTests(unittest.TestCase):
         self.plan = {'supportingArticlesPerHub': 10, 'blocks': [{
             'id': 'example', 'hubSlug': 'reading-guide',
             'members': [{'slug': slug} for slug in self.slugs]}]}
-        self.members = [{'slug': slug, 'status': 'published', 'sections': [],
+        self.members = [{'slug': slug, 'status': 'published', 'sections': [
+                         {'html': '<a href="/learn/reading-guide/">Full guide</a>'}],
                          'hub': {'url': '/learn/reading-guide/'}} for slug in self.slugs]
         self.hub = {'slug': 'reading-guide', 'status': 'published', 'sections': [
             {'html': ''.join(f'<p><a href="/learn/{slug}/">Read</a></p>' for slug in self.slugs)}]}
@@ -29,6 +30,7 @@ class HubPublicationTests(unittest.TestCase):
             validate_clusters(self.members + [self.hub], self.plan)
 
     def test_return_links_are_required_and_can_be_contextual(self):
+        self.members[0]['sections'] = []
         self.members[0]['hub'] = {'url': '/games/'}
         with self.assertRaisesRegex(ValueError, 'missing its return link'):
             validate_clusters(self.members + [self.hub], self.plan)
@@ -65,9 +67,11 @@ class HubPublicationTests(unittest.TestCase):
         block = self.plan['blocks'][0]
         block.update(supportingArticlesPerHub=7, members=block['members'][:7])
         self.members[0]['hub'] = {'url': '/learn/'}
+        self.members[0]['sections'] = []
         with self.assertRaisesRegex(ValueError, 'missing its return link'):
             validate_clusters(self.members[:7] + [self.hub], self.plan)
         self.members[0]['hub']['url'] = '/learn/reading-guide/'
+        self.members[0]['sections'] = [{'html': '<a href="/learn/reading-guide/">Full guide</a>'}]
         self.hub['sections'][0]['html'] = ''
         with self.assertRaisesRegex(ValueError, 'missing a link'):
             validate_clusters(self.members[:7] + [self.hub], self.plan)
@@ -78,6 +82,12 @@ class HubPublicationTests(unittest.TestCase):
                 self.plan['blocks'][0]['supportingArticlesPerHub'] = count
                 with self.assertRaisesRegex(ValueError, 'integer of at least two'):
                     validate_clusters(self.members + [self.hub], self.plan)
+
+    def test_legacy_hub_metadata_is_not_a_visible_return_link(self):
+        self.members[0]['sections'] = []
+        self.assertEqual(self.members[0]['hub']['url'], '/learn/reading-guide/')
+        with self.assertRaisesRegex(ValueError, 'missing its return link'):
+            validate_clusters(self.members + [self.hub], self.plan)
 
 
 if __name__ == '__main__':

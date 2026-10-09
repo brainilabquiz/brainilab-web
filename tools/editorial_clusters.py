@@ -48,7 +48,7 @@ def validate_clusters(articles, plan):
                     raise ValueError(f'{name}: hub is missing a link to {slug}')
                 article = published[slug]
                 returns = Links(''.join(s['html'] for s in article['sections'])).hrefs
-                returns.add(article.get('hub', {}).get('url'))
+                # The simplified reader renders section links, not the legacy hub field.
                 if f'/learn/{hub}/' not in returns:
                     raise ValueError(f'{name}: {slug} is missing its return link')
     if claimed.intersection(hubs):

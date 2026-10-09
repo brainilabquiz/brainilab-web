@@ -88,11 +88,11 @@
     },
     {
       "id": "read-the-amount-not-just-the-digits",
-      "html": "<p>For 47, say “four tens and seven ones” before saying “forty-seven”. For 8, there are no complete tens and eight ones. A one-digit number still fits the same idea.</p><p>Try making 26 with small objects. Trade one bundle of ten for ten loose objects. The total stays 26. This exchange will become useful when you add or subtract across a ten.</p>",
+      "html": "<p>For 47, say “four tens and seven ones” before saying “forty-seven”. For 8, there are no complete tens and eight ones. A one-digit number still fits the same idea.</p><p>Try making 26 with small objects. Trade one bundle of ten for ten loose objects. The total stays 26. This exchange will become useful when you add or subtract across a ten.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
       "title": "Read the amount, not just the digits"
     }
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T17:07:39.650554Z",
   "description": "Bundle ten little cubes into one group and discover how the position of a digit changes its value.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

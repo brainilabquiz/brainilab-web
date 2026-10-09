@@ -93,11 +93,11 @@
     },
     {
       "id": "zero-left",
-      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>These examples remove only counters you already have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\" target=\"_blank\" rel=\"noopener noreferrer\">see how equal groups make counting quicker</a>.</p>",
+      "html": "<p>Start with 3 counters. Take away all 3. None remain, so <strong>3 − 3 = 0</strong>.</p><p>If you take away nothing, all three stay: <strong>3 − 0 = 3</strong>. These are different stories, even though they use the same numbers.</p><p>These examples remove only counters you already have. Later, negative numbers will let us describe other stories, such as owing money.</p><p>Next, <a href=\"/learn/multiplication-equal-groups/\" target=\"_blank\" rel=\"noopener noreferrer\">see how equal groups make counting quicker</a>.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
       "title": "Sometimes the answer is nothing"
     }
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
+  "updatedAt": "2026-10-09T17:07:39.649548Z",
   "description": "Start with a small pile, take a few away, and count what remains. Try it yourself, then use addition to check your answer.",
   "publishedAt": "2026-09-30T20:58:19.100686+00:00"
 }
