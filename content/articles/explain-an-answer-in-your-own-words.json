@@ -1,0 +1,75 @@
+{
+  "slug": "explain-an-answer-in-your-own-words",
+  "title": "Can you explain it? A simple way to check what you learn",
+  "description": "Try self-explanation with one short answer. Use your own words, spot a missing step and check it against the source before moving on.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 84,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/explain-an-answer-in-your-own-words.webp",
+    "small": "/assets/images/learn/explain-an-answer-in-your-own-words-small.webp",
+    "thumbnail": "/assets/images/learn/explain-an-answer-in-your-own-words-thumb.webp",
+    "alt": "Hands with a pencil and an open notebook beside a small globe and desk lamp",
+    "position": 50,
+    "credit": "AI-generated photorealistic image created for BrainiLab; an illustrative scene, not a photograph of research participants."
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "After a round, choose one answer that caught your attention. Find a reliable explanation, then try putting its main idea into your own words.",
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "can-a-wrong-guess-help-you-learn",
+    "why-day-turns-into-night"
+  ],
+  "sources": [
+    {
+      "name": "Chi, de Leeuw, Chiu & LaVancher (1994) — Eliciting Self-Explanations Improves Understanding (original research, PDF)",
+      "url": "https://education.asu.edu/sites/g/files/litvpz656/files/lcl/chideleeuwchiulavancher_3.pdf"
+    },
+    {
+      "name": "NASA Science — Facts About Earth: orbit and rotation",
+      "url": "https://science.nasa.gov/earth/facts/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "try-one-sentence",
+      "title": "The moment “I get it” meets “How?”",
+      "html": "<p>You read an answer. It makes sense. Then someone asks you to explain it, and you get stuck halfway through.</p><p>That pause gives you something useful to investigate. <strong>Self-explanation means working out how or why an idea makes sense, using your own words.</strong> You can do it quietly, aloud or with a quick sketch. You do not need an audience.</p><p>Start with one small idea. Ask: “Why does this happen?” or “How does this step lead to the next?” Keep the original explanation nearby so you can check your answer.</p>"
+    },
+    {
+      "id": "more-than-new-words",
+      "title": "Changing the words is only the start",
+      "html": "<p>Imagine reading: “Earth rotates.” Replacing it with “Earth spins” changes the wording. To explain more, connect that movement to something it causes.</p><p>For example: <strong>“As Earth turns, our part of it moves away from the sunlight. That is why we move into night.”</strong> Now the answer connects a movement with its result. <a href=\"https://science.nasa.gov/earth/facts/\" target=\"_blank\" rel=\"noopener noreferrer\">NASA describes Earth’s rotation</a> separately from its yearly journey around the Sun.</p><p>If the idea is new, explore our <a href=\"/learn/why-day-turns-into-night/\" target=\"_blank\" rel=\"noopener noreferrer\">day-and-night lesson</a> first. The example here is a place to practise explaining, not a test of astronomy knowledge you should already have.</p>"
+    },
+    {
+      "id": "spot-the-missing-step",
+      "title": "Try it: what is missing from this answer?",
+      "html": "<p>Here is a short answer to “Why does night happen?”:</p><blockquote><p>“Because Earth moves.”</p></blockquote><p>It is a start, but “moves” leaves a lot unexplained. Say or sketch what you would add before opening the answer below.</p><details class=\"practice-answer\"><summary>Show one clearer explanation</summary><p>Earth turns, carrying our location from the sunlit side toward the side facing away from the Sun. Naming the turn and linking it to the change in light explains more than saying only that Earth moves.</p></details><p>Your wording can be different. Look for the same connection between the turn and the change in light.</p>"
+    },
+    {
+      "id": "check-your-explanation",
+      "title": "Three questions to ask your own explanation",
+      "html": "<p>Try this small checklist with another paragraph you have just read. It is a practice aid, not a research test or a score for your intelligence.</p><div class=\"table-scroll\"><table><caption>A quick explanation check</caption><thead><tr><th scope=\"col\">Ask yourself</th><th scope=\"col\">What to do next</th></tr></thead><tbody><tr><td>What does this word mean?</td><td>Use an everyday phrase, or look up the unfamiliar term.</td></tr><tr><td>How does this step lead to the next?</td><td>Add the missing link instead of repeating the result.</td></tr><tr><td>Which part am I guessing?</td><td>Mark that part, then check it against a reliable source.</td></tr></tbody></table></div><p>Do not fill a gap with a story just because it sounds convincing. Leave a question mark. Finding one precise question is a useful stopping point.</p>"
+    },
+    {
+      "id": "what-research-found",
+      "title": "What happened when students tried explaining?",
+      "html": "<p>In <a href=\"https://education.asu.edu/sites/g/files/litvpz656/files/lcl/chideleeuwchiulavancher_3.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">a 1994 study by Michelene Chi and colleagues</a>, 14 eighth-grade students were prompted to explain what they understood as they read a passage about the human circulatory system. Ten other students read the passage twice without those prompts.</p><p>The prompted group improved more between the tests before and after reading. That supports trying self-explanation as a learning activity. It does not promise the same improvement for every person, subject or short article: this was a small study with a particular task.</p>"
+    },
+    {
+      "id": "one-idea-is-enough",
+      "title": "One idea is enough to start",
+      "html": "<p>For your next article, choose one paragraph rather than the whole page. Read it, try explaining its main connection, and check the part you were unsure about. Revise that part in plain language.</p><p>Want to check whether the idea stays with you later? That is a different next step: try our <a href=\"/learn/remember-quiz-answers-tomorrow/\" target=\"_blank\" rel=\"noopener noreferrer\">routine for recalling a quiz answer</a>. Here, the focus is making sense of the explanation while you learn it.</p><details class=\"practice-answer\"><summary>Is a smooth-sounding explanation enough to trust?</summary><p>No. An explanation can sound convincing and still contain a mistake. Check the uncertain step against a reliable source and correct it.</p></details>"
+    }
+  ],
+  "publishedAt": "2026-10-09T08:01:41.022404+00:00",
+  "updatedAt": "2026-10-09T08:01:41.022404+00:00"
+}
