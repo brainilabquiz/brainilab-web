@@ -1,0 +1,76 @@
+{
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "why-earthquakes-can-be-felt-far-away",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-daily-20261010.webp",
+    "small": "/assets/images/learn/curiosity-daily-20261010-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-daily-20261010-thumb.webp",
+    "alt": "A seismograph recording a wavy trace beside a rock sample in a quiet laboratory",
+    "credit": "AI-generated conceptual cover created for BrainiLab; not a photograph of a real event.",
+    "position": 50
+  },
+  "order": 68,
+  "title": "Why can you feel an earthquake far away?",
+  "topic": "Curiosity",
+  "status": "published",
+  "related": [
+    "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "name": "USGS — The science of earthquakes",
+      "url": "https://www.usgs.gov/programs/earthquake-hazards/science-earthquakes"
+    },
+    {
+      "name": "USGS — What an earthquake feels like",
+      "url": "https://www.usgs.gov/faqs/what-does-earthquake-feel"
+    },
+    {
+      "name": "USGS — Distance effects",
+      "url": "https://earthquake.usgs.gov/education/listen/distance.php"
+    },
+    {
+      "name": "USGS — Magnitude and shaking intensity",
+      "url": "https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few more questions about the world around you.",
+  "sections": [
+    {
+      "id": "a-shake-from-somewhere-else",
+      "title": "A shake from somewhere else",
+      "html": "<p>Imagine sitting quietly when your chair gives a small wobble. Later, you hear that an earthquake began far from your town. How could something happening there move the floor here?</p><p>The ground connects the two places. An earthquake sends vibrations through Earth, and those vibrations can reach people a long way from where the movement began. The moving message is a wave.</p>"
+    },
+    {
+      "id": "where-the-waves-begin",
+      "title": "The rock slips; the movement travels",
+      "html": "<p>The outer part of Earth is broken into enormous pieces called tectonic plates. As these pieces move, rocks along a fault—a break where rock can move—may get stuck while forces keep building. When the rocks suddenly slip, stored energy is released.</p><p>That energy spreads out as seismic waves. Seismic simply means related to earthquakes. <a href=\"https://www.usgs.gov/programs/earthquake-hazards/science-earthquakes\" target=\"_blank\" rel=\"noopener noreferrer\">The USGS compares their spread to ripples on a pond</a>. The comparison describes energy travelling outward; it does not mean solid ground turns into water.</p><p>Think of people passing a gentle squeeze along a line of joined hands. Nobody has to walk from the first person to the last. The disturbance travels while each person moves only a little. Rock can also pass a disturbance along without travelling across the country.</p>"
+    },
+    {
+      "id": "more-than-one-wave",
+      "title": "The shaking arrives in different ways",
+      "html": "<p>An earthquake does not send just one kind of wave. P waves squeeze and stretch material in the direction they travel. S waves move material across that direction. P waves travel faster, so recording instruments usually detect them first.</p><p>Other waves travel along Earth’s surface. Different arrivals help explain why shaking may feel like a quick jolt followed by a longer rolling movement. Your distance from the earthquake, and the ground beneath you, also affect the experience. <a href=\"https://www.usgs.gov/faqs/what-does-earthquake-feel\" target=\"_blank\" rel=\"noopener noreferrer\">The USGS guide to what earthquakes feel like</a> describes these differences.</p>"
+    },
+    {
+      "id": "why-distance-isnt-everything",
+      "title": "Farther away usually means less shaking",
+      "html": "<p>As waves spread, their energy is spread over a larger area. Some energy is also lost along the way. That usually makes the shaking weaker farther from its source, as the <a href=\"https://earthquake.usgs.gov/education/listen/distance.php\" target=\"_blank\" rel=\"noopener noreferrer\">USGS explanation of distance effects</a> shows.</p><p>But distance is only part of the story. Waves travel through different types of rock, and shallow ground beneath a place can change how it shakes. Two towns equally far away may therefore have different experiences. There is no single distance at which every earthquake stops being felt.</p>"
+    },
+    {
+      "id": "one-earthquake-many-experiences",
+      "title": "One earthquake, many experiences",
+      "html": "<p>Magnitude describes the size of an earthquake at its source. Intensity describes how strongly the shaking is experienced in a particular place. <a href=\"https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity\" target=\"_blank\" rel=\"noopener noreferrer\">The USGS distinguishes these two measurements</a> because they answer different questions.</p><p>A useful comparison is a speaker playing music. Its output and how loud the music sounds at your chair are related, but they are not the same thing. Move farther away, or put a wall between you and the speaker, and your experience changes.</p><p>So a faraway wobble does not mean the earthquake began beneath your feet. It means waves reached you. A single sudden slip can send a travelling disturbance through the ground—and many places can feel different parts of that same story.</p>"
+    }
+  ],
+  "updatedAt": "2026-10-10T20:07:13.525784Z",
+  "description": "An earthquake begins in one place, yet people far away may feel it. Follow the travelling waves to see how the shaking reaches them.",
+  "publishedAt": "2026-10-10T20:07:13.525784Z"
+}

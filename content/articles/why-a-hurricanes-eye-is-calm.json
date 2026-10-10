@@ -1,0 +1,72 @@
+{
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "why-a-hurricanes-eye-is-calm",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-weekly-20261010.webp",
+    "small": "/assets/images/learn/curiosity-weekly-20261010-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-weekly-20261010-thumb.webp",
+    "alt": "Conceptual aerial view of a hurricane with a clear eye surrounded by white spiral clouds over blue ocean",
+    "credit": "AI-generated conceptual cover created for BrainiLab; not a photograph of a real event.",
+    "position": 50
+  },
+  "order": 69,
+  "title": "Why is the middle of a hurricane so calm?",
+  "topic": "Curiosity",
+  "status": "published",
+  "related": [
+    "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "name": "NOAA — Tropical cyclone structure",
+      "url": "https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction/tropical-cyclone-structure"
+    },
+    {
+      "name": "NOAA — Hurricanes",
+      "url": "https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes"
+    },
+    {
+      "name": "NOAA — Hurricane safety",
+      "url": "https://www.noaa.gov/education/explainers/hurricane-safety-explained"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try a few more questions about the world around you.",
+  "sections": [
+    {
+      "id": "a-surprising-gap",
+      "title": "A quiet gap inside a huge storm",
+      "html": "<p>Picture a great swirl of clouds over the ocean. The strongest winds seem to be racing around a small gap in the middle. In some hurricanes, that gap—the eye—can have light winds and relatively clear skies.</p><p>Why would the centre of such a powerful storm look quieter than the ring around it? The answer lies in the air’s movement: air rises strongly around the eye, while air inside it sinks.</p>"
+    },
+    {
+      "id": "a-storm-with-a-centre",
+      "title": "Meet the eye and the eyewall",
+      "html": "<p>A hurricane is a strong tropical cyclone: a rotating storm that forms over warm ocean water under suitable conditions. <a href=\"https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes\" target=\"_blank\" rel=\"noopener noreferrer\">NOAA’s introduction to hurricanes</a> explains how warm, moist air helps fuel these systems.</p><p>In a mature hurricane, the eye is the central area. Around it sits the eyewall, a ring of towering thunderstorms. That wall is where some of the storm’s most violent weather occurs. It is easy to mix up the two names, but they describe very different parts.</p><p>Imagine a circular stadium. The open space in the middle is different from the ring of steep stands around it. That is only a picture of the layout, not an explanation of the wind; it helps keep the eye and eyewall separate in your mind.</p>"
+    },
+    {
+      "id": "rising-around-sinking-inside",
+      "title": "The air takes two different routes",
+      "html": "<p>In the eyewall, moist air rises. As rising air cools, water vapour condenses into cloud droplets. This helps create the tall clouds and heavy rain surrounding the eye.</p><p>Inside the eye, air generally sinks. Sinking air warms, which makes it harder for clouds to remain there. That is a major reason the eye can look clearer than the eyewall. <a href=\"https://www.noaa.gov/jetstream/tropical/tropical-cyclone-introduction/tropical-cyclone-structure\" target=\"_blank\" rel=\"noopener noreferrer\">NOAA’s guide to tropical cyclone structure</a> describes this contrast between the sinking centre and the rising ring.</p><p>Calm does not mean that the storm has lost its energy. Different parts of the same system are doing different things at the same time.</p>"
+    },
+    {
+      "id": "not-every-storm-has-an-eye",
+      "title": "Not every swirl has a clear eye",
+      "html": "<p>The neat circular gap seen in dramatic images belongs to some well-organised storms. A tropical storm does not need a clearly visible eye, and a hurricane’s eye may be partly covered by cloud.</p><p>Storms also change as they develop. A picture taken at one moment cannot tell you everything about the wind, rain or danger at a particular location. The clear patch is one part of the structure, not a complete forecast.</p>"
+    },
+    {
+      "id": "a-pause-isnt-the-end",
+      "title": "The quiet part is not an all-clear",
+      "html": "<p>If an eye passes over a place, there may be a temporary lull. But the other side of the eyewall can arrive afterwards, bringing violent weather again. <a href=\"https://www.noaa.gov/education/explainers/hurricane-safety-explained\" target=\"_blank\" rel=\"noopener noreferrer\">NOAA’s hurricane-safety explanation</a> warns against treating that lull as the end of the storm. Follow local official instructions rather than judging safety by a moment of calmer weather.</p><p>The puzzle has a simple answer: the air inside the eye behaves differently from the air around it. Sinking air helps clear the centre; rising air builds the towering ring. A quiet-looking middle and a fierce surrounding storm can belong to the very same hurricane.</p>"
+    }
+  ],
+  "updatedAt": "2026-10-10T20:07:13.525784Z",
+  "description": "A hurricane can have a quiet centre surrounded by fierce winds. The surprising difference comes from what the air is doing inside the storm.",
+  "publishedAt": "2026-10-10T20:07:13.525784Z"
+}
