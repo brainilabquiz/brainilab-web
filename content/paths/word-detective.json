@@ -33,6 +33,11 @@
       "slug": "portmanteau-words-brunch-smog-spork",
       "level": "6 · Unpack a word",
       "objective": "Find the source words inside a blend and tell it apart from an anagram or a compound."
+    },
+    {
+      "slug": "what-is-a-pangram-quick-brown-fox",
+      "level": "7 · Find the whole alphabet",
+      "objective": "Check whether a sentence contains all 26 English letters and explain why repeats are allowed."
     }
   ],
   "sources": [
@@ -61,24 +66,32 @@
       "name": "Merriam-Webster — Palindrome"
     },
     {
-      "name": "Merriam-Webster — Portmanteau",
-      "url": "https://www.merriam-webster.com/dictionary/portmanteau"
+      "url": "https://www.merriam-webster.com/dictionary/portmanteau",
+      "name": "Merriam-Webster — Portmanteau"
     },
     {
-      "name": "Merriam-Webster — Brunch",
-      "url": "https://www.merriam-webster.com/dictionary/brunch"
+      "url": "https://www.merriam-webster.com/dictionary/brunch",
+      "name": "Merriam-Webster — Brunch"
     },
     {
-      "name": "Merriam-Webster — Smog",
-      "url": "https://www.merriam-webster.com/dictionary/smog"
+      "url": "https://www.merriam-webster.com/dictionary/smog",
+      "name": "Merriam-Webster — Smog"
     },
     {
-      "name": "Merriam-Webster — Spork",
-      "url": "https://www.merriam-webster.com/dictionary/spork"
+      "url": "https://www.merriam-webster.com/dictionary/spork",
+      "name": "Merriam-Webster — Spork"
     },
     {
-      "name": "Merriam-Webster — Open, closed and hyphenated compounds",
-      "url": "https://www.merriam-webster.com/grammar/hyphen-rules-open-closed-compound-words"
+      "url": "https://www.merriam-webster.com/grammar/hyphen-rules-open-closed-compound-words",
+      "name": "Merriam-Webster — Open, closed and hyphenated compounds"
+    },
+    {
+      "name": "Merriam-Webster — Pangram",
+      "url": "https://www.merriam-webster.com/dictionary/pangram"
+    },
+    {
+      "name": "Wordsmith — Practical Uses of Pangrams",
+      "url": "https://wordsmith.org/pangram/use.html"
     }
   ],
   "authorId": "biel-sarda",
@@ -106,6 +119,10 @@
     {
       "term": "Portmanteau",
       "definition": "A word formed by blending parts and meanings of two or more source words."
+    },
+    {
+      "term": "Pangram",
+      "definition": "A sentence or phrase containing every letter of an alphabet at least once."
     }
   ],
   "outcomes": [
@@ -114,12 +131,13 @@
     "Explain a connection that fits every clue.",
     "Check that an anagram uses every original letter exactly once.",
     "Test words and phrases for palindromes using a clear rule.",
-    "Recognise everyday portmanteau words and identify their ingredients."
+    "Recognise everyday portmanteau words and identify their ingredients.",
+    "Check a sentence for all 26 English letters and recognise that letters may repeat."
   ],
-  "updatedAt": "2026-10-11T17:36:47Z",
-  "description": "Six short English lessons: follow sentence clues, explore meanings, shuffle letters, spot palindromes and unpack word blends. Optional quizzes included.",
+  "updatedAt": "2026-10-11T18:45:29Z",
+  "description": "Seven short English lessons: follow sentence clues, explore meanings, shuffle letters, unpack word blends and find a whole alphabet. Optional quizzes included.",
   "publishedAt": "2026-10-04T11:31:17.023592+00:00",
   "coverArticle": "homophones-same-sound-different-meaning",
-  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Start with the clues around a word.</strong> Explore sound-alikes, meet words with opposite meanings and test a link across a set of clues. Then shuffle the letters of LISTEN into SILENT and find out what is hiding inside LEVEL. Finish by unpacking the two meals in brunch.</p><p>Each lesson builds on the last. Read at your own pace, try the examples and take an optional short quiz when you feel ready. There is no timer.</p>",
+  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Start with the clues around a word.</strong> Explore sound-alikes, meet words with opposite meanings and test a link across a set of clues. Then shuffle the letters of LISTEN into SILENT and find out what is hiding inside LEVEL. Unpack the two meals in brunch, then discover why a fox and a sleepy dog keep appearing in type samples.</p><p>Each lesson builds on the last. Read at your own pace, try the examples and take an optional short quiz when you feel ready. There is no timer.</p>",
   "prerequisites": "You only need to read short English sentences. We explain each new term as it appears."
 }

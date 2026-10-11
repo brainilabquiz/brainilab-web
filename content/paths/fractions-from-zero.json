@@ -33,6 +33,11 @@
       "slug": "decimals-money-and-parts-of-ten",
       "level": "6 · Meet the decimal point",
       "objective": "Use tenths and hundredths to write the same amount in a new way."
+    },
+    {
+      "slug": "what-is-a-ratio-juice-and-water",
+      "level": "7 · Compare a mixture",
+      "objective": "Read a ratio in order, distinguish a part-to-part ratio from a fraction of the whole, and scale both quantities together."
     }
   ],
   "sources": [
@@ -53,8 +58,16 @@
       "name": "Math is Fun — Adding Fractions"
     },
     {
-      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals",
+      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)"
+    },
+    {
+      "name": "OpenStax — Prealgebra 2e: Ratios and Rate",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-6-ratios-and-rate"
+    },
+    {
+      "name": "NRICH — Blackcurrantiest",
+      "url": "https://nrich.maths.org/problems/blackcurrantiest"
     }
   ],
   "authorId": "biel-sarda",
@@ -78,6 +91,10 @@
     {
       "term": "Decimal point",
       "definition": "The mark separating whole-number places from tenths, hundredths and smaller places."
+    },
+    {
+      "term": "Ratio",
+      "definition": "A comparison of two quantities in a stated order, such as juice to water."
     }
   ],
   "outcomes": [
@@ -85,12 +102,13 @@
     "Explain the numerator and denominator using a picture.",
     "Show why different fractions can describe the same amount.",
     "Compare fractions using equal-sized wholes.",
-    "Add fractions whose pieces have the same size."
+    "Add fractions whose pieces have the same size.",
+    "Compare two quantities with a ratio and scale both while preserving their proportions."
   ],
-  "updatedAt": "2026-10-01T14:50:47.063Z",
-  "description": "Explore equal pieces, compare and add fractions, then meet decimals. Six short lessons with pictures and activities you can change.",
+  "updatedAt": "2026-10-11T18:45:29Z",
+  "description": "Seven short lessons: start with equal pieces, read and compare fractions, meet decimals, then use ratios to make a picnic drink. Optional quizzes included.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00",
   "coverArticle": "fractions-equal-parts",
-  "introduction": "<p>Start with equal pieces of one whole. Learn to read, compare and add fractions using pictures you can change.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
+  "introduction": "<p>Start with equal pieces of one whole. Learn to read, compare and add fractions, then meet decimals and use a ratio to make a bigger batch of a drink.</p><p>Read at your own pace and check the small examples. Each lesson has an optional short quiz; you can return to any chapter whenever you like.</p>",
   "prerequisites": "Comfort with counting, addition and equal sharing. Maths from zero is a useful starting point."
 }
