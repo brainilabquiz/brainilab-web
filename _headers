@@ -28,3 +28,107 @@
 
 /assets/flags/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=2592000
+
+# Daily may be played inside the two exact Alldle origins only.
+# Keep global X-Frame-Options: DENY as the legacy-browser fallback.
+# Modern browsers enforce frame-ancestors instead. No wildcard ancestors.
+
+/daily-quiz
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/daily-quiz/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/daily-quiz/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brain-mix
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brain-mix/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brain-mix/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/connections
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/connections/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/connections/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/math-rush
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/math-rush/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/math-rush/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brainiword
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brainiword/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/brainiword/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/number-route
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/number-route/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/number-route/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/order-up
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/order-up/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/order-up/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/odd-one-out
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/odd-one-out/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/odd-one-out/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/topic-rush
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/topic-rush/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/topic-rush/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/sequence
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/sequence/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/sequence/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/higher-lower
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/higher-lower/
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
+/games/higher-lower/index.html
+  Content-Security-Policy: frame-ancestors https://alldle.net https://www.alldle.net;
+
