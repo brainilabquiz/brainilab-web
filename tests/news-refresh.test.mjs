@@ -5,7 +5,7 @@ const now=Date.parse('2026-10-09T18:00:00Z');
 const story={title:'A test headline',summary:'An original short summary.',sourceName:'UN',sourceUrl:'https://news.un.org/en/story/2026/10/test',reportedAt:'2026-10-09T16:00:00Z',evidence:'Test source dated 9 October 2026; this is a test fixture.'};
 const result=stories=>({status:'completed',usage:{input_tokens:1234,output_tokens:300},output:[{type:'web_search_call',status:'completed',action:{sources:[{url:story.sourceUrl}]}},{type:'message',content:[{type:'output_text',text:JSON.stringify({stories}),annotations:[]}]}]});
 function state(){const data=new Map();let queue=Promise.resolve();return {storage:{get:async k=>data.get(k),put:async(k,v)=>{data.set(k,v)},setAlarm:async t=>data.set('alarm',t),transaction(fn){const work=queue.then(()=>fn(this));queue=work.catch(()=>{});return work;}},data};}
-test('one search, bounded output, fixed model, no server retention',()=>{const body=requestBody(now);assert.equal(body.max_tool_calls,1);assert.equal(body.max_output_tokens,1800);assert.equal(body.store,false);assert.equal(body.tools[0].type,'web_search');});
+test('one compatible search, bounded output, fixed model, no server retention',()=>{const body=requestBody(now);assert.equal(body.max_tool_calls,1);assert.equal(body.max_output_tokens,1800);assert.equal(body.store,false);assert.equal(body.model,'gpt-4.1-mini-2025-04-14');assert.equal(body.tools[0].type,'web_search_preview');assert.equal(body.tools[0].filters,undefined);assert.equal(body.tool_choice.type,'web_search_preview');assert.match(body.input,/Use only sources from these domains/);});
 test('requires actual search and exact cited allowlisted sources',()=>{
   assert.equal(parseNewsResponse(result([story]),now).edition.stories.length,1);
   assert.throws(()=>parseNewsResponse({...result([story]),output:[]},now),/missing-search/);
@@ -81,4 +81,43 @@ test('diagnostic mirror failure does not prevent reading the existing edition',a
   s.data.set('bootstrapped',true);s.data.set('api-diagnostic',{checkedAt:new Date(now).toISOString(),httpStatus:500});
   s.storage.sql={exec:()=>{throw Error('SQL temporarily unavailable');}};
   assert.equal((await store.fetch(new Request('https://news.internal/edition'))).status,200);
+});
+
+const reviewedAt=Date.parse('2026-10-11T10:00:00Z');
+const reviewedDiagnostic={checkedAt:'2026-10-11T00:00:32.272Z',httpStatus:400,type:'invalid_request_error',param:'tools'};
+function reviewedStore(){const s=state();s.data.set('bootstrapped',true);s.data.set('status',{code:'api-error'});s.data.set('api-diagnostic',reviewedDiagnostic);s.data.set('last-slot',Math.floor(reviewedAt/REFRESH_MS));return {s,store:new BreakingNewsStore(s,{OPENAI_API_KEY:'test'})};}
+
+test('the reviewed recovery schedules one alarm and reserves an additional attempt without resetting the ledger',async()=>{
+  const {s,store}=reviewedStore(),month='2026-10';s.data.set('budget:'+month,{cents:42,calls:3});
+  let alarms=0;s.storage.setAlarm=async()=>{alarms++;};
+  await Promise.all(Array.from({length:5},()=>store.fetch(new Request('https://news.internal/edition'),reviewedAt)));
+  assert.equal(alarms,1);
+  let calls=0;await Promise.all(Array.from({length:5},()=>store.refresh(reviewedAt,async()=>{calls++;return Response.json(result([story]));})));
+  assert.equal(calls,1);assert.deepEqual(s.data.get('budget:'+month),{cents:42+RESERVATION_CENTS,calls:4});
+  assert.equal(s.data.get('status').code,'updated');
+  assert.equal(s.data.has('audit:review:search-compat-2026-10-11'),true);
+  await store.refresh(reviewedAt+REFRESH_MS,async()=>{calls++;return Response.json(result([{...story,reportedAt:'2026-10-11T09:00:00Z'}]));});
+  assert.equal(calls,2);assert.equal(s.data.get('status').code,'updated');
+});
+
+test('a failed reviewed recovery stays paused across later slots, reads and deployments',async()=>{
+  const {s,store}=reviewedStore();let calls=0;
+  const api=async()=>{calls++;return Response.json({error:{type:'invalid_request_error',param:'tools'}},{status:400});};
+  await store.refresh(reviewedAt,api);
+  const after=structuredClone([...s.data]);
+  await store.refresh(reviewedAt+REFRESH_MS,api);
+  await new BreakingNewsStore(s,{OPENAI_API_KEY:'test'}).refresh(reviewedAt+REFRESH_MS*100,api);
+  await store.fetch(new Request('https://news.internal/edition'),reviewedAt+1000);
+  assert.equal(calls,1);assert.deepEqual([...s.data],after);assert.equal(s.data.get('status').code,'api-error');
+});
+
+test('review authorization cannot retry a different failure, expired review or exhausted budget',async()=>{
+  for(const scenario of ['different-failure','expired','exhausted']){
+    const {s,store}=reviewedStore();let at=reviewedAt;
+    if(scenario==='different-failure')s.data.set('api-diagnostic',{...reviewedDiagnostic,checkedAt:'2026-10-11T00:00:33.000Z'});
+    if(scenario==='expired')at=Date.parse('2026-10-12T00:00:00Z');
+    if(scenario==='exhausted')s.data.set('budget:2026-10',{cents:MONTHLY_CENTS,calls:64});
+    const before=structuredClone([...s.data]);let calls=0;await store.refresh(at,async()=>{calls++;});
+    assert.equal(calls,0);assert.deepEqual([...s.data],before);
+  }
 });
