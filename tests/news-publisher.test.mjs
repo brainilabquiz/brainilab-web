@@ -125,7 +125,7 @@ test('multiple publishers share bounded discovery and retain immutable provenanc
     return htmlResponse(pages[addresses.indexOf(address)]);
   });
   assert.equal(calls.length,10);assert.ok(maxActive<=4);assert.equal(new Set(sources.map(s=>s.sourceName)).size,5);
-  const generated=sources.map(s=>({sourceId:s.id,title:'Original title '+s.id,summary:'An original short summary grounded in this source.',sourceName:'Wrong publisher'}));
+  const generated=sources.map(s=>({sourceId:s.id,title:'Original report from '+s.sourceName,summary:'An original short summary grounded in this source.',sourceName:'Wrong publisher'}));
   const result=parsePublisherResponse(response(generated),sources,now);
   assert.deepEqual(result.edition.stories.map(s=>s.sourceName),PUBLISHERS.map(p=>p.name));
   assert.deepEqual(result.edition.stories.map(s=>s.sourceUrl),addresses);
@@ -133,4 +133,35 @@ test('multiple publishers share bounded discovery and retain immutable provenanc
 test('a blocked BBC cannot prevent a verified article from another newsroom',async()=>{
   const sources=await collectPublisherSources(now,async address=>address===PUBLISHERS[2].index?htmlResponse(`<a href="${aljazeeraURL}"></a>`):address===aljazeeraURL?htmlResponse(ld(aljazeeraURL)):new Response('',{status:403}));
   assert.equal(sources.length,1);assert.equal(sources[0].sourceName,'Al Jazeera');
+});
+
+test('generated figures must appear in the selected source, not another story or its URL',()=>{
+  const counted={...source,headline:'Officials announce 109 places',description:'More than 116 people applied.',context:'The programme supports 1,000 participants.'};
+  const valid={sourceId:1,title:'Officials announce 109 places',summary:'More than 116 people applied to the programme, which supports 1000 participants.'};
+  assert.equal(parsePublisherResponse(response([valid]),[counted],now).edition.stories.length,1);
+  for(const summary of ['Officials announced 350 places.','Officials announced 2026 places.']) {
+    assert.throws(()=>parsePublisherResponse(response([{...valid,summary}]),[counted,{...source,id:2,description:'350 places.'}],now),error=>error.validationDiagnostic?.rejections['unsupported-number']===1);
+  }
+  assert.throws(()=>parsePublisherResponse(response([{...valid,title:'Officials announce 110 places'}]),[counted],now),error=>error.validationDiagnostic?.rejections['unsupported-number']===1);
+});
+
+test('numeric grounding handles grouped and decimal figures without fabricating calculations',()=>{
+  const counted={...source,description:'The value is 12.5, and 208\u00a0000 people participated.'};
+  const item={sourceId:1,title:'Officials report results',summary:'The value is 12.5, with 208,000 people participating.'};
+  assert.equal(parsePublisherResponse(response([item]),[counted],now).edition.stories.length,1);
+  assert.throws(()=>parsePublisherResponse(response([{...item,summary:'The rounded value is 13.'}]),[counted],now),error=>error.validationDiagnostic?.rejections['unsupported-number']===1);
+});
+
+test('one unsupported figure does not discard other valid stories',()=>{
+  const other={...source,id:2,description:'Officials reported 42 participants.'};
+  const result=parsePublisherResponse(response([{sourceId:1,title:'Unverified count',summary:'Officials reported 999 participants.'},{sourceId:2,title:'Officials report participation',summary:'Officials reported 42 participants.'}]),[source,other],now);
+  assert.equal(result.edition.stories.length,1);assert.equal(result.edition.stories[0].summary,'Officials reported 42 participants.');
+  assert.equal(result.validationDiagnostic.rejections['unsupported-number'],1);
+});
+
+test('large numeric figures remain exact instead of collapsing through floating-point conversion',()=>{
+  const counted={...source,description:'The reported value is 9007199254740993.'};
+  const item={sourceId:1,title:'Officials report a value',summary:'Officials reported a value of 9007199254740993.'};
+  assert.equal(parsePublisherResponse(response([item]),[counted],now).edition.stories.length,1);
+  assert.throws(()=>parsePublisherResponse(response([{...item,summary:'Officials reported a value of 9007199254740992.'}]),[counted],now),error=>error.validationDiagnostic?.rejections['unsupported-number']===1);
 });
