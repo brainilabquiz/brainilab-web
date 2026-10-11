@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {BreakingNewsStore,requestBody,parseNewsResponse,MONTHLY_CENTS,RESERVATION_CENTS,REFRESH_MS} from '../lib/news-refresh.js';
+import {BreakingNewsStore,requestBody,parseNewsResponse,canonicalNewsSource,MONTHLY_CENTS,RESERVATION_CENTS,REFRESH_MS} from '../lib/news-refresh.js';
 const now=Date.parse('2026-10-09T18:00:00Z');
 const story={title:'A test headline',summary:'An original short summary.',sourceName:'UN',sourceUrl:'https://news.un.org/en/story/2026/10/test',reportedAt:'2026-10-09T16:00:00Z',evidence:'Test source dated 9 October 2026; this is a test fixture.'};
 const result=stories=>({status:'completed',usage:{input_tokens:1234,output_tokens:300},output:[{type:'web_search_call',status:'completed',action:{sources:[{url:story.sourceUrl}]}},{type:'message',content:[{type:'output_text',text:JSON.stringify({stories}),annotations:[]}]}]});
@@ -85,7 +85,8 @@ test('diagnostic mirror failure does not prevent reading the existing edition',a
 
 const reviewedAt=Date.parse('2026-10-11T10:00:00Z');
 const reviewedDiagnostic={checkedAt:'2026-10-11T00:00:32.272Z',httpStatus:400,type:'invalid_request_error',param:'tools'};
-function reviewedStore(){const s=state();s.data.set('bootstrapped',true);s.data.set('status',{code:'api-error'});s.data.set('api-diagnostic',reviewedDiagnostic);s.data.set('last-slot',Math.floor(reviewedAt/REFRESH_MS));return {s,store:new BreakingNewsStore(s,{OPENAI_API_KEY:'test'})};}
+const previousStartedAt='2026-10-11T09:48:00Z';
+function reviewedStore(){const s=state();s.data.set('bootstrapped',true);s.data.set('status',{code:'no-verified-stories',checkedAt:previousStartedAt});s.data.set('review-attempt:search-compat-2026-10-11',{startedAt:previousStartedAt,originalFailureAt:reviewedDiagnostic.checkedAt});s.data.set('api-diagnostic',reviewedDiagnostic);s.data.set('last-slot',Math.floor(reviewedAt/REFRESH_MS));return {s,store:new BreakingNewsStore(s,{OPENAI_API_KEY:'test'})};}
 
 test('the reviewed recovery schedules one alarm and reserves an additional attempt without resetting the ledger',async()=>{
   const {s,store}=reviewedStore(),month='2026-10';s.data.set('budget:'+month,{cents:42,calls:3});
@@ -95,7 +96,7 @@ test('the reviewed recovery schedules one alarm and reserves an additional attem
   let calls=0;await Promise.all(Array.from({length:5},()=>store.refresh(reviewedAt,async()=>{calls++;return Response.json(result([story]));})));
   assert.equal(calls,1);assert.deepEqual(s.data.get('budget:'+month),{cents:42+RESERVATION_CENTS,calls:4});
   assert.equal(s.data.get('status').code,'updated');
-  assert.equal(s.data.has('audit:review:search-compat-2026-10-11'),true);
+  assert.equal(s.data.has('audit:review:news-validation-2026-10-11'),true);
   await store.refresh(reviewedAt+REFRESH_MS,async()=>{calls++;return Response.json(result([{...story,reportedAt:'2026-10-11T09:00:00Z'}]));});
   assert.equal(calls,2);assert.equal(s.data.get('status').code,'updated');
 });
@@ -112,12 +113,67 @@ test('a failed reviewed recovery stays paused across later slots, reads and depl
 });
 
 test('review authorization cannot retry a different failure, expired review or exhausted budget',async()=>{
-  for(const scenario of ['different-failure','expired','exhausted']){
+  for(const scenario of ['different-failure','different-validation-failure','no-previous-review','expired','exhausted']){
     const {s,store}=reviewedStore();let at=reviewedAt;
     if(scenario==='different-failure')s.data.set('api-diagnostic',{...reviewedDiagnostic,checkedAt:'2026-10-11T00:00:33.000Z'});
+    if(scenario==='different-validation-failure')s.data.set('status',{code:'no-verified-stories',checkedAt:'2026-10-11T09:49:00Z'});
+    if(scenario==='no-previous-review')s.data.delete('review-attempt:search-compat-2026-10-11');
     if(scenario==='expired')at=Date.parse('2026-10-12T00:00:00Z');
     if(scenario==='exhausted')s.data.set('budget:2026-10',{cents:MONTHLY_CENTS,calls:64});
     const before=structuredClone([...s.data]);let calls=0;await store.refresh(at,async()=>{calls++;});
     assert.equal(calls,0);assert.deepEqual([...s.data],before);
   }
+});
+
+test('cited source attribution parameters and fragments do not change article identity',()=>{
+  const cited='https://www.bbc.co.uk/news/articles/test?at_medium=RSS&at_campaign=rss#section';
+  const clean='https://www.bbc.co.uk/news/articles/test';
+  const response=result([{...story,sourceUrl:clean,summary:'A short\noriginal summary.'}]);
+  response.output[0].action.sources=[{url:cited}];
+  const parsed=parseNewsResponse(response,now);
+  assert.equal(parsed.edition.stories[0].sourceUrl,clean);
+  assert.equal(parsed.edition.stories[0].summary,'A short original summary.');
+  assert.equal(parsed.validationDiagnostic.acceptedCount,1);
+  assert.equal(canonicalNewsSource('https://www.bbc.co.uk/news/articles/test?edition=one&utm_source=link'),'https://www.bbc.co.uk/news/articles/test?edition=one');
+  assert.equal(canonicalNewsSource('https://evilbbc.co.uk/news/articles/test'),null);
+});
+
+test('different article identifiers, paths and hosts remain distinct',()=>{
+  for(const sourceUrl of ['https://www.bbc.co.uk/news/articles/other','https://www.bbc.com/news/articles/test','https://www.bbc.co.uk/news/articles/test?edition=two']){
+    const response=result([{...story,sourceUrl}]);response.output[0].action.sources=[{url:'https://www.bbc.co.uk/news/articles/test?edition=one'}];
+    assert.throws(()=>parseNewsResponse(response,now),error=>error.validationDiagnostic.rejections['source-not-in-search']===1);
+  }
+});
+
+test('all rejected stories explain their private reason without retaining prose',()=>{
+  const cases=[
+    [{...story,summary:'x'.repeat(351)},'long-summary'],
+    [{...story,summary:'<script>fake</script>'},'unsafe-summary'],
+    [{...story,reportedAt:'2026-10-07T18:00:00Z'},'expired-source-date'],
+    [{...story,reportedAt:'2026-10-09T18:00:01Z'},'future-source-date'],
+    [{...story,reportedAt:'not a date'},'invalid-source-date'],
+    [{...story,evidence:''},'invalid-evidence']
+  ];
+  for(const [candidate,reason] of cases){
+    assert.throws(()=>parseNewsResponse(result([candidate]),now),error=>{
+      assert.equal(error.message,'no-verified-stories');assert.equal(error.validationDiagnostic.rejections[reason],1);
+      assert.equal(error.validationDiagnostic.candidateCount,1);
+      assert.equal(error.validationDiagnostic.sourceCount,1);
+      assert.equal(JSON.stringify(error.validationDiagnostic).includes('original short summary'),false);
+      return true;
+    });
+  }
+  assert.throws(()=>parseNewsResponse(result([]),now),error=>error.validationDiagnostic.candidateCount===0&&error.validationDiagnostic.acceptedCount===0);
+});
+
+test('validation diagnostics are persisted privately, mirrored once and failure keeps all later slots paused',async()=>{
+  const {s,store}=reviewedStore(),queries=[];s.storage.sql={exec:(...args)=>queries.push(args)};let calls=0;
+  await store.refresh(reviewedAt,async()=>{calls++;return Response.json(result([{...story,reportedAt:'2026-10-01T00:00:00Z'}]));});
+  const diagnostic=s.data.get('validation-diagnostic');
+  assert.equal(diagnostic.outcome,'no-verified-stories');assert.equal(diagnostic.rejections['expired-source-date'],1);
+  const reply=await(await store.fetch(new Request('https://news.internal/edition'),reviewedAt+1000)).json();
+  assert.equal(reply['validation-diagnostic'],undefined);assert.equal(reply.candidates,undefined);
+  assert.equal(queries.filter(q=>q[0].startsWith('INSERT INTO news_validation_diagnostic')).length,1);
+  const after=structuredClone([...s.data]);await store.refresh(reviewedAt+REFRESH_MS,async()=>{calls++;});
+  assert.equal(calls,1);assert.deepEqual([...s.data],after);
 });
