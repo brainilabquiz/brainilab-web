@@ -134,7 +134,7 @@ window.BrainiPerf=(function(){
       || ["localhost","127.0.0.1","::1"]
         .includes(location.hostname);
 
-    if(!isLocal) return;
+    if(!isLocal || window.BRAINI_ENABLE_SW===true) return;
 
     if("serviceWorker" in navigator){
       navigator.serviceWorker
@@ -186,23 +186,6 @@ window.BrainiPerf=(function(){
     }
   }
 
-  function registerServiceWorker(){
-    if(
-      window.BRAINI_ENABLE_SW!==true ||
-      !("serviceWorker" in navigator) ||
-      !["http:","https:"].includes(location.protocol) ||
-      ["localhost","127.0.0.1","::1"].includes(location.hostname)
-    ){
-      return;
-    }
-
-    window.addEventListener("load",()=>{
-      navigator.serviceWorker.register("/sw.js").catch(err=>{
-        console.warn("BrainiLab service worker:",err.message||err);
-      });
-    },{once:true});
-  }
-
   function loadFeature(filename){
     return loadScript(
       new URL(
@@ -214,7 +197,6 @@ window.BrainiPerf=(function(){
 
   installNavigationPrefetch();
   cleanupLocalServiceWorkers();
-  registerServiceWorker();
 
   return {
     ensureSupabase,

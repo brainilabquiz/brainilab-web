@@ -1,5 +1,6 @@
 import {newTabLinks} from '../lib/link-policy.js';
 import {assetVersion,versionAssets} from '../lib/asset-versions.js';
+import {pwaHtml,pwaWorker} from '../lib/pwa.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -26,7 +27,7 @@ if(previous?.isSymbolicLink()) throw new Error('Build output must not be a symli
 await rm(output,{recursive:true,force:true});
 await mkdir(output,{recursive:true});
 const files=execFileSync('git',['ls-files','-z'],{cwd:root,encoding:'utf8'}).split('\0').filter(Boolean);
-const rootPublic=new Set(['ads.txt','robots.txt','sitemap.xml','sw.js','_headers','_redirects']);
+const rootPublic=new Set(['ads.txt','robots.txt','sitemap.xml','sw.js','manifest.webmanifest','_headers','_redirects']);
 async function generatedPages(directory){
   const pages=[];
   for(const entry of await readdir(directory,{withFileTypes:true})){
@@ -53,13 +54,18 @@ for(const file of publicFiles){
     await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
     assetVersions.set(file,assetVersion(await readFile(target)));
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
-  }else if(!file.endsWith('.html')) await copyFile(source,target);
+  }else if(!file.endsWith('.html')){
+    await copyFile(source,target);
+    if(file.startsWith('assets/brand/app/'))assetVersions.set(file,assetVersion(await readFile(target)));
+  }
 }
 for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
-  const html=newTabLinks(await readFile(path.join(root,file),'utf8'));
+  const html=newTabLinks(pwaHtml(await readFile(path.join(root,file),'utf8')));
   await writeFile(path.join(output,file),versionAssets(html,file,assetVersions));
 }
-for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
+const sw=pwaWorker(await readFile('sw.js','utf8'),await readFile(path.join(output,'offline/index.html'),'utf8'),assetVersions);
+await build({stdin:{contents:sw,sourcefile:'sw.js',loader:'js'},outfile:path.join(output,'sw.js'),minify:true,target:'es2020',legalComments:'none'});
+for(const required of ['index.html','404.html','learn/index.html','install/index.html','offline/index.html','manifest.webmanifest','assets/js/home.bundle.js','_headers']){
   await stat(path.join(output,required));
 }
 console.log(`Built ${publicFiles.length} public files in dist; ${count} JS/CSS files minified (${original} → ${compressed} bytes).`);
