@@ -18,6 +18,16 @@
       "slug": "connections-puzzles-find-the-hidden-link",
       "level": "3 · Connect the whole set",
       "objective": "Test a possible link against every clue in a word puzzle."
+    },
+    {
+      "slug": "anagrams-rearrange-the-same-letters",
+      "level": "4 · Shuffle the letters",
+      "objective": "Rearrange a word without adding, losing or duplicating a letter."
+    },
+    {
+      "slug": "palindromes-words-that-read-both-ways",
+      "level": "5 · Check both directions",
+      "objective": "Spot a palindrome and distinguish its rule from an anagram."
     }
   ],
   "sources": [
@@ -36,6 +46,14 @@
     {
       "url": "https://www.merriam-webster.com/dictionary/bark",
       "name": "Merriam-Webster — Bark"
+    },
+    {
+      "name": "Merriam-Webster — Anagram",
+      "url": "https://www.merriam-webster.com/dictionary/anagram"
+    },
+    {
+      "name": "Merriam-Webster — Palindrome",
+      "url": "https://www.merriam-webster.com/dictionary/palindrome"
     }
   ],
   "authorId": "biel-sarda",
@@ -51,17 +69,27 @@
     {
       "term": "Contronym",
       "definition": "A word with meanings that can be opposites."
+    },
+    {
+      "term": "Anagram",
+      "definition": "A rearrangement of all the letters in a word or phrase to make another word or phrase."
+    },
+    {
+      "term": "Palindrome",
+      "definition": "A word or phrase whose letters read the same forwards and backwards, under the stated spacing and punctuation rules."
     }
   ],
   "outcomes": [
     "Use context to choose between homophones.",
     "Recognise opposing meanings in familiar phrases.",
-    "Explain a connection that fits every clue."
+    "Explain a connection that fits every clue.",
+    "Check that an anagram uses every original letter exactly once.",
+    "Test words and phrases for palindromes using a clear rule."
   ],
-  "updatedAt": "2026-10-09T12:24:07.530Z",
-  "description": "Explore homophones, words with opposite meanings and Connections puzzles. Three short English lessons with examples, interactive clues and quick quizzes.",
+  "updatedAt": "2026-10-11T17:08:31.614Z",
+  "description": "Five short English lessons: follow a sentence’s clues, explore surprising meanings, shuffle letters and spot words that read both ways. Optional quizzes included.",
   "publishedAt": "2026-10-04T11:31:17.023592+00:00",
   "coverArticle": "homophones-same-sound-different-meaning",
-  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Context is your clue: the words around a word help you work out its meaning.</strong> Start with sound-alikes called <a href=\"/learn/homophones-same-sound-different-meaning/\" target=\"_blank\" rel=\"noopener noreferrer\">homophones</a>, meet a word that can <a href=\"/learn/words-that-mean-their-own-opposite/\" target=\"_blank\" rel=\"noopener noreferrer\">mean opposite things</a>, then <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">test a link across a whole set of clues</a>.</p><p>You only need to read short English sentences. Try the examples yourself, then answer a few questions about what you have just read. There is no timer.</p>",
+  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Start with the clues around a word.</strong> Explore sound-alikes, meet words with opposite meanings and test a link across a set of clues. Then shuffle the letters of LISTEN into SILENT and find out what is hiding inside LEVEL.</p><p>Each lesson builds on the last. Read at your own pace, try the examples and take an optional short quiz when you feel ready. There is no timer.</p>",
   "prerequisites": "You only need to read short English sentences. We explain each new term as it appears."
 }

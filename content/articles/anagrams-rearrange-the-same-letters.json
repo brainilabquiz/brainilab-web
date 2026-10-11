@@ -1,0 +1,98 @@
+{
+  "topic": "Words & puzzles",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Word detective: follow the clues",
+    "url": "/learn/paths/word-detective/"
+  },
+  "publishedAt": "2026-10-11T17:08:31.614Z",
+  "updatedAt": "2026-10-11T17:08:31.614Z",
+  "slug": "anagrams-rearrange-the-same-letters",
+  "title": "Anagrams: how did LISTEN become SILENT?",
+  "description": "A small shuffle can turn a cat into an act. Discover the trick behind anagrams, the repeated-letter trap and a few words to try yourself.",
+  "order": 111,
+  "cover": {
+    "src": "/assets/images/learn/anagrams-rearrange-the-same-letters.webp",
+    "small": "/assets/images/learn/anagrams-rearrange-the-same-letters-small.webp",
+    "thumbnail": "/assets/images/learn/anagrams-rearrange-the-same-letters-thumb.webp",
+    "alt": "Wooden letter tiles arranged as CAT and ACT on a warm tabletop",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "Merriam-Webster — Anagram",
+      "url": "https://www.merriam-webster.com/dictionary/anagram"
+    }
+  ],
+  "related": [
+    "palindromes-words-that-read-both-ways",
+    "repeated-letters-in-five-letter-word-games"
+  ],
+  "practice": "Try looking at a familiar word from another angle in Connections.",
+  "sections": [
+    {
+      "id": "same-letters",
+      "title": "The cat has not gained a single letter",
+      "html": "<p>Write <strong>CAT</strong> on three scraps of paper. Slide the C to the middle: <strong>ACT</strong>. Nothing has been added or thrown away, yet the animal has turned into something you can do.</p><p><strong>An anagram rearranges all the letters of a word or phrase to make another word or phrase.</strong> The letters move; their counts stay the same. That is the idea in <a href=\"https://www.merriam-webster.com/dictionary/anagram\">Merriam-Webster’s definition</a>.</p><p><strong>LISTEN → SILENT</strong> is a pleasing example. It sounds like someone has hidden an instruction inside the word. In fact, the puzzle only needs the matching letters; the meanings do not have to be related.</p>"
+    },
+    {
+      "id": "letter-budget",
+      "title": "Your letters are a tiny budget",
+      "html": "<p>A tempting answer can look right and still spend a letter you do not have. <strong>CAT → CATS</strong> fails because the S came from nowhere. <strong>BOOK → BOO</strong> fails because the K has disappeared.</p><p>Repeated letters are where this gets sneaky. BOOK gives you <strong>two Os</strong>, not one. Write the letters in a row and cross off each one as you use it. A valid answer leaves nothing over.</p><p>Sorting both words alphabetically is another quick check: LISTEN and SILENT both become <strong>EILNST</strong>. Their letter budgets match exactly.</p>"
+    },
+    {
+      "id": "stone",
+      "title": "One stone, two surprises",
+      "html": "<p>Take <strong>STONE</strong>. Can you turn it into something a musician might play? Keep all five letters.</p><details class=\"practice-answer\"><summary>Show one answer</summary><p><strong>TONES</strong>. You can also rearrange STONE into <strong>NOTES</strong>. Both use S, T, O, N and E exactly once.</p></details><p>If you get stuck, try moving the vowels first. Or look for a familiar ending. Neither trick guarantees an answer, but changing the arrangement can help you stop reading the original word automatically.</p>"
+    },
+    {
+      "id": "different-tricks",
+      "title": "Same letters, different trick",
+      "html": "<p>Anagrams shuffle letters. <a href=\"/learn/palindromes-words-that-read-both-ways/\">Palindromes</a> keep the order and read the same backwards. That distinction is handy: <strong>CAT and ACT</strong> are an anagram pair, but neither word is a palindrome.</p><p>For a little challenge, rearrange <strong>TEA</strong> into a word meaning “consume food”. Then see if there is another real word hiding in the same three letters.</p><details class=\"practice-answer\"><summary>Check your words</summary><p><strong>EAT</strong> fits the clue. <strong>ATE</strong> uses the same letters too, with the action moved into the past.</p></details>"
+    }
+  ],
+  "quiz": {
+    "version": "word-anagrams-v1",
+    "questions": [
+      {
+        "prompt": "Which word uses every letter of STONE exactly once?",
+        "options": [
+          "STONES",
+          "NOTES",
+          "TONE",
+          "NOSE"
+        ],
+        "answer": 1,
+        "explanation": "NOTES rearranges all five letters of STONE. STONES adds an S; TONE and NOSE each leave a letter behind."
+      },
+      {
+        "prompt": "Why is BOO not an anagram of BOOK?",
+        "options": [
+          "The letters cannot move",
+          "It repeats the O",
+          "It leaves out the K",
+          "Both words must mean the same thing"
+        ],
+        "answer": 2,
+        "explanation": "An anagram must use all the original letters. BOO leaves the K unused."
+      },
+      {
+        "prompt": "What do LISTEN and SILENT have in common?",
+        "options": [
+          "Exactly the same letters, including the same counts",
+          "The same meaning",
+          "The same order of letters",
+          "Both read the same backwards"
+        ],
+        "answer": 0,
+        "explanation": "Their sorted letters are EILNST. The arrangement and meanings differ, but each letter is used exactly once."
+      }
+    ]
+  }
+}

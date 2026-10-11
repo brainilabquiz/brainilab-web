@@ -1,5 +1,5 @@
 /* Build-time tripwire: syntax, unresolved merges, unsafe publication and Daily contract. */
-import {readdir,readFile} from 'node:fs/promises';
+import {readdir,readFile,stat} from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 import './test-daily-choice.mjs';
@@ -16,6 +16,14 @@ async function scan(dir){
   if(file.endsWith('.js')&&file!=='worker.js'){new vm.Script(text,{filename:file});scripts++;}
   if(file.endsWith('.html')){
    pages++;
+   for(const match of text.matchAll(/\bsrcset=["']([^"']+)["']/gi)){
+    for(const candidate of match[1].split(',')){
+     const url=candidate.trim().split(/\s+/)[0];
+     if(!url||/^(?:https?:|data:|\/\/)/i.test(url))continue;
+     const target=url.startsWith('/')?'.'+url:path.join(path.dirname(file),url);
+     if(!(await stat(target.split(/[?#]/)[0]).catch(()=>null))?.isFile())throw Error('Missing srcset asset in '+file+': '+url);
+    }
+   }
    for(const match of text.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
     if(/application\/(?:ld\+)?json/.test(match[1]))JSON.parse(match[2]);
     else if(!/\bsrc=|type=["']module/.test(match[1])&&match[2].trim())new vm.Script(match[2],{filename:file});
