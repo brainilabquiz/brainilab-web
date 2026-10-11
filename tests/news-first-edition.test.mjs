@@ -13,5 +13,6 @@ test('new successful edition replaces launch content',()=>{
 });
 test('launch stories expire individually and dates never reset',()=>{
   assert.equal(freshNews(selectNewsEdition(null,Date.parse('2026-10-12T04:30:00Z')),Date.parse('2026-10-12T04:30:00Z')).length,3);
-  assert.equal(selectNewsEdition(null,Date.parse('2026-10-13T09:38:01Z')),null);
+  const expires=Math.max(...firstEdition.stories.map(s=>Date.parse(s.reportedAt)))+48*60*60*1000;
+  assert.equal(selectNewsEdition(null,expires),null);
 });
