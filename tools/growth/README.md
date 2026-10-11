@@ -4,6 +4,24 @@ The website publishes none of this directory. Real exports, SQLite data, OAuth c
 
 ## Current workflow
 
+### Distribution workspace
+
+`/admin/#growth` now prepares campaign links and editable invitations for the published games, quizzes, articles and Academy catalogue. Source/medium/campaign/content use short public labels; directory traffic uses `referral`, social uses `social`, email uses `email`. Share these URLs externally, never on internal navigation. The tools copy or download text; they do not send, publish or count a prepared invitation as a launch.
+
+The directory table reads an allowlisted snapshot of the existing private outreach registry. It distinguishes verified listings (with verification date and public URL), receipts awaiting review, uncertain sends and items needing private review. It does not crawl or resubmit automatically. A domain check also covers identifiable organisation domains from email/exclusion records, without exposing addresses or message bodies. Consumer mail providers cannot identify an organisation; always reconcile the complete private registry before sending.
+
+Refresh the published Supabase catalogue first, then run:
+
+```text
+python tools/growth/distribution.py --registry PRIVATE_OUTREACH_REGISTRY.json --catalog PRIVATE_PUBLISHED_CATALOG.json --games games/index.html --private ORIGINAL_PRIVATE_DATA_DIRECTORY
+```
+
+Only dated public resource metadata, directory organisations/domains, saved submission/listing state and dates are attached to `growth-report.json`. No OAuth tokens, personal contact fields, messages or Gmail links are exported. Snapshot history is retained; invalid input does not replace the last successful observation. `daily_gsc.py` enriches a matching same-day export and changes its hash when this snapshot changes. Finish the normal backed-up, idempotent Supabase ingest to display it in the admin. The local daily runner must call `distribution.refresh` before `daily_gsc.run`; it still depends on the computer/Codex, not an independent cloud scheduler.
+
+Referral sessions match a recorded domain or its subdomains with medium `referral` in the existing GA4 API snapshot. A missing row remains unknown, and a site-wide source row cannot prove that a particular listing caused a visit. Do not assign Direct to directories or infer conversions, unique people, backlinks or ranking gains. Compare the Analytics period with the submission/publication date. Listing status is the last verified observation, not a live check.
+
+Validation: `node tools/test-growth-distribution.mjs` with the existing JSDOM test dependency; `python -m unittest discover -s tools/growth` covers redaction, publication evidence, duplicate domains, failures and dated snapshot preservation.
+
 1. Import each official Search Console ZIP with `python tools/growth/gsc_import.py EXPORT.zip --property sc-domain:brainilabgames.com --captured-at ISO_TIMESTAMP_WITH_TIMEZONE`.
 2. Generate the report with `python tools/growth/report_gsc.py --inventory PRIVATE_PUBLIC_AUDIT.json`. The default output is `tools/growth/data/growth-report.json`.
 3. In `/admin/#growth`, import that JSON. Review a proposal, record a decision, implement and verify the approved change, then record its publication URL. Saving a decision does not deploy content.
