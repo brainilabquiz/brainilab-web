@@ -1,0 +1,440 @@
+{
+  "version": 1,
+  "date": "2026-10-11",
+  "provider": "DataForSEO estimates returned by OpenSEO get_keyword_metrics and get_serp_results",
+  "language": "en",
+  "markets": [
+    {
+      "name": "United States",
+      "locationCode": 2840
+    },
+    {
+      "name": "United Kingdom",
+      "locationCode": 2826
+    }
+  ],
+  "limits": [
+    "Estimated monthly demand, not yesterday's top searches or guaranteed visits.",
+    "No global total; close-variant buckets are not summed.",
+    "The latest US monthly trend rows are August 2026.",
+    "OpenSEO Search Console integration is not connected; no first-party traffic gains measured.",
+    "Depth-10 SERP samples contain seven organic results each, not ten organic positions.",
+    "Keyword difficulty and paid advertising competition are different metrics.",
+    "Missing metrics remain null; no tracked keyword library writes or external outreach."
+  ],
+  "metrics": [
+    {
+      "market": "US",
+      "keyword": "square numbers",
+      "search_volume": 9900,
+      "keyword_difficulty": 4,
+      "main_intent": "informational",
+      "cpc": 0.12,
+      "competition": 0.01,
+      "competition_level": "LOW",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 8100
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 3600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 5400
+        }
+      ]
+    },
+    {
+      "market": "US",
+      "keyword": "blend words",
+      "search_volume": 4400,
+      "keyword_difficulty": 0,
+      "main_intent": "informational",
+      "cpc": 0.27,
+      "competition": 0.68,
+      "competition_level": "HIGH",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 2400
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 1600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 1900
+        }
+      ]
+    },
+    {
+      "market": "US",
+      "keyword": "what is a portmanteau",
+      "search_volume": 4400,
+      "keyword_difficulty": 25,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 5400
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 3600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 3600
+        }
+      ]
+    },
+    {
+      "market": "US",
+      "keyword": "what is a square number",
+      "search_volume": 3600,
+      "keyword_difficulty": 17,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 2400
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 880
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 1300
+        }
+      ]
+    },
+    {
+      "market": "US",
+      "keyword": "portmanteau examples",
+      "search_volume": 1900,
+      "keyword_difficulty": 11,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 1900
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 1600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 1600
+        }
+      ]
+    },
+    {
+      "market": "UK",
+      "keyword": "square numbers",
+      "search_volume": 40500,
+      "keyword_difficulty": 24,
+      "main_intent": "informational",
+      "cpc": 0.09,
+      "competition": 0.24,
+      "competition_level": "LOW",
+      "lastMonthlyRows": []
+    },
+    {
+      "market": "UK",
+      "keyword": "what is a square number",
+      "search_volume": 12100,
+      "keyword_difficulty": 9,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0.01,
+      "competition_level": "LOW",
+      "lastMonthlyRows": []
+    },
+    {
+      "market": "UK",
+      "keyword": "what is a portmanteau",
+      "search_volume": 590,
+      "keyword_difficulty": 21,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "lastMonthlyRows": []
+    },
+    {
+      "market": "UK",
+      "keyword": "portmanteau examples",
+      "search_volume": 480,
+      "keyword_difficulty": 12,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "lastMonthlyRows": []
+    }
+  ],
+  "serp": [
+    {
+      "keyword": "portmanteau examples",
+      "ok": true,
+      "organicRows": [
+        {
+          "type": "organic",
+          "rank": 2,
+          "organicRank": 1,
+          "title": "Portmanteau Definition and Examples in English",
+          "url": "https://www.vedantu.com/english/portmanteau",
+          "domain": "www.vedantu.com",
+          "description": "Common Examples of Portmanteau Words · Brunch (breakfast + lunch) · Smog (smoke + fog) · Motel (motor + hotel) · Netizen (internet + citizen) · Blog (web + log) ... Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 4,
+          "organicRank": 2,
+          "title": "More examples on Portmanteau Words. ...",
+          "url": "https://www.facebook.com/felewiseentng/posts/more-examples-on-portmanteau-wordsportmanteau-wordformation-vocabulary-wordblend/1025121832986698/",
+          "domain": "www.facebook.com",
+          "description": "Portmanteau words are when we take the first part of one word and the second part of another (usually) to make a new word. Do you know any more?"
+        },
+        {
+          "type": "organic",
+          "rank": 5,
+          "organicRank": 3,
+          "title": "Portmanteau Words",
+          "url": "https://thinkzone.wlonk.com/WordFun/PortWords.html",
+          "domain": "thinkzone.wlonk.com",
+          "description": "acknowledg mention = acknowledgment + mention acquaintroduce = acquaint + introduce admirespect = admire + respect adolescentertainer = adolescent + entertainer"
+        },
+        {
+          "type": "organic",
+          "rank": 6,
+          "organicRank": 4,
+          "title": "“Email” & A List of More Portmanteaus You Probably Didn't ...",
+          "url": "https://beelinguapp.com/blog/email-and-a-list-of-more-portmanteaus-you-probably-didnt-know",
+          "domain": "beelinguapp.com",
+          "description": "Jun 5, 2023 — hungry + angry = hangry. spork + spoon = spork. situational + comedy = sitcom. man + explaining = mansplaining. jeans + shorts = jorts."
+        },
+        {
+          "type": "organic",
+          "rank": 7,
+          "organicRank": 5,
+          "title": "\"What is a Portmanteau?\": A Literary Guide for English Students ...",
+          "url": "https://www.youtube.com/watch?v=P5TdpQXTkB0",
+          "domain": "www.youtube.com",
+          "description": null
+        },
+        {
+          "type": "organic",
+          "rank": 8,
+          "organicRank": 6,
+          "title": "Wordplay: What are some of the best portmanteaus you've ...",
+          "url": "https://www.quora.com/Wordplay-What-are-some-of-the-best-portmanteaus-youve-heard-English",
+          "domain": "www.quora.com",
+          "description": "Wordplay: What are some of the best portmanteaus you've heard? (English)"
+        },
+        {
+          "type": "organic",
+          "rank": 10,
+          "organicRank": 7,
+          "title": "11 Words You Might Not Know Are Portmanteaux",
+          "url": "https://www.mentalfloss.com/language/words/10-words-you-might-not-know-are-portmanteaux",
+          "domain": "www.mentalfloss.com",
+          "description": "Oct 18, 2024 — Some words, like 'motel,' 'brunch,' and 'sitcom,' are obvious portmanteaux. But the portmanteaux on this list are undercover."
+        }
+      ],
+      "aiOverview": true
+    },
+    {
+      "keyword": "what is a square number",
+      "ok": true,
+      "organicRows": [
+        {
+          "type": "organic",
+          "rank": 2,
+          "organicRank": 1,
+          "title": "Understanding how the shape of a square is related to ...",
+          "url": "https://www.facebook.com/superteacherguy/videos/squares-are-a-shape-and-a-number/1199000061417963/",
+          "domain": "www.facebook.com",
+          "description": "Understanding how the shape of a square is related to a square number is important to register in your brain for continued math purposes."
+        },
+        {
+          "type": "organic",
+          "rank": 4,
+          "organicRank": 2,
+          "title": "properties of perfect square numbers",
+          "url": "https://byjus.com/maths/properties-of-square-numbers/",
+          "domain": "byjus.com",
+          "description": "Square numbers always end with digits 0, 1, 4, 5, 6 or 9, at its unit place. Square of a number ending with 4 and 6, will always end with 6 at unit place. If a ... Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 6,
+          "organicRank": 3,
+          "title": "Square Number — Definition, Formula & Examples",
+          "url": "https://www.mathwords.com/s/square_number.htm",
+          "domain": "www.mathwords.com",
+          "description": "A square number is the result you get when you multiply a whole number by itself. For example, 9 is a square number because 3 × 3 = 9. Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 7,
+          "organicRank": 4,
+          "title": "What is the meaning of square numbers?",
+          "url": "https://www.quora.com/What-is-the-meaning-of-square-numbers",
+          "domain": "www.quora.com",
+          "description": "What is the meaning of square numbers?"
+        },
+        {
+          "type": "organic",
+          "rank": 8,
+          "organicRank": 5,
+          "title": "What does it really mean to square a number?",
+          "url": "https://www.elementarymathforparents.com/blog/what-does-it-really-mean-to-square-a-number",
+          "domain": "www.elementarymathforparents.com",
+          "description": "May 7, 2024 — We can take any number and build an array that is x squares tall and x squares wide and we will get a square. Most students are familiar with ... Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 9,
+          "organicRank": 6,
+          "title": "What is a square number?",
+          "url": "https://www.examninja.co.uk/learning-zone/what-is-a-square-number/?srsltid=AU7gw4Vo6lEW0NgsXz9vBvTZnnAyNd4M56-ukGbZt-AaPoW8Q0pUxC0d",
+          "domain": "www.examninja.co.uk",
+          "description": "What is a square number? A square number is the product of a whole number which has been multiplied by itself. For example, 16 and 25 are both square numbers ... Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 10,
+          "organicRank": 7,
+          "title": "Square root",
+          "url": "https://en.wikipedia.org/wiki/Square_root",
+          "domain": "en.wikipedia.org",
+          "description": "In mathematics, a square root of a number x is a number y such that y 2 = x {\\displaystyle y^{2}=x} {\\displaystyle y^{2}=x} ; in other words, a number y ... Read more"
+        }
+      ],
+      "aiOverview": true
+    }
+  ],
+  "articles": [
+    {
+      "slug": "portmanteau-words-brunch-smog-spork",
+      "title": "Portmanteau examples: the two words hiding in brunch",
+      "primaryKeyword": "portmanteau examples",
+      "secondaryKeyword": "what is a portmanteau",
+      "fit": "Explains common word blends with three verified examples; sixth Word detective lesson.",
+      "sources": [
+        {
+          "name": "Merriam-Webster — Portmanteau",
+          "url": "https://www.merriam-webster.com/dictionary/portmanteau",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        },
+        {
+          "name": "Merriam-Webster — Brunch",
+          "url": "https://www.merriam-webster.com/dictionary/brunch",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        },
+        {
+          "name": "Merriam-Webster — Smog",
+          "url": "https://www.merriam-webster.com/dictionary/smog",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        },
+        {
+          "name": "Merriam-Webster — Spork",
+          "url": "https://www.merriam-webster.com/dictionary/spork",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        },
+        {
+          "name": "Merriam-Webster — Open, closed and hyphenated compounds",
+          "url": "https://www.merriam-webster.com/grammar/hyphen-rules-open-closed-compound-words",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        }
+      ],
+      "review": {
+        "searchDemand": "pass",
+        "searchIntent": "pass",
+        "existingCatalogueOverlap": "pass",
+        "originalShortEnglish": "pass",
+        "earlyDirectAnswer": "pass",
+        "sourcesAndExamples": "pass",
+        "metadataCanonicalSchema": "pass locally; live check required after CMS publication",
+        "uniqueCoverAndCrops": "pass",
+        "internalReadingGameCourseLinks": "pass locally; live check required",
+        "optionalQuizScoring": "pass (0/3 and 3/3; wrong answer UI tested locally)",
+        "mobileLayout": "320px: no horizontal overflow or broken images; optional folds closed",
+        "desktopLayout": "Both covers and article headers visually inspected",
+        "publicCopy": "No internal SEO, monetisation or acquisition objectives in article text"
+      }
+    },
+    {
+      "slug": "square-numbers-why-they-make-a-square",
+      "title": "What is a square number? Picture a tiny tiled floor",
+      "primaryKeyword": "what is a square number",
+      "secondaryKeyword": "square numbers",
+      "fit": "Explains whole-number squares, a visual arrangement and a rule behind number sequences; seventh arithmetic lesson.",
+      "sources": [
+        {
+          "name": "OpenStax — Exponents and exponential notation",
+          "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        },
+        {
+          "name": "University of Cambridge NRICH — Picturing Square Numbers",
+          "url": "https://nrich.maths.org/problems/picturing-square-numbers",
+          "checkedOn": "2026-10-11",
+          "status": "Page successfully retrieved and relevant passage read"
+        }
+      ],
+      "review": {
+        "searchDemand": "pass",
+        "searchIntent": "pass",
+        "existingCatalogueOverlap": "pass",
+        "originalShortEnglish": "pass",
+        "earlyDirectAnswer": "pass",
+        "sourcesAndExamples": "pass",
+        "metadataCanonicalSchema": "pass locally; live check required after CMS publication",
+        "uniqueCoverAndCrops": "pass",
+        "internalReadingGameCourseLinks": "pass locally; live check required",
+        "optionalQuizScoring": "pass (0/3 and 3/3; wrong answer UI tested locally)",
+        "mobileLayout": "320px: no horizontal overflow or broken images; optional folds closed",
+        "desktopLayout": "Both covers and article headers visually inspected",
+        "publicCopy": "No internal SEO, monetisation or acquisition objectives in article text"
+      }
+    }
+  ]
+}
