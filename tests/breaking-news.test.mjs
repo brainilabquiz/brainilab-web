@@ -28,3 +28,11 @@ test('sources open separately and empty editions have no attention treatment', (
   assert.equal(renderNews(edition([]),now),'');
   assert.equal(renderNews(null,now),'');
 });
+
+test('standalone news uses one main heading and second-level story headings', () => {
+  const html=renderNews(edition([story]),now);
+  assert.equal((html.match(/<h1\b/g)||[]).length,1);
+  assert.match(html,/<h1 id="breaking-news-title">Breaking News<\/h1>/);
+  assert.match(html,/<h2>A test headline<\/h2>/);
+  assert.doesNotMatch(html,/<h3\b/);
+});

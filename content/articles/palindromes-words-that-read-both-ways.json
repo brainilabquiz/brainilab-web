@@ -1,0 +1,98 @@
+{
+  "topic": "Words & puzzles",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Word detective: follow the clues",
+    "url": "/learn/paths/word-detective/"
+  },
+  "publishedAt": "2026-10-11T17:08:31.614Z",
+  "updatedAt": "2026-10-11T17:08:31.614Z",
+  "slug": "palindromes-words-that-read-both-ways",
+  "title": "Palindromes: LEVEL has a neat little secret",
+  "description": "Read LEVEL backwards and it refuses to change. Meet words that work in both directions, then try a sentence with the same little trick.",
+  "order": 112,
+  "cover": {
+    "src": "/assets/images/learn/palindromes-words-that-read-both-ways.webp",
+    "small": "/assets/images/learn/palindromes-words-that-read-both-ways-small.webp",
+    "thumbnail": "/assets/images/learn/palindromes-words-that-read-both-ways-thumb.webp",
+    "alt": "Five wooden letter tiles spelling LEVEL on a purple tray",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "Merriam-Webster — Palindrome",
+      "url": "https://www.merriam-webster.com/dictionary/palindrome"
+    }
+  ],
+  "related": [
+    "anagrams-rearrange-the-same-letters",
+    "connections-puzzles-find-the-hidden-link"
+  ],
+  "practice": "Enjoy spotting a hidden rule? Try Connections.",
+  "sections": [
+    {
+      "id": "two-directions",
+      "title": "A word that refuses to change",
+      "html": "<p>Read <strong>LEVEL</strong> from left to right. Now start at the other end: L, E, V, E, L. You arrive at exactly the same word. There is a satisfying little click when you notice it.</p><p><strong>A palindrome reads the same forwards and backwards.</strong> It can be a word, a phrase or a number, as <a href=\"https://www.merriam-webster.com/dictionary/palindrome\">Merriam-Webster explains</a>. Here we are playing with letters.</p><p><strong>RADAR</strong> and <strong>CIVIC</strong> do the same trick. They do not need to mean similar things. The rule is about the order of their letters.</p>"
+    },
+    {
+      "id": "outside-in",
+      "title": "Start at the edges",
+      "html": "<p>You can check a long word without trying to pronounce it backwards. Compare its first and last letters, then move one place inwards.</p><p>In LEVEL, the two outside letters are <strong>L</strong>. The next pair is <strong>E</strong>. The <strong>V</strong> sits on its own in the middle. Every pair matches.</p><p>Try the same check on <strong>LEVER</strong>. It nearly looks right, but the first L and last R disagree immediately. One mismatched pair is enough to break the rule.</p><p>This is letter symmetry, rather than a claim that every printed letter looks identical in a mirror. The spelling stays the same when its order is reversed.</p>"
+    },
+    {
+      "id": "sentence",
+      "title": "Can a whole sentence do it?",
+      "html": "<p>Try <strong>“Never odd or even.”</strong> For this phrase puzzle, ignore spaces, punctuation and capital letters. That leaves <strong>NEVERODDOREVEN</strong>.</p><p>Its letters read the same in either direction. The spaces will land in different places if you reverse the original sentence, so it matters that we agreed on the rule first.</p><p>Now try <strong>“Step on no pets.”</strong> Write just its letters and compare the two ends, working towards the middle.</p><details class=\"practice-answer\"><summary>Check the phrase</summary><p><strong>STEPONNOPETS</strong> reads the same backwards. S matches S, T matches T, and the remaining pairs match too.</p></details>"
+    },
+    {
+      "id": "two-rules",
+      "title": "Two puzzles, two questions",
+      "html": "<p><a href=\"/learn/anagrams-rearrange-the-same-letters/\">Anagrams</a> ask, “Can I rearrange these letters?” Palindromes ask, “Does reversing their order change anything?”</p><p><strong>CAT → ACT</strong> passes the first test. <strong>RADAR</strong> passes the second. Sharing letters is not enough to make a palindrome.</p><p>Finish with a small hunt: which of <strong>LEVEL, LEVER and LEMON</strong> survives being read backwards? Then find a shorter example you might call a family member.</p><details class=\"practice-answer\"><summary>One possible answer</summary><p><strong>LEVEL</strong> survives. <strong>MUM</strong> and <strong>DAD</strong> are short palindromes too. The other two words change when reversed.</p></details>"
+    }
+  ],
+  "quiz": {
+    "version": "word-palindromes-v1",
+    "questions": [
+      {
+        "prompt": "Which word is a palindrome?",
+        "options": [
+          "LEVER",
+          "LEMON",
+          "RADAR",
+          "RADIO"
+        ],
+        "answer": 2,
+        "explanation": "RADAR has the same letter order forwards and backwards. The other words change when reversed."
+      },
+      {
+        "prompt": "What rule did we use to check “Never odd or even”?",
+        "options": [
+          "Remove every repeated letter",
+          "Ignore spaces, punctuation and capital letters",
+          "Rearrange the words into a new sentence",
+          "Keep only the vowels"
+        ],
+        "answer": 1,
+        "explanation": "We compared the letters in NEVERODDOREVEN. Ignoring spaces, punctuation and case lets us test the phrase consistently."
+      },
+      {
+        "prompt": "What is the difference between an anagram and a palindrome?",
+        "options": [
+          "Both must have the same meaning as another word",
+          "Anagrams cannot repeat letters",
+          "Palindromes always have five letters",
+          "Anagrams rearrange letters; palindromes read the same in reverse"
+        ],
+        "answer": 3,
+        "explanation": "An anagram changes an arrangement while keeping all the letters. A palindrome keeps the same letter sequence when it is reversed."
+      }
+    ]
+  }
+}
