@@ -1,15 +1,8 @@
 {
   "slug": "patterns-and-reasoning",
   "title": "Patterns and reasoning",
-  "description": "Notice a repeat, test a rule and separate a good guess from a conclusion that must follow. Five small lessons build a careful way to solve puzzles.",
   "topic": "Numbers & logic",
   "status": "published",
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-01T05:06:25.092526+00:00",
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "coverArticle": "spotting-repeating-patterns",
-  "introduction": "<p>Notice a repeat, test a rule and separate a good guess from a conclusion that must follow. Five small lessons build a careful way to solve puzzles.</p><p>Change the examples, check your predictions and take the short quiz at the end of each lesson. You can return to any chapter whenever you like.</p>",
-  "prerequisites": "Basic counting. No previous logic lessons needed.",
   "lessons": [
     {
       "slug": "spotting-repeating-patterns",
@@ -35,15 +28,36 @@
       "slug": "logic-what-must-be-true",
       "level": "5 · Draw a conclusion",
       "objective": "Identify what must follow from the stated facts."
+    },
+    {
+      "slug": "venn-diagram-examples-pizza-night",
+      "level": "6 · Count the overlap",
+      "objective": "Read separate Venn-diagram regions and avoid double counting shared members."
     }
   ],
-  "outcomes": [
-    "Find the repeating unit before predicting the next item.",
-    "Check a proposed number rule against every step.",
-    "Distinguish turning a shape from reflecting it.",
-    "Sort objects by two rules at once.",
-    "Identify what must follow from the stated facts."
+  "sources": [
+    {
+      "url": "https://www.mathsisfun.com/numberpatterns.html",
+      "name": "Math is Fun — Number Patterns"
+    },
+    {
+      "url": "https://www.mathsisfun.com/geometry/rotation.html",
+      "name": "Math is Fun — Rotation"
+    },
+    {
+      "url": "https://www.mathsisfun.com/sets/venn-diagrams.html",
+      "name": "Math is Fun — Sets and Venn Diagrams"
+    },
+    {
+      "name": "OpenStax — Understanding Venn Diagrams",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/1-3-understanding-venn-diagrams"
+    },
+    {
+      "name": "OpenStax — Set Operations with Two Sets",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/1-4-set-operations-with-two-sets"
+    }
   ],
+  "authorId": "biel-sarda",
   "glossary": [
     {
       "term": "Repeating unit",
@@ -60,20 +74,24 @@
     {
       "term": "Deduction",
       "definition": "A conclusion that follows from the facts and rules given."
+    },
+    {
+      "term": "Union",
+      "definition": "The members of either group or both, with each counted once."
     }
   ],
-  "sources": [
-    {
-      "name": "Math is Fun — Number Patterns",
-      "url": "https://www.mathsisfun.com/numberpatterns.html"
-    },
-    {
-      "name": "Math is Fun — Rotation",
-      "url": "https://www.mathsisfun.com/geometry/rotation.html"
-    },
-    {
-      "name": "Math is Fun — Sets and Venn Diagrams",
-      "url": "https://www.mathsisfun.com/sets/venn-diagrams.html"
-    }
-  ]
+  "outcomes": [
+    "Find the repeating unit before predicting the next item.",
+    "Check a proposed number rule against every step.",
+    "Distinguish turning a shape from reflecting it.",
+    "Sort objects by two rules at once.",
+    "Identify what must follow from the stated facts.",
+    "Read separate Venn-diagram regions and avoid double counting shared members."
+  ],
+  "updatedAt": "2026-10-11T18:18:46.052Z",
+  "description": "Six short lessons in spotting patterns, testing rules and making careful deductions. Finish with a pizza-order puzzle that makes overlapping groups clear.",
+  "publishedAt": "2026-10-01T14:46:03.187485+00:00",
+  "coverArticle": "spotting-repeating-patterns",
+  "introduction": "<p>A repeating pattern, a paper shape and a pizza order can all hide a small puzzle. Learn to notice the rule, check it and explain what follows.</p><p>Read each short lesson at your own pace. The quizzes are optional, and you can return to any chapter.</p>",
+  "prerequisites": "Basic counting. No previous logic lessons needed."
 }

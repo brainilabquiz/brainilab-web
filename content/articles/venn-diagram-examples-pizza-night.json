@@ -1,0 +1,102 @@
+{
+  "slug": "venn-diagram-examples-pizza-night",
+  "title": "Venn diagram examples: who wants both pizza toppings?",
+  "description": "Five friends order pizza, but adding two topping lists counts Maya twice. Read the circles, find the overlap and see how to count each friend once.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 115,
+  "publishedAt": "2026-10-11T18:18:46.052Z",
+  "updatedAt": "2026-10-11T18:18:46.052Z",
+  "game": {
+    "name": "Odd One Out",
+    "url": "/games/odd-one-out/"
+  },
+  "hub": {
+    "name": "Patterns and reasoning",
+    "url": "/learn/paths/patterns-and-reasoning/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/venn-diagram-examples-pizza-night.webp",
+    "small": "/assets/images/learn/venn-diagram-examples-pizza-night-small.webp",
+    "thumbnail": "/assets/images/learn/venn-diagram-examples-pizza-night-thumb.webp",
+    "alt": "Overlapping yellow and green circles with one wooden token in their shared centre",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "OpenStax — Understanding Venn Diagrams",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/1-3-understanding-venn-diagrams"
+    },
+    {
+      "name": "OpenStax — Set Operations with Two Sets",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/1-4-set-operations-with-two-sets"
+    }
+  ],
+  "related": [
+    "sorting-with-two-rules",
+    "logic-what-must-be-true"
+  ],
+  "practice": "For another small sorting challenge, try spotting the outsider in Odd One Out.",
+  "sections": [
+    {
+      "id": "what-is-a-venn-diagram",
+      "title": "Two circles can save a pizza order",
+      "html": "<p><strong>A Venn diagram shows how groups relate.</strong> In a two-circle example, the overlapping middle holds the things that belong to both groups. <a href=\"https://openstax.org/books/contemporary-mathematics/pages/1-3-understanding-venn-diagrams\">OpenStax explains the diagram’s role</a> in making those relationships visible.</p><p>Imagine ordering pizza for five friends. One circle means “likes mushrooms”; the other means “likes olives”. A friend can belong to either group, both groups or neither. The circles describe preferences, not separate tables to sit at.</p>"
+    },
+    {
+      "id": "pizza-example",
+      "title": "Maya is not two people",
+      "html": "<p>Here is a small Venn diagram example you can sketch:</p><ul><li><strong>Mushrooms:</strong> Maya, Leo and Sam.</li><li><strong>Olives:</strong> Maya and Noor.</li><li><strong>Neither:</strong> Tess.</li></ul><p>Put Maya in the shared middle, Leo and Sam in mushrooms only, and Noor in olives only. Tess stays outside both circles, inside a box representing all five friends.</p><p>The middle is the <strong>intersection</strong>: the members both groups share. Maya still gets one place in the drawing. She has two preferences, not a spare head.</p>"
+    },
+    {
+      "id": "count-without-duplicates",
+      "title": "Why 3 + 2 does not make five topping fans",
+      "html": "<p>Three friends like mushrooms and two like olives. Add those totals and you count Maya twice. To find everyone who likes <strong>at least one</strong> topping, count her once:</p><p><strong>3 + 2 − 1 = 4 friends.</strong></p><p>This combined group is the <strong>union</strong>. <a href=\"https://openstax.org/books/contemporary-mathematics/pages/1-4-set-operations-with-two-sets\">OpenStax’s counting rule</a> subtracts the overlap after adding the two group totals.</p><p>If you already wrote the separate regions instead—two in mushrooms only, one in both and one in olives only—add <strong>2 + 1 + 1</strong>. Do not subtract Maya again. The wording matters, just as it does with <a href=\"/learn/sorting-with-two-rules/\">“and” and “or”</a>.</p>"
+    },
+    {
+      "id": "read-the-whole-box",
+      "title": "Do not forget the friend outside",
+      "html": "<p>Tess has not vanished because she dislikes both toppings. The rectangle sets the whole group being considered; here that is five friends. Four like at least one topping, leaving <strong>one who likes neither</strong>.</p><p>For your next sketch, try “likes tea” and “likes coffee”. Label the circles before placing anyone. Read each region once, and the little picture will keep your guest list honest.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "patterns-venn-v1",
+    "questions": [
+      {
+        "prompt": "Where does Maya go if she likes mushrooms and olives?",
+        "options": [
+          "Outside both circles",
+          "In mushrooms only",
+          "In the overlapping middle",
+          "In olives only"
+        ],
+        "answer": 2,
+        "explanation": "The overlapping middle is the intersection: Maya belongs to both preference groups."
+      },
+      {
+        "prompt": "Three friends like mushrooms, two like olives, and one likes both. How many like at least one topping?",
+        "options": [
+          "6",
+          "5",
+          "4",
+          "1"
+        ],
+        "answer": 2,
+        "explanation": "Add the group totals and subtract the one shared person: 3 + 2 − 1 = 4."
+      },
+      {
+        "prompt": "The separate regions contain 2 in mushrooms only, 1 in both and 1 in olives only. How many like at least one?",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "2"
+        ],
+        "answer": 1,
+        "explanation": "These are separate regions, so 2 + 1 + 1 = 4. The overlap has not been counted twice; do not subtract it again."
+      }
+    ]
+  }
+}
