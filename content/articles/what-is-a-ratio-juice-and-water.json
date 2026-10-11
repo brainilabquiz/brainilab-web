@@ -1,0 +1,102 @@
+{
+  "slug": "what-is-a-ratio-juice-and-water",
+  "title": "What is a ratio? One cup of juice, three cups of water",
+  "description": "Your picnic drink has a 1:3 ratio. Find out what those numbers compare, why the total is four parts, and how to make a bigger batch.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 118,
+  "publishedAt": "2026-10-11T18:45:29Z",
+  "updatedAt": "2026-10-11T18:45:29Z",
+  "game": {
+    "name": "Math Rush",
+    "url": "/games/math-rush/"
+  },
+  "hub": {
+    "name": "Fractions, one piece at a time",
+    "url": "/learn/paths/fractions-from-zero/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-ratio-juice-and-water.webp",
+    "small": "/assets/images/learn/what-is-a-ratio-juice-and-water-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-ratio-juice-and-water-thumb.webp",
+    "alt": "Four equal-sized glasses filled to the same height: one orange juice and three clear water",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "OpenStax — Prealgebra 2e: Ratios and Rate",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-6-ratios-and-rate"
+    },
+    {
+      "name": "NRICH — Blackcurrantiest",
+      "url": "https://nrich.maths.org/problems/blackcurrantiest"
+    }
+  ],
+  "related": [
+    "equivalent-fractions-same-amount",
+    "reading-a-fraction"
+  ],
+  "practice": "Try a few quick calculations in Math Rush after checking the proportions.",
+  "sections": [
+    {
+      "id": "what-is-a-ratio",
+      "title": "A picnic drink with two numbers",
+      "html": "<p><strong>A ratio compares two quantities in a stated order.</strong> If you mix one cup of juice with three cups of water, the <strong>juice-to-water ratio is 1:3</strong>. Read it as “one to three”. <a href=\"https://openstax.org/books/prealgebra-2e/pages/5-6-ratios-and-rate\">OpenStax explains this notation</a>.</p><p>Imagine a picnic where you are in charge of the drinks. Use the same cup for both ingredients. One tiny juice measure beside three enormous water mugs would make a very different drink—and some disappointed guests.</p>"
+    },
+    {
+      "id": "ratio-versus-fraction",
+      "title": "Why one to three makes four parts",
+      "html": "<p>There are <strong>four equal measures altogether</strong>: one juice plus three water. Juice makes up <strong>1/4 of the total measured amount</strong>, or 25%. It does not make up 1/3 of the whole.</p><p>The difference is what you compare. <strong>1:3 compares juice with water; 1/4 compares juice with the whole.</strong> <a href=\"https://nrich.maths.org/problems/blackcurrantiest\">NRICH explores this distinction through drink mixtures</a>. The numbers become clearer when you name both sides.</p>"
+    },
+    {
+      "id": "equivalent-ratio-examples",
+      "title": "More guests, same mixture",
+      "html": "<p>For a larger batch, use <strong>two cups of juice and six cups of water</strong>. The ratio 2:6 has the same proportions as 1:3: you doubled both quantities.</p><p>Now juice accounts for 2/8 of the measured total, still 1/4. That is the idea behind <a href=\"/learn/equivalent-fractions-same-amount/\">equivalent fractions</a>. Doubling only the water would change the mixture. Your jug may be fuller, but you have not preserved the recipe.</p>"
+    },
+    {
+      "id": "order-and-measures",
+      "title": "Which ingredient comes first?",
+      "html": "<p>Order matters. For this mixture, <strong>water to juice is 3:1</strong>, the reverse of juice to water.</p><p>Here is one final ratio example. For 600 mL of ingredients measured before mixing, split the total into four equal shares: <strong>600 ÷ 4 = 150 mL</strong>. Use 150 mL of juice and 450 mL of water.</p><p>Before calculating, ask two small questions: “What am I comparing?” and “Are the measures the same size?” They save a surprising amount of confusion—and watery picnic drinks.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "fractions-ratio-v1",
+    "questions": [
+      {
+        "prompt": "A juice-to-water ratio is 1:3, using equal-sized measures. How many measures are there altogether?",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "answer": 2,
+        "explanation": "One juice measure plus three water measures makes four measures. Juice is one quarter of that total."
+      },
+      {
+        "prompt": "Which juice-to-water ratio keeps the same proportions as 1:3?",
+        "options": [
+          "2:3",
+          "2:6",
+          "1:6",
+          "3:1"
+        ],
+        "answer": 1,
+        "explanation": "Multiply both numbers by two: 1:3 becomes 2:6. Doubling just one quantity changes the proportions."
+      },
+      {
+        "prompt": "You need 600 mL of measured ingredients at a juice-to-water ratio of 1:3. How much juice do you measure?",
+        "options": [
+          "450 mL",
+          "300 mL",
+          "200 mL",
+          "150 mL"
+        ],
+        "answer": 3,
+        "explanation": "There are four shares. Each is 600 ÷ 4 = 150 mL; juice uses one share and water uses three."
+      }
+    ]
+  }
+}
