@@ -1,0 +1,114 @@
+{
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-11T17:36:47Z",
+  "updatedAt": "2026-10-11T17:36:47Z",
+  "cover": {
+    "src": "/assets/images/learn/portmanteau-words-brunch-smog-spork.webp",
+    "small": "/assets/images/learn/portmanteau-words-brunch-smog-spork-small.webp",
+    "thumbnail": "/assets/images/learn/portmanteau-words-brunch-smog-spork-thumb.webp",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab.",
+    "alt": "A brunch table with a croissant, salad and a paper card spelling BRUNCH"
+  },
+  "slug": "portmanteau-words-brunch-smog-spork",
+  "title": "Portmanteau examples: the two words hiding in brunch",
+  "topic": "Words & puzzles",
+  "order": 113,
+  "description": "Brunch packs two meals into six letters. Discover how portmanteau words work, spot three familiar examples and try unpacking a word yourself.",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Word detective: follow the clues",
+    "url": "/learn/paths/word-detective/"
+  },
+  "sources": [
+    {
+      "name": "Merriam-Webster — Portmanteau",
+      "url": "https://www.merriam-webster.com/dictionary/portmanteau"
+    },
+    {
+      "name": "Merriam-Webster — Brunch",
+      "url": "https://www.merriam-webster.com/dictionary/brunch"
+    },
+    {
+      "name": "Merriam-Webster — Smog",
+      "url": "https://www.merriam-webster.com/dictionary/smog"
+    },
+    {
+      "name": "Merriam-Webster — Spork",
+      "url": "https://www.merriam-webster.com/dictionary/spork"
+    },
+    {
+      "name": "Merriam-Webster — Open, closed and hyphenated compounds",
+      "url": "https://www.merriam-webster.com/grammar/hyphen-rules-open-closed-compound-words"
+    }
+  ],
+  "related": [
+    "anagrams-rearrange-the-same-letters",
+    "words-that-mean-their-own-opposite"
+  ],
+  "practice": "For another kind of word detective work, look for the link between clues in Connections.",
+  "sections": [
+    {
+      "id": "what-is-a-portmanteau",
+      "title": "Two words, one late breakfast",
+      "html": "<p><strong>A portmanteau blends parts and meanings of two or more words into one.</strong> <strong>Brunch</strong> combines <strong>breakfast</strong> and <strong>lunch</strong>. You may also see these words called <em>blends</em>.</p><p>Imagine waking up too late for breakfast but feeling far too hungry to wait for lunch. The meal sits between the two, and its name does the same. <a href=\"https://www.merriam-webster.com/dictionary/brunch\">Merriam-Webster records both parent words</a>.</p><p>Look at the spelling: <strong>br-</strong> from breakfast meets <strong>-unch</strong> from lunch. The original words have been trimmed to make something new.</p>"
+    },
+    {
+      "id": "portmanteau-examples",
+      "title": "A meal, a haze and a very practical fork",
+      "html": "<p>Three portmanteau examples you might already use:</p><ul><li><strong>Brunch = breakfast + lunch.</strong> Two meals squeeze into one name.</li><li><strong>Smog = smoke + fog.</strong> The blend is recorded in the word’s <a href=\"https://www.merriam-webster.com/dictionary/smog\">etymology</a>—its word history. It explains the name, rather than every kind of smog today.</li><li><strong>Spork = spoon + fork.</strong> A scoop with little prongs: the <a href=\"https://www.merriam-webster.com/dictionary/spork\">utensil and its name</a> both combine two things.</li></ul><p>You do not need to remember the long label to enjoy spotting the shorter words inside.</p>"
+    },
+    {
+      "id": "not-an-anagram",
+      "title": "The letters are allowed to disappear",
+      "html": "<p>Unlike an <a href=\"/learn/anagrams-rearrange-the-same-letters/\">anagram</a>, a portmanteau does not keep every original letter. Breakfast and lunch have fourteen letters altogether; brunch has six.</p><p>Nor is every joined word a blend. <strong>Toothbrush</strong> keeps tooth and brush whole: it is a <a href=\"https://www.merriam-webster.com/grammar/hyphen-rules-open-closed-compound-words\">compound word</a>. Brunch cuts into its ingredients. That makes a useful first clue when you meet an unfamiliar example.</p>"
+    },
+    {
+      "id": "unpack-a-word",
+      "title": "A tiny word puzzle for the next coffee break",
+      "html": "<p>Before looking below, ask yourself: which two words are hiding inside <strong>spork</strong>, and which parts survive?</p><details class=\"practice-answer\"><summary>Unpack the spork</summary><p><strong>Sp-</strong> comes from spoon and <strong>-ork</strong> from fork. The name keeps a piece of each, just as the object keeps a feature of each.</p></details><p>Now invent a name for a snack that is half breakfast, half dinner. Your suggestion does not have to be a dictionary word. Treat it as wordplay—and see whether someone else can guess your ingredients.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "word-portmanteau-v1",
+    "questions": [
+      {
+        "prompt": "Which two words make brunch?",
+        "options": [
+          "Bread and crunch",
+          "Breakfast and lunch",
+          "Brown and lunch",
+          "Breakfast and dinner"
+        ],
+        "answer": 1,
+        "explanation": "Brunch blends breakfast and lunch, keeping parts of both words and combining their meal meanings."
+      },
+      {
+        "prompt": "Which example keeps both original words whole?",
+        "options": [
+          "Brunch",
+          "Smog",
+          "Spork",
+          "Toothbrush"
+        ],
+        "answer": 3,
+        "explanation": "Toothbrush keeps tooth and brush whole. The other three trim their source words to make blends."
+      },
+      {
+        "prompt": "How does a portmanteau differ from an anagram?",
+        "options": [
+          "It must read the same backwards",
+          "It must have five letters",
+          "It can combine parts of source words rather than keep every letter",
+          "It must have the same meaning as only one source word"
+        ],
+        "answer": 2,
+        "explanation": "A portmanteau combines parts and meanings of source words. An anagram rearranges all the original letters without changing their counts."
+      }
+    ]
+  }
+}

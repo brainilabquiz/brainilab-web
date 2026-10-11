@@ -27,12 +27,17 @@
     {
       "slug": "multiplication-equal-groups",
       "level": "5 · Make equal groups",
-      "objective": "Build groups and explore a times table by touch or hover."
+      "objective": "Connect equal groups to a multiplication fact."
     },
     {
       "slug": "division-sharing-equally",
       "level": "6 · Share it fairly",
       "objective": "Share equal amounts and explain what is left over."
+    },
+    {
+      "slug": "square-numbers-why-they-make-a-square",
+      "level": "7 · Grow a little square",
+      "objective": "Explain a square number with equal rows and columns, then spot the odd-number gaps."
     }
   ],
   "sources": [
@@ -47,6 +52,14 @@
     {
       "url": "https://openstax.org/books/prealgebra-2e/pages/1-4-multiply-whole-numbers",
       "name": "OpenStax — Multiply Whole Numbers"
+    },
+    {
+      "name": "OpenStax — Exponents and exponential notation",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "name": "University of Cambridge NRICH — Picturing Square Numbers",
+      "url": "https://nrich.maths.org/problems/picturing-square-numbers"
     }
   ],
   "authorId": "biel-sarda",
@@ -66,6 +79,10 @@
     {
       "term": "Zero",
       "definition": "The number we use for none."
+    },
+    {
+      "term": "Square number",
+      "definition": "The result of multiplying a whole number by itself."
     }
   ],
   "outcomes": [
@@ -74,12 +91,13 @@
     "Model addition with two small piles.",
     "Model subtraction and check it by adding.",
     "Connect equal groups to multiplication.",
-    "Share whole objects equally and identify a remainder."
+    "Share whole objects equally and identify a remainder.",
+    "Read squared notation and connect whole-number squares to tile arrangements."
   ],
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "description": "Count, build tens, add, take away and share. Six hands-on lessons introduce arithmetic at your own pace.",
+  "updatedAt": "2026-10-11T17:36:47Z",
+  "description": "Seven friendly lessons: count, build tens, add, subtract, multiply, share and discover square numbers. Read and try optional quizzes at your own pace.",
   "publishedAt": "2026-09-30 20:58:19.100686+00",
   "coverArticle": "addition-putting-things-together",
-  "introduction": "<p>Start with a handful of buttons. Count them, bundle ten together, then use those small discoveries to add, subtract, multiply and share.</p><p>There is no clock to beat. Each lesson adds one idea and an activity you can change yourself. If an idea already feels familiar, jump to the next chapter.</p>",
+  "introduction": "<p>Start with a handful of buttons. Count them, bundle ten together, then use those small discoveries to add, subtract, multiply and share.</p><p>Finish with a tiny tiled floor: equal rows and columns reveal why some numbers are called squares.</p><p>There is no clock to beat. Each lesson adds one idea. Read at your own pace and try the examples or an optional short quiz when you feel ready.</p>",
   "prerequisites": "No arithmetic background. Start by counting the counters one at a time."
 }
