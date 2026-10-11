@@ -42,3 +42,22 @@ test('failure diagnostics exclude prose and are never exposed publicly',async()=
   const reply=await(await store.fetch(new Request('https://news.internal/edition'))).json();
   assert.equal(reply['api-diagnostic'],undefined);assert.equal(reply.serviceStatus,'api-error');
 });
+
+test('a failure pauses all later paid slots until manual review, preserving ledger and edition',async()=>{
+  for(const code of ['invalid-key','api-quota','api-error','incomplete-response','missing-search','invalid-stories','no-verified-stories','oversized-response','refresh-failed']) {
+    const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});
+    s.data.set('status',{code});s.data.set('last-slot',1);
+    s.data.set('budget:existing',{cents:42,calls:3});s.data.set('edition',{generatedAt:'original',stories:[]});
+    const before=structuredClone([...s.data]);let calls=0;
+    await Promise.all([store.refresh(now,async()=>{calls++;}),store.refresh(now+REFRESH_MS*20,async()=>{calls++;})]);
+    assert.equal(calls,0);assert.deepEqual([...s.data],before);
+  }
+});
+
+test('a newly failed refresh also stops the next scheduled slot',async()=>{
+  const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});let calls=0;
+  const api=async()=>{calls++;return new Response('',{status:500});};
+  await store.refresh(now,api);const after=[...s.data];
+  await store.refresh(now+REFRESH_MS,api);
+  assert.equal(calls,1);assert.deepEqual([...s.data],after);
+});
