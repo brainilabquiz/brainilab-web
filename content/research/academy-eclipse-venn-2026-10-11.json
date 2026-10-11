@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "date": "2026-10-11",
+  "provider": "DataForSEO estimates returned by OpenSEO",
+  "language": "en",
+  "markets": [
+    {
+      "name": "US",
+      "locationCode": 2840
+    },
+    {
+      "name": "UK",
+      "locationCode": 2826
+    }
+  ],
+  "limits": [
+    "Monthly country estimates, not worldwide totals or guaranteed visits.",
+    "Latest returned US monthly rows August 2026; eclipse interest varies sharply by month.",
+    "Close variants are not summed; paid competition is distinct from organic difficulty.",
+    "OpenSEO GSC integration is unconnected; no traffic gains measured."
+  ],
+  "metrics": [
+    {
+      "keyword": "solar eclipse vs lunar eclipse",
+      "search_volume": 14800,
+      "keyword_difficulty": 12,
+      "main_intent": "informational",
+      "cpc": 5.1,
+      "competition": 0,
+      "competition_level": "LOW",
+      "market": "US",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 49500
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 6600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 6600
+        }
+      ]
+    },
+    {
+      "keyword": "venn diagram examples",
+      "search_volume": 5400,
+      "keyword_difficulty": 1,
+      "main_intent": "informational",
+      "cpc": 0.21,
+      "competition": 0.01,
+      "competition_level": "LOW",
+      "market": "US",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 4400
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 2400
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 2900
+        }
+      ]
+    },
+    {
+      "keyword": "what is a venn diagram",
+      "search_volume": 5400,
+      "keyword_difficulty": 19,
+      "main_intent": "informational",
+      "cpc": 0.08,
+      "competition": 0,
+      "competition_level": "LOW",
+      "market": "US",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 5400
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 2400
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 2900
+        }
+      ]
+    },
+    {
+      "keyword": "difference between solar and lunar eclipse",
+      "search_volume": 3600,
+      "keyword_difficulty": 8,
+      "main_intent": "informational",
+      "cpc": 0.53,
+      "competition": 0,
+      "competition_level": "LOW",
+      "market": "US",
+      "lastMonthlyRows": [
+        {
+          "year": 2026,
+          "month": 8,
+          "search_volume": 14800
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "search_volume": 1600
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "search_volume": 1600
+        }
+      ]
+    },
+    {
+      "keyword": "solar eclipse vs lunar eclipse",
+      "search_volume": 4400,
+      "keyword_difficulty": 13,
+      "main_intent": "informational",
+      "cpc": 0.18,
+      "competition": 0,
+      "competition_level": "LOW",
+      "market": "UK"
+    },
+    {
+      "keyword": "venn diagram examples",
+      "search_volume": 1300,
+      "keyword_difficulty": 11,
+      "main_intent": "informational",
+      "cpc": null,
+      "competition": 0,
+      "competition_level": "LOW",
+      "market": "UK"
+    }
+  ],
+  "serp": [
+    {
+      "keyword": "venn diagram examples",
+      "ok": true,
+      "organicRows": [
+        {
+          "type": "organic",
+          "rank": 2,
+          "organicRank": 1,
+          "title": "Venn Diagrams",
+          "url": "https://academicweb.nd.edu/~dgalvin1/10120/10120_S16/Topic02_6p2_Galvin.pdf",
+          "domain": "academicweb.nd.edu",
+          "description": "Jul 9, 2006 — Example The following Venn diagram shows the number of elements in each region for the sets A, B and C which are subsets of the universal set U. Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 4,
+          "organicRank": 2,
+          "title": "What are some examples on how Venn diagrams work?",
+          "url": "https://www.quora.com/What-are-some-examples-on-how-Venn-diagrams-work",
+          "domain": "www.quora.com",
+          "description": "What are some examples on how Venn diagrams work?"
+        },
+        {
+          "type": "organic",
+          "rank": 5,
+          "organicRank": 3,
+          "title": "Venn Diagrams for Probability (2 of 2: Filling the sets)",
+          "url": "https://www.youtube.com/watch?v=Srabpd2dLEY",
+          "domain": "www.youtube.com",
+          "description": null
+        },
+        {
+          "type": "organic",
+          "rank": 6,
+          "organicRank": 4,
+          "title": "Venn Diagram: Types, Examples & Complete Guide",
+          "url": "https://cloudairy.com/guide/venn-diagram",
+          "domain": "cloudairy.com",
+          "description": "For example, imagine a classic 2-circle Venn diagram: one circle filled red, the other bold blue. These two circles represent two separate sets of items. The ... Read more"
+        },
+        {
+          "type": "organic",
+          "rank": 8,
+          "organicRank": 5,
+          "title": "Part 1 Module 3 Venn Diagrams and Survey Problems",
+          "url": "https://www.math.fsu.edu/~wooland/hm2ed/Part1Module3/Part1Module3.pdf",
+          "domain": "www.math.fsu.edu",
+          "description": "VENN DIAGRAMS AND SURVEY PROBLEMS EXAMPLE 1.3.1 A survey of 64 informed voters … believe that Elvis is still alive. EXAMPLE 1.3.2 A survey of used car salesmen ..."
+        },
+        {
+          "type": "organic",
+          "rank": 9,
+          "organicRank": 6,
+          "title": "Venn Diagram — Union, Intersection, Complement Examples",
+          "url": "https://bhanzu.com/math/algebra/venn-diagram",
+          "domain": "bhanzu.com",
+          "description": "Jun 10, 2026 — A Venn diagram shows set operations as overlapping circles. Learn union, intersection, complement, 2-set and 3-set diagrams, regions, ..."
+        },
+        {
+          "type": "organic",
+          "rank": 10,
+          "organicRank": 7,
+          "title": "Venn Diagrams and Truth Tables",
+          "url": "https://www.youtube.com/watch?v=wL9TBVgZmK0",
+          "domain": "www.youtube.com",
+          "description": null
+        }
+      ],
+      "aiOverview": true
+    },
+    {
+      "keyword": "solar eclipse vs lunar eclipse",
+      "ok": true,
+      "organicRows": [
+        {
+          "type": "organic",
+          "rank": 5,
+          "organicRank": 1,
+          "title": "Lunar vs. solar eclipse: The different types ...",
+          "url": "https://www.usatoday.com/story/news/nation/2025/03/06/lunar-vs-solar-eclipse-the-different-types-of-eclipses-explained/81612749007/",
+          "domain": "www.usatoday.com",
+          "description": "Mar 6, 2025 — A lunar eclipse can last for a few hours, while a solar eclipse lasts only a few minutes. Solar eclipses also rarely occur, while lunar ..."
+        },
+        {
+          "type": "organic",
+          "rank": 6,
+          "organicRank": 2,
+          "title": "What Is Solar Eclipse and Lunar Eclipse? Explained Clearly",
+          "url": "https://www.starscapes.zone/what-is-solar-eclipse-and-lunar-eclipse/",
+          "domain": "www.starscapes.zone",
+          "description": "Aug 1, 2025 — Solar eclipses happen during a new moon, while lunar eclipses occur during a full moon. Visibility: Solar eclipses are visible only from ..."
+        },
+        {
+          "type": "organic",
+          "rank": 7,
+          "organicRank": 3,
+          "title": "What is the difference between a solar eclipse and a lunar ...",
+          "url": "https://www.quora.com/What-is-the-difference-between-a-solar-eclipse-and-a-lunar-eclipse-What-are-some-of-the-physical-challenges-you-would-experience-in-space",
+          "domain": "www.quora.com",
+          "description": "What is the difference between a solar eclipse and a lunar eclipse? What are some of the physical challenges you would experience in space?"
+        },
+        {
+          "type": "organic",
+          "rank": 8,
+          "organicRank": 4,
+          "title": "What are the differences between a solar and lunar eclipse?",
+          "url": "https://www.youtube.com/watch?v=LMWpOLOcVCU",
+          "domain": "www.youtube.com",
+          "description": "WTOL 11 Meteorologist Diane Phillips breaks down the differences between solar and lunar eclipses ahead of the April 8, 2024 total solar ..."
+        },
+        {
+          "type": "organic",
+          "rank": 9,
+          "organicRank": 5,
+          "title": "Difference Between Solar Eclipse And Lunar Eclipse - SATHEE",
+          "url": "https://sathee.iitk.ac.in/sathee-jee/article/physics/physics-difference-between-solar-eclipse-and-lunar-eclipse/",
+          "domain": "sathee.iitk.ac.in",
+          "description": "Solar eclipses occur about two to five times a year, while lunar eclipses occur about two to four times a year."
+        },
+        {
+          "type": "organic",
+          "rank": 10,
+          "organicRank": 6,
+          "title": "How to easily tell the difference between a solar and lunar ...",
+          "url": "https://www.quora.com/How-can-you-easily-tell-the-difference-between-a-solar-and-lunar-eclipse",
+          "domain": "www.quora.com",
+          "description": "How can you easily tell the difference between a solar and lunar eclipse?"
+        }
+      ],
+      "aiOverview": true
+    }
+  ],
+  "articles": [
+    {
+      "slug": "venn-diagram-examples-pizza-night",
+      "primaryKeyword": "venn diagram examples",
+      "secondaryKeyword": "what is a venn diagram",
+      "distinctIntent": "Read regions and avoid double counting, extending existing and/or lesson.",
+      "sources": [
+        {
+          "name": "OpenStax — Understanding Venn Diagrams",
+          "url": "https://openstax.org/books/contemporary-mathematics/pages/1-3-understanding-venn-diagrams",
+          "checkedAt": "2026-10-11T18:18:46.052Z",
+          "status": "opened and exact supporting passages checked"
+        },
+        {
+          "name": "OpenStax — Set Operations with Two Sets",
+          "url": "https://openstax.org/books/contemporary-mathematics/pages/1-4-set-operations-with-two-sets",
+          "checkedAt": "2026-10-11T18:18:46.052Z",
+          "status": "opened and exact supporting passages checked"
+        }
+      ],
+      "prepublicationReview": {
+        "searchDemand": "pass: dated US/UK provider estimates; no global sum or promised visits",
+        "searchIntent": "pass: two US depth-10 SERP samples and competing-page intent checked",
+        "existingCatalogueOverlap": "pass: distinguishes overlap counting from and/or; eclipses from ordinary Moon phases",
+        "originalShortEnglish": "pass: about 300 words per lesson and four sections",
+        "earlyDirectAnswer": "pass",
+        "sourcesAndExamples": "pass: exact NASA/OpenStax passages opened; fictional sets, separate-region counting and keys checked",
+        "metadataCanonicalSchema": "pass locally; verify on live domain after CMS publication",
+        "uniqueCoverAndCrops": "pass: two original images visually inspected at full size and 240px; 960/480/240 WebP",
+        "internalReadingGameCourseLinks": "pass locally; Science Quiz corrected to /science/science-quiz/",
+        "optionalQuizScoring": "pass: 0/3 and 3/3; wrong-answer UI locks choice and displays explanation",
+        "mobileLayout": "320px: no horizontal overflow or broken images; optional folds initially closed; original crops readable",
+        "desktopLayout": "both covers and article headers visually inspected",
+        "publicCopy": "pass: no internal acquisition, SEO or monetisation strategy in visible copy"
+      }
+    },
+    {
+      "slug": "solar-eclipse-vs-lunar-eclipse",
+      "primaryKeyword": "solar eclipse vs lunar eclipse",
+      "secondaryKeyword": "difference between solar and lunar eclipse",
+      "distinctIntent": "Compare eclipse alignment and shadows, extending existing Moon phases.",
+      "sources": [
+        {
+          "name": "NASA Science — Eclipses and the Moon",
+          "url": "https://science.nasa.gov/moon/eclipses/",
+          "checkedAt": "2026-10-11T18:18:46.052Z",
+          "status": "opened and exact supporting passages checked"
+        },
+        {
+          "name": "NASA Science — Why Do Eclipses Happen?",
+          "url": "https://science.nasa.gov/eclipses/geometry/",
+          "checkedAt": "2026-10-11T18:18:46.052Z",
+          "status": "opened and exact supporting passages checked"
+        },
+        {
+          "name": "NASA Science — Eclipse Viewing Safety",
+          "url": "https://science.nasa.gov/eclipses/safety/",
+          "checkedAt": "2026-10-11T18:18:46.052Z",
+          "status": "opened and exact supporting passages checked"
+        }
+      ],
+      "prepublicationReview": {
+        "searchDemand": "pass: dated US/UK provider estimates; no global sum or promised visits",
+        "searchIntent": "pass: two US depth-10 SERP samples and competing-page intent checked",
+        "existingCatalogueOverlap": "pass: distinguishes overlap counting from and/or; eclipses from ordinary Moon phases",
+        "originalShortEnglish": "pass: about 300 words per lesson and four sections",
+        "earlyDirectAnswer": "pass",
+        "sourcesAndExamples": "pass: exact NASA/OpenStax passages opened; fictional sets, separate-region counting and keys checked",
+        "metadataCanonicalSchema": "pass locally; verify on live domain after CMS publication",
+        "uniqueCoverAndCrops": "pass: two original images visually inspected at full size and 240px; 960/480/240 WebP",
+        "internalReadingGameCourseLinks": "pass locally; Science Quiz corrected to /science/science-quiz/",
+        "optionalQuizScoring": "pass: 0/3 and 3/3; wrong-answer UI locks choice and displays explanation",
+        "mobileLayout": "320px: no horizontal overflow or broken images; optional folds initially closed; original crops readable",
+        "desktopLayout": "both covers and article headers visually inspected",
+        "publicCopy": "pass: no internal acquisition, SEO or monetisation strategy in visible copy"
+      }
+    }
+  ]
+}

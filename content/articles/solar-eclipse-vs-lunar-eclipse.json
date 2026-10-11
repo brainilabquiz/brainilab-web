@@ -1,0 +1,106 @@
+{
+  "slug": "solar-eclipse-vs-lunar-eclipse",
+  "title": "Solar eclipse vs lunar eclipse: who is in the middle?",
+  "description": "The Sun, Earth and Moon can make two very different shadow shows. Discover which object moves between the others, and why it does not happen every month.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 116,
+  "publishedAt": "2026-10-11T18:18:46.052Z",
+  "updatedAt": "2026-10-11T18:18:46.052Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "From the Moon to the time on your clock",
+    "url": "/learn/paths/sun-moon-and-time/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/solar-eclipse-vs-lunar-eclipse.webp",
+    "small": "/assets/images/learn/solar-eclipse-vs-lunar-eclipse-small.webp",
+    "thumbnail": "/assets/images/learn/solar-eclipse-vs-lunar-eclipse-thumb.webp",
+    "alt": "Conceptual comparison of a solar eclipse with a white corona and a reddish eclipsed Moon",
+    "position": 50,
+    "credit": "AI-generated conceptual comparison of two different eclipses; not a documentary photograph."
+  },
+  "sources": [
+    {
+      "name": "NASA Science — Eclipses and the Moon",
+      "url": "https://science.nasa.gov/moon/eclipses/"
+    },
+    {
+      "name": "NASA Science — Why Do Eclipses Happen?",
+      "url": "https://science.nasa.gov/eclipses/geometry/"
+    },
+    {
+      "name": "NASA Science — Eclipse Viewing Safety",
+      "url": "https://science.nasa.gov/eclipses/safety/"
+    }
+  ],
+  "related": [
+    "why-the-moon-changes-shape",
+    "why-day-turns-into-night"
+  ],
+  "practice": "Keep exploring the natural world with a few questions in Science Quiz.",
+  "sections": [
+    {
+      "id": "solar-vs-lunar",
+      "title": "Same cast, different object in the middle",
+      "html": "<p><strong>In a solar eclipse, the Moon passes between the Sun and Earth. In a lunar eclipse, Earth passes between the Sun and Moon.</strong> The difference is who blocks the sunlight—and where the shadow falls.</p><p>Think of three objects lined up for a shadow show. Move the middle one and the story changes. The word <em>solar</em> points to the Sun; <em>lunar</em> points to the Moon.</p>"
+    },
+    {
+      "id": "two-shadow-shows",
+      "title": "One hides the Sun; the other dims the Moon",
+      "html": "<p>During a <strong>solar eclipse</strong>, the Moon can cover some or all of the Sun’s face from a particular place on Earth. The line-up is <strong>Sun → Moon → Earth</strong>, at new Moon.</p><p>During a <strong>lunar eclipse</strong>, the Moon moves into Earth’s shadow. The line-up is <strong>Sun → Earth → Moon</strong>, at full Moon. <a href=\"https://science.nasa.gov/moon/eclipses/\">NASA’s eclipse guide</a> explains both arrangements.</p><p>A totally eclipsed Moon can look reddish. Some sunlight reaches it after travelling through Earth’s atmosphere, which scatters more of the blue light. The Moon has not switched on a red lamp.</p>"
+    },
+    {
+      "id": "not-every-month",
+      "title": "Why is there no eclipse every month?",
+      "html": "<p>There is a new Moon and a full Moon each month, so why not two eclipses?</p><p><strong>The Moon’s orbit is tilted relative to Earth’s path around the Sun.</strong> Most months, the alignment misses: the Moon passes above or below the Sun in our sky, or above or below Earth’s shadow. <a href=\"https://science.nasa.gov/eclipses/geometry/\">NASA explains this geometry</a>.</p><p>That is also why <a href=\"/learn/why-the-moon-changes-shape/\">ordinary Moon phases</a> are not little eclipses. Phases come from our changing view of the Moon’s sunlit half.</p>"
+    },
+    {
+      "id": "remember-the-middle",
+      "title": "A small trick for remembering",
+      "html": "<p>Ask: <strong>“What is in the middle?”</strong> Moon in the middle: solar eclipse. Earth in the middle: lunar eclipse. You do not need a calendar of eclipse dates to understand the difference.</p><p>You can explore shadows with a lamp and a ball indoors. Do not use the Sun for this experiment. If you plan to watch a solar eclipse, follow <a href=\"https://science.nasa.gov/eclipses/safety/\">NASA’s viewing-safety guidance</a>; ordinary sunglasses are not safe solar viewers.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "sky-eclipses-v1",
+    "questions": [
+      {
+        "prompt": "Which object is between the Sun and Earth during a solar eclipse?",
+        "options": [
+          "The Moon",
+          "Mars",
+          "Jupiter",
+          "Earth"
+        ],
+        "answer": 0,
+        "explanation": "The Moon passes between the Sun and Earth, blocking some or all of the Sun from a particular place."
+      },
+      {
+        "prompt": "Which phase is needed for a lunar eclipse?",
+        "options": [
+          "First quarter",
+          "New Moon",
+          "Full Moon",
+          "Last quarter"
+        ],
+        "answer": 2,
+        "explanation": "Lunar eclipses happen at full Moon, when Earth can lie between the Sun and Moon. Most full Moons are not eclipsed."
+      },
+      {
+        "prompt": "Why do eclipses not happen at every new and full Moon?",
+        "options": [
+          "The Moon stops reflecting light",
+          "The Moon’s orbit is tilted, so the alignment usually misses",
+          "Earth stops rotating",
+          "The Sun disappears each month"
+        ],
+        "answer": 1,
+        "explanation": "The Moon’s tilted orbit usually carries it above or below the alignment needed for an eclipse."
+      }
+    ]
+  }
+}

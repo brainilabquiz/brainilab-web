@@ -23,6 +23,11 @@
       "slug": "why-time-zones-get-messy",
       "level": "4 · Apply and distinguish",
       "objective": "Follow three clocks to understand why places use different times."
+    },
+    {
+      "slug": "solar-eclipse-vs-lunar-eclipse",
+      "level": "5 · Follow the shadow",
+      "objective": "Distinguish solar and lunar eclipses by alignment, shadow and Moon phase."
     }
   ],
   "sources": [
@@ -41,6 +46,18 @@
     {
       "url": "https://www.rmg.co.uk/stories/time/time-greenwich-mean-time-confusing-case-travellers-watch",
       "name": "Royal Museums Greenwich — Local time and the railways"
+    },
+    {
+      "name": "NASA Science — Eclipses and the Moon",
+      "url": "https://science.nasa.gov/moon/eclipses/"
+    },
+    {
+      "name": "NASA Science — Why Do Eclipses Happen?",
+      "url": "https://science.nasa.gov/eclipses/geometry/"
+    },
+    {
+      "name": "NASA Science — Eclipse Viewing Safety",
+      "url": "https://science.nasa.gov/eclipses/safety/"
     }
   ],
   "authorId": "biel-sarda",
@@ -56,18 +73,23 @@
     {
       "term": "Time zone",
       "definition": "An area that follows the same rules for its clocks."
+    },
+    {
+      "term": "Eclipse",
+      "definition": "An alignment where one object blocks sunlight from reaching another object or from reaching our view."
     }
   ],
   "outcomes": [
     "Connect day and night to Earth’s rotation.",
     "Explain lunar phases without confusing them with eclipses.",
     "Connect seasons to tilt, sunlight angle and daylight.",
-    "Distinguish a time zone from its current UTC offset."
+    "Distinguish a time zone from its current UTC offset.",
+    "Distinguish solar and lunar eclipses by alignment, shadow and Moon phase."
   ],
-  "updatedAt": "2026-10-01T05:06:25.092526+00:00",
-  "description": "Start with day and night, then explore Moon phases, seasons and the clocks we use around the world.",
+  "updatedAt": "2026-10-11T18:18:46.052Z",
+  "description": "Start with day and night, explore Moon phases and seasons, then make sense of time zones and the two different shadows behind eclipses.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "why-the-moon-changes-shape",
-  "introduction": "<p>You do not need a telescope or any astronomy lessons to begin. A ball beside a lamp, the changing evening light and a call to a faraway friend will help us make sense of the sky and our clocks.</p>",
+  "introduction": "<p>A ball beside a lamp, the changing evening light and a call to a faraway friend will help us make sense of the sky and our clocks.</p><p>Five short lessons lead from familiar observations to solar and lunar eclipses. You can read at your own pace and try the optional quizzes.</p>",
   "prerequisites": "No astronomy background needed. The last lesson includes simple clock arithmetic."
 }
