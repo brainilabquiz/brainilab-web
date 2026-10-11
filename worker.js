@@ -1,4 +1,5 @@
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
+import {productionRequest} from './lib/production-origin.js';
 import {renderNews,renderEmptyNews,freshNews} from './lib/breaking-news.js';
 import {newsEdition} from './lib/news-refresh.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
@@ -65,6 +66,7 @@ export default {
     ctx.waitUntil(store.fetch('https://news.internal/refresh',{method:'POST'}));
   },
   async fetch(request,env,ctx){
+    request=productionRequest(request);
     const url=new URL(request.url);
     if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
       if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});

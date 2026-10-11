@@ -1,0 +1,8 @@
+# HTTP and www converge on the existing public HTTPS canonical domain.
+http://brainilabgames.com/* https://brainilabgames.com/:splat 301!
+http://www.brainilabgames.com/* https://brainilabgames.com/:splat 301!
+https://www.brainilabgames.com/* https://brainilabgames.com/:splat 301!
+# Fixed HTTPS backend; do not proxy to the public apex (would create a loop).
+# Netlify passes query strings through. Force prevents the bootstrap file
+# from shadowing the real homepage. No cache or authentication overrides.
+/* https://brainilab-web.brainilabquiz.workers.dev/:splat 200!
