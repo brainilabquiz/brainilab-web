@@ -1,5 +1,5 @@
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
-import {renderNews,freshNews} from './lib/breaking-news.js';
+import {renderNews,renderEmptyNews,freshNews} from './lib/breaking-news.js';
 import {newsEdition} from './lib/news-refresh.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/news-refresh.js';
@@ -72,7 +72,9 @@ export default {
       if(request.method==='HEAD')return response;
       const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
       const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
-      return new Response(html.replace('<!-- breaking-news -->',()=>renderNews(edition)||'<div class="wrap"><h1>Breaking News</h1><p>No recent stories are available right now. Please check back soon.</p></div>'),{status:response.status,headers});
+      const news=renderNews(edition);
+      headers.set('Cache-Control',news?'public,max-age=60':'no-store');
+      return new Response(html.replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),{status:response.status,headers});
     }
     // Consolidate production entry points before rendering or caching HTML.
     // Keep previews and local development on their own origin.

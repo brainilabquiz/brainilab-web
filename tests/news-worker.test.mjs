@@ -13,3 +13,24 @@ test('news outage preserves the functioning homepage',async()=>{const e=environm
 test('public news API rejects mutations and previews cannot trigger research',async()=>{const e=environment();assert.equal((await worker.fetch(new Request('https://brainilabgames.com/api/breaking-news',{method:'POST'}),e.env,ctx)).status,405);assert.equal((await worker.fetch(new Request('https://preview.example.org/api/breaking-news'),e.env,ctx)).status,503);assert.equal(e.reads(),0);});
 
 test('dedicated news page renders current stories',async()=>{const e=environment();const r=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Breaking News/);assert.equal(e.reads(),1);});
+
+test('empty news page offers a reading route without stale dates or caching the outage',async()=>{
+  const e=environment(true);
+  // Preview never reads production news or triggers a paid bootstrap.
+  const r=await worker.fetch(new Request('https://preview.example.org/breaking-news/'),e.env,ctx);
+  const html=await r.text();
+  assert.match(html,/No fresh stories/);assert.match(html,/href="\/learn\/"/);
+  assert.doesNotMatch(html,/<time|Updated|API|Codex/);assert.equal(e.reads(),0);
+  assert.equal(r.headers.get('Cache-Control'),'no-store');
+});
+
+test('news footer image candidates resolve at the site root',async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const html=await readFile(new URL('../breaking-news/index.html',import.meta.url),'utf8');
+  assert.doesNotMatch(html,/\uFFFD/);
+  const footer=html.split('<footer')[1];
+  for(const match of footer.matchAll(/srcset="([^"]+)"/g)) {
+    for(const candidate of match[1].split(',')) assert.match(candidate.trim(),/^\/assets\//);
+  }
+  assert.match(html,/content="https:\/\/brainilabgames.com\/breaking-news\/" property="og:url"/);
+});
