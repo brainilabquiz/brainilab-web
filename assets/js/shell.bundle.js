@@ -3173,7 +3173,7 @@ window.BrainiPerf=(function(){
       || ["localhost","127.0.0.1","::1"]
         .includes(location.hostname);
 
-    if(!isLocal || window.BRAINI_ENABLE_SW===true) return;
+    if(!isLocal) return;
 
     if("serviceWorker" in navigator){
       navigator.serviceWorker
@@ -3225,6 +3225,23 @@ window.BrainiPerf=(function(){
     }
   }
 
+  function registerServiceWorker(){
+    if(
+      window.BRAINI_ENABLE_SW!==true ||
+      !("serviceWorker" in navigator) ||
+      !["http:","https:"].includes(location.protocol) ||
+      ["localhost","127.0.0.1","::1"].includes(location.hostname)
+    ){
+      return;
+    }
+
+    window.addEventListener("load",()=>{
+      navigator.serviceWorker.register("/sw.js").catch(err=>{
+        console.warn("BrainiLab service worker:",err.message||err);
+      });
+    },{once:true});
+  }
+
   function loadFeature(filename){
     return loadScript(
       new URL(
@@ -3236,6 +3253,7 @@ window.BrainiPerf=(function(){
 
   installNavigationPrefetch();
   cleanupLocalServiceWorkers();
+  registerServiceWorker();
 
   return {
     ensureSupabase,
@@ -5201,55 +5219,6 @@ window.BrainiMobileUI=(function(){
   }
 
   return {boot};
-})();
-
-/* ===== pwa.js ===== */
-
-/* Installation is user initiated. No popups, notification requests or tracking. */
-window.BrainiPWA=(()=>{
-  let promptEvent=null;
-  const mode=window.matchMedia('(display-mode: standalone)');
-  const installed=()=>mode.matches||navigator.standalone===true;
-  const embedded=window.top!==window;
-  const ios=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  const local=['localhost','127.0.0.1','::1'].includes(location.hostname);
-  function status(text){const node=document.querySelector('[data-pwa-status]');if(node)node.textContent=text;}
-  function render(){
-    document.querySelectorAll('[data-pwa-install]').forEach(button=>{button.hidden=!promptEvent||installed()||embedded;button.disabled=false;});
-    document.documentElement.dataset.pwaMode=installed()?'standalone':'browser';
-    if(installed())status('BrainiLab is already open as an app. You’re ready to play.');
-  }
-  window.addEventListener('beforeinstallprompt',event=>{
-    if(embedded||installed())return;
-    event.preventDefault();promptEvent=event;render();
-    status('Ready to install. Add BrainiLab to your home screen.');
-  });
-  window.addEventListener('appinstalled',()=>{promptEvent=null;render();status('BrainiLab has been installed. Look for its icon on your home screen.');});
-  async function install(event){
-    if(!promptEvent)return;
-    const saved=promptEvent;promptEvent=null;event.currentTarget.disabled=true;
-    try{
-      await saved.prompt();
-      const choice=await saved.userChoice;
-      status(choice.outcome==='accepted'?'Finish installation in your browser’s dialog.':'No problem. You can install it whenever you like.');
-    }catch{status('Installation did not finish. Try your browser’s menu below.');}
-    render();
-  }
-  function register(){
-    if(embedded||!window.isSecureContext||!('serviceWorker' in navigator)||(local&&window.BRAINI_ENABLE_SW!==true))return;
-    navigator.serviceWorker.register('/sw.js',{scope:'/',updateViaCache:'none'}).then(()=>navigator.serviceWorker.ready).then(()=>{
-      document.documentElement.dataset.pwaWorker='ready';
-    }).catch(()=>{document.documentElement.dataset.pwaWorker='unavailable';});
-  }
-  function boot(){
-    document.querySelectorAll('[data-pwa-install]').forEach(button=>button.addEventListener('click',install));
-    if(ios&&!installed())status('On iPhone or iPad, use Safari’s Share menu to add BrainiLab.');
-    render();register();
-    if(embedded)document.querySelectorAll('[data-pwa-install-link]').forEach(link=>link.hidden=true);
-  }
-  mode.addEventListener?.('change',render);
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-  return {installed};
 })();
 /* related-video bundle */
 (()=>{var d=e=>String(e??"").replace(/[&<>"']/g,n=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[n]);function u(e){if(typeof e!="string")return null;let n=e.trim();if(/^[\w-]{11}$/.test(n))return n;try{let t=new URL(n);if(t.protocol!=="https:"||t.username||t.password||t.port)return null;let r=null;return t.hostname==="youtu.be"&&(r=t.pathname.slice(1)),["youtube.com","www.youtube.com","m.youtube.com"].includes(t.hostname)&&(r=t.pathname==="/watch"?t.searchParams.get("v"):t.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{11})\/?$/)?.[1]),typeof r=="string"&&/^[\w-]{11}$/.test(r)?r:null}catch{return null}}function o(e){let n=u(e?.id),t=typeof e?.title=="string"?e.title.trim().slice(0,180):"";return n&&t?{id:n,title:t,showAfterGame:e.showAfterGame===!0}:null}function i(e,n="article"){let t=o(e);if(!t)return"";let r=n==="post_game"?"post_game":"article";return`<a class="related-video" data-related-video="${r}" data-video-id="${t.id}" href="https://www.youtube.com/watch?v=${t.id}" target="_blank" rel="noopener"><span class="related-video-art"><img src="/api/youtube-thumbnail/${t.id}" width="320" height="180" loading="lazy" decoding="async" alt=""/><span class="related-video-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 5v14l11-7z"/></svg></span></span><span class="related-video-copy"><span class="related-video-label">${r==="post_game"?"Fancy a video quiz?":"Play along on YouTube"}</span><strong>${d(t.title)}</strong><span class="related-video-link">Watch on YouTube <span aria-hidden="true">\u2197</span><span class="sr-only"> (opens in a new tab)</span></span></span></a>`}var s=Object.freeze({brainmix:"/games/brain-mix/",worldflags:"/geography/world-flags-quiz/",worldcapitals:"/geography/world-capitals-quiz/",generalknowledge:"/general-knowledge/general-knowledge-quiz/",science:"/science/science-quiz/",history:"/history/history-quiz/",sports:"/sports/sports-quiz/",connections:"/games/connections/",mathrush:"/games/math-rush/",sequence:"/games/sequence/",brainiword:"/games/brainiword/",numberroute:"/games/number-route/",orderup:"/games/order-up/",topicrush:"/games/topic-rush/",oddoneout:"/games/odd-one-out/",higherlower:"/games/higher-lower/",survival:"/games/survival/"});var a=new Map,l=new WeakMap;function c(e){return a.has(e)||a.set(e,fetch("/api/related-video?game="+encodeURIComponent(e),{credentials:"omit",signal:AbortSignal.timeout(6e3)}).then(async n=>{if(!n.ok)throw Error("Video unavailable");return o((await n.json()).video)}).catch(()=>(a.delete(e),null))),a.get(e)}async function p(e,{gameId:n}={}){if(!e)return;let t={};if(l.set(e,t),e.hidden=!0,e.replaceChildren(),!Object.hasOwn(s,n))return;let r=await c(n);!r||!e.isConnected||l.get(e)!==t||(e.innerHTML=i(r,"post_game"),e.hidden=!1)}document.addEventListener("error",e=>{let n=e.target;n?.matches?.(".related-video-art img")&&(n.hidden=!0)},!0);window.BrainiRelatedVideo={mount:p};})();
