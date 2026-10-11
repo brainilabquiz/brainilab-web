@@ -61,3 +61,24 @@ test('a newly failed refresh also stops the next scheduled slot',async()=>{
   await store.refresh(now+REFRESH_MS,api);
   assert.equal(calls,1);assert.deepEqual([...s.data],after);
 });
+
+test('Data Studio diagnostics backfill only bounded private fields without resuming refresh',async()=>{
+  const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'}),queries=[];
+  s.data.set('bootstrapped',true);s.data.set('status',{code:'api-error'});
+  s.data.set('api-diagnostic',{checkedAt:new Date(now).toISOString(),httpStatus:400,code:'unsupported_parameter',type:'invalid_request_error',param:'tools[0].filters',message:'private prose',credential:'never copy'});
+  s.storage.sql={exec:(...args)=>queries.push(args)};
+  const before=structuredClone([...s.data]);
+  const reply=await(await store.fetch(new Request('https://news.internal/edition'))).json();
+  await store.fetch(new Request('https://news.internal/edition'));
+  let calls=0;await store.refresh(now,async()=>{calls++;});
+  assert.equal(calls,0);assert.equal(queries.length,2);assert.deepEqual([...s.data],before);
+  assert.deepEqual(queries[1].slice(1),[new Date(now).toISOString(),400,'unsupported_parameter','invalid_request_error','tools[0].filters']);
+  assert.equal(JSON.stringify(queries).includes('private prose'),false);assert.equal(reply['api-diagnostic'],undefined);
+});
+
+test('diagnostic mirror failure does not prevent reading the existing edition',async()=>{
+  const s=state(),store=new BreakingNewsStore(s,{OPENAI_API_KEY:'test'});
+  s.data.set('bootstrapped',true);s.data.set('api-diagnostic',{checkedAt:new Date(now).toISOString(),httpStatus:500});
+  s.storage.sql={exec:()=>{throw Error('SQL temporarily unavailable');}};
+  assert.equal((await store.fetch(new Request('https://news.internal/edition'))).status,200);
+});
