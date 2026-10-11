@@ -18,7 +18,7 @@ window.BrainiMobileUI=(function(){
       const nav=shell.querySelector('.links');
       const button=shell.querySelector('[data-mobile-menu]');
       if(nav&&!nav.querySelector('.news-nav-link')){
-        const link=document.createElement('a');link.href='/breaking-news/';link.className='news-nav-link';link.textContent='Breaking News';link.target='_blank';link.rel='noopener noreferrer';
+        const link=document.createElement('a');link.href='/breaking-news/';link.className='news-nav-link';link.textContent='Breaking News';
         if(location.pathname.startsWith('/breaking-news'))link.setAttribute('aria-current','page');
         nav.append(link);
       }
@@ -35,6 +35,22 @@ window.BrainiMobileUI=(function(){
         button.setAttribute('aria-expanded',String(open));
       });
 
+      // The dropdown sits before its toggle in the shared header DOM.
+      // Enter its links on Tab, then leave it after the last link.
+      button.addEventListener('keydown',event=>{
+        if(event.key==='Tab'&&!event.shiftKey&&nav.classList.contains('mobile-open')){
+          const first=nav.querySelector('a[href]');
+          if(first){event.preventDefault();first.focus();}
+        }
+      });
+      nav.addEventListener('keydown',event=>{
+        const links=nav.querySelectorAll('a[href]');
+        if(event.key==='Tab'&&!event.shiftKey&&event.target===links[links.length-1]&&nav.classList.contains('mobile-open')){
+          closeMenu(nav,button);
+          button.focus();
+        }
+      });
+
       nav.addEventListener('click',event=>{
         if(event.target.closest('a')) closeMenu(nav,button);
       });
@@ -46,7 +62,11 @@ window.BrainiMobileUI=(function(){
       },{passive:true});
 
       document.addEventListener('keydown',event=>{
-        if(event.key==='Escape') closeMenu(nav,button);
+        if(event.key==='Escape'&&nav.classList.contains('mobile-open')){
+          const restoreFocus=nav.contains(document.activeElement);
+          closeMenu(nav,button);
+          if(restoreFocus)button.focus();
+        }
       });
 
       window.addEventListener('resize',()=>{

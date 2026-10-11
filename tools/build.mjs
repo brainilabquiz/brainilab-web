@@ -1,11 +1,12 @@
 import {newTabLinks} from '../lib/link-policy.js';
+import {assetVersion,versionAssets} from '../lib/asset-versions.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
-import {createHash} from 'node:crypto';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import './check-site-integrity.mjs';
+import './test-asset-versions.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -41,18 +42,21 @@ for(const file of candidates){
   const info=await stat(path.join(root,file)).catch(error=>{if(error.code!=='ENOENT')throw error;return null;});
   if(info?.isFile())publicFiles.push(file);
 }
-// Immutable shared styles need a new URL whenever their contents change.
-const siteCssVersion=createHash('sha256').update(await readFile('assets/css/site.css')).digest('hex').slice(0,12);
-const versionSiteCss=html=>html.replace(/(assets\/css\/site\.css)\?v=[^\s"'<>]+/g,(_,file)=>`${file}?v=${siteCssVersion}`);
+// Immutable CSS/JS URLs follow the actual published bytes, including generated bundles.
+const assetVersions=new Map();
 let original=0,compressed=0,count=0;
 for(const file of publicFiles){
   const source=path.join(root,file),target=path.join(output,file);
   await mkdir(path.dirname(target),{recursive:true});
   if(/\.(js|css)$/.test(file)){
     await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
+    assetVersions.set(file,assetVersion(await readFile(target)));
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
-  }else if(file.endsWith('.html')) await writeFile(target,versionSiteCss(newTabLinks(await readFile(source,'utf8'))));
-  else await copyFile(source,target);
+  }else if(!file.endsWith('.html')) await copyFile(source,target);
+}
+for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
+  const html=newTabLinks(await readFile(path.join(root,file),'utf8'));
+  await writeFile(path.join(output,file),versionAssets(html,file,assetVersions));
 }
 for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
   await stat(path.join(output,required));
