@@ -1,6 +1,7 @@
 import {newTabLinks} from '../lib/link-policy.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
+import {createHash} from 'node:crypto';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
@@ -40,6 +41,9 @@ for(const file of candidates){
   const info=await stat(path.join(root,file)).catch(error=>{if(error.code!=='ENOENT')throw error;return null;});
   if(info?.isFile())publicFiles.push(file);
 }
+// Immutable shared styles need a new URL whenever their contents change.
+const siteCssVersion=createHash('sha256').update(await readFile('assets/css/site.css')).digest('hex').slice(0,12);
+const versionSiteCss=html=>html.replace(/(assets\/css\/site\.css)\?v=[^\s"'<>]+/g,(_,file)=>`${file}?v=${siteCssVersion}`);
 let original=0,compressed=0,count=0;
 for(const file of publicFiles){
   const source=path.join(root,file),target=path.join(output,file);
@@ -47,7 +51,7 @@ for(const file of publicFiles){
   if(/\.(js|css)$/.test(file)){
     await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
-  }else if(file.endsWith('.html')) await writeFile(target,newTabLinks(await readFile(source,'utf8')));
+  }else if(file.endsWith('.html')) await writeFile(target,versionSiteCss(newTabLinks(await readFile(source,'utf8'))));
   else await copyFile(source,target);
 }
 for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
