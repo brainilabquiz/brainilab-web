@@ -28,9 +28,6 @@
 .editorial-page .learn-card-label{font-size:13px}.editorial-page .learn-card .eyebrow{font-size:11px}
 @media(max-width:700px){
  .home-page .home-hero{gap:20px;padding:20px 0}
- .home-page .home-hero>.challenge-wrap{order:0}
- .home-page .home-intro h1,.home-page .home-intro .home-tagline{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none;white-space:normal}
- .home-page .home-intro h1{font-size:32px}.home-page .home-intro .home-tagline{margin-top:8px;font-size:15px;line-height:1.5}
  .home-page .home-hero .challenge{min-height:320px}.home-page .home-hero .challenge-inner{padding:20px 16px}
  .home-page .home-start h2{font-size:28px}.home-page .home-start>p{font-size:15px}.home-page .home-daily-icon{height:48px;width:64px}
 }
@@ -42,7 +39,11 @@
  .games-library-page .games-daily-link{margin-top:4px}
 }
 
-/* Keep the latest article and video beside the Daily, directly below the headline. */
-.home-page .home-intro .home-article{max-width:none;border-radius:var(--discovery-radius);order:initial;margin-top:20px}
-.home-page .home-intro .home-video{max-width:none;border-radius:var(--discovery-radius);order:initial;margin-top:12px;min-height:110px}
-.home-page .home-intro .home-social-links{order:initial}
+/* Shared card surfaces; home.css controls the mobile reading order. */
+.home-page .home-intro .home-article{max-width:none;border-radius:var(--discovery-radius)}
+.home-page .home-intro .home-video{max-width:none;border-radius:var(--discovery-radius);min-height:110px}
+/* On wider screens, the article sits above the video beside the Daily. */
+@media(min-width:701px){
+ .home-page .home-intro .home-article{margin-top:20px}
+ .home-page .home-intro .home-video{margin-top:12px}
+}
