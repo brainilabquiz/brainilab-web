@@ -1,0 +1,102 @@
+{
+  "slug": "coin-flip-probability-five-heads",
+  "title": "Coin flip probability: can a coin remember five heads?",
+  "description": "Five heads in a row feels like a pattern. Find out why tails is not due next, and why predicting a whole run differs from predicting one more flip.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 122,
+  "publishedAt": "2026-10-12T17:00:36Z",
+  "updatedAt": "2026-10-12T17:00:36Z",
+  "game": {
+    "name": "Odd One Out",
+    "url": "/games/odd-one-out/"
+  },
+  "hub": {
+    "name": "Patterns and reasoning",
+    "url": "/learn/paths/patterns-and-reasoning/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/coin-flip-probability-five-heads.webp",
+    "small": "/assets/images/learn/coin-flip-probability-five-heads-small.webp",
+    "thumbnail": "/assets/images/learn/coin-flip-probability-five-heads-thumb.webp",
+    "alt": "One upright wooden coin with a star face beside a paper strip showing five earlier matching star stamps",
+    "position": 50,
+    "credit": "AI-generated cover image created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "University of Cambridge NRICH — Independence and Dependence",
+      "url": "https://nrich.maths.org/articles/independence-and-dependence"
+    },
+    {
+      "name": "OpenStax — Introductory Statistics 2e: Independent and Mutually Exclusive Events",
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-2-independent-and-mutually-exclusive-events"
+    }
+  ],
+  "related": [
+    "logic-what-must-be-true",
+    "venn-diagram-examples-pizza-night"
+  ],
+  "practice": "Try spotting which idea does not fit in Odd One Out.",
+  "sections": [
+    {
+      "id": "coin-flip-probability",
+      "title": "Five heads. Surely tails is next?",
+      "html": "<p><strong>For a fair coin with independent flips, the probability of heads on the next flip is 1/2, or 50%—even after five heads.</strong> Fair means heads and tails have equal chances. Independent means earlier outcomes do not change the next flip’s chances.</p><p>Imagine choosing who washes the picnic mugs by flipping a coin. Five heads arrive in a row. Someone announces, “Tails is due!” The coin has received no such instruction. <a href=\"https://nrich.maths.org/articles/independence-and-dependence\">Cambridge’s NRICH explains why past flips do not control the next one</a>.</p>"
+    },
+    {
+      "id": "a-run-versus-one-flip",
+      "title": "Then why does the run feel surprising?",
+      "html": "<p><strong>Before five flips</strong>, the probability of getting heads on all five is 1/2 × 1/2 × 1/2 × 1/2 × 1/2 = <strong>1/32, or 3.125%</strong>. That asks about an entire sequence that has not happened yet.</p><p><strong>After five heads have happened</strong>, the next flip is a new question. Under our fair, independent model, its chance of heads is still 50%. A rare past run does not turn the next toss into a correction service.</p>"
+    },
+    {
+      "id": "two-flip-example",
+      "title": "Two flips make the difference visible",
+      "html": "<p>Write out the ordered possibilities for two flips: <strong>HH, HT, TH and TT</strong>. In this model, each has probability 1/4.</p><p>Exactly one head can happen in two ways: HT or TH. Its probability is therefore <strong>2/4 = 1/2</strong>. But “heads, then tails” names only HT: <strong>1/4</strong>. <a href=\"https://openstax.org/books/introductory-statistics-2e/pages/3-2-independent-and-mutually-exclusive-events\">OpenStax works through these distinct ordered outcomes</a>. A tiny change in wording changes what you count.</p>"
+    },
+    {
+      "id": "what-the-model-assumes",
+      "title": "The small print worth remembering",
+      "html": "<p>The belief that tails becomes overdue is called the <strong>gambler’s fallacy</strong>. It mistakes random streaks for a rule requiring the next result to balance them.</p><p>Our answer assumes a fair coin and independent flips; it is not a promise that every physical coin or tossing method is perfectly balanced. As in <a href=\"/learn/logic-what-must-be-true/\">working out what must be true</a>, start with the assumptions. Then ask: am I predicting one new result, or a whole sequence?</p>"
+    }
+  ],
+  "quiz": {
+    "version": "reasoning-coin-v1",
+    "questions": [
+      {
+        "prompt": "A fair coin is flipped independently. After five heads, what is the chance of heads next?",
+        "options": [
+          "0%",
+          "100%",
+          "50%",
+          "3.125%"
+        ],
+        "answer": 2,
+        "explanation": "The next independent flip still has probability 1/2. The earlier five heads do not change it."
+      },
+      {
+        "prompt": "Before five fair, independent flips, what is the chance that all five will be heads?",
+        "options": [
+          "1/2",
+          "1/5",
+          "1/10",
+          "1/32"
+        ],
+        "answer": 3,
+        "explanation": "Multiply five factors of 1/2: (1/2)^5 = 1/32. This predicts the whole future run, not just the next flip."
+      },
+      {
+        "prompt": "For two fair, independent flips, which event has probability 1/2?",
+        "options": [
+          "Heads then tails specifically",
+          "Exactly one head",
+          "Two heads",
+          "Two tails"
+        ],
+        "answer": 1,
+        "explanation": "Exactly one head includes HT and TH: two of four equally likely ordered outcomes. Each specific sequence has probability 1/4."
+      }
+    ]
+  }
+}

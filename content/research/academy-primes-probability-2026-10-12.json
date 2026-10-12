@@ -1,0 +1,393 @@
+{
+  "date": "2026-10-12T17:00:36Z",
+  "batch": "academy-primes-probability",
+  "language": "English",
+  "demand": {
+    "trends": {
+      "checkedAt": "2026-10-12T16:52:55.388Z",
+      "url": "https://trends.google.com/trends/explore?geo=US&q=prime%20numbers,coin%20flip%20probability&hl=en",
+      "market": "US",
+      "language": "English search terms",
+      "period": "Past 12 months",
+      "type": "Web Search",
+      "keywords": [
+        "prime numbers",
+        "coin flip probability"
+      ],
+      "data": {
+        "tables": [
+          [
+            [
+              "x1",
+              "prime numbers",
+              "coin flip probability"
+            ],
+            [
+              "Average",
+              "54",
+              "2"
+            ]
+          ],
+          [
+            [
+              "x",
+              "y1",
+              "y2"
+            ],
+            [
+              "‪Oct 12, 2025‬",
+              "50",
+              "2"
+            ],
+            [
+              "‪Oct 19, 2025‬",
+              "53",
+              "2"
+            ],
+            [
+              "‪Oct 26, 2025‬",
+              "52",
+              "2"
+            ],
+            [
+              "‪Nov 2, 2025‬",
+              "53",
+              "1"
+            ],
+            [
+              "‪Nov 9, 2025‬",
+              "48",
+              "1"
+            ],
+            [
+              "‪Nov 16, 2025‬",
+              "52",
+              "1"
+            ],
+            [
+              "‪Nov 23, 2025‬",
+              "26",
+              "1"
+            ],
+            [
+              "‪Nov 30, 2025‬",
+              "52",
+              "2"
+            ],
+            [
+              "‪Dec 7, 2025‬",
+              "52",
+              "2"
+            ],
+            [
+              "‪Dec 14, 2025‬",
+              "45",
+              "1"
+            ],
+            [
+              "‪Dec 21, 2025‬",
+              "29",
+              "0"
+            ],
+            [
+              "‪Dec 28, 2025‬",
+              "22",
+              "1"
+            ],
+            [
+              "‪Jan 4, 2026‬",
+              "54",
+              "2"
+            ],
+            [
+              "‪Jan 11, 2026‬",
+              "59",
+              "2"
+            ],
+            [
+              "‪Jan 18, 2026‬",
+              "49",
+              "2"
+            ],
+            [
+              "‪Jan 25, 2026‬",
+              "50",
+              "1"
+            ],
+            [
+              "‪Feb 1, 2026‬",
+              "50",
+              "2"
+            ],
+            [
+              "‪Feb 8, 2026‬",
+              "46",
+              "2"
+            ],
+            [
+              "‪Feb 15, 2026‬",
+              "44",
+              "2"
+            ],
+            [
+              "‪Feb 22, 2026‬",
+              "51",
+              "3"
+            ],
+            [
+              "‪Mar 1, 2026‬",
+              "53",
+              "2"
+            ],
+            [
+              "‪Mar 8, 2026‬",
+              "52",
+              "3"
+            ],
+            [
+              "‪Mar 15, 2026‬",
+              "53",
+              "2"
+            ],
+            [
+              "‪Mar 22, 2026‬",
+              "69",
+              "3"
+            ],
+            [
+              "‪Mar 29, 2026‬",
+              "64",
+              "3"
+            ],
+            [
+              "‪Apr 5, 2026‬",
+              "57",
+              "2"
+            ],
+            [
+              "‪Apr 12, 2026‬",
+              "52",
+              "4"
+            ],
+            [
+              "‪Apr 19, 2026‬",
+              "61",
+              "3"
+            ],
+            [
+              "‪Apr 26, 2026‬",
+              "93",
+              "7"
+            ],
+            [
+              "‪May 3, 2026‬",
+              "97",
+              "8"
+            ],
+            [
+              "‪May 10, 2026‬",
+              "81",
+              "3"
+            ],
+            [
+              "‪May 17, 2026‬",
+              "73",
+              "2"
+            ],
+            [
+              "‪May 24, 2026‬",
+              "85",
+              "1"
+            ],
+            [
+              "‪May 31, 2026‬",
+              "100",
+              "1"
+            ],
+            [
+              "‪Jun 7, 2026‬",
+              "98",
+              "1"
+            ],
+            [
+              "‪Jun 14, 2026‬",
+              "98",
+              "1"
+            ],
+            [
+              "‪Jun 21, 2026‬",
+              "93",
+              "1"
+            ],
+            [
+              "‪Jun 28, 2026‬",
+              "56",
+              "1"
+            ],
+            [
+              "‪Jul 5, 2026‬",
+              "40",
+              "0"
+            ],
+            [
+              "‪Jul 12, 2026‬",
+              "32",
+              "0"
+            ],
+            [
+              "‪Jul 19, 2026‬",
+              "23",
+              "0"
+            ],
+            [
+              "‪Jul 26, 2026‬",
+              "21",
+              "1"
+            ],
+            [
+              "‪Aug 2, 2026‬",
+              "22",
+              "0"
+            ],
+            [
+              "‪Aug 9, 2026‬",
+              "28",
+              "0"
+            ],
+            [
+              "‪Aug 16, 2026‬",
+              "36",
+              "1"
+            ],
+            [
+              "‪Aug 23, 2026‬",
+              "42",
+              "1"
+            ],
+            [
+              "‪Aug 30, 2026‬",
+              "48",
+              "1"
+            ],
+            [
+              "‪Sep 6, 2026‬",
+              "46",
+              "1"
+            ],
+            [
+              "‪Sep 13, 2026‬",
+              "54",
+              "1"
+            ],
+            [
+              "‪Sep 20, 2026‬",
+              "56",
+              "1"
+            ],
+            [
+              "‪Sep 27, 2026‬",
+              "45",
+              "1"
+            ],
+            [
+              "‪Oct 4, 2026‬",
+              "43",
+              "1"
+            ],
+            [
+              "‪Oct 11, 2026‬",
+              "25",
+              "1"
+            ]
+          ]
+        ],
+        "visibleFilters": "United States\nPast 12 months\nAll categories\nWeb Search\nprime numbers\ncoin flip probability\nUnited States, Past 12 months\nInterest over time help_outline\nfile_download\ncode\ns"
+      },
+      "limitations": [
+        "Relative interest, not search counts or monthly volume.",
+        "Rising related queries for prime numbers contained unrelated retail/programming terms and were excluded.",
+        "Final week may be incomplete."
+      ]
+    },
+    "metrics": {
+      "monthlySearchVolume": null,
+      "keywordDifficulty": null,
+      "cpc": null
+    },
+    "method": "Google Trends actual UI tables, US, English search terms, past 12 months, Web Search. Free web search inspected intent; no country-specific rank positions claimed.",
+    "limitations": [
+      "OpenSEO keyword metrics failed due to insufficient credits; no further paid calls made.",
+      "Trends sampled normalised relative interest is not monthly search volume. Low-interest terms are especially uncertain.",
+      "Unrelated rising queries excluded. Search intent is educational explanations, with calculator alternatives for coin probability. No guarantee of indexing, ranking, visits or AI mentions."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "prime-numbers-why-one-is-not-prime",
+      "primaryKeyword": "prime numbers",
+      "secondaryKeyword": "why is 1 not a prime number",
+      "course": "maths-from-zero",
+      "novelty": "Factor-count classification follows equal sharing and square numbers; no existing prime-number lesson."
+    },
+    {
+      "slug": "coin-flip-probability-five-heads",
+      "primaryKeyword": "coin flip probability",
+      "secondaryKeyword": "are coin flips independent",
+      "course": "patterns-and-reasoning",
+      "novelty": "Probabilistic prediction with explicit assumptions differs from deterministic pattern and certainty lessons."
+    }
+  ],
+  "sourcesOpened": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors",
+      "claims": "Prime two distinct factors, composite more than two, 1 neither; lines 362–367."
+    },
+    {
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers",
+      "claims": "Prime and composite groupings, two unique positive divisors and first primes; lines 148–159 and prime table."
+    },
+    {
+      "url": "https://nrich.maths.org/articles/independence-and-dependence",
+      "claims": "Independence and misconception of tails being due after heads; lines 84–105."
+    },
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-2-independent-and-mutually-exclusive-events",
+      "claims": "Independence definition and multiplication rule, ordered HH/HT/TH/TT outcomes; lines 25–32 and 73–82."
+    }
+  ],
+  "originalChecks": [
+    "Factor sets 1={1};2={1,2};7={1,7};9={1,3,9};15={1,3,5,15};2,3,5,7,11 prime.",
+    "Independent fair model: 1/2 next; (1/2)^5=1/32=3.125%; two-flip outcomes four, exactly one head two."
+  ],
+  "publicationChecks": {
+    "status": "reviewed-before-publication",
+    "required": [
+      "validators and quiz grading",
+      "all 13 old lessons preserved",
+      "cover art and thumbnail inspection",
+      "desktop and mobile reading",
+      "metadata and schema",
+      "deploy and verify assets first",
+      "atomic CMS/public/history publication",
+      "live pages, course links, feed and sitemap"
+    ],
+    "reviewedAt": "2026-10-12T17:05:37.136843+00:00",
+    "passed": [
+      "Four factual primary-source pages opened and exact supporting passages checked.",
+      "Dated Google Trends UI tables give relative demand; volume/KD/CPC explicitly unknown. Educational intent and 79 published articles checked for overlap.",
+      "Bodies 302/301 words, four sections, direct definitions, natural searched terms, no public internal objectives.",
+      "Two original covers inspected at full size and 240px; 960/480/240 WebP, largest 47,006 bytes.",
+      "Actual article, quiz and course validators; all-correct 3/3 and all-wrong 0/3; factors, 1/32 and 3.125% independently computed.",
+      "All 13 old lesson objects, orders and quiz versions retained; course counts 8/7.",
+      "Desktop and 320px mobile screenshots inspected, no horizontal overflow or broken article images; optional sources/quiz/course folded.",
+      "Local wrong-answer UI disables answers and explains the correct one; no production progress was altered.",
+      "Production renderer author, canonical, Article citations and game/course routes checked locally; build and required integrity tests passed."
+    ],
+    "remaining": [
+      "Preview and production deployments",
+      "Six live assets with matching hashes before CMS publication",
+      "Atomic course/document/history checks",
+      "Seven live pages and contextual links"
+    ]
+  }
+}
