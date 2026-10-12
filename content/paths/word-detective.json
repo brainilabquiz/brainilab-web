@@ -38,6 +38,11 @@
       "slug": "what-is-a-pangram-quick-brown-fox",
       "level": "7 · Find the whole alphabet",
       "objective": "Check whether a sentence contains all 26 English letters and explain why repeats are allowed."
+    },
+    {
+      "slug": "oxymoron-examples-deafening-silence",
+      "level": "8 · Hear a little contradiction",
+      "objective": "Recognise an oxymoron and explain what the apparently conflicting ideas add to an expression."
     }
   ],
   "sources": [
@@ -86,12 +91,20 @@
       "name": "Merriam-Webster — Open, closed and hyphenated compounds"
     },
     {
-      "name": "Merriam-Webster — Pangram",
-      "url": "https://www.merriam-webster.com/dictionary/pangram"
+      "url": "https://www.merriam-webster.com/dictionary/pangram",
+      "name": "Merriam-Webster — Pangram"
     },
     {
-      "name": "Wordsmith — Practical Uses of Pangrams",
-      "url": "https://wordsmith.org/pangram/use.html"
+      "url": "https://wordsmith.org/pangram/use.html",
+      "name": "Wordsmith — Practical Uses of Pangrams"
+    },
+    {
+      "name": "Oxford Learner’s Dictionaries — Oxymoron",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/oxymoron"
+    },
+    {
+      "name": "Merriam-Webster — Oxymoron",
+      "url": "https://www.merriam-webster.com/dictionary/oxymoron"
     }
   ],
   "authorId": "biel-sarda",
@@ -123,6 +136,10 @@
     {
       "term": "Pangram",
       "definition": "A sentence or phrase containing every letter of an alphabet at least once."
+    },
+    {
+      "term": "Oxymoron",
+      "definition": "An expression combining apparently contradictory words or ideas."
     }
   ],
   "outcomes": [
@@ -132,12 +149,13 @@
     "Check that an anagram uses every original letter exactly once.",
     "Test words and phrases for palindromes using a clear rule.",
     "Recognise everyday portmanteau words and identify their ingredients.",
-    "Check a sentence for all 26 English letters and recognise that letters may repeat."
+    "Check a sentence for all 26 English letters and recognise that letters may repeat.",
+    "Recognise an oxymoron and explain how its apparent contradiction creates meaning."
   ],
-  "updatedAt": "2026-10-11T18:45:29Z",
-  "description": "Seven short English lessons: follow sentence clues, explore meanings, shuffle letters, unpack word blends and find a whole alphabet. Optional quizzes included.",
+  "updatedAt": "2026-10-12T17:20:27Z",
+  "description": "Eight short English lessons: follow context clues, explore meanings, rearrange letters, unpack blends and discover the contradictions inside everyday expressions. Optional quizzes included.",
   "publishedAt": "2026-10-04T11:31:17.023592+00:00",
   "coverArticle": "homophones-same-sound-different-meaning",
-  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Start with the clues around a word.</strong> Explore sound-alikes, meet words with opposite meanings and test a link across a set of clues. Then shuffle the letters of LISTEN into SILENT and find out what is hiding inside LEVEL. Unpack the two meals in brunch, then discover why a fox and a sleepy dog keep appearing in type samples.</p><p>Each lesson builds on the last. Read at your own pace, try the examples and take an optional short quiz when you feel ready. There is no timer.</p>",
+  "introduction": "<p>A flower belongs in a vase. Flour belongs in a cake. They sound alike, so how do you know which one someone means?</p><p><strong>Start with the clues around a word.</strong> Explore sound-alikes, meet words with opposite meanings and test a link across a set of clues. Then shuffle the letters of LISTEN into SILENT and find out what is hiding inside LEVEL. Unpack the two meals in brunch, discover why a fox and a sleepy dog keep appearing in type samples, then listen to a silence that feels deafening.</p><p>Each lesson builds on the last. Read at your own pace, try the examples and take an optional short quiz when you feel ready. There is no timer.</p>",
   "prerequisites": "You only need to read short English sentences. We explain each new term as it appears."
 }

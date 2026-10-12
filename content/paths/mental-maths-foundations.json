@@ -33,6 +33,11 @@
       "slug": "mental-percentages-without-a-calculator",
       "level": "6 · Put it together",
       "objective": "See what half, a quarter and ten percent look like."
+    },
+    {
+      "slug": "percentage-change-why-twenty-percent-does-not-cancel",
+      "level": "7 · Check the changing whole",
+      "objective": "Calculate a percentage change using the correct starting amount and explain why equal percentage decreases and increases do not cancel."
     }
   ],
   "sources": [
@@ -49,16 +54,24 @@
       "name": "OpenStax — Prealgebra: percent concepts"
     },
     {
-      "name": "OpenStax — Divide Whole Numbers",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-5-divide-whole-numbers",
+      "name": "OpenStax — Divide Whole Numbers"
     },
     {
-      "name": "OpenStax — Visualize Fractions",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/4-1-visualize-fractions"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/4-1-visualize-fractions",
+      "name": "OpenStax — Visualize Fractions"
     },
     {
-      "name": "OpenStax — Decimal Operations",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/5-2-decimal-operations"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-2-decimal-operations",
+      "name": "OpenStax — Decimal Operations"
+    },
+    {
+      "name": "OpenStax — Prealgebra 2e: General Applications of Percent",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/6-2-solve-general-applications-of-percent"
+    },
+    {
+      "name": "University of Cambridge NRICH — Dating Made Easier",
+      "url": "https://nrich.maths.org/problems/dating-made-easier"
     }
   ],
   "authorId": "biel-sarda",
@@ -74,6 +87,10 @@
     {
       "term": "Percent",
       "definition": "A share described as an amount out of every hundred."
+    },
+    {
+      "term": "Percentage change",
+      "definition": "The difference between new and original amounts expressed as a percentage of a positive original amount."
     }
   ],
   "outcomes": [
@@ -82,12 +99,13 @@
     "Keep a product unchanged by doubling and halving.",
     "Divide by five and explain why doubling helps.",
     "Multiply by eleven.",
-    "Build simple percentages from familiar parts."
+    "Build simple percentages from familiar parts.",
+    "Use the correct starting amount for each percentage change and distinguish a fall from the rise needed to reverse it."
   ],
-  "updatedAt": "2026-10-09T16:51:49.095291Z",
-  "description": "Turn awkward sums into easier ones. Start with counters and sweets, then explore what percentages really mean.",
+  "updatedAt": "2026-10-12T17:20:27Z",
+  "description": "Seven short mental math lessons: make friendly numbers, round, double, divide and build percentages, then discover why equal percentage changes do not cancel. Optional quizzes included.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "mental-math-round-and-adjust",
-  "introduction": "<p>No need to remember a page of formulas. We’ll begin with small groups of things you can count, explain each step, and give you one little idea to try at a time.</p>",
+  "introduction": "<p>Make ten, adjust a rounded number, double and halve, then try a few useful multiplication and division shortcuts. Build percentages from smaller shares before exploring a backpack price that drops and rises by the same percentage.</p><p>Each short lesson adds one idea. Read at your own pace and check the everyday examples; the quiz is optional.</p>",
   "prerequisites": "Comfort with basic addition, subtraction and multiplication."
 }

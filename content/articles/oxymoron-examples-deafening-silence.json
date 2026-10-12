@@ -1,0 +1,102 @@
+{
+  "slug": "oxymoron-examples-deafening-silence",
+  "title": "Oxymoron examples: how can silence be deafening?",
+  "description": "A loud silence, a bittersweet goodbye and a word that argues with itself. Explore the little contradictions that make English surprisingly expressive.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 123,
+  "publishedAt": "2026-10-12T17:20:27Z",
+  "updatedAt": "2026-10-12T17:20:27Z",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Word detective",
+    "url": "/learn/paths/word-detective/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/oxymoron-examples-deafening-silence.webp",
+    "small": "/assets/images/learn/oxymoron-examples-deafening-silence-small.webp",
+    "thumbnail": "/assets/images/learn/oxymoron-examples-deafening-silence-thumb.webp",
+    "alt": "Purple wooden megaphone beside an ivory felt speech bubble with a closed zipper, a playful image of deafening silence",
+    "position": 50,
+    "credit": "AI-generated conceptual cover created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "Oxford Learner’s Dictionaries — Oxymoron",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/oxymoron"
+    },
+    {
+      "name": "Merriam-Webster — Oxymoron",
+      "url": "https://www.merriam-webster.com/dictionary/oxymoron"
+    }
+  ],
+  "related": [
+    "words-that-mean-their-own-opposite",
+    "connections-puzzles-find-the-hidden-link"
+  ],
+  "practice": "Look for another unexpected link between words in Connections.",
+  "sections": [
+    {
+      "id": "what-is-an-oxymoron",
+      "title": "A silence that makes itself heard",
+      "html": "<p><strong>An oxymoron combines apparently contradictory words or ideas in one expression.</strong> “Deafening silence” is an example: deafening suggests overwhelming noise, while silence suggests its absence. <a href=\"https://www.oxfordlearnersdictionaries.com/definition/english/oxymoron\">Oxford’s dictionary uses this very phrase</a>.</p><p>Imagine telling a joke at dinner. You finish. Nobody laughs. Someone quietly reaches for the potatoes. The silence might feel enormous, even though it makes no sound. Calling it deafening captures that awkward feeling better than merely calling the room quiet.</p>"
+    },
+    {
+      "id": "everyday-oxymoron-examples",
+      "title": "Two more small contradictions",
+      "html": "<p><strong>Bittersweet</strong> holds two opposing feelings inside one word. Picture a friend leaving for an exciting adventure: you are pleased for them and sad to say goodbye. One word leaves room for both.</p><p><strong>Cruel kindness</strong> puts a harsher idea beside a gentler one. In an imagined story, a friend’s honest criticism might sting while helping someone improve. The context explains the tension. <a href=\"https://www.merriam-webster.com/dictionary/oxymoron\">Merriam-Webster includes both examples</a>. Neither expression asks you to throw away one half of the meaning.</p>"
+    },
+    {
+      "id": "different-from-a-contronym",
+      "title": "Is this the same as a word meaning its opposite?",
+      "html": "<p>No. In an <a href=\"/learn/words-that-mean-their-own-opposite/\">earlier lesson about words such as dust</a>, the same word has different meanings in different uses. You choose the intended meaning from the sentence.</p><p>With an oxymoron, the opposing ideas appear together. “Deafening silence” keeps the quiet and the sense of overwhelming impact in the same expression. The apparent contradiction is doing useful work; it is not automatically a mistake.</p>"
+    },
+    {
+      "id": "a-word-with-its-own-contradiction",
+      "title": "Even the name joins an argument",
+      "html": "<p>The name has a pleasing little twist. <a href=\"https://www.merriam-webster.com/dictionary/oxymoron\">Merriam-Webster traces its Greek ingredients</a> to meanings of <strong>sharp or keen</strong> and <strong>foolish</strong>. The word’s own roots pull in different directions.</p><p>When you spot possible oxymoron examples, ask two questions: “Which ideas seem to clash?” and “What does putting them together add?” A plain “quiet room” does not contain that clash. A “deafening silence” gives the room a rather more uncomfortable personality.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "word-oxymoron-v1",
+    "questions": [
+      {
+        "prompt": "Which expression is an oxymoron?",
+        "options": [
+          "Quiet room",
+          "Warm soup",
+          "Deafening silence",
+          "Green door"
+        ],
+        "answer": 2,
+        "explanation": "Deafening suggests overwhelming sound; silence suggests its absence. Their apparent clash conveys how intense the quiet feels."
+      },
+      {
+        "prompt": "A goodbye is described as bittersweet. What does the word allow for?",
+        "options": [
+          "Only happiness",
+          "Only sadness",
+          "A spelling error",
+          "Pleasure and sadness together"
+        ],
+        "answer": 3,
+        "explanation": "The bitter and sweet ideas coexist: you can be pleased about an adventure and sad that a friend is leaving."
+      },
+      {
+        "prompt": "Why is deafening silence different from choosing a meaning of dust?",
+        "options": [
+          "It combines opposing ideas in one expression",
+          "It has the same letters as dust",
+          "It must be read backwards",
+          "It is a literal measurement of sound"
+        ],
+        "answer": 0,
+        "explanation": "Dust has different meanings in different uses. Deafening silence puts the apparently opposing ideas together for an effect."
+      }
+    ]
+  }
+}

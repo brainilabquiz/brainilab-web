@@ -1,0 +1,401 @@
+{
+  "date": "2026-10-12T17:20:27Z",
+  "batch": "academy-oxymoron-percent",
+  "language": "English",
+  "demand": {
+    "trends": {
+      "checkedAt": "2026-10-12T17:16:54.485Z",
+      "url": "https://trends.google.com/trends/explore?geo=US&q=oxymoron%20examples,percentage%20change&hl=en",
+      "market": "US",
+      "language": "English search terms",
+      "period": "Past 12 months",
+      "type": "Web Search",
+      "keywords": [
+        "oxymoron examples",
+        "percentage change"
+      ],
+      "data": {
+        "filters": "This site uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.Learn moreOK, got it\nHome\nExplore\nTrending Now\nshare\nfeedback\ninfo\nTry the new experience!\nExplore search trends with Gemini. A quick and easy way to find search terms and discover trends.\nGo to new Explore\nclose_24px\nÃ¢â‚¬Â¢\nSearch term\nÃ¢â‚¬Â¢\nSearch term\n Add comparison\nUnited States\nPast 12 months\nAll categories\nWeb Search\noxymoron examples\npercentage change\nUnited States, Past 12 months\nInterest overÃ‚Â time help_outline\nfile_download\ncode\nshare\nAverage\nx1\toxymoron examples\tpercentage change\nAverage\t2\t50\nÃ¢â‚¬ÂªOct 12, 2025Ã¢â‚¬Â¬\nÃ¢â‚¬ÂªFeb 22, 2026Ã¢â‚¬Â¬\nÃ¢â‚¬ÂªJul 5, 2026Ã¢â‚¬Â¬\n25\n50\n75\n100\nx\ty1\ty2\nÃ¢â‚¬ÂªOct 12, 2025Ã¢â‚¬Â¬\t3\t38\nÃ¢â‚¬ÂªOct 19, 2025Ã¢â‚¬Â¬\t4\t38\nÃ¢â‚¬ÂªOct 26, 2025Ã¢â‚¬Â¬\t3\t42\nÃ¢â‚¬ÂªNov 2, 2025Ã¢â‚¬Â¬\t3\t53\nÃ¢â‚¬ÂªNov 9, 2025Ã¢â‚¬Â¬\t3\t49\nÃ¢â‚¬ÂªNov 16, 2025Ã¢â‚¬Â¬\t3\t48\nÃ¢â‚¬ÂªNov 23, 2025Ã¢â‚¬Â¬\t1\t37\nÃ¢â‚¬ÂªNov 30, 2025Ã¢â‚¬Â¬\t3\t57\nÃ¢â‚¬ÂªDec 7, 2025Ã¢â‚¬Â¬\t3\t61\nÃ¢â‚¬ÂªDec 14, 2025Ã¢â‚¬Â¬\t3\t47\nÃ¢â‚¬ÂªDec 21, 2025Ã¢â‚¬Â¬\t1\t30\nÃ¢â‚¬ÂªDec 28, 2025Ã¢â‚¬Â¬\t0\t37\nÃ¢â‚¬ÂªJan 4, 2026Ã¢â‚¬Â¬\t2\t50\nÃ¢â‚¬ÂªJan 11, 2026Ã¢â‚¬Â¬\t3\t58\nÃ¢â‚¬ÂªJan 18, 2026Ã¢â‚¬Â¬\t2\t63\nÃ¢â‚¬ÂªJan 25, 2026Ã¢â‚¬Â¬\t2\t68\nÃ¢â‚¬ÂªFeb 1, 2026Ã¢â‚¬Â¬\t2\t90\nÃ¢â‚¬ÂªFeb 8, 2026Ã¢â‚¬Â¬\t2\t78\nÃ¢â‚¬ÂªFeb 15, 2026Ã¢â‚¬Â¬\t2\t87\nÃ¢â‚¬ÂªFeb 22, 2026Ã¢â‚¬Â¬\t2\t100\nÃ¢â‚¬ÂªMar 1, 2026Ã¢â‚¬Â¬\t2\t93\nÃ¢â‚¬ÂªMar 8, 2026Ã¢â‚¬Â¬\t2\t79\nÃ¢â‚¬ÂªMar 15, 2026Ã¢â‚¬Â¬\t2\t68\nÃ¢â‚¬ÂªMar 22, 2026Ã¢â‚¬Â¬\t2\t68\nÃ¢â‚¬ÂªMar 29, 2026Ã¢â‚¬Â¬\t2\t59\nÃ¢â‚¬ÂªApr 5, 2026Ã¢â‚¬Â¬\t2\t59\nÃ¢â‚¬ÂªApr 12, 2026Ã¢â‚¬Â¬\t2\t76\nÃ¢â‚¬ÂªApr 19, 2026Ã¢â‚¬Â¬\t2\t70\nÃ¢â‚¬ÂªApr 26, 2026Ã¢â‚¬Â¬\t3\t67\nÃ¢â‚¬ÂªMay 3, 2026Ã¢â‚¬Â¬\t2\t67\nÃ¢â‚¬ÂªMay 10, 2026Ã¢â‚¬Â¬\t2\t56\nÃ¢â‚¬ÂªMay 17, 2026Ã¢â‚¬Â¬\t2\t52\nÃ¢â‚¬ÂªMay 24, 2026Ã¢â‚¬Â¬\t1\t50\nÃ¢â‚¬ÂªMay 31, 2026Ã¢â‚¬Â¬\t1\t62\nÃ¢â‚¬ÂªJun 7, 2026Ã¢â‚¬Â¬\t1\t61\nÃ¢â‚¬ÂªJun 14, 2026Ã¢â‚¬Â¬\t1\t58\nÃ¢â‚¬ÂªJun 21, 2026Ã¢â‚¬Â¬\t1",
+        "tables": [
+          [
+            [
+              "x1",
+              "oxymoron examples",
+              "percentage change"
+            ],
+            [
+              "Average",
+              "2",
+              "50"
+            ]
+          ],
+          [
+            [
+              "x",
+              "y1",
+              "y2"
+            ],
+            [
+              "Ã¢â‚¬ÂªOct 12, 2025Ã¢â‚¬Â¬",
+              "3",
+              "38"
+            ],
+            [
+              "Ã¢â‚¬ÂªOct 19, 2025Ã¢â‚¬Â¬",
+              "4",
+              "38"
+            ],
+            [
+              "Ã¢â‚¬ÂªOct 26, 2025Ã¢â‚¬Â¬",
+              "3",
+              "42"
+            ],
+            [
+              "Ã¢â‚¬ÂªNov 2, 2025Ã¢â‚¬Â¬",
+              "3",
+              "53"
+            ],
+            [
+              "Ã¢â‚¬ÂªNov 9, 2025Ã¢â‚¬Â¬",
+              "3",
+              "49"
+            ],
+            [
+              "Ã¢â‚¬ÂªNov 16, 2025Ã¢â‚¬Â¬",
+              "3",
+              "48"
+            ],
+            [
+              "Ã¢â‚¬ÂªNov 23, 2025Ã¢â‚¬Â¬",
+              "1",
+              "37"
+            ],
+            [
+              "Ã¢â‚¬ÂªNov 30, 2025Ã¢â‚¬Â¬",
+              "3",
+              "57"
+            ],
+            [
+              "Ã¢â‚¬ÂªDec 7, 2025Ã¢â‚¬Â¬",
+              "3",
+              "61"
+            ],
+            [
+              "Ã¢â‚¬ÂªDec 14, 2025Ã¢â‚¬Â¬",
+              "3",
+              "47"
+            ],
+            [
+              "Ã¢â‚¬ÂªDec 21, 2025Ã¢â‚¬Â¬",
+              "1",
+              "30"
+            ],
+            [
+              "Ã¢â‚¬ÂªDec 28, 2025Ã¢â‚¬Â¬",
+              "0",
+              "37"
+            ],
+            [
+              "Ã¢â‚¬ÂªJan 4, 2026Ã¢â‚¬Â¬",
+              "2",
+              "50"
+            ],
+            [
+              "Ã¢â‚¬ÂªJan 11, 2026Ã¢â‚¬Â¬",
+              "3",
+              "58"
+            ],
+            [
+              "Ã¢â‚¬ÂªJan 18, 2026Ã¢â‚¬Â¬",
+              "2",
+              "63"
+            ],
+            [
+              "Ã¢â‚¬ÂªJan 25, 2026Ã¢â‚¬Â¬",
+              "2",
+              "68"
+            ],
+            [
+              "Ã¢â‚¬ÂªFeb 1, 2026Ã¢â‚¬Â¬",
+              "2",
+              "90"
+            ],
+            [
+              "Ã¢â‚¬ÂªFeb 8, 2026Ã¢â‚¬Â¬",
+              "2",
+              "78"
+            ],
+            [
+              "Ã¢â‚¬ÂªFeb 15, 2026Ã¢â‚¬Â¬",
+              "2",
+              "87"
+            ],
+            [
+              "Ã¢â‚¬ÂªFeb 22, 2026Ã¢â‚¬Â¬",
+              "2",
+              "100"
+            ],
+            [
+              "Ã¢â‚¬ÂªMar 1, 2026Ã¢â‚¬Â¬",
+              "2",
+              "93"
+            ],
+            [
+              "Ã¢â‚¬ÂªMar 8, 2026Ã¢â‚¬Â¬",
+              "2",
+              "79"
+            ],
+            [
+              "Ã¢â‚¬ÂªMar 15, 2026Ã¢â‚¬Â¬",
+              "2",
+              "68"
+            ],
+            [
+              "Ã¢â‚¬ÂªMar 22, 2026Ã¢â‚¬Â¬",
+              "2",
+              "68"
+            ],
+            [
+              "Ã¢â‚¬ÂªMar 29, 2026Ã¢â‚¬Â¬",
+              "2",
+              "59"
+            ],
+            [
+              "Ã¢â‚¬ÂªApr 5, 2026Ã¢â‚¬Â¬",
+              "2",
+              "59"
+            ],
+            [
+              "Ã¢â‚¬ÂªApr 12, 2026Ã¢â‚¬Â¬",
+              "2",
+              "76"
+            ],
+            [
+              "Ã¢â‚¬ÂªApr 19, 2026Ã¢â‚¬Â¬",
+              "2",
+              "70"
+            ],
+            [
+              "Ã¢â‚¬ÂªApr 26, 2026Ã¢â‚¬Â¬",
+              "3",
+              "67"
+            ],
+            [
+              "Ã¢â‚¬ÂªMay 3, 2026Ã¢â‚¬Â¬",
+              "2",
+              "67"
+            ],
+            [
+              "Ã¢â‚¬ÂªMay 10, 2026Ã¢â‚¬Â¬",
+              "2",
+              "56"
+            ],
+            [
+              "Ã¢â‚¬ÂªMay 17, 2026Ã¢â‚¬Â¬",
+              "2",
+              "52"
+            ],
+            [
+              "Ã¢â‚¬ÂªMay 24, 2026Ã¢â‚¬Â¬",
+              "1",
+              "50"
+            ],
+            [
+              "Ã¢â‚¬ÂªMay 31, 2026Ã¢â‚¬Â¬",
+              "1",
+              "62"
+            ],
+            [
+              "Ã¢â‚¬ÂªJun 7, 2026Ã¢â‚¬Â¬",
+              "1",
+              "61"
+            ],
+            [
+              "Ã¢â‚¬ÂªJun 14, 2026Ã¢â‚¬Â¬",
+              "1",
+              "58"
+            ],
+            [
+              "Ã¢â‚¬ÂªJun 21, 2026Ã¢â‚¬Â¬",
+              "1",
+              "50"
+            ],
+            [
+              "Ã¢â‚¬ÂªJun 28, 2026Ã¢â‚¬Â¬",
+              "0",
+              "42"
+            ],
+            [
+              "Ã¢â‚¬ÂªJul 5, 2026Ã¢â‚¬Â¬",
+              "1",
+              "43"
+            ],
+            [
+              "Ã¢â‚¬ÂªJul 12, 2026Ã¢â‚¬Â¬",
+              "1",
+              "30"
+            ],
+            [
+              "Ã¢â‚¬ÂªJul 19, 2026Ã¢â‚¬Â¬",
+              "1",
+              "26"
+            ],
+            [
+              "Ã¢â‚¬ÂªJul 26, 2026Ã¢â‚¬Â¬",
+              "1",
+              "24"
+            ],
+            [
+              "Ã¢â‚¬ÂªAug 2, 2026Ã¢â‚¬Â¬",
+              "1",
+              "23"
+            ],
+            [
+              "Ã¢â‚¬ÂªAug 9, 2026Ã¢â‚¬Â¬",
+              "1",
+              "19"
+            ],
+            [
+              "Ã¢â‚¬ÂªAug 16, 2026Ã¢â‚¬Â¬",
+              "2",
+              "20"
+            ],
+            [
+              "Ã¢â‚¬ÂªAug 23, 2026Ã¢â‚¬Â¬",
+              "2",
+              "23"
+            ],
+            [
+              "Ã¢â‚¬ÂªAug 30, 2026Ã¢â‚¬Â¬",
+              "3",
+              "26"
+            ],
+            [
+              "Ã¢â‚¬ÂªSep 6, 2026Ã¢â‚¬Â¬",
+              "2",
+              "26"
+            ],
+            [
+              "Ã¢â‚¬ÂªSep 13, 2026Ã¢â‚¬Â¬",
+              "2",
+              "31"
+            ],
+            [
+              "Ã¢â‚¬ÂªSep 20, 2026Ã¢â‚¬Â¬",
+              "3",
+              "32"
+            ],
+            [
+              "Ã¢â‚¬ÂªSep 27, 2026Ã¢â‚¬Â¬",
+              "2",
+              "26"
+            ],
+            [
+              "Ã¢â‚¬ÂªOct 4, 2026Ã¢â‚¬Â¬",
+              "1",
+              "25"
+            ],
+            [
+              "Ã¢â‚¬ÂªOct 11, 2026Ã¢â‚¬Â¬",
+              "1",
+              "20"
+            ]
+          ],
+          [
+            [
+              "Term",
+              "Value"
+            ],
+            [
+              "oxymoron examples",
+              "0"
+            ],
+            [
+              "percentage change",
+              "100"
+            ]
+          ]
+        ]
+      }
+    },
+    "metrics": {
+      "monthlySearchVolume": null,
+      "keywordDifficulty": null,
+      "cpc": null
+    },
+    "method": "Free dated Google Trends US past12months Web Search comparison, actual UI tables; free web search inspected intent without country-specific rank positions.",
+    "limitations": [
+      "OpenSEO metrics unavailable due to insufficient credits on the preceding batch; no new paid calls.",
+      "Relative average interest 2 and 50 is not monthly volume; oxymoron examples has a much smaller sampled signal.",
+      "Unrelated rising percentage queries excluded. No indexing, traffic, conversion or AI-citation claims."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "oxymoron-examples-deafening-silence",
+      "primaryKeyword": "oxymoron examples",
+      "secondaryKeyword": "what is an oxymoron",
+      "course": "word-detective",
+      "novelty": "Opposing ideas coexist in one expression; unlike anagram, pangram, palindrome or a contronym with alternative senses."
+    },
+    {
+      "slug": "percentage-change-why-twenty-percent-does-not-cancel",
+      "primaryKeyword": "percentage change",
+      "secondaryKeyword": "percentage increase and decrease",
+      "course": "mental-maths-foundations",
+      "novelty": "Successive changes use new bases; existing percentage lesson only explains shares of one fixed whole."
+    }
+  ],
+  "sourcesOpened": [
+    {
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/oxymoron",
+      "claims": "Definition and deafening silence example, line105."
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/oxymoron",
+      "claims": "Definition, cruel kindness, bittersweet, Greek sharp/keen+foolish; lines42,77,102."
+    },
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/6-2-solve-general-applications-of-percent",
+      "claims": "Change as a share of original amount, increase/decrease; lines234â€“279."
+    },
+    {
+      "url": "https://nrich.maths.org/problems/dating-made-easier",
+      "claims": "A percentage increase and decrease are not opposites; multiplier method and changing base; lines159â€“178."
+    }
+  ],
+  "originalChecks": [
+    "The Oxford deafening-silence and MW cruel-kindness/bittersweet examples are explained through invented scenes; quiet room is a literal contrast, not an oxymoron.",
+    "100Ã—0.8=80;80Ã—1.2=96;20/80Ã—100=25%;15/50Ã—100=30%; positive starting amount explicit."
+  ],
+  "publicationChecks": {
+    "status": "reviewed-before-publication",
+    "required": [
+      "validators",
+      "quiz0/3and3/3",
+      "13oldlessons preserved",
+      "original cover and thumbnail inspection",
+      "desktop/320pxmobile",
+      "author/canonical/Article",
+      "live cover hashes before CMS",
+      "guarded CMS/history",
+      "seven live pages and contextual links"
+    ],
+    "reviewedAt": "2026-10-12T17:25:35.785984+00:00",
+    "passed": [
+      "Four exact primary-source pages checked; 81 live articles reviewed for overlap.",
+      "Dated Google Trends US relative interest 2/50; unknown volume/KD/CPC; unrelated rising queries excluded.",
+      "Original English bodies 285/277 words, four short sections, clear answer near start; public copy contains no internal growth objective. Percentage title shortened after mobile inspection.",
+      "Two original ImageGen covers inspected full/thumbnail; numbers100,80,96 correct; six WebP960/480/240, maximum51,146 bytes.",
+      "Production article/course/quiz validators; scoring0/3 and3/3; percentage examples and keys checked; all13oldlessons retained.",
+      "Desktop and320pxmobile inspected: no horizontal overflow or broken main images, sources/quiz/course folded.",
+      "Author/canonical/Article citations and game/course routes checked using production renderer; build and integrity tests passed."
+    ],
+    "remaining": [
+      "Successful preview/production",
+      "Cover hashes before CMS",
+      "Atomic revision/history checks",
+      "Seven live pages and eight contextual routes"
+    ]
+  }
+}

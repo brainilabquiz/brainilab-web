@@ -1,0 +1,102 @@
+{
+  "slug": "percentage-change-why-twenty-percent-does-not-cancel",
+  "title": "Percentage change: the 20% trap",
+  "description": "A backpack goes from 100 to 80 to 96. Follow the changing starting amount to uncover the percentage trick hiding in plain sight.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 124,
+  "publishedAt": "2026-10-12T17:20:27Z",
+  "updatedAt": "2026-10-12T17:20:27Z",
+  "game": {
+    "name": "Math Rush",
+    "url": "/games/math-rush/"
+  },
+  "hub": {
+    "name": "Mental math foundations",
+    "url": "/learn/paths/mental-maths-foundations/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/percentage-change-why-twenty-percent-does-not-cancel.webp",
+    "small": "/assets/images/learn/percentage-change-why-twenty-percent-does-not-cancel-small.webp",
+    "thumbnail": "/assets/images/learn/percentage-change-why-twenty-percent-does-not-cancel-thumb.webp",
+    "alt": "Wooden number blocks 100, 80 and 96 with a downward then upward arrow, illustrating two changes with different bases",
+    "position": 50,
+    "credit": "AI-generated conceptual cover created for BrainiLab."
+  },
+  "sources": [
+    {
+      "name": "OpenStax — Prealgebra 2e: General Applications of Percent",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/6-2-solve-general-applications-of-percent"
+    },
+    {
+      "name": "University of Cambridge NRICH — Dating Made Easier",
+      "url": "https://nrich.maths.org/problems/dating-made-easier"
+    }
+  ],
+  "related": [
+    "mental-percentages-without-a-calculator",
+    "mental-math-round-and-adjust"
+  ],
+  "practice": "Try a quick arithmetic round in Math Rush once you have checked the starting amount.",
+  "sections": [
+    {
+      "id": "percentage-change-explained",
+      "title": "The backpack that does not quite bounce back",
+      "html": "<p><strong>A 20% decrease followed by a 20% increase leaves 96% of a positive starting amount.</strong> The percentages use different bases, so they do not cancel. <a href=\"https://nrich.maths.org/problems/dating-made-easier\">Cambridge’s NRICH explores this changing-base puzzle</a>.</p><p>Imagine a backpack priced at $100. A 20% reduction removes $20, leaving <strong>$80</strong>. Later, its price rises by 20%. Surely the original price returns? The backpack has other plans.</p>"
+    },
+    {
+      "id": "a-share-of-which-amount",
+      "title": "The second 20% belongs to 80",
+      "html": "<p>The increase uses the current $80 price. Ten percent of 80 is 8, so 20% is 16. Add that: <strong>80 + 16 = 96</strong>.</p><p>You removed 20 but added only 16. As in our <a href=\"/learn/mental-percentages-without-a-calculator/\">percentage basics lesson</a>, a percentage is a share of something. Here, the “something” changed between steps. <strong>Twenty percent of 100 and twenty percent of 80 are different amounts.</strong></p>"
+    },
+    {
+      "id": "percentage-change-formula",
+      "title": "How do you calculate percentage change?",
+      "html": "<p>For a positive original amount, calculate <strong>(new amount − original amount) ÷ original amount × 100%</strong>. A positive result is an increase; a negative result is a decrease. <a href=\"https://openstax.org/books/prealgebra-2e/pages/6-2-solve-general-applications-of-percent\">OpenStax explains comparing the change with the original amount</a>.</p><p>From 100 to 80, the change is −20: −20 ÷ 100 × 100% = <strong>−20%</strong>. For the next step, 80 becomes the original amount. From 80 to 96, the change is 16: 16 ÷ 80 × 100% = <strong>20%</strong>.</p>"
+    },
+    {
+      "id": "return-to-the-original",
+      "title": "What increase would really get you back?",
+      "html": "<p>To get from 80 back to 100, you need an increase of 20. Compare that increase with 80: <strong>20 ÷ 80 × 100% = 25%</strong>.</p><p>So a 20% drop needs a <strong>25% rise</strong> to reverse it. Our fictional backpack does return to $100—just with a different percentage on the return journey.</p><p>Before combining percentages, write down each starting amount. The two percentage signs may match perfectly while quietly referring to different wholes.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "mental-percent-change-v1",
+    "questions": [
+      {
+        "prompt": "A value starts at 100, drops by 20%, then rises by 20% of its new value. Where does it finish?",
+        "options": [
+          "100",
+          "96",
+          "80",
+          "120"
+        ],
+        "answer": 1,
+        "explanation": "The drop leaves 80. The rise adds 20% of 80, which is 16. The final value is 96."
+      },
+      {
+        "prompt": "What percentage increase takes 80 back to 100?",
+        "options": [
+          "20%",
+          "16%",
+          "25%",
+          "40%"
+        ],
+        "answer": 2,
+        "explanation": "The increase is 20. Divide it by the starting amount for this step: 20 ÷ 80 × 100% = 25%."
+      },
+      {
+        "prompt": "A positive amount rises from 50 to 65. What is the percentage increase?",
+        "options": [
+          "15%",
+          "30%",
+          "65%",
+          "50%"
+        ],
+        "answer": 1,
+        "explanation": "The increase is 15. Compared with the original 50, 15 ÷ 50 × 100% = 30%."
+      }
+    ]
+  }
+}
