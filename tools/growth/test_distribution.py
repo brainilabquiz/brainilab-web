@@ -1,5 +1,6 @@
 import copy
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -44,6 +45,27 @@ class DistributionTest(unittest.TestCase):
         self.registry['forms'][0]['status'] = 'send_uncertain'
         self.assertEqual(self.snapshot()['directories'][0]['state'], 'uncertain')
 
+    def test_submitted_resource_records_keep_receipt_uncertainty_and_unknown_dates(self):
+        self.registry['forms'] = [
+            {'domain': 'puzzlelinks.com', 'submittedResource': 'https://brainilabgames.com/daily-quiz/?utm_source=puzzlelinks.com', 'status': 'send_uncertain', 'verification': {'observedAt': STAMP}, 'body': 'private message'},
+            {'domain': 'roomescapeartist.com', 'submittedResource': 'https://brainilabgames.com/daily-quiz/', 'status': 'submitted_verified', 'submittedAt': STAMP, 'commentId': 34017},
+            {'domain': 'goldles.com', 'submittedResource': 'https://brainilabgames.com/daily-quiz/', 'status': 'form_sent_confirmed', 'verification': {'receiptConfirmedByUser': True, 'receiptVerified': False, 'reportedAt': STAMP}},
+            {'domain': 'general-contact.org', 'status': 'submitted_verified', 'body': 'private contact'},
+        ]
+        s = validate(self.snapshot())
+        rows = {r['domain']: r for r in s['directories']}
+        self.assertEqual(set(rows), {'puzzlelinks.com', 'roomescapeartist.com', 'goldles.com'})
+        self.assertEqual(rows['puzzlelinks.com']['state'], 'uncertain')
+        self.assertEqual(rows['goldles.com']['state'], 'pending')
+        self.assertIsNone(rows['puzzlelinks.com']['submittedAt'])
+        self.assertIsNone(rows['goldles.com']['submittedAt'])
+        self.assertEqual(rows['roomescapeartist.com']['submittedAt'], STAMP)
+        self.assertTrue(all(r['listingUrl'] is None for r in rows.values()))
+        self.assertTrue(set(rows).issubset(s['contactedDomains']))
+        text = json.dumps(s)
+        for private in ('private message', 'private contact', 'utm_source', 'commentId', 'receiptConfirmedByUser'):
+            self.assertNotIn(private, text)
+
     def test_no_private_paths_or_consumer_contacts(self):
         self.catalog['rows'].append({'path': '/admin/', 'title': 'Admin', 'kind': 'library'})
         self.registry['emails'].append({'recipient': 'private@gmail.com'})
@@ -79,6 +101,28 @@ class DistributionTest(unittest.TestCase):
             p = Path(tmp);old = self.snapshot();new = {**old, 'observedAt': '2026-10-12T16:00:00+00:00'}
             (p / 'distribution-latest.json').write_text(json.dumps(old))
             self.assertEqual(attach_distribution({'distribution': new}, p)['distribution'], new)
+
+    def test_upgrade_rebuilds_same_day_cache_without_changing_registry(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(api, 'PRIVATE', Path(tmp)):
+            folder = Path(tmp)
+            self.registry['forms'][0]['submittedResource'] = self.registry['forms'][0].pop('resource')
+            paths = [folder / 'registry.json', folder / 'catalog.json', folder / 'games.html']
+            paths[0].write_text(json.dumps(self.registry))
+            paths[1].write_text(json.dumps(self.catalog))
+            paths[2].write_text('<script type="application/ld+json">{"@graph":[{"@type":"ItemList","itemListElement":[]}]}</script>')
+            inputs = [p.read_bytes() for p in paths]
+            old = {**self.snapshot(), 'directories': []}
+            p = folder / 'distribution-latest.json'; p.write_text(json.dumps(old))
+            old_bytes = p.read_bytes()
+            old_digest = hashlib.sha256(json.dumps([hashlib.sha256(b).hexdigest() for b in inputs]).encode()).hexdigest()
+            (folder / 'distribution-state.json').write_text(json.dumps({'day': datetime.now(timezone.utc).date().isoformat(), 'inputsHash': old_digest, 'snapshotHash': hashlib.sha256(old_bytes).hexdigest()}))
+            result = refresh(*paths)
+            self.assertFalse(result['reused'])
+            self.assertEqual(result['directories'], 1)
+            self.assertEqual([p.read_bytes() for p in paths], inputs)
+            saved = json.loads((folder / 'distribution-history' / (hashlib.sha256(old_bytes).hexdigest() + '.json')).read_text())
+            self.assertEqual(saved, old)
+            self.assertTrue(refresh(*paths)['reused'])
 
 
 if __name__ == '__main__': unittest.main()

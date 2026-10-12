@@ -8,6 +8,8 @@ import json
 import re
 import gsc_sync as api
 
+PRODUCER_VERSION = 2
+
 
 def domain(value):
     if not isinstance(value, str):
@@ -67,7 +69,7 @@ def build(registry, catalog, game_rows, now=None):
             continue
         blocked.add(host)
         # Only resource submissions; do not expose general contact messages.
-        if not (f.get('resource') or f.get('resourceUrls') or f.get('destination')):
+        if not (f.get('resource') or f.get('resourceUrls') or f.get('destination') or f.get('submittedResource')):
             continue
         raw_status = f.get('status')
         listing = public_url(f.get('listingUrl'))
@@ -146,7 +148,7 @@ def refresh(registry_path, catalog_path, games_path):
     prior = path.read_bytes() if path.exists() else None
     paths = [Path(registry_path), Path(catalog_path), Path(games_path)]
     inputs = [p.read_bytes() for p in paths]
-    digest = hashlib.sha256(json.dumps([hashlib.sha256(b).hexdigest() for b in inputs]).encode()).hexdigest()
+    digest = hashlib.sha256(json.dumps([PRODUCER_VERSION, *[hashlib.sha256(b).hexdigest() for b in inputs]]).encode()).hexdigest()
     state_path = api.PRIVATE / 'distribution-state.json'
     state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {}
     day = datetime.now(timezone.utc).date().isoformat()
