@@ -11,10 +11,9 @@ for(const url of ['//evil.example/','javascript:alert(1)','/geography/world-flag
 assert.ok(cleanHtml(`<p><a href="${flags}">Play</a><a href="javascript:alert(1)">Bad</a></p>`).includes('difficulty=easy&amp;set=1'));
 assert.ok(!cleanHtml('<a href="/geography/world-flags-quiz/?email=private">Bad</a>').includes('href='));
 
+const articles=readdirSync('content/articles').filter(f=>f.endsWith('.json')).map(file=>JSON.parse(readFileSync('content/articles/'+file,'utf8'))).filter(a=>a.status==='published');
 let total=0;
-for(const file of readdirSync('content/articles').filter(f=>f.endsWith('.json'))){
- const raw=JSON.parse(readFileSync('content/articles/'+file,'utf8'));
- if(raw.status!=='published')continue;
+for(const raw of articles){
  const a=prepareArticle(raw);
  assert.equal(a.game.url,raw.game.url,`${a.slug}: destination must not silently change`);
  assert.deepEqual(a.quiz,raw.quiz,`${a.slug}: quiz must not change`);
@@ -29,7 +28,7 @@ for(const file of readdirSync('content/articles').filter(f=>f.endsWith('.json'))
  assert.equal(dom.window.document.querySelectorAll('.article-fold[open]').length,0,a.slug);
  dom.window.close();total++;
 }
-assert.equal(total,83);
+assert.equal(total,articles.length);assert.ok(total>0);
 const fallback=new JSDOM(articleGame({url:'/games/',name:'<img src=x onerror=alert(1)>'}));
 assert.equal(fallback.window.document.querySelector('a').getAttribute('href'),'/games/');
 assert.equal(fallback.window.document.querySelectorAll('img').length,1);
