@@ -38,6 +38,11 @@
       "slug": "square-numbers-why-they-make-a-square",
       "level": "7 · Grow a little square",
       "objective": "Explain a square number with equal rows and columns, then spot the odd-number gaps."
+    },
+    {
+      "slug": "prime-numbers-why-one-is-not-prime",
+      "level": "8 · Count the factors",
+      "objective": "Identify prime and composite numbers by their different positive factors, and explain why 1 is neither."
     }
   ],
   "sources": [
@@ -54,12 +59,20 @@
       "name": "OpenStax — Multiply Whole Numbers"
     },
     {
-      "name": "OpenStax — Exponents and exponential notation",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "name": "OpenStax — Exponents and exponential notation"
     },
     {
-      "name": "University of Cambridge NRICH — Picturing Square Numbers",
-      "url": "https://nrich.maths.org/problems/picturing-square-numbers"
+      "url": "https://nrich.maths.org/problems/picturing-square-numbers",
+      "name": "University of Cambridge NRICH — Picturing Square Numbers"
+    },
+    {
+      "name": "OpenStax — Prealgebra 2e: Find Multiples and Factors",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "name": "OpenStax — Contemporary Mathematics: Prime and Composite Numbers",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers"
     }
   ],
   "authorId": "biel-sarda",
@@ -83,6 +96,14 @@
     {
       "term": "Square number",
       "definition": "The result of multiplying a whole number by itself."
+    },
+    {
+      "term": "Factor",
+      "definition": "A whole number that divides another whole number exactly, with no remainder."
+    },
+    {
+      "term": "Prime number",
+      "definition": "A whole number greater than 1 with exactly two different positive factors: 1 and itself."
     }
   ],
   "outcomes": [
@@ -92,12 +113,13 @@
     "Model subtraction and check it by adding.",
     "Connect equal groups to multiplication.",
     "Share whole objects equally and identify a remainder.",
-    "Read squared notation and connect whole-number squares to tile arrangements."
+    "Read squared notation and connect whole-number squares to tile arrangements.",
+    "Count different positive factors to distinguish primes, composites and the number 1."
   ],
-  "updatedAt": "2026-10-11T17:36:47Z",
-  "description": "Seven friendly lessons: count, build tens, add, subtract, multiply, share and discover square numbers. Read and try optional quizzes at your own pace.",
+  "updatedAt": "2026-10-12T17:00:36Z",
+  "description": "Eight short maths lessons: count, add, subtract, make equal groups, explore squares and discover why prime numbers have just two factors. Optional quizzes included.",
   "publishedAt": "2026-09-30 20:58:19.100686+00",
   "coverArticle": "addition-putting-things-together",
-  "introduction": "<p>Start with a handful of buttons. Count them, bundle ten together, then use those small discoveries to add, subtract, multiply and share.</p><p>Finish with a tiny tiled floor: equal rows and columns reveal why some numbers are called squares.</p><p>There is no clock to beat. Each lesson adds one idea. Read at your own pace and try the examples or an optional short quiz when you feel ready.</p>",
+  "introduction": "<p>Begin with a small pile of counters and an empty space. Learn to count, build tens, add, subtract and share equally. Then grow a square and discover which numbers refuse to form equal groups.</p><p>Each short lesson adds one idea. Read at your own pace; optional quizzes stay tucked away until you want them.</p>",
   "prerequisites": "No arithmetic background. Start by counting the counters one at a time."
 }
