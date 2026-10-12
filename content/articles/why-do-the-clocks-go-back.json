@@ -1,0 +1,77 @@
+{
+  "slug": "why-do-the-clocks-go-back",
+  "title": "Why do the clocks go back?",
+  "description": "The clock can show the same hour twice, yet the Sun keeps moving as usual. Discover what the autumn clock change actually changes.",
+  "topic": "Curiosity",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 120,
+  "publishedAt": "2026-10-12T09:11:25.190644Z",
+  "updatedAt": "2026-10-12T09:11:25.190644Z",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-weekly-20261012.webp",
+    "small": "/assets/images/learn/curiosity-weekly-20261012-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-weekly-20261012-thumb.webp",
+    "alt": "An analogue alarm clock on a windowsill beside autumn leaves in soft morning light",
+    "credit": "AI-generated conceptual cover created for BrainiLab; not a photograph of a real event.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Curious about more? Try a few science questions.",
+  "related": [
+    "what-really-causes-seasons",
+    "why-time-zones-get-messy"
+  ],
+  "sources": [
+    {
+      "name": "UK government — Clock-change dates",
+      "url": "https://www.gov.uk/when-do-the-clocks-change"
+    },
+    {
+      "name": "UK Parliament — Daylight saving time",
+      "url": "https://commonslibrary.parliament.uk/research-briefings/sn03796/"
+    },
+    {
+      "name": "BOE — Spain’s clock-change calendar",
+      "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2022-4026&lang=es"
+    },
+    {
+      "name": "Royal Observatory — Why the clocks change",
+      "url": "https://www.rmg.co.uk/stories/time/when-do-clocks-go-back"
+    }
+  ],
+  "sections": [
+    {
+      "id": "an-hour-that-happens-twice",
+      "title": "The hour that happens twice",
+      "html": "<p>Imagine watching a clock reach 1:59 in the morning. A minute later, it says 1:00 again. The next hour seems to have arrived twice. Nothing has happened to the Sun or to Earth: the numbers on the clock have changed.</p><p>Clocks go back to end daylight saving time, also called summer time. During summer, places that use this system set their clocks ahead. In autumn, they reverse that change and return to standard time. The aim is to shift when daylight falls within our daily schedules, not to create more sunlight.</p>"
+    },
+    {
+      "id": "a-different-label",
+      "title": "Same sunrise, different number",
+      "html": "<p>Here is a deliberately imagined example. Suppose sunrise on a particular morning would be labelled 8:00 by a clock still on summer time. Moving that clock back one hour labels the same sunrise 7:00. The sunrise itself has not moved.</p><p>During summer, putting clocks forward shifts an hour of daylight from the morning side of the timetable to the evening side. Turning them back reverses that arrangement. <a href=\"https://commonslibrary.parliament.uk/research-briefings/sn03796/\" target=\"_blank\" rel=\"noopener noreferrer\">The UK Parliament’s explanation describes this trade between morning and evening light</a>.</p><p>If school or work still starts at 9:00, changing the clock changes where that appointment sits relative to sunrise. That is the key: we are adjusting our shared timetable.</p>"
+    },
+    {
+      "id": "why-autumn",
+      "title": "Why do it in autumn?",
+      "html": "<p>In places such as the UK and Spain, daylight becomes shorter as autumn approaches. Keeping summer clock settings would put sunrise later by the clock. Returning to standard time gives mornings an earlier sunrise label, while evenings get dark earlier by the clock too.</p><p>There is no extra daylight to divide up. The reason days change length comes from <a href=\"/learn/what-really-causes-seasons/\" target=\"_blank\" rel=\"noopener noreferrer\">Earth’s tilt and the seasons</a>. A clock adjustment only changes the labels we attach to those hours.</p><p>It is a choice about daily routines, and people disagree about the trade-offs. Longer summer evenings can suit some activities; changing clocks can be inconvenient. <a href=\"https://www.rmg.co.uk/stories/time/when-do-clocks-go-back\" target=\"_blank\" rel=\"noopener noreferrer\">The Royal Observatory describes the reasons and the debate</a>.</p>"
+    },
+    {
+      "id": "what-the-change-looks-like",
+      "title": "A real example: 25 October 2026",
+      "html": "<p>In the UK, clocks go back on Sunday <strong>25 October 2026</strong>. At 2:00 in the morning, the clock returns to 1:00. British Summer Time ends and Greenwich Mean Time resumes. <a href=\"https://www.gov.uk/when-do-the-clocks-change\" target=\"_blank\" rel=\"noopener noreferrer\">The UK government lists the date and the one-hour change</a>.</p><p>Spain uses the same Sunday, but the clock reading is different: 3:00 becomes 2:00 on the mainland. In the Canary Islands, 2:00 becomes 1:00. <a href=\"https://www.boe.es/buscar/doc.php?id=BOE-A-2022-4026&lang=es\" target=\"_blank\" rel=\"noopener noreferrer\">Spain’s official calendar confirms these rules</a>.</p><p>That repeated hour is why the local clock day lasts 25 hours. It does not mean Earth takes an extra hour to turn. Different places use different clock rules, so check the local official time when travelling.</p>"
+    },
+    {
+      "id": "what-we-really-change",
+      "title": "What we really turn back",
+      "html": "<p>We cannot wind back the morning. We can only change what we call the time. The clock goes back because the summer adjustment is being undone: daylight is moved towards the morning part of our timetable, at the expense of the evening part.</p><p>That is how an hour can appear twice on the clock while the world keeps moving forward.</p>"
+    }
+  ]
+}
