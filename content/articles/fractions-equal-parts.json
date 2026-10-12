@@ -82,7 +82,7 @@
     },
     {
       "id": "always-name-the-whole",
-      "html": "<p>Half a small sandwich and half a large sandwich are both halves, but they may contain different amounts of food. “A half” describes a relationship to a whole, not a fixed size by itself.</p><p>In the activities in this course, comparison strips have the same length. That makes comparing their shaded fractions fair. If the wholes changed size without warning, the picture could be misleading.</p>",
+      "html": "<p>Half a small sandwich and half a large sandwich are both halves, but they may contain different amounts of food. “A half” describes a relationship to a whole, not a fixed size by itself.</p><p>When comparing fractions, use strips of the same length. That makes comparing their shaded fractions fair. If the wholes changed size without warning, the picture could be misleading.</p>",
       "title": "Always name the whole"
     },
     {
@@ -91,7 +91,7 @@
       "title": "Make your own example"
     }
   ],
-  "updatedAt": "2026-10-09T17:07:39.649548Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "A half needs two equal shares. Learn why cutting something into two pieces is not always the same as halving it.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

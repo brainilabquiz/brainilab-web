@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/multiply-by-11-in-your-head-thumb.webp"
   },
   "order": 19,
-  "title": "An easy way to multiply by 11",
+  "title": "Multiply by 11: ten groups, then one more",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -102,7 +102,7 @@
       "title": "Ten bags, then the last bag"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "Picture eleven bags with the same number of sweets in each. Count ten bags first, then add the last one. We’ll take it one step at a time.",
   "publishedAt": "2026-09-29T06:02:00Z"
 }

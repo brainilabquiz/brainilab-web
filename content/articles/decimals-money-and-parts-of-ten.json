@@ -69,7 +69,7 @@
     }
   ],
   "authorId": "biel-sarda",
-  "practice": "Take your time with the grid and quick round. Math Rush is an optional whole-number challenge for another day.",
+  "practice": "Try the paper examples at your own pace. Math Rush is there when you want a quicker challenge.",
   "sections": [
     {
       "id": "one-ribbon",
@@ -102,7 +102,7 @@
       "title": "What if there is a whole ribbon too?"
     }
   ],
-  "updatedAt": "2026-10-09T17:07:39.648546Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "What do the numbers after the dot mean? Cut a ribbon into equal pieces to explore 0.5, 0.05 and 1.3, one step at a time.",
   "publishedAt": "2026-10-01T15:18:01.509497+00:00"
 }

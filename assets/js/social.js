@@ -493,7 +493,7 @@ window.BrainiSocial = (function(){
         if(cloudGroupsReady()){
           await BrainiGroups.acceptLink(code);
         }else{
-          throw new Error("Group invites require the BrainiLab cloud backend.");
+          throw new Error("Group invitations are unavailable. Please try again later.");
         }
 
         BrainiData.api.track("group_invite_accepted",{
@@ -1098,7 +1098,7 @@ window.BrainiSocial = (function(){
         b.onclick=async()=>{
           try{
             if(!cloudGroupsReady()){
-              throw new Error("Group invitations require cloud sync.");
+              throw new Error("Group invitations are unavailable. Please try again later.");
             }
 
             await BrainiGroups.acceptInvite(
@@ -1158,7 +1158,7 @@ window.BrainiSocial = (function(){
 
           try{
             if(!cloudGroupsReady()){
-              throw new Error("Member management requires cloud sync.");
+              throw new Error("Member settings are unavailable. Please try again later.");
             }
 
             await BrainiGroups.removeMember(

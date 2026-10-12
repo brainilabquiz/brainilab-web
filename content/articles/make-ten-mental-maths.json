@@ -88,10 +88,10 @@
     {
       "id": "use-it-as-a-choice",
       "html": "<p>Making ten is one strategy, not a rule that every addition must use. With 3 + 2, counting on twice may be simpler. With 8 + 5, the full tray makes the amount easier to keep track of.</p><p>Once that exchange feels natural, try the next lesson’s rounding method. It uses a related idea, but temporarily adjusts a number and then corrects for the adjustment.</p>",
-      "title": "Use it as a choice"
+      "title": "When does making ten help?"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "Turn 8 + 5 into a small, visible exchange: fill the ten first, then count what remains.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
