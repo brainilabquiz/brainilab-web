@@ -5,6 +5,7 @@
 */
 window.BrainiAccountMenu=(function(){
   let openMenu=null;
+  const headerInvites=new WeakMap();
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function close(){
@@ -242,7 +243,67 @@ window.BrainiAccountMenu=(function(){
     openFor(avatar);
   }
 
+  function isGuest(){
+    const auth=BrainiData.authState();
+    return auth.status==="guest" || (auth.status==="authenticated" && auth.user?.is_anonymous===true);
+  }
+
+  function hydrateHeaderInvite(){
+    if(/^\/(admin|auth)(\/|$)/.test(location.pathname)) return;
+    document.querySelectorAll(".topbar .nav").forEach(nav=>{
+      const right=nav.querySelector(".nav-right");
+      if(!right) return;
+      let entry=headerInvites.get(nav);
+      if(!entry){
+        const slot=document.createElement("div");
+        slot.className="header-account-invite";
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="header-account-button";
+        button.dataset.headerSignup="";
+        button.title="Keep your scores and progress across devices";
+        const status=document.createElement("span");
+        status.className="header-account-status";
+        status.setAttribute("role","status");
+        status.hidden=true;
+        slot.append(button,status);
+        right.prepend(slot);
+        entry={slot,button,status,pending:false};
+        headerInvites.set(nav,entry);
+        button.addEventListener("click",async()=>{
+          if(entry.pending || !isGuest()) return;
+          close();
+          entry.pending=true;
+          status.hidden=true;
+          hydrateHeaderInvite();
+          try{
+            if(!window.BrainiAuth?.open && window.BrainiPerf?.ensureCloud) await BrainiPerf.ensureCloud();
+            if(!isGuest()) return;
+            if(!window.BrainiAuth?.open) throw Error("Sign-up unavailable");
+            await BrainiAuth.open({source:"header",mode:"signup"});
+          }catch{
+            if(isGuest()){
+              status.textContent="Sign-up is unavailable right now. Please try again.";
+              status.hidden=false;
+            }
+          }finally{
+            entry.pending=false;
+            hydrateHeaderInvite();
+          }
+        });
+      }
+      const visible=isGuest();
+      entry.slot.hidden=!visible;
+      nav.classList.toggle("has-header-account-invite",visible);
+      entry.button.disabled=entry.pending;
+      entry.button.setAttribute("aria-busy",String(entry.pending));
+      entry.button.textContent=entry.pending?"Opening…":"Create free account";
+      if(!visible){entry.status.hidden=true;entry.status.textContent="";}
+    });
+  }
+
   function hydrate(){
+    hydrateHeaderInvite();
     const p=BrainiData.player();
 
     document.querySelectorAll(".avatar").forEach(avatar=>{
@@ -307,7 +368,8 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("resize",close);
   window.addEventListener("scroll",close,{passive:true});
 
-  document.addEventListener("DOMContentLoaded",hydrate);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",hydrate,{once:true});
+  else hydrate();
   window.addEventListener("brainilab:authchange",hydrate);
   window.addEventListener("brainilab:profilechange",hydrate);
   window.addEventListener("brainilab:progressionchange",hydrate);
