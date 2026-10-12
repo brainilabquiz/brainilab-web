@@ -1,0 +1,722 @@
+{
+  "date": "2026-10-12",
+  "checkedAt": "2026-10-12T09:11:25.190644Z",
+  "main": "deed3bb93a9bc9933d7269509ee69e5d525d0524",
+  "guidelines": "content/AGENTS.md read before drafting",
+  "coverage": "US/GB/ES/IN; North America/Europe/Asia; English, Spanish and Hindi query evidence. Twenty topic groups in each pool, not a worldwide ranking.",
+  "limitations": [
+    "Daily pool contains trends whose visible start was 11 October in Europe/Madrid; their volumes come from the captured rolling 48-hour table, not a natural-day total.",
+    "Weekly pool is rolling seven days captured on 12 October, not seven completed calendar days.",
+    "English clock-change volume is unknown. Spanish cambio horario octubre is the observed topic signal; English educational SERP intent was checked separately.",
+    "No sightings, deaths, allegations or causes of a query spike are inferred from Trends.",
+    "Thirty-day saved research and content/research checked: existing Academy keywords are already covered and do not supply the new topics. No paid research used."
+  ],
+  "pool": {
+    "daily": [
+      {
+        "query": "eagles vs jaguars",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:33.532Z",
+        "visibleStart": "11 d’oct., 1:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "2 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "broncos vs chargers",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:33.532Z",
+        "visibleStart": "11 d’oct., 10:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "colts vs steelers",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:33.532Z",
+        "visibleStart": "11 d’oct., 11:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "social security 2027 cola announcement",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:33.532Z",
+        "visibleStart": "11 d’oct., 18:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "jennifer meyer",
+        "market": "US",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:33.532Z",
+        "visibleStart": "11 d’oct., 22:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "northern lights aurora borealis",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:12.254Z",
+        "visibleStart": "11 d’oct., 5:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Selected for daily explanation; exclude from weekly to avoid two articles on same topic."
+      },
+      {
+        "query": "british gas autumn snow warning",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:12.254Z",
+        "visibleStart": "11 d’oct., 12:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "amy dowden brendan cole strictly",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:12.254Z",
+        "visibleStart": "11 d’oct., 13:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "cruise ship passenger rescue peloponnese",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:12.254Z",
+        "visibleStart": "11 d’oct., 11:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "10 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "djibouti",
+        "market": "GB",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:12.254Z",
+        "visibleStart": "11 d’oct., 12:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "cambio horario octubre",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:01.529Z",
+        "visibleStart": "11 d’oct., 21:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Selected for weekly curiosity explanation; Spanish demand is not English demand."
+      },
+      {
+        "query": "real betis - osasuna",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:01.529Z",
+        "visibleStart": "11 d’oct., 17:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "pepe colubi",
+        "market": "ES",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:01.529Z",
+        "visibleStart": "11 d’oct., 10:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "futuro sistema aéreo de combate",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:01.529Z",
+        "visibleStart": "11 d’oct., 22:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "5 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "emilio delgado",
+        "market": "ES",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:05:01.529Z",
+        "visibleStart": "11 d’oct., 14:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "quentin sampson",
+        "market": "IN",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:43.756Z",
+        "visibleStart": "11 d’oct., 15:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "prince yadav",
+        "market": "IN",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:43.756Z",
+        "visibleStart": "11 d’oct., 15:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "nepal flash floods",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:43.756Z",
+        "visibleStart": "11 d’oct., 16:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "nepal vs canada",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:43.756Z",
+        "visibleStart": "11 d’oct., 7:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "inter kashi vs kerala blasters standings",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-12T09:01:43.756Z",
+        "visibleStart": "11 d’oct., 14:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      }
+    ],
+    "weekly": [
+      {
+        "query": "hurricane isaias",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:02:59.019Z",
+        "visibleStart": "6 d’oct., 22:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "5 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "susan dell",
+        "market": "US",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:02:59.019Z",
+        "visibleStart": "7 d’oct., 19:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "mike ditka",
+        "market": "US",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:02:59.019Z",
+        "visibleStart": "9 d’oct., 16:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "carrie tv show",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:02:59.019Z",
+        "visibleStart": "7 d’oct., 8:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "below netflix",
+        "market": "US",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:02:59.019Z",
+        "visibleStart": "8 d’oct., 10:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "northern lights aurora borealis",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T08:56:07.102Z",
+        "visibleStart": "ahir",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Selected for daily explanation; exclude from weekly to avoid two articles on same topic."
+      },
+      {
+        "query": "glens of antrim potatoes administration",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T08:56:07.102Z",
+        "visibleStart": "fa 4 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "cats found sealed in boxes",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T08:56:07.102Z",
+        "visibleStart": "abans-d’ahir",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "british gas autumn snow warning",
+        "market": "GB",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T08:56:07.102Z",
+        "visibleStart": "fa 22 hores",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "djibouti",
+        "market": "GB",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T08:56:07.102Z",
+        "visibleStart": "fa 22 hores",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "cambio horario octubre",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:04:31.596Z",
+        "visibleStart": "11 d’oct., 21:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Selected for weekly curiosity explanation; Spanish demand is not English demand."
+      },
+      {
+        "query": "afinidad politica",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:04:31.596Z",
+        "visibleStart": "6 d’oct., 17:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "democracia 21",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:04:31.596Z",
+        "visibleStart": "10 d’oct., 9:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "clasificación liga",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:04:31.596Z",
+        "visibleStart": "9 d’oct., 21:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "masters de shanghái",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:04:31.596Z",
+        "visibleStart": "8 d’oct., 21:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "world space week 2026",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:03:33.451Z",
+        "visibleStart": "6 d’oct., 15:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "2 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "nana patekar",
+        "market": "IN",
+        "language": "und; proper name in Latin script",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:03:33.451Z",
+        "visibleStart": "8 d’oct., 3:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "2 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "bangladesh vs afghanistan",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:03:33.451Z",
+        "visibleStart": "9 d’oct., 7:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "जंतर मंतर",
+        "market": "IN",
+        "language": "hi",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:03:33.451Z",
+        "visibleStart": "7 d’oct., 9:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      },
+      {
+        "query": "navratri colours 2026",
+        "market": "IN",
+        "language": "en",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-12T09:03:33.451Z",
+        "visibleStart": "9 d’oct., 6:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; not global volume or exact calendar-day count.",
+        "selectionReason": "Excluded from article: unrelated intent; no unverified news claim made."
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "slug": "why-northern-lights-have-different-colours",
+      "question": "Why are the northern lights different colours?",
+      "demand": "GB English query northern lights aurora borealis, 50 k+, started 11 October 05:00 visible Madrid; US also showed 10 k+ in original 50-row 48h capture at 08:52:57Z, relative start 15 hours; do not assign a fabricated exact start.",
+      "serp": {
+        "checkedAt": "2026-10-12T09:11:25.190644Z",
+        "query": "northern lights aurora borealis",
+        "intent": "Mixed current visibility and educational intent. This page answers the science, not a live forecast.",
+        "observedResults": [
+          "NASA Science /sun/auroras/",
+          "NASA Space Place /aurora/en/",
+          "Canadian Space Agency /eng/astronomy/northern-lights/what-are-northern-lights.asp"
+        ]
+      },
+      "novelty": "77 live publication titles reviewed; document search finds no aurora article. Midnight-sun article is about daylight from Earth tilt, not atmospheric light."
+    },
+    {
+      "slug": "why-do-the-clocks-go-back",
+      "question": "Why do the clocks go back?",
+      "demand": "ES Spanish cambio horario octubre, 20 k+ in 7d capture, started 11 October 21:20 visible Madrid. No English-market volume inferred.",
+      "serp": {
+        "checkedAt": "2026-10-12T09:11:25.190644Z",
+        "queries": [
+          "why do the clocks go back",
+          "cambio horario octubre 2026 España BOE ultimo domingo"
+        ],
+        "intent": "Educational reason plus practical date/time. English results include Royal Observatory Greenwich, Queen’s University Belfast, government material and clock-change explanations. Spanish results combine date questions with speculation; use BOE only for confirmed date.",
+        "observedResults": [
+          "Royal Observatory Greenwich /stories/time/when-do-clocks-go-back",
+          "UK Parliament Commons Library /research-briefings/sn03796/",
+          "BOE BOE-A-2022-4026"
+        ]
+      },
+      "novelty": "why-time-zones-get-messy revision 5 explains geographic offsets and briefly names daylight saving. New piece focuses only on the seasonal one-hour reversal and repeated clock hour; no duplicate zone arithmetic. what-really-causes-seasons rev6 explains tilt, not clock policy."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.spaceweather.gov/phenomena/aurora",
+      "opened": true,
+      "claims": "Energetic electrons follow magnetic field lines, collisions excite gases, emitted light; changing oval/curtains and darkness needed."
+    },
+    {
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-aurora",
+      "opened": true,
+      "claims": "Oxygen green/red; nitrogen blue/purple; northern/southern names."
+    },
+    {
+      "url": "https://science.nasa.gov/sun/auroras/",
+      "opened": true,
+      "claims": "Particles, atmosphere and Sun/Earth magnetic interaction; aurora names."
+    },
+    {
+      "url": "https://www.gov.uk/when-do-the-clocks-change",
+      "opened": true,
+      "claims": "UK 25 October 2026 at 02:00 ->01:00; last Sundays; BST to GMT."
+    },
+    {
+      "url": "https://commonslibrary.parliament.uk/research-briefings/sn03796/",
+      "opened": true,
+      "sourceDate": "2026-03-25",
+      "claims": "Summer-time redistribution morning to evening and return in autumn; not a promise of energy benefit."
+    },
+    {
+      "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2022-4026&lang=es",
+      "opened": true,
+      "claims": "Spain Sunday25October2026 at03:00->02:00; Canary Islands02:00->01:00; calendar date does not abolish rules."
+    },
+    {
+      "url": "https://www.rmg.co.uk/stories/time/when-do-clocks-go-back",
+      "opened": true,
+      "claims": "Return from BST to GMT; weekend disruption and different regional rules."
+    }
+  ],
+  "rejectedSource": {
+    "url": "https://www.government.nl/faq/european-union/why-do-the-clocks-change-twice-a-year",
+    "reason": "Open returned404, not cited."
+  },
+  "preDraftCMS": {
+    "publicationCount": 77,
+    "todayEditions": [],
+    "overlap": [
+      {
+        "slug": "why-time-zones-get-messy",
+        "revision": 5
+      }
+    ],
+    "maxOrder": 118
+  },
+  "checks": {
+    "sources": "Opened primary pages as listed; each paragraph paraphrased without copied passages.",
+    "example": "UK sunrise example is explicitly imagined; 08:00 summer-clock label minus1hour =07:00 standard-clock label, same sunlight. Repeated01:59->01:00 checked against gov.uk. Spain03->02 checked againstBOE.",
+    "quiz": "No new quiz, scoring or Academy changes. Existing validators remain required.",
+    "wordExamples": "No mathematical formula chain, specialist terms explained before use.",
+    "publicCopy": "No Trends pool, SEO goals, estimated metrics, artificialFAQ or exercise widgets."
+  },
+  "assets": [
+    {
+      "path": "assets/images/learn/curiosity-daily-20261012.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 34788,
+      "sha256": "b6b52956c1a04fb9228dce952d9ff8cf1bac7b21db60d1bd09c691e40cfcb4a3"
+    },
+    {
+      "path": "assets/images/learn/curiosity-daily-20261012-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 10238,
+      "sha256": "1a1d1ff2ad02a70a1073adad3a2f7c36ff0a089953bcd3d32babf1cb913512b6"
+    },
+    {
+      "path": "assets/images/learn/curiosity-daily-20261012-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 3746,
+      "sha256": "7d4adaa66dbcc444cac43708a1c72f135db814533e096541986aa5e695d35b6a"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261012.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 56464,
+      "sha256": "48fbb1cb8dbc98d6cf1e95c3611e907009f60892c86be2cda4e4fdeea2471603"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261012-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 22882,
+      "sha256": "f0813d4892b73a5245b1aa69f9bb9f51dc87f305b1b2680f52a7aac6cea7756e"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261012-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8434,
+      "sha256": "182011cf8782cc187c438f36980627e841b46777401d121e8f7c98bd5740cfcb"
+    }
+  ],
+  "covers": {
+    "generator": "built-in ImageGen",
+    "originals": [
+      "daily-original.png",
+      "weekly-original.png"
+    ],
+    "inspection": "Both original1536x1024 covers visually checked. Aurora is conceptual; clock has12correctnumerals/twohands/noinventedevent.3:2 fullimage resized without cropping/stretching; derivative crops to be checked."
+  },
+  "prePublicationReview": {
+    "completedAt": "2026-10-12T09:17:27.628382+00:00",
+    "sources": "Seven cited primary pages opened and specific claims checked; failed Netherlands URL excluded.",
+    "demandIntentNovelty": "Dated actual Trends buckets and query language, educational SERPs, 77 live articles and overlap rev5 checked before drafting.",
+    "readability": "534 and482words; single question each; terms defined; no formula chains or injected widgets.",
+    "coverCrops": "Originals and240px thumbnails inspected;12clocknumerals in correct order, twohands; conceptual photo credit visible; six3:2WebPderivatives.",
+    "mobile": {
+      "viewportWidth": 390,
+      "renderedDocumentWidth": 375,
+      "articleWidth": 339,
+      "bothCoversLoaded": true,
+      "horizontalOverflow": false,
+      "visualInspection": "Both articles inspected via browser screenshots."
+    },
+    "desktop": {
+      "viewportWidth": 1366,
+      "renderedDocumentWidth": 1351,
+      "articleWidth": 740,
+      "bothCoversLoaded": true,
+      "horizontalOverflow": false,
+      "visualInspection": "Both articles inspected via browser screenshots."
+    },
+    "metadata": "Both H1, description, dates, canonical and Person/Article checked; external citations _blank noopener noreferrer.",
+    "validation": [
+      "check-editorial.py:89pages pass",
+      "test-learn-seo.mjs:pass",
+      "test-learning-paths.mjs:7paths126questions pass with existing JSDOM dependency",
+      "audit-learn-catalog.mjs:79articles zeroerrors/zerowarnings",
+      "tools/build.mjs:819files plus Daily/assets/integrity/cachecontract pass"
+    ],
+    "environmentNotes": "Initial pnpm install returned ignored esbuild build-script warning; build succeeds using already resolved package. First Academy test lacked JSDOM_MODULE; rerun with existing explicit module path passed. No dependency or permission-policy changes committed.",
+    "scope": "Twoarticles,sixcovers,research,theirgeneratedpages,andLearn/feed/sitemap/homepreview only. Othergeneratedchanges excluded. No app,DNS,Netlify,Worker-domain,player or Academy-document changes."
+  }
+}

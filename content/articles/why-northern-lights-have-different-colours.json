@@ -1,0 +1,73 @@
+{
+  "slug": "why-northern-lights-have-different-colours",
+  "title": "Why are the northern lights different colours?",
+  "description": "The northern lights can glow green, red or purple. Follow a tiny collision high above Earth to discover where those colours come from.",
+  "topic": "Curiosity",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 119,
+  "publishedAt": "2026-10-12T09:11:25.190644Z",
+  "updatedAt": "2026-10-12T09:11:25.190644Z",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-daily-20261012.webp",
+    "small": "/assets/images/learn/curiosity-daily-20261012-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-daily-20261012-thumb.webp",
+    "alt": "Green aurora curtains with purple and faint red light over a dark forest and lake",
+    "credit": "AI-generated conceptual cover created for BrainiLab; not a photograph of a real event.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Curious about more? Try a few science questions.",
+  "related": [
+    "curiosity-weekly-2026-10-09",
+    "why-the-moon-changes-shape"
+  ],
+  "sources": [
+    {
+      "name": "NOAA — How auroras form",
+      "url": "https://www.spaceweather.gov/phenomena/aurora"
+    },
+    {
+      "name": "NOAA — Aurora colours",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-aurora"
+    },
+    {
+      "name": "NASA — Auroras",
+      "url": "https://science.nasa.gov/sun/auroras/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-sky-makes-its-own-light",
+      "title": "A sky that glows",
+      "html": "<p>A green ribbon hangs above a dark landscape. Beside it, a purple edge flickers into view. These are the northern lights, also called the aurora borealis. But why does the same sky produce different colours?</p><p>The light comes from gases high in the air. Energetic particles bump into those gases and give them energy. When the gases release that energy, they glow. Different gases can produce different colours.</p>"
+    },
+    {
+      "id": "how-the-energy-arrives",
+      "title": "The journey begins beyond the clouds",
+      "html": "<p>The Sun constantly sends energy and tiny charged particles into space. A charged particle carries an electric charge. Earth has a magnetic field: an invisible magnetic influence that surrounds the planet and helps protect it.</p><p>When energy from the Sun interacts with this magnetic environment, some electrons can be accelerated towards the upper atmosphere. Electrons are extremely small charged particles. They follow magnetic field lines into regions near the magnetic poles.</p><p><a href=\"https://science.nasa.gov/sun/auroras/\" target=\"_blank\" rel=\"noopener noreferrer\">NASA describes auroras as an interaction between particles, magnetism and the atmosphere</a>. The atmosphere is the blanket of gases around Earth. The glowing part is high above the clouds, not a coloured cloud passing over your garden.</p>"
+    },
+    {
+      "id": "air-as-a-lamp",
+      "title": "The air becomes the lamp",
+      "html": "<p>Imagine an electron meeting an oxygen atom high above Earth. An atom is a tiny building block of matter. The collision can transfer energy to the atom. When it releases that extra energy, some of it comes out as light.</p><p>A glowing neon sign is a useful comparison. Inside its tube, electrical energy makes a gas emit light. <a href=\"https://www.spaceweather.gov/phenomena/aurora\" target=\"_blank\" rel=\"noopener noreferrer\">NOAA uses this comparison to explain the aurora</a>. There is no glass tube across the sky; the gas is already there in the upper atmosphere.</p><p>The same process happens many times across a huge region. Together, those tiny flashes can create a display large enough to see from the ground.</p>"
+    },
+    {
+      "id": "different-gases-different-colours",
+      "title": "Why green, red and purple?",
+      "html": "<p>Oxygen can give off green light, and it can also produce red light. Nitrogen can produce blue and purple light. <a href=\"https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-aurora\" target=\"_blank\" rel=\"noopener noreferrer\">NOAA’s explanation connects these colours to the gases involved</a>.</p><p>So the colours are clues about the air that is glowing. They are not sunlight reflected from a rainbow. The gas itself is releasing light after gaining energy.</p><p>The conditions of each collision matter too. “Oxygen makes green” is a handy starting point, but oxygen does not have only one possible colour. That is why an aurora can contain a mixture rather than a single flat band.</p>"
+    },
+    {
+      "id": "a-curtain-you-can-see",
+      "title": "Why the glow looks like a curtain",
+      "html": "<p>Particles follow the magnetic field, so the glow can form arcs and curtain-like shapes instead of lighting the whole sky evenly. As the magnetic environment changes, the display can move and twist.</p><p>Auroras usually form around the magnetic poles. During stronger disturbances, the glowing region can expand, making the lights visible farther away. That does not make them guaranteed on any particular night: clouds, daylight and the changing activity all affect what you can see.</p><p>Darkness matters because a bright sky can hide a faint glow. That is a different puzzle from <a href=\"/learn/curiosity-weekly-2026-10-09/\" target=\"_blank\" rel=\"noopener noreferrer\">why the Sun can stay up at midnight in Norway</a>. One is light made by excited gas; the other is sunlight still reaching you.</p><p>The answer to the colour mystery is right above us: different gases, given energy in different conditions, release different light. A green ribbon and a purple fringe are the atmosphere showing us its ingredients.</p>"
+    }
+  ]
+}
