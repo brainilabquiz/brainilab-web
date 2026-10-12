@@ -72,3 +72,31 @@ console.log('PASS video clicks: consent required, three precise placements, no a
  w.close();
 }
 console.log('PASS topic discovery measurement: consent, approved fields, no query data, withdrawal.');
+
+// The reading layout replaced legacy widgets. Measure the real end-of-article
+// link, including clicks on its children, without sending URL query values.
+for(const selector of ['data-article-game','class="article-game-link"']){
+ const w=page('https://brainilabgames.com/learn/how-to-learn-world-flags/');
+ w.document.body.innerHTML=`<a ${selector} href="/geography/world-flags-quiz/?difficulty=easy&set=1&private=do-not-send"><span>Play flags</span></a>`;
+ w.document.addEventListener('click',e=>e.preventDefault());
+ const click=()=>w.document.querySelector('span').dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+ click();assert.equal(w.dataLayer,undefined);
+ w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer,undefined);
+ w.BrainiSiteAnalytics.setConsent(true);click();
+ const events=w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click');
+ assert.equal(events.length,1);assert.equal(events[0][2].article_slug,'how-to-learn-world-flags');
+ assert.equal(events[0][2].game_path,'/geography/world-flags-quiz/');
+ assert.ok(!JSON.stringify(events).includes('do-not-send'));
+ assert.ok(!JSON.stringify(events).includes('difficulty='));
+ w.BrainiSiteAnalytics.setConsent(false);click();
+ assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click').length,0);
+ w.close();
+}
+for(const [pagePath,target] of [['/learn/','/games/math-rush/'],['/learn/moon/','/profile/'],['/learn/moon/','https://example.com/games/math-rush/'],['/learn/paths/word-detective/','/games/connections/']]){
+ const w=page('https://brainilabgames.com'+pagePath,{allowed:true,at:Date.now()});
+ w.document.body.innerHTML=`<a data-article-game href="${target}">Play</a>`;
+ w.document.addEventListener('click',e=>e.preventDefault());
+ w.document.querySelector('a').dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+ assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click').length,0);w.close();
+}
+console.log('PASS article game measurement: current layout, child clicks, explicit consent, withdrawal, path-only data and unrelated link exclusion.');

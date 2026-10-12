@@ -83,7 +83,7 @@ window.BrainiSiteAnalytics=(()=>{
     const videoId=url.searchParams.get('v');
     if(social==='youtube'&&url.pathname==='/watch'&&videoPlace&&/^[\w-]{11}$/.test(videoId||''))send('video_click',{video_id:videoId,placement:videoPlace});
     if(url.origin===location.origin&&url.pathname==='/assets/resources/five-number-puzzles.pdf')send('resource_download',{resource_id:'five_number_puzzles'});
-    if(url.origin===location.origin&&a.closest('.article-practice,.sidebar-game'))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
+    if(url.origin===location.origin&&/^\/learn\/[a-z0-9-]+\/$/.test(path())&&a.closest('[data-article-game],.article-game-link,.article-practice,.sidebar-game')&&/^\/(?:games\/(?:math-rush|connections|sequence|odd-one-out|number-route|brainiword)\/|geography\/world-(?:flags|capitals)-quiz\/|(?:science|history|sports)\/[a-z-]+-quiz\/|general-knowledge\/general-knowledge-quiz\/|reasoning\/|daily-quiz\/|games\/)$/.test(url.pathname))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
     if(url.origin===location.origin&&a.closest('[data-game-guides]')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('game_guide_click',{article_slug:url.pathname.split('/')[2],game_path:path()});
     if(url.origin===location.origin&&a.closest('.topic-discovery')&&['/general-knowledge/','/history/','/sports/'].includes(path())){
       if(a.matches('.topic-level'))send('topic_game_click',{topic_path:path(),difficulty:['easy','medium','hard'].includes(url.searchParams.get('difficulty'))?url.searchParams.get('difficulty'):'unknown'});
