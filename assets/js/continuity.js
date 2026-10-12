@@ -55,8 +55,8 @@ window.BrainiContinuity=(()=>{
       const saved=window.BrainiData?.recentResults?.(result.gameId)?.find(r=>r.clientResultId===result.clientResultId)||result;
       const checked=saved.answersVerified===true||[saved.answerVerificationStatus,saved.dailyAnswerVerificationStatus,saved.dailyGameVerificationStatus].includes('verified');
       if(window.BrainiProgression?.getLastError?.())return '<p class="post-reward-note">Your result is saved. Progress is temporarily unavailable. <button type="button" class="post-refresh-progress" data-refresh-progress>Refresh progress</button></p>';
-      if(checked)return '<p class="post-reward-note">Result verified. <a href="/profile/?section=progress">See your progress</a>.</p>';
-      return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Result saved. XP is awaiting verification.':'Saved on this device. Waiting to sync.'}</p>`;
+      if(checked)return '<p class="post-reward-note">Your result is saved. <a href="/profile/?section=progress">See your progress</a>.</p>';
+      return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Your score is saved. We’re checking your XP.':'Saved on this device. Waiting to sync.'}</p>`;
     }
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp),change=changes.get(result.clientResultId),before=change&&BrainiProgressUI.xpProgress(1,change.before),up=before&&progress.level>before.level;
     const player=window.BrainiData?.player?.()||{};let photo='';try{const u=new URL(player.avatarUrl);if(u.protocol==='https:')photo=esc(u.href);}catch{}

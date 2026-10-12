@@ -78,7 +78,7 @@
     {
       "id": "explore",
       "html": "<p>Look at <strong>AB | AB | AB</strong>. The little block AB repeats. It contains two letters, so the pattern repeats every two places. That length is called its <strong>period</strong>. The shortest working length is the <strong>minimum period</strong>.</p><p>Now group <strong>AAB | AAB | AAB</strong>. Repeating just A would miss the B. Repeating AA would miss it too. The smallest block that works is AAB, with three places. Its minimum period is <strong>3</strong>.</p><p>Try a small block first. Repeat it and check each letter against the example. If a letter does not match, try a different block. The <a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\" target=\"_blank\" rel=\"noopener noreferrer\">NCETM guide to patterns</a> explains why finding the smallest unit matters more than naming every item.</p>",
-      "title": "Find the minimum period"
+      "title": "Find the smallest repeating block"
     },
     {
       "id": "separate-a-repeat-from-growth",
@@ -91,7 +91,7 @@
       "title": "What comes after ABBABBAB?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "Spot the little block that repeats in a row of shapes or letters. Check it against the whole pattern, then try the next step.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

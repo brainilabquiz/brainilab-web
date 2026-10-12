@@ -1,70 +1,17 @@
 {
-  "status": "published",
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-11T17:36:47Z",
-  "updatedAt": "2026-10-11T17:36:47Z",
-  "cover": {
-    "src": "/assets/images/learn/square-numbers-why-they-make-a-square.webp",
-    "small": "/assets/images/learn/square-numbers-why-they-make-a-square-small.webp",
-    "thumbnail": "/assets/images/learn/square-numbers-why-they-make-a-square-thumb.webp",
-    "position": 50,
-    "credit": "AI-generated cover image created for BrainiLab.",
-    "alt": "Nine ceramic tiles arranged in three equal rows and three equal columns"
-  },
-  "slug": "square-numbers-why-they-make-a-square",
-  "title": "What is a square number? Picture a tiny tiled floor",
-  "topic": "Numbers & logic",
-  "order": 114,
-  "description": "Nine tiles make a three-by-three square. See why square numbers have that name, what the little 2 means and the odd pattern hiding between them.",
-  "game": {
-    "name": "Sequence",
-    "url": "/games/sequence/"
-  },
   "hub": {
-    "name": "Maths from zero: little numbers, big ideas",
-    "url": "/learn/paths/maths-from-zero/"
+    "url": "/learn/paths/maths-from-zero/",
+    "name": "Maths from zero: little numbers, big ideas"
   },
-  "sources": [
-    {
-      "name": "OpenStax — Exponents and exponential notation",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
-    },
-    {
-      "name": "University of Cambridge NRICH — Picturing Square Numbers",
-      "url": "https://nrich.maths.org/problems/picturing-square-numbers"
-    }
-  ],
-  "related": [
-    "multiplication-equal-groups",
-    "number-sequences-look-at-the-gaps"
-  ],
-  "practice": "Enjoy finding what comes next? Try a number pattern in Sequence.",
-  "sections": [
-    {
-      "id": "what-is-a-square-number",
-      "title": "Nine tiles explain the name",
-      "html": "<p><strong>A square number is the result of multiplying a whole number by itself.</strong> Nine is a square number because <strong>3 × 3 = 9</strong>.</p><p>Picture nine tiles on the floor. Arrange them in three rows, with three in each row. The shape is a square: its height and width match. Four rows of four tiles give you another square, with <strong>16</strong> tiles.</p><p>That is <a href=\"/learn/multiplication-equal-groups/\">multiplication with equal groups</a>, with one extra condition: the number of rows matches the number in each row.</p>"
-    },
-    {
-      "id": "squared-not-doubled",
-      "title": "The little 2 is not telling you to double",
-      "html": "<p><strong>5²</strong> means “five squared”: <strong>5 × 5 = 25</strong>. It does not mean 5 × 2, which is 10. <a href=\"https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra\">OpenStax explains this exponent notation</a>.</p><p>If the small raised 2 feels unfamiliar, write the multiplication out first. You are using two copies of the same number as factors—the numbers being multiplied.</p><p>The first positive square numbers are <strong>1, 4, 9, 16, 25, 36</strong>. Zero counts too: <strong>0 × 0 = 0</strong>, even though there are no tiles to arrange.</p>"
-    },
-    {
-      "id": "odd-number-gaps",
-      "title": "The next square needs an odd little border",
-      "html": "<p>Start with a three-by-three square. To grow it into four by four, add a new row of four tiles and a column of three beside the old rows. That adds <strong>7</strong> tiles: <strong>9 + 7 = 16</strong>.</p><p>Look at the jumps between positive squares: <strong>3, 5, 7, 9, 11</strong>. Each new border needs the next odd number.</p><p>This also explains why <strong>1 + 3 + 5 + 7 = 16</strong>. The four borders build a four-by-four square. Cambridge’s <a href=\"https://nrich.maths.org/problems/picturing-square-numbers\">NRICH exploration</a> shows this connection with pictures.</p>"
-    },
-    {
-      "id": "try-the-next-square",
-      "title": "Can you grow a square without counting every tile?",
-      "html": "<p>A five-by-five square has <strong>25</strong> tiles. How many extra tiles would turn it into six by six?</p><details class=\"practice-answer\"><summary>Check the border</summary><p><strong>11 extra tiles.</strong> Add a row of six and a column of five. The total becomes <strong>25 + 11 = 36</strong>, which is 6 × 6.</p></details><p>If a sequence looks mysterious, try drawing what its numbers describe. A little tiled floor can reveal a rule that a list of digits hides.</p>"
-    }
-  ],
+  "game": {
+    "url": "/games/sequence/",
+    "name": "Sequence"
+  },
   "quiz": {
     "version": "maths-square-numbers-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "What does 6² mean?",
         "options": [
           "6 × 2 = 12",
@@ -72,10 +19,10 @@
           "6 + 2 = 8",
           "2 × 2 = 4"
         ],
-        "answer": 1,
         "explanation": "The raised 2 means multiply two factors of 6: 6 × 6. Squaring is different from doubling."
       },
       {
+        "answer": 3,
         "prompt": "Which number of tiles can make a square with the same whole-number count in each row and column?",
         "options": [
           "12",
@@ -83,10 +30,10 @@
           "20",
           "25"
         ],
-        "answer": 3,
         "explanation": "25 tiles make five rows of five. The other options are not whole-number squares."
       },
       {
+        "answer": 1,
         "prompt": "How many tiles must you add to a 4 × 4 square to make a 5 × 5 square?",
         "options": [
           "5",
@@ -94,9 +41,62 @@
           "16",
           "25"
         ],
-        "answer": 1,
         "explanation": "A new row of five and a new column of four add nine tiles. 16 + 9 = 25."
       }
     ]
-  }
+  },
+  "slug": "square-numbers-why-they-make-a-square",
+  "cover": {
+    "alt": "Nine ceramic tiles arranged in three equal rows and three equal columns",
+    "src": "/assets/images/learn/square-numbers-why-they-make-a-square.webp",
+    "small": "/assets/images/learn/square-numbers-why-they-make-a-square-small.webp",
+    "credit": "AI-generated cover image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/square-numbers-why-they-make-a-square-thumb.webp"
+  },
+  "order": 114,
+  "title": "What is a square number? Start with nine tiles",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "multiplication-equal-groups",
+    "number-sequences-look-at-the-gaps"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "name": "OpenStax — Exponents and exponential notation"
+    },
+    {
+      "url": "https://nrich.maths.org/problems/picturing-square-numbers",
+      "name": "University of Cambridge NRICH — Picturing Square Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Enjoy finding what comes next? Try a number pattern in Sequence.",
+  "sections": [
+    {
+      "id": "what-is-a-square-number",
+      "html": "<p><strong>A square number is the result of multiplying a whole number by itself.</strong> Nine is a square number because <strong>3 × 3 = 9</strong>.</p><p>Picture nine tiles on the floor. Arrange them in three rows, with three in each row. The shape is a square: its height and width match. Four rows of four tiles give you another square, with <strong>16</strong> tiles.</p><p>That is <a href=\"/learn/multiplication-equal-groups/\">multiplication with equal groups</a>, with one extra condition: the number of rows matches the number in each row.</p>",
+      "title": "Nine tiles explain the name"
+    },
+    {
+      "id": "squared-not-doubled",
+      "html": "<p><strong>5²</strong> means “five squared”: <strong>5 × 5 = 25</strong>. It does not mean 5 × 2, which is 10. <a href=\"https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra\">OpenStax explains this exponent notation</a>.</p><p>If the small raised 2 feels unfamiliar, write the multiplication out first. You are using two copies of the same number as factors—the numbers being multiplied.</p><p>The first positive square numbers are <strong>1, 4, 9, 16, 25, 36</strong>. Zero counts too: <strong>0 × 0 = 0</strong>, even though there are no tiles to arrange.</p>",
+      "title": "The little 2 is not telling you to double"
+    },
+    {
+      "id": "odd-number-gaps",
+      "html": "<p>Start with a three-by-three square. To grow it into four by four, add a new row of four tiles and a column of three beside the old rows. That adds <strong>7</strong> tiles: <strong>9 + 7 = 16</strong>.</p><p>Look at the jumps between positive squares: <strong>3, 5, 7, 9, 11</strong>. Each new border needs the next odd number.</p><p>This also explains why <strong>1 + 3 + 5 + 7 = 16</strong>. The four borders build a four-by-four square. Cambridge’s <a href=\"https://nrich.maths.org/problems/picturing-square-numbers\">NRICH exploration</a> shows this connection with pictures.</p>",
+      "title": "The next square needs an odd little border"
+    },
+    {
+      "id": "try-the-next-square",
+      "html": "<p>A five-by-five square has <strong>25</strong> tiles. How many extra tiles would turn it into six by six?</p><details class=\"practice-answer\"><summary>Check the border</summary><p><strong>11 extra tiles.</strong> Add a row of six and a column of five. The total becomes <strong>25 + 11 = 36</strong>, which is 6 × 6.</p></details><p>If a sequence looks mysterious, try drawing what its numbers describe. A little tiled floor can reveal a rule that a list of digits hides.</p>",
+      "title": "Can you grow a square without counting every tile?"
+    }
+  ],
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
+  "description": "Nine tiles make a three-by-three square. See why square numbers have that name, what the little 2 means and the odd pattern hiding between them.",
+  "publishedAt": "2026-10-11T17:36:47Z"
 }

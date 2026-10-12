@@ -31,9 +31,9 @@ window.BrainiTryFirst=(function(){
     const route=META[game]||META.brainmix;
     const practiceDate=previousDateFor(game,today);
     if(root){
-      root.querySelector("[data-title]")?.replaceChildren(document.createTextNode("Loading the full practice game…"));
+      root.querySelector("[data-title]")?.replaceChildren(document.createTextNode("Loading your practice round…"));
       const desc=root.querySelector("[data-description]");
-      if(desc) desc.textContent="Same rules and full gameplay as the scored Daily, with a different batch and no score.";
+      if(desc) desc.textContent="Practise the same game with different questions. This round does not add points.";
     }
     const qs=new URLSearchParams({archive:practiceDate,try:"1",today});
     location.replace(`${route}?${qs}`);

@@ -26,15 +26,15 @@
   ],
   "sources": [
     {
-      "url": "/games/connections/",
+      "url": "https://brainilabgames.com/games/connections/",
       "name": "BrainiLab — Connections"
     },
     {
-      "url": "/games/math-rush/",
+      "url": "https://brainilabgames.com/games/math-rush/",
       "name": "BrainiLab — Math Rush"
     },
     {
-      "url": "/geography/world-flags-quiz/",
+      "url": "https://brainilabgames.com/geography/world-flags-quiz/",
       "name": "BrainiLab — World Flags"
     }
   ],
@@ -44,7 +44,7 @@
     {
       "id": "pick-a-mood",
       "html": "<p>You open a page of games. Suddenly choosing a game feels like the first puzzle. Let’s make that part easier.</p><p>Forget choosing the one you ought to be good at. Pick the little moment you enjoy: spotting a connection, landing a quick calculation or recognising a place you have never visited. Here are three ways in.</p>",
-      "title": "What sort of curious are you today?"
+      "title": "Which game suits your mood?"
     },
     {
       "id": "words",
@@ -62,7 +62,7 @@
       "title": "“I’ve seen that somewhere”"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
   "description": "Do you enjoy words, numbers or flags? Find a game that suits you and see how to play your first round.",
   "publishedAt": "2026-10-04T16:00:00Z"
 }

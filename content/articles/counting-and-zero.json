@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/counting-and-zero-thumb.webp"
   },
   "order": 40,
-  "title": "Counting starts with one object at a time",
+  "title": "Counting and zero: what’s in an empty cup?",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -92,7 +92,7 @@
       "title": "A quick check before moving on"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
-  "description": "Move a few counters, keep track of each one, and see why an empty pile still has a number.",
+  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
+  "description": "Count one object at a time and discover why an empty cup still has a number.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

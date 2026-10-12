@@ -2,6 +2,8 @@
 
 These requirements reflect the user's explicit instruction of 11 October 2026: no new article may be published without following all the editorial, SEO, AEO and GEO guidelines. They apply to articles, Academy lessons and editorial learning paths.
 
+For public English, also follow PUBLIC_COPY.md in this directory. The user requested clear, easy English and accurate, inviting headlines on 12 October 2026. Keep account invitations voluntary and separate from any future newsletter subscription.
+
 Before drafting, read current published content to avoid overlapping search intent. Research the candidate keywords using first-party Search Console queries when available, or dated third-party demand estimates with their market and language. Check search-result intent and competing pages. Reuse research from the previous 30 days where applicable. Never invent volume, difficulty, rankings or traffic. Unknown data is unknown, not zero. If suitable demand evidence is unavailable, keep the article in draft rather than publishing it as researched.
 
 Write original, entertaining English for readers. Explain the actual question near the start and support the answer with specific examples. Use relevant searched terms naturally in the title, description, headings or text; do not force unrelated trending terms or a quota of keywords into an article. Public copy must not expose internal acquisition, SEO, monetisation or retention objectives. AEO and GEO mean clear, attributable explanations that can be understood and cited; they do not guarantee AI mentions or require artificial FAQ blocks.

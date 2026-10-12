@@ -98,7 +98,7 @@ window.BrainiAuth = (function(){
       <img class="auth-brandmark" src="/assets/brand/iso-multicolor.png" alt="" width="52" height="52">
       <div class="auth-kicker">Free BrainiLab account</div>
       <h2 id="authTitle">Save your progress</h2>
-      <p class="auth-lead">Your games and Academy progress, together in one free account.</p>
+      <p class="auth-lead">Keep your scores and course progress across devices. Join for free.</p>
 
       ${BrainiData.player().totalGames>0?`<div class="auth-keep">
         <div><strong>${stats[0]}</strong><span>kept on device</span></div>
@@ -148,7 +148,7 @@ window.BrainiAuth = (function(){
       <div class="auth-kicker">${reset?"Password reset":"Verify email"}</div>
       <h2 id="authTitle">Check your email</h2>
       <p class="auth-lead">${reset
-        ? `If an account exists for <strong>${pendingEmail}</strong>, Supabase will send a password-reset email.`
+        ? `If an account exists for <strong>${pendingEmail}</strong>, we’ll send a password-reset email.`
         : `We sent a confirmation link to <strong>${pendingEmail}</strong>. Open it to activate your BrainiLab account.`
       }</p>
       <button type="button" class="auth-primary" data-back-options>Back to sign in</button>
@@ -162,7 +162,7 @@ window.BrainiAuth = (function(){
       <div class="auth-success-icon">${BrainiIcons.product("success","auth-state-icon")}</div>
       <div class="auth-kicker">Progress saved</div>
       <h2 id="authTitle">Your BrainiLab is ready</h2>
-      <p class="auth-lead">Your account is active. Your profile, game results and progression can sync securely with BrainiLab.</p>
+      <p class="auth-lead">Your account is active. Your games and Academy progress can now sync across devices.</p>
       <div class="auth-success-stats">
         <div><strong>${BrainiIcons.product("streak","braini-inline-icon")} ${p.currentStreak}</strong><span>day streak</span></div>
         <div><strong>${d.brainScore.toLocaleString()}</strong><span>Daily Brain Score</span></div>
@@ -279,7 +279,7 @@ window.BrainiAuth = (function(){
             currentStep="resetSent";
             render();
           }catch(err){
-            error.textContent=err.message||"Could not send password reset.";
+            error.textContent=err.message||"We couldn’t send the reset email. Please try again.";
           }
         };
       }
@@ -385,10 +385,10 @@ window.BrainiAuth = (function(){
       <aside class="save-progress-card">
         <div class="save-progress-icon">☁</div>
         <div class="save-progress-copy">
-          <strong>Save this progress</strong>
-          <span>Keep your ${p.currentStreak}-day streak, scores and personal bests across devices.</span>
+          <strong>Keep your progress</strong>
+          <span>Keep your scores and course progress across devices with a free account.</span>
         </div>
-        <button type="button" data-save-progress>Save progress</button>
+        <button type="button" data-save-progress>Create free account</button>
       </aside>`;
   }
 
@@ -480,14 +480,14 @@ window.BrainiAuth = (function(){
             </div>
           </div>
           <div class="profile-cloud-badge ${cloud?"synced":""}">
-            ${cloud?"☁ Profile synced":realAccount?"⚙ Profile setup needed":"Prototype account"}
+            ${cloud?"☁ Profile synced":realAccount?"Finish setting up your profile":"Saved on this device"}
           </div>
         </div>
 
         ${realAccount && !cloud ? `
           <div class="profile-backend-warning">
-            <strong>Supabase account connected, profile table pending.</strong>
-            <span>Run <code>supabase/step2_profiles.sql</code> in the Supabase SQL Editor, then reload this page.</span>
+            <strong>Your profile could not sync.</strong>
+            <span>Your account is connected. Reload the page to try again, or contact us if this continues.</span>
           </div>
         ` : ""}
 
@@ -503,7 +503,7 @@ window.BrainiAuth = (function(){
               <input name="countryCode" maxlength="2" pattern="[A-Za-z]{2}" value="${(p.countryCode||"").replace(/"/g,"&quot;")}" placeholder="ES">
               <button type="submit">${cloud?"Save profile":"Save locally"}</button>
             </div>
-            <small class="profile-field-help">Use the 2-letter country code for now, e.g. ES, US, GB, FR. This powers local rankings.</small>
+            <small class="profile-field-help">Enter your country’s two-letter code, such as ES, US or GB, for country rankings.</small>
           </form>
 
           <div>
@@ -532,7 +532,7 @@ window.BrainiAuth = (function(){
             <label>Profile photo</label>
             <strong>${p.avatarUrl ? "Change your photo" : "Add a profile photo"}</strong>
             <span>
-              JPG, PNG or WebP. BrainiLab crops it square and stores a 512×512 version.
+              Choose a JPG, PNG or WebP image. We’ll crop it to a square.
             </span>
 
             ${realAccount && cloud ? `
@@ -629,7 +629,7 @@ window.BrainiAuth = (function(){
 
             try{
               if(!window.BrainiProfiles?.uploadAvatar){
-                throw new Error("Profile photo uploads are not configured yet.");
+                throw new Error("Photo uploads are unavailable. Please try again later.");
               }
 
               await BrainiProfiles.uploadAvatar(file);

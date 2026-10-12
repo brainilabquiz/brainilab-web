@@ -264,7 +264,7 @@ window.BrainiMonetization=(function(){
 
     if(!plusEnabled()){
       plusNotice(
-        "BrainiLab+ sales are currently disabled. Enable BrainiLab+ sales in Admin → Monetization for this test.",
+        "BrainiLab+ is not available yet. Nothing has been charged.",
         "warning"
       );
       return;
@@ -285,7 +285,7 @@ window.BrainiMonetization=(function(){
 
       if(!window.BrainiMonetizationBackend){
         throw new Error(
-          "The BrainiLab billing connection did not load. Hard-refresh the page and try again."
+          "The payment service could not load. Reload the page and try again."
         );
       }
 
@@ -297,7 +297,7 @@ window.BrainiMonetization=(function(){
 
       if(!data?.url){
         throw new Error(
-          "Stripe Checkout did not return a secure checkout URL."
+          "The checkout could not open. Please try again."
         );
       }
 
@@ -517,8 +517,7 @@ window.BrainiMonetization=(function(){
                 <span>BrainiLab+</span>
                 <strong>Coming soon</strong>
                 <p>
-                  The optional supporter membership is prepared
-                  but not available yet.
+                  Our optional supporter membership is not available yet.
                 </p>
               </div>
             </div>
@@ -621,7 +620,7 @@ window.BrainiMonetization=(function(){
       action=`
         <div class="plus-current-card">
           <span>COMING SOON</span>
-          <h2>BrainiLab+ is prepared for launch</h2>
+          <h2>BrainiLab+ is coming soon</h2>
           <p>
             Membership sales are currently disabled.
             Nothing will be charged.

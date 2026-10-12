@@ -17,10 +17,28 @@ function paint(){
  document.querySelectorAll('[data-lesson]').forEach(el=>{const done=records[el.dataset.lesson]?.version===el.dataset.version,n=el.querySelector('[data-lesson-number]');n.textContent=done?'✓':n.dataset.lessonNumber;n.setAttribute('aria-label',done?'Completed':'Lesson '+n.dataset.lessonNumber);el.classList.toggle('is-complete',done);el.querySelector('[data-lesson-status]').textContent=done?'Completed · revisit anytime':'Ready when you are';});
  document.querySelectorAll('[data-continue]').forEach(el=>{const lessons=JSON.parse(el.dataset.lessons),next=lessons.find(l=>records[l.slug]?.version!==l.version);el.href=next?'/learn/'+next.slug+'/':'/learn/'+lessons[0].slug+'/';el.textContent=next?(lessons[0]===next?'Start learning →':'Continue learning →'):'Revisit the lessons →';});
 }
+const dismissedInvites=new WeakSet();
+function paintAccountInvites(){
+ document.querySelectorAll('[data-learning-account-invite]').forEach(el=>{
+  el.hidden=!identified||account!=='guest'||dismissedInvites.has(el);
+  if(el.hidden||el.querySelector('[data-learning-join]'))return;
+  el.innerHTML='<div><h2>Keep learning on any device</h2><p>A free account keeps your game scores and Academy progress together.</p></div><div class="learning-account-actions"><button class="btn" type="button" data-learning-join>Create free account →</button><button class="btn-light" type="button" data-learning-dismiss>Not now</button></div><p class="learning-account-error" data-learning-account-error role="status" hidden></p>';
+  el.querySelector('[data-learning-dismiss]').onclick=()=>{dismissedInvites.add(el);el.hidden=true;(document.querySelector('#learn-search')||el.closest('[data-completion-panel]')?.querySelector('[data-review-round]'))?.focus();};
+  el.querySelector('[data-learning-join]').onclick=async event=>{
+   const button=event.currentTarget,error=el.querySelector('[data-learning-account-error]');button.disabled=true;error.hidden=true;
+   try{
+    if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
+    if(!window.BrainiAuth?.open)throw Error('Account service unavailable');
+    window.BrainiAuth.open({source:el.dataset.learningAccountInvite,mode:'signup'});
+   }catch{error.textContent='We couldn’t open sign-up. Please try again. You can keep reading.';error.hidden=false;}
+   finally{button.disabled=false;}
+  };
+ });
+}
 function note(text){document.querySelectorAll('[data-progress-storage]').forEach(el=>el.textContent=text);}
 async function identify(session){
  const next=session?.user&&!session.user.is_anonymous?session.user.id:'guest';if(identified&&next===account)return;identified=true;
- const token=++epoch;account=next;pending=null;load();paint();
+ const token=++epoch;account=next;pending=null;load();paint();paintAccountInvites();
  blocks.forEach(el=>resetters.get(el)?.());
  if(account==='guest'){note('Your progress is saved on this device. Finish a quick quiz to tick off a chapter.');return;}
  try{
@@ -76,7 +94,7 @@ window.addEventListener('storage',e=>{if(e.key===key()){load();paint();}});
 window.addEventListener('brainilab:backend-auth',e=>{sb=window.BrainiBackendAuth?.getClient();void identify(e.detail.session);});
 // Resolve the existing session without creating anonymous auth users.
 async function initSession(){
- try{if(window.BrainiPerf?.ensureCloud)await window.BrainiPerf.ensureCloud();sb=window.BrainiBackendAuth?.getClient();if(!sb)return;const {data}=await sb.auth.getSession();await identify(data?.session);}catch{note('Progress is saved on this browser. Sign-in is unavailable right now.');}
+ try{if(window.BrainiPerf?.ensureCloud)await window.BrainiPerf.ensureCloud();sb=window.BrainiBackendAuth?.getClient();if(!sb){identified=true;paintAccountInvites();return;}const {data}=await sb.auth.getSession();await identify(data?.session);}catch{identified=true;paintAccountInvites();note('Progress is saved on this browser. Sign-in is unavailable right now.');}
 }
 const sessionReady=initSession();
 
