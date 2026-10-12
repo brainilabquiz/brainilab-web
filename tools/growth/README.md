@@ -10,6 +10,8 @@ The website publishes none of this directory. Real exports, SQLite data, OAuth c
 
 The directory table reads an allowlisted snapshot of the existing private outreach registry. It distinguishes verified listings (with verification date and public URL), receipts awaiting review, uncertain sends and items needing private review. It does not crawl or resubmit automatically. A domain check also covers identifiable organisation domains from email/exclusion records, without exposing addresses or message bodies. Consumer mail providers cannot identify an organisation; always reconcile the complete private registry before sending.
 
+Resource submissions recorded as `submittedResource` are included alongside the older `resource`, `resourceUrls` and `destination` fields. A human-confirmed receipt remains pending, an uncertain send remains uncertain, and an observation or confirmation date is never substituted for an unknown submission time. Producer changes invalidate the same-day distribution cache while retaining its previous snapshot and leaving the outreach registry untouched.
+
 Refresh the published Supabase catalogue first, then run:
 
 ```text
