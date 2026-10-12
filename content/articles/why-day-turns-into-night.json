@@ -34,14 +34,14 @@
       },
       {
         "answer": 2,
-        "prompt": "Is this explanation a live sunrise prediction for your location?",
+        "prompt": "Is the activity a live sunrise prediction for your location?",
         "options": [
           "Yes, for all latitudes",
           "Only in winter",
           "No, it is a simplified model",
           "Yes, to the minute"
         ],
-        "explanation": "This explanation leaves out your location and several details of real daylight."
+        "explanation": "The model deliberately leaves out location and several details of real daylight."
       }
     ]
   },
@@ -97,7 +97,7 @@
       "title": "Why someone else is awake"
     }
   ],
-  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
+  "updatedAt": "2026-10-09T15:53:35Z",
   "description": "Shine a lamp on a globe and turn it slowly. See why your side of Earth has day while the other side has night.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
