@@ -56,12 +56,16 @@ def checked_plan(plan, as_of):
         raise ValueError('A researched script is required; queries alone cannot create a quiz')
     seen = set()
     for q in questions:
+        if not isinstance(q['prompt'], str) or len(q['prompt']) > 60 or '\n' in q['prompt'] or '\r' in q['prompt']:
+            raise ValueError('Visible question must fit one line and 60 characters; rewrite it without truncating')
         prompt = normalize(q['prompt'])
         if prompt in seen or not prompt:
             raise ValueError('Duplicate or empty question')
         seen.add(prompt)
         if len(q['options']) != 3 or len(set(q['options'])) != 3:
             raise ValueError('The pilot uses three distinct ABC choices')
+        if any(not isinstance(o, str) or not 1 <= len(o.split()) <= 3 or '\n' in o or '\r' in o for o in q['options']):
+            raise ValueError('Each visible ABC choice must fit one line and three words; rewrite it without truncating')
         if type(q['answer']) is not int or not 0 <= q['answer'] < 3:
             raise ValueError('Invalid answer index')
         if not q.get('explanation') or not q.get('source'):

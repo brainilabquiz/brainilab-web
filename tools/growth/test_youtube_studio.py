@@ -139,5 +139,57 @@ class StudioTests(unittest.TestCase):
         self.assertEqual(missing['videoPlanning']['status'],'needs_studio_observation')
         self.assertIsNone(packs.rank_topics(base,[plan()],'2026-10-13')['items'][0]['youtubeTopicDemand'])
 
+    def test_long_visible_copy_fails_before_creating_any_artifact(self):
+        r=self.private/'report.json';ps=self.private/'plans.json';yt.atomic(r,growth())
+        for prompt,options in [('A year ends in 00. Which final check decides whether it keeps its leap day?', ['2','4','400']),
+                               ('Why add leap days?', ['To keep dates close to the seasons','Equal months','Match weekdays']),
+                               ('Question\nwith a break?', ['2','4','400'])]:
+            p=plan();p['questions'][0].update(prompt=prompt,options=options)
+            yt.atomic(ps,[p]);out=self.private/'invalid'
+            with self.assertRaises(ValueError):packs.generate(r,ps,out,'2026-10-13')
+            self.assertFalse(out.exists())
+        p=plan();p['questions'][0].update(prompt='x'*60,options=['three visible words','2','4'])
+        yt.atomic(ps,[p]);packs.generate(r,ps,self.private/'boundary','2026-10-13')
+        saved=json.loads((self.private/'boundary/example/upload-pack.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['questions'][0]['prompt'],'x'*60)
+        self.assertEqual(saved['questions'][0]['options'][0],'three visible words')
+
+    def test_reviewed_revision_preserves_identity_day_history_and_daily_limit(self):
+        s=self.private/'studio.json';yt.atomic(s,observation())
+        p=plan();p['youtubeEvidence']={'snapshotSha256':yt.digest(s),'references':['calendar quiz'],'fitExplanation':'Fixture'}
+        r=self.private/'report.json';ps=self.private/'plans.json';yt.atomic(r,growth());yt.atomic(ps,[p])
+        a=self.private/'v1';b=self.private/'v2'
+        packs.generate(r,ps,a,'2026-10-13',s);first=drafts.register(self.private,a,None)
+        original=json.loads((self.private/'video-drafts.json').read_text(encoding='utf-8'))['drafts'][0]
+        p['questions'][0]['prompt']='What is two plus two?';yt.atomic(ps,[p]);packs.generate(r,ps,b,'2026-10-13',s)
+        with self.assertRaises(ValueError):drafts.register(self.private,b,first['sha256'],'example','0'*64)
+        second=drafts.register(self.private,b,first['sha256'],'example',original['manifestSha256'])
+        self.assertEqual((second['added'],second['revised']),(0,1))
+        saved=json.loads((self.private/'video-drafts.json').read_text(encoding='utf-8'))['drafts']
+        self.assertEqual(len(saved),1)
+        for key in ('id','createdAt','preparationDay','automaticCycle','actor','status'):
+            self.assertEqual(saved[0][key],original[key])
+        self.assertEqual(saved[0]['versions'][0]['manifestSha256'],original['manifestSha256'])
+        again=drafts.register(self.private,b,second['sha256'],'example',original['manifestSha256'])
+        self.assertEqual((again['added'],again['revised'],again['reused']),(0,0,1))
+        p['id']='other';p['destination']='https://brainilabgames.com/learn/other/'
+        base=growth();base['distribution']['resources'].append({'path':'/learn/other/'})
+        yt.atomic(r,base);yt.atomic(ps,[p]);packs.generate(r,ps,self.private/'other','2026-10-13',s)
+        with self.assertRaises(ValueError):drafts.register(self.private,self.private/'other',second['sha256'])
+
+    def test_revision_refuses_human_edits_and_deferred_status(self):
+        r=self.private/'report.json';ps=self.private/'plans.json';yt.atomic(r,growth());p=plan();yt.atomic(ps,[p])
+        a=self.private/'v1';b=self.private/'v2';packs.generate(r,ps,a,'2026-10-13')
+        first=drafts.register(self.private,a,None);manifest=yt.digest(a/'manifest.json')
+        p['questions'][0]['prompt']='What is two plus two?';yt.atomic(ps,[p]);packs.generate(r,ps,b,'2026-10-13')
+        human=a/'example/UPLOAD-PACK.md';before=human.read_bytes();human.write_bytes(b'Human correction')
+        with self.assertRaises(ValueError):drafts.register(self.private,b,first['sha256'],'example',manifest)
+        self.assertEqual(human.read_bytes(),b'Human correction')
+        human.write_bytes(before)
+        saved=json.loads((self.private/'video-drafts.json').read_text(encoding='utf-8'));saved['drafts'][0]['status']='user_deferred'
+        yt.atomic(self.private/'video-drafts.json',saved)
+        with self.assertRaises(ValueError):drafts.register(self.private,b,yt.digest(self.private/'video-drafts.json'),'example',manifest)
+        self.assertEqual(json.loads((self.private/'video-drafts.json').read_text(encoding='utf-8'))['drafts'][0]['status'],'user_deferred')
+
 
 if __name__=='__main__':unittest.main()
