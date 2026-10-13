@@ -5,9 +5,11 @@ from content_measurement import attach_content
 from search_performance import attach_search
 from distribution import attach_distribution
 from datetime import date, datetime
+from youtube_studio import attach as attach_youtube
 
 
 def attach_measurement(report, private):
+    report = attach_youtube(report, private)
     report = attach_distribution(report, private)
     report = attach_search(report, private)
     report = attach_content(report, private)

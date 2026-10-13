@@ -6,3 +6,4 @@ dist/
 !.env.example
 __pycache__/
 supabase/.temp/
+tools/growth/data/

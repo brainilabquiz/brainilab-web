@@ -2,6 +2,7 @@
 import hashlib
 from openseo import research_tasks
 from search_intent import enrich_tasks
+from youtube_studio import handoff as video_handoff
 
 def build_handoff(report):
     tasks=[];seen=set()
@@ -44,7 +45,8 @@ def build_handoff(report):
                     'observedAt':search['observedAt'],'timezone':search['current']['analyticsTimezone'],
                     'source':'GA4 google / organic','data':matches[0],
                     'limit':'Session landing-page evidence only. Never attribute these outcomes to a keyword or treat registration requests as confirmed accounts.'}
-    return {'schemaVersion':2,'mode':'automatic_codex','authorization':'Owner explicitly authorized detection, execution and publication on 2026-10-01.',
+    return {'schemaVersion':2,'mode':'automatic_codex','authorization':'Owner explicitly authorized detection, execution and publication on 2026-10-01. Video research and packs authorized 2026-10-13 for preparation only; video publication is not authorized.',
+        'videoResearch':video_handoff(report),
         'researchTasks':research_tasks(report.get('openseo')),
         'researchInstructions':['Use installed openseo:seo-project-setup, openseo:seo-audit and openseo:keyword-research skills in that order.',
             'Verify whoami and list_projects first. Resolve the exact domain, read context and reuse recent research before spending credits.',
