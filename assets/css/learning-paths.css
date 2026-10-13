@@ -66,6 +66,10 @@
 @media(max-width:650px){.academy-lab:has(.word-lab-controls) .lab-workbench{grid-template-columns:1fr}.academy-lab .word-lab-controls .lab-choices{grid-template-columns:1fr}.academy-lab .word-lab-scene{min-height:100px}}
 
 /* A quiet account invitation after reading or a completed optional quiz. */
+/* Matching lessons are a direct link only while a reader searches Academy. */
+.library-grid .academy-card .path-match{position:relative;z-index:1;display:block;font-size:13px;font-weight:650;line-height:1.5;margin:0 0 12px;padding:8px 0;color:#2d296e;text-decoration:underline;text-underline-offset:3px}
+.library-grid .academy-card .path-match[hidden]{display:none}
+.library-grid .academy-card .path-match:focus-visible{outline:3px solid #3fab34;outline-offset:3px}
 .learning-account-invite{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px;margin:28px 0;border:1px solid #ddd5c8;border-left:4px solid #39ad31;border-radius:16px;background:#f4f6ec}
 .learning-account-invite[hidden]{display:none}.learning-account-invite h2{font-size:22px;line-height:1.25;margin:0 0 8px}.learning-account-invite p{font-family:inherit;font-size:15px;line-height:1.6;margin:0}.learning-account-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}.learning-account-invite .btn,.learning-account-invite .btn-light{font-size:14px;white-space:nowrap}.learning-account-error{color:#a32424}
 @media(max-width:700px){.learning-account-invite{align-items:flex-start;flex-direction:column;gap:16px;padding:20px}.learning-account-invite h2{font-size:20px}.learning-account-actions{flex-wrap:wrap;gap:8px;width:100%}.learning-account-invite .btn,.learning-account-invite .btn-light{font-size:13px}}

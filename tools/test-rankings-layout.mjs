@@ -14,6 +14,9 @@ w.BrainiAuth={open:()=>{}};
 for(const file of ['progression-ui.js','rankings.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
 await new Promise(r=>setTimeout(r,0));
 const root=w.document.querySelector('#rankingsRoot');
+assert.equal(w.BrainiRankings.state.period,'monthly','ordinary visits open this month');
+assert.equal(w.document.querySelector('#rankingPeriod').value,'monthly');
+assert.match(root.querySelector('.ranking-board-period').textContent,/This month/);
 assert.equal(root.querySelectorAll('[role=table] [role=row]').length,4);
 assert.doesNotMatch(root.querySelector('.ranking-rules').textContent,/2026|verified|UTC|2,500|50 XP|250 XP/);
 assert.ok(root.querySelector('.ranking-rules').textContent.length<260);
@@ -37,10 +40,15 @@ assert.equal(root.querySelector('.ranking-player-count').textContent,'1 player')
 assert.equal(root.querySelectorAll('.ranking-row').length,1);
 assert.match(root.querySelector('.ranking-personal').textContent,/Not ranked yet/);
 assert.equal(root.querySelector('.ranking-personal-link').getAttribute('href'),'/daily-quiz/');
-data={...data,rows:[],totalPlayers:0};await w.BrainiRankings.render();
+w.BrainiRankings.state.period='daily';data={...data,rows:[],totalPlayers:0};await w.BrainiRankings.render();
 assert.equal(root.querySelectorAll('.ranking-row').length,0);assert.ok(root.querySelector('[data-ranking-month]'));
 root.querySelector('[data-ranking-month]').click();await new Promise(r=>setTimeout(r,0));
-assert.equal(w.BrainiRankings.state.period,'monthly');assert.match(w.location.search,/period=monthly/);
+assert.equal(w.BrainiRankings.state.period,'monthly');assert.equal(new w.URLSearchParams(w.location.search).has('period'),false,'monthly is the canonical default selection');
+const period=w.document.querySelector('#rankingPeriod');period.value='alltime';period.dispatchEvent(new w.Event('change'));await new Promise(r=>setTimeout(r,0));
+assert.equal(w.BrainiRankings.state.period,'alltime');assert.match(w.location.search,/period=alltime/);assert.match(root.querySelector('.ranking-board-period').textContent,/All-time/);
+assert.match(root.querySelector('.ranking-rules').textContent,/Scores add up across days/);
+period.value='daily';period.dispatchEvent(new w.Event('change'));await new Promise(r=>setTimeout(r,0));
+assert.match(w.location.search,/period=daily/,'today stays explicit on reload');
 const metric=w.document.querySelector('#rankingMetric');metric.value='streak';metric.dispatchEvent(new w.Event('change'));await new Promise(r=>setTimeout(r,0));
 assert.ok(w.document.querySelector('#rankingPeriod').disabled);assert.ok(w.document.querySelector('#rankingGame').disabled);assert.match(root.textContent,/Current streaks/);
 w.BrainiRankings.state.mode='group';data={...data,rows:[{...row(1,'Team',25),members:3}],totalPlayers:1};await w.BrainiRankings.render();
@@ -48,4 +56,15 @@ assert.equal(root.querySelector('.ranking-player-count').textContent,'1 team');a
 w.BrainiRankings.state.mode='individual';fail=true;w.console.error=()=>{};await w.BrainiRankings.render();assert.ok(root.querySelector('[data-ranking-retry]'));
 fail=false;root.querySelector('[data-ranking-retry]').click();await new Promise(r=>setTimeout(r,0));assert.ok(root.querySelector('[role=table]'));
 w.BrainiRankingsCloud.individual=()=>new Promise(r=>resolvePending=r);const pending=w.BrainiRankings.render();assert.ok(root.querySelector('.ranking-skeleton[role=status]'));resolvePending(data);await pending;
-dom.window.close();console.log('PASS rankings presentation: tied positions, own row, singular counts, empty/loading/error/retry, group layout, period control and streak filters.');
+dom.window.close();
+for(const [query,expected] of [['','monthly'],['?period=daily','daily'],['?period=weekly','weekly'],['?period=monthly','monthly'],['?period=alltime','alltime'],['?period=unknown','monthly']]){
+ const reload=new JSDOM(readFileSync('rankings/index.html','utf8'),{url:'https://brainilabgames.com/rankings/'+query,runScripts:'outside-only'}),rw=reload.window;
+ let sentPeriod;
+ rw.BrainiData={authState:()=>({status:'guest'}),player:()=>({})};
+ rw.BrainiBackendAuth={isConfigured:()=>true};rw.BrainiIcons={product:()=>'',groupCrest:()=>''};
+ rw.BrainiRankingsCloud={individual:async filters=>{sentPeriod=filters.period;return {rows:[],totalPlayers:0};}};
+ rw.eval(readFileSync('assets/js/rankings.js','utf8'));await new Promise(r=>setTimeout(r,0));
+ assert.equal(rw.BrainiRankings.state.period,expected);assert.equal(sentPeriod,expected,'Selected period reaches the backend');
+ assert.equal(rw.document.querySelector('#rankingPeriod').value,expected);reload.window.close();
+}
+console.log('PASS rankings presentation: tied positions, own row, singular counts, empty/loading/error/retry, group layout, period reload/backend routing and streak filters.');
