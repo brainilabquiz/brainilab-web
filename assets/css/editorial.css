@@ -86,6 +86,13 @@
 .article-reading .article-fold>summary>span{font-size:12px;color:var(--muted);font-weight:400;margin-left:8px}
 .article-reading .article-fold>ul{margin:0 0 20px}
 .article-reading .article-fold .lesson-quiz{margin:8px 0 24px;box-shadow:none}
+/* A quiet, direct next step without opening the course tools. */
+.article-reading a.article-course-next{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--brand-blue)}
+.course-step-copy{display:grid;gap:4px;min-width:0}
+.course-step-label{font-size:12px;font-weight:500;color:var(--muted)}
+.course-step-copy>strong{font-size:17px;line-height:1.5;font-weight:650}
+.course-step-arrow{display:grid;place-items:center;flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--brand-yellow);font-size:20px}
+.article-course-next:hover strong{text-decoration:underline;text-underline-offset:4px}
 /* One compact invitation to play after the optional reading tools. */
 .article-reading a.article-game-link{display:grid;grid-template-columns:80px minmax(0,1fr) auto;align-items:center;gap:16px;margin:24px 0 12px;padding:16px;background:#fffdf9;border:1px solid var(--line);border-left:3px solid var(--brand-green);border-radius:12px;text-decoration:none}
 .article-game-link>img{display:block;width:80px;height:60px;object-fit:contain}
