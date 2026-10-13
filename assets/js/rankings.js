@@ -2,7 +2,7 @@ window.BrainiRankings=(function(){
   const state={
     mode:"individual",
     region:"global",
-    period:"daily",
+    period:"monthly",
     gameId:"all",
     metric:"score",
     expanded:false
@@ -47,7 +47,7 @@ window.BrainiRankings=(function(){
   function currentPeriodLabel(){
     if(state.metric==="streak") return "Current";
 
-    return {daily:"Today",weekly:"This week",monthly:"This month"}[state.period];
+    return {daily:"Today",weekly:"This week",monthly:"This month",alltime:"All-time"}[state.period];
   }
 
   function syncControls(){
@@ -100,7 +100,7 @@ window.BrainiRankings=(function(){
       url.searchParams.set("region",state.region);
     }
 
-    if(state.period==="daily"){
+    if(state.period==="monthly"){
       url.searchParams.delete("period");
     }else{
       url.searchParams.set("period",state.period);
@@ -121,7 +121,7 @@ window.BrainiRankings=(function(){
     history.replaceState(
       {},
       document.title,
-      url.pathname+url.search
+      url.pathname+url.search+url.hash
     );
   }
 
@@ -217,8 +217,10 @@ window.BrainiRankings=(function(){
     const explanation=state.metric==='streak'
       ? 'Longer active streaks rank higher. Complete the main Daily to keep yours going.'
       : state.mode==='group'
-        ? 'Your team’s three highest scores count. Teams with the same score share a place.'
-        : 'Your score decides your place. Players with the same score share a position.';
+        ? 'Your team’s three highest scores count each day. Teams with the same score share a place.'
+        : state.period==='alltime'
+          ? 'Scores add up across days. Players with the same score share a position.'
+          : 'Your score decides your place. Players with the same score share a position.';
     return `<details class="ranking-rules"><summary>How rankings work</summary><p>${explanation}</p><p>XP builds your level and is separate from this ranking.</p></details>`;
   }
 
@@ -620,7 +622,7 @@ window.BrainiRankings=(function(){
     }
 
     const period=params.get("period");
-    if(["daily","weekly","monthly"].includes(period)){
+    if(["daily","weekly","monthly","alltime"].includes(period)){
       state.period=period;
     }
 
