@@ -1,0 +1,102 @@
+{
+  "slug": "mean-vs-median-biscuit-average",
+  "title": "Mean vs median: the biscuit tin that changes the average",
+  "description": "Five friends bring biscuits. One brings a whole tin. Discover why the mean and median tell different stories about the same snack.",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 125,
+  "publishedAt": "2026-10-13T05:56:43Z",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "game": {
+    "name": "Math Rush",
+    "url": "/games/math-rush/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/mean-vs-median-biscuit-average.webp",
+    "small": "/assets/images/learn/mean-vs-median-biscuit-average-small.webp",
+    "thumbnail": "/assets/images/learn/mean-vs-median-biscuit-average-thumb.webp",
+    "alt": "Four small groups of biscuits beside a much taller stack in a purple tin, illustrating an unusually large value",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "OpenStax — Mean, Median and Mode",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/8-3-mean-median-and-mode"
+    },
+    {
+      "name": "OpenStax — Measures of Center and the Effect of Outliers",
+      "url": "https://openstax.org/books/principles-data-science/pages/3-1-measures-of-center"
+    }
+  ],
+  "related": [
+    "division-sharing-equally",
+    "mental-percentages-without-a-calculator"
+  ],
+  "practice": "Try a quick round of arithmetic in Math Rush.",
+  "sections": [
+    {
+      "id": "mean-vs-median",
+      "title": "One snack, two different answers",
+      "html": "<p><strong>The mean adds all the values and divides by how many there are. The median is the middle value after you put them in order.</strong> With an even number of values, take the mean of the two middle ones. <a href=\"https://openstax.org/books/contemporary-mathematics/pages/8-3-mean-median-and-mode\">OpenStax explains both measures</a>.</p><p>Imagine five friends bringing biscuits to a picnic: <strong>2, 3, 3, 4 and 18</strong>. Four pack a small snack. One arrives with a tin that means business. How many biscuits did a typical friend bring?</p>"
+    },
+    {
+      "id": "calculate-the-mean",
+      "title": "Share the whole pile",
+      "html": "<p>Add the five amounts: <strong>2 + 3 + 3 + 4 + 18 = 30</strong>. Divide by five friends: <strong>30 ÷ 5 = 6</strong>. The mean is six biscuits.</p><p>Think of it as <a href=\"/learn/division-sharing-equally/\">sharing the total equally</a>. Everyone would get six if the friends pooled their biscuits. Nobody actually brought six. That does not make the calculation wrong; it tells you what the mean measures.</p>"
+    },
+    {
+      "id": "find-the-median",
+      "title": "Pick the middle friend",
+      "html": "<p>The amounts are already in order: 2, 3, <strong>3</strong>, 4, 18. The third value sits in the middle, so the median is <strong>three biscuits</strong>.</p><p>Now imagine the generous friend brings 38 instead of 18. The total becomes 50, so the mean rises to <strong>10</strong>. The middle value is still 3. A very large value can pull the mean upwards without changing the median in this example. <a href=\"https://openstax.org/books/principles-data-science/pages/3-1-measures-of-center\">OpenStax discusses this effect of extreme values</a>.</p>"
+    },
+    {
+      "id": "which-average",
+      "title": "Which answer should you use?",
+      "html": "<p>Want to know what everyone could receive after sharing? The mean answers that question. Want to describe the middle of this rather uneven group? The median is useful.</p><p>For an even-sized group, try <strong>2, 3, 4, 9</strong>. The middle pair is 3 and 4. Their mean is <strong>(3 + 4) ÷ 2 = 3.5</strong>, so the median is 3.5. It need not be a number anyone brought.</p><p>When you hear “the average”, ask which average it means. The biscuits have not changed. The question has.</p>"
+    }
+  ],
+  "hub": {
+    "name": "Maths from zero",
+    "url": "/learn/paths/maths-from-zero/"
+  },
+  "quiz": {
+    "version": "math-mean-median-v1",
+    "questions": [
+      {
+        "prompt": "Five values are 2, 3, 3, 4 and 18. What is their mean?",
+        "options": [
+          "3",
+          "6",
+          "18",
+          "30"
+        ],
+        "answer": 1,
+        "explanation": "The total is 30. There are five values, so 30 ÷ 5 = 6."
+      },
+      {
+        "prompt": "Change the ordered list to 2, 3, 3, 4 and 38. What is the median?",
+        "options": [
+          "3",
+          "10",
+          "38",
+          "50"
+        ],
+        "answer": 0,
+        "explanation": "The third value is still 3. Changing the largest value did not change the middle one here."
+      },
+      {
+        "prompt": "What is the median of 2, 3, 4 and 9?",
+        "options": [
+          "3",
+          "4",
+          "3.5",
+          "4.5"
+        ],
+        "answer": 2,
+        "explanation": "For four values, use the mean of the middle pair: (3 + 4) ÷ 2 = 3.5."
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "slug": "why-we-see-same-side-of-moon",
+  "title": "Why do we always see the same side of the Moon?",
+  "description": "The Moon really does rotate. Discover the neat timing behind its familiar face—and why the far side is not always dark.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 126,
+  "publishedAt": "2026-10-13T05:56:43Z",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-we-see-same-side-of-moon.webp",
+    "small": "/assets/images/learn/why-we-see-same-side-of-moon-small.webp",
+    "thumbnail": "/assets/images/learn/why-we-see-same-side-of-moon-thumb.webp",
+    "alt": "Blue model Earth beside a smaller cratered grey Moon on a curved orbital wire, an illustrative tabletop display",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "NASA Science — Moon Facts: Orbit and Rotation",
+      "url": "https://science.nasa.gov/moon/facts/"
+    },
+    {
+      "name": "NASA Science — Moon Phases and Libration",
+      "url": "https://science.nasa.gov/moon/moon-phases/"
+    }
+  ],
+  "related": [
+    "why-the-moon-changes-shape",
+    "solar-eclipse-vs-lunar-eclipse"
+  ],
+  "practice": "Try a Science Quiz to explore another question about the world around us.",
+  "sections": [
+    {
+      "id": "tidal-locking-explained",
+      "title": "A familiar face with a hidden turn",
+      "html": "<p><strong>We see roughly the same side of the Moon because it turns once on its axis in the time it takes to orbit Earth once.</strong> This matching rhythm is called synchronous rotation; the Moon is <strong>tidally locked</strong> to Earth. <a href=\"https://science.nasa.gov/moon/facts/\">NASA explains its orbit and rotation</a>.</p><p>Watch the Moon on different nights and the outline changes, but its familiar dark patches keep returning. It is tempting to think the Moon never spins. In fact, a spin is what keeps that familiar face pointing towards us.</p>"
+    },
+    {
+      "id": "picture-the-turn",
+      "title": "Imagine walking around a chair",
+      "html": "<p>Picture a chair in the middle of a room. You walk around it, always keeping your face towards the chair. Halfway around, you face the opposite wall from the one you faced at the start.</p><p>By the time you complete the circle, your body has turned once. One journey around the chair, one turn of your body. That is the basic idea behind the Moon’s matching movements.</p><p>If you kept facing the same wall throughout the walk, different sides of you would face the chair. “No rotation” would not keep the same face pointing inwards.</p>"
+    },
+    {
+      "id": "far-side-not-dark-side",
+      "title": "The far side gets sunshine too",
+      "html": "<p><strong>Far side</strong> describes the side facing away from Earth. It does not mean a place in permanent darkness. As <a href=\"https://science.nasa.gov/moon/facts/\">NASA points out</a>, different parts of the Moon move between sunlight and darkness.</p><p>The <a href=\"/learn/why-the-moon-changes-shape/\">phases of the Moon</a> tell us how much of its sunlit half we can see. They are a change in illumination and viewpoint, not a different face swinging round for each night’s appearance.</p>"
+    },
+    {
+      "id": "a-little-peek-around-the-edge",
+      "title": "Why say roughly the same side?",
+      "html": "<p>Our view shifts a little over time. The Moon appears to nod and rock, letting us glimpse slightly around its edges. This effect is called <strong>libration</strong>, and <a href=\"https://science.nasa.gov/moon/moon-phases/\">NASA’s Moon phases page explains it</a>.</p><p>So “the same side” is a useful starting point, rather than a perfectly frozen view. The important distinction stays simple: <strong>the Moon rotates, and its rotation matches its orbit</strong>. Next time those dark patches look familiar, there is a turn hiding behind that familiar face.</p>"
+    }
+  ],
+  "hub": {
+    "name": "Sun, Moon and time",
+    "url": "/learn/paths/sun-moon-and-time/"
+  },
+  "quiz": {
+    "version": "science-moon-tidal-locking-v1",
+    "questions": [
+      {
+        "prompt": "Why does roughly the same side of the Moon face Earth?",
+        "options": [
+          "It does not rotate",
+          "It rotates once for each orbit of Earth",
+          "Earth never rotates",
+          "Only one side exists"
+        ],
+        "answer": 1,
+        "explanation": "The Moon makes one turn on its axis in the time it takes to orbit Earth once. This is synchronous rotation."
+      },
+      {
+        "prompt": "What does the far side of the Moon mean?",
+        "options": [
+          "The side that never gets sunlight",
+          "A separate small moon",
+          "The side facing away from Earth",
+          "The side that is always full"
+        ],
+        "answer": 2,
+        "explanation": "Far side names its direction relative to Earth. It has periods of sunlight and darkness too."
+      },
+      {
+        "prompt": "What is libration?",
+        "options": [
+          "The Moon’s apparent rocking that reveals a little more around its edges",
+          "A permanent eclipse",
+          "The Moon stopping its orbit",
+          "Sunlight produced by the Moon"
+        ],
+        "answer": 0,
+        "explanation": "Libration slightly changes our view of the Moon, allowing glimpses around its edges over time."
+      }
+    ]
+  }
+}

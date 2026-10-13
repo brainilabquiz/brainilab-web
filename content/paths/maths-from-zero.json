@@ -43,6 +43,11 @@
       "slug": "prime-numbers-why-one-is-not-prime",
       "level": "8 · Count the factors",
       "objective": "Identify prime and composite numbers by their different positive factors, and explain why 1 is neither."
+    },
+    {
+      "slug": "mean-vs-median-biscuit-average",
+      "level": "9 · Find the middle",
+      "objective": "Calculate a mean and a median, then explain how one unusually large value changes the story."
     }
   ],
   "sources": [
@@ -73,6 +78,14 @@
     {
       "name": "OpenStax — Contemporary Mathematics: Prime and Composite Numbers",
       "url": "https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers"
+    },
+    {
+      "name": "OpenStax — Mean, Median and Mode",
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/8-3-mean-median-and-mode"
+    },
+    {
+      "name": "OpenStax — Measures of Center and the Effect of Outliers",
+      "url": "https://openstax.org/books/principles-data-science/pages/3-1-measures-of-center"
     }
   ],
   "authorId": "biel-sarda",
@@ -104,6 +117,14 @@
     {
       "term": "Prime number",
       "definition": "A whole number greater than 1 with exactly two different positive factors: 1 and itself."
+    },
+    {
+      "term": "Mean",
+      "definition": "The total of the values divided by how many values there are."
+    },
+    {
+      "term": "Median",
+      "definition": "The middle value in an ordered list; with an even number of values, the mean of the middle pair."
     }
   ],
   "outcomes": [
@@ -114,12 +135,13 @@
     "Connect equal groups to multiplication.",
     "Share whole objects equally and identify a remainder.",
     "Read squared notation and connect whole-number squares to tile arrangements.",
-    "Count different positive factors to distinguish primes, composites and the number 1."
+    "Count different positive factors to distinguish primes, composites and the number 1.",
+    "Calculate a mean and median, and compare how they respond to one unusually large value."
   ],
-  "updatedAt": "2026-10-12T17:00:36Z",
-  "description": "Eight short maths lessons: count, add, subtract, make equal groups, explore squares and discover why prime numbers have just two factors. Optional quizzes included.",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "description": "Short maths lessons from counting and equal sharing to squares, prime numbers and the difference between mean and median. Optional quizzes included.",
   "publishedAt": "2026-09-30 20:58:19.100686+00",
   "coverArticle": "addition-putting-things-together",
-  "introduction": "<p>Begin with a small pile of counters and an empty space. Learn to count, build tens, add, subtract and share equally. Then grow a square and discover which numbers refuse to form equal groups.</p><p>Each short lesson adds one idea. Read at your own pace; optional quizzes stay tucked away until you want them.</p>",
+  "introduction": "<p>Begin with a small pile of counters and an empty space. Learn to count, build tens, add, subtract and share equally. Then grow a square, count factors and discover how a very full biscuit tin can change an average.</p><p>Each short lesson adds one idea. Read at your own pace; optional quizzes stay tucked away until you want them.</p>",
   "prerequisites": "No arithmetic background. Start by counting the counters one at a time."
 }

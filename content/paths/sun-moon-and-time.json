@@ -28,6 +28,11 @@
       "slug": "solar-eclipse-vs-lunar-eclipse",
       "level": "5 · Follow the shadow",
       "objective": "Distinguish solar and lunar eclipses by alignment, shadow and Moon phase."
+    },
+    {
+      "slug": "why-we-see-same-side-of-moon",
+      "level": "6 · Follow the familiar face",
+      "objective": "Explain synchronous rotation, distinguish the far side from darkness and recognise the small change in viewpoint called libration."
     }
   ],
   "sources": [
@@ -58,6 +63,10 @@
     {
       "name": "NASA Science — Eclipse Viewing Safety",
       "url": "https://science.nasa.gov/eclipses/safety/"
+    },
+    {
+      "name": "NASA Science — Moon Facts: Orbit and Rotation",
+      "url": "https://science.nasa.gov/moon/facts/"
     }
   ],
   "authorId": "biel-sarda",
@@ -77,6 +86,14 @@
     {
       "term": "Eclipse",
       "definition": "An alignment where one object blocks sunlight from reaching another object or from reaching our view."
+    },
+    {
+      "term": "Synchronous rotation",
+      "definition": "One turn on an object’s axis in the same time as one orbit around its partner."
+    },
+    {
+      "term": "Libration",
+      "definition": "Small apparent rocking of the Moon that changes our view around its edges."
     }
   ],
   "outcomes": [
@@ -84,12 +101,13 @@
     "Explain lunar phases without confusing them with eclipses.",
     "Connect seasons to tilt, sunlight angle and daylight.",
     "Distinguish a time zone from its current UTC offset.",
-    "Distinguish solar and lunar eclipses by alignment, shadow and Moon phase."
+    "Distinguish solar and lunar eclipses by alignment, shadow and Moon phase.",
+    "Explain why the Moon rotates while keeping roughly the same side facing Earth, and why its far side is not always dark."
   ],
-  "updatedAt": "2026-10-11T18:18:46.052Z",
-  "description": "Start with day and night, explore Moon phases and seasons, then make sense of time zones and the two different shadows behind eclipses.",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "description": "Explore day and night, Moon phases, seasons, time zones and eclipses, then discover why the Moon keeps its familiar face towards Earth.",
   "publishedAt": "2026-09-30 18:56:22.650105+00",
   "coverArticle": "why-the-moon-changes-shape",
-  "introduction": "<p>A ball beside a lamp, the changing evening light and a call to a faraway friend will help us make sense of the sky and our clocks.</p><p>Five short lessons lead from familiar observations to solar and lunar eclipses. You can read at your own pace and try the optional quizzes.</p>",
-  "prerequisites": "No astronomy background needed. The last lesson includes simple clock arithmetic."
+  "introduction": "<p>A ball beside a lamp, the changing evening light and a call to a faraway friend help us make sense of the sky and our clocks.</p><p>Follow the light through phases and eclipses, then picture a walk around a chair to understand the Moon’s hidden turn. Read at your own pace; the quizzes are optional.</p>",
+  "prerequisites": "No astronomy background needed. The time-zone lesson includes simple clock arithmetic."
 }

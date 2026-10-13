@@ -1,0 +1,64 @@
+{
+  "slug": "why-do-onions-make-you-cry",
+  "title": "Why do onions make you cry?",
+  "description": "An onion can turn dinner prep into a tearful scene. Meet the tiny airborne irritant behind the drama and the chemistry of a cooler onion.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 127,
+  "publishedAt": "2026-10-13T05:56:43Z",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-do-onions-make-you-cry.webp",
+    "small": "/assets/images/learn/why-do-onions-make-you-cry-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-onions-make-you-cry-thumb.webp",
+    "alt": "Two halves of a golden onion on a wooden board beside a purple handkerchief and glass teardrops",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "American Chemical Society — The Compound Behind Onion Tears",
+      "url": "https://www.acs.org/molecule-of-the-week/archive/p/syn-propanethial-s-oxide.html"
+    },
+    {
+      "name": "American Chemical Society — Chemistry Life Hacks",
+      "url": "https://www.acs.org/content/dam/acsorg/pressroom/reactions/infographics/chemistry-life-hacks.pdf"
+    }
+  ],
+  "related": [
+    "counting-seconds-after-lightning",
+    "why-octopuses-have-three-hearts"
+  ],
+  "practice": "Try a Science Quiz for more small mysteries hiding in everyday life.",
+  "sections": [
+    {
+      "id": "why-onions-cause-tears",
+      "title": "Dinner has suddenly become emotional",
+      "html": "<p><strong>Cutting an onion breaks its cells and starts chemical reactions that release an airborne irritant. When it reaches your eyes, they produce tears to help wash it away.</strong> The <a href=\"https://www.acs.org/content/dam/acsorg/pressroom/reactions/infographics/chemistry-life-hacks.pdf\">American Chemical Society explains this chain of events</a>.</p><p>You were only making dinner. A moment later, you look as though the recipe has said something deeply upsetting. The onion has not hurt your feelings. It has set off a chemical reaction.</p>"
+    },
+    {
+      "id": "the-compound-behind-the-drama",
+      "title": "A tiny molecule with a very long name",
+      "html": "<p>The culprit is called <strong>syn-propanethial S-oxide</strong>. You can forget the spelling and keep the useful part: it is volatile, so it can travel through the air from a freshly cut onion to your eyes.</p><p><a href=\"https://www.acs.org/molecule-of-the-week/archive/p/syn-propanethial-s-oxide.html\">ACS describes the enzymes involved</a>. These help create one compound and then turn it into the tear-provoking one. An enzyme helps a chemical reaction happen; you do not need to memorise every step to understand the result.</p>"
+    },
+    {
+      "id": "why-cutting-matters",
+      "title": "The knife starts the chain",
+      "html": "<p>The important change is the damage to the onion’s cells. Chopping opens them and allows the reactions to begin. The explanation is more specific than “onions smell strong”: an irritant is being formed and released.</p><p>Keep the sequence in mind: <strong>broken cells → chemical reactions → airborne irritant → tears</strong>. Those tears are the response at the end of the chain, rather than liquid coming out of the onion and somehow jumping into your eyes.</p>"
+    },
+    {
+      "id": "does-chilling-help",
+      "title": "What happens if the onion is cooler?",
+      "html": "<p><a href=\"https://www.acs.org/content/dam/acsorg/pressroom/reactions/infographics/chemistry-life-hacks.pdf\">ACS suggests refrigerating onions before chopping</a>. Lowering the temperature slows the conversion and release of the compounds involved. It is a way to slow the chemistry, rather than a promise that no tears will appear.</p><p>Next time an onion interrupts dinner, the question is less “Why am I so emotional?” and more “What did cutting those cells allow to happen?” A kitchen can be a chemistry lesson with a chopping board.</p><p>For another everyday mystery, discover <a href=\"/learn/counting-seconds-after-lightning/\">why thunder comes after lightning</a>.</p>"
+    }
+  ],
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  }
+}
