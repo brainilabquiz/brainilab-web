@@ -1,0 +1,64 @@
+{
+  "slug": "pencil-grades-h-b-hb-explained",
+  "title": "Pencil grades: what do H, B and HB actually mean?",
+  "description": "The tiny letters on your pencil explain its mark. Decode H, B, HB, 2H and 2B without turning your desk into an art shop.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 128,
+  "publishedAt": "2026-10-13T05:56:43Z",
+  "updatedAt": "2026-10-13T05:56:43Z",
+  "game": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/pencil-grades-h-b-hb-explained.webp",
+    "small": "/assets/images/learn/pencil-grades-h-b-hb-explained-small.webp",
+    "thumbnail": "/assets/images/learn/pencil-grades-h-b-hb-explained-thumb.webp",
+    "alt": "Three sharpened wooden graphite pencils beside light, medium and dark graphite swatches on cream paper",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "STAEDTLER — Pencil Ingredients and Hardness Grades",
+      "url": "https://www.staedtler.com/ca/en/products/pencils-and-accessories/"
+    },
+    {
+      "name": "STAEDTLER — Graphite Pencil Grades for Writing and Drawing",
+      "url": "https://www.staedtler.com/ca/en/products/pencils-and-accessories/graphite-pencils/"
+    }
+  ],
+  "related": [
+    "how-post-it-notes-were-invented",
+    "was-bubble-wrap-invented-as-wallpaper"
+  ],
+  "practice": "Try a General Knowledge quiz for more questions about familiar things.",
+  "sections": [
+    {
+      "id": "pencil-grades-explained",
+      "title": "The letters are doing a small job",
+      "html": "<p><strong>H means hard, B means black, and HB means hard black.</strong> In the usual graphite pencil scale, H grades are harder, B grades are softer and darker, and HB sits between them. <a href=\"https://www.staedtler.com/ca/en/products/pencils-and-accessories/\">Pencil maker STAEDTLER explains the letters and grades</a>.</p><p>A pencil looks like such a simple object that its tiny code can seem oddly serious. You wanted to draw a cat, not choose a spacecraft component. Fortunately, the code is just a clue to the kind of mark it makes.</p>"
+    },
+    {
+      "id": "h-and-b-numbers",
+      "title": "Why 2H and 2B go in different directions",
+      "html": "<p>A larger number before <strong>H</strong> means a harder grade: 2H is harder than H. A larger number before <strong>B</strong> means a softer grade: 2B is softer than B.</p><p>So the number is not a quality score. A 4H pencil has not beaten a 2B pencil in a competition. They do different jobs. Softer grades help with dark shading; harder grades suit lighter, finer work. <a href=\"https://www.staedtler.com/ca/en/products/pencils-and-accessories/graphite-pencils/\">STAEDTLER groups its grades by writing and drawing uses</a>.</p>"
+    },
+    {
+      "id": "graphite-and-clay",
+      "title": "What changes inside the pencil?",
+      "html": "<p>In a traditional graphite pencil, the core contains <strong>graphite and clay</strong>. Graphite leaves the familiar grey-black mark. According to <a href=\"https://www.staedtler.com/ca/en/products/pencils-and-accessories/\">STAEDTLER’s manufacturing explanation</a>, changing their proportions changes the hardness: more clay makes a harder core; more graphite makes it softer and blacker.</p><p>The barrel colour can be cheerful, but it does not tell you the grade. The little H or B is the useful clue when two ordinary pencils leave surprisingly different marks.</p>"
+    },
+    {
+      "id": "a-small-pencil-test",
+      "title": "Try three patches on scrap paper",
+      "html": "<p>If you have an H, an HB and a B pencil, shade a small patch with each using similar pressure. Compare the marks. A darker patch does not automatically mean a better pencil; it might simply be closer to the effect you want.</p><p>Remember the two directions: <strong>more H, harder; more B, softer</strong>. You can return to drawing the cat. Its dramatic shadow may need a different pencil from its first faint outline.</p><p>For another clever detail on a desk, read <a href=\"/learn/how-post-it-notes-were-invented/\">how a slipping bookmark helped inspire Post-it Notes</a>.</p>"
+    }
+  ],
+  "hub": {
+    "name": "General Knowledge",
+    "url": "/general-knowledge/"
+  }
+}
