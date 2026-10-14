@@ -1,0 +1,1858 @@
+{
+  "date": "2026-10-14",
+  "type": "original-source-checked-game-content",
+  "sources": [
+    {
+      "id": "iau",
+      "publisher": "International Astronomical Union",
+      "url": "https://www.iau.org/IAU/IAU/Astronomy-FAQs/Constellations.aspx?hkey=bb9dc841-0618-41b5-ac70-149741062141",
+      "checked_at": "2026-10-14",
+      "sha256": "ff10cbf93ccb88997c2a9ce4e0932cc4758a4ae9a8b4e6dfbc6f6323f16bbf63"
+    },
+    {
+      "id": "nps",
+      "publisher": "US National Park Service",
+      "url": "https://www.nps.gov/aboutus/national-park-system.htm",
+      "checked_at": "2026-10-14",
+      "sha256": "5c1d051b4c97c672071e5065cff5f297631cbf7147d2b76dcda1f1070d4540c4"
+    },
+    {
+      "id": "rsc",
+      "publisher": "Royal Shakespeare Company",
+      "url": "https://www.rsc.org.uk/shakespeares-plays/tragedies-comedies-histories",
+      "checked_at": "2026-10-14",
+      "sha256": "c8aa44c5fdfe2b7312da7dc12c35269eeda373df84ca810d95c0183ee5027f7f"
+    },
+    {
+      "id": "nato",
+      "publisher": "NATO",
+      "url": "https://www.nato.int/en/about-us/organization/nato-member-countries",
+      "checked_at": "2026-10-14",
+      "sha256": "963a7731bd4de811a06cf2a98f6a7669c4a04e63d38d45eae8aa2984cb1cb4a2"
+    }
+  ],
+  "review": {
+    "article": false,
+    "source_lists_complete": true,
+    "aliases_checked_for_collisions": true,
+    "existing_content_duplicates_checked": true,
+    "daily_assignments_preserved": true
+  },
+  "topicrush": [
+    {
+      "external_key": "knowledge-20261014-constellations",
+      "title": "Constellations",
+      "prompt": "Name IAU constellations. Latin names, English names and official three-letter abbreviations count.",
+      "target_count": 12,
+      "source_url": "https://www.iau.org/IAU/IAU/Astronomy-FAQs/Constellations.aspx?hkey=bb9dc841-0618-41b5-ac70-149741062141",
+      "scope": "All 88 IAU constellations; asterisms such as the Big Dipper are excluded.",
+      "answers": [
+        {
+          "answer": "Andromeda",
+          "aliases": [
+            "And",
+            "The Princess",
+            "Princess"
+          ]
+        },
+        {
+          "answer": "Antlia",
+          "aliases": [
+            "Ant",
+            "The Air Pump",
+            "Air Pump"
+          ]
+        },
+        {
+          "answer": "Apus",
+          "aliases": [
+            "Aps",
+            "The Bird of Paradise",
+            "Bird of Paradise"
+          ]
+        },
+        {
+          "answer": "Aquarius",
+          "aliases": [
+            "Aqr",
+            "The Water Bearer",
+            "Water Bearer"
+          ]
+        },
+        {
+          "answer": "Aquila",
+          "aliases": [
+            "Aql",
+            "The Eagle",
+            "Eagle"
+          ]
+        },
+        {
+          "answer": "Ara",
+          "aliases": [
+            "The Altar",
+            "Altar"
+          ]
+        },
+        {
+          "answer": "Aries",
+          "aliases": [
+            "Ari",
+            "The Ram",
+            "Ram"
+          ]
+        },
+        {
+          "answer": "Auriga",
+          "aliases": [
+            "Aur",
+            "The Charioteer",
+            "Charioteer"
+          ]
+        },
+        {
+          "answer": "Boötes",
+          "aliases": [
+            "Boo",
+            "The Herdsman",
+            "Herdsman"
+          ]
+        },
+        {
+          "answer": "Caelum",
+          "aliases": [
+            "Cae",
+            "The Engraving Tool",
+            "Engraving Tool"
+          ]
+        },
+        {
+          "answer": "Camelopardalis",
+          "aliases": [
+            "Cam",
+            "The Giraffe",
+            "Giraffe"
+          ]
+        },
+        {
+          "answer": "Cancer",
+          "aliases": [
+            "Cnc",
+            "The Crab",
+            "Crab"
+          ]
+        },
+        {
+          "answer": "Canes Venatici",
+          "aliases": [
+            "CVn",
+            "The Hunting Dogs",
+            "Hunting Dogs"
+          ]
+        },
+        {
+          "answer": "Canis Major",
+          "aliases": [
+            "CMa",
+            "The Great Dog",
+            "Great Dog"
+          ]
+        },
+        {
+          "answer": "Canis Minor",
+          "aliases": [
+            "CMi",
+            "The Lesser Dog",
+            "Lesser Dog"
+          ]
+        },
+        {
+          "answer": "Capricornus",
+          "aliases": [
+            "Cap",
+            "The Sea Goat",
+            "Sea Goat"
+          ]
+        },
+        {
+          "answer": "Carina",
+          "aliases": [
+            "Car",
+            "The Ship's Keel",
+            "Ship's Keel"
+          ]
+        },
+        {
+          "answer": "Cassiopeia",
+          "aliases": [
+            "Cas",
+            "The Queen",
+            "Queen"
+          ]
+        },
+        {
+          "answer": "Centaurus",
+          "aliases": [
+            "Cen",
+            "The Centaur",
+            "Centaur"
+          ]
+        },
+        {
+          "answer": "Cepheus",
+          "aliases": [
+            "Cep",
+            "The King",
+            "King"
+          ]
+        },
+        {
+          "answer": "Cetus",
+          "aliases": [
+            "Cet",
+            "The Sea Monster",
+            "Sea Monster"
+          ]
+        },
+        {
+          "answer": "Chamaeleon",
+          "aliases": [
+            "Cha",
+            "The Chameleon",
+            "Chameleon"
+          ]
+        },
+        {
+          "answer": "Circinus",
+          "aliases": [
+            "Cir",
+            "The Drawing Compass",
+            "Drawing Compass"
+          ]
+        },
+        {
+          "answer": "Columba",
+          "aliases": [
+            "Col",
+            "The Dove",
+            "Dove"
+          ]
+        },
+        {
+          "answer": "Coma Berenices",
+          "aliases": [
+            "Com",
+            "The Berenice's Hair",
+            "Berenice's Hair"
+          ]
+        },
+        {
+          "answer": "Corona Australis",
+          "aliases": [
+            "CrA",
+            "The Southern Crown",
+            "Southern Crown"
+          ]
+        },
+        {
+          "answer": "Corona Borealis",
+          "aliases": [
+            "CrB",
+            "The Northern Crown",
+            "Northern Crown"
+          ]
+        },
+        {
+          "answer": "Corvus",
+          "aliases": [
+            "Crv",
+            "The Crow",
+            "Crow"
+          ]
+        },
+        {
+          "answer": "Crater",
+          "aliases": [
+            "Crt",
+            "The Cup",
+            "Cup"
+          ]
+        },
+        {
+          "answer": "Crux",
+          "aliases": [
+            "Cru",
+            "The Southern Cross",
+            "Southern Cross"
+          ]
+        },
+        {
+          "answer": "Cygnus",
+          "aliases": [
+            "Cyg",
+            "The Swan",
+            "Swan"
+          ]
+        },
+        {
+          "answer": "Delphinus",
+          "aliases": [
+            "Del",
+            "The Dolphin",
+            "Dolphin"
+          ]
+        },
+        {
+          "answer": "Dorado",
+          "aliases": [
+            "Dor",
+            "The Dolphinfish",
+            "Dolphinfish"
+          ]
+        },
+        {
+          "answer": "Draco",
+          "aliases": [
+            "Dra",
+            "The Dragon",
+            "Dragon"
+          ]
+        },
+        {
+          "answer": "Equuleus",
+          "aliases": [
+            "Equ",
+            "The Little Horse",
+            "Little Horse"
+          ]
+        },
+        {
+          "answer": "Eridanus",
+          "aliases": [
+            "Eri",
+            "The River",
+            "River"
+          ]
+        },
+        {
+          "answer": "Fornax",
+          "aliases": [
+            "For",
+            "The Furnace",
+            "Furnace"
+          ]
+        },
+        {
+          "answer": "Gemini",
+          "aliases": [
+            "Gem",
+            "The Twins",
+            "Twins"
+          ]
+        },
+        {
+          "answer": "Grus",
+          "aliases": [
+            "Gru",
+            "The Crane",
+            "Crane"
+          ]
+        },
+        {
+          "answer": "Hercules",
+          "aliases": [
+            "Her"
+          ]
+        },
+        {
+          "answer": "Horologium",
+          "aliases": [
+            "Hor",
+            "The Pendulum Clock",
+            "Pendulum Clock"
+          ]
+        },
+        {
+          "answer": "Hydra",
+          "aliases": [
+            "Hya",
+            "The Water Snake",
+            "Water Snake"
+          ]
+        },
+        {
+          "answer": "Hydrus",
+          "aliases": [
+            "Hyi",
+            "The Lesser Water Snake",
+            "Lesser Water Snake"
+          ]
+        },
+        {
+          "answer": "Indus",
+          "aliases": [
+            "Ind",
+            "The Indian",
+            "Indian"
+          ]
+        },
+        {
+          "answer": "Lacerta",
+          "aliases": [
+            "Lac",
+            "The Lizard",
+            "Lizard"
+          ]
+        },
+        {
+          "answer": "Leo",
+          "aliases": [
+            "The Lion",
+            "Lion"
+          ]
+        },
+        {
+          "answer": "Leo Minor",
+          "aliases": [
+            "LMi",
+            "The Lesser Lion",
+            "Lesser Lion"
+          ]
+        },
+        {
+          "answer": "Lepus",
+          "aliases": [
+            "Lep",
+            "The Hare",
+            "Hare"
+          ]
+        },
+        {
+          "answer": "Libra",
+          "aliases": [
+            "Lib",
+            "The Scales",
+            "Scales"
+          ]
+        },
+        {
+          "answer": "Lupus",
+          "aliases": [
+            "Lup",
+            "The Wolf",
+            "Wolf"
+          ]
+        },
+        {
+          "answer": "Lynx",
+          "aliases": [
+            "Lyn",
+            "The Lynx"
+          ]
+        },
+        {
+          "answer": "Lyra",
+          "aliases": [
+            "Lyr",
+            "The Lyre",
+            "Lyre"
+          ]
+        },
+        {
+          "answer": "Mensa",
+          "aliases": [
+            "Men",
+            "The Table Mountain",
+            "Table Mountain"
+          ]
+        },
+        {
+          "answer": "Microscopium",
+          "aliases": [
+            "Mic",
+            "The Microscope",
+            "Microscope"
+          ]
+        },
+        {
+          "answer": "Monoceros",
+          "aliases": [
+            "Mon",
+            "The Unicorn",
+            "Unicorn"
+          ]
+        },
+        {
+          "answer": "Musca",
+          "aliases": [
+            "Mus",
+            "The Fly",
+            "Fly"
+          ]
+        },
+        {
+          "answer": "Norma",
+          "aliases": [
+            "Nor",
+            "The Set Square",
+            "Set Square"
+          ]
+        },
+        {
+          "answer": "Octans",
+          "aliases": [
+            "Oct",
+            "The Octant",
+            "Octant"
+          ]
+        },
+        {
+          "answer": "Ophiuchus",
+          "aliases": [
+            "Oph",
+            "The Serpent Bearer",
+            "Serpent Bearer"
+          ]
+        },
+        {
+          "answer": "Orion",
+          "aliases": [
+            "Ori",
+            "The Hunter",
+            "Hunter"
+          ]
+        },
+        {
+          "answer": "Pavo",
+          "aliases": [
+            "Pav",
+            "The Peacock",
+            "Peacock"
+          ]
+        },
+        {
+          "answer": "Pegasus",
+          "aliases": [
+            "Peg",
+            "The Winged Horse",
+            "Winged Horse"
+          ]
+        },
+        {
+          "answer": "Perseus",
+          "aliases": [
+            "Per",
+            "The Hero",
+            "Hero"
+          ]
+        },
+        {
+          "answer": "Phoenix",
+          "aliases": [
+            "Phe",
+            "The Phoenix"
+          ]
+        },
+        {
+          "answer": "Pictor",
+          "aliases": [
+            "Pic",
+            "The Painter's Easel",
+            "Painter's Easel"
+          ]
+        },
+        {
+          "answer": "Pisces",
+          "aliases": [
+            "Psc",
+            "The Fishes",
+            "Fishes"
+          ]
+        },
+        {
+          "answer": "Piscis Austrinus",
+          "aliases": [
+            "PsA",
+            "The Southern Fish",
+            "Southern Fish"
+          ]
+        },
+        {
+          "answer": "Puppis",
+          "aliases": [
+            "Pup",
+            "The Ship's Stern",
+            "Ship's Stern"
+          ]
+        },
+        {
+          "answer": "Pyxis",
+          "aliases": [
+            "Pyx",
+            "The Mariner's Compass",
+            "Mariner's Compass"
+          ]
+        },
+        {
+          "answer": "Reticulum",
+          "aliases": [
+            "Ret",
+            "The Net (an instrument)",
+            "Net (an instrument)"
+          ]
+        },
+        {
+          "answer": "Sagitta",
+          "aliases": [
+            "Sge",
+            "The Arrow",
+            "Arrow"
+          ]
+        },
+        {
+          "answer": "Sagittarius",
+          "aliases": [
+            "Sgr",
+            "The Archer",
+            "Archer"
+          ]
+        },
+        {
+          "answer": "Scorpius",
+          "aliases": [
+            "Sco",
+            "The Scorpion",
+            "Scorpion"
+          ]
+        },
+        {
+          "answer": "Sculptor",
+          "aliases": [
+            "Scl",
+            "The Sculptor"
+          ]
+        },
+        {
+          "answer": "Scutum",
+          "aliases": [
+            "Sct",
+            "The Shield",
+            "Shield"
+          ]
+        },
+        {
+          "answer": "Serpens",
+          "aliases": [
+            "Ser",
+            "The Serpent",
+            "Serpent"
+          ]
+        },
+        {
+          "answer": "Sextans",
+          "aliases": [
+            "Sex",
+            "The Sextant",
+            "Sextant"
+          ]
+        },
+        {
+          "answer": "Taurus",
+          "aliases": [
+            "Tau",
+            "The Bull",
+            "Bull"
+          ]
+        },
+        {
+          "answer": "Telescopium",
+          "aliases": [
+            "Tel",
+            "The Telescope",
+            "Telescope"
+          ]
+        },
+        {
+          "answer": "Triangulum",
+          "aliases": [
+            "Tri",
+            "The Triangle",
+            "Triangle"
+          ]
+        },
+        {
+          "answer": "Triangulum Australe",
+          "aliases": [
+            "TrA",
+            "The Southern Triangle",
+            "Southern Triangle"
+          ]
+        },
+        {
+          "answer": "Tucana",
+          "aliases": [
+            "Tuc",
+            "The Toucan",
+            "Toucan"
+          ]
+        },
+        {
+          "answer": "Ursa Major",
+          "aliases": [
+            "UMa",
+            "The Great Bear",
+            "Great Bear"
+          ]
+        },
+        {
+          "answer": "Ursa Minor",
+          "aliases": [
+            "UMi",
+            "The Little Bear",
+            "Little Bear"
+          ]
+        },
+        {
+          "answer": "Vela",
+          "aliases": [
+            "Vel",
+            "The Ship's Sails",
+            "Ship's Sails"
+          ]
+        },
+        {
+          "answer": "Virgo",
+          "aliases": [
+            "Vir",
+            "The Maiden",
+            "Maiden"
+          ]
+        },
+        {
+          "answer": "Volans",
+          "aliases": [
+            "Vol",
+            "The Flying Fish",
+            "Flying Fish"
+          ]
+        },
+        {
+          "answer": "Vulpecula",
+          "aliases": [
+            "Vul",
+            "The Fox",
+            "Fox"
+          ]
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-us-national-parks",
+      "title": "U.S. national parks",
+      "prompt": "Name U.S. national parks, including those in U.S. territories. Short park names are fine.",
+      "target_count": 12,
+      "source_url": "https://www.nps.gov/aboutus/national-park-system.htm",
+      "scope": "All 63 sites in the NPS National Parks section, not every unit of the National Park System.",
+      "answers": [
+        {
+          "answer": "Acadia National Park",
+          "aliases": [
+            "Acadia",
+            "Acadia NP"
+          ]
+        },
+        {
+          "answer": "Arches National Park",
+          "aliases": [
+            "Arches",
+            "Arches NP"
+          ]
+        },
+        {
+          "answer": "Badlands National Park",
+          "aliases": [
+            "Badlands",
+            "Badlands NP"
+          ]
+        },
+        {
+          "answer": "Big Bend National Park",
+          "aliases": [
+            "Big Bend",
+            "Big Bend NP"
+          ]
+        },
+        {
+          "answer": "Biscayne National Park",
+          "aliases": [
+            "Biscayne",
+            "Biscayne NP"
+          ]
+        },
+        {
+          "answer": "Black Canyon of the Gunnison National Park",
+          "aliases": [
+            "Black Canyon of the Gunnison",
+            "Black Canyon of the Gunnison NP"
+          ]
+        },
+        {
+          "answer": "Bryce Canyon National Park",
+          "aliases": [
+            "Bryce Canyon",
+            "Bryce Canyon NP"
+          ]
+        },
+        {
+          "answer": "Canyonlands National Park",
+          "aliases": [
+            "Canyonlands",
+            "Canyonlands NP"
+          ]
+        },
+        {
+          "answer": "Capitol Reef National Park",
+          "aliases": [
+            "Capitol Reef",
+            "Capitol Reef NP"
+          ]
+        },
+        {
+          "answer": "Carlsbad Caverns National Park",
+          "aliases": [
+            "Carlsbad Caverns",
+            "Carlsbad Caverns NP"
+          ]
+        },
+        {
+          "answer": "Channel Islands National Park",
+          "aliases": [
+            "Channel Islands",
+            "Channel Islands NP"
+          ]
+        },
+        {
+          "answer": "Congaree National Park",
+          "aliases": [
+            "Congaree",
+            "Congaree NP"
+          ]
+        },
+        {
+          "answer": "Crater Lake National Park",
+          "aliases": [
+            "Crater Lake",
+            "Crater Lake NP"
+          ]
+        },
+        {
+          "answer": "Cuyahoga Valley National Park",
+          "aliases": [
+            "Cuyahoga Valley",
+            "Cuyahoga Valley NP"
+          ]
+        },
+        {
+          "answer": "Death Valley National Park",
+          "aliases": [
+            "Death Valley",
+            "Death Valley NP"
+          ]
+        },
+        {
+          "answer": "Denali National Park",
+          "aliases": [
+            "Denali",
+            "Denali NP"
+          ]
+        },
+        {
+          "answer": "Dry Tortugas National Park",
+          "aliases": [
+            "Dry Tortugas",
+            "Dry Tortugas NP"
+          ]
+        },
+        {
+          "answer": "Everglades National Park",
+          "aliases": [
+            "Everglades",
+            "Everglades NP"
+          ]
+        },
+        {
+          "answer": "Gates of the Arctic National Park",
+          "aliases": [
+            "Gates of the Arctic",
+            "Gates of the Arctic NP"
+          ]
+        },
+        {
+          "answer": "Gateway Arch National Park",
+          "aliases": [
+            "Gateway Arch",
+            "Gateway Arch NP"
+          ]
+        },
+        {
+          "answer": "Glacier Bay National Park",
+          "aliases": [
+            "Glacier Bay",
+            "Glacier Bay NP"
+          ]
+        },
+        {
+          "answer": "Glacier National Park",
+          "aliases": [
+            "Glacier",
+            "Glacier NP"
+          ]
+        },
+        {
+          "answer": "Grand Canyon National Park",
+          "aliases": [
+            "Grand Canyon",
+            "Grand Canyon NP"
+          ]
+        },
+        {
+          "answer": "Grand Teton National Park",
+          "aliases": [
+            "Grand Teton",
+            "Grand Teton NP"
+          ]
+        },
+        {
+          "answer": "Great Basin National Park",
+          "aliases": [
+            "Great Basin",
+            "Great Basin NP"
+          ]
+        },
+        {
+          "answer": "Great Sand Dunes National Park",
+          "aliases": [
+            "Great Sand Dunes",
+            "Great Sand Dunes NP"
+          ]
+        },
+        {
+          "answer": "Great Smoky Mountains National Park",
+          "aliases": [
+            "Great Smoky Mountains",
+            "Great Smoky Mountains NP"
+          ]
+        },
+        {
+          "answer": "Guadalupe Mountains National Park",
+          "aliases": [
+            "Guadalupe Mountains",
+            "Guadalupe Mountains NP"
+          ]
+        },
+        {
+          "answer": "Haleakalā National Park",
+          "aliases": [
+            "Haleakalā",
+            "Haleakalā NP"
+          ]
+        },
+        {
+          "answer": "Hawai'i Volcanoes National Park",
+          "aliases": [
+            "Hawai'i Volcanoes",
+            "Hawai'i Volcanoes NP"
+          ]
+        },
+        {
+          "answer": "Hot Springs National Park",
+          "aliases": [
+            "Hot Springs",
+            "Hot Springs NP"
+          ]
+        },
+        {
+          "answer": "Indiana Dunes National Park",
+          "aliases": [
+            "Indiana Dunes",
+            "Indiana Dunes NP"
+          ]
+        },
+        {
+          "answer": "Isle Royale National Park",
+          "aliases": [
+            "Isle Royale",
+            "Isle Royale NP"
+          ]
+        },
+        {
+          "answer": "Joshua Tree National Park",
+          "aliases": [
+            "Joshua Tree",
+            "Joshua Tree NP"
+          ]
+        },
+        {
+          "answer": "Katmai National Park",
+          "aliases": [
+            "Katmai",
+            "Katmai NP"
+          ]
+        },
+        {
+          "answer": "Kenai Fjords National Park",
+          "aliases": [
+            "Kenai Fjords",
+            "Kenai Fjords NP"
+          ]
+        },
+        {
+          "answer": "Kings Canyon National Park",
+          "aliases": [
+            "Kings Canyon",
+            "Kings Canyon NP"
+          ]
+        },
+        {
+          "answer": "Kobuk Valley National Park",
+          "aliases": [
+            "Kobuk Valley",
+            "Kobuk Valley NP"
+          ]
+        },
+        {
+          "answer": "Lake Clark National Park",
+          "aliases": [
+            "Lake Clark",
+            "Lake Clark NP"
+          ]
+        },
+        {
+          "answer": "Lassen Volcanic National Park",
+          "aliases": [
+            "Lassen Volcanic",
+            "Lassen Volcanic NP"
+          ]
+        },
+        {
+          "answer": "Mammoth Cave National Park",
+          "aliases": [
+            "Mammoth Cave",
+            "Mammoth Cave NP"
+          ]
+        },
+        {
+          "answer": "Mesa Verde National Park",
+          "aliases": [
+            "Mesa Verde",
+            "Mesa Verde NP"
+          ]
+        },
+        {
+          "answer": "Mount Rainier National Park",
+          "aliases": [
+            "Mount Rainier",
+            "Mount Rainier NP"
+          ]
+        },
+        {
+          "answer": "National Park of American Samoa",
+          "aliases": [
+            "American Samoa",
+            "American Samoa NP",
+            "American Samoa National Park"
+          ]
+        },
+        {
+          "answer": "New River Gorge National Park and Preserve",
+          "aliases": [
+            "New River Gorge",
+            "New River Gorge NP",
+            "New River Gorge National Park"
+          ]
+        },
+        {
+          "answer": "North Cascades National Park",
+          "aliases": [
+            "North Cascades",
+            "North Cascades NP"
+          ]
+        },
+        {
+          "answer": "Olympic National Park",
+          "aliases": [
+            "Olympic",
+            "Olympic NP"
+          ]
+        },
+        {
+          "answer": "Petrified Forest National Park",
+          "aliases": [
+            "Petrified Forest",
+            "Petrified Forest NP"
+          ]
+        },
+        {
+          "answer": "Pinnacles National Park",
+          "aliases": [
+            "Pinnacles",
+            "Pinnacles NP"
+          ]
+        },
+        {
+          "answer": "Redwood National Park",
+          "aliases": [
+            "Redwood",
+            "Redwood NP"
+          ]
+        },
+        {
+          "answer": "Rocky Mountain National Park",
+          "aliases": [
+            "Rocky Mountain",
+            "Rocky Mountain NP"
+          ]
+        },
+        {
+          "answer": "Saguaro National Park",
+          "aliases": [
+            "Saguaro",
+            "Saguaro NP"
+          ]
+        },
+        {
+          "answer": "Sequoia National Park",
+          "aliases": [
+            "Sequoia",
+            "Sequoia NP"
+          ]
+        },
+        {
+          "answer": "Shenandoah National Park",
+          "aliases": [
+            "Shenandoah",
+            "Shenandoah NP"
+          ]
+        },
+        {
+          "answer": "Theodore Roosevelt National Park",
+          "aliases": [
+            "Theodore Roosevelt",
+            "Theodore Roosevelt NP"
+          ]
+        },
+        {
+          "answer": "Virgin Islands National Park",
+          "aliases": [
+            "Virgin Islands",
+            "Virgin Islands NP"
+          ]
+        },
+        {
+          "answer": "Voyageurs National Park",
+          "aliases": [
+            "Voyageurs",
+            "Voyageurs NP"
+          ]
+        },
+        {
+          "answer": "White Sands National Park",
+          "aliases": [
+            "White Sands",
+            "White Sands NP"
+          ]
+        },
+        {
+          "answer": "Wind Cave National Park",
+          "aliases": [
+            "Wind Cave",
+            "Wind Cave NP"
+          ]
+        },
+        {
+          "answer": "Wrangell-St. Elias National Park",
+          "aliases": [
+            "Wrangell-St. Elias",
+            "Wrangell-St. Elias NP",
+            "Wrangell Saint Elias"
+          ]
+        },
+        {
+          "answer": "Yellowstone National Park",
+          "aliases": [
+            "Yellowstone",
+            "Yellowstone NP"
+          ]
+        },
+        {
+          "answer": "Yosemite National Park",
+          "aliases": [
+            "Yosemite",
+            "Yosemite NP"
+          ]
+        },
+        {
+          "answer": "Zion National Park",
+          "aliases": [
+            "Zion",
+            "Zion NP"
+          ]
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-shakespeare-plays",
+      "title": "Shakespeare's plays",
+      "prompt": "Name Shakespeare's plays. For Henry IV and Henry VI, include the part number.",
+      "target_count": 12,
+      "source_url": "https://www.rsc.org.uk/shakespeares-plays/tragedies-comedies-histories",
+      "scope": "The 36 First Folio plays plus Pericles and The Two Noble Kinsmen, matching the RSC list. Lost or disputed plays and poems are excluded.",
+      "answers": [
+        {
+          "answer": "All's Well That Ends Well",
+          "aliases": []
+        },
+        {
+          "answer": "As You Like It",
+          "aliases": []
+        },
+        {
+          "answer": "The Comedy of Errors",
+          "aliases": [
+            "Comedy of Errors"
+          ]
+        },
+        {
+          "answer": "Love's Labour's Lost",
+          "aliases": []
+        },
+        {
+          "answer": "Measure for Measure",
+          "aliases": []
+        },
+        {
+          "answer": "The Merchant of Venice",
+          "aliases": [
+            "Merchant of Venice"
+          ]
+        },
+        {
+          "answer": "The Merry Wives of Windsor",
+          "aliases": [
+            "Merry Wives of Windsor"
+          ]
+        },
+        {
+          "answer": "A Midsummer Night's Dream",
+          "aliases": [
+            "Midsummer Night's Dream"
+          ]
+        },
+        {
+          "answer": "Much Ado About Nothing",
+          "aliases": []
+        },
+        {
+          "answer": "The Taming of the Shrew",
+          "aliases": [
+            "Taming of the Shrew"
+          ]
+        },
+        {
+          "answer": "The Tempest",
+          "aliases": [
+            "Tempest"
+          ]
+        },
+        {
+          "answer": "Twelfth Night",
+          "aliases": []
+        },
+        {
+          "answer": "The Two Gentlemen of Verona",
+          "aliases": [
+            "Two Gentlemen of Verona"
+          ]
+        },
+        {
+          "answer": "The Winter's Tale",
+          "aliases": [
+            "Winter's Tale"
+          ]
+        },
+        {
+          "answer": "Antony and Cleopatra",
+          "aliases": []
+        },
+        {
+          "answer": "Coriolanus",
+          "aliases": []
+        },
+        {
+          "answer": "Cymbeline",
+          "aliases": []
+        },
+        {
+          "answer": "Hamlet",
+          "aliases": []
+        },
+        {
+          "answer": "Julius Caesar",
+          "aliases": []
+        },
+        {
+          "answer": "King Lear",
+          "aliases": []
+        },
+        {
+          "answer": "Macbeth",
+          "aliases": []
+        },
+        {
+          "answer": "Othello",
+          "aliases": []
+        },
+        {
+          "answer": "Romeo and Juliet",
+          "aliases": []
+        },
+        {
+          "answer": "Timon of Athens",
+          "aliases": []
+        },
+        {
+          "answer": "Titus Andronicus",
+          "aliases": []
+        },
+        {
+          "answer": "Troilus and Cressida",
+          "aliases": []
+        },
+        {
+          "answer": "Henry IV Part I",
+          "aliases": [
+            "Henry 4 Part 1",
+            "Henry IV Part 1",
+            "Henry IV 1"
+          ]
+        },
+        {
+          "answer": "Henry IV Part II",
+          "aliases": [
+            "Henry 4 Part 2",
+            "Henry IV Part 2",
+            "Henry IV 2"
+          ]
+        },
+        {
+          "answer": "Henry V",
+          "aliases": [
+            "Henry 5"
+          ]
+        },
+        {
+          "answer": "Henry VI Part I",
+          "aliases": [
+            "Henry 6 Part 1",
+            "Henry VI Part 1",
+            "Henry VI 1"
+          ]
+        },
+        {
+          "answer": "Henry VI Part II",
+          "aliases": [
+            "Henry 6 Part 2",
+            "Henry VI Part 2",
+            "Henry VI 2"
+          ]
+        },
+        {
+          "answer": "Henry VI Part III",
+          "aliases": [
+            "Henry 6 Part 3",
+            "Henry VI Part 3",
+            "Henry VI 3"
+          ]
+        },
+        {
+          "answer": "Henry VIII",
+          "aliases": [
+            "Henry 8"
+          ]
+        },
+        {
+          "answer": "King John",
+          "aliases": []
+        },
+        {
+          "answer": "Richard II",
+          "aliases": [
+            "Richard 2"
+          ]
+        },
+        {
+          "answer": "Richard III",
+          "aliases": [
+            "Richard 3"
+          ]
+        },
+        {
+          "answer": "Pericles",
+          "aliases": []
+        },
+        {
+          "answer": "The Two Noble Kinsmen",
+          "aliases": [
+            "Two Noble Kinsmen"
+          ]
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-nato-countries",
+      "title": "NATO member countries",
+      "prompt": "Name NATO member countries. Common country-name variants count.",
+      "target_count": 15,
+      "source_url": "https://www.nato.int/en/about-us/organization/nato-member-countries",
+      "scope": "All 32 members on the official list checked on 14 October 2026; check the source before future reuse.",
+      "answers": [
+        {
+          "answer": "Albania",
+          "aliases": []
+        },
+        {
+          "answer": "Belgium",
+          "aliases": []
+        },
+        {
+          "answer": "Bulgaria",
+          "aliases": []
+        },
+        {
+          "answer": "Canada",
+          "aliases": []
+        },
+        {
+          "answer": "Croatia",
+          "aliases": []
+        },
+        {
+          "answer": "Czechia",
+          "aliases": [
+            "Czech Republic"
+          ]
+        },
+        {
+          "answer": "Denmark",
+          "aliases": []
+        },
+        {
+          "answer": "Estonia",
+          "aliases": []
+        },
+        {
+          "answer": "Finland",
+          "aliases": []
+        },
+        {
+          "answer": "France",
+          "aliases": []
+        },
+        {
+          "answer": "Germany",
+          "aliases": []
+        },
+        {
+          "answer": "Greece",
+          "aliases": []
+        },
+        {
+          "answer": "Hungary",
+          "aliases": []
+        },
+        {
+          "answer": "Iceland",
+          "aliases": []
+        },
+        {
+          "answer": "Italy",
+          "aliases": []
+        },
+        {
+          "answer": "Latvia",
+          "aliases": []
+        },
+        {
+          "answer": "Lithuania",
+          "aliases": []
+        },
+        {
+          "answer": "Luxembourg",
+          "aliases": []
+        },
+        {
+          "answer": "Montenegro",
+          "aliases": []
+        },
+        {
+          "answer": "North Macedonia",
+          "aliases": []
+        },
+        {
+          "answer": "Norway",
+          "aliases": []
+        },
+        {
+          "answer": "Poland",
+          "aliases": []
+        },
+        {
+          "answer": "Portugal",
+          "aliases": []
+        },
+        {
+          "answer": "Romania",
+          "aliases": []
+        },
+        {
+          "answer": "Slovakia",
+          "aliases": []
+        },
+        {
+          "answer": "Slovenia",
+          "aliases": []
+        },
+        {
+          "answer": "Spain",
+          "aliases": []
+        },
+        {
+          "answer": "Sweden",
+          "aliases": []
+        },
+        {
+          "answer": "The Netherlands",
+          "aliases": [
+            "Netherlands"
+          ]
+        },
+        {
+          "answer": "Türkiye",
+          "aliases": [
+            "Turkey"
+          ]
+        },
+        {
+          "answer": "United Kingdom",
+          "aliases": [
+            "UK"
+          ]
+        },
+        {
+          "answer": "United States",
+          "aliases": [
+            "USA",
+            "US",
+            "United States of America"
+          ]
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "external_key": "knowledge-20261014-sky-birds",
+      "category": "science",
+      "prompt": "What do these constellation names represent?",
+      "clues": [
+        "Apus",
+        "Aquila",
+        "Corvus",
+        "Grus"
+      ],
+      "correct_connection": "Birds",
+      "distractors": [
+        "Sea creatures",
+        "Musical instruments",
+        "Kings and queens"
+      ],
+      "explanation": "Apus is the bird of paradise, Aquila the eagle, Corvus the crow and Grus the crane. Their names put four birds in the sky.",
+      "source_url": "https://www.iau.org/IAU/IAU/Astronomy-FAQs/Constellations.aspx?hkey=bb9dc841-0618-41b5-ac70-149741062141",
+      "fact_checks": [
+        {
+          "name": "Apus",
+          "abbr": "Aps",
+          "english": "The Bird of Paradise"
+        },
+        {
+          "name": "Aquila",
+          "abbr": "Aql",
+          "english": "The Eagle"
+        },
+        {
+          "name": "Corvus",
+          "abbr": "Crv",
+          "english": "The Crow"
+        },
+        {
+          "name": "Grus",
+          "abbr": "Gru",
+          "english": "The Crane"
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-sky-instruments",
+      "category": "science",
+      "prompt": "What do these constellation names represent?",
+      "clues": [
+        "Horologium",
+        "Microscopium",
+        "Telescopium",
+        "Sextans"
+      ],
+      "correct_connection": "Measuring or observing instruments",
+      "distractors": [
+        "Birds",
+        "Dogs",
+        "Royal figures"
+      ],
+      "explanation": "Horologium is the clock, Microscopium the microscope, Telescopium the telescope and Sextans the sextant. Each name points to an instrument.",
+      "source_url": "https://www.iau.org/IAU/IAU/Astronomy-FAQs/Constellations.aspx?hkey=bb9dc841-0618-41b5-ac70-149741062141",
+      "fact_checks": [
+        {
+          "name": "Horologium",
+          "abbr": "Hor",
+          "english": "The Pendulum Clock"
+        },
+        {
+          "name": "Microscopium",
+          "abbr": "Mic",
+          "english": "The Microscope"
+        },
+        {
+          "name": "Telescopium",
+          "abbr": "Tel",
+          "english": "The Telescope"
+        },
+        {
+          "name": "Sextans",
+          "abbr": "Sex",
+          "english": "The Sextant"
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-folio-tragedies",
+      "category": "words",
+      "prompt": "In the First Folio, what links these titles?",
+      "clues": [
+        "Coriolanus",
+        "Timon of Athens",
+        "Titus Andronicus",
+        "Troilus and Cressida"
+      ],
+      "correct_connection": "Shakespeare tragedies",
+      "distractors": [
+        "Shakespeare comedies",
+        "Shakespeare histories",
+        "Shakespeare poems"
+      ],
+      "explanation": "The First Folio lists all four as tragedies. The clue is that original classification, rather than how a modern production might describe them.",
+      "source_url": "https://www.rsc.org.uk/shakespeares-plays/tragedies-comedies-histories",
+      "fact_checks": {
+        "genre": "Tragedies",
+        "plays": [
+          "Coriolanus",
+          "Timon of Athens",
+          "Titus Andronicus",
+          "Troilus and Cressida"
+        ]
+      }
+    },
+    {
+      "external_key": "knowledge-20261014-folio-histories",
+      "category": "words",
+      "prompt": "In the First Folio, what links these titles?",
+      "clues": [
+        "Henry V",
+        "King John",
+        "Richard II",
+        "Henry VIII"
+      ],
+      "correct_connection": "Shakespeare histories",
+      "distractors": [
+        "Shakespeare comedies",
+        "Shakespeare tragedies",
+        "Shakespeare poems"
+      ],
+      "explanation": "All four are history plays in the First Folio. Their titles follow English kings, from King John to Henry VIII.",
+      "source_url": "https://www.rsc.org.uk/shakespeares-plays/tragedies-comedies-histories",
+      "fact_checks": {
+        "genre": "Histories",
+        "plays": [
+          "Henry V",
+          "King John",
+          "Richard II",
+          "Henry VIII"
+        ]
+      }
+    },
+    {
+      "external_key": "knowledge-20261014-alaska-parks",
+      "category": "geography",
+      "prompt": "Which location connects these national parks?",
+      "clues": [
+        "Denali",
+        "Katmai",
+        "Kobuk Valley",
+        "Lake Clark"
+      ],
+      "correct_connection": "National parks in Alaska",
+      "distractors": [
+        "National parks in Utah",
+        "National parks in Colorado",
+        "National parks in California"
+      ],
+      "explanation": "Denali, Katmai, Kobuk Valley and Lake Clark are all national parks in Alaska. The shared link is their location.",
+      "source_url": "https://www.nps.gov/aboutus/national-park-system.htm",
+      "fact_checks": [
+        {
+          "name": "Denali National Park",
+          "short": "Denali",
+          "location": "Alaska"
+        },
+        {
+          "name": "Katmai National Park",
+          "short": "Katmai",
+          "location": "Alaska"
+        },
+        {
+          "name": "Kobuk Valley National Park",
+          "short": "Kobuk Valley",
+          "location": "Alaska"
+        },
+        {
+          "name": "Lake Clark National Park",
+          "short": "Lake Clark",
+          "location": "Alaska"
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-utah-parks",
+      "category": "geography",
+      "prompt": "Which location connects these national parks?",
+      "clues": [
+        "Arches",
+        "Bryce Canyon",
+        "Canyonlands",
+        "Capitol Reef"
+      ],
+      "correct_connection": "National parks in Utah",
+      "distractors": [
+        "National parks in Alaska",
+        "National parks in Colorado",
+        "National parks in Florida"
+      ],
+      "explanation": "Arches, Bryce Canyon, Canyonlands and Capitol Reef are all national parks in Utah. The shared link is their location.",
+      "source_url": "https://www.nps.gov/aboutus/national-park-system.htm",
+      "fact_checks": [
+        {
+          "name": "Arches National Park",
+          "short": "Arches",
+          "location": "Utah"
+        },
+        {
+          "name": "Bryce Canyon National Park",
+          "short": "Bryce Canyon",
+          "location": "Utah"
+        },
+        {
+          "name": "Canyonlands National Park",
+          "short": "Canyonlands",
+          "location": "Utah"
+        },
+        {
+          "name": "Capitol Reef National Park",
+          "short": "Capitol Reef",
+          "location": "Utah"
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-nato-founders",
+      "category": "history",
+      "prompt": "What links these countries in NATO's history?",
+      "clues": [
+        "Belgium",
+        "Canada",
+        "Denmark",
+        "Portugal"
+      ],
+      "correct_connection": "Joined NATO in 1949",
+      "distractors": [
+        "Joined NATO in 1952",
+        "Joined NATO in 1999",
+        "Joined NATO in 2024"
+      ],
+      "explanation": "Belgium, Canada, Denmark and Portugal were among the twelve countries that founded NATO in 1949.",
+      "source_url": "https://www.nato.int/en/about-us/organization/nato-member-countries",
+      "fact_checks": [
+        {
+          "name": "Belgium",
+          "joined": 1949
+        },
+        {
+          "name": "Canada",
+          "joined": 1949
+        },
+        {
+          "name": "Denmark",
+          "joined": 1949
+        },
+        {
+          "name": "Portugal",
+          "joined": 1949
+        }
+      ]
+    },
+    {
+      "external_key": "knowledge-20261014-nato-2004",
+      "category": "history",
+      "prompt": "What links these countries in NATO's history?",
+      "clues": [
+        "Bulgaria",
+        "Estonia",
+        "Latvia",
+        "Slovakia"
+      ],
+      "correct_connection": "Joined NATO in 2004",
+      "distractors": [
+        "Joined NATO in 1949",
+        "Joined NATO in 1999",
+        "Joined NATO in 2024"
+      ],
+      "explanation": "Bulgaria, Estonia, Latvia and Slovakia all joined NATO in 2004, alongside Lithuania, Romania and Slovenia.",
+      "source_url": "https://www.nato.int/en/about-us/organization/nato-member-countries",
+      "fact_checks": [
+        {
+          "name": "Bulgaria",
+          "joined": 2004
+        },
+        {
+          "name": "Estonia",
+          "joined": 2004
+        },
+        {
+          "name": "Latvia",
+          "joined": 2004
+        },
+        {
+          "name": "Slovakia",
+          "joined": 2004
+        }
+      ]
+    }
+  ]
+}

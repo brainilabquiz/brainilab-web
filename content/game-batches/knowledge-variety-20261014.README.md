@@ -1,0 +1,13 @@
+# Knowledge variety — 14 October 2026
+
+Four complete Topic Rush themes add 221 canonical answers: 88 IAU constellations, 63 U.S. national parks (including territories), the RSC's 38 Shakespeare plays and 32 NATO member countries. Eight original Connections puzzles use entries from these same checked sources.
+
+The linked official lists were opened on the batch date. Each source record includes its URL and the SHA256 of the reviewed HTML. Names and classifications are factual source data; prompts, puzzles and explanations are original. These are game records, not new Learn articles. No article cover or SEO-demand claim is implied.
+
+Constellations accept Latin names, the listed English names and official three-letter abbreviations. They exclude asterisms such as the Big Dipper. Parks use only the National Parks section of the NPS list, not all National Park System units; short names and NP forms count. Shakespeare follows the 36 First Folio plays plus Pericles and The Two Noble Kinsmen; ambiguous Henry IV/VI titles without a part number do not count. NATO uses the checked membership list, with common spelling/name variants such as Turkey, Czech Republic, UK and USA. Recheck changeable membership and park lists before later reuse.
+
+Aliases are case-, punctuation- and accent-insensitive under the existing server normaliser. Every accepted form must map to exactly one canonical answer within its theme. Alternate spellings cannot award duplicate points. Broad guessed synonyms and non-member examples are excluded. The corresponding CSVs follow the real Admin importer and preserve the same answer lists and explanations.
+
+Connections questions state the relevant frame: First Folio classification, park location, constellation-name meaning or NATO joining year. Each has four distinct choices, exactly one correct answer, a short explanation and source facts. Source clue sets are compared with the existing bank, including different clue orders, before publication.
+
+Run tools/test-knowledge-variety-batch.mjs and tools/test-knowledge-variety-gameplay.mjs. Also check every canonical/alias against the actual server normaliser, validate the exact insert in a rolled-back production transaction, and read the published rows back. Publication must be atomic and idempotent, preserve old IDs/rows and all scheduled Daily assignments, and fail on concurrent changes or mismatched existing batch keys. Do not modify a live Daily to demonstrate new content: new Topic Rush themes become available to subsequent Daily generation; new Connections also enter Anytime selection.
