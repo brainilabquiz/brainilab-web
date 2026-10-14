@@ -1,0 +1,143 @@
+{
+  "checkedAt": "2026-10-14T17:49:18.051Z",
+  "scope": "Human-requested two additional Academy lessons after the two regular trend editions; not a quota change or international trend edition.",
+  "demand": {
+    "source": "Google Trends Explore",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=why%20is%20the%20sky%20blue,why%20are%20sunsets%20red&hl=en",
+    "market": "US",
+    "language": "English query terms",
+    "window": "Past 12 months",
+    "searchType": "Web Search",
+    "averages": {
+      "why is the sky blue": 71,
+      "why are sunsets red": 0
+    },
+    "sunsetNonzeroObservations": [
+      [
+        "2026-03-01",
+        4
+      ],
+      [
+        "2026-03-15",
+        5
+      ],
+      [
+        "2026-05-31",
+        6
+      ],
+      [
+        "2026-06-14",
+        4
+      ],
+      [
+        "2026-09-27",
+        1
+      ],
+      [
+        "2026-10-04",
+        1
+      ],
+      [
+        "2026-10-11",
+        1
+      ]
+    ],
+    "skyRecentObservations": [
+      [
+        "2026-09-20",
+        89
+      ],
+      [
+        "2026-09-27",
+        71
+      ],
+      [
+        "2026-10-04",
+        72
+      ],
+      [
+        "2026-10-11",
+        68
+      ]
+    ],
+    "limits": "Relative jointly normalised interest, not search counts. Average0 for sunset is rounding/low relative signal, not zero demand; selected as a complementary lesson, not a high-volume opportunity. Latest interval may be partial. Monthly volume, difficulty, CPC, ranks, AI citations and forecast traffic unknown."
+  },
+  "intent": {
+    "observed": "Explanatory results from NASA Space Place, Met Office, NOAA NESDIS and Royal Observatory, about scattering, wavelength and low Sun path.",
+    "queries": [
+      "why is the sky blue",
+      "why are sunsets red"
+    ],
+    "checkedAt": "2026-10-14",
+    "pages": [
+      "https://spaceplace.nasa.gov/blue-sky/en/",
+      "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue",
+      "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue",
+      "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue"
+    ],
+    "notClaimed": "No ranking positions or exhaustive Google SERP census."
+  },
+  "novelty": {
+    "publishedInventory": 89,
+    "courses": [
+      {
+        "slug": "calendars-explained",
+        "revision": 3
+      },
+      {
+        "slug": "fractions-from-zero",
+        "revision": 3
+      },
+      {
+        "slug": "maths-from-zero",
+        "revision": 5
+      },
+      {
+        "slug": "mental-maths-foundations",
+        "revision": 6
+      },
+      {
+        "slug": "patterns-and-reasoning",
+        "revision": 3
+      },
+      {
+        "slug": "sun-moon-and-time",
+        "revision": 5
+      },
+      {
+        "slug": "word-detective",
+        "revision": 6
+      }
+    ],
+    "newLessonSlugs": [
+      "why-is-the-sky-blue",
+      "why-are-sunsets-red"
+    ],
+    "newCourseSlug": "sky-colours",
+    "distinctions": "No existing sky-blue or red-sunset lesson. Aurora article covers emission from excited gases, not scattering. Sun-Moon-time course covers rotation, phases, seasons, time zones, eclipses and tidal locking; unchanged. No arbitrary or empty hub. Existing editorial-cluster plan read; new two-lesson course is not a ten-article hub."
+  },
+  "sourcesOpened": [
+    {
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/",
+      "claims": "Sunlight includes colours; blue shorter than red; air scattering; low Sun longer air path; horizon paler."
+    },
+    {
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue",
+      "claims": "Rayleigh scattering by small gas molecules; short wavelengths scatter more; violet perception; low Sun red/orange."
+    },
+    {
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue",
+      "claims": "Wavelength meaning; near-white direct sunlight distinct from scattered skylight; violet eye sensitivity."
+    },
+    {
+      "url": "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue",
+      "claims": "Blue sky is not an ocean reflection; atmosphere causes the colour."
+    }
+  ],
+  "discardedSource": {
+    "url": "https://www.weather.gov/jetstream/color",
+    "reason": "Redirects to generic JetStream overview; not cited as if original detail was read."
+  },
+  "reviewBeforeDraft": "Demand/intent/novelty and primary sources checked before prose. Covers and final tests pending.",
+  "policy": "No paid research; no fabricated search metrics; no player/account/security/DNS/Netlify changes."
+}

@@ -1,0 +1,66 @@
+{
+  "slug": "sky-colours",
+  "title": "Blue skies and red sunsets",
+  "description": "Discover why the sky is blue and sunsets turn red. Two short science lessons connect everyday sky colours to the journey of sunlight.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-14T17:56:34.407Z",
+  "updatedAt": "2026-10-14T17:56:34.407Z",
+  "coverArticle": "why-is-the-sky-blue",
+  "introduction": "<p>A blue afternoon becomes an orange evening. What changed?</p><p>Start with the colours hidden in sunlight, then follow its longer path through the evening air. These two short lessons fit together; read at your own pace and try the optional quizzes.</p>",
+  "prerequisites": "No science background needed. Each new term is explained as it appears.",
+  "lessons": [
+    {
+      "slug": "why-is-the-sky-blue",
+      "level": "1 · Follow the blue",
+      "objective": "Connect the blue daytime sky to sunlight scattered by air molecules."
+    },
+    {
+      "slug": "why-are-sunsets-red",
+      "level": "2 · Follow the evening light",
+      "objective": "Explain how the low Sun’s longer air path changes the colours reaching us."
+    }
+  ],
+  "sources": [
+    {
+      "name": "NASA Space Place — Why is the sky blue?",
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/"
+    },
+    {
+      "name": "Met Office — Why the sky is blue and sunsets red",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue"
+    },
+    {
+      "name": "NOAA NESDIS — Sunlight, wavelengths and sky colour",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue"
+    },
+    {
+      "name": "Royal Observatory Greenwich — Why is the sky blue?",
+      "url": "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Atmosphere",
+      "definition": "The layer of gases around Earth."
+    },
+    {
+      "term": "Scattering",
+      "definition": "Light being redirected in different directions."
+    },
+    {
+      "term": "Wavelength",
+      "definition": "The distance from one wave peak to the next."
+    },
+    {
+      "term": "Rayleigh scattering",
+      "definition": "Scattering by very small particles such as air molecules, which redirects shorter wavelengths more strongly."
+    }
+  ],
+  "outcomes": [
+    "Explain why a blue sky does not need a nearby sea.",
+    "Compare the wavelengths of blue and red light.",
+    "Connect a low Sun with a longer route through the air and warmer arriving light."
+  ]
+}

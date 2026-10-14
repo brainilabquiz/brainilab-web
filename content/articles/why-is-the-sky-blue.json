@@ -1,0 +1,110 @@
+{
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-14T17:56:34.407Z",
+  "updatedAt": "2026-10-14T17:56:34.407Z",
+  "hub": {
+    "name": "Sky colours",
+    "url": "/learn/paths/sky-colours/"
+  },
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "practice": "Curious about more? Try a few questions in our Science Quiz.",
+  "slug": "why-is-the-sky-blue",
+  "order": 131,
+  "title": "Why is the sky blue?",
+  "description": "A blue sky is not a reflection of the sea. Discover how sunlight and tiny molecules in the air give the daytime sky its familiar colour.",
+  "cover": {
+    "src": "/assets/images/learn/why-is-the-sky-blue.webp",
+    "small": "/assets/images/learn/why-is-the-sky-blue-small.webp",
+    "thumbnail": "/assets/images/learn/why-is-the-sky-blue-thumb.webp",
+    "alt": "A wide blue daytime sky above a green meadow and one leafy tree",
+    "credit": "AI-generated photorealistic cover created for BrainiLab; an imagined landscape, not a photograph of an observed event.",
+    "position": 50
+  },
+  "related": [
+    "why-are-sunsets-red",
+    "why-northern-lights-have-different-colours"
+  ],
+  "sources": [
+    {
+      "name": "NASA Space Place — Why is the sky blue?",
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/"
+    },
+    {
+      "name": "Met Office — Why the sky is blue and sunsets red",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue"
+    },
+    {
+      "name": "NOAA NESDIS — Sunlight, wavelengths and sky colour",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue"
+    },
+    {
+      "name": "Royal Observatory Greenwich — Why is the sky blue?",
+      "url": "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-colour-comes-from-air",
+      "title": "The air does the colouring",
+      "html": "<p><strong>The sky looks blue because tiny molecules in the air scatter blue sunlight more strongly than red sunlight.</strong> Scattering means sending light off in different directions.</p><p>Picture a green field far from the coast. The sky above it can still be blue. <a href=\"https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue\">The Royal Observatory explains why the sea is not painting the sky</a>: the colour comes from the atmosphere, the layer of gases around Earth.</p>"
+    },
+    {
+      "id": "sunlight-holds-many-colours",
+      "title": "Sunlight has more than one colour",
+      "html": "<p>Sunlight may look white, but it contains the colours of the rainbow. <a href=\"https://spaceplace.nasa.gov/blue-sky/en/\">NASA shows how a prism separates them</a>. A prism is a clear, specially shaped object that bends different colours by different amounts.</p><p>Light travels as waves. <strong>Wavelength</strong> is the distance from one wave peak to the next. Blue light has a shorter wavelength than red light, as <a href=\"https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue\">NOAA explains</a>. “Shorter” describes the wave, not a slower speed.</p>"
+    },
+    {
+      "id": "a-blue-sky-in-many-directions",
+      "title": "Why blue reaches you from all around",
+      "html": "<p>Air molecules scatter short wavelengths more strongly than long ones. Blue light spreads out and can reach your eyes from many parts of the sky, rather than only from the Sun’s direction.</p><p>This is called <strong>Rayleigh scattering</strong>. <a href=\"https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue\">The Met Office connects it to the tiny gas molecules in the air</a>. The air is not blue paint, and the light has not turned into a new colour; different parts of sunlight have taken different routes.</p>"
+    },
+    {
+      "id": "why-not-violet",
+      "title": "Why not a violet sky?",
+      "html": "<p>Violet has an even shorter wavelength and is scattered strongly too. But our eyes respond more to blue, and sunlight contains less violet. <a href=\"https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue\">The Met Office explains why the result looks blue to us</a>.</p><p>So a familiar blue afternoon hides a small sorting trick: the air redirects some colours more than others. In the <a href=\"/learn/why-are-sunsets-red/\">next lesson</a>, the Sun takes a longer route through that same air.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "science-blue-sky-v1",
+    "questions": [
+      {
+        "prompt": "What mainly gives a clear daytime sky its blue colour?",
+        "options": [
+          "Blue water reflected upwards",
+          "Blue sunlight scattered by air molecules",
+          "Blue paint inside clouds",
+          "The Moon shining in daytime"
+        ],
+        "answer": 1,
+        "explanation": "Air molecules scatter blue sunlight more strongly than red sunlight. A sea or lake is not needed."
+      },
+      {
+        "prompt": "How does the wavelength of blue light compare with red light?",
+        "options": [
+          "It is longer",
+          "They are always identical",
+          "It is shorter",
+          "Blue light has no wavelength"
+        ],
+        "answer": 2,
+        "explanation": "Blue has a shorter wavelength: a shorter distance between wave peaks."
+      },
+      {
+        "prompt": "What does scattering mean here?",
+        "options": [
+          "Sending light off in different directions",
+          "Turning air into water",
+          "Making the Sun rotate",
+          "Removing every colour from sunlight"
+        ],
+        "answer": 0,
+        "explanation": "Scattering redirects light. This lets blue sunlight reach us from many directions in the sky."
+      }
+    ]
+  }
+}
