@@ -1,0 +1,106 @@
+{
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "publishedAt": "2026-10-14T17:56:34.407Z",
+  "updatedAt": "2026-10-14T17:56:34.407Z",
+  "hub": {
+    "name": "Sky colours",
+    "url": "/learn/paths/sky-colours/"
+  },
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "practice": "Curious about more? Try a few questions in our Science Quiz.",
+  "slug": "why-are-sunsets-red",
+  "order": 132,
+  "title": "Why are sunsets red?",
+  "description": "The Sun has not changed into a red lamp. Follow its longer evening path through the air to see why sunsets can look orange or red.",
+  "cover": {
+    "src": "/assets/images/learn/why-are-sunsets-red.webp",
+    "small": "/assets/images/learn/why-are-sunsets-red-small.webp",
+    "thumbnail": "/assets/images/learn/why-are-sunsets-red-thumb.webp",
+    "alt": "An orange and red evening sky fading into blue above quiet hills and a dark tree",
+    "credit": "AI-generated photorealistic cover created for BrainiLab; an imagined landscape, not a photograph of an observed event.",
+    "position": 50
+  },
+  "related": [
+    "why-is-the-sky-blue",
+    "why-day-turns-into-night"
+  ],
+  "sources": [
+    {
+      "name": "NASA Space Place — Why is the sky blue?",
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/"
+    },
+    {
+      "name": "Met Office — Why the sky is blue and sunsets red",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue"
+    },
+    {
+      "name": "NOAA NESDIS — Sunlight, wavelengths and sky colour",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-longer-journey-for-light",
+      "title": "Same sunlight, longer journey",
+      "html": "<p><strong>Sunsets can look red or orange because sunlight passes through more air when the Sun is low.</strong> More blue light is scattered out of that direct path, leaving a warmer mixture to reach us.</p><p>The Sun has not become a red lamp. <a href=\"https://spaceplace.nasa.gov/blue-sky/en/\">NASA explains how its low position changes the route through the atmosphere</a>. The colours were already in the sunlight.</p>"
+    },
+    {
+      "id": "take-the-slanting-route",
+      "title": "The slanting route matters",
+      "html": "<p>Imagine the atmosphere as a layer wrapped around Earth. When the Sun is high, its light takes a relatively short route through that layer. Near the horizon, it comes in at a shallow angle and travels through more air.</p><p><a href=\"https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue\">The Met Office describes this longer path at sunrise and sunset</a>. More air gives the light more chances to be scattered before it reaches you.</p>"
+    },
+    {
+      "id": "where-the-blue-went",
+      "title": "Where did the blue go?",
+      "html": "<p>In the <a href=\"/learn/why-is-the-sky-blue/\">blue-sky lesson</a>, we saw that air molecules scatter short blue wavelengths more strongly than longer red ones. Along the evening route, much of that blue light is redirected away from the direct beam.</p><p>The remaining mixture is richer in longer wavelengths, so it can look orange or red. <a href=\"https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue\">NOAA explains the difference between this arriving sunlight and the scattered blue light</a>. Blue light does not turn into red light.</p>"
+    },
+    {
+      "id": "two-colours-one-process",
+      "title": "Two colours, one idea",
+      "html": "<p>At noon, scattered blue light makes the sky familiar. Near sunset, the longer route changes the mixture arriving from the Sun’s direction. Sunrise can produce warm colours for the same reason.</p><p>A bright blue afternoon and an orange evening are two views of the same process. The next time the sky changes colour, the useful question is not “Has the Sun changed?” but “How far has this light travelled through the air?”</p>"
+    }
+  ],
+  "quiz": {
+    "version": "science-red-sunset-v1",
+    "questions": [
+      {
+        "prompt": "What changes when the Sun is low near the horizon?",
+        "options": [
+          "The atmosphere disappears",
+          "Sunlight loses every colour",
+          "Sunlight travels through more air to reach us",
+          "Earth stops turning"
+        ],
+        "answer": 2,
+        "explanation": "The low Sun sends light along a longer, slanting path through the atmosphere."
+      },
+      {
+        "prompt": "What happens to much of the blue light along that path?",
+        "options": [
+          "It is scattered away from the direct beam",
+          "It changes into red light",
+          "It stops having a wavelength",
+          "It all turns into water"
+        ],
+        "answer": 0,
+        "explanation": "Air scatters the shorter blue wavelengths strongly. The remaining direct light can look warmer."
+      },
+      {
+        "prompt": "Why can sunrise show similar warm colours?",
+        "options": [
+          "The Moon paints the sky",
+          "Only mornings contain red light",
+          "The Sun becomes a different star",
+          "The Sun is low, so light again takes a long path through air"
+        ],
+        "answer": 3,
+        "explanation": "Sunrise and sunset both place the Sun low in the sky, giving its light a longer route through the atmosphere."
+      }
+    ]
+  }
+}
