@@ -1,0 +1,72 @@
+{
+  "slug": "what-is-a-dana",
+  "title": "What is a DANA, and why can it bring heavy rain?",
+  "description": "A ribbon of wind can leave a pocket of weather behind. Discover how a DANA forms and why moist air can turn that pattern into heavy rain.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 130,
+  "publishedAt": "2026-10-14T17:22:33.922720Z",
+  "updatedAt": "2026-10-14T17:22:33.922720Z",
+  "cover": {
+    "src": "/assets/images/learn/curiosity-weekly-20261014.webp",
+    "small": "/assets/images/learn/curiosity-weekly-20261014-small.webp",
+    "thumbnail": "/assets/images/learn/curiosity-weekly-20261014-thumb.webp",
+    "alt": "Tall dark clouds and distant rain shafts over an imagined Mediterranean coastline",
+    "credit": "AI-generated photorealistic cover created for BrainiLab; an illustrative scene, not a photograph of an observed event.",
+    "position": 50
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "practice": "Enjoy another small mystery? Try the Science Quiz.",
+  "related": [
+    "why-a-hurricanes-eye-is-calm",
+    "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "name": "AEMET — What a DANA is and how it forms",
+      "url": "https://aemetblog.es/2023/06/03/que-es-una-dana-y-como-se-formapor-que-es-mas-adecuado-usar-este-termino-que-gota-fria/"
+    },
+    {
+      "name": "US National Weather Service — Cutoff low",
+      "url": "https://forecast.weather.gov/glossary.php?word=cutoff"
+    },
+    {
+      "name": "Met Office — How rain forms",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain"
+    },
+    {
+      "name": "Royal Meteorological Society — Cut-off lows and DANA",
+      "url": "https://www.rmets.org/metmatters/cut-lows-cold-drops-and-dana"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-weather-system-high-overhead",
+      "title": "A pocket of weather overhead",
+      "html": "<p><strong>A DANA is a low-pressure weather system high in the atmosphere that has broken away from the main flow of winds. With warm, moist air beneath it, it can help tall storm clouds grow and bring heavy rain.</strong></p><p>The name comes from the Spanish <em>Depresión Aislada en Niveles Altos</em>: an isolated depression at high levels. Here, depression means an area of low air pressure. <a href=\"https://aemetblog.es/2023/06/03/que-es-una-dana-y-como-se-formapor-que-es-mas-adecuado-usar-este-termino-que-gota-fria/\" target=\"_blank\" rel=\"noopener noreferrer\">Spain’s weather agency, AEMET, explains what those words describe</a>.</p>"
+    },
+    {
+      "id": "when-the-ribbon-bends",
+      "title": "When a ribbon of wind bends",
+      "html": "<p>High above us, the jet stream is a narrow band of fast winds. Imagine a river that bends until a loop separates from the main current. A similar pattern in the atmosphere can leave a low-pressure system moving on its own.</p><p>That is why the English term is <em>cut-off low</em>. <a href=\"https://forecast.weather.gov/glossary.php?word=cutoff\" target=\"_blank\" rel=\"noopener noreferrer\">The US National Weather Service defines it by this separation</a>. The name tells us about the weather system’s position and movement.</p>"
+    },
+    {
+      "id": "where-the-rain-comes-from",
+      "title": "The water comes from moist air",
+      "html": "<p>A supply of moist air matters. Around the Mediterranean, winds can bring air containing water vapour from the sea. Water vapour is water in its invisible gas form.</p><p>Cold air higher up can make it easier for warmer air below to keep rising. As that moist air rises and cools, vapour condenses into tiny liquid droplets, forming clouds. Droplets grow until they fall as rain. <a href=\"https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain\" target=\"_blank\" rel=\"noopener noreferrer\">The Met Office explains this journey from invisible vapour to raindrops</a>.</p><p>The contrast between the lower air and the cold air overhead can help clouds build upwards into thunderstorms. AEMET calls this rising motion convection.</p>"
+    },
+    {
+      "id": "why-it-can-last",
+      "title": "Why can the rain keep coming?",
+      "html": "<p>A cut-off low can move slowly. The National Weather Service notes that some remain nearly stationary for days. If storm-producing conditions persist, the same region can receive repeated rainfall.</p><p><a href=\"https://www.rmets.org/metmatters/cut-lows-cold-drops-and-dana\" target=\"_blank\" rel=\"noopener noreferrer\">The Royal Meteorological Society describes how warm, moist Mediterranean air and a slow-moving cut-off low can combine</a>. The amount of moisture, the winds and the landscape all help shape the result.</p><p>A DANA therefore describes a weather pattern; its effects depend on the conditions around it. It cannot tell you the rainfall at your own street by itself.</p><p>The answer is a chain of events: a detached system, air able to rise, moisture turning into cloud, and sometimes a pattern that lingers. A small phrase in a weather report can describe a much larger story overhead.</p>"
+    }
+  ]
+}

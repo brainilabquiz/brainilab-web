@@ -1,0 +1,697 @@
+{
+  "date": "2026-10-14",
+  "preparedAt": "2026-10-14T17:22:33.922720Z",
+  "baseMain": "64b7d09429d34670b47306270a1cd178137ca642",
+  "guidelines": {
+    "content/AGENTS.md": "0aeca1bd73f7036dc495770535929f13139a36df",
+    "content/PUBLIC_COPY.md": "251a893b257da83fd250062a324aaab35fcd59ca"
+  },
+  "quota": {
+    "todayBefore": 0,
+    "maximum": 2
+  },
+  "coverage": "US/GB/ES/IN; North America, Europe and Asia; Spanish query evidence included. Forty internal topic groups; no world ranking.",
+  "pool": {
+    "daily": [
+      {
+        "query": "harrison mevis",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:10:57.671Z",
+        "visibleStart": "13 d’oct., 2:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "barbera thornhill",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:10:57.671Z",
+        "visibleStart": "13 d’oct., 18:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "press secretary",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:10:57.671Z",
+        "visibleStart": "13 d’oct., 15:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "apple homeview",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:10:57.671Z",
+        "visibleStart": "13 d’oct., 15:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "american airlines dropped destinations list",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:10:57.671Z",
+        "visibleStart": "13 d’oct., 23:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "toilet",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:04:11.060Z",
+        "visibleStart": "13 d’oct., 19:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Selected topic; exact explanatory long-tail volume remains unknown."
+      },
+      {
+        "query": "pension credit",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:04:11.060Z",
+        "visibleStart": "13 d’oct., 20:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "davina mccall",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:04:11.060Z",
+        "visibleStart": "13 d’oct., 19:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "10 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "british airways flight ba2660 emergency",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:04:11.060Z",
+        "visibleStart": "13 d’oct., 15:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "martin brundle louise goodman tribute",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:04:11.060Z",
+        "visibleStart": "13 d’oct., 10:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "montse mínguez",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:06:31.839Z",
+        "visibleStart": "13 d’oct., 10:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "marruecos",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:06:31.839Z",
+        "visibleStart": "13 d’oct., 23:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "juan soto ivars",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:06:31.839Z",
+        "visibleStart": "13 d’oct., 21:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "montaña rusa six flags",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:06:31.839Z",
+        "visibleStart": "13 d’oct., 21:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "playstation 5",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:06:31.839Z",
+        "visibleStart": "13 d’oct., 19:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "5 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "honda cb250ss scrambler concept",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:07:54.045Z",
+        "visibleStart": "13 d’oct., 9:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "coloros 17 ai capabilities",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:07:54.045Z",
+        "visibleStart": "13 d’oct., 15:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "east bengal vs al-shorta",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:07:54.045Z",
+        "visibleStart": "13 d’oct., 14:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "shekhar suman",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:07:54.045Z",
+        "visibleStart": "13 d’oct., 16:50",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "arsenal vs losc",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=48",
+        "window": "rolling 48 hours",
+        "capturedAt": "2026-10-14T17:07:54.045Z",
+        "visibleStart": "13 d’oct., 20:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      }
+    ],
+    "weekly": [
+      {
+        "query": "susan dell",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:55.228Z",
+        "visibleStart": "fa 6 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "katie zacharia",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:55.228Z",
+        "visibleStart": "fa 4 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "mike ditka",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:55.228Z",
+        "visibleStart": "fa 5 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "dodgers vs brewers",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:55.228Z",
+        "visibleStart": "fa 3 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "art of play brooklyn",
+        "market": "US",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=US&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:55.228Z",
+        "visibleStart": "fa 3 dies",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "yorkshire wildlife park",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:04:56.290Z",
+        "visibleStart": "10 d’oct., 15:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "pension credit",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:04:56.290Z",
+        "visibleStart": "13 d’oct., 20:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "100 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "toilet",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:04:56.290Z",
+        "visibleStart": "13 d’oct., 19:00",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "below netflix",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:04:56.290Z",
+        "visibleStart": "8 d’oct., 13:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "sally rooney",
+        "market": "GB",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=GB&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:04:56.290Z",
+        "visibleStart": "15:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "5 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "nueva dana",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:06:54.157Z",
+        "visibleStart": "14:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Selected topic; exact explanatory long-tail volume remains unknown."
+      },
+      {
+        "query": "galatasaray - barcelona",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:06:54.157Z",
+        "visibleStart": "13 d’oct., 20:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "amaia montero",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:06:54.157Z",
+        "visibleStart": "12 d’oct., 14:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "20 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "marruecos",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:06:54.157Z",
+        "visibleStart": "13 d’oct., 23:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "huevos salmonella españa",
+        "market": "ES",
+        "language": "es",
+        "source": "https://trends.google.com/trending?geo=ES&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:06:54.157Z",
+        "visibleStart": "12 d’oct., 22:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "200 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "navratri colours 2026",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:38.554Z",
+        "visibleStart": "9 d’oct., 6:20",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "isl",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:38.554Z",
+        "visibleStart": "8 d’oct., 15:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "500 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "bangladesh vs afghanistan",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:38.554Z",
+        "visibleStart": "9 d’oct., 7:30",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "pak vs sl",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:38.554Z",
+        "visibleStart": "8 d’oct., 0:10",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "1 M+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      },
+      {
+        "query": "honda cb250ss scrambler concept",
+        "market": "IN",
+        "language": "en; proper names retained where relevant",
+        "source": "https://trends.google.com/trending?geo=IN&hours=168",
+        "window": "rolling 168 hours",
+        "capturedAt": "2026-10-14T17:08:38.554Z",
+        "visibleStart": "13 d’oct., 9:40",
+        "displayTimezone": "Europe/Madrid",
+        "observedVolume": "50 k+",
+        "volumeMeaning": "Approximate country-specific trending-query bucket; no global sum, monthly search volume or calendar-day volume implied.",
+        "selectionReason": "Excluded from article: different intent or subject. Query is not evidence that a rumour, accusation or news event is true."
+      }
+    ]
+  },
+  "limitations": [
+    "Daily pool consists only of trends whose absolute visible start is13OctoberEurope/Madrid. The volumes are from the rolling48-hour view, not totals for that natural day.",
+    "Weekly pool is rolling168hours, including trends begun today; source start labels retained.",
+    "GB toilet20k+ is a broad-topic signal. Volume for the exact educational question is unknown; shopping/repair intent is not claimed as addressed.",
+    "ES nueva dana20k+ is Spanish topic demand, not measured English demand or a confirmed forecast. The English explanatory long-tail volume is unknown.",
+    "Named persons, death/arrest/health rumours and unrelated match/product queries are excluded from public text. No recent disaster, death, accusation or forecast is asserted.",
+    "Variants and translations represent one topic, not additional independent terms. No country volumes are summed.",
+    "Saved research from12–13October reviewed; its Academy, aurora and clocks subjects are already covered. No paid research.",
+    "Desktop/mobile layout, derivative crops, validators, GitHub checks and public CMS verification remain gates before release."
+  ],
+  "candidates": [
+    {
+      "slug": "how-does-a-toilet-flush",
+      "question": "How does a toilet flush without electricity?",
+      "demand": "GB English toilet20k+, started13Oct19:00Madrid, rolling48h.",
+      "intent": "A focused free search for how does a toilet flush without electricity returned explanatory siphon/power pages and manufacturer sources. Education is the selected intent; no repair or outage instructions.",
+      "serpQueries": [
+        "how does a toilet flush without electricity",
+        "how a toilet flush works siphon Kohler American Standard"
+      ],
+      "observedResults": [
+        "Kohler Assist — How a Toilet Flushes",
+        "This Old House — What Is a Toilet Siphon and How Does One Work?",
+        "US EPA — WaterSense toilet mechanisms"
+      ],
+      "novelty": "87 live titles and documents plus main fixtures/research checked: no toilet/flush/siphon piece. Different mechanism from ballpoint pen and zipper. Exact keyword volume unknown."
+    },
+    {
+      "slug": "what-is-a-dana",
+      "question": "What is a DANA, and why can it bring heavy rain?",
+      "demand": "ES Spanish nueva dana20k+, started14Oct14:30Madrid, rolling168h.",
+      "intent": "Free Spanish and English explanatory searches return AEMET, National Weather Service and Royal Meteorological Society. Explain the pattern and rain chain rather than repeat a speculative forecast.",
+      "serpQueries": [
+        "DANA que es depresión aislada niveles altos AEMET cold air",
+        "what is a DANA weather cut off low"
+      ],
+      "observedResults": [
+        "AEMET — Qué es una DANA y cómo se forma",
+        "NWS — Cutoff Low glossary",
+        "Royal Meteorological Society — Cut-off lows, cold drops and DANA"
+      ],
+      "novelty": "87live documents reviewed: hurricane-eye page explains sinking centre vs rising eyewall; this piece explains detachment from upper winds, moisture and persistence. No duplicated question. English volume unknown."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://assist.kohler.com/en/toilets-and-seats/How-a-Toilet-Flushes",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://www.epa.gov/watersense/residential-toilets",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://aemetblog.es/2023/06/03/que-es-una-dana-y-como-se-formapor-que-es-mas-adecuado-usar-este-termino-que-gota-fria/",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://forecast.weather.gov/glossary.php?word=cutoff",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    },
+    {
+      "url": "https://www.rmets.org/metmatters/cut-lows-cold-drops-and-dana",
+      "opened": true,
+      "checkedDate": "2026-10-14"
+    }
+  ],
+  "sourceNotes": [
+    "Kohler used for siphonic flush sequence and mechanical float only; not every toilet is siphonic. EPA distinguishes flush designs and confirms efficiency/performance testing.",
+    "AEMET definition/detachment/convection checked against NWS exact glossary and RMetS. Met Office rain formation checked. No rainfall figures,20-year recurrence or event-attribution claims reused.",
+    "Meteochile official source also opened for general cross-check; no deaths or historical totals copied.",
+    "Fluidmaster PDF returned429 and guessed MetOffice/types-of-rain404; neither is a cited or successfully opened source."
+  ],
+  "assets": [
+    {
+      "path": "assets/images/learn/curiosity-daily-20261014.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 56650,
+      "sha256": "ef57f37741432733704783eea818a39c85266c428f604a0d07b14f76697eaa64"
+    },
+    {
+      "path": "assets/images/learn/curiosity-daily-20261014-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 18774,
+      "sha256": "cab7e3ddf2af6c58ee55787c6630494323e80bfd926c6137b0dcc32aa35956a7"
+    },
+    {
+      "path": "assets/images/learn/curiosity-daily-20261014-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 6352,
+      "sha256": "f6d2e82b43d5b3cdcd5af01da8d1893853275a6fe4ae993e04bce846271f5921"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261014.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 64186,
+      "sha256": "86ad55e8eb3bc3b68c1ecc9f099ef8c63356c6d502e0eaf4a88c0a9824e6c6d1"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261014-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 18686,
+      "sha256": "8066f94e42ee1fa2901a58c2a2315ce2a9f96c33f5d7735714a5992b9593558a"
+    },
+    {
+      "path": "assets/images/learn/curiosity-weekly-20261014-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 5900,
+      "sha256": "e9863349ebc4fd108a169aa848f396e9de8756cc400bb9f2e4fe3a88034bff53"
+    }
+  ],
+  "covers": {
+    "generator": "built-in ImageGen",
+    "originals": [
+      "C:/Users/PC/.codex/generated_images/01a0cf29-8746-71c3-adb3-5bab23eb3fdb/exec-6001b7bb-f184-438b-9f90-4f1fdd4f8e73.png",
+      "C:/Users/PC/.codex/generated_images/01a0cf29-8746-71c3-adb3-5bab23eb3fdb/exec-a2527511-4e90-4d85-949e-b88235b9928c.png"
+    ],
+    "review": "Both originals visually inspected. Ordinary exterior toilet; no technical cutaway. Imagined coastal weather scene; no documentary-event claim.3:2derivatives preserved without stretching.",
+    "thumbnailInspection": "Both240px images inspected; central subjects remain readable. No cutaway or documentary event claim."
+  },
+  "checks": {
+    "publicCopy": "One central question per piece, short paragraphs, terms explained, no keyword lists, artificialFAQ, required quiz or internal goals.",
+    "factual": "No calculations/quiz added; mechanics distinguished, condensation explained, DANA effects conditional.",
+    "cms": "Public/editor/history publication must remain exact and actorNULL, live author must match biel-sarda.",
+    "prepublication": "PASSED:dated topic demand and limits, explanatory intent, no overlap, seven opened primary/professional sources, original English, two original photos/full+240crops, desktop1280/mobile320, keyboard sources, author/Article/canonical/social/citations/links/feed/sitemap, existing quiz/course regressions.",
+    "tests": [
+      "test-learning-paths:7courses/144questions; full-correct/full-wrong/version/progress",
+      "test-learn-library",
+      "test-learn-seo",
+      "test-learning-journey",
+      "check-editorial:99pages;draft exclusion/republishing",
+      "check-build:145HTMLpages",
+      "fullbuild:865publicfiles/134minifiedassets;Daily730dates6570weightedcases,icons372,integrity/cache checks"
+    ],
+    "visualProof": "visual-proof.json",
+    "assets": "Six derivatives hash-matched from source to localdist;public verification still required before CMS."
+  }
+}
