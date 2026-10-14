@@ -13,12 +13,24 @@ const template=parse(fs.readFileSync(root+'/admin/brainilab_connections_template
 assert.equal(normalize('connections',template)[0].valid,true);
 assert.equal(normalize('connections',[{...template[0],explanation:''}])[0].valid,false);
 assert.equal(normalize('connections',[{...template[0],clue_5:template[0].correct_connection}])[0].valid,false);
+for(const [kind,file,count] of [['sequence','sequence',18],['numberroute','numberroute',12]]){
+ const rows=parse(fs.readFileSync(root+'/admin/content-batches/'+file+'-20261014.csv','utf8'));
+ assert.equal(rows.length,count);assert.ok(normalize(kind,rows).every(r=>r.valid),'Every new '+kind+' record passes the real Admin importer');
+}
 // Exercise real ad eligibility with enabled runtime flags: functional routes must stay excluded.
 const ads=fs.readFileSync(root+'/assets/js/ads.js','utf8');
-const eligible=ads.slice(ads.indexOf('  function eligiblePlacement('),ads.indexOf('  function publisherReady('));
-for(const [url,expected] of [['/404.html',false],['/profile/',false],['/rankings/',false],['/suggestions/',false],['/privacy/',false],['/games/',true],['/science/science-quiz/',true]]){
-const context={location:{pathname:url},debugMode:()=>false,flagForPlacement:{quiz_result:'yes'},window:{}};
-context.window={BrainiMonetization:{canDecideAds:()=>true,adsEnabled:()=>true,adsFree:()=>false},BrainiRuntime:{has:()=>true}};context.BrainiRuntime={get:()=>({enabled:true})};
-assert.equal(vm.runInNewContext(eligible+';eligiblePlacement("quiz_result")',context),expected,url);}
+const eligible=ads.slice(ads.indexOf('  const config='),ads.indexOf('  function publisherReady('));
+function adEligibility(url,{active=false,free=false,consent=true,enabled=true}={}){
+ const context={location:new URL(url,'https://brainilabgames.com'),URLSearchParams,document:{querySelector:()=>active?{}:null},window:{}};
+ context.window={BrainiMonetization:{canDecideAds:()=>consent,adsEnabled:()=>true,adsFree:()=>free},BrainiRuntime:{has:()=>true}};context.BrainiRuntime={get:()=>({enabled})};
+ return vm.runInNewContext(eligible+';eligiblePlacement("quiz_result")',context);
+}
+for(const [url,expected] of [['/404.html',false],['/profile/',false],['/rankings/',false],['/suggestions/',false],['/privacy/',false],['/games/',true],['/science/science-quiz/',true]])assert.equal(adEligibility(url),expected,url);
+assert.equal(adEligibility('https://preview.brainilabquiz.workers.dev/games/'),false);
+assert.equal(adEligibility('https://www.brainilabgames.com/games/'),true);
+assert.equal(adEligibility('/',{active:true}),false);
+assert.equal(adEligibility('/games/',{free:true}),false);
+assert.equal(adEligibility('/games/',{consent:false}),false);
+assert.equal(adEligibility('/games/',{enabled:false}),false);
 
 console.log('CSV alignment, Connections content and ad exclusion tests passed.');
