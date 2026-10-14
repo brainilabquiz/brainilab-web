@@ -6,10 +6,13 @@ const html=readFileSync('learn/index.html','utf8'),script=readFileSync('assets/j
 const setup=hash=>{const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/?source=test'+hash,runScripts:'outside-only'});dom.window.eval(script);return dom;};
 const visible=d=>[...d.querySelectorAll('.learn-card:not([hidden])')];
 const tick=()=>new Promise(r=>setTimeout(r,20));
+const catalogue=new JSDOM(html).window.document;
+const academyCount=Math.min(12,catalogue.querySelectorAll('.learn-card[data-format=academy]').length);
+const overviewCount=Math.min(12,catalogue.querySelectorAll('.learn-card[data-format=article][data-latest-topic]').length);
 const dom=setup(''),w=dom.window,d=w.document;
-assert.equal(visible(d).length,10);
+assert.equal(visible(d).length,overviewCount);
 d.querySelector('[data-format-filter=academy]').click();
-assert.equal(w.location.hash,'#academy');assert.equal(visible(d).length,7);
+assert.equal(w.location.hash,'#academy');assert.equal(visible(d).length,academyCount);
 assert.equal(d.querySelector('#learn-topic').value,'__latest');
 assert.equal(d.querySelector('#learn-topic option[value="Sports"]').disabled,true);
 const input=d.querySelector('#learn-search');input.value='biscuit';input.dispatchEvent(new w.Event('input'));
@@ -21,8 +24,8 @@ const copied=setup(w.location.hash);assert.equal(visible(copied.window.document)
 d.querySelector('.learn-search-clear').click();assert.equal(w.location.hash,'#academy');
 assert.ok([...d.querySelectorAll('[data-matched-lesson]')].every(a=>a.hidden&&!a.hasAttribute('href')));
 d.querySelector('[data-format-filter=article]').click();assert.equal(w.location.hash,'');
-w.history.back();await tick();assert.equal(w.location.hash,'#academy');assert.equal(visible(d).length,7);
-w.history.forward();await tick();assert.equal(w.location.hash,'');assert.equal(visible(d).length,10);
+w.history.back();await tick();assert.equal(w.location.hash,'#academy');assert.equal(visible(d).length,academyCount);
+w.history.forward();await tick();assert.equal(w.location.hash,'');assert.equal(visible(d).length,overviewCount);
 d.querySelector('#learn-topic').value='';d.querySelector('#learn-topic').dispatchEvent(new w.Event('change'));
 d.querySelector('[data-show-more]').click();assert.equal(visible(d).length,24);assert.match(w.location.hash,/shown=24/);
 const expanded=setup(w.location.hash);assert.equal(visible(expanded.window.document).length,24);expanded.window.close();
@@ -30,7 +33,7 @@ w.dispatchEvent(new w.PageTransitionEvent('pageshow',{persisted:true}));assert.e
 dom.window.close();
 for(const hash of ['#academy?topic=all','#academy?topic=Sports&shown=-4','#unknown?q=median&shown=999999']){
  const bad=setup(hash),bd=bad.window.document;
- assert.equal(visible(bd).length,hash.startsWith('#academy')?7:10);
+ assert.equal(visible(bd).length,hash.startsWith('#academy')?academyCount:overviewCount);
  assert.equal(bd.querySelector('#learn-topic').value,'__latest');bad.window.close();
 }
 console.log('PASS library navigation: shareable selections, lesson search/direct link, back/forward, restored more and pageshow, invalid state, topic availability.');

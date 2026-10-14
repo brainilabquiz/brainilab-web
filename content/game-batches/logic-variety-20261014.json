@@ -1,0 +1,684 @@
+{
+  "date": "2026-10-14",
+  "provenance": "Original BrainiLab logic puzzles. Sources document mathematical methods; the exact vectors and all operator routes were checked computationally. Number Route uses its explicit left-to-right rule, equivalent to nested parentheses, not ungrouped normal precedence.",
+  "sources": [
+    {
+      "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations",
+      "checked_at": "2026-10-14",
+      "supports": "Explicit/recursive sequences, powers and factorial methods"
+    },
+    {
+      "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-3-geometric-sequences",
+      "checked_at": "2026-10-14",
+      "supports": "Constant ratios, multiplication and division"
+    },
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors",
+      "checked_at": "2026-10-14",
+      "supports": "Prime numbers and factors"
+    },
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "checked_at": "2026-10-14",
+      "supports": "Basic arithmetic and evaluating grouped expressions"
+    }
+  ],
+  "sequence": [
+    {
+      "external_key": "exp-20261014-sequence-01",
+      "category": "math",
+      "sequence_values": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "answer_value": 13,
+      "options": [
+        13,
+        12,
+        15,
+        17
+      ],
+      "explanation": "These are consecutive prime numbers. After 11 comes 13.",
+      "family": "primes",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "external_key": "exp-20261014-sequence-02",
+      "category": "math",
+      "sequence_values": [
+        1,
+        2,
+        6,
+        24,
+        120
+      ],
+      "answer_value": 720,
+      "options": [
+        144,
+        720,
+        240,
+        600
+      ],
+      "explanation": "Multiply by 2, then 3, 4 and 5. The next step multiplies 120 by 6, giving 720.",
+      "family": "factorials",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-03",
+      "category": "math",
+      "sequence_values": [
+        100,
+        81,
+        64,
+        49,
+        36
+      ],
+      "answer_value": 25,
+      "options": [
+        24,
+        16,
+        25,
+        20
+      ],
+      "explanation": "These are the squares of 10, 9, 8, 7 and 6. Next comes 5 squared: 25.",
+      "family": "descending-squares",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-04",
+      "category": "math",
+      "sequence_values": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "answer_value": 1024,
+      "options": [
+        768,
+        512,
+        2048,
+        1024
+      ],
+      "explanation": "Multiply each number by 4. The next value is 256 multiplied by 4: 1024.",
+      "family": "powers-of-four",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-3-geometric-sequences"
+    },
+    {
+      "external_key": "exp-20261014-sequence-05",
+      "category": "math",
+      "sequence_values": [
+        9,
+        99,
+        999,
+        9999,
+        99999
+      ],
+      "answer_value": 999999,
+      "options": [
+        999999,
+        999990,
+        999909,
+        999900
+      ],
+      "explanation": "Multiply by 10 and add 9 each time. One more 9 gives 999999.",
+      "family": "repeat-nine",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-06",
+      "category": "math",
+      "sequence_values": [
+        4,
+        16,
+        36,
+        64,
+        100
+      ],
+      "answer_value": 144,
+      "options": [
+        121,
+        144,
+        120,
+        196
+      ],
+      "explanation": "Square the consecutive even numbers 2, 4, 6, 8 and 10. The next even number is 12, and its square is 144.",
+      "family": "even-squares",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-07",
+      "category": "math",
+      "sequence_values": [
+        1,
+        27,
+        125,
+        343,
+        729
+      ],
+      "answer_value": 1331,
+      "options": [
+        1000,
+        1210,
+        1331,
+        1728
+      ],
+      "explanation": "Cube the consecutive odd numbers 1, 3, 5, 7 and 9. Next comes 11 cubed: 1331.",
+      "family": "odd-cubes",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-08",
+      "category": "math",
+      "sequence_values": [
+        2,
+        1,
+        3,
+        4,
+        7
+      ],
+      "answer_value": 11,
+      "options": [
+        10,
+        12,
+        14,
+        11
+      ],
+      "explanation": "Starting with 2 and 1, add the previous two terms to make the next. Here, 4 plus 7 gives 11.",
+      "family": "add-previous-two",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-09",
+      "category": "math",
+      "sequence_values": [
+        1,
+        100,
+        2,
+        90,
+        3
+      ],
+      "answer_value": 80,
+      "options": [
+        80,
+        70,
+        4,
+        60
+      ],
+      "explanation": "Read every other number. One line counts 1, 2, 3; the other falls from 100 to 90 to 80.",
+      "family": "interleave-count-down",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-10",
+      "category": "math",
+      "sequence_values": [
+        1,
+        5,
+        2,
+        10,
+        3
+      ],
+      "answer_value": 15,
+      "options": [
+        4,
+        15,
+        20,
+        12
+      ],
+      "explanation": "Two lines are interleaved: 1, 2, 3 and 5, 10, 15. The next term belongs to the fives.",
+      "family": "interleave-count-fives",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-11",
+      "category": "math",
+      "sequence_values": [
+        2,
+        1,
+        4,
+        4,
+        8
+      ],
+      "answer_value": 9,
+      "options": [
+        16,
+        8,
+        9,
+        12
+      ],
+      "explanation": "The first, third and fifth terms double: 2, 4, 8. The second, fourth and sixth are 1, 4, 9: consecutive squares.",
+      "family": "interleave-powers-squares",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-12",
+      "category": "math",
+      "sequence_values": [
+        1,
+        50,
+        4,
+        40,
+        9
+      ],
+      "answer_value": 30,
+      "options": [
+        16,
+        20,
+        25,
+        30
+      ],
+      "explanation": "One line follows the squares 1, 4, 9. The other subtracts 10: 50, 40, 30.",
+      "family": "interleave-squares-down",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-13",
+      "category": "math",
+      "sequence_values": [
+        1,
+        2,
+        5,
+        14,
+        41
+      ],
+      "answer_value": 122,
+      "options": [
+        122,
+        123,
+        124,
+        82
+      ],
+      "explanation": "Multiply each term by 3, then subtract 1. So 41 multiplied by 3, minus 1, gives 122.",
+      "family": "triple-minus-one",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-14",
+      "category": "math",
+      "sequence_values": [
+        4096,
+        1024,
+        256,
+        64,
+        16
+      ],
+      "answer_value": 4,
+      "options": [
+        8,
+        4,
+        12,
+        2
+      ],
+      "explanation": "Divide each term by 4. After 16 comes 4.",
+      "family": "divide-by-four",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-3-geometric-sequences"
+    },
+    {
+      "external_key": "exp-20261014-sequence-15",
+      "category": "math",
+      "sequence_values": [
+        1,
+        4,
+        13,
+        40,
+        121
+      ],
+      "answer_value": 364,
+      "options": [
+        363,
+        365,
+        364,
+        242
+      ],
+      "explanation": "Multiply each term by 3, then add 1. So 121 multiplied by 3, plus 1, gives 364.",
+      "family": "triple-plus-one",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-16",
+      "category": "math",
+      "sequence_values": [
+        1,
+        4,
+        10,
+        20,
+        35
+      ],
+      "answer_value": 56,
+      "options": [
+        50,
+        55,
+        60,
+        56
+      ],
+      "explanation": "The increases are 3, 6, 10 and 15. These increases grow by 3, 4 and 5, so the next increase is 21. Add it to 35 to get 56.",
+      "family": "growing-triangular-steps",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-17",
+      "category": "math",
+      "sequence_values": [
+        1,
+        5,
+        12,
+        22,
+        35
+      ],
+      "answer_value": 51,
+      "options": [
+        51,
+        48,
+        50,
+        52
+      ],
+      "explanation": "The increases are 4, 7, 10 and 13, growing by 3 each time. The next increase is 16, so 35 becomes 51.",
+      "family": "steps-growing-by-three",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    },
+    {
+      "external_key": "exp-20261014-sequence-18",
+      "category": "math",
+      "sequence_values": [
+        1,
+        6,
+        15,
+        28,
+        45
+      ],
+      "answer_value": 66,
+      "options": [
+        64,
+        66,
+        65,
+        68
+      ],
+      "explanation": "The increases are 5, 9, 13 and 17, growing by 4 each time. Add the next increase, 21, to 45 to get 66.",
+      "family": "steps-growing-by-four",
+      "source_url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/13-1-sequences-and-their-notations"
+    }
+  ],
+  "numberroute": [
+    {
+      "external_key": "exp-20261014-numberroute-01",
+      "category": "math",
+      "numbers": [
+        3,
+        5,
+        2,
+        7
+      ],
+      "target": 28,
+      "solution": [
+        "+",
+        "÷",
+        "×"
+      ],
+      "trace": [
+        3,
+        8,
+        4,
+        28
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-02",
+      "category": "math",
+      "numbers": [
+        3,
+        6,
+        4,
+        7
+      ],
+      "target": 35,
+      "solution": [
+        "+",
+        "−",
+        "×"
+      ],
+      "trace": [
+        3,
+        9,
+        5,
+        35
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-03",
+      "category": "math",
+      "numbers": [
+        5,
+        7,
+        9,
+        4
+      ],
+      "target": 27,
+      "solution": [
+        "+",
+        "×",
+        "÷"
+      ],
+      "trace": [
+        5,
+        12,
+        108,
+        27
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-04",
+      "category": "math",
+      "numbers": [
+        4,
+        8,
+        5,
+        7
+      ],
+      "target": 34,
+      "solution": [
+        "×",
+        "−",
+        "+"
+      ],
+      "trace": [
+        4,
+        32,
+        27,
+        34
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-05",
+      "category": "math",
+      "numbers": [
+        6,
+        2,
+        8,
+        5
+      ],
+      "target": 29,
+      "solution": [
+        "÷",
+        "×",
+        "+"
+      ],
+      "trace": [
+        6,
+        3,
+        24,
+        29
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-06",
+      "category": "math",
+      "numbers": [
+        7,
+        5,
+        4,
+        6
+      ],
+      "target": 36,
+      "solution": [
+        "−",
+        "+",
+        "×"
+      ],
+      "trace": [
+        7,
+        2,
+        6,
+        36
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-07",
+      "category": "math",
+      "numbers": [
+        7,
+        9,
+        3,
+        5
+      ],
+      "target": 26,
+      "solution": [
+        "×",
+        "÷",
+        "+"
+      ],
+      "trace": [
+        7,
+        63,
+        21,
+        26
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-08",
+      "category": "math",
+      "numbers": [
+        2,
+        4,
+        7,
+        5
+      ],
+      "target": 37,
+      "solution": [
+        "+",
+        "×",
+        "−"
+      ],
+      "trace": [
+        2,
+        6,
+        42,
+        37
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-09",
+      "category": "math",
+      "numbers": [
+        8,
+        4,
+        3,
+        5
+      ],
+      "target": 25,
+      "solution": [
+        "÷",
+        "+",
+        "×"
+      ],
+      "trace": [
+        8,
+        2,
+        5,
+        25
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-10",
+      "category": "math",
+      "numbers": [
+        6,
+        3,
+        8,
+        9
+      ],
+      "target": 33,
+      "solution": [
+        "−",
+        "×",
+        "+"
+      ],
+      "trace": [
+        6,
+        3,
+        24,
+        33
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-11",
+      "category": "math",
+      "numbers": [
+        3,
+        4,
+        8,
+        2
+      ],
+      "target": 10,
+      "solution": [
+        "×",
+        "+",
+        "÷"
+      ],
+      "trace": [
+        3,
+        12,
+        20,
+        10
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "exp-20261014-numberroute-12",
+      "category": "math",
+      "numbers": [
+        5,
+        8,
+        2,
+        4
+      ],
+      "target": 38,
+      "solution": [
+        "×",
+        "+",
+        "−"
+      ],
+      "trace": [
+        5,
+        40,
+        42,
+        38
+      ],
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    }
+  ]
+}
