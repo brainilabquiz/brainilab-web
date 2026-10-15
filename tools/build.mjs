@@ -8,6 +8,7 @@ import path from 'node:path';
 import './check-site-integrity.mjs';
 import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
+import './validate-game-batches.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
