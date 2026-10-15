@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import vm from 'node:vm';
+import {validateHigherPair,validateQuizQuestion} from './validate-game-batches.mjs';
+const b=JSON.parse(readFileSync('content/game-batches/variety-facts-20261015.json','utf8'));
+assert.equal(b.higherlower.length,12);assert.equal(b.quiz.length,12);
+for(const p of b.higherlower)validateHigherPair(p);validateHigherPair(b.repair);for(const q of b.quiz)validateQuizQuestion(q);
+assert.equal(b.higherlower.filter(p=>p.expected_choice==='first').length,6);
+for(let i=0;i<4;i++)assert.equal(b.quiz.filter(q=>q.options[i].is_correct).length,3);
+assert.throws(()=>validateHigherPair({...b.higherlower[0],right_value:b.higherlower[0].left_value}),/tie/);
+assert.throws(()=>validateHigherPair({...b.higherlower[0],expected_choice:'second'}),/direction/);
+assert.throws(()=>validateHigherPair({...b.repair,comparison_type:'faster_slower'}),/speed/);
+const badFact=structuredClone(b.higherlower[0]);badFact.fact_checks[0].value=99;assert.throws(()=>validateHigherPair(badFact),/Source value/);
+const badQuiz=structuredClone(b.quiz[0]);badQuiz.options[1].is_correct=true;assert.throws(()=>validateQuizQuestion(badQuiz),/Exactly one/);
+assert.throws(()=>validateQuizQuestion({...b.quiz[0],fact_check:null}),/fact check/);
+const admin=readFileSync('assets/js/admin.js','utf8');
+const parse=vm.runInNewContext(admin.slice(admin.indexOf('  function parseCSV('),admin.indexOf('  function importRowFromCSV('))+';parseCSV');
+const types=admin.slice(admin.indexOf('  const HIGHER_LOWER_TYPES='),admin.indexOf('  function higherLowerTypeOptions('));
+const normalize=vm.runInNewContext('const cleanError=e=>e.message;'+types+admin.slice(admin.indexOf('  function csvList('),admin.indexOf('  function openPoolImport('))+';normalizePoolImport');
+const rows=normalize('higherlower',parse(readFileSync('admin/content-batches/higherlower-20261015.csv','utf8')));assert.equal(rows.length,12);
+for(let i=0;i<12;i++){assert.ok(rows[i].valid);for(const [k,v] of Object.entries(JSON.parse(JSON.stringify(rows[i].row))))assert.deepEqual(v,b.higherlower[i][k]);}
+const importQuestion=vm.runInNewContext(admin.slice(admin.indexOf('  function importRowFromCSV('),admin.indexOf('  function openQuestionImport('))+';importRowFromCSV');
+const questions=parse(readFileSync('admin/content-batches/quiz-20261015.csv','utf8')).map(importQuestion);
+assert.deepEqual(JSON.parse(JSON.stringify(questions)),b.quiz.map(({fact_check,...q})=>q));
+console.log('PASS 24 source-checked records: direction/precision/unit/fact/answer guards, balanced keys and exact real Admin CSV imports.');

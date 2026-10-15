@@ -1,0 +1,836 @@
+{
+  "date": "2026-10-15",
+  "sources": [
+    {
+      "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+      "checked_at": "2026-10-15",
+      "sha256": "e49a487947295c389ba6e5833dd8fb04b63e826d39f70c123881882096e5e68b"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/one-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "1417ce319b581ba48a67b10d4ac8d0dc3c6d8719668a13dd233fb6c1d8127ad2"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/two-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "8ed0cd6021263bf5d2ad3fd4e568f5a7c9d9586aa646ba24fa3bfec824e61dc8"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/five-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "f6a324da850873297de55007458186e2a578daa7942b934403f0f3151c1fbf49"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/ten-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "c520344edc2b315ec49083c2b535413a45bdc8a9aa2f8a4953fb5dba90151c17"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/twenty-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "b97ff4dfd40d2083121cda53b6b50af8e567c0713f7c4d8f97d050b9d714f16c"
+    },
+    {
+      "url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/fifty-pence-coin-designs/",
+      "checked_at": "2026-10-15",
+      "sha256": "0fda16c510bccb2dc93643e89470021a37b8c688b5b174cca14c06b7f6dd9a25"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/coral.html",
+      "checked_at": "2026-10-15",
+      "sha256": "a395ea4ece2875dee7912c489a7245a83596e34ff1c51c0165e4019051097d54"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/sargassosea.html",
+      "checked_at": "2026-10-15",
+      "sha256": "437d27a0783f3b8e1a56e482c6aa248452d74d27534fbb86ca1fce2b95be678b"
+    },
+    {
+      "url": "https://science.nasa.gov/dwarf-planets/ceres/facts/",
+      "checked_at": "2026-10-15",
+      "sha256": "3d5085347e47d74c422d42101c6c5091e8c91b79d848691a4d521d0a4191ce95"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1903",
+      "checked_at": "2026-10-15",
+      "sha256": "29a799375b8857a548ddd42df6f9a4c83889059d46b0a8120ee8d487565ff4dc"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1911",
+      "checked_at": "2026-10-15",
+      "sha256": "84331b0cae0888f824344d4fd9dc7026fe899918d25aa812e4054c18f2e3d6fb"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1921",
+      "checked_at": "2026-10-15",
+      "sha256": "2a00ec9bc0d9b5ec5d74a1a2bceed4f44652b7e59161764f6346c0d703f76ead"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1945",
+      "checked_at": "2026-10-15",
+      "sha256": "418d1d3ad414164535a7f60d05db07b26ca112db44c0438ca84303183b6e9dcf"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1993",
+      "checked_at": "2026-10-15",
+      "sha256": "9356f7db101dd390d6704e27832e623e065a46408e9f892b3f40c5d888fd89a7"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2004",
+      "checked_at": "2026-10-15",
+      "sha256": "7154218294c192aec4ba9b3a61fb9dddfb68dd37f850e2dfadec2e0063648db5"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2016",
+      "checked_at": "2026-10-15",
+      "sha256": "814ee0c8d7d4100090bd5a112abc19f1d12f7443585e440072d9a7f3be20affc"
+    },
+    {
+      "url": "https://api.nobelprize.org/2.1/laureate/6",
+      "checked_at": "2026-10-15",
+      "sha256": "43b48baa19c53f0ddcb6815ffe668156d3b46f26b6702e9f060b5c0c4f978a73"
+    },
+    {
+      "url": "https://home.nps.gov/crla/learn/nature/crater-lake.htm",
+      "checked_at": "2026-10-15",
+      "sha256": "7ae3d64bce264c3622f398196ae6404c9fd3c8b419bb78b6d9ca3105dd762021"
+    }
+  ],
+  "higherlower": [
+    {
+      "external_key": "variety-20261015-mercury-venus-year",
+      "category": "science",
+      "comparison_type": "longer_shorter",
+      "metric": "Time for one orbit of the Sun (approx.)",
+      "left_label": "a year on Mercury",
+      "left_value": 0.2408467,
+      "right_label": "a year on Venus",
+      "right_value": 0.61519726,
+      "unit": "Earth years",
+      "explanation": "Mercury takes about 0.24 Earth years to orbit the Sun; Venus takes about 0.62. This compares years, not the length of a day.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 0.2408467,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Mercury: JPL sidereal orbital period 0.2408467 years."
+        },
+        {
+          "side": "right",
+          "value": 0.61519726,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Venus: JPL sidereal orbital period 0.61519726 years."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-mars-earth-year",
+      "category": "science",
+      "comparison_type": "longer_shorter",
+      "metric": "Time for one orbit of the Sun (approx.)",
+      "left_label": "a year on Mars",
+      "left_value": 1.8808476,
+      "right_label": "a year on Earth",
+      "right_value": 1.0000174,
+      "unit": "Earth years",
+      "explanation": "Mars takes about 1.88 Earth years to orbit the Sun; Earth takes about 1.00. This compares years, not the length of a day.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 1.8808476,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Mars: JPL sidereal orbital period 1.8808476 years."
+        },
+        {
+          "side": "right",
+          "value": 1.0000174,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Earth: JPL sidereal orbital period 1.0000174 years."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-saturn-jupiter-year",
+      "category": "science",
+      "comparison_type": "longer_shorter",
+      "metric": "Time for one orbit of the Sun (approx.)",
+      "left_label": "a year on Saturn",
+      "left_value": 29.447498,
+      "right_label": "a year on Jupiter",
+      "right_value": 11.862615,
+      "unit": "Earth years",
+      "explanation": "Saturn takes about 29.45 Earth years to orbit the Sun; Jupiter takes about 11.86. This compares years, not the length of a day.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 29.447498,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Saturn: JPL sidereal orbital period 29.447498 years."
+        },
+        {
+          "side": "right",
+          "value": 11.862615,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Jupiter: JPL sidereal orbital period 11.862615 years."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-uranus-neptune-year",
+      "category": "science",
+      "comparison_type": "longer_shorter",
+      "metric": "Time for one orbit of the Sun (approx.)",
+      "left_label": "a year on Uranus",
+      "left_value": 84.016846,
+      "right_label": "a year on Neptune",
+      "right_value": 164.79132,
+      "unit": "Earth years",
+      "explanation": "Uranus takes about 84.02 Earth years to orbit the Sun; Neptune takes about 164.79. This compares years, not the length of a day.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 84.016846,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Uranus: JPL sidereal orbital period 84.016846 years."
+        },
+        {
+          "side": "right",
+          "value": 164.79132,
+          "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+          "detail": "Neptune: JPL sidereal orbital period 164.79132 years."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-1p-5p-mass",
+      "category": "everyday",
+      "comparison_type": "heavier_lighter",
+      "metric": "Mass of the current UK coin",
+      "left_label": "a UK 1p coin",
+      "left_value": 3.56,
+      "right_label": "a UK 5p coin",
+      "right_value": 3.25,
+      "unit": "g",
+      "explanation": "The current 1p coin weighs 3.56 g; the 5p weighs 3.25 g. A higher face value does not always mean a heavier coin.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 3.56,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/one-pence-coin-designs/",
+          "detail": "Current 1p specification: 3.56 grams."
+        },
+        {
+          "side": "right",
+          "value": 3.25,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/five-pence-coin-designs/",
+          "detail": "Current 5p specification: 3.25 grams."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-10p-2p-mass",
+      "category": "everyday",
+      "comparison_type": "heavier_lighter",
+      "metric": "Mass of the current UK coin",
+      "left_label": "a UK 10p coin",
+      "left_value": 6.5,
+      "right_label": "a UK 2p coin",
+      "right_value": 7.12,
+      "unit": "g",
+      "explanation": "The current 10p coin weighs 6.5 g; the 2p weighs 7.12 g. A higher face value does not always mean a heavier coin.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 6.5,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/ten-pence-coin-designs/",
+          "detail": "Current 10p specification: 6.5 grams."
+        },
+        {
+          "side": "right",
+          "value": 7.12,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/two-pence-coin-designs/",
+          "detail": "Current 2p specification: 7.12 grams."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-50p-20p-mass",
+      "category": "everyday",
+      "comparison_type": "heavier_lighter",
+      "metric": "Mass of the current UK coin",
+      "left_label": "a UK 50p coin",
+      "left_value": 8.0,
+      "right_label": "a UK 20p coin",
+      "right_value": 5.0,
+      "unit": "g",
+      "explanation": "The current 50p coin weighs 8 g; the 20p weighs 5 g. A higher face value does not always mean a heavier coin.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 8.0,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/fifty-pence-coin-designs/",
+          "detail": "Current 50p specification: 8 grams."
+        },
+        {
+          "side": "right",
+          "value": 5.0,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/twenty-pence-coin-designs/",
+          "detail": "Current 20p specification: 5 grams."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-20p-10p-mass",
+      "category": "everyday",
+      "comparison_type": "heavier_lighter",
+      "metric": "Mass of the current UK coin",
+      "left_label": "a UK 20p coin",
+      "left_value": 5.0,
+      "right_label": "a UK 10p coin",
+      "right_value": 6.5,
+      "unit": "g",
+      "explanation": "The current 20p coin weighs 5 g; the 10p weighs 6.5 g. A higher face value does not always mean a heavier coin.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 5.0,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/twenty-pence-coin-designs/",
+          "detail": "Current 20p specification: 5 grams."
+        },
+        {
+          "side": "right",
+          "value": 6.5,
+          "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/ten-pence-coin-designs/",
+          "detail": "Current 10p specification: 6.5 grams."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-curie-einstein-prize",
+      "category": "culture",
+      "comparison_type": "earlier_later",
+      "metric": "Official Nobel Prize year",
+      "left_label": "Marie Curie's Chemistry prize",
+      "left_value": 1911,
+      "right_label": "Albert Einstein's Physics prize",
+      "right_value": 1921,
+      "unit": "year",
+      "explanation": "Marie Curie's Chemistry prize is dated 1911; Albert Einstein's Physics prize is dated 1921. These are the official prize years.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 1911,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1911",
+          "detail": "Marie Curie: Chemistry, official awardYear 1911."
+        },
+        {
+          "side": "right",
+          "value": 1921,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1921",
+          "detail": "Albert Einstein: Physics, official awardYear 1921."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-dylan-morrison-prize",
+      "category": "culture",
+      "comparison_type": "earlier_later",
+      "metric": "Official Nobel Prize year",
+      "left_label": "Bob Dylan's Literature prize",
+      "left_value": 2016,
+      "right_label": "Toni Morrison's Literature prize",
+      "right_value": 1993,
+      "unit": "year",
+      "explanation": "Bob Dylan's Literature prize is dated 2016; Toni Morrison's Literature prize is dated 1993. These are the official prize years.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 2016,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2016",
+          "detail": "Bob Dylan: Literature, official awardYear 2016."
+        },
+        {
+          "side": "right",
+          "value": 1993,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1993",
+          "detail": "Toni Morrison: Literature, official awardYear 1993."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-fleming-curie-prize",
+      "category": "culture",
+      "comparison_type": "earlier_later",
+      "metric": "Official Nobel Prize year",
+      "left_label": "Sir Alexander Fleming's Physiology or Medicine prize",
+      "left_value": 1945,
+      "right_label": "Marie Curie's Chemistry prize",
+      "right_value": 1911,
+      "unit": "year",
+      "explanation": "Sir Alexander Fleming's Physiology or Medicine prize is dated 1945; Marie Curie's Chemistry prize is dated 1911. These are the official prize years.",
+      "expected_choice": "first",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 1945,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1945",
+          "detail": "Sir Alexander Fleming: Physiology or Medicine, official awardYear 1945."
+        },
+        {
+          "side": "right",
+          "value": 1911,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1911",
+          "detail": "Marie Curie: Chemistry, official awardYear 1911."
+        }
+      ]
+    },
+    {
+      "external_key": "variety-20261015-mandela-maathai-prize",
+      "category": "culture",
+      "comparison_type": "earlier_later",
+      "metric": "Official Nobel Prize year",
+      "left_label": "Nelson Mandela's Peace prize",
+      "left_value": 1993,
+      "right_label": "Wangari Maathai's Peace prize",
+      "right_value": 2004,
+      "unit": "year",
+      "explanation": "Nelson Mandela's Peace prize is dated 1993; Wangari Maathai's Peace prize is dated 2004. These are the official prize years.",
+      "expected_choice": "second",
+      "fact_checks": [
+        {
+          "side": "left",
+          "value": 1993,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1993",
+          "detail": "Nelson Mandela: Peace, official awardYear 1993."
+        },
+        {
+          "side": "right",
+          "value": 2004,
+          "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2004",
+          "detail": "Wangari Maathai: Peace, official awardYear 2004."
+        }
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "external_key": "variety-20261015-coral-animals",
+      "topic_slug": "science",
+      "difficulty": "easy",
+      "prompt": "Coral may look like a plant. What is it actually?",
+      "explanation": "Corals are animals. Their tiny polyps catch food; many reef-building corals also live with algae in their tissues.",
+      "source_url": "https://oceanservice.noaa.gov/facts/coral.html",
+      "tags": [],
+      "options": [
+        {
+          "text": "An animal",
+          "is_correct": true
+        },
+        {
+          "text": "A fungus",
+          "is_correct": false
+        },
+        {
+          "text": "A flowering plant",
+          "is_correct": false
+        },
+        {
+          "text": "A mineral with no living parts",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "NOAA identifies corals as sessile animals and describes their polyps and symbiotic algae.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-saturn-density",
+      "topic_slug": "science",
+      "difficulty": "medium",
+      "prompt": "Which of these planets has a lower average density than water?",
+      "explanation": "Saturn has an average density of about 0.69 g/cm³, below the usual 1 g/cm³ reference for liquid water. The other three are above 1.",
+      "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+      "tags": [],
+      "options": [
+        {
+          "text": "Jupiter",
+          "is_correct": false
+        },
+        {
+          "text": "Saturn",
+          "is_correct": true
+        },
+        {
+          "text": "Uranus",
+          "is_correct": false
+        },
+        {
+          "text": "Neptune",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "JPL bulk density: Saturn0.6871, Jupiter1.3262, Uranus1.270, Neptune1.638 g/cm³. Water comparison uses the ordinary approximate1g/cm³ reference, not an exact temperature-independent constant.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-venus-slow-spin",
+      "topic_slug": "science",
+      "difficulty": "hard",
+      "prompt": "On which planet does one full rotation take longer than one orbit of the Sun?",
+      "explanation": "Venus takes about 243 Earth days to rotate once, but about 225 days to orbit the Sun. This compares a full rotation with a year, not the time from one noon to the next.",
+      "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+      "tags": [],
+      "options": [
+        {
+          "text": "Mercury",
+          "is_correct": false
+        },
+        {
+          "text": "Earth",
+          "is_correct": false
+        },
+        {
+          "text": "Venus",
+          "is_correct": true
+        },
+        {
+          "text": "Mars",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "JPL absolute sidereal rotation243.018days; orbital0.61519726years. Mercury58.6462days/<88day orbit; Earth~1day/year; Mars~1day/year. Negative rotation indicates direction, not negative duration.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-ceres-belt",
+      "topic_slug": "science",
+      "difficulty": "medium",
+      "prompt": "Which dwarf planet lies in the asteroid belt between Mars and Jupiter?",
+      "explanation": "Ceres is a dwarf planet in the main asteroid belt. Its location makes it a closer neighbour than Pluto and the other distant dwarf planets.",
+      "source_url": "https://science.nasa.gov/dwarf-planets/ceres/facts/",
+      "tags": [],
+      "options": [
+        {
+          "text": "Pluto",
+          "is_correct": false
+        },
+        {
+          "text": "Eris",
+          "is_correct": false
+        },
+        {
+          "text": "Makemake",
+          "is_correct": false
+        },
+        {
+          "text": "Ceres",
+          "is_correct": true
+        }
+      ],
+      "fact_check": {
+        "detail": "NASA Ceres facts places Ceres in the asteroid belt between Mars and Jupiter.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-curie-two-categories",
+      "topic_slug": "history",
+      "difficulty": "medium",
+      "prompt": "Marie Curie won Nobel Prizes in which two subjects?",
+      "explanation": "Curie shared the 1903 Physics prize and won the 1911 Chemistry prize. Her two awards belong to different scientific fields.",
+      "source_url": "https://api.nobelprize.org/2.1/laureate/6",
+      "tags": [],
+      "options": [
+        {
+          "text": "Physics and Chemistry",
+          "is_correct": true
+        },
+        {
+          "text": "Chemistry and Literature",
+          "is_correct": false
+        },
+        {
+          "text": "Physics and Peace",
+          "is_correct": false
+        },
+        {
+          "text": "Medicine and Chemistry",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "Official laureate6 lists1903Physics and1911Chemistry.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-peace-1993-pair",
+      "topic_slug": "history",
+      "difficulty": "medium",
+      "prompt": "Who shared the 1993 Nobel Peace Prize with Nelson Mandela?",
+      "explanation": "Mandela and F. W. de Klerk shared the 1993 Peace prize. The official citation recognised their work towards ending apartheid peacefully.",
+      "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1993",
+      "tags": [],
+      "options": [
+        {
+          "text": "Desmond Tutu",
+          "is_correct": false
+        },
+        {
+          "text": "F. W. de Klerk",
+          "is_correct": true
+        },
+        {
+          "text": "Kofi Annan",
+          "is_correct": false
+        },
+        {
+          "text": "Wangari Maathai",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "Official1993 Peace prize laureates are NelsonMandela and F.W.deKlerk; motivation concerns peaceful termination of apartheid and democratic SouthAfrica.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-sargasso-boundaries",
+      "topic_slug": "geography",
+      "difficulty": "medium",
+      "prompt": "Which sea is bounded by ocean currents rather than coastlines?",
+      "explanation": "The Sargasso Sea sits in the North Atlantic. Its shifting boundaries follow ocean currents, rather than a ring of surrounding coastlines.",
+      "source_url": "https://oceanservice.noaa.gov/facts/sargassosea.html",
+      "tags": [],
+      "options": [
+        {
+          "text": "The Mediterranean Sea",
+          "is_correct": false
+        },
+        {
+          "text": "The Red Sea",
+          "is_correct": false
+        },
+        {
+          "text": "The Sargasso Sea",
+          "is_correct": true
+        },
+        {
+          "text": "The Baltic Sea",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "NOAA describes the Sargasso Sea as the only sea without a land boundary, defined by ocean currents.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-crater-lake-collapse",
+      "topic_slug": "geography",
+      "difficulty": "medium",
+      "prompt": "What created the basin that now holds Crater Lake in Oregon?",
+      "explanation": "Mount Mazama collapsed after a major eruption, leaving a caldera. Rain and snow later helped fill it with water.",
+      "source_url": "https://home.nps.gov/crla/learn/nature/crater-lake.htm",
+      "tags": [],
+      "options": [
+        {
+          "text": "A meteorite impact",
+          "is_correct": false
+        },
+        {
+          "text": "A river cutting through limestone",
+          "is_correct": false
+        },
+        {
+          "text": "A dam built by people",
+          "is_correct": false
+        },
+        {
+          "text": "The collapse of a volcano",
+          "is_correct": true
+        }
+      ],
+      "fact_check": {
+        "detail": "NPS CraterLake page describes MountMazama central collapse forming caldera, later partially filled by rain and snow.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-magnetic-penny",
+      "topic_slug": "general-knowledge",
+      "difficulty": "medium",
+      "prompt": "Why will a magnet pick up a modern UK copper-plated 1p coin?",
+      "explanation": "Modern copper-plated pennies have steel inside. The copper-coloured surface hides the part attracted to the magnet.",
+      "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/one-pence-coin-designs/",
+      "tags": [],
+      "options": [
+        {
+          "text": "It has a steel core",
+          "is_correct": true
+        },
+        {
+          "text": "Copper is strongly magnetic",
+          "is_correct": false
+        },
+        {
+          "text": "Its shape creates magnetism",
+          "is_correct": false
+        },
+        {
+          "text": "It contains a small battery",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "RoyalMint: copper-plated steel since September1992; mildsteel core makes these coins magnetic. Question excludes olderbronze pennies.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-twenty-pence-shape",
+      "topic_slug": "general-knowledge",
+      "difficulty": "easy",
+      "prompt": "How many curved sides does a UK 20p coin have?",
+      "explanation": "The 20p is a curved seven-sided shape. Its constant rolling diameter helps machines recognise it.",
+      "source_url": "https://www.royalmint.com/collect/collector-resources/designs-and-specifications/twenty-pence-coin-designs/",
+      "tags": [],
+      "options": [
+        {
+          "text": "Five",
+          "is_correct": false
+        },
+        {
+          "text": "Seven",
+          "is_correct": true
+        },
+        {
+          "text": "Six",
+          "is_correct": false
+        },
+        {
+          "text": "Eight",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "RoyalMint describes seven-sided equilateral curve heptagon with constant rollingdiameter.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-dylan-literature",
+      "topic_slug": "general-knowledge",
+      "difficulty": "easy",
+      "prompt": "Which Nobel Prize did songwriter Bob Dylan win in 2016?",
+      "explanation": "Dylan received the Literature prize. The official citation recognised new poetic expression within the American song tradition.",
+      "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=2016",
+      "tags": [],
+      "options": [
+        {
+          "text": "Peace",
+          "is_correct": false
+        },
+        {
+          "text": "Physics",
+          "is_correct": false
+        },
+        {
+          "text": "Literature",
+          "is_correct": true
+        },
+        {
+          "text": "Chemistry",
+          "is_correct": false
+        }
+      ],
+      "fact_check": {
+        "detail": "Official2016Literature record names BobDylan; motivation refers to newpoeticexpressions withinAmerican songtradition.",
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "external_key": "variety-20261015-morrison-literature",
+      "topic_slug": "general-knowledge",
+      "difficulty": "medium",
+      "prompt": "Which author won the 1993 Nobel Prize in Literature?",
+      "explanation": "Toni Morrison won the 1993 Literature prize. Nobel categories can connect familiar names from books, songs and science.",
+      "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1993",
+      "tags": [],
+      "options": [
+        {
+          "text": "Kazuo Ishiguro",
+          "is_correct": false
+        },
+        {
+          "text": "Bob Dylan",
+          "is_correct": false
+        },
+        {
+          "text": "Gabriel García Márquez",
+          "is_correct": false
+        },
+        {
+          "text": "Toni Morrison",
+          "is_correct": true
+        }
+      ],
+      "fact_check": {
+        "detail": "Official1993Literature record names ToniMorrison.",
+        "checked_at": "2026-10-15"
+      }
+    }
+  ],
+  "repair": {
+    "id": "13d9058a-4946-40e5-89fb-4c8b48c8bc7f",
+    "external_key": "jupiter-vs-earth-rotation",
+    "category": "science",
+    "is_active": true,
+    "comparison_type": "longer_shorter",
+    "metric": "Time for one full rotation (approx.)",
+    "left_label": "one rotation of Earth",
+    "left_value": 23.93447232,
+    "right_label": "one rotation of Jupiter",
+    "right_value": 9.92496,
+    "unit": "hours",
+    "explanation": "Jupiter completes one rotation in about 9.92 hours; Earth takes about 23.93 hours. A shorter rotation time means a faster spin.",
+    "expected_choice": "second",
+    "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+    "fact_check": "JPL sidereal rotation periods multiplied by24: Earth0.99726968days; Jupiter0.41354days. The comparison asks duration, not speed. Original correct direction was also second; saved scores are not recalculated.",
+    "fact_checks": [
+      {
+        "side": "left",
+        "value": 23.93447232,
+        "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "detail": "JPL sidereal rotation periods multiplied by24: Earth0.99726968days; Jupiter0.41354days. The comparison asks duration, not speed. Original correct direction was also second; saved scores are not recalculated."
+      },
+      {
+        "side": "right",
+        "value": 9.92496,
+        "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "detail": "JPL sidereal rotation periods multiplied by24: Earth0.99726968days; Jupiter0.41354days. The comparison asks duration, not speed. Original correct direction was also second; saved scores are not recalculated."
+      }
+    ]
+  },
+  "source_limitations": [
+    "BritishMuseum pages blocked403; no RosettaStone question included.",
+    "Original NPSvolcanoes URL404; current CraterLakepage fetchedsuccessfully."
+  ],
+  "notes": "Original short questions and explanations. Exact official reference values retained in source data; UI rounds to two decimal places. Current and historical scores are not recalculated."
+}
