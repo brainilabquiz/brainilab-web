@@ -1,0 +1,817 @@
+{
+  "date": "2026-10-15",
+  "type": "original-exact-maths-and-editorial-quality-holds",
+  "sources": [
+    {
+      "id": "multiples",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "573a2c2c0b1b1e2e149071040c9f8ec5ede995222cf971c29644a2a301de34b2"
+    },
+    {
+      "id": "fractions",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "08a3d5b2c71e05878d59c4cfeb46e3c6530fc88ccc31bed6df5755554668649b"
+    },
+    {
+      "id": "percent",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/6-1-understand-percent",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "90aab26da58be16f4cdf4970890cd0acbac57269b8e81f103b4fec5054fef162"
+    },
+    {
+      "id": "units",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/7-5-systems-of-measurement",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "f80cbffb608a0b75de2d3ea16d9fba77355463b8e19cc6730817539c03572841"
+    },
+    {
+      "id": "operations",
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "f6a2ed2830381d405d85f8726cfbbc289a726fe0e6880eacd77bc75c9d3683e6"
+    },
+    {
+      "id": "tennis",
+      "url": "https://www.itftennis.com/en/tours/grand-slam-tournaments/",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "d02032286070b4dd9d8fbd985a7bdca8af8edf52b89ff177db3bfcb2c8a9c43d"
+    },
+    {
+      "id": "sleep",
+      "url": "https://www.nhlbi.nih.gov/health/sleep/stages-of-sleep",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "43d5f225a9b8c39e4d67446cfce7cc675d14bec50f8e4c5a911f898a63ebcc80"
+    },
+    {
+      "id": "rivers",
+      "url": "https://www.usgs.gov/water-science-school/science/rivers-world-worlds-longest-rivers",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "81afffa44a6eba004958307e3540bbe1f101423985d9f802ab11635b18bb8dd6"
+    },
+    {
+      "id": "wonders",
+      "url": "https://education.nationalgeographic.org/resource/seven-wonders-ancient-world/",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "95c910a6d119f9e35348a6cf7b8d4e618901f47b977a990c006517d60911ad2e"
+    },
+    {
+      "id": "nobel1901",
+      "url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1901",
+      "checked_at": "2026-10-15",
+      "status": 200,
+      "sha256": "bd6801f5ea064c450ab80d1250418c12408693c217f649a98896b4d620d60fe7"
+    }
+  ],
+  "source_limitations": [
+    {
+      "id": "elephant",
+      "url": "https://movementoflife.si.edu/species/asian-elephant/",
+      "checked_at": "2026-10-15",
+      "status": "unavailable",
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ],
+  "orderup": [
+    {
+      "external_key": "quality-20261015-fractions",
+      "title": "A slice of the number line",
+      "prompt": "Put these fractions in order from smallest to largest.",
+      "direction_label": "Smallest to largest",
+      "category": "math",
+      "items": [
+        "1/10",
+        "1/8",
+        "1/5",
+        "1/4",
+        "1/3",
+        "2/5",
+        "1/2",
+        "3/5",
+        "3/4",
+        "9/10"
+      ],
+      "sort_values": [
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "comparison_unit": "number",
+      "evaluation_kind": "number",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions"
+    },
+    {
+      "external_key": "quality-20261015-decimals",
+      "title": "Mind the decimal point",
+      "prompt": "Put these decimals in order from smallest to largest.",
+      "direction_label": "Smallest to largest",
+      "category": "math",
+      "items": [
+        "0.07",
+        "0.107",
+        "0.17",
+        "0.207",
+        "0.27",
+        "0.702",
+        "0.72",
+        "1.007",
+        "1.07",
+        "1.7"
+      ],
+      "sort_values": [
+        [
+          7,
+          100
+        ],
+        [
+          107,
+          1000
+        ],
+        [
+          17,
+          100
+        ],
+        [
+          207,
+          1000
+        ],
+        [
+          27,
+          100
+        ],
+        [
+          351,
+          500
+        ],
+        [
+          18,
+          25
+        ],
+        [
+          1007,
+          1000
+        ],
+        [
+          107,
+          100
+        ],
+        [
+          17,
+          10
+        ]
+      ],
+      "comparison_unit": "number",
+      "evaluation_kind": "number",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions"
+    },
+    {
+      "external_key": "quality-20261015-mixed-values",
+      "title": "Same number line, different outfits",
+      "prompt": "Compare the fractions, decimals and percentages. Put the smallest first.",
+      "direction_label": "Smallest to largest",
+      "category": "math",
+      "items": [
+        "5%",
+        "1/10",
+        "0.15",
+        "1/5",
+        "25%",
+        "0.4",
+        "1/2",
+        "65%",
+        "3/4",
+        "0.9"
+      ],
+      "sort_values": [
+        [
+          1,
+          20
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          3,
+          20
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "comparison_unit": "number",
+      "evaluation_kind": "number",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/6-1-understand-percent"
+    },
+    {
+      "external_key": "quality-20261015-number-line",
+      "title": "Which side of zero?",
+      "prompt": "Put these numbers in order from the most negative to the largest.",
+      "direction_label": "Smallest to largest",
+      "category": "math",
+      "items": [
+        "−7",
+        "−3.5",
+        "−2",
+        "−1.25",
+        "−0.4",
+        "0",
+        "0.25",
+        "0.8",
+        "1.5",
+        "3"
+      ],
+      "sort_values": [
+        [
+          -7,
+          1
+        ],
+        [
+          -7,
+          2
+        ],
+        [
+          -2,
+          1
+        ],
+        [
+          -5,
+          4
+        ],
+        [
+          -2,
+          5
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "comparison_unit": "number",
+      "evaluation_kind": "number",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions"
+    },
+    {
+      "external_key": "quality-20261015-durations",
+      "title": "A matter of time",
+      "prompt": "Put these durations in order, from shortest to longest.",
+      "direction_label": "Shortest to longest",
+      "category": "math",
+      "items": [
+        "20 seconds",
+        "45 seconds",
+        "1 minute",
+        "90 seconds",
+        "2 minutes",
+        "3 minutes",
+        "200 seconds",
+        "5 minutes",
+        "8 minutes",
+        "10 minutes"
+      ],
+      "sort_values": [
+        [
+          20,
+          1
+        ],
+        [
+          45,
+          1
+        ],
+        [
+          60,
+          1
+        ],
+        [
+          90,
+          1
+        ],
+        [
+          120,
+          1
+        ],
+        [
+          180,
+          1
+        ],
+        [
+          200,
+          1
+        ],
+        [
+          300,
+          1
+        ],
+        [
+          480,
+          1
+        ],
+        [
+          600,
+          1
+        ]
+      ],
+      "comparison_unit": "seconds",
+      "evaluation_kind": "duration",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/7-5-systems-of-measurement"
+    },
+    {
+      "external_key": "quality-20261015-calculations",
+      "title": "Little sums, bigger answers",
+      "prompt": "Work out each result, then put the answers in order from smallest to largest.",
+      "direction_label": "Smallest to largest",
+      "category": "math",
+      "items": [
+        "18 ÷ 6",
+        "9 − 5",
+        "2 × 3",
+        "11 − 4",
+        "24 ÷ 3",
+        "3 × 3",
+        "22 ÷ 2",
+        "7 + 6",
+        "4 × 4",
+        "5 × 5"
+      ],
+      "sort_values": [
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          16,
+          1
+        ],
+        [
+          25,
+          1
+        ]
+      ],
+      "comparison_unit": "number",
+      "evaluation_kind": "calculation",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "quality-20261015-lengths",
+      "title": "How long is it, really?",
+      "prompt": "Compare these metric lengths and put the shortest first.",
+      "direction_label": "Shortest to longest",
+      "category": "math",
+      "items": [
+        "5 mm",
+        "1 cm",
+        "15 mm",
+        "2 cm",
+        "5 cm",
+        "0.1 m",
+        "25 cm",
+        "0.5 m",
+        "75 cm",
+        "1 m"
+      ],
+      "sort_values": [
+        [
+          1,
+          200
+        ],
+        [
+          1,
+          100
+        ],
+        [
+          3,
+          200
+        ],
+        [
+          1,
+          50
+        ],
+        [
+          1,
+          20
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "comparison_unit": "metres",
+      "evaluation_kind": "length",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/7-5-systems-of-measurement"
+    },
+    {
+      "external_key": "quality-20261015-masses",
+      "title": "Small things on the scales",
+      "prompt": "Compare these metric masses, from lightest to heaviest.",
+      "direction_label": "Lightest to heaviest",
+      "category": "math",
+      "items": [
+        "150 mg",
+        "0.2 g",
+        "500 mg",
+        "1 g",
+        "1,500 mg",
+        "2 g",
+        "0.005 kg",
+        "12 g",
+        "0.025 kg",
+        "50 g"
+      ],
+      "sort_values": [
+        [
+          3,
+          20
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          25,
+          1
+        ],
+        [
+          50,
+          1
+        ]
+      ],
+      "comparison_unit": "grams",
+      "evaluation_kind": "mass",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/7-5-systems-of-measurement"
+    }
+  ],
+  "oddoneout": [
+    {
+      "external_key": "quality-20261015-multiple-three",
+      "category": "math",
+      "prompt": "Which number is not a multiple of 3?",
+      "items": [
+        "25",
+        "12",
+        "21",
+        "36"
+      ],
+      "odd_index": 0,
+      "rule": {
+        "type": "multiple",
+        "base": 3
+      },
+      "explanation": "12, 21 and 36 divide exactly by 3. The number 25 does not.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "external_key": "quality-20261015-factor-twenty-four",
+      "category": "math",
+      "prompt": "Which number is not a factor of 24?",
+      "items": [
+        "3",
+        "9",
+        "6",
+        "8"
+      ],
+      "odd_index": 1,
+      "rule": {
+        "type": "factor",
+        "base": 24
+      },
+      "explanation": "24 divides exactly by 3, 6 and 8, but not by 9.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "external_key": "quality-20261015-prime-check",
+      "category": "math",
+      "prompt": "Which number is not prime?",
+      "items": [
+        "11",
+        "13",
+        "21",
+        "17"
+      ],
+      "odd_index": 2,
+      "rule": {
+        "type": "prime"
+      },
+      "explanation": "21 is 3 × 7. The other three numbers have no factors except 1 and themselves.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "external_key": "quality-20261015-square-check",
+      "category": "math",
+      "prompt": "Which number is not a whole number squared?",
+      "items": [
+        "16",
+        "25",
+        "36",
+        "48"
+      ],
+      "odd_index": 3,
+      "rule": {
+        "type": "square"
+      },
+      "explanation": "16 is 4 × 4, 25 is 5 × 5 and 36 is 6 × 6. No whole number squared equals 48.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra"
+    },
+    {
+      "external_key": "quality-20261015-even-check",
+      "category": "math",
+      "prompt": "Which number is not even?",
+      "items": [
+        "27",
+        "14",
+        "22",
+        "38"
+      ],
+      "odd_index": 0,
+      "rule": {
+        "type": "multiple",
+        "base": 2
+      },
+      "explanation": "14, 22 and 38 divide exactly by 2. The number 27 is odd.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
+    },
+    {
+      "external_key": "quality-20261015-half-check",
+      "category": "math",
+      "prompt": "Which fraction is not equal to 1/2?",
+      "items": [
+        "2/4",
+        "4/6",
+        "3/6",
+        "5/10"
+      ],
+      "odd_index": 1,
+      "rule": {
+        "type": "equal",
+        "value": [
+          1,
+          2
+        ]
+      },
+      "explanation": "2/4, 3/6 and 5/10 all equal 1/2. But 4/6 simplifies to 2/3.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions"
+    },
+    {
+      "external_key": "quality-20261015-three-quarter-check",
+      "category": "math",
+      "prompt": "Which fraction is not equal to 3/4?",
+      "items": [
+        "6/8",
+        "9/12",
+        "10/16",
+        "12/16"
+      ],
+      "odd_index": 2,
+      "rule": {
+        "type": "equal",
+        "value": [
+          3,
+          4
+        ]
+      },
+      "explanation": "6/8, 9/12 and 12/16 all equal 3/4. But 10/16 simplifies to 5/8.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/5-3-decimals-and-fractions"
+    },
+    {
+      "external_key": "quality-20261015-quarter-formats",
+      "category": "math",
+      "prompt": "Which value is not equal to 0.25?",
+      "items": [
+        "1/4",
+        "25%",
+        "0.250",
+        "0.025"
+      ],
+      "odd_index": 3,
+      "rule": {
+        "type": "equal",
+        "value": [
+          1,
+          4
+        ]
+      },
+      "explanation": "1/4, 25% and 0.250 all equal 0.25. The number 0.025 is ten times smaller.",
+      "source_url": "https://openstax.org/books/prealgebra-2e/pages/6-1-understand-percent"
+    }
+  ],
+  "quality_holds": [
+    {
+      "key": "nobel-prize-categories",
+      "kind": "tied-sort-keys-and-mixed-category",
+      "reason": "Five labels specify the same first-award year, 1901, so a strict total order unfairly penalises valid ties. Four later cards explicitly identify other award schemes.",
+      "source_url": "https://api.nobelprize.org/2.1/nobelPrizes?nobelPrizeYear=1901",
+      "id": "5a850e1f-d699-4fe2-bc7d-7e1a472bcacd"
+    },
+    {
+      "key": "ancient-seven-wonders",
+      "kind": "category-padding",
+      "reason": "The prompt asks about the classical seven ancient wonders, but ten cards include the Great Wall, Colosseum and Taj Mahal as comparisons; the supplied ancient construction order is not reproducibly sourced.",
+      "source_url": "https://education.nationalgeographic.org/resource/seven-wonders-ancient-world/",
+      "id": "3260cd9f-1c74-48f0-89fb-83f596a3859f"
+    },
+    {
+      "key": "tennis-grand-slam-calendar",
+      "kind": "category-padding",
+      "reason": "The prompt specifies the four Grand Slam tournaments but ten cards include warmups, Masters events and ATP Finals.",
+      "source_url": "https://www.itftennis.com/en/tours/grand-slam-tournaments/",
+      "id": "f0292f58-31f0-4b41-91cf-ad6b1b7918ab"
+    },
+    {
+      "key": "human-sleep-cycle-stages",
+      "kind": "overlapping-stages",
+      "reason": "A ten-card fixed chain mixes non-REM stages, a repeated stage, activity inside a stage and awakenings. These are not ten distinct sequential stages of every sleep cycle.",
+      "source_url": "https://www.nhlbi.nih.gov/health/sleep/stages-of-sleep",
+      "id": "63dcfaaa-a0e4-42e6-9c69-69650878fad7"
+    },
+    {
+      "key": "elements-by-abundance-crust",
+      "kind": "inconsistent-measure-and-missing-values",
+      "reason": "An abundance comparison ends with Hydrogen (by atoms), while the other cards give neither a consistent weight/atom metric nor source values. Hold until one comparable dataset defines a strict order.",
+      "source_url": null,
+      "id": "20b99a50-22d7-4320-befc-3e41c00e669b"
+    },
+    {
+      "key": "longest-rivers-world",
+      "kind": "inconsistent-definition-and-missing-values",
+      "reason": "Named rivers and a combined river system are mixed without source lengths or a consistent headwater definition. Hold rather than claim one unqualified strict order.",
+      "source_url": "https://www.usgs.gov/water-science-school/science/rivers-world-worlds-longest-rivers",
+      "id": "d1019da0-5d73-4375-a478-ea1afeb0d216"
+    },
+    {
+      "key": "heaviest-land-mammals",
+      "kind": "missing-comparable-values",
+      "reason": "Average adult male mass is ranked without a source population, numerical averages or comparable measurement definitions. Hold for documented values; no replacement species ranking is asserted.",
+      "source_url": null,
+      "id": "51bfd6fe-84aa-4f4c-899a-4bdef31c166e"
+    }
+  ],
+  "future_replacements": {
+    "elements-by-abundance-crust": "quality-20261015-fractions",
+    "longest-rivers-world": "quality-20261015-decimals",
+    "heaviest-land-mammals": "quality-20261015-mixed-values",
+    "nobel-prize-categories": "quality-20261015-calculations"
+  },
+  "review": {
+    "article": false,
+    "original_examples": true,
+    "methods_not_copied_exercises": true,
+    "strict_order_no_ties": true,
+    "one_odd_under_explicit_rule": true,
+    "historical_values_and_ids_immutable": true
+  }
+}
