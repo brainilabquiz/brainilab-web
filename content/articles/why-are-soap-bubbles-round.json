@@ -1,0 +1,68 @@
+{
+  "slug": "why-are-soap-bubbles-round",
+  "title": "Why are soap bubbles round? Surface tension at work",
+  "description": "A square wand still makes round bubbles. Discover how surface tension shapes them, why soap helps and when a bubble stops being a sphere.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 133,
+  "publishedAt": "2026-10-16T17:14:34Z",
+  "updatedAt": "2026-10-16T17:14:34Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Science",
+    "url": "/science/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-are-soap-bubbles-round.webp",
+    "small": "/assets/images/learn/why-are-soap-bubbles-round-small.webp",
+    "thumbnail": "/assets/images/learn/why-are-soap-bubbles-round-thumb.webp",
+    "alt": "A round iridescent soap bubble floats above a purple bowl beside a yellow square bubble wand",
+    "position": 25,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "Exploratorium — The Shape of Bubbles",
+      "url": "https://annex.exploratorium.edu/ronh/bubbles/shape_of_bubbles.html"
+    },
+    {
+      "name": "Exploratorium — Soap",
+      "url": "https://annex.exploratorium.edu/ronh/bubbles/soap.html"
+    },
+    {
+      "name": "Exploratorium — Why are bubbles round?",
+      "url": "https://annex.exploratorium.edu/exploratopia/activity_bubbles.html"
+    }
+  ],
+  "related": [
+    "why-is-the-sky-blue",
+    "why-do-onions-make-you-cry"
+  ],
+  "practice": "Try a Science Quiz for another small mystery hiding in plain sight.",
+  "sections": [
+    {
+      "id": "why-bubbles-are-round",
+      "title": "A square wand, a round surprise",
+      "html": "<p><strong>A free-floating soap bubble tends to form a sphere because surface tension pulls its film towards the smallest surface area for the air inside. For a given volume, that shape is a sphere.</strong></p><p>Use a square bubble wand and you still do not get a procession of floating cubes. Once a bubble breaks free, the wand no longer holds its edges in place. The film can settle into its own shape.</p>"
+    },
+    {
+      "id": "surface-tension-explained",
+      "title": "What is surface tension?",
+      "html": "<p>Molecules in a liquid attract one another. At its surface, those attractions make the liquid resist being stretched over a larger area. That effect is called <strong>surface tension</strong>.</p><p>A soap bubble is air enclosed by a very thin liquid film. <a href=\"https://annex.exploratorium.edu/ronh/bubbles/shape_of_bubbles.html\">The Exploratorium explains how the film tends to shrink</a>. The air inside resists being squeezed, so the bubble does not simply collapse to a point.</p><p>Picture wrapping the same parcel with less paper. The amount inside stays the same; the covering uses less area. A sphere is the bubble’s neatest wrapping.</p>"
+    },
+    {
+      "id": "why-soap-helps",
+      "title": "Does soap make the pull stronger?",
+      "html": "<p>Here is the twist: <strong>soap lowers water’s surface tension</strong>. It does not increase it. Try blowing lasting bubbles with plain water and you will soon notice the difference.</p><p><a href=\"https://annex.exploratorium.edu/ronh/bubbles/soap.html\">The Exploratorium describes soap’s double role</a>: it reduces the surface tension and helps the thin film last longer, including by slowing evaporation. The film can stretch into a bubble without disappearing almost immediately.</p>"
+    },
+    {
+      "id": "when-bubbles-change-shape",
+      "title": "The bubbles in the washing-up disagree",
+      "html": "<p>Look at a cluster of bubbles and many seem squashed or angular. Touching neighbours change the conditions: the bubbles share films rather than each floating alone.</p><p>The <a href=\"https://annex.exploratorium.edu/exploratopia/activity_bubbles.html\">Exploratorium’s bubble activity explores these changing shapes</a>. “Bubbles are round” is a helpful starting point for an isolated bubble, rather than a rule that every bubble must obey.</p><p>Fancy another everyday puzzle? Discover <a href=\"/learn/why-do-onions-make-you-cry/\">why chopping an onion can make you cry</a>. Even the washing-up and dinner prep have their own physics and chemistry.</p>"
+    }
+  ]
+}

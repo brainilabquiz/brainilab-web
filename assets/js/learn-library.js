@@ -27,14 +27,25 @@
   const empty=document.querySelector('.learn-empty');
   const select=document.querySelector('#learn-topic');
   const clearSearch=document.querySelector('.learn-search-clear');
-  const normalize=value=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+  // Match common British and American spellings without changing the reader's query.
+  // Whole words keep unrelated names (such as Colorado) intact.
+  const spellings={color:'colour',colors:'colours',colorful:'colourful',colored:'coloured',
+    center:'centre',centers:'centres',gray:'grey',grays:'greys',
+    favorite:'favourite',favorites:'favourites',behavior:'behaviour',behaviors:'behaviours'};
+  const normalize=value=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/\b[a-z]+\b/g,word=>Object.hasOwn(spellings,word)?spellings[word]:word).trim();
   const lessons=cards.map(card=>{
     try{
       const data=JSON.parse(card.dataset.searchLessons||'[]');
       return Array.isArray(data)?data.filter(l=>/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(l?.slug||'')&&typeof l.title==='string'):[];
     }catch{return [];}
   });
-  const texts=cards.map((card,i)=>normalize(card.textContent+' '+lessons[i].map(l=>l.title).join(' ')));
+  const cardText=card=>{
+    const nodes=document.createTreeWalker(card,NodeFilter.SHOW_TEXT),parts=[];
+    while(nodes.nextNode())parts.push(nodes.currentNode.nodeValue);
+    return parts.join(' ');
+  };
+  const texts=cards.map((card,i)=>normalize(cardText(card)+' '+lessons[i].map(l=>l.title).join(' ')));
   const formatButtons=[...document.querySelectorAll('[data-format-filter]')];
   const heading=document.querySelector('#library-heading');
   const more=document.querySelector('[data-show-more]');
