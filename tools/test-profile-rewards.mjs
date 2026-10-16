@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
-const files=['profile-rewards-model.js','profile-rewards-store.js','profile-rewards.js'];
+const files=['avatar-design.js','profile-rewards-model.js','profile-rewards-store.js','avatar-studio-ui.js','profile-rewards.js'];
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
 function setup({signed=false,xp=2700,metadata={},storage=true}={}){
   const dom=new JSDOM('<body class="profile-page"><div class="nav-right"><a class="avatar"></a></div><div data-profile-rank-hero><span class="rank-avatar"></span><div class="profile-rank-main"><h2>Level 12</h2></div></div><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only'});
@@ -58,7 +58,7 @@ assert.equal(S.snapshot().style.frame,'copper');assert.equal(JSON.stringify(gues
 await S.load();guest.setXP(3000);w.BrainiProfileRewards.render();
 assert.equal(root.querySelector('[data-reward-id=gold]').disabled,false);assert.equal(S.snapshot().style.frame,'copper','new reward is not auto-equipped');
 guest.setXP(10000);w.BrainiProfileRewards.render();assert.match(root.querySelector('[data-next-reward]').textContent,/Every reward is unlocked/);
-root.querySelector('[data-reward-id=none]').click();root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-style-preview-title]').textContent,'Puzzle Detective');
+root.querySelector('[data-reward-kind=title][data-reward-id=none]').click();root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-style-preview-title]').textContent,'Puzzle Detective');
 const blocked=make({storage:false});await tick();assert.equal(await blocked.w.BrainiRewardStore.save({frame:'blue'}),false);assert.equal(blocked.w.BrainiRewardStore.snapshot().style.frame,'level');assert.match(blocked.w.BrainiRewardStore.snapshot().error,/could not be confirmed/);
 const account=make({signed:true,metadata:{full_name:'Keep me',brainilab_avatar_frame_v1:'green',brainilab_profile_title_v1:'explorer'}});await tick();
 assert.equal(account.w.BrainiRewardStore.snapshot().style.frame,'green');

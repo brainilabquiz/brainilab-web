@@ -63,6 +63,9 @@ window.BrainiProgressUI=(function(){
 
   function avatarImageMarkup(person){
     person=person||window.BrainiData?.player?.()||{};
+    if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
+      return BrainiAvatarDesign.markup(person.avatarDesign,person.xp);
+    }
     const identity=BrainiPeople.resolve(person);
     try{
       if(person.avatarUrl){

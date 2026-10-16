@@ -11,7 +11,7 @@
 <link href="../assets/css/site.css?v=41.53.0" rel="stylesheet"/><link href="../assets/css/stats.css?v=41.11.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
 <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.53.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.53.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.53.0"></script><script defer="" src="../assets/js/profile.bundle.js?v=41.41.0"></script>
 <link rel="stylesheet" href="/assets/css/profile-progress.css?v=41.41.0"/><link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
-<link rel="stylesheet" href="/assets/css/learning-paths.css?v=10"/><script defer src="/assets/js/learning-paths.bundle.js?v=10"></script><link rel="stylesheet" href="/assets/css/profile-rewards.css?v=1"/><script defer src="/assets/js/profile-rewards.bundle.js?v=1"></script></head>
+<link rel="stylesheet" href="/assets/css/profile-rewards.css?v=1"/><script defer src="/assets/js/profile-rewards.bundle.js?v=1"></script><link rel="stylesheet" href="/assets/css/learning-paths.css?v=10"/><script defer src="/assets/js/learning-paths.bundle.js?v=10"></script></head>
 <body class="profile-page braini-visual">
 <header class="topbar">
 <div class="wrap nav">
@@ -28,7 +28,7 @@
 <section class="profile-v27-head">
 <div class="wrap">
 <div class="profile-v27-title">
-<div><span>My BrainiLab</span><h1>Your progress.</h1></div>
+<div><span>My BrainiLab</span><h1>Your BrainiLab.</h1></div>
 <a class="btn" href="../games/index.html">Keep playing →</a>
 </div>
 <nav aria-label="My BrainiLab sections" class="profile-tabs">
@@ -42,8 +42,9 @@
 <section class="section profile-section" data-profile-section="progress">
 <div class="wrap">
 <div data-profile-auth-root=""></div>
-<div class="profile-rank-hero" data-profile-rank-hero=""></div>
-<section class="profile-rewards" data-profile-rewards aria-label="Profile rewards"></section>
+<section class="profile-rewards" data-profile-rewards aria-label="Avatar creator and rewards"></section>
+<nav class="profile-quick-links" aria-label="Keep exploring"><a href="/daily-quiz/">Today’s Daily →</a><a href="?section=stats">Your game stats →</a><a href="/learn/paths/">BrainiLab Academy →</a></nav>
+<details class="profile-activity" data-profile-activity><summary>Progress &amp; recent activity<span>Level, streak, games &amp; learning</span></summary><div class="profile-activity-body"><div class="profile-rank-hero" data-profile-rank-hero=""></div>
 <div data-braini-continuity></div>
 <div class="profile-progress-layout">
 <section class="panel profile-today"><div class="section-head"><h2>Today’s Daily</h2><span>Daily #<span data-daily-number>0</span></span></div>
@@ -65,7 +66,7 @@
 <div class="data-metric"><strong data-player-total-questions>0</strong><span>Questions played</span></div>
 </div>
 <details class="profile-reward-rules"><summary>How XP and streaks work</summary><p>XP builds your level; game scores decide your ranking. Finish a game to earn XP, with more for correct answers. Your first three rounds of each game earn XP each day.</p><p>The main Daily adds a 250 XP bonus. Signed-in players also earn 40 XP the first time they finish an Academy lesson’s quiz.</p><p>Finish the main Daily each day to keep your streak. The flame stays grey until today’s game is complete. Days reset at 00:00 UTC. If a day is missed, the current streak resets to zero; your personal best and reached milestones remain.</p></details>
-</div></section>
+</div></details></div></section>
 <section class="section profile-section profile-stats-section" data-profile-section="stats" hidden=""><div class="wrap"><div class="profile-section-intro stats-page-intro">
 <span>My Stats</span>
 <h2>See how your games are going</h2>
