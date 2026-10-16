@@ -1,0 +1,106 @@
+{
+  "slug": "why-do-stars-twinkle",
+  "title": "Why do stars twinkle? The sky’s tiny light show",
+  "description": "That flickering star is not sending a secret signal. Discover how moving air bends starlight, why low stars shimmer more and why planets usually look steadier.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 135,
+  "publishedAt": "2026-10-16T17:34:35Z",
+  "updatedAt": "2026-10-16T17:34:35Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Sky colours",
+    "url": "/learn/paths/sky-colours/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-do-stars-twinkle.webp",
+    "small": "/assets/images/learn/why-do-stars-twinkle-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-stars-twinkle-thumb.webp",
+    "alt": "A small cream observatory and purple telescope beneath an indigo sky with a brighter shimmering star",
+    "position": 40,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "NASA StarChild — Why do stars twinkle?",
+      "url": "https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html"
+    },
+    {
+      "name": "NASA Imagine the Universe — Why stars and planets look different",
+      "url": "https://imagine.gsfc.nasa.gov/ask_astro/night_sky.html#981217a"
+    },
+    {
+      "name": "NASA Astronomy Picture of the Day — Why stars twinkle",
+      "url": "https://science.nasa.gov/image-article/apod-2000-july-25-why-stars-twinkle/"
+    }
+  ],
+  "related": [
+    "how-are-rainbows-formed",
+    "why-we-see-same-side-of-moon"
+  ],
+  "practice": "Try a Science Quiz for another small surprise about the world around you.",
+  "sections": [
+    {
+      "id": "why-starlight-twinkles",
+      "title": "A steady star, a restless view",
+      "html": "<p><strong>Stars appear to twinkle because moving pockets of air in Earth’s atmosphere bend their light in changing ways. The rapid flicker we see from the ground is mainly an effect of the air, not the star switching on and off.</strong> <a href=\"https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html\">NASA StarChild explains the effect</a>.</p><p>One bright dot seems to be trying out every setting on a dimmer switch. It is tempting to blame something dramatic happening far away. Often, the interesting part is much closer to home.</p>"
+    },
+    {
+      "id": "air-bends-starlight",
+      "title": "The last part of a very long journey",
+      "html": "<p>Remember <a href=\"/learn/how-are-rainbows-formed/\">refraction in a raindrop</a>? Air can bend light too. Pockets with different temperatures and densities change the path slightly as they move across our view.</p><p>A distant star looks like a tiny point. Those changing paths can make its light seem to shift or flicker. <a href=\"https://science.nasa.gov/image-article/apod-2000-july-25-why-stars-twinkle/\">NASA’s close-up explanation shows how restless the view can become</a>. The irregular movement of the air is called <strong>turbulence</strong>.</p>"
+    },
+    {
+      "id": "stars-near-the-horizon",
+      "title": "Why the low star puts on a bigger show",
+      "html": "<p>A star near the horizon is seen through a longer stretch of atmosphere than one high overhead. Its light has more changing air to cross, so the twinkling can be stronger.</p><p><a href=\"https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html\">NASA suggests comparing stars at different heights</a>. A clear night is enough for a small observation: look for a low star and a higher one, then notice how steady each seems. Conditions vary, so this is a comparison to explore, not a guaranteed result.</p>"
+    },
+    {
+      "id": "why-planets-look-steadier",
+      "title": "Why planets often look calmer",
+      "html": "<p>Planets usually look steadier because they show a small disc rather than an almost point-sized source. Light from different parts crosses different patches of air, and the variations tend to average out.</p><p><a href=\"https://imagine.gsfc.nasa.gov/ask_astro/night_sky.html#981217a\">NASA’s astronomers explain this averaging</a>. “Usually steadier” is the useful clue; twinkling alone is not a foolproof way to identify everything in the sky.</p><p>The star may be far away, but its little light show has a local stage: the air above you.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "science-star-twinkle-v1",
+    "questions": [
+      {
+        "prompt": "What mainly causes the rapid twinkling of a star seen from the ground?",
+        "options": [
+          "The star turning off each second",
+          "Earth’s shadow repeatedly covering it",
+          "Moving air bending its light in changing ways",
+          "The Moon flashing at it"
+        ],
+        "answer": 2,
+        "explanation": "Changing air in Earth’s atmosphere alters the path of the starlight. The familiar rapid twinkle is mainly an atmospheric effect."
+      },
+      {
+        "prompt": "Why can a star near the horizon twinkle more strongly?",
+        "options": [
+          "Its light passes through more atmosphere",
+          "It has moved much closer to Earth",
+          "It contains more gold",
+          "The ground gives it extra light"
+        ],
+        "answer": 0,
+        "explanation": "The line of sight towards the horizon crosses a longer stretch of atmosphere than the view high overhead."
+      },
+      {
+        "prompt": "Why do planets usually look steadier than stars?",
+        "options": [
+          "Planets have no light reaching us",
+          "Light from their small visible discs tends to average out atmospheric variations",
+          "Planets are outside the atmosphere but stars are inside it",
+          "The air stops moving near a planet"
+        ],
+        "answer": 1,
+        "explanation": "A planet’s visible disc provides light from several paths through the air. Their variations tend to average out, unlike an almost point-like star."
+      }
+    ]
+  }
+}

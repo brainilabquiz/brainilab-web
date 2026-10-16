@@ -1,0 +1,106 @@
+{
+  "slug": "how-are-rainbows-formed",
+  "title": "How are rainbows formed? The trick inside a raindrop",
+  "description": "A shower, a little sunshine and a very useful bend. Follow light through a raindrop to discover why a rainbow appears—and why you cannot walk to its end.",
+  "topic": "Science & nature",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 134,
+  "publishedAt": "2026-10-16T17:34:35Z",
+  "updatedAt": "2026-10-16T17:34:35Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Sky colours",
+    "url": "/learn/paths/sky-colours/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/how-are-rainbows-formed.webp",
+    "small": "/assets/images/learn/how-are-rainbows-formed-small.webp",
+    "thumbnail": "/assets/images/learn/how-are-rainbows-formed-thumb.webp",
+    "alt": "A colourful rainbow arches over a miniature green meadow, with rain falling from a lavender cloud",
+    "position": 40,
+    "credit": "AI-generated illustrative cover created for BrainiLab; a conceptual scene, not a scientific diagram."
+  },
+  "sources": [
+    {
+      "name": "Met Office — Rainbows: optical wonders",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows"
+    },
+    {
+      "name": "NOAA NESDIS / NASA Space Place — What causes a rainbow?",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow"
+    },
+    {
+      "name": "National Weather Service — How do rainbows form?",
+      "url": "https://www.weather.gov/fgz/Rainbow"
+    }
+  ],
+  "related": [
+    "why-is-the-sky-blue",
+    "why-are-sunsets-red"
+  ],
+  "practice": "Try a Science Quiz for another small surprise about the world around you.",
+  "sections": [
+    {
+      "id": "how-a-rainbow-forms",
+      "title": "A shower with a colourful bonus",
+      "html": "<p><strong>A rainbow forms when sunlight bends as it enters water droplets, reflects inside them and bends again as it leaves. Different colours bend by different amounts, so they spread out.</strong> <a href=\"https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow\">NOAA follows that journey through a droplet</a>.</p><p>The rain has interrupted your walk. Then the Sun appears and the sky seems to apologise with a rainbow. The ingredients are ordinary; their arrangement does the clever part.</p>"
+    },
+    {
+      "id": "refraction-and-reflection",
+      "title": "One droplet, three changes of direction",
+      "html": "<p>Light travels more slowly in water than in air. When it enters a droplet at an angle, its path bends. That bending is called <strong>refraction</strong>.</p><p>Some light then reflects off the inside of the droplet, like a small bounce, before bending again on its way out. The <a href=\"https://www.weather.gov/fgz/Rainbow\">National Weather Service explains this route</a>. It is not simply sunshine reflecting off the outside of rain.</p>"
+    },
+    {
+      "id": "colours-already-in-sunlight",
+      "title": "The colours were there all along",
+      "html": "<p>As the <a href=\"/learn/why-is-the-sky-blue/\">first lesson</a> showed, sunlight contains a range of colours. A droplet separates them rather than making new ones. This separation is called <strong>dispersion</strong>.</p><p>In a primary rainbow, red sits on the outside of the arc and violet on the inside. We often name seven colours, but the spectrum blends continuously. The <a href=\"https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows\">Met Office explains why seven is a useful description, rather than seven separate stripes</a>.</p>"
+    },
+    {
+      "id": "where-to-look-for-a-rainbow",
+      "title": "Why the rainbow will not wait for you",
+      "html": "<p>For an ordinary daytime rainbow, look towards rain with the Sun <strong>behind you</strong>. Your viewpoint matters: the rainbow is an optical effect, not a painted arch fixed to a field.</p><p><a href=\"https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow\">NOAA explains that the full shape is a circle</a>; from the ground, we usually see only part. In the right conditions, a view from above can reveal more.</p><p>Move and the view changes with you. That elusive end is not playing a particularly mean game of hide-and-seek.</p>"
+    }
+  ],
+  "quiz": {
+    "version": "science-rainbow-refraction-v1",
+    "questions": [
+      {
+        "prompt": "What does refraction mean?",
+        "options": [
+          "Light being switched off",
+          "Light bending as it passes between materials",
+          "A cloud making light",
+          "Rain turning into steam"
+        ],
+        "answer": 1,
+        "explanation": "Refraction changes the direction of light. In this lesson, light bends when it passes between air and water at an angle."
+      },
+      {
+        "prompt": "Where should the Sun be when you look for an ordinary daytime rainbow?",
+        "options": [
+          "Inside the rain cloud",
+          "Directly in front of you",
+          "Below your feet",
+          "Behind you"
+        ],
+        "answer": 3,
+        "explanation": "The Sun is behind the observer and the sunlit water droplets are ahead."
+      },
+      {
+        "prompt": "Where do a rainbow’s colours come from?",
+        "options": [
+          "Different colours already present in sunlight",
+          "Coloured paint in clouds",
+          "A new colour made by every droplet",
+          "The green ground reflected upwards"
+        ],
+        "answer": 0,
+        "explanation": "Sunlight contains a spectrum of colours. Droplets separate them because different colours bend by different amounts."
+      }
+    ]
+  }
+}
