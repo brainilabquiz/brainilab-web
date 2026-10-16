@@ -1,0 +1,64 @@
+{
+  "slug": "what-is-interleaving-learning",
+  "title": "What is interleaving? Give your practice a little shuffle",
+  "description": "Interleaving alternates different kinds of examples. Discover what a painting study found, and why mixing everything together is not the point.",
+  "topic": "Learning",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 140,
+  "publishedAt": "2026-10-16T20:39:00Z",
+  "updatedAt": "2026-10-16T20:39:00Z",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Learn",
+    "url": "/learn/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/what-is-interleaving-learning.webp",
+    "small": "/assets/images/learn/what-is-interleaving-learning-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-interleaving-learning-thumb.webp",
+    "alt": "Six small landscape study cards alternate between blue dots and golden brushstrokes on a sunlit wooden desk",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; original invented artwork, not material or participants from the studies."
+  },
+  "sources": [
+    {
+      "name": "Kornell and Bjork (2008) — Learning Concepts and Categories (original research, PDF)",
+      "url": "https://sites.williams.edu/nk2/files/2011/08/Kornell.Bjork_.2008a.pdf"
+    },
+    {
+      "name": "Hausman and Kornell (2014) — Mixing topics while studying does not enhance learning (original research, PDF)",
+      "url": "https://sites.williams.edu/nk2/files/2011/08/Hausman.Kornell.2014.pdf"
+    }
+  ],
+  "related": [
+    "chunking-memory-familiar-groups",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "practice": "Try spotting which clues belong together in Connections.",
+  "sections": [
+    {
+      "id": "what-it-means",
+      "title": "Same examples, a different order",
+      "html": "<p><strong>Interleaving means alternating different kinds of examples or problems during practice, instead of finishing a whole batch of one kind first.</strong></p><p>Imagine learning to recognise two painting styles. You could view three from artist A, then three from artist B: <strong>AAABBB</strong>. Or alternate them: <strong>ABABAB</strong>. Same six pictures; a different order.</p><p>The second arrangement keeps asking a useful question: what makes these styles different?</p>"
+    },
+    {
+      "id": "the-painting-study",
+      "title": "A small surprise in the gallery",
+      "html": "<p>In <a href=\"https://sites.williams.edu/nk2/files/2011/08/Kornell.Bjork_.2008a.pdf\">a 2008 study by Nate Kornell and Robert Bjork</a>, students viewed paintings grouped by artist or mixed with other artists’ work. They then tried to identify the artists behind paintings they had not studied.</p><p>The mixed presentation produced better test performance. Yet participants who experienced both arrangements tended to judge grouped practice as at least as useful. Feeling smooth and learning well were different things in this task.</p>"
+    },
+    {
+      "id": "mix-with-a-purpose",
+      "title": "A shuffle needs a reason",
+      "html": "<p>That does not make every mixture helpful. <a href=\"https://sites.williams.edu/nk2/files/2011/08/Hausman.Kornell.2014.pdf\">Hausman and Kornell’s 2014 experiments</a> found no reliable learning benefit from mixing anatomy flashcards with Indonesian vocabulary rather than keeping the topics separate.</p><p>Comparing related examples is a more focused idea than jumping between unrelated subjects. Keep your attention on the differences you are trying to learn.</p>"
+    },
+    {
+      "id": "one-small-change",
+      "title": "Try one small change",
+      "html": "<p>Once you have looked at two similar kinds of example, try a short mixed set. Say which kind each belongs to, explain your clue, then check the answer.</p><p>This is a practice suggestion, not a promise of a particular improvement. If your next question is whether the answer stays with you later, try <a href=\"/learn/remember-quiz-answers-tomorrow/\">our simple recall routine</a>.</p>"
+    }
+  ]
+}
