@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-16",
+  "language": "English, British spelling",
+  "market": "United States demand check; international English readership",
+  "demand": {
+    "source": "Native Google Trends chart and related queries",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=%22pomodoro%20technique%22,red%20card%20soccer&hl=en",
+    "filters": "United States; Past 12 months; All categories; Web Search",
+    "relativeAverages": {
+      "\"pomodoro technique\"": 1,
+      "red card soccer": 5
+    },
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limits": [
+      "Relative indices, not visits, percentages, search volume or rank. Final week may be partial.",
+      "Pomodoro related queries include Francesco Cirillo, pomodoro technique PDF and pomodoro technique study. Long AI study-schedule prompt not copied or treated as extra keyword quota.",
+      "Red-card interest has a major World Cup/event spike. Evergreen meaning and origin answer used; not a Balogun news story or claim of sustained traffic.",
+      "Drawing-memory and drawing-effect candidates rejected: broad related searches included software/hardware/lottery; specific learning term rounded to zero throughout. Draft and cover retained locally, excluded from publication.",
+      "Exact-phrase punctuation checked against Google Trends official help.",
+      "Reuse same-day GSC not_connected and OpenSEO insufficient-credit state; no paid retry, tracking or keyword saving."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "pomodoro-technique-tomato-timer",
+      "primaryKeyword": "Pomodoro technique",
+      "question": "What is the Pomodoro technique?",
+      "intent": "Brief study routine plus origin of the tomato timer; not medical attention advice, a timer app, paid course or guarantee of improved learning",
+      "novelty": "All 103 documents reviewed: six Learning articles cover pretesting, self-explanation, recall, familiarity, chunking and interleaving. None covers Pomodoro or Cirillo. This is a regular independent article."
+    },
+    {
+      "slug": "why-football-cards-red-yellow",
+      "primaryKeyword": "red card soccer",
+      "question": "Why are football cards red and yellow?",
+      "intent": "Plain explanation of origins, meaning and straight-red distinction; British football wording with international relevance",
+      "novelty": "Sports six before: three tennis, Olympic rings, golf dimples and marathon. No football-cards article; topic expands the sports represented."
+    }
+  ],
+  "sourcesOpened": [
+    {
+      "url": "https://www.pomodorotechnique.com/francesco-cirillo/",
+      "claims": "Creator first-person account, 1980s university student, tomato-shaped timer, method broader than 25-minute blocks. Marketing claims of universal benefits not adopted."
+    },
+    {
+      "url": "https://www.maynoothuniversity.ie/sites/default/files/assets/document/The%20Pomodoro%20Technique_0.pdf",
+      "claims": "One-page university study guidance opened: choose task,25 minutes,record unrelated thought,5-minute break,longer after four. Used as practice guidance, not original efficacy study."
+    },
+    {
+      "url": "https://inside.fifa.com/en/tournaments/mens/worldcup/1966england/news/1966-world-cup-gripping-tales-and-inspirational-traffic-lights-2812820",
+      "claims": "FIFA institutional/museum account25July2016 opened:1966 England-Argentina,Rattin/Kreitlein language confusion,Ken Aston and traffic light,World Cup introduction Mexico1970. Not first-ever disciplinary sanction1966."
+    },
+    {
+      "url": "https://www.theifab.com/laws/latest/fouls-and-misconduct/",
+      "claims": "Current Law12 opened: yellow caution,red sending-off,second caution same match,straight-red serious foul play/violent conduct. Not exhaustive list of sanctions or tournament suspension rules."
+    },
+    {
+      "url": "https://support.google.com/trends/answer/4359582?hl=en",
+      "claims": "Official search tips: quotation marks restrict to exact phrase, not match words in arbitrary order."
+    }
+  ],
+  "unavailableChecks": [
+    "Cambridge Italian-English dictionary403; omitted from article and bibliography, no claim it was read.",
+    "MDPI2026 paper429; omitted, no efficacy claim or claim of paper review."
+  ],
+  "reading": {
+    "bodyWords": [
+      226,
+      218
+    ],
+    "sectionsEach": 4,
+    "regularArticles": true,
+    "noNewQuiz": true,
+    "noResourceWidgets": true,
+    "noRegistrationWall": true,
+    "noLearningOutcomeGuarantee": true
+  },
+  "artwork": {
+    "mode": "Built-in ImageGen",
+    "prompts": "image-prompts.json",
+    "variants": [
+      {
+        "path": "assets/images/learn/pomodoro-technique-tomato-timer.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 73736,
+        "sha256": "22dd6e9e3d78c4cbff8a37a314eeca1200470c557748df4a2f2f310c106b76f6"
+      },
+      {
+        "path": "assets/images/learn/pomodoro-technique-tomato-timer-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 22500,
+        "sha256": "b64a38abe9bd1ed728c71569c9a340cb57cf363ac9127b6e4e1cc27652f74aa9"
+      },
+      {
+        "path": "assets/images/learn/pomodoro-technique-tomato-timer-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 6906,
+        "sha256": "06c9c53ac5ebfe7dd8f2220f87911194a49b538edc707192e02ce86b638833c0"
+      },
+      {
+        "path": "assets/images/learn/why-football-cards-red-yellow.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 99382,
+        "sha256": "6d5e8f9a740fbcc8b6483a9c498d605670b2bd53384c344dc4d23200e4386470"
+      },
+      {
+        "path": "assets/images/learn/why-football-cards-red-yellow-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 32132,
+        "sha256": "9e530dbe0f3100959b7371f8208ae352e4a92f7e6849db51d858b8e3056a29d7"
+      },
+      {
+        "path": "assets/images/learn/why-football-cards-red-yellow-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 10416,
+        "sha256": "cb2a3b7f07b4c2e6fa8d04b3fcbd3881dd770133867396086b0a54eb67e5f190"
+      }
+    ],
+    "totalBytes": 245072,
+    "review": "Originals and240px/wide crops inspected; native1280/320 both pages. Generic timer and illustrative cards, not historical objects; descriptive alt and truthful credit."
+  },
+  "verification": [
+    "Full build989 files before upstream integration; target checks repeated after current-main integration",
+    "Learn SEO/library/navigation/eight paths156 quiz questions pass",
+    "103 existing documents and eight paths exact; metadata/schema/citations/routes/cover sizes/feed/sitemap checked",
+    "PGlite duplicate rejection and full rollback when second lexical Sports article invalid; two rev1 matching mirrors on valid transaction",
+    "Native four screenshots1280/320, images loaded/no horizontal overflow"
+  ],
+  "categories": {
+    "before": {
+      "Learning": 6,
+      "Sports": 6,
+      "Numbers & logic": 34
+    },
+    "after": {
+      "Learning": 7,
+      "Sports": 7,
+      "Numbers & logic": 34
+    },
+    "rationale": "Explicit user request for Learning and Sports; no maths expansion or Academy path modification."
+  },
+  "publication": {
+    "preparedAt": "2026-10-16T21:30:49.291823+00:00",
+    "status": "Reviewed; cover deployment/hash check before atomic CMS insert",
+    "priorArticles": 103,
+    "priorPaths": 8
+  }
+}

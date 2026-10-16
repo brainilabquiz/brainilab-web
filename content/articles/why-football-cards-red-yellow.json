@@ -1,0 +1,64 @@
+{
+  "slug": "why-football-cards-red-yellow",
+  "title": "Why are football cards red and yellow? Blame a traffic light",
+  "description": "Football’s red and yellow cards began with a communication problem and a traffic light. Discover Ken Aston’s idea and what the two colours actually mean.",
+  "topic": "Sports",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 145,
+  "publishedAt": "2026-10-16T21:28:06Z",
+  "updatedAt": "2026-10-16T21:28:06Z",
+  "game": {
+    "name": "Sports Quiz",
+    "url": "/sports/sports-quiz/"
+  },
+  "hub": {
+    "name": "Sports",
+    "url": "/sports/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-football-cards-red-yellow.webp",
+    "small": "/assets/images/learn/why-football-cards-red-yellow-small.webp",
+    "thumbnail": "/assets/images/learn/why-football-cards-red-yellow-thumb.webp",
+    "alt": "Plain yellow and red referee cards and a silver whistle rest on a violet notebook beside a football pitch",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; not an archival photograph or objects known to have belonged to Ken Aston."
+  },
+  "sources": [
+    {
+      "name": "FIFA (2016) — The 1966 World Cup and Ken Aston’s traffic-light idea",
+      "url": "https://inside.fifa.com/en/tournaments/mens/worldcup/1966england/news/1966-world-cup-gripping-tales-and-inspirational-traffic-lights-2812820"
+    },
+    {
+      "name": "The IFAB — Law 12: disciplinary action, cautions and sending-off offences",
+      "url": "https://www.theifab.com/laws/latest/fouls-and-misconduct/"
+    }
+  ],
+  "related": [
+    "what-olympic-rings-mean",
+    "why-tennis-balls-are-yellow"
+  ],
+  "practice": "Discover more small details behind big games in the Sports Quiz.",
+  "sections": [
+    {
+      "id": "a-pocket-traffic-signal",
+      "title": "A traffic signal in the referee’s pocket",
+      "html": "<p><strong>Football’s yellow and red cards were inspired by traffic lights: yellow communicates a caution; red communicates a sending-off.</strong> The colours give players and spectators a visible signal without relying on a shared language.</p><p>For such a dramatic little rectangle, the idea had a surprisingly ordinary starting point: a London road.</p>"
+    },
+    {
+      "id": "a-message-lost-at-wembley",
+      "title": "A message lost at Wembley",
+      "html": "<p><a href=\"https://inside.fifa.com/en/tournaments/mens/worldcup/1966england/news/1966-world-cup-gripping-tales-and-inspirational-traffic-lights-2812820\">FIFA’s account traces the problem to the 1966 World Cup</a>. During England’s quarter-final against Argentina, referee Rudolf Kreitlein sent off Antonio Rattín. They spoke different languages, and the argument left onlookers confused.</p><p>Ken Aston, who chaired the referees’ committee, wanted a clearer way to communicate decisions. In London, a traffic light changing from yellow to red gave him the idea.</p>"
+    },
+    {
+      "id": "four-years-later",
+      "title": "The idea arrived before the cards",
+      "html": "<p>The cards were introduced at the <strong>1970 World Cup in Mexico</strong>, four years after the tournament that inspired them.</p><p>That is the neat distinction for a quiz: <strong>1966</strong> for the inspiration, <strong>1970</strong> for their World Cup introduction. The colourful solution did not appear during the original argument.</p>"
+    },
+    {
+      "id": "does-yellow-always-come-first",
+      "title": "Does yellow always come first?",
+      "html": "<p>No. Under <a href=\"https://www.theifab.com/laws/latest/fouls-and-misconduct/\">the IFAB’s Law 12</a>, a second caution in the same match is a sending-off offence. But serious foul play or violent conduct can bring a straight red; a player does not need an earlier yellow.</p><p>Curious about other sporting colours? Find out <a href=\"/learn/why-tennis-balls-are-yellow/\">why tennis balls became yellow</a>, or what <a href=\"/learn/what-olympic-rings-mean/\">the Olympic ring colours mean</a>.</p>"
+    }
+  ]
+}
