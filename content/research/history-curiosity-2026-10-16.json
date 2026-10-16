@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-16",
+  "language": "English",
+  "market": "United States priority; worldwide English readership",
+  "demand": {
+    "source": "NativeGoogleTrendscharttable",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=Roman%20concrete,why%20does%20popcorn%20pop&hl=en",
+    "filters": "UnitedStates;Past12months;Allcategories;WebSearch;Englishterms",
+    "weeklyLabels": "12Oct2025–11Oct2026,lastweekpossiblypartial",
+    "relativeAverages": {
+      "Roman concrete": 67,
+      "why does popcorn pop": 2
+    },
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limits": [
+      "Relativeindices,NOTvolume/visits/percentages/currentranks. Popcornexactqueryissparseandmuchsmallerinthiscomparison.",
+      "Romanconcreteinterestincludesnewsaround2025research;durableevergreenexplanationused,nooutdateddiscoverytodayclaim.",
+      "RelatedRomanWilsonirrelevantandexcluded. Limeclasts/MIT/volcanicashandhowdoespopcornpop/whenheatedrelevant. No forcedkeywordquota.",
+      "Knownsame-dayOpenSEOinsufficientcreditsandGSCnot_connectedreused;nopaidretry,savingortracking. NewURLsnoownGSCbaseline."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "why-roman-concrete-lasts",
+      "primaryKeyword": "Roman concrete",
+      "question": "why does Roman concrete last so long",
+      "intent": "Historicalmaterials/explanationoflimefragmentsandhotmixing,notDIYmixrecipeorclaimallmodernconcreteinferior",
+      "novelty": "101fulldocsaudited;History6beforewith4Academylessons/2independentarticles,noneconcrete;newregularitemisthirdindependentHistoryarticle"
+    },
+    {
+      "slug": "why-does-popcorn-pop",
+      "primaryKeyword": "why does popcorn pop",
+      "intent": "Entertainingeverydaycuriosity:pressure,popandjump,notrecipe/shopping/cinemawebsite",
+      "novelty": "Curiosity6before,nonepopcorn. Onlyexistingpopcornmentionisalttextinafriendchallengecover,notcompetingarticle. Distinctfrommeringue/bubbles;relatedkitchencuriositylinks."
+    }
+  ],
+  "intentReview": "FocusedfreeSERPsreviewed;historicalmaterialresearch/MITprimarysourcesandphysicalpopcornexplainers/primarypaper. No competitorrank or volume inferred.",
+  "sourcesOpened": [
+    {
+      "url": "https://news.mit.edu/2023/roman-concrete-durability-lime-casts-0106",
+      "access": "MIT original reporting of its ownresearch opened;lines130–144 checked",
+      "claims": "Limeclasts,water/calciummineralcrackfilling,quicklimehotmixing;deliberatelycrackedRoman-inspiredlaboratorysamplesstoppedwaterflowwithintwoweeks;notacontrolledtestofallancientwalls."
+    },
+    {
+      "url": "https://www.nature.com/articles/s41467-025-66634-7",
+      "access": "Full originalresearchHTMLopeneddespitecookieerrorqueryredirect;abstract/introduction/materialevidence checked. Published9Dec2025,30Jan2026correctionisaffiliationsonly.",
+      "claims": "UnfinishedPompeianworksitepreservedby79CEeruption;quicklimedrypremixedwithpozzolanbeforewater;historicalmethodnotexhaustiveacrossallRomanconcrete."
+    },
+    {
+      "url": "https://eaps.mit.edu/news-impact/pompeii-offers-insights-into-ancient-roman-building-technology/",
+      "access": "Full institutionalaccountofownstudyopened;9Dec2025,lines174–197 checked",
+      "claims": "Rawmaterialpiles,workinprogressandfinishedwallsconfirmhotmixinginearlierinference;volcanicmineralreactionalsocontributestodurability."
+    },
+    {
+      "url": "https://yakari.polytechnique.fr/Django-pub/documents/virot2015rp-1pp.pdf",
+      "access": "6pageoriginalVirot/Ponomarenko2015paperonresearchinstitutionhostopened;PDFindices0–1,3–4checked",
+      "claims": "Water/pressure/hullfracture/starchfoam;ovenresults17/50at170C,48/50at180C,notuniversalrecipe;starchlegbouncesoffsurface,no observedsteamrocket;vapour-releaseacousticexplanationconsistentwithrecordings,notprovenallconditions."
+    },
+    {
+      "url": "https://royalsociety.org/blog/2015/02/the-science-of-popcorn/",
+      "access": "RoyalSocietyoriginalauthorinterview/publisheraccountopened;11Feb2015,lines202–217checked",
+      "claims": "Roughly400piecesusedforjumpmovies;highspeedfilmsandanalysis;publicstorydoesnotcopyunqualifiedallpopcornsametemperatureclaim."
+    }
+  ],
+  "unavailableChecks": [
+    "MITDSpace2023PDFredirectunavailable;PMCreCAPTCHApageblocked,notbypassed/notclaimedread. ClaimscheckedagainstMITownresearchaccountand2025originalNaturepaper.",
+    "PopcornRoyalSocietyblogoverstatesuniversal180C;originalpaperboundedovenresultusedinstead."
+  ],
+  "examples": {
+    "noNewQuiz": true,
+    "noInventedCalculation": true,
+    "romanLabOutcome": "Two weeks in testedlaboratorymixes,notallRomanbuildings",
+    "popcornTemperature": "Around180Cinthepaperovenconditions,notpan/cookingprescription",
+    "popcornJump": "Starchlegnotsteamrocket",
+    "sound": "Recordingssupportvapourreleaseexplanation"
+  },
+  "reading": {
+    "bodyWords": [
+      247,
+      241
+    ],
+    "sectionsEach": 4,
+    "regularArticles": true,
+    "noLargeWidgets": true,
+    "noRegistrationWall": true,
+    "articleTitlesSpecific": true
+  },
+  "artwork": {
+    "mode": "Built-inimage_gen",
+    "prompts": "image-prompts.json",
+    "sourcePNGs": "artwork/",
+    "variants": [
+      {
+        "path": "assets/images/learn/why-roman-concrete-lasts.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 123652,
+        "sha256": "2bd295343c1095f9a81b41b6671fc91a2ea2fe3c5c89f377ffff3f0c4198558a"
+      },
+      {
+        "path": "assets/images/learn/why-roman-concrete-lasts-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 35420,
+        "sha256": "260f4b74e0f32e07c91976a80729d58b0ad6fe338131df658ffe6af80f52519f"
+      },
+      {
+        "path": "assets/images/learn/why-roman-concrete-lasts-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 10360,
+        "sha256": "b3cd6ad27299f2f229438e3f9247896d5acb3ecffc15c68bfbefdcf5966d813a"
+      },
+      {
+        "path": "assets/images/learn/why-does-popcorn-pop.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 51724,
+        "sha256": "d04415b8c0467e068d1642109036b63370360318f7d60fc3e2fde31897280ce2"
+      },
+      {
+        "path": "assets/images/learn/why-does-popcorn-pop-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 18562,
+        "sha256": "382e5c0683f4a9e34d7c9182fd61173f99337978aa5b864049e925a9e5da0038"
+      },
+      {
+        "path": "assets/images/learn/why-does-popcorn-pop-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 6782,
+        "sha256": "4e6e8cda2b1c18260ba2a1b38386151cc17e6668650af23b31911b4ed3b212b6"
+      }
+    ],
+    "totalBytes": 246500,
+    "review": "Originals,thumbnails,widecrops/native1280/320inspected. Historyreconstructionnotarchaeologicalspecimen;popcorn3airbornepiecesnotexperiment/cookingdemonstration;honestcredits."
+  },
+  "verification": [
+    "Fullbuild981publicfiles/143JS-CSSassetsafterpreservingconcurrentPR183profileworkspace",
+    "LearnSEO/navigation/library/8course156questiontests pass",
+    "2newarticlemetadata/schema/author/canonical/citations/images/routes/feed/sitemap pass",
+    "PGlite101priorarticles/8pathsintact,2matchingmirrors,duplicate-rejection,invalidsecondlexicalHistoryarticlerollsbackboth",
+    "Native2articles1280/320coversloaded/nooverflow;all101sourceCMSdocsagree,noU+FFFD",
+    "CurrentmainPR183profileworkspaceandlazycachetests pass;17upstreamfilespreserved,nocontentoverlap"
+  ],
+  "categories": {
+    "before": {
+      "History": 6,
+      "Curiosity": 6,
+      "Learning": 6,
+      "Sports": 6,
+      "Getting started": 3,
+      "Numbers & logic": 34
+    },
+    "after": {
+      "History": 7,
+      "Curiosity": 7,
+      "Learning": 6,
+      "Sports": 6,
+      "Getting started": 3,
+      "Numbers & logic": 34
+    },
+    "rationale": "HistoryandCuriositytiedlowestthematic6;Learning/Sportsgrewearlier. Gettingstartedrequiresusefulmissingguide,notfiller."
+  },
+  "publication": {
+    "preparedAt": "2026-10-16T21:03:32.069862+00:00",
+    "status": "Prepublicationcheckscomplete;coverdeploy/hashcheckandguardedCMSinsertfollow",
+    "priorArticles": 101,
+    "priorPaths": 8
+  }
+}

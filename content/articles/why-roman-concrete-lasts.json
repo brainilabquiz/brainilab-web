@@ -1,0 +1,68 @@
+{
+  "slug": "why-roman-concrete-lasts",
+  "title": "Why does Roman concrete last so long? Look at the little lumps",
+  "description": "Some Roman concrete can seal small cracks. Discover how lime fragments, volcanic ingredients and an unfinished Pompeii building site helped explain why.",
+  "topic": "History",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 142,
+  "publishedAt": "2026-10-16T20:58:25Z",
+  "updatedAt": "2026-10-16T20:58:25Z",
+  "game": {
+    "name": "History Quiz",
+    "url": "/history/history-quiz/"
+  },
+  "hub": {
+    "name": "History",
+    "url": "/history/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-roman-concrete-lasts.webp",
+    "small": "/assets/images/learn/why-roman-concrete-lasts-small.webp",
+    "thumbnail": "/assets/images/learn/why-roman-concrete-lasts-thumb.webp",
+    "alt": "An illustrative rough concrete block with pale inclusions sits in front of a Roman-style brick arch",
+    "position": 50,
+    "credit": "AI-generated illustrative reconstruction created for BrainiLab; not an archaeological specimen or a photograph of a named monument."
+  },
+  "sources": [
+    {
+      "name": "MIT News (2023) — Roman concrete, lime fragments and laboratory crack-sealing tests",
+      "url": "https://news.mit.edu/2023/roman-concrete-durability-lime-casts-0106"
+    },
+    {
+      "name": "Vaserman and colleagues (2025) — An unfinished Pompeian construction site reveals ancient Roman building technology",
+      "url": "https://www.nature.com/articles/s41467-025-66634-7"
+    },
+    {
+      "name": "MIT EAPS (2025) — Pompeii’s preserved building materials",
+      "url": "https://eaps.mit.edu/news-impact/pompeii-offers-insights-into-ancient-roman-building-technology/"
+    }
+  ],
+  "related": [
+    "cleopatra-pyramids-moon-landing",
+    "how-to-read-roman-numerals"
+  ],
+  "practice": "Explore more surprising details from the past in the History Quiz.",
+  "sections": [
+    {
+      "id": "a-wall-with-a-trick",
+      "title": "A wall with a useful trick",
+      "html": "<p><strong>Some Roman concrete can seal small cracks when water reaches lime-rich fragments inside it.</strong> This helps explain its durability, alongside reactions involving volcanic ingredients.</p><p>It is a lovely reversal: the interesting part of an old wall may be the little lumps you would have expected a careful builder to remove.</p>"
+    },
+    {
+      "id": "the-white-fragments",
+      "title": "The white fragments matter",
+      "html": "<p>In <a href=\"https://news.mit.edu/2023/roman-concrete-durability-lime-casts-0106\">research reported by MIT in 2023</a>, scientists examined pale pieces called <strong>lime clasts</strong>. These can supply calcium when water enters a crack. New mineral deposits can then fill the gap.</p><p>The proposed preparation method was <strong>hot mixing</strong>: using reactive quicklime produces heat when water is added. The resulting material retains calcium-rich fragments instead of becoming perfectly uniform.</p>"
+    },
+    {
+      "id": "pompeii-time-capsule",
+      "title": "Pompeii left the ingredients on the table",
+      "html": "<p>A <a href=\"https://www.nature.com/articles/s41467-025-66634-7\">2025 study of an unfinished construction site at Pompeii</a> found quicklime already mixed with dry volcanic material. The city’s burial in <strong>79 CE</strong> had preserved a worksite, not just a finished wall.</p><p><a href=\"https://eaps.mit.edu/news-impact/pompeii-offers-insights-into-ancient-roman-building-technology/\">MIT’s account explains why that mattered</a>: the raw piles showed how builders prepared their mixture. The archaeological evidence supported a method earlier inferred from finished concrete.</p>"
+    },
+    {
+      "id": "what-the-test-showed",
+      "title": "A repaired crack is not an immortal building",
+      "html": "<p>In the 2023 laboratory tests, researchers deliberately cracked their test samples and passed water through them. Within two weeks, cracks in the quicklime-containing samples had sealed and water stopped flowing through.</p><p>That was a laboratory result, not proof that every Roman wall repairs itself. Recipes and conditions matter. The fascinating finding is that an apparently passive building material can still react.</p><p>For another ancient surprise, compare <a href=\"/learn/cleopatra-pyramids-moon-landing/\">Cleopatra’s lifetime with the pyramids and the Moon landing</a>.</p>"
+    }
+  ]
+}
