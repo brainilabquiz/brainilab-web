@@ -1,0 +1,612 @@
+{
+  "date": "2026-10-16",
+  "period": [
+    "2026-09-17",
+    "2026-10-14"
+  ],
+  "source": "Same-day native signed-in Search Console; first batch global capture reused, individual pages checked again",
+  "market": "Domain property, Web search, all countries/devices, English questions selected",
+  "articles": [
+    {
+      "slug": "why-golf-balls-have-dimples",
+      "baseline": [
+        "0",
+        "68",
+        "0 %",
+        "60,4"
+      ],
+      "queries": [
+        [
+          "why do golf balls have dimples",
+          "0",
+          "10",
+          "0 %",
+          "27,3"
+        ],
+        [
+          "how many dimples on a golf ball",
+          "0",
+          "10",
+          "0 %",
+          "81,5"
+        ],
+        [
+          "why golf balls have dimples",
+          "0",
+          "5",
+          "0 %",
+          "35,4"
+        ],
+        [
+          "how many dents on a golf ball",
+          "0",
+          "4",
+          "0 %",
+          "41,0"
+        ],
+        [
+          "golf ball with dimples",
+          "0",
+          "4",
+          "0 %",
+          "70,8"
+        ]
+      ]
+    },
+    {
+      "slug": "how-to-read-a-tennis-score",
+      "baseline": [
+        "0",
+        "67",
+        "0 %",
+        "33,4"
+      ],
+      "queries": [
+        [
+          "how tennis scoring works",
+          "0",
+          "4",
+          "0 %",
+          "17,2"
+        ],
+        [
+          "how does tennis scoring work",
+          "0",
+          "4",
+          "0 %",
+          "18,5"
+        ],
+        [
+          "deuce tennis meaning",
+          "0",
+          "3",
+          "0 %",
+          "33,0"
+        ],
+        [
+          "what does deuce mean in tennis",
+          "0",
+          "2",
+          "0 %",
+          "8,0"
+        ],
+        [
+          "deuce meaning in sports",
+          "0",
+          "2",
+          "0 %",
+          "10,0"
+        ]
+      ]
+    },
+    {
+      "slug": "tens-and-ones",
+      "baseline": [
+        "0",
+        "48",
+        "0 %",
+        "6,9"
+      ],
+      "queries": [
+        [
+          "23 tens means",
+          "0",
+          "4",
+          "0 %",
+          "10,2"
+        ],
+        [
+          "23 tens and ones",
+          "0",
+          "2",
+          "0 %",
+          "10,5"
+        ]
+      ]
+    },
+    {
+      "slug": "why-tennis-balls-are-yellow",
+      "baseline": [
+        "0",
+        "44",
+        "0 %",
+        "29,9"
+      ],
+      "queries": [
+        [
+          "yellow tennis balls",
+          "0",
+          "10",
+          "0 %",
+          "46,4"
+        ],
+        [
+          "yellow tennis ball",
+          "0",
+          "7",
+          "0 %",
+          "47,9"
+        ],
+        [
+          "why are tennis balls yellow",
+          "0",
+          "6",
+          "0 %",
+          "46,8"
+        ],
+        [
+          "when did tennis balls become yellow",
+          "0",
+          "1",
+          "0 %",
+          "25,0"
+        ],
+        [
+          "why tennis balls yellow",
+          "0",
+          "1",
+          "0 %",
+          "28,0"
+        ]
+      ]
+    },
+    {
+      "slug": "stalactites-vs-stalagmites",
+      "baseline": [
+        "0",
+        "43",
+        "0 %",
+        "53,9"
+      ],
+      "queries": [
+        [
+          "stalagmites",
+          "0",
+          "4",
+          "0 %",
+          "33,8"
+        ],
+        [
+          "stalactites and stalagmites",
+          "0",
+          "4",
+          "0 %",
+          "62,8"
+        ],
+        [
+          "difference between stalagmites and stalactites",
+          "0",
+          "3",
+          "0 %",
+          "53,0"
+        ],
+        [
+          "stalagmites and stalactites",
+          "0",
+          "3",
+          "0 %",
+          "72,0"
+        ],
+        [
+          "stalactites",
+          "0",
+          "2",
+          "0 %",
+          "33,5"
+        ]
+      ]
+    },
+    {
+      "slug": "which-century-is-that-year",
+      "baseline": [
+        "0",
+        "41",
+        "0 %",
+        "32,8"
+      ],
+      "queries": [
+        [
+          "what years make up the 19th century 20th century",
+          "0",
+          "2",
+          "0 %",
+          "34,5"
+        ],
+        [
+          "what century was 1900",
+          "0",
+          "2",
+          "0 %",
+          "40,5"
+        ],
+        [
+          "1900 which century",
+          "0",
+          "1",
+          "0 %",
+          "32,0"
+        ],
+        [
+          "when does the 20th century start",
+          "0",
+          "1",
+          "0 %",
+          "32,0"
+        ],
+        [
+          "20th century is what year",
+          "0",
+          "1",
+          "0 %",
+          "34,0"
+        ]
+      ]
+    },
+    {
+      "slug": "why-britain-skipped-eleven-days-in-1752",
+      "baseline": [
+        "0",
+        "40",
+        "0 %",
+        "8,0"
+      ],
+      "queries": [
+        [
+          "why were 11 days skipped in 1752",
+          "0",
+          "2",
+          "0 %",
+          "7,5"
+        ]
+      ]
+    },
+    {
+      "slug": "why-are-flamingos-pink",
+      "baseline": [
+        "0",
+        "39",
+        "0 %",
+        "62,5"
+      ],
+      "queries": [
+        [
+          "why are flamingos pink",
+          "0",
+          "7",
+          "0 %",
+          "62,6"
+        ],
+        [
+          "why is the flamingo pink",
+          "0",
+          "2",
+          "0 %",
+          "63,5"
+        ],
+        [
+          "why are pink flamingos pink",
+          "0",
+          "2",
+          "0 %",
+          "64,5"
+        ],
+        [
+          "how do pink flamingos get their color",
+          "0",
+          "1",
+          "0 %",
+          "37,0"
+        ],
+        [
+          "what makes pink flamingos pink",
+          "0",
+          "1",
+          "0 %",
+          "45,0"
+        ]
+      ]
+    },
+    {
+      "slug": "how-hook-and-loop-fasteners-work",
+      "baseline": [
+        "0",
+        "30",
+        "0 %",
+        "8,5"
+      ],
+      "queries": [
+        [
+          "a fastening such as a catch or hook",
+          "0",
+          "2",
+          "0 %",
+          "30,0"
+        ],
+        [
+          "burr hooks",
+          "0",
+          "1",
+          "0 %",
+          "10,0"
+        ]
+      ]
+    },
+    {
+      "slug": "what-olympic-rings-mean",
+      "baseline": [
+        "0",
+        "29",
+        "0 %",
+        "25,0"
+      ],
+      "queries": [
+        [
+          "olympic ring color",
+          "0",
+          "1",
+          "0 %",
+          "36,0"
+        ],
+        [
+          "olympic ring colour",
+          "0",
+          "1",
+          "0 %",
+          "52,0"
+        ],
+        [
+          "olympic rings",
+          "0",
+          "1",
+          "0 %",
+          "55,0"
+        ],
+        [
+          "olympic flag rings color",
+          "0",
+          "1",
+          "0 %",
+          "63,0"
+        ],
+        [
+          "colours of olympic rings",
+          "0",
+          "1",
+          "0 %",
+          "67,0"
+        ]
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "slug": "how-post-it-notes-were-invented",
+      "reason": "25pageimpressions but no query rows reported; preserve until a specific query-targeted improvement is justified"
+    }
+  ],
+  "categoryBalance": {
+    "publishedCounts": {
+      "Geography": 6,
+      "Words & puzzles": 9,
+      "Numbers & logic": 34,
+      "Learning": 4,
+      "Everyday inventions": 7,
+      "Sports": 5,
+      "History": 5,
+      "Science & nature": 16,
+      "Getting started": 3,
+      "Curiosity": 6
+    },
+    "academyPathCounts": {
+      "History": 1,
+      "Numbers & logic": 4,
+      "Science & nature": 2,
+      "Words & puzzles": 1
+    },
+    "userConfirmed": "16Oct2026:grow all categories; do not concentrate future publishing in Numbers & logic",
+    "reason": "Four Numbers & logic Academy paths concentrate many lessons in one topic.",
+    "currentBatch": "9non-numbers revisions;1existing place-value lesson;0new articles",
+    "futurePriority": [
+      "History and Words & puzzles regular articles (one each before this batch)",
+      "Sports, Geography, Learning and Curiosity with distinct supported topics",
+      "Everyday inventions and Science & nature as useful opportunities appear",
+      "Coherent non-maths Academy coverage when enough related lessons are justified"
+    ],
+    "guidance": "Audit regular articles and Academy lessons separately before choosing new work. Prefer underrepresented categories with evidence and distinct intent. Getting started grows only for a useful missing guide. No filler, forced equal counts or category relabelling to disguise imbalance; hold default new Numbers & logic expansion unless explicitly requested or justified by a distinct opportunity.",
+    "breakdown": [
+      {
+        "topic": "Geography",
+        "total": 6,
+        "academyLessons": 1,
+        "regularArticles": 5
+      },
+      {
+        "topic": "Words & puzzles",
+        "total": 9,
+        "academyLessons": 8,
+        "regularArticles": 1
+      },
+      {
+        "topic": "Numbers & logic",
+        "total": 34,
+        "academyLessons": 30,
+        "regularArticles": 4
+      },
+      {
+        "topic": "Learning",
+        "total": 4,
+        "academyLessons": 0,
+        "regularArticles": 4
+      },
+      {
+        "topic": "Everyday inventions",
+        "total": 7,
+        "academyLessons": 0,
+        "regularArticles": 7
+      },
+      {
+        "topic": "Sports",
+        "total": 5,
+        "academyLessons": 0,
+        "regularArticles": 5
+      },
+      {
+        "topic": "History",
+        "total": 5,
+        "academyLessons": 4,
+        "regularArticles": 1
+      },
+      {
+        "topic": "Science & nature",
+        "total": 16,
+        "academyLessons": 9,
+        "regularArticles": 7
+      },
+      {
+        "topic": "Getting started",
+        "total": 3,
+        "academyLessons": 0,
+        "regularArticles": 3
+      },
+      {
+        "topic": "Curiosity",
+        "total": 6,
+        "academyLessons": 0,
+        "regularArticles": 6
+      }
+    ]
+  },
+  "limits": [
+    "Small samples; average positions are historical, not current ranks.",
+    "Missing queries are unknown, not zero demand.",
+    "Revisions may improve relevance; no post-change traffic/signup/AI-citation gain measured.",
+    "No paid keyword metrics, tracking, outreach or new automation."
+  ],
+  "primarySourcesOpened": [
+    {
+      "url": "https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/",
+      "checked": "2026-10-16",
+      "claims": "Golf-ball turbulence, attached boundary layer and delayed separation"
+    },
+    {
+      "url": "https://www.titleist.com/learning-lab/how-its-made/golf-ball-dimples",
+      "checked": "2026-10-16",
+      "claims": "Dimple lift/drag, depth/shape/pattern design"
+    },
+    {
+      "url": "https://www.titleist.com.sg/teamtitleist/b/tourblog/posts/titleist-introduces-new-2025-pro-v1-and-pro-v1x-golf-balls",
+      "checked": "2026-10-16",
+      "claims": "2025 ProV1 388 and ProV1x348, explicitly model/year-specific"
+    },
+    {
+      "url": "https://www.lta.org.uk/play/how-to-get-started/rules-scoring/",
+      "checked": "2026-10-16",
+      "claims": "Points, advantage scoring and no-ad exception"
+    },
+    {
+      "url": "https://www.usta.com/en/home/improve/tips-and-instruction/national/tennis-scoring-rules.html",
+      "checked": "2026-10-16",
+      "claims": "Love/15/30/40,deuce,tie-breaksets,sevenpoints with two-point lead; formats vary"
+    },
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers",
+      "checked": "2026-10-16",
+      "claims": "Base10/placevalue,ones/tens/hundreds; own23tens calculation independently checked"
+    },
+    {
+      "url": "https://www.itftennis.com/media/2280/balls-history-of-tennis-balls.pdf",
+      "checked": "2026-10-16",
+      "claims": "Page2:black/white history,TVvisibility,1972rules and1986Wimbledon"
+    },
+    {
+      "url": "https://www.wimbledon.com/pdf/Online_Pack_Bouncing_Along.pdf",
+      "checked": "2026-10-16",
+      "claims": "Page6:1986yellow ball switch and colourTVvisibility"
+    },
+    {
+      "url": "https://www.nps.gov/subjects/caves/speleothems.htm",
+      "checked": "2026-10-16",
+      "claims": "Ceiling/floor/columns,sodastraws,calcite/CO2/mineraldeposition and variable caveconditions"
+    },
+    {
+      "url": "https://www.nps.gov/cuga/planyourvisit/gap-cave-1.htm",
+      "checked": "2026-10-16",
+      "claims": "GapCave context; no unsupported hand-oil claim added"
+    },
+    {
+      "url": "https://www.usgs.gov/media/audio/unseen-world-beneath-our-feet-caves-sinkholes-and-springs",
+      "checked": "2026-10-16",
+      "claims": "Existing furtherreading:karst geology/transcript opened, not used for a fixed growthrate"
+    },
+    {
+      "url": "https://aa.usno.navy.mil/faq/millennium",
+      "checked": "2026-10-16",
+      "claims": "CE/AD starts1; century1=1–100,20=1901–2000,21starts2001"
+    },
+    {
+      "url": "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds",
+      "checked": "2026-10-16",
+      "claims": "British1752Julian/Gregorian change,2September followed14September; leaprules"
+    },
+    {
+      "url": "https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts",
+      "checked": "2026-10-16",
+      "claims": "Carotenoids/algae/brineshrimp,whitegrey chicks"
+    },
+    {
+      "url": "https://animals.sandiegozoo.org/animals/flamingo",
+      "checked": "2026-10-16",
+      "claims": "Filterfeeding,diet varies with species/bill structures"
+    },
+    {
+      "url": "https://www.invent.org/inductees/george-de-mestral",
+      "checked": "2026-10-16",
+      "claims": "Burrhooks clingingclothing,1955patent,manufacturing hooks/loops"
+    },
+    {
+      "url": "https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings",
+      "checked": "2026-10-16",
+      "claims": "Five ringcolours+white,1913,whole-symbolunity,no official colour-continentassignment"
+    }
+  ],
+  "unavailableSources": [
+    {
+      "url": "https://www.legislation.gov.uk/apgb/Geo2/24/23",
+      "status": "Web extraction returned only a JavaScript check; not claimed read. Calendar facts checked in opened RMG instead; original official reference retained."
+    },
+    {
+      "url": "https://invention.si.edu/invention-stories/george-de-mestral-velcror-inventor",
+      "status": "Web fetch failed; not claimed read. Only NIHF-supported invention details retained; original further-reading destination unchanged."
+    }
+  ],
+  "intentReview": "Focused free results for golf why/count,tennisdeuce/advantage and23tens checked. Both primary sport/education explainers and commercialresults exist; no buying recommendations or keywordvolume inferred. Own95publishedarticles checked for overlap; edit existing URLs rather than duplicate them. Exclude irrelevant/foreign-language/misspelled GSC rows from public keyword targeting.",
+  "verification": [
+    "Fullbuild948publicfiles/142assets",
+    "ExistingLearnSEO,library,navigation,8course/156questiontests pass",
+    "Ten generated titles/descriptions/canonical/Article/byline/citations checked",
+    "Three unchanged quizzes at0/3and3/3; placevalue/century/date calculations checked",
+    "PGlite10article/editor/public/history mirrors,85others/8courses preserved,repeat/concurrent/quiztamperrollback",
+    "Native1280desktop and320mobile all10pages:0overflow/failedimages observed; screenshots inspected",
+    "Actualproduction/CMSpublication and live checks follow before completion"
+  ]
+}

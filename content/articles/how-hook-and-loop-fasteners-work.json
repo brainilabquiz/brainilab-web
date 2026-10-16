@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/how-hook-and-loop-fasteners-work-photo-thumb.webp"
   },
   "order": 30,
-  "title": "How did a burr inspire a fastener you can pull apart?",
+  "title": "How do hook-and-loop fasteners work?",
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
@@ -35,31 +35,31 @@
       "name": "National Inventors Hall of Fame — George de Mestral and hook-and-loop fasteners"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Explore more unexpected facts with a round of General Knowledge.",
   "sections": [
     {
-      "id": "a-stubborn-passenger",
-      "html": "<p>A burr catches on a sleeve and comes along for the walk. Annoying for the walker; rather effective for the plant.</p><p>Swiss engineer <strong>George de Mestral</strong> became interested in burrs caught in his clothes and his dog’s fur. Looking closely, he saw little hooks that could catch in fibres. The Smithsonian’s Lemelson Center describes how that observation suggested a fabric fastener based on the same idea.</p><p>The useful question was not just “How do I remove this?” It was “Could I make something that grips this way?”</p>",
-      "title": "A plant had already solved the gripping problem"
+      "id": "two-surfaces",
+      "title": "Tiny hooks meet a soft tangle",
+      "html": "<p><strong>A hook-and-loop fastener grips because tiny hooks on one strip catch loops on the other.</strong> Press the faces together and many little connections form. Peel them apart and the hooks release.</p><p>The two fastening faces hold mechanically, rather than with sticky glue between them. A product may still have an adhesive backing to attach the strip to something else.</p>"
     },
     {
-      "id": "two-surfaces",
-      "html": "<p>A traditional hook-and-loop fastener has two different surfaces. One carries small hooks. The other offers loops for those hooks to catch.</p><p>Press the surfaces together and many little connections form across the contact area. Pull the strips apart and those connections release. The fastening comes from their shapes catching together, rather than a layer of sticky glue between them.</p><p>VELCRO is a brand name; <strong>hook-and-loop</strong> describes the general kind of fastener. Some products use other surface structures, so this explanation is about the familiar hook-and-loop version.</p>",
-      "title": "Hooks on one side, loops on the other"
+      "id": "a-stubborn-passenger",
+      "title": "What does a plant burr have to do with it?",
+      "html": "<p>Swiss engineer <strong>George de Mestral</strong> noticed how burrs’ small hooks clung to clothing. That suggested a reusable fabric fastener.</p><p>The <a href=\"https://www.invent.org/inductees/george-de-mestral\">National Inventors Hall of Fame records his 1955 patent</a> and the challenge of making hundreds of tiny hooks on cloth tape. A nuisance after a walk had become an engineering idea.</p>"
     },
     {
       "id": "making-it-work",
-      "html": "<p>Copying a burr did not immediately produce a dependable strip of fabric. Smithsonian’s account describes years of experiments, including hooks and loops that did not fit one another properly.</p><p>De Mestral worked with a weaver to develop suitable nylon hooks and a matching fabric. The National Inventors Hall of Fame records his 1955 patent. That manufacturing work matters: an observation becomes a useful invention only when the parts can be made to work together reliably.</p>",
-      "title": "Seeing the idea was easier than making it"
+      "title": "Is every hook-and-loop fastener called Velcro?",
+      "html": "<p><strong>VELCRO is a brand name; hook-and-loop is the general type of fastener.</strong> The familiar version needs two different surfaces doing different jobs.</p><p>Look closely at a strap: one side is a softer tangle, the other has firmer little hooks. Pressing against a smooth sheet cannot supply the missing loops.</p>"
     },
     {
       "id": "look-closely",
-      "html": "<p>If you have a hook-and-loop strap, open it and look at each face in good light. Which side looks more like a soft tangle? Which has the firmer little projections?</p><p>Now imagine replacing the loop side with a smooth sheet. Would pressing harder recreate the missing loops?</p><details class=\"practice-answer\"><summary>Think it through</summary><p><strong>No.</strong> Pressure brings the surfaces together, but the hooks still need something suitable to catch. The two sides have different jobs.</p></details><p>That makes an interesting comparison with <a href=\"/learn/how-post-it-notes-were-invented/\">the removable adhesive in Post-it Notes</a>. Both let you attach and remove something, but one uses a mechanical connection and the other an adhesive. Similar everyday task; very different solution.</p>",
-      "title": "Try a two-sided inspection"
+      "title": "A different way to make something removable",
+      "html": "<p>Compare it with <a href=\"/learn/how-post-it-notes-were-invented/\">a Post-it note’s removable adhesive</a>. Both let you attach and remove something, but the grip works differently. Same everyday job, two rather different solutions.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T17:19:01.76865+00:00",
-  "description": "A plant burr clinging to fabric gave George de Mestral an idea. Look closely at the hooks and loops behind a familiar reusable fastener.",
-  "publishedAt": "2026-09-30T17:19:01.76865+00:00",
-  "authorId": "biel-sarda"
+  "updatedAt": "2026-10-16T19:33:25Z",
+  "description": "Tiny hooks catch tiny loops: that is what holds a hook-and-loop fastener together. Discover the plant burr that inspired the idea behind the familiar strap.",
+  "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

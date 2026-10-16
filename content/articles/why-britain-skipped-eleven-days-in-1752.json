@@ -77,31 +77,26 @@
   "sections": [
     {
       "id": "next-morning",
-      "title": "The next morning had a surprising date",
-      "html": "<p>Imagine writing <strong>2 September 1752</strong> in your diary before bed. When you wake up the next morning, the official date is <strong>14 September</strong>.</p><p>That is what happened when Britain changed its calendar. Only one night had passed. <strong>The numbers on the calendar changed; time did not jump.</strong></p>"
+      "title": "Why did the date jump from 2 to 14 September?",
+      "html": "<p><strong>Britain skipped eleven date labels in September 1752 when it changed from the Julian calendar to the Gregorian calendar.</strong> The calendars had drifted eleven days apart.</p><p>Go to bed on 2 September; wake up on 14 September. Only one ordinary night had passed. Your diary needed a surprising new heading, not eleven missing entries.</p>"
     },
     {
       "id": "catching-up",
       "title": "Two calendars had stopped agreeing",
-      "html": "<p>A calendar is a way of putting dates on days. Britain was using one called the <strong>Julian calendar</strong>. Many other places were using a newer one, the <strong>Gregorian calendar</strong>.</p><p>The two calendars had different leap-year rules. Over many years, the difference grew until they were <strong>eleven days apart</strong>.</p><p>Britain switched to the newer calendar. To bring its dates into line, the law said that the day after 2 September would be called 14 September.</p><p>The new leap-year rules helped stop the same problem building up again. You can explore them in <a href=\"/learn/why-2100-is-not-a-leap-year/\">the story of 2100’s missing leap day</a>.</p>"
+      "html": "<p>The calendars used different leap-year rules. Over time, those small differences added up. Skipping dates brought Britain into line with the Gregorian calendar.</p><p><a href=\"https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds\">Royal Museums Greenwich records the switch</a>. The new rules still matter today: they explain <a href=\"/learn/why-2100-is-not-a-leap-year/\">why 2100 will not have a leap day</a>.</p>"
     },
     {
       "id": "count-the-days",
-      "title": "Which dates were left out?",
-      "html": "<p>The calendar went from 2 straight to 14. The missing date labels were <strong>3, 4, 5, 6, 7, 8, 9, 10, 11, 12 and 13 September</strong>: eleven labels in all.</p><p>Imagine changing the page number in a notebook from 2 to 14. You have changed the label on the next page, not created eleven extra pages to read.</p><details class=\"practice-answer\"><summary>You go to bed on 2 September 1752 in Britain. What date is it next morning?</summary><p><strong>14 September 1752.</strong> One ordinary night has passed.</p></details>"
-    },
-    {
-      "id": "at-a-glance",
-      "title": "What changed, and what stayed the same?",
-      "html": "<div class=\"table-scroll\"><table><caption>Britain’s calendar switch</caption><thead><tr><th scope=\"col\">Changed</th><th scope=\"col\">Stayed the same</th></tr></thead><tbody><tr><td>The next date was 14 September instead of 3 September</td><td>One day still followed the previous day</td></tr><tr><td>Eleven date labels were skipped</td><td>People did not live through eleven extra nights</td></tr></tbody></table></div>"
+      "title": "Which eleven dates were left out?",
+      "html": "<p><strong>3–13 September 1752, inclusive.</strong> The count is 13 − 3 + 1 = 11. The next date after 2 September was therefore 14 September.</p><p>It is like changing the number on the next notebook page. The label jumps, but no extra pages have been read.</p>"
     },
     {
       "id": "reading-old-dates",
       "title": "Other countries changed at other times",
-      "html": "<p>This was not a worldwide switch on one morning. Different countries adopted the new calendar at different times.</p><p>That is why an old date makes more sense when you also know <strong>where it was written</strong> and <strong>which calendar people used there</strong>.</p>"
+      "html": "<p>This was not a worldwide switch on one morning. For a historical date, check where it was recorded and which calendar was in use.</p><p>And if a century label causes the next puzzle, <a href=\"/learn/which-century-is-that-year/\">1900 and 1901 make a useful comparison</a>.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
-  "description": "Go to bed on 2 September. Wake up on 14 September. That happened in Britain in 1752—but nobody slept for eleven extra nights.",
+  "updatedAt": "2026-10-16T19:33:25Z",
+  "description": "Britain jumped from 2 to 14 September 1752 to bring its calendar into line. Here is why eleven date labels vanished, while ordinary days kept passing.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }
