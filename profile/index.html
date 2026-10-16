@@ -3,15 +3,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<title>My BrainiLab — Progress, Stats, Profile &amp; Settings | BrainiLab</title>
-<meta content="View your Brain Rank, XP, streaks, personal performance statistics, Daily Brain Score, results, groups and BrainiLab account settings." name="description"/>
+<title>My BrainiLab — Avatar, Stats &amp; Friends | BrainiLab</title>
+<meta content="Make your avatar yours with earned frames, titles and little extras. Find your game stats, learning progress, friends, groups and account settings." name="description"/>
 <meta content="noindex,follow" name="robots"/>
 <link href="https://brainilabgames.com/profile/" rel="canonical"/>
 <link href="../assets/brand/iso-multicolor.png" rel="icon"/>
 <link href="../assets/css/site.css?v=41.53.0" rel="stylesheet"/><link href="../assets/css/stats.css?v=41.11.0" rel="stylesheet"/><link href="../assets/css/mobile.css?v=41.8.3" rel="stylesheet"/>
 <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/><link crossorigin="" href="https://wvgcdlxebbybthyuajgb.supabase.co" rel="preconnect"/><script defer src="/assets/js/consent.bundle.js?v=41.53.0"></script><script defer="" src="../assets/js/shell.bundle.js?v=41.53.0"></script><script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer="" src="../assets/js/cloud.bundle.js?v=41.53.0"></script><script defer="" src="../assets/js/profile.bundle.js?v=41.41.0"></script>
 <link rel="stylesheet" href="/assets/css/profile-progress.css?v=41.41.0"/><link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
-<link rel="stylesheet" href="/assets/css/profile-rewards.css?v=1"/><script defer src="/assets/js/profile-rewards.bundle.js?v=1"></script><link rel="stylesheet" href="/assets/css/learning-paths.css?v=10"/><script defer src="/assets/js/learning-paths.bundle.js?v=10"></script></head>
+<link rel="stylesheet" href="/assets/css/profile-rewards.css?v=1"/><script defer src="/assets/js/profile-rewards.bundle.js?v=1"></script><link rel="stylesheet" href="/assets/css/groups.css?v=1"/><link rel="stylesheet" href="/assets/css/profile-workspace.css?v=1"/><link rel="stylesheet" href="/assets/css/learning-paths.css?v=10"/><script defer src="/assets/js/learning-paths.bundle.js?v=10"></script></head>
 <body class="profile-page braini-visual">
 <header class="topbar">
 <div class="wrap nav">
@@ -28,14 +28,14 @@
 <section class="profile-v27-head">
 <div class="wrap">
 <div class="profile-v27-title">
-<div><span>My BrainiLab</span><h1>Your BrainiLab.</h1></div>
+<div><span>My BrainiLab</span><h1>Your BrainiLab.</h1><p>Your look, your progress, your people.</p></div>
 <a class="btn" href="../games/index.html">Keep playing →</a>
 </div>
 <nav aria-label="My BrainiLab sections" class="profile-tabs">
-<button data-profile-tab="progress" type="button">My Progress</button><button data-profile-tab="stats" type="button">My Stats</button>
+<button data-profile-tab="progress" type="button">My Avatar</button><button data-profile-tab="stats" type="button">My Stats</button>
 <button data-profile-tab="profile" type="button">Edit Profile</button>
-<button data-profile-tab="social" type="button">Groups &amp; Friends</button>
-<button data-profile-tab="settings" type="button">Account &amp; Security</button>
+<button data-profile-tab="social" type="button">Friends &amp; Groups</button>
+<button data-profile-tab="settings" type="button">Account</button>
 </nav>
 </div>
 </section>
@@ -78,7 +78,7 @@
 <div class="profile-section-intro">
 <span>Edit Profile</span>
 <h2>How you appear in BrainiLab</h2>
-<p>Update your display name, country and public ranking identity.</p>
+<p>Your name, photo and country. You decide whether to appear in public rankings.</p>
 </div>
 <div data-profile-account-root=""></div>
 </div>
@@ -86,13 +86,13 @@
 <section class="section profile-section" data-profile-section="social" hidden="">
 <div class="wrap">
 <div class="profile-section-intro">
-<span>Social</span>
-<h2>Groups &amp; Friends</h2>
-<p>Manage your team, invitations and the people you compare scores with.</p>
+<span>Your people</span>
+<h2>Better together.</h2>
+<p>Compare scores with friends, find your team and show a little personality.</p>
 </div>
 <div class="social-section-grid">
-<div class="social-panel profile-groups-priority" data-groups-root=""></div>
 <div class="social-panel" data-friends-root=""></div>
+<div class="social-panel profile-groups-priority" data-groups-root=""></div>
 </div>
 </div>
 </section>
@@ -127,20 +127,5 @@ document.addEventListener("DOMContentLoaded",()=>{
   );
 });
 </script>
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-  const maybeLoad=()=>{
-    const section=new URLSearchParams(location.search).get("section");
-    if(section==="social"){
-      BrainiPerf.loadFeature("profile-social.bundle.js");
-    }
-  };
-  maybeLoad();
-  document.querySelector('[data-profile-tab="social"]')?.addEventListener(
-    "pointerdown",
-    ()=>BrainiPerf.loadFeature("profile-social.bundle.js"),
-    {once:true}
-  );
-},{once:true});
-</script></body>
+</body>
 </html>

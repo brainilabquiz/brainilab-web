@@ -38,6 +38,8 @@ window.BrainiProfileSections=(function(){
     if(section==="stats" && window.BrainiStatsUI){
       BrainiStatsUI.render();
     }
+    // Click, keyboard activation, deep links and browser history share one loader.
+    if(section==="social")window.BrainiPerf?.loadFeature?.("profile-social.bundle.js");
   }
 
   let recentRequest=0,recentOwner=null;
@@ -105,7 +107,7 @@ window.BrainiProfileSections=(function(){
         <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${format(progress.earnedInLevel)} of ${format(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><span style="width:${progress.percent}%"></span></div>
         <div class="profile-level-numbers"><strong>${format(progress.earnedInLevel)} <span>/ ${format(progress.neededInLevel)} XP</span></strong><small>${format(progress.currentXp)} total XP</small></div>
       </div>
-      <div class="profile-next-rank">${next?`<span class="rank-avatar ${BrainiProgressUI.avatarClass(next.min)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span><span><small>Next title</small><strong>${next.name}</strong><span>Level ${next.min}</span></span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest title</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
+      <div class="profile-next-rank">${next?`<span class="rank-avatar ${BrainiProgressUI.avatarClass(next.min)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span><span><small>Next level rank</small><strong>${next.name}</strong><span>Level ${next.min}</span></span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest level rank</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
       <div class="profile-level-footer">${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link">Your rankings →</a></div>`;
     if(restoreFocus)root.querySelector('[data-ranks-toggle]')?.focus({preventScroll:true});
     const journey=document.querySelector('[data-profile-milestones]');

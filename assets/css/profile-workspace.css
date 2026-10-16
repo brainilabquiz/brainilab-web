@@ -1,0 +1,246 @@
+/* One profile workspace: cosmetics first, with progress and account controls intact. */
+.profile-page{--group-paper:var(--page);--group-line:var(--line);--group-muted:var(--muted);--group-surface:var(--card)}
+.profile-page .profile-v27-head{padding-top:28px}
+.profile-page .profile-v27-title{align-items:center}
+.profile-page .profile-v27-title h1{font-size:clamp(30px,4vw,38px);line-height:1.15;margin:4px 0 8px}
+.profile-page .profile-v27-title>div>p{margin:0;color:var(--muted);font-size:14px;font-weight:500;line-height:1.6}
+.profile-page .profile-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;margin-top:24px;overflow:visible}
+.profile-page .profile-tabs button{min-height:48px;padding:10px 12px;font-size:14px;line-height:1.4;white-space:normal;cursor:pointer}
+.profile-page .profile-tabs button:not(.active):hover{background:var(--soft-navy);color:var(--navy)}
+.profile-page .profile-section{padding-top:28px;padding-bottom:40px}
+.profile-page .profile-section-intro{margin-bottom:24px}
+.profile-page .profile-section-intro>span{font-size:11px;letter-spacing:.06em}
+.profile-page .profile-section-intro h2{font-size:clamp(26px,3vw,32px);line-height:1.2;margin:6px 0 10px}
+.profile-page .profile-section-intro p{max-width:65ch;font-size:14px;font-weight:500;line-height:1.7}
+.profile-page .avatar-sharing-note{max-width:30ch;font-size:12px;line-height:1.65;color:var(--muted);margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.profile-page .avatar-storage-note{font-size:12px}
+.profile-page .avatar-studio-heading p{font-size:14px}
+.profile-page .profile-quick-links{justify-content:flex-start;gap:8px 24px;padding:0 4px 20px}
+.profile-page .profile-activity>summary{min-height:60px;font-size:15px;padding:20px 24px}
+.profile-page .profile-activity>summary>span{font-size:13px}
+.profile-page .profile-activity-body{padding:0 24px 24px}
+.profile-page .profile-activity .panel{background:var(--card);border-color:var(--line)}
+
+/* Edit Profile keeps identity/privacy controls; My Avatar owns the saved look. */
+.profile-page .profile-account-panel{margin-top:0;padding:28px;border-radius:20px}
+.profile-page .profile-account-head{gap:20px;margin-bottom:28px;align-items:center}
+.profile-page .profile-account-identity{min-width:0;gap:20px}
+.profile-page .profile-account-identity>div:last-child{min-width:0}
+.profile-page .profile-account-avatar{width:76px;height:76px;flex-shrink:0;border-radius:50%}
+.profile-page .profile-account-avatar>img,.profile-page .profile-account-avatar>svg{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.profile-page .profile-account-head h2{font-size:28px;line-height:1.2;overflow-wrap:anywhere}
+.profile-page .profile-account-head p{font-size:13px;line-height:1.6;font-weight:500;margin:8px 0 0}
+.profile-page [data-profile-account-title][hidden]{display:none}
+.profile-page .profile-account-head .auth-kicker{font-size:11px}
+.profile-page .profile-cloud-badge{font-size:12px;font-weight:650;white-space:nowrap}
+.profile-page .profile-settings-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
+.profile-page .profile-settings-grid label{display:block;color:var(--navy);font-size:14px;font-weight:700;margin-bottom:8px}
+.profile-page .profile-settings-grid form label:not(:first-child){margin-top:20px}
+.profile-page .profile-setting-row{gap:12px}
+.profile-page .profile-setting-row input{min-width:0;width:100%;min-height:48px;font-family:inherit;font-size:16px;padding:12px 14px;border-radius:10px}
+.profile-page .profile-setting-row button{min-height:48px;font-size:14px;padding:12px 18px;border-radius:10px;white-space:nowrap}
+.profile-page .profile-field-help{font-size:12px;font-weight:500;line-height:1.7;margin-top:10px}
+.profile-page .profile-leaderboard-setting{padding:12px;gap:12px;flex-wrap:wrap;background:var(--page)}
+.profile-page .profile-leaderboard-setting span{font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.profile-page .profile-leaderboard-setting button{font-size:12px;min-height:44px;padding:10px 14px}
+.profile-page .profile-avatar-edit-link{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;color:var(--navy);margin:24px 0 8px}
+.profile-page .profile-photo-editor{margin-top:8px;padding:20px;gap:20px;border-radius:14px;background:var(--page)}
+.profile-page .profile-photo-preview{width:72px;height:72px;flex-shrink:0;border-radius:50%;overflow:hidden}
+.profile-page .profile-photo-preview>img{width:100%;height:100%;object-fit:cover}
+.profile-page .profile-photo-copy{min-width:0}
+.profile-page .profile-photo-copy label{font-size:11px;line-height:1.6}
+.profile-page .profile-photo-copy>strong{font-size:18px;line-height:1.4}
+.profile-page .profile-photo-copy>span{font-size:13px;line-height:1.65;font-weight:500;margin-top:6px}
+.profile-page .profile-photo-actions{gap:10px;flex-wrap:wrap;margin-top:14px}
+.profile-page .profile-photo-actions button{font-size:13px;min-height:44px;padding:10px 16px;border-radius:10px}
+.profile-page .profile-backend-warning strong,.profile-page .profile-backend-warning span{font-size:13px;line-height:1.7}
+
+/* Friends remain readable on a phone; group cards match the Groups page. */
+.profile-page .social-section-grid{grid-template-columns:minmax(0,1fr);gap:32px}
+.profile-page .social-panel{padding:28px;border-radius:20px;min-width:0}
+.profile-page .profile-groups-priority{padding:0;border:0;background:transparent}
+.profile-page .social-panel-head{gap:20px;margin-bottom:20px;align-items:start}
+.profile-page .social-panel-head h2{font-size:26px;line-height:1.2}
+.profile-page .social-panel-head p{font-size:14px;line-height:1.65;font-weight:500;max-width:48ch}
+.profile-page .friend-cloud-status{font-size:12px;line-height:1.6;padding:10px 12px}
+.profile-page .friend-code{gap:10px;padding:8px 12px;flex-wrap:wrap}
+.profile-page .friend-code>span{font-size:11px}.profile-page .friend-code strong{font-size:14px;letter-spacing:.03em}
+.profile-page .friend-code button{font-size:12px;min-height:44px;padding:10px 14px}
+.profile-page .friend-invite-button{width:44px;height:44px;font-size:22px;flex-shrink:0}
+.profile-page .friend-head-actions{flex-wrap:wrap}
+.profile-page .friend-code-label{display:block;font-size:13px;color:var(--navy);font-weight:700;margin:20px 0 8px}
+.profile-page .add-friend-row{gap:12px;max-width:520px}
+.profile-page .add-friend-row input{font-family:inherit;font-size:16px;min-height:48px}
+.profile-page .add-friend-row button{font-size:13px;min-height:48px;padding:10px 16px}
+.profile-page .social-subtitle{font-size:14px;margin:24px 0 12px}
+.profile-page .friend-list{gap:12px}
+.profile-page .friend-row{grid-template-columns:48px minmax(0,1fr) auto;padding:16px;gap:12px 16px;background:var(--card)}
+.profile-page .friend-row-accepted{grid-template-columns:48px minmax(0,1fr) repeat(3,minmax(64px,auto)) 44px}
+.profile-page .friend-row .social-avatar{width:48px;height:48px}
+.profile-page .friend-main{min-width:0;overflow-wrap:anywhere}
+.profile-page .friend-row strong{font-size:15px;line-height:1.4}
+.profile-page .friend-row small{font-size:12px;line-height:1.65;font-weight:500;margin-top:4px}
+.profile-page .friend-row .player-profile-title{font-size:11px;margin:6px 0}
+.profile-page .friend-stat{display:block!important;min-width:0;padding-left:20px;border-left:1px solid var(--line)}
+.profile-page .friend-stat strong{font-size:17px;font-variant-numeric:tabular-nums}
+.profile-page .friend-stat span{font-size:11px;font-weight:500;text-transform:none;display:block;margin-top:4px}
+.profile-page .friend-menu{width:44px;height:44px;font-size:24px;border:1px solid var(--line);border-radius:10px;background:transparent;color:#a32925;justify-self:end}
+.profile-page .friend-request-actions{gap:8px;flex-wrap:wrap}
+.profile-page .friend-action{min-height:44px;font-size:13px;padding:10px 14px}
+.profile-page .friend-empty-state{padding:24px;background:var(--page)}
+.profile-page .friend-empty-state strong{font-size:18px;line-height:1.4}
+.profile-page .friend-empty-state span{font-size:14px;line-height:1.7;font-weight:500;margin-top:8px}
+.profile-page .social-ranking-link{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;font-size:14px}
+.profile-page .group-workspace-heading{margin-top:0;padding-top:0;border-top:0}
+.profile-page .group-room{border-top:4px solid var(--green)}
+.profile-page .group-room-crest{width:64px;height:72px;flex-shrink:0}
+.profile-page :is(.group-room-meta,.group-room-scores span,.group-player small){font-size:13px}
+.profile-page .group-player strong{font-size:14px}
+.profile-page .group-remove{width:44px;height:44px;flex-shrink:0;border:1px solid var(--line);border-radius:10px;background:transparent;color:#a32925;font-size:22px}
+.profile-page .group-invite-primary{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}
+.profile-page .group-welcome{background:var(--soft-green);border-color:var(--line)}
+.profile-page .social-locked{padding:24px;gap:20px;flex-wrap:wrap}
+.profile-page .social-locked strong{font-size:20px;line-height:1.4}.profile-page .social-locked span{font-size:14px;line-height:1.7;font-weight:500}
+.profile-page .social-dialog{padding:28px;border-radius:20px;max-height:calc(100dvh - 32px);width:min(560px,100%)}
+.profile-page .social-dialog h2{font-size:28px;max-width:calc(100% - 36px)}
+.profile-page .social-dialog .auth-kicker{font-size:11px}.profile-page .social-dialog .auth-lead{font-size:14px;line-height:1.65}
+.profile-page .social-modal-close{width:44px;height:44px;right:12px;top:12px}
+.profile-page .social-label{font-size:14px;margin:20px 0 8px}
+.profile-page .social-input{font-family:inherit;font-size:16px;min-height:48px}
+.profile-page :is(.social-icon-choice,.social-color-choice){width:44px;height:44px}
+.profile-page .social-friend-select label{min-height:56px;padding:12px;gap:8px}
+.profile-page .social-friend-select strong{font-size:13px;overflow-wrap:anywhere}.profile-page .social-friend-select small{font-size:12px}
+.profile-page .social-dialog .auth-primary{min-height:48px;font-size:14px;margin-top:20px}
+.profile-page .social-dialog .auth-error,.profile-page [data-friend-error]{font-size:13px;line-height:1.6}
+
+/* Existing statistics, with usable labels and controls instead of miniature text. */
+.profile-page .stats-toolbar{padding:20px;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+.profile-page .stats-toolbar>div>span{font-size:11px;letter-spacing:.04em;margin-bottom:10px}
+.profile-page .stats-toolbar>small{font-size:12px;font-weight:500;line-height:1.65}
+.profile-page :is(.stats-range-switch,.stats-game-filters){gap:8px}
+.profile-page :is(.stats-range-switch,.stats-game-filters) button{min-height:44px;font-size:13px;padding:10px 14px;font-weight:650}
+.profile-page .stats-summary-grid{gap:16px;margin-bottom:24px}
+.profile-page .stats-summary-card{padding:24px}
+.profile-page .stats-summary-card>span{font-size:13px;font-weight:650}
+.profile-page .stats-summary-card>strong{font-size:30px;line-height:1.2;overflow-wrap:anywhere;margin-top:10px;overflow:visible}
+.profile-page .stats-summary-card>small{font-size:12px;font-weight:500;line-height:1.6;margin-top:10px}
+.profile-page .stats-panel{padding:24px;margin-top:20px;border-radius:20px;min-width:0}
+.profile-page .stats-panel-head{gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.profile-page .stats-panel-head>div:first-child>span{font-size:11px;letter-spacing:.04em}
+.profile-page .stats-panel-head h2{font-size:26px;line-height:1.2;margin:6px 0 10px}
+.profile-page .stats-panel-head p{font-size:14px;line-height:1.65;font-weight:500;max-width:60ch}
+.profile-page .stats-panel-link{font-size:13px;min-height:44px;display:inline-flex;align-items:center;padding:10px 14px}
+.profile-page .stats-game-filters{justify-content:flex-start;max-width:none}
+.profile-page .stats-chart-axis{font-size:12px;fill:#625d70;font-weight:500}
+.profile-page .stats-chart-empty{font-size:14px;font-weight:500;line-height:1.7}
+.profile-page .stats-two-col{gap:20px}
+.profile-page .stats-bar-meta{flex-wrap:wrap;gap:4px 12px}
+.profile-page .stats-bar-meta strong{font-size:14px}.profile-page .stats-bar-meta>span{font-size:12px;font-weight:500}
+.profile-page .stats-bars{gap:20px}
+.profile-page .stats-difficulty-card{padding:18px}
+.profile-page .stats-difficulty-card span{font-size:14px}.profile-page .stats-difficulty-card strong{font-size:22px}
+.profile-page .stats-difficulty-card small{font-size:12px;font-weight:500;line-height:1.6;margin-top:10px}
+.profile-page .stats-daily-metrics{gap:12px}
+.profile-page .stats-daily-metrics>div{padding:16px;min-width:0}
+.profile-page .stats-daily-metrics span{font-size:12px;line-height:1.6;font-weight:650}
+.profile-page .stats-daily-metrics strong{font-size:23px;line-height:1.3;overflow-wrap:anywhere}
+.profile-page .stats-game-grid{gap:16px}
+.profile-page .stats-game-card{padding:20px;min-width:0}
+.profile-page .stats-game-card-head strong{font-size:16px;line-height:1.4}.profile-page .stats-game-card-head small{font-size:12px;font-weight:500;line-height:1.6}
+.profile-page .stats-game-card-metrics{gap:8px}
+.profile-page .stats-game-card-metrics>div{padding:12px}
+.profile-page .stats-game-card-metrics span{font-size:12px;font-weight:500;line-height:1.5;min-height:36px}
+.profile-page .stats-game-card-metrics strong{font-size:20px;line-height:1.3;overflow-wrap:anywhere;overflow:visible}
+.profile-page .stats-insight-grid{gap:16px}
+.profile-page .stats-insight-grid article{padding:24px}
+.profile-page .stats-insight-grid article>span{font-size:12px}.profile-page .stats-insight-grid article>strong{font-size:22px;line-height:1.3}
+.profile-page .stats-insight-grid article>p{font-size:14px;font-weight:500;line-height:1.7}
+.profile-page .stats-recent-row{padding:16px 0;grid-template-columns:110px minmax(0,1fr) auto;gap:16px}
+.profile-page .stats-recent-row time{font-size:12px;font-weight:500;line-height:1.6}
+.profile-page .stats-recent-row>div strong,.profile-page .stats-recent-row>strong{font-size:14px;line-height:1.5}
+.profile-page .stats-recent-row>div span{font-size:12px;font-weight:500;line-height:1.6}
+.profile-page :is(.stats-signin-card p,.stats-loading span,.stats-error span){font-size:14px;font-weight:500;line-height:1.7}
+
+/* Account controls retain their existing behavior and privacy choices. */
+.profile-page .profile-security-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.profile-page .profile-security-card{padding:24px;border-radius:20px;min-width:0}
+.profile-page .profile-security-card:first-child{grid-row:span 2}
+.profile-page .profile-settings-kicker{font-size:11px;letter-spacing:.04em}
+.profile-page .profile-security-card h2{font-size:24px;line-height:1.25;margin:8px 0 16px}
+.profile-page .profile-security-card p{font-size:14px;font-weight:500;line-height:1.75}
+.profile-page .profile-security-card dl{grid-template-columns:90px minmax(0,1fr);margin:20px 0}
+.profile-page .profile-security-card dt,.profile-page .profile-security-card dd{font-size:13px;line-height:1.7;padding:12px 0}
+.profile-page .profile-security-card dt{font-weight:650}
+.profile-page .profile-security-card :is(button,.btn-light){min-height:44px;font-size:13px;padding:12px 16px;display:inline-flex;align-items:center}
+.profile-page :is(a,button,input,select,summary):focus-visible{outline:3px solid #287b27;outline-offset:4px}
+.profile-page :is(.profile-activity>summary,.group-room-members>summary,.group-room-settings>summary){scroll-margin-top:96px}
+
+@media(max-width:900px){
+ .profile-page .friend-row-accepted{grid-template-columns:48px minmax(0,1fr) 44px}
+ .profile-page .friend-row-accepted .friend-menu{grid-column:3;grid-row:1}
+ .profile-page .friend-row-accepted .friend-stat{grid-row:2;text-align:left;padding:12px 0 0;border-left:0;border-top:1px solid var(--line)}
+ .profile-page .friend-row-accepted{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .profile-page .friend-row-accepted .social-avatar{grid-column:1;grid-row:1}
+ .profile-page .friend-row-accepted .friend-main{grid-column:1/4;grid-row:1;padding-left:64px;padding-right:40px}
+ .profile-page .friend-row-accepted .friend-menu{grid-column:3;z-index:1}
+ .profile-page .profile-settings-grid{grid-template-columns:1fr;gap:24px}
+ .profile-page .social-panel-head{flex-direction:column}
+ .profile-page .group-room-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){.profile-page .avatar-sharing-note{grid-column:1/-1;max-width:none}}
+@media(max-width:600px){
+ .profile-page .profile-v27-head{padding-top:20px}
+ .profile-page .profile-tabs{grid-template-columns:repeat(6,minmax(0,1fr));margin-top:20px}
+ .profile-page .profile-tabs button{grid-column:span 2;font-size:12px;padding:10px 6px;min-height:46px}
+ .profile-page .profile-tabs button:nth-child(n+4){grid-column:span 3}
+ .profile-page .profile-section{padding-top:20px;padding-bottom:28px}
+ .profile-page .profile-section-intro{margin-bottom:20px}
+ .profile-page .avatar-sharing-note{grid-column:1/-1;max-width:none;margin-top:0;font-size:12px;padding-top:12px}
+ .profile-page .profile-account-panel,.profile-page .social-panel,.profile-page .profile-security-card{padding:20px}
+ .profile-page .profile-account-head{align-items:start;flex-direction:column;gap:16px}
+ .profile-page .profile-account-avatar{width:60px;height:60px}
+ .profile-page .profile-account-identity{gap:16px;align-items:center}
+ .profile-page .profile-cloud-badge{white-space:normal}
+ .profile-page .profile-account-head h2{font-size:26px}
+ .profile-page .profile-photo-editor{padding:16px;align-items:start;flex-wrap:wrap}
+ .profile-page .profile-photo-preview{width:56px;height:56px}
+ .profile-page .profile-photo-copy{flex:1;min-width:min(160px,100%)}
+ .profile-page .profile-setting-row{flex-wrap:wrap}
+ .profile-page .profile-setting-row button{width:100%}
+ .profile-page .profile-activity>summary{padding:20px}
+ .profile-page .profile-activity-body{padding:0 16px 16px}
+ .profile-page .profile-activity>summary>span{margin-left:0;line-height:1.6}
+ .profile-page .friend-head-actions{width:100%;gap:8px}
+ .profile-page .friend-code{flex:1;gap:8px;padding:6px 8px;justify-content:space-between}
+ .profile-page .friend-code>span{flex-basis:100%}
+ .profile-page .friend-code strong{font-size:12px;overflow-wrap:anywhere}
+ .profile-page .friend-code button{padding:10px}
+ .profile-page .add-friend-row{flex-direction:column}
+ .profile-page .friend-row{padding:14px;gap:12px}
+ .profile-page .friend-row:not(.friend-row-accepted){grid-template-columns:40px minmax(0,1fr)}
+ .profile-page .friend-row:not(.friend-row-accepted) .friend-request-actions{grid-column:1/-1;flex-direction:row}
+ .profile-page .friend-row:not(.friend-row-accepted)>.friend-action{grid-column:2;width:fit-content}
+ .profile-page .friend-row .social-avatar{width:40px;height:40px}
+ .profile-page .friend-row-accepted .friend-main{padding-left:52px;padding-right:28px}
+ .profile-page .friend-row strong{font-size:14px}.profile-page .friend-stat strong{font-size:16px}
+ .profile-page .friend-row small{font-size:11px}
+ .profile-page .profile-groups-priority{padding:0}
+ .profile-page .group-room-crest{width:52px;height:60px}
+ .profile-page .social-modal{padding:8px}.profile-page .social-dialog{padding:24px 20px;max-height:calc(100dvh - 16px)}
+ .profile-page .social-friend-select{grid-template-columns:1fr}
+ .profile-page .stats-panel{padding:20px}
+ .profile-page .stats-summary-grid{gap:12px}
+ .profile-page .stats-summary-card{padding:20px}
+ .profile-page .stats-panel-head h2{font-size:24px}
+ .profile-page .stats-game-card-metrics{grid-template-columns:1fr}
+ .profile-page .stats-game-card-metrics>div{display:flex;justify-content:space-between;align-items:center;gap:16px}
+ .profile-page .stats-game-card-metrics span{min-height:0;max-width:65%}
+ .profile-page .stats-game-card-metrics strong{margin-top:0}
+ .profile-page .stats-recent-row{grid-template-columns:75px minmax(0,1fr);gap:8px 12px}
+ .profile-page .profile-security-grid{grid-template-columns:1fr}
+ .profile-page .profile-security-card:first-child{grid-row:auto}
+ .profile-page .profile-security-card dl{grid-template-columns:1fr}
+ .profile-page .profile-security-card dt{padding:12px 0 0;border:0}
+ .profile-page .profile-security-card dd{padding:4px 0 12px}
+}
+@media(prefers-reduced-motion:reduce){.profile-page .stats-loading-dot{animation:none}}

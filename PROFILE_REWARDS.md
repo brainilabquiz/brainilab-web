@@ -130,6 +130,23 @@ avoid a digest cycle; unbuilt/local entry points retain a compatible fallback.
 `tools/test-lazy-feature-cache.mjs` checks the built loader, exact byte hashes,
 replacement of a cached version, script reuse and query/fragment preservation.
 
+The profile workspace labels the existing `progress` section **My Avatar**;
+existing URLs and section keys remain valid. Progress, recent games and Academy
+remain in the folded activity panel. The saved avatar/frame/title also appear in
+Edit Profile, while the upload panel previews the retained picture. An unsaved
+creator draft never changes either saved identity. Form labels are associated
+with their controls, and guest profile details have the existing sign-in action.
+The social section loads through the section controller for click, keyboard,
+deep-link and browser-history entry paths. Its bundle reuses `groups-view.js`,
+so team cards and member actions match the Groups page; existing social handlers
+and RPCs still perform all operations. Friend cards keep streak/today/XP visible
+on small screens. `profile-workspace.css` is profile-only and makes navigation,
+statistics, identity, social and security controls readable at mobile sizes.
+Level ranks are named separately from the optional equipped profile title.
+No progression calculation, ranking score, visibility choice or membership is
+changed. `tools/test-profile-workspace.mjs` covers section routing, saved/draft
+identity isolation, retained photos, field labels and unchanged gameplay/privacy.
+
 Validation: `tools/test-profile-rewards.mjs` and `tools/test-avatar-studio.mjs`
 (set `JSDOM_MODULE`), existing profile,
 progression, player identity, rankings and game-integrity suites;

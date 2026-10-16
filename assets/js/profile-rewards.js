@@ -8,7 +8,7 @@ window.BrainiProfileRewards=(function(){
     if(owner!==state.owner){owner=state.owner;dirty=false;}
     if(!dirty)draft={...state.style};draft=C.available(draft,total);
     const equipped=state.style;
-    for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar')]){
+    for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){frame(avatar,equipped.frame);avatar.innerHTML=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)});}
     }
     const hero=document.querySelector('.profile-rank-main');
@@ -17,6 +17,8 @@ window.BrainiProfileRewards=(function(){
       if(!title){title=document.createElement('p');title.dataset.equippedTitle='';hero.querySelector('h2')?.after(title);}
       title.hidden=equipped.title==='none';title.textContent=C.titles.find(t=>t.id===equipped.title).name;
     }
+    const accountTitle=document.querySelector('[data-profile-account-title]');
+    if(accountTitle){accountTitle.hidden=equipped.title==='none';accountTitle.textContent=C.titles.find(t=>t.id===equipped.title).name;}
     const preview=root.querySelector('[data-style-preview-avatar]');
     preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(player.level||1);frame(preview,draft.frame);
     preview.innerHTML=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
@@ -30,6 +32,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-avatar-level]').textContent=`Level ${progress?.level||player.level||1} · ${total.toLocaleString('en-GB')} XP`;
     U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
+    root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;

@@ -14,7 +14,7 @@ BUNDLES={
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],
  'profile.bundle.js':['supabase-analytics.js','stats-ui.js','profile-sections.js'],
  'profile-rewards.bundle.js':['profile-rewards-model.js','profile-rewards-store.js','avatar-studio-ui.js','profile-rewards.js'],
- 'profile-social.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','social.js'],
+ 'profile-social.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','groups-view.js','social.js'],
  'suggestions.bundle.js':['supabase-feedback.js','suggestions-ui.js'],
 }
 for out,parts in BUNDLES.items():

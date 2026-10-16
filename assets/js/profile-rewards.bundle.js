@@ -159,13 +159,13 @@ window.BrainiAvatarStudioUI=(function(){
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
   function mount(root){
-    root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>A look, a little personality, and a few things to earn.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
+    root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>Try a new look. Add a little extra. Make it you.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
       <div class="avatar-studio-layout"><aside class="avatar-studio-stage" aria-label="Avatar preview">
       <div class="avatar-stage-art"><span class="avatar-preview-label" data-style-preview-label>Your avatar</span><span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span></div>
       <div class="avatar-stage-identity"><strong data-style-preview-name></strong><p data-style-preview-title></p><span data-avatar-level></span></div>
       <div class="avatar-next-reward" data-next-reward></div>
       <div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save my avatar</button><button class="btn-light" type="button" data-style-cancel>Cancel changes</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div>
-      <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p></aside>
+      <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></aside>
       <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><fieldset class="avatar-mode"><legend>Start with</legend><div class="reward-mode-grid" data-style-modes></div></fieldset>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
       ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Little extras for your illustrated avatar. Pick one to try it on.</p>':''}${Object.entries(p.groups).map(([kind,name])=>`<fieldset class="avatar-option-group"><legend>${name}</legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`).join('')}</div>`).join('')}</div></div>`;
@@ -240,7 +240,7 @@ window.BrainiProfileRewards=(function(){
     if(owner!==state.owner){owner=state.owner;dirty=false;}
     if(!dirty)draft={...state.style};draft=C.available(draft,total);
     const equipped=state.style;
-    for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar')]){
+    for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){frame(avatar,equipped.frame);avatar.innerHTML=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)});}
     }
     const hero=document.querySelector('.profile-rank-main');
@@ -249,6 +249,8 @@ window.BrainiProfileRewards=(function(){
       if(!title){title=document.createElement('p');title.dataset.equippedTitle='';hero.querySelector('h2')?.after(title);}
       title.hidden=equipped.title==='none';title.textContent=C.titles.find(t=>t.id===equipped.title).name;
     }
+    const accountTitle=document.querySelector('[data-profile-account-title]');
+    if(accountTitle){accountTitle.hidden=equipped.title==='none';accountTitle.textContent=C.titles.find(t=>t.id===equipped.title).name;}
     const preview=root.querySelector('[data-style-preview-avatar]');
     preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(player.level||1);frame(preview,draft.frame);
     preview.innerHTML=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
@@ -262,6 +264,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-avatar-level]').textContent=`Level ${progress?.level||player.level||1} · ${total.toLocaleString('en-GB')} XP`;
     U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
+    root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;

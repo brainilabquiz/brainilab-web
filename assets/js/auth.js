@@ -424,7 +424,7 @@ window.BrainiAuth = (function(){
       <section class="profile-account-panel">
         <div class="profile-account-head">
           <div class="profile-account-identity">
-            <div class="profile-account-avatar profile-edit-avatar ${
+            <div data-profile-account-avatar aria-hidden="true" class="profile-account-avatar rank-avatar profile-edit-avatar ${
               window.BrainiProgressUI
                 ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
                 : ""
@@ -434,6 +434,7 @@ window.BrainiAuth = (function(){
             <div>
               <div class="auth-kicker">Edit Profile</div>
               <h2>${String(p.displayName).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</h2>
+              <span class="player-profile-title" data-profile-account-title hidden></span>
               <p>${window.BrainiProgressUI
                 ? `${BrainiProgressUI.tier(p.level||1).name} · Level ${p.level||1}`
                 : `Level ${p.level||1}`
@@ -454,17 +455,17 @@ window.BrainiAuth = (function(){
 
         <div class="profile-settings-grid">
           <form data-profile-details-form>
-            <label>Display name</label>
+            <label for="profile-display-name">Display name</label>
             <div class="profile-setting-row">
-              <input name="displayName" maxlength="30" value="${(p.displayName||"").replace(/"/g,"&quot;")}" required>
+              <input id="profile-display-name" name="displayName" maxlength="30" value="${(p.displayName||"").replace(/"/g,"&quot;")}" required>
             </div>
 
-            <label>Country</label>
+            <label for="profile-country">Country</label>
             <div class="profile-setting-row">
-              <input name="countryCode" maxlength="2" pattern="[A-Za-z]{2}" value="${(p.countryCode||"").replace(/"/g,"&quot;")}" placeholder="ES">
+              <input id="profile-country" name="countryCode" aria-describedby="profile-country-help" maxlength="2" pattern="[A-Za-z]{2}" value="${(p.countryCode||"").replace(/"/g,"&quot;")}" placeholder="ES">
               <button type="submit">${cloud?"Save profile":"Save locally"}</button>
             </div>
-            <small class="profile-field-help">Enter your country’s two-letter code, such as ES, US or GB, for country rankings.</small>
+            <small class="profile-field-help" id="profile-country-help">Enter your country’s two-letter code, such as ES, US or GB, for country rankings.</small>
           </form>
 
           <div>
@@ -477,20 +478,21 @@ window.BrainiAuth = (function(){
           </div>
         </div>
 
+        <a class="profile-avatar-edit-link" href="?section=progress">Change avatar, frame &amp; title →</a>
         <div class="profile-photo-editor">
           <div class="profile-photo-preview ${
             window.BrainiProgressUI
               ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
               : ""
           }">
-            ${BrainiProgressUI.avatarImageMarkup(p)}
+            ${BrainiProgressUI.avatarImageMarkup({...p,avatarDesign:null})}
           </div>
 
           <div class="profile-photo-copy">
             <label>Profile photo</label>
             <strong>${p.avatarUrl ? "Change your photo" : "Add a profile photo"}</strong>
             <span>
-              Choose a JPG, PNG or WebP image. We’ll crop it to a square.
+              Choose a JPG, PNG or WebP image. Use it with “Your picture” in My Avatar.
             </span>
 
             ${realAccount && cloud ? `
@@ -672,8 +674,10 @@ window.BrainiAuth = (function(){
         };
 
 
+        window.BrainiProfileRewards?.render?.();
       }else{
-        account.innerHTML="";
+        account.innerHTML=guestProfileMarkup();
+        account.querySelector('[data-profile-save]').onclick=()=>open({source:'profile_details'});
       }
     }
   }

@@ -585,11 +585,12 @@ window.BrainiSocial = (function(){
         <div class="friend-cloud-status">☁ Friends synced with your BrainiLab account</div>
       ` : ""}
 
+      <label class="friend-code-label" for="add-friend-code">Add a friend by code</label>
       <form class="add-friend-row" data-add-friend-form>
-        <input name="friendCode" placeholder="BRN-XXXXXXXX" autocomplete="off" maxlength="12">
+        <input id="add-friend-code" name="friendCode" aria-describedby="friend-request-error" placeholder="BRN-XXXXXXXX" autocomplete="off" maxlength="12">
         <button type="submit">Send request</button>
       </form>
-      <div class="auth-error" data-friend-error></div>
+      <div class="auth-error" id="friend-request-error" data-friend-error role="status"></div>
 
       ${incoming.length ? `
         <div class="social-subtitle">Requests received · ${incoming.length}</div>
@@ -630,7 +631,7 @@ window.BrainiSocial = (function(){
 
       <div class="friend-list">
         ${social.friends.map(f=>`
-          <div class="friend-row">
+          <div class="friend-row friend-row-accepted">
             <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
             <div class="friend-main">
               <strong>${f.name}</strong>
@@ -653,7 +654,7 @@ window.BrainiSocial = (function(){
               <span>XP</span>
             </div>
 
-            <button class="friend-menu" data-remove-friend="${f.userId||f.id}" title="Remove friend">×</button>
+            <button class="friend-menu" data-remove-friend="${f.userId||f.id}" aria-label="Remove friend" title="Remove friend">×</button>
           </div>`).join("")}
       </div>
 
