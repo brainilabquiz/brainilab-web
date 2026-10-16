@@ -1,0 +1,68 @@
+{
+  "slug": "why-antarctica-is-largest-desert",
+  "title": "The world’s largest desert is covered in ice. How?",
+  "description": "Antarctica is the world’s largest desert. Find out why ice and dryness can go together, and which extra word makes the Sahara the right answer.",
+  "topic": "Geography",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 141,
+  "publishedAt": "2026-10-16T20:39:00Z",
+  "updatedAt": "2026-10-16T20:39:00Z",
+  "game": {
+    "name": "General Knowledge Quiz",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "Geography",
+    "url": "/geography/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-antarctica-is-largest-desert.webp",
+    "small": "/assets/images/learn/why-antarctica-is-largest-desert-small.webp",
+    "thumbnail": "/assets/images/learn/why-antarctica-is-largest-desert-thumb.webp",
+    "alt": "Wind-sculpted Antarctic snow ripples and blue shadows stretch towards a dark rocky mountain ridge",
+    "position": 50,
+    "credit": "AI-generated illustrative Antarctic landscape created for BrainiLab; not a photograph of a named place or expedition."
+  },
+  "sources": [
+    {
+      "name": "Natural History Museum — Antarctica’s landscape and desert climate",
+      "url": "https://www.nhm.ac.uk/discover/climate-change-antarctica.html"
+    },
+    {
+      "name": "British Antarctic Survey — Snow in Antarctica",
+      "url": "https://legacy.bas.ac.uk/about_antarctica/geography/weather/snow.php"
+    },
+    {
+      "name": "NASA MODIS — Sahara: the largest hot desert",
+      "url": "https://modis.gsfc.nasa.gov/gallery/individual.php?db_date=2019-06-28"
+    }
+  ],
+  "related": [
+    "why-greenland-looks-so-big",
+    "why-is-the-ocean-salty"
+  ],
+  "practice": "See what else you know about our world in the General Knowledge Quiz.",
+  "sections": [
+    {
+      "id": "the-surprising-answer",
+      "title": "Put the camel back for a moment",
+      "html": "<p><strong>Antarctica is the world’s largest desert. A desert is defined by dryness, not by heat or a covering of sand.</strong> The <a href=\"https://www.nhm.ac.uk/discover/climate-change-antarctica.html\">Natural History Museum identifies Antarctica as the largest</a> because it receives so little precipitation.</p><p>If your mental picture came with dunes and a blazing sun, it needs a second version: a cold desert.</p>"
+    },
+    {
+      "id": "snow-counts",
+      "title": "Snow still counts as precipitation",
+      "html": "<p>Precipitation is water falling from the atmosphere, including rain and snow. “It never rains” alone does not explain whether a snowy place is dry.</p><p>The <a href=\"https://legacy.bas.ac.uk/about_antarctica/geography/weather/snow.php\">British Antarctic Survey describes a striking contrast</a>: several metres of snow can fall annually near the coast, while the interior gets only a few centimetres. Conditions vary across the continent; it is not equally dry everywhere.</p>"
+    },
+    {
+      "id": "ice-is-a-store",
+      "title": "The ice is a store, not today’s delivery",
+      "html": "<p>Antarctica’s ice does not show how much snow fell this year. As the <a href=\"https://www.nhm.ac.uk/discover/climate-change-antarctica.html\">Natural History Museum explains</a>, snow has accumulated over immense periods, with pressure turning older layers into ice.</p><p>Think of a savings jar: a large amount inside does not mean a large amount went in today. That is the difference between a store of ice and a year’s snowfall.</p>"
+    },
+    {
+      "id": "the-sahara-answer",
+      "title": "One extra word changes the answer",
+      "html": "<p>Ask for the largest <strong>hot</strong> desert and the answer becomes the <strong>Sahara</strong>. <a href=\"https://modis.gsfc.nasa.gov/gallery/individual.php?db_date=2019-06-28\">NASA makes that distinction explicitly</a>.</p><p>So keep the wording: largest desert, Antarctica; largest hot desert, Sahara. “Desert” is doing less work than our picture of it suggests.</p><p>For another place that can fool your mental picture, find out <a href=\"/learn/why-greenland-looks-so-big/\">why Greenland looks so large on some maps</a>.</p>"
+    }
+  ]
+}

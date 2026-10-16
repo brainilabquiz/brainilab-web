@@ -1,0 +1,179 @@
+{
+  "date": "2026-10-16",
+  "language": "English",
+  "market": "United States priority; worldwide English readership",
+  "demand": {
+    "source": "NativeGoogleTrendscharttables",
+    "filters": "UnitedStates;Past12months;Allcategories;WebSearch;Englishterms",
+    "weeklyLabels": "12Oct2025–11Oct2026,lastweekpossiblypartial",
+    "focused": {
+      "url": "https://trends.google.com/trends/explore?geo=US&q=interleaving%20learning,Antarctica%20desert&hl=en",
+      "relativeAverages": {
+        "interleaving learning": 27,
+        "Antarctica desert": 70
+      }
+    },
+    "broad": {
+      "url": "https://trends.google.com/trends/explore?geo=US&q=interleaving,largest%20desert&hl=en",
+      "relativeAverages": {
+        "interleaving": 26,
+        "largest desert": 59
+      }
+    },
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limits": [
+      "Normalisedrelativeinterest,notmonthlyvolume/visits/percentages;do not compareindicesacrossrescaledcharts.",
+      "Interleavingbroadertermcanmeancomputing;focusedlearningquerycheckedseparately.",
+      "Broadlargestdesertincludescrossword/gamequeries,CrimsonDesertanderroneousSaharageographytext;allirrelevantrowsrejected.",
+      "FocusedWalmartnearmerowexcluded;retrievalpracticeisadjacentnotnewtarget. Antarcticdryvalleys/polardesertqueryrowsrelevantbutnolegacyweatherforecastintenttargeted.",
+      "Same-dayOpenSEOinsufficientcredits/GSCnot_connectedknown;no paidretry/keyword-saving/tracking. NewURLsnoownGSCevidence."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "what-is-interleaving-learning",
+      "keyword": "interleaving learning",
+      "intent": "Definition,relatedexamplecontrast,paintingstudyandlimitsofunrelatedmixing",
+      "novelty": "99fullpublishedarticledocschecked;5Learningarticlescoverpretesting/selfexplanation/recall/logo-familiarity/chunking,noneinterleaving. Spacing-onlycandidatewouldoverlapexistingrecallroutine;notwritten."
+    },
+    {
+      "slug": "why-antarctica-is-largest-desert",
+      "keyword": "largest desert",
+      "secondary": "Antarctica desert",
+      "intent": "Antarcticdryness/ice-storagevsannualsnowfall,largesthotdesertcontrast",
+      "novelty": "NoAntarcticdesertarticleamong99. ExistingGreenlandprojectiontopicrejectedasduplicate;Geography6before/7after."
+    }
+  ],
+  "intentReview": "FocusedfreeSERPschecked:educationalpsychologyoriginalresearch/authorpages;polareducation/BAS/NHMandNASA. Intentfitconfirmed,notcurrentranksorvolumes.",
+  "sourcesOpened": [
+    {
+      "url": "https://sites.williams.edu/nk2/files/2011/08/Kornell.Bjork_.2008a.pdf",
+      "access": "Opened8page original paper; PDFpages1–4/indices0–3 checked",
+      "claim": "UCLAstudents studied paintings blocked byartist/interleaved,then attributed newpaintings; interleaved bettertestperformance in1a/1b;1aparticipantsjudgedblockedatleastasuseful. No universal effect/longtermdelay claimed."
+    },
+    {
+      "url": "https://sites.williams.edu/nk2/files/2011/08/Hausman.Kornell.2014.pdf",
+      "access": "Opened8page original paper; abstract/methods/results checked",
+      "claim": "Fourexperiments anatomyterms/Indonesianvocabulary,mixedvsunmixed;no reliablebenefitofunrelatedtopicmixing; bothconditionsinterleavedwithintopic. Used as boundary,not claim of no interleaving benefit."
+    },
+    {
+      "url": "https://www.nhm.ac.uk/discover/climate-change-antarctica.html",
+      "access": "OpenedfullMuseumarticle;lines77–84",
+      "claim": "Antarcticalargestdesert/lowprecipitation;longaccumulationofsnowandpressureintoice. Didnotadoptunrelatedtemperature/climateprojections."
+    },
+    {
+      "url": "https://legacy.bas.ac.uk/about_antarctica/geography/weather/snow.php",
+      "access": "OpenedfullBASlegacySnowinAntarcticaarticle;lines34–39",
+      "claim": "Coastalannualsnowseveralmetres,interiorfewcentimetres;muchofcontinentdesert;snowdensification. No precipitationwater-equivalentconversion invented."
+    },
+    {
+      "url": "https://modis.gsfc.nasa.gov/gallery/individual.php?db_date=2019-06-28",
+      "access": "OpenedNASAoriginalMODISgallerypage",
+      "claim": "Saharalargesthotdesert,thirdoverallafterAntarctica/Arctic. Onlyhot-versus-all distinctionused;noextraneousareavalue."
+    }
+  ],
+  "unavailableChecks": [
+    "CurrentBASfactsheet/where-we-workextractorsshowedrobotverification;notclaimedread,notbypassed. ReadactualBASlegacySnowarticleinstead.",
+    "2013interleavingmechanismpaperopenedbutlaterextractorintermittent;notneeded/citedinfinalarticle."
+  ],
+  "examples": {
+    "blocked": "AAABBB",
+    "interleaved": "ABABAB",
+    "sameSixItems": true,
+    "threePerType": true,
+    "paintingIllustrationNotResearchStimuli": true,
+    "iceStoreVersusAnnualInput": "Qualitativejaranalogy,notamassbalancecalculation"
+  },
+  "reading": {
+    "bodyWords": [
+      248,
+      239
+    ],
+    "sectionsEach": 4,
+    "regularArticles": true,
+    "noNewQuizOrWidget": true,
+    "noForcedRegistration": true,
+    "noUniversalLearningBenefit": true
+  },
+  "artwork": {
+    "mode": "Built-inimage_gen",
+    "prompts": "image-prompts.json",
+    "sourcePNGs": "artwork/",
+    "variants": [
+      {
+        "path": "assets/images/learn/what-is-interleaving-learning.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 110050,
+        "sha256": "0a686bb8670540c44d5a9ac6138c4ad53bcc2c1bc6939e16fd7418a5f22d2532"
+      },
+      {
+        "path": "assets/images/learn/what-is-interleaving-learning-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 31512,
+        "sha256": "a64462125f01017536c60d95c1c8ecf8b29d1054c8fcf8cd83775b2727512dbb"
+      },
+      {
+        "path": "assets/images/learn/what-is-interleaving-learning-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 8256,
+        "sha256": "d086778e4647c44f99b123fea0426341591a6654a312a4dc7f4e0c6d7a2010ec"
+      },
+      {
+        "path": "assets/images/learn/why-antarctica-is-largest-desert.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 90872,
+        "sha256": "c55db09000cc1d2130de75511728a71ee142b59b9b8ece7d7f7ee921e84586c1"
+      },
+      {
+        "path": "assets/images/learn/why-antarctica-is-largest-desert-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 25328,
+        "sha256": "86a029b222fc2b7603eaac4abf3408060d31e321c13854af937da4f74558330b"
+      },
+      {
+        "path": "assets/images/learn/why-antarctica-is-largest-desert-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 7098,
+        "sha256": "830900784881d06390d6aba28ec30fdb484a79dd0f0d44240dcb73dbc95bfe1d"
+      }
+    ],
+    "totalBytes": 273116,
+    "review": "Originals,240thumbnails,widecropsandnative1280/320pagesinspected;sixcardsalternate3blue/3gold;polarlandscapenoanimals/sea/sand;honestillustrativecredits."
+  },
+  "verification": [
+    "Fullbuild972publicfiles/142assets",
+    "LearnSEO/librarynavigation/libraryUIand8course156quizquestionvalidatorspass",
+    "Newarticlemetadata/schema/author/citations/canonical/covervariants/contextuallinks/library/feed/sitemapchecks pass",
+    "PGlitepublicationmirrors,99oldarticles/8pathsintact,repeatrejected,invalidsecondarticleatomicrollback",
+    "Nativebotharticles1280/320coversloaded,nooverflow"
+  ],
+  "categories": {
+    "before": {
+      "Learning": 5,
+      "Geography": 6,
+      "Getting started": 3,
+      "Numbers & logic": 34
+    },
+    "after": {
+      "Learning": 6,
+      "Geography": 7,
+      "Getting started": 3,
+      "Numbers & logic": 34
+    },
+    "selectionReason": "Learninglowestthematiccategory;Geographytiedat6withSports/History/Curiosity. Gettingstartedonlyusefulmissingguides,notfiller."
+  },
+  "publication": {
+    "preparedAt": "2026-10-16T20:42:57.142772+00:00",
+    "status": "Prepublicationcheckspassed;coverdeploy/hashverificationandguardedCMSinsertfollow",
+    "priorArticles": 99,
+    "priorPaths": 8
+  }
+}
