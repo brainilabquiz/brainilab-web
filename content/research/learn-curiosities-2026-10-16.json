@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-16T17:15:56.350110+00:00",
+  "language": "English",
+  "market": "United States",
+  "demand": {
+    "source": "Google Trends native chart tables, checked 16 October 2026",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=why%20is%20the%20ocean%20salty,why%20are%20bubbles%20round,surface%20tension&hl=en",
+    "filters": "United States; Past 12 months; All categories; Web Search; English search terms, interface en",
+    "coverage": "Weekly labels 12 October 2025 through 11 October 2026; final week may be partial",
+    "relativeAverages": {
+      "why is the ocean salty": 4,
+      "why are bubbles round": 0,
+      "surface tension": 61
+    },
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limitations": [
+      "Normalised relative interest, not search volumes or total searches.",
+      "The exact bubbles question is below the reporting threshold, not proof of zero searches. The article directly explains the evidenced broader concept surface tension through that concrete example.",
+      "One US sample does not establish worldwide demand or likely traffic.",
+      "Paid OpenSEO research was not retried after the preceding insufficient-credit result. No paid metrics or ranking claims."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "why-is-the-ocean-salty",
+      "primaryKeyword": "why is the ocean salty",
+      "intent": "Clear cause, fresh rivers versus seawater, evaporation and salinity",
+      "novelty": "New ocean chemistry/water-cycle intent among 91 existing articles; distinct from map distortion, weather and animal facts"
+    },
+    {
+      "slug": "why-are-soap-bubbles-round",
+      "primaryKeyword": "surface tension",
+      "secondaryQuestion": "why are soap bubbles round",
+      "intent": "Plain physics explanation using a familiar bubble, sphere and soap misconception",
+      "novelty": "New surface-energy/shape question, distinct from Bubble Wrap invention and light scattering"
+    }
+  ],
+  "sourcesOpened": [
+    {
+      "url": "https://oceanservice.noaa.gov/facts/whysalty.html",
+      "claims": "Rock weathering, river ions, seafloor inputs, average salinity35 parts per1000 by mass; avoided unsupported magma-from-core wording."
+    },
+    {
+      "url": "https://www.whoi.edu/ocean-learning-hub/ocean-facts/what-makes-the-ocean-salty/",
+      "claims": "Rivers contain dilute dissolved minerals, salts stay behind during evaporation, Mediterranean is saltier, average3.5%."
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/riversnotsalty.html",
+      "claims": "Sediment removal can broadly balance salt inputs; no indefinite automatic ocean-salt increase."
+    },
+    {
+      "url": "https://www.usgs.gov/water-science-school/science/why-ocean-salty",
+      "claims": "Cross-check rock weathering, seafloor exchange and35g/1000g; conflicting sodium/chloride percentages omitted."
+    },
+    {
+      "url": "https://annex.exploratorium.edu/ronh/bubbles/shape_of_bubbles.html",
+      "claims": "Sphere minimises surface area for given enclosed air volume; pressure resists contraction."
+    },
+    {
+      "url": "https://annex.exploratorium.edu/ronh/bubbles/soap.html",
+      "claims": "Soap lowers water surface tension and helps film last longer, including slowing evaporation."
+    },
+    {
+      "url": "https://annex.exploratorium.edu/exploratopia/activity_bubbles.html",
+      "claims": "Isolated bubbles versus touching clusters; shared films change shapes."
+    },
+    {
+      "url": "https://annex.exploratorium.edu/ronh/bubbles/sticky_water.html",
+      "claims": "Molecular attraction and work required to increase liquid surface area."
+    }
+  ],
+  "reviewed": [
+    "Two original297/309-word articles, four short sections each, concrete answer first, British English and readable question headlines.",
+    "No new course, quiz, large learning resources, keyword stuffing or internal objectives in public copy.",
+    "NOAA/WHOI salinity and balance verified; no pure-water or infinite-salting misconception.",
+    "Bubble sphere is qualified for an isolated free bubble; soap lowers tension; no forced numerical example.",
+    "Two bespoke image_gen covers inspected in full and at240px;6 WebP variants total149628bytes. Bubble focal point25 keeps its round outline in wide crops.",
+    "Native desktop1280 and mobile320 views checked: no overflow, broken images or open widgets; one H1.",
+    "Search supports common US/UK spellings in both directions, separates card text nodes, preserves raw query/hash, no fuzzy false matches.",
+    "Existing library navigation/search/SEO/article-game/course tests passed, including150 existing quiz questions/version rules.",
+    "Full build882files; site integrity, Daily scoring, game icons, asset versions, CMS cache and all existing game-batch validators passed."
+  ],
+  "covers": [
+    {
+      "path": "assets/images/learn/why-is-the-ocean-salty.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 76410,
+      "sha256": "ff32bc6987d2ee8ccef61f375e9a9ba6974122ee1b283c56dbbaba381362f12a"
+    },
+    {
+      "path": "assets/images/learn/why-is-the-ocean-salty-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 22100,
+      "sha256": "3492ea052b7b7b463c4a9a381d732daa8bfe74f4e7c379263415cbe553ad03df"
+    },
+    {
+      "path": "assets/images/learn/why-is-the-ocean-salty-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 6542,
+      "sha256": "386b187d59ae37dc579183fa07ac3573bf08790d72c30cd28013585f28966990"
+    },
+    {
+      "path": "assets/images/learn/why-are-soap-bubbles-round.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 30978,
+      "sha256": "b07a1d54167f09a202a2524c69d87d52b0d5806dae3ae8bad55f1d3f95320562"
+    },
+    {
+      "path": "assets/images/learn/why-are-soap-bubbles-round-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 10104,
+      "sha256": "97d2371f684430052abfffb44e351da09d43df0189c3b0526f258ddd5292d49f"
+    },
+    {
+      "path": "assets/images/learn/why-are-soap-bubbles-round-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 3494,
+      "sha256": "2198b3aa684bf90018c2734520e6b22491abccd6655d7e1b7b2d47ab159c06e3"
+    }
+  ],
+  "publication": {
+    "status": "Prepublication review passed; cover deployment and guarded CMS publication pending",
+    "previousArticles": 91,
+    "previousPaths": 8
+  }
+}
