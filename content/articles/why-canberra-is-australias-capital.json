@@ -15,7 +15,7 @@
     "position": 50
   },
   "order": 15,
-  "title": "Why is Canberra Australia’s capital?",
+  "title": "Why is Canberra the capital of Australia, not Sydney?",
   "topic": "Geography",
   "status": "published",
   "related": [
@@ -25,11 +25,11 @@
   "sources": [
     {
       "url": "https://www.nca.gov.au/education/canberras-history/canberra-seat-government",
-      "name": "National Capital Authority — Canberra, the Seat of Government"
+      "name": "National Capital Authority � Canberra, the Seat of Government"
     },
     {
       "url": "https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra",
-      "name": "National Capital Authority — The Siting and Naming of Canberra"
+      "name": "National Capital Authority � The Siting and Naming of Canberra"
     }
   ],
   "authorId": "biel-sarda",
@@ -37,26 +37,26 @@
   "sections": [
     {
       "id": "short-answer",
-      "html": "<p><strong>Canberra is Australia’s capital because the newly united country chose a separate home for its national government instead of choosing Sydney or Melbourne.</strong> Rivalry between New South Wales and Victoria helped shape that compromise.</p><p>So the answer is not “pick the biggest or most famous city”. In 1901, six colonies joined together to form Australia. The new country needed a place for its national government. The <a href=\"https://www.nca.gov.au/education/canberras-history/canberra-seat-government\" target=\"_blank\" rel=\"noopener noreferrer\">National Capital Authority’s history</a> explains why neither rival city got the permanent job.</p>",
-      "title": "Why Canberra, not Sydney or Melbourne?"
+      "title": "Why Canberra, not Sydney or Melbourne?",
+      "html": "<p><strong>Canberra is Australia�s capital because the new federation chose a separate home for its national government, rather than favouring Sydney or Melbourne.</strong> Rivalry between New South Wales and Victoria helped shape the compromise.</p><p>When six colonies united in 1901, the country needed a national capital. As the <a href=\"https://www.nca.gov.au/education/canberras-history/canberra-seat-government\">National Capital Authority explains</a>, the best-known city did not automatically get the job.</p>"
     },
     {
       "id": "distance-rule",
-      "html": "<p>The Constitution, which sets out how the country is governed, required the new capital’s territory to be within New South Wales and at least <strong>100 miles from Sydney</strong>—about 160 kilometres. Parliament would meet in Melbourne until the new capital was ready.</p><p>That did not mean “exactly halfway between Sydney and Melbourne”. The compromise was political; it was not a ruler placed between two dots on a map.</p>",
-      "title": "The 100-mile rule was real"
+      "title": "The rule that kept Sydney out",
+      "html": "<p>The Constitution required the capital�s territory to be within New South Wales and at least <strong>100 miles from Sydney</strong>, about 160 kilometres. Parliament would meet in Melbourne until the new capital was ready.</p><p>That was not a rule to build exactly halfway between the two cities. It was a political compromise, not a geometry puzzle.</p>"
     },
     {
       "id": "three-dates",
-      "html": "<p>Three dates explain the different stages:</p><ul><li><strong>1908:</strong> Parliament selected the Yass–Canberra district.</li><li><strong>12 March 1913:</strong> the city was officially named Canberra.</li><li><strong>1927:</strong> federal Parliament moved from Melbourne to Canberra.</li></ul><p>A location, a name and a working parliament did not arrive all at once. That is why different dates can appear in answers to this question.</p>",
-      "title": "When did Canberra become the capital?"
+      "title": "When did Canberra become the capital?",
+      "html": "<p>The answer depends on which stage you mean:</p><ul><li><strong>1908:</strong> Parliament selected the Yass�Canberra district.</li><li><strong>12 March 1913:</strong> the city was officially named Canberra.</li><li><strong>1927:</strong> federal Parliament moved there from Melbourne.</li></ul><p>Choosing a site, naming a city and opening its Parliament were separate steps.</p>"
     },
     {
       "id": "try-it",
-      "html": "<p>More than 60 New South Wales centres were put forward. Dalgety was an earlier parliamentary choice before Yass–Canberra won support. The <a href=\"https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra\" target=\"_blank\" rel=\"noopener noreferrer\">National Capital Authority’s account of the selection</a> follows the debate over climate, water and access.</p><p>For your next quiz, remember the distinction: <strong>Canberra is the capital; Melbourne hosted the federal Parliament while it was being established.</strong> Try the <a href=\"/geography/world-capitals-quiz/\" target=\"_blank\" rel=\"noopener noreferrer\">World Capitals Quiz</a> to spot other countries where the best-known city is not the answer.</p>",
-      "title": "Canberra was not the only candidate"
+      "title": "Was Sydney ever Australia�s national capital?",
+      "html": "<p><strong>No: Sydney was not the national capital before Canberra.</strong> Melbourne was the temporary home of the federal Parliament.</p><p>Canberra was not the only candidate either. More than 60 New South Wales centres were proposed; Dalgety was an earlier parliamentary choice. The <a href=\"https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra\">National Capital Authority follows the selection</a>.</p><p>Try the <a href=\"/geography/world-capitals-quiz/\">World Capitals Quiz</a>: a famous skyline can make a surprisingly convincing wrong answer.</p>"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
-  "description": "Canberra became Australia’s capital as a compromise between Sydney and Melbourne. Discover the 100-mile rule and what happened in 1908, 1913 and 1927.",
+  "updatedAt": "2026-10-16T18:58:04Z",
+  "description": "Canberra was the compromise between Sydney and Melbourne. Discover the 100-mile rule, who hosted Parliament first and why three dates tell the story.",
   "publishedAt": "2026-09-28T18:46:01.246533+00:00"
 }

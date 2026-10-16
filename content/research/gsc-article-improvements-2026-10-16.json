@@ -1,0 +1,409 @@
+{
+  "date": "2026-10-16",
+  "source": "Signed-in Google Search Console native tables",
+  "property": "sc-domain:brainilabgames.com",
+  "searchType": "Web",
+  "period": [
+    "2026-09-17",
+    "2026-10-14"
+  ],
+  "market": "All countries and devices; English queries",
+  "site": {
+    "clicks": 7,
+    "impressions": 1595,
+    "ctrPercentDisplayed": 0.4,
+    "averagePosition": 18.6
+  },
+  "opportunities": [
+    {
+      "slug": "why-2100-is-not-a-leap-year",
+      "clicks": 1,
+      "impressions": 300,
+      "averagePosition": 8.9
+    },
+    {
+      "slug": "why-canberra-is-australias-capital",
+      "clicks": 0,
+      "impressions": 99,
+      "averagePosition": 29.4
+    },
+    {
+      "slug": "spotting-repeating-patterns",
+      "clicks": 0,
+      "impressions": 50,
+      "averagePosition": 7.2
+    },
+    {
+      "slug": "was-bubble-wrap-invented-as-wallpaper",
+      "clicks": 0,
+      "impressions": 63,
+      "averagePosition": 9.3
+    },
+    {
+      "slug": "decimals-money-and-parts-of-ten",
+      "clicks": 0,
+      "impressions": 30,
+      "averagePosition": 13.1
+    }
+  ],
+  "limitations": [
+    "Impressions are appearances in Google Search, not visits or unique people.",
+    "Some queries are omitted by Google; query and page totals need not match.",
+    "Average position is a historical aggregate, not a current SERP rank.",
+    "No monthly keyword volume, KD or CPC obtained; unknown.",
+    "These changes have no measured post-publication traffic or account effect yet."
+  ],
+  "review": {
+    "primarySourcesOpened": true,
+    "existingOriginalCoversPreserved": true,
+    "quizTextAndVersionsUnchanged": true,
+    "publishedDatesAndCourseOrderPreserved": true,
+    "noKeywordQuota": true,
+    "noPublicInternalSEOCopy": true,
+    "completedChecks": [
+      "Fullbuild946files/140assets",
+      "ExistingLearnSEO/library/navigation/8course156questiontests",
+      "Fivegeneratedpagetitle/metadata/canonical/schema/citationchecks",
+      "Threeunchangedquizzes0/3and3/3",
+      "Calendar/pattern/decimalexamplechecks",
+      "Native1280desktopand320mobile;0overflow/failedimages",
+      "GuardedPostgrespublicationtest:5historymirrors,90others/8coursesretained,concurrencyandquiztamperrollback"
+    ]
+  },
+  "queryEvidence": [
+    {
+      "page": "/learn/why-2100-is-not-a-leap-year/",
+      "rows": [
+        [
+          "why 2100 is not a leap year",
+          "0",
+          "32",
+          "0�%",
+          "8,5"
+        ],
+        [
+          "will 2100 be a leap year",
+          "0",
+          "25",
+          "0�%",
+          "8,7"
+        ],
+        [
+          "why is 2100 not a leap year",
+          "0",
+          "24",
+          "0�%",
+          "8,7"
+        ],
+        [
+          "is 2100 a leap year",
+          "0",
+          "16",
+          "0�%",
+          "13,8"
+        ],
+        [
+          "calendar 2100 leap year",
+          "0",
+          "8",
+          "0�%",
+          "12,1"
+        ],
+        [
+          "is the year 2100 a leap year",
+          "0",
+          "6",
+          "0�%",
+          "8,3"
+        ],
+        [
+          "why isn't 2100 a leap year",
+          "0",
+          "6",
+          "0�%",
+          "8,7"
+        ],
+        [
+          "leap year 2100",
+          "0",
+          "5",
+          "0�%",
+          "8,2"
+        ],
+        [
+          "2100 is a leap year",
+          "0",
+          "4",
+          "0�%",
+          "28,8"
+        ],
+        [
+          "2100/29",
+          "0",
+          "3",
+          "0�%",
+          "8,3"
+        ]
+      ]
+    },
+    {
+      "page": "/learn/why-canberra-is-australias-capital/",
+      "rows": [
+        [
+          "canberra capital",
+          "0",
+          "8",
+          "0�%",
+          "82,5"
+        ],
+        [
+          "why is sydney not the capital of australia",
+          "0",
+          "5",
+          "0�%",
+          "18,8"
+        ],
+        [
+          "why is the capital of australia not sydney",
+          "0",
+          "4",
+          "0�%",
+          "7,5"
+        ],
+        [
+          "why is canberra the capital of australia and not sydney or melbourne",
+          "0",
+          "4",
+          "0�%",
+          "10,5"
+        ],
+        [
+          "what is the capital of australia",
+          "0",
+          "3",
+          "0�%",
+          "2,0"
+        ],
+        [
+          "why is canberra the capital of australia",
+          "0",
+          "3",
+          "0�%",
+          "46,7"
+        ],
+        [
+          "is sydney the capital of australia",
+          "0",
+          "3",
+          "0�%",
+          "58,3"
+        ],
+        [
+          "why canberra",
+          "0",
+          "3",
+          "0�%",
+          "60,3"
+        ],
+        [
+          "why is sydney no longer the capital of australia?",
+          "0",
+          "2",
+          "0�%",
+          "8,0"
+        ],
+        [
+          "why is canberra the capital of australia and not sydney",
+          "0",
+          "2",
+          "0�%",
+          "9,5"
+        ]
+      ]
+    },
+    {
+      "page": "/learn/spotting-repeating-patterns/",
+      "rows": [
+        [
+          "minimum period before its pattern repeats puzzle",
+          "0",
+          "32",
+          "0�%",
+          "7,6"
+        ]
+      ]
+    },
+    {
+      "page": "/learn/was-bubble-wrap-invented-as-wallpaper/",
+      "rows": [
+        [
+          "was bubble wrap originally wallpaper",
+          "0",
+          "4",
+          "0�%",
+          "9,5"
+        ],
+        [
+          "what invention was originally meant to serve as wallpaper?",
+          "0",
+          "2",
+          "0�%",
+          "7,5"
+        ],
+        [
+          "did bubble wrap start out as wallpaper",
+          "0",
+          "2",
+          "0�%",
+          "9,5"
+        ],
+        [
+          "was bubble wrap meant to be wallpaper",
+          "0",
+          "2",
+          "0�%",
+          "10,5"
+        ],
+        [
+          "was bubble wrap originally made for wallpaper",
+          "0",
+          "2",
+          "0�%",
+          "10,5"
+        ],
+        [
+          "was bubble wrap invented as wallpaper",
+          "0",
+          "2",
+          "0�%",
+          "27,5"
+        ],
+        [
+          "bubble wrap wall paper",
+          "0",
+          "1",
+          "0�%",
+          "7,0"
+        ],
+        [
+          "was bubble wrap originally invented as wallpaper",
+          "0",
+          "1",
+          "0�%",
+          "7,0"
+        ],
+        [
+          "bubble wrap as wallpaper",
+          "0",
+          "1",
+          "0�%",
+          "9,0"
+        ],
+        [
+          "was bubble wrap supposed to be wallpaper",
+          "0",
+          "1",
+          "0�%",
+          "9,0"
+        ]
+      ]
+    },
+    {
+      "page": "/learn/decimals-money-and-parts-of-ten/",
+      "rows": [
+        [
+          "tenths and hundredths in decimals",
+          "0",
+          "9",
+          "0�%",
+          "4,4"
+        ],
+        [
+          "decimal tenths and hundredths",
+          "0",
+          "2",
+          "0�%",
+          "3,5"
+        ],
+        [
+          "what is tenths in decimals",
+          "0",
+          "1",
+          "0�%",
+          "3,0"
+        ],
+        [
+          "what is 5 tenths as a decimal",
+          "0",
+          "1",
+          "0�%",
+          "37,0"
+        ],
+        [
+          "tenths",
+          "0",
+          "1",
+          "0�%",
+          "59,0"
+        ],
+        [
+          "tenths meaning in math",
+          "0",
+          "1",
+          "0�%",
+          "59,0"
+        ],
+        [
+          "what are tenths and hundredths",
+          "0",
+          "1",
+          "0�%",
+          "92,0"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html",
+      "checked": "2026-10-16",
+      "supports": "Gregorian leap-year4/100/400rules,1900/2000/2100,400yearcycle"
+    },
+    {
+      "url": "https://spaceplace.nasa.gov/leap-year/en/",
+      "checked": "2026-10-16",
+      "supports": "Why seasonal cycles need leap days; century exception"
+    },
+    {
+      "url": "https://www.nca.gov.au/education/canberras-history/canberra-seat-government",
+      "checked": "2026-10-16",
+      "supports": "1901federation,rivalry,100milesrule,1908/1913/1927distinctevents,temporaryMelbourne"
+    },
+    {
+      "url": "https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra",
+      "checked": "2026-10-16",
+      "supports": "Morethan60sites,Dalgety,YassCanberraselection"
+    },
+    {
+      "url": "https://www.ncetm.org.uk/classroom-resources/ey-pattern/",
+      "checked": "2026-10-16",
+      "supports": "Smallestunitofrepeat,AB/ABB,partialfinalblocks,joinsandgrowth"
+    },
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals",
+      "checked": "2026-10-16",
+      "supports": "Decimalplacevalue,tenths,hundredths,equivalenttrailingzeros"
+    },
+    {
+      "url": "https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day",
+      "checked": "2026-10-16",
+      "supports": "1957HawthorneNewJersey,FieldingChavannes,texturedwallcovering"
+    },
+    {
+      "url": "https://jobs.sealedair.com/content/Our-History/?locale=en_US",
+      "checked": "2026-10-16",
+      "supports": "1960SealedAirfounding,signatureBubbleWrap"
+    }
+  ],
+  "intentReview": "Free web results for leap-year, minimum-period and decimal queries checked16Oct. Intent is a direct explanation and worked examples, not commercial calculators. Existing95articles checked for overlap; revise these existing URLs, no competing new page. No current Google rank inferred from websearch."
+}

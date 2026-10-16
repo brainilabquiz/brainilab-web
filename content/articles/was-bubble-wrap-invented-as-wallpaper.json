@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/was-bubble-wrap-invented-as-wallpaper-thumb.webp"
   },
   "order": 21,
-  "title": "Was bubble wrap really invented as wallpaper?",
+  "title": "Was bubble wrap invented as wallpaper? Yes, really",
   "topic": "Everyday inventions",
   "status": "published",
   "related": [
@@ -27,11 +27,11 @@
   "sources": [
     {
       "url": "https://jobs.sealedair.com/content/Our-History/?locale=en_US",
-      "name": "Sealed Air — Our history"
+      "name": "Sealed Air � Our history"
     },
     {
       "url": "https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day",
-      "name": "Sealed Air — The origins of Bubble Wrap"
+      "name": "Sealed Air � The origins of Bubble Wrap"
     }
   ],
   "authorId": "biel-sarda",
@@ -39,26 +39,21 @@
   "sections": [
     {
       "id": "wallpaper-first",
-      "html": "<p>Imagine covering a living-room wall with the little air pockets you usually find inside a parcel. Strange as it sounds, that was the original idea behind bubble wrap.</p><p>In <strong>1957</strong>, engineers Alfred Fielding and Marc Chavannes set out to make textured wallpaper in Hawthorne, New Jersey. They joined layers of plastic with air trapped between them. According to Sealed Air’s account of its beginnings, home decoration was the goal.</p>",
-      "title": "Yes, it was meant for your walls"
+      "title": "Wallpaper before wrapping paper",
+      "html": "<p><strong>Yes. Bubble wrap began in 1957 as an attempt to make textured wallpaper.</strong> Engineers Alfred Fielding and Marc Chavannes joined two plastic sheets with pockets of air trapped between them in Hawthorne, New Jersey.</p><p><a href=\"https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day\">Sealed Air tells the story of the original wall covering</a>. Picture the sheet from your last parcel spread across a living-room wall: the decorating plan was rather different from the result we know.</p>"
     },
     {
       "id": "a-new-purpose",
-      "html": "<p>The wallpaper idea did not take off, but the material had another use: cushioning objects during shipping.</p><p>Fielding and Chavannes founded <strong>Sealed Air in 1960</strong>, with Bubble Wrap as its signature product. The invention had found a different home, inside packaging rather than on a wall.</p><p>That explains why two dates appear in its history: 1957 for the original experiment and 1960 for the company’s founding.</p>",
-      "title": "The walls could wait. Parcels needed it."
+      "title": "Why do both 1957 and 1960 appear?",
+      "html": "<p>The wallpaper idea did not take off, but the air pockets offered another use: cushioning objects during shipping.</p><p><strong>1957 was the original experiment; 1960 was the founding of Sealed Air.</strong> Fielding and Chavannes started the company with Bubble Wrap as its signature product, according to <a href=\"https://jobs.sealedair.com/content/Our-History/?locale=en_US\">its published history</a>.</p>"
     },
     {
       "id": "a-second-look",
-      "html": "<p>A roll of packing material does not look much like a decorating experiment. Yet the same feature that gave it texture, those pockets of air, helped give it a new purpose.</p><p>The next time you unwrap a parcel, picture that sheet on a living-room wall. It is a surprisingly good reminder of where the story started.</p>",
-      "title": "An ordinary object with an unexpected beginning"
-    },
-    {
-      "id": "quick-check",
-      "html": "<details class=\"practice-answer\"><summary>What were bubble wrap’s inventors originally trying to make?</summary><p><strong>Textured wallpaper.</strong> Protective packaging came later.</p></details>",
-      "title": "One question before you go"
+      "title": "A second job for a strange idea",
+      "html": "<p>The material�s useful feature was there all along. Air pockets gave the plastic its unusual texture; they also helped it protect objects. What changed was where people used it.</p><p>It is not the only everyday object with an unexpected beginning. <a href=\"/learn/how-post-it-notes-were-invented/\">Post-it notes also found a use for an initially awkward result</a>. Next time you open a parcel, spare a thought for the living-room wall that never happened.</p>"
     }
   ],
-  "description": "Before it protected parcels, bubble wrap was meant to decorate walls. The familiar packing material began with a very different plan.",
-  "publishedAt": "2026-09-29T20:20:36Z",
-  "updatedAt": "2026-10-07T16:54:30Z"
+  "updatedAt": "2026-10-16T18:58:04Z",
+  "description": "Bubble wrap began as textured wallpaper in 1957, before finding a home inside parcels. Meet the two inventors and the idea that changed direction.",
+  "publishedAt": "2026-09-29T20:20:36Z"
 }
