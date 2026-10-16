@@ -33,11 +33,12 @@ window.BrainiProgressUI=(function(){
   }
 
   function xpProgress(level,xp){
-    const value=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
+    const value=Number.isFinite(Number(xp))?Math.max(0,Math.floor(Number(xp))):0;
     const n=Math.max(1,Math.floor(Math.sqrt(value/20))+1);
     const start=xpForLevel(n),end=xpForLevel(n+1);
     return {percent:Math.max(0,Math.min(100,(value-start)/(end-start)*100)),
       currentXp:value,nextXp:end,level:n,nextLevel:n+1,
+      startXp:start,earnedInLevel:value-start,neededInLevel:end-start,remainingXp:end-value,
       label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
 
@@ -83,6 +84,19 @@ window.BrainiProgressUI=(function(){
       if(person){image.classList.add('default-player-avatar');image.src=person.avatar;}
     }
   },true);
+
+  function ranksMarkup(person,{open=false}={}){
+    const progress=xpProgress(person.level,person.xp),current=tier(progress.level);
+    return `<details class="profile-ranks" ${open?'open':''}><summary data-ranks-toggle>Level titles <span aria-hidden="true">+</span></summary>
+      <p>Your avatar frame changes as you level up.</p>
+      <ol class="profile-rank-journey">${TIERS.map(t=>{
+        const reached=progress.level>=t.min,active=t.key===current.key;
+        return `<li class="${active?'is-current':reached?'is-reached':'is-ahead'}" ${active?'aria-current="step"':''}>
+          <span class="rank-avatar ${avatarClass(active?progress.level:t.min)}" aria-hidden="true">${avatarImageMarkup(person)}</span>
+          <span><strong>${t.name}</strong><small>Level ${t.min}</small></span>
+          <b>${active?'Your title':reached?'Reached':'Ahead'}</b></li>`;
+      }).join('')}</ol></details>`;
+  }
 
   function badgeMarkup(level){
     const t=tier(level);
@@ -210,7 +224,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();

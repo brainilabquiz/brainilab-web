@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const tick=()=>new Promise(r=>setTimeout(r,0));
+const w=new JSDOM('<div data-profile-rank-hero></div><div id="recentResults"></div>',{url:'https://brainilabgames.com/profile/?section=progress',runScripts:'outside-only'}).window;
+let player={displayName:'Curious Curie',level:99,xp:2700,bestStreak:5},recent=[],reads=[],localCalls=0,owner='first';
+w.BrainiData={player:()=>player,recentResults:()=>recent,authState:()=>({status:'guest',guestUserId:owner}),daily:()=>({})};
+w.BrainiAnalytics={fetchStats:()=>new Promise((resolve,reject)=>reads.push({resolve,reject}))};
+w.BrainiUI={renderRecentResults:(root,limit,rows)=>{localCalls++;root.innerHTML=(rows||recent).length?'<div class="data-row">A real saved game</div>':'No games played yet.';}};
+w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',choices:[]})};w.BrainiContinuity={render:()=>{}};
+for(const f of ['player-personalities.js','icon-system.js','progression-ui.js','profile-sections.js'])w.eval(readFileSync('assets/js/'+f,'utf8'));
+w.document.dispatchEvent(new w.Event('DOMContentLoaded'));await tick();
+const p=w.BrainiProgressUI,root=w.document.querySelector('[data-profile-rank-hero]'),activity=w.document.querySelector('#recentResults');
+for(let level=1;level<=1000;level++){
+ const start=20*(level-1)**2,next=20*level**2,at=p.xpProgress(99,start),end=p.xpProgress(99,next-1);
+ assert.equal(at.level,level);assert.equal(at.percent,0);assert.equal(at.remainingXp,next-start);assert.equal(at.neededInLevel,next-start);assert.equal(at.earnedInLevel,0);
+ assert.equal(end.level,level);assert.equal(end.remainingXp,1);assert.ok(end.percent<100);assert.equal(p.xpProgress(1,next).level,level+1);
+}
+for(const value of [Infinity,-20,NaN,undefined,'invalid'])assert.equal(p.xpProgress(99,value).level,1);
+assert.equal(p.xpProgress(1,80.9).currentXp,80);
+assert.match(root.querySelector('h2').textContent,/Level 12/,'one canonical XP-derived level');
+assert.match(root.querySelector('h2').textContent,/High School/);assert.doesNotMatch(root.textContent,/Level 99/);
+assert.match(root.textContent,/180 XP to level 13/);assert.match(root.textContent,/280.*460 XP/);assert.match(root.textContent,/2,700 total XP/);
+assert.equal(root.querySelector('[role=progressbar]').getAttribute('aria-valuenow'),'61');assert.match(root.querySelector('[role=progressbar]').getAttribute('aria-valuetext'),/280 of 460 XP towards level 13/);
+assert.match(root.querySelector('.profile-next-rank').textContent,/College/);assert.match(root.querySelector('.profile-next-rank').textContent,/Level 15/);
+assert.equal(root.querySelector('.profile-ranks').open,false);assert.equal(root.querySelectorAll('.profile-rank-journey li').length,10);assert.equal(root.querySelectorAll('[aria-current=step]').length,1);
+assert.equal(root.querySelectorAll('.is-reached').length,2);assert.equal(root.querySelector('[aria-current=step] strong').textContent,'High School');
+const summary=root.querySelector('[data-ranks-toggle]');root.querySelector('.profile-ranks').open=true;summary.focus();w.BrainiProfileSections.hydrateRankHero();
+assert.equal(root.querySelector('.profile-ranks').open,true);assert.equal(w.document.activeElement,root.querySelector('[data-ranks-toggle]'),'preserve keyboard focus and expansion during refresh');
+assert.match(activity.textContent,/Loading recent games/);assert.equal(activity.getAttribute('aria-busy'),'true');
+const last=reads.at(-1);last.resolve({recent_results:[{game_id:'science',score:100,correct_answers:2,completed_at:'2026-10-15'}]});await tick();assert.match(activity.textContent,/real saved game/);assert.equal(activity.hasAttribute('aria-busy'),false);
+w.BrainiProfileSections.hydrateRankHero();assert.match(activity.textContent,/real saved game/,'do not erase visible records while refreshing');reads.at(-1).reject(Error('offline'));await tick();assert.match(activity.textContent,/real saved game/);assert.equal(activity.hasAttribute('aria-busy'),false);
+activity.innerHTML='';w.BrainiProfileSections.hydrateRankHero();const stale=reads.at(-1);w.BrainiProfileSections.hydrateRankHero();const fresh=reads.at(-1);stale.resolve({recent_results:[]});await tick();assert.equal(activity.getAttribute('aria-busy'),'true','old request does not clear the newer loading state');fresh.reject(Error('offline'));await tick();assert.match(activity.textContent,/could not be loaded/);assert.equal(activity.hasAttribute('aria-busy'),false);
+player={...player,xp:69620};w.BrainiProfileSections.hydrateRankHero();assert.match(root.querySelector('h2').textContent,/Level 60/);assert.match(root.querySelector('.profile-next-rank').textContent,/Highest title/);assert.equal(root.querySelectorAll('.is-ahead').length,0);
+player={...player,xp:0};w.BrainiProfileSections.hydrateRankHero();assert.match(root.querySelector('h2').textContent,/Level 1/);assert.match(root.querySelector('.profile-level-goal').textContent,/20 XP to level 2/);assert.match(root.querySelector('.profile-next-rank').textContent,/Elementary/);
+reads.at(-1).resolve(null);await tick();assert.equal(activity.hasAttribute('aria-busy'),false);assert.ok(localCalls>0);
+activity.innerHTML='<div class="data-row">Previous account activity</div>';w.BrainiProfileSections.hydrateRankHero();const oldAccount=reads.at(-1);owner='second';w.dispatchEvent(new w.Event('brainilab:authchange'));const newAccount=reads.at(-1);
+assert.doesNotMatch(activity.textContent,/Previous account/);assert.match(activity.textContent,/Loading/);oldAccount.resolve({recent_results:[{game_id:'history',score:9999}]});await tick();assert.match(activity.textContent,/Loading/);newAccount.resolve({recent_results:[]});await tick();assert.match(activity.textContent,/No games played yet/);w.close();
+console.log('PASS 1,000 level boundaries, invalid input, within-level/total XP, matching rank/frame, next/top rank, optional journey/focus preservation and loading/stale/offline recent-history states.');

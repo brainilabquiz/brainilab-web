@@ -47,15 +47,15 @@ window.BrainiAccountMenu=(function(){
 
   function menuMarkup(auth,p){
     const logged=auth.status==="authenticated";
-    const tier=window.BrainiProgressUI?.tier?.(p.level||1);
     const progress=window.BrainiProgressUI?.xpProgress?.(p.level,p.xp);
+    const tier=window.BrainiProgressUI?.tier?.(progress?.level||1);
     const streak=Math.max(0,Number(p.currentStreak)||0);
 
     return `
       <div class="account-popover" role="menu" aria-label="BrainiLab account menu">
         <div class="account-popover-head">
           <span class="rank-avatar ${window.BrainiProgressUI
-            ? BrainiProgressUI.avatarClass(p.level||1)
+            ? BrainiProgressUI.avatarClass(progress.level)
             : ""
           } account-menu-avatar">
             ${BrainiProgressUI.avatarImageMarkup(p)}
@@ -293,12 +293,13 @@ window.BrainiAccountMenu=(function(){
         .forEach(c=>avatar.classList.remove(c));
 
       if(window.BrainiProgressUI){
-        const t=BrainiProgressUI.tier(p.level||1);
+        const level=BrainiProgressUI.xpProgress(p.level,p.xp).level;
+        const t=BrainiProgressUI.tier(level);
         avatar.classList.add(
           "rank-header-avatar",
-          ...BrainiProgressUI.avatarClass(p.level||1).split(" ")
+          ...BrainiProgressUI.avatarClass(level).split(" ")
         );
-        avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${Number(p.level||1)}`;
+        avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${level}`;
       }
 
       avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);

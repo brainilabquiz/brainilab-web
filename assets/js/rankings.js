@@ -202,10 +202,10 @@ window.BrainiRankings=(function(){
     if(!p || !window.BrainiProgressUI)return '';
     const progress=BrainiProgressUI.xpProgress(p.level,p.xp);
     return `<a class="ranking-level" href="/profile/?section=progress" aria-label="Your level and XP progress">
-      ${playerAvatar({...p,name:p.displayName})}
-      <div><strong>Level ${Number(p.level)||1} <span>· ${escapeText(BrainiProgressUI.tier(p.level).name)}</span></strong>
+      ${playerAvatar({...p,name:p.displayName,level:progress.level})}
+      <div><strong>Level ${progress.level} <span>· ${escapeText(BrainiProgressUI.tier(progress.level).name)}</span></strong>
       <div class="ranking-xp-track" role="progressbar" aria-label="Progress to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><i style="width:${progress.percent}%"></i></div>
-      <small>${escapeText(progress.label)}</small></div><b>${Number(p.xp||0).toLocaleString()} XP <span>→</span></b>
+      <small>${escapeText(progress.label)}</small></div><b>${Number(progress.currentXp).toLocaleString()} XP <span>→</span></b>
     </a>`;
   }
 
