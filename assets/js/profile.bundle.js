@@ -6,8 +6,10 @@
 */
 window.BrainiAnalytics=(function(){
   const cache=new Map();
+  const pending=new Map();
   let lastError=null;
-  let loading=null;
+  let generation=0;
+  let ownerId=null;
 
   function configured(){
     return !!window.BrainiBackendAuth?.isConfigured?.();
@@ -36,71 +38,84 @@ window.BrainiAnalytics=(function(){
       return null;
     }
 
+    const startedGeneration=generation;
     const current=await session();
+    if(startedGeneration!==generation)return null;
     if(!current?.user){
       return null;
     }
+    if(ownerId && ownerId!==current.user.id)invalidate();
+    ownerId=current.user.id;
 
     if(!force && cache.has(range)){
       return structuredClone(cache.get(range));
     }
 
-    if(loading && loading.range===range){
-      return loading.promise;
-    }
+    if(pending.has(range))return pending.get(range).promise;
 
     lastError=null;
 
-    const promise=(async()=>{
-      const sb=client();
+    const job={owner:ownerId,generation,promise:null};
+    job.promise=(async()=>{
+      try{
+        const sb=client();
 
-      const {data,error}=await sb.rpc(
-        "get_my_brainilab_stats",
-        {p_days:range}
-      );
+        let timeout;
+        const response=sb.rpc("get_my_brainilab_stats",{p_days:range});
+        const {data,error}=await Promise.race([
+          response,
+          new Promise((_,reject)=>{timeout=setTimeout(()=>reject(new Error('Stats update timed out. Please try again.')),12000);})
+        ]).finally(()=>clearTimeout(timeout));
 
-      if(error){
+        if(job.generation!==generation || job.owner!==ownerId)return null;
+        if(error)throw error;
+
+        const snapshot=data||{};
+        cache.set(range,snapshot);
+
+        window.dispatchEvent(
+          new CustomEvent(
+            "brainilab:analyticschange",
+            {
+              detail:{
+                range,
+                snapshot
+              }
+            }
+          )
+        );
+
+        return structuredClone(snapshot);
+      }catch(error){
+        if(job.generation!==generation || job.owner!==ownerId)return null;
         lastError=error;
         throw error;
       }
-
-      const snapshot=data||{};
-      cache.set(range,snapshot);
-
-      window.dispatchEvent(
-        new CustomEvent(
-          "brainilab:analyticschange",
-          {
-            detail:{
-              range,
-              snapshot
-            }
-          }
-        )
-      );
-
-      return structuredClone(snapshot);
     })();
 
-    loading={range,promise};
+    pending.set(range,job);
 
     try{
-      return await promise;
+      return await job.promise;
     }finally{
-      if(loading?.promise===promise){
-        loading=null;
-      }
+      if(pending.get(range)===job)pending.delete(range);
     }
   }
 
   function getCached(days=30){
+    const auth=window.BrainiData?.authState?.();
+    if(auth && (auth.user?.id||auth.guestUserId||null)!==ownerId)return null;
     const range=normalizeDays(days);
     const value=cache.get(range);
     return value?structuredClone(value):null;
   }
 
   function invalidate(){
+    generation++;
+    ownerId=null;
     cache.clear();
+    pending.clear();
+    lastError=null;
   }
 
   function getLastError(){
@@ -268,11 +283,9 @@ window.BrainiStatsUI=(function(){
     container.innerHTML=`
       <div class="stats-signin-card">
         <span>MY STATS</span>
-        <h2>Build your personal performance history</h2>
+        <h2>Your games, at a glance</h2>
         <p>
-          Sign in to keep your BrainiLab statistics synced across devices
-          and unlock trends, category strengths, Daily performance and
-          detailed game analytics.
+          Sign in to see your scores, strongest topics and progress across devices.
         </p>
         <button
           class="btn"
@@ -368,7 +381,7 @@ window.BrainiStatsUI=(function(){
           <span>Quiz accuracy</span>
           <strong>${pct(s.quiz_accuracy)}</strong>
           <small>
-            Across verified/synced quiz results
+            From your saved quiz results
           </small>
         </article>
 
@@ -898,7 +911,7 @@ window.BrainiStatsUI=(function(){
             <span>DAILY PERFORMANCE</span>
             <h2>Your Daily Brain Score</h2>
             <p>
-              From 1 October 2026: up to 2,500 main Daily points plus 1,000 optional extra points. Earlier scores keep their original scale.
+              Up to 2,500 points from the main Daily, plus 1,000 from one optional extra. Older results used a different scale.
             </p>
           </div>
 
@@ -950,7 +963,7 @@ window.BrainiStatsUI=(function(){
             </div>
 
             <div>
-              <span>Full Dailies</span>
+              <span>Daily completions</span>
               <strong>${num(d.full_dailies)}</strong>
             </div>
 
@@ -1016,7 +1029,7 @@ window.BrainiStatsUI=(function(){
       {id:"sequence",primary:r=>r?pct(r.accuracy):"—",pl:"Average accuracy",secondary:r=>avg(r),sl:"Average score"}
     ];
     function card(c){const row=gameById(snapshot,c.id);return `<article class="stats-game-card"><div class="stats-game-card-head"><span>${icon(c.id)}</span><div><strong>${GAME_NAMES[c.id]}</strong><small>${row?`${num(row.games_played)} games in ${rangeLabel()}`:"No results in this range"}</small></div></div><div class="stats-game-card-metrics"><div><span>${c.pl}</span><strong>${c.primary(row)}</strong></div><div><span>${c.sl}</span><strong>${c.secondary(row)}</strong></div><div><span>All-time best</span><strong>${pbScore(row)}</strong></div></div></article>`}
-    return `<section class="stats-panel"><div class="stats-panel-head"><div><span>GAME PERFORMANCE</span><h2>Your BrainiLab games</h2><p>Every current mechanic is tracked with metrics that fit how that game is actually played.</p></div></div><div class="stats-game-grid">${configs.map(card).join("")}</div></section>`;
+    return `<section class="stats-panel"><div class="stats-panel-head"><div><span>GAME PERFORMANCE</span><h2>Your BrainiLab games</h2><p>See your results for each game.</p></div></div><div class="stats-game-grid">${configs.map(card).join("")}</div></section>`;
   }
 
   function insights(snapshot){
@@ -1116,7 +1129,7 @@ window.BrainiStatsUI=(function(){
       out.push({
         title:"Daily consistency",
         text:
-          `You completed ${num(daily.full_dailies)} Full Dailies in this range. Each completed main Daily counts from 1 October 2026.`
+          `You completed ${num(daily.full_dailies)} Dailies in this range. Each completed main Daily counts; older results required the full set.`
       });
     }
 
@@ -1141,7 +1154,7 @@ window.BrainiStatsUI=(function(){
             <span>PERSONAL INSIGHTS</span>
             <h2>What your results are saying</h2>
             <p>
-              Rule-based insights from your own BrainiLab history.
+              A few things your recent results show.
             </p>
           </div>
         </div>
@@ -1386,18 +1399,29 @@ window.BrainiProfileSections=(function(){
     }
   }
 
-  let recentRequest=0;
+  let recentRequest=0,recentOwner=null;
+  const activityOwner=()=>{
+    const auth=BrainiData.authState();
+    return auth.user?.id||auth.guestUserId||auth.anonymousPlayerId||'local';
+  };
   async function hydrateRecentGames(){
     const request=++recentRequest,root=document.getElementById('recentResults');
     if(!root||!window.BrainiAnalytics?.fetchStats)return;
+    const owner=activityOwner();
+    if(recentOwner!==null && recentOwner!==owner)root.replaceChildren();
+    recentOwner=owner;
+    const hasRows=!!root.querySelector('.data-row');
+    root.setAttribute('aria-busy','true');
+    if(!hasRows && !BrainiData.recentResults().length)root.textContent='Loading recent games…';
     try{
       const snapshot=await BrainiAnalytics.fetchStats(0);
-      if(request!==recentRequest||!Array.isArray(snapshot?.recent_results))return;
+      if(request!==recentRequest||owner!==activityOwner())return;
+      if(!Array.isArray(snapshot?.recent_results)){BrainiUI.renderRecentResults(root,5);return;}
       const rows=snapshot.recent_results.map(r=>({gameId:r.game_id,playedAt:r.completed_at,score:r.score,correct:r.correct_answers,won:r.special?.won,attempts:r.special?.attempts}));
       BrainiUI.renderRecentResults(root,5,rows);
     }catch(error){
-      if(request===recentRequest&&!BrainiData.recentResults().length)root.textContent='Recent games could not be loaded. Please try again.';
-    }
+      if(request===recentRequest&&owner===activityOwner()&&!hasRows&&!BrainiData.recentResults().length)root.textContent='Recent games could not be loaded. Please try again.';
+    }finally{if(request===recentRequest)root.removeAttribute('aria-busy');}
   }
 
   function dailyProgress(daily){
@@ -1427,16 +1451,20 @@ window.BrainiProfileSections=(function(){
     const p=BrainiData.player();
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
     const tier=BrainiProgressUI.tier(progress.level);
-    let photo="";try{const url=new URL(p.avatarUrl);if(url.protocol==="https:")photo=url.href.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;",'\'':"&#39;"}[c]));}catch{}
 
+    const next=BrainiProgressUI.nextTier(progress.level),format=n=>Number(n).toLocaleString('en-GB');
+    const ranksOpen=!!root.querySelector('.profile-ranks[open]');
+    const restoreFocus=root.querySelector('[data-ranks-toggle]')===document.activeElement;
     root.innerHTML=`
-      <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>
+      <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span>
       <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
-        <p>${Number(p.xp||0).toLocaleString()} XP earned</p>
-        <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><span style="width:${progress.percent}%"></span></div>
-        <small>${progress.label}</small>
+        <p class="profile-level-goal">${progress.label}</p>
+        <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${format(progress.earnedInLevel)} of ${format(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><span style="width:${progress.percent}%"></span></div>
+        <div class="profile-level-numbers"><strong>${format(progress.earnedInLevel)} <span>/ ${format(progress.neededInLevel)} XP</span></strong><small>${format(progress.currentXp)} total XP</small></div>
       </div>
-      <a href="/rankings/" class="profile-rank-link">Your rankings →</a>`;
+      <div class="profile-next-rank">${next?`<span class="rank-avatar ${BrainiProgressUI.avatarClass(next.min)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span><span><small>Next title</small><strong>${next.name}</strong><span>Level ${next.min}</span></span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest title</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
+      <div class="profile-level-footer">${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link">Your rankings →</a></div>`;
+    if(restoreFocus)root.querySelector('[data-ranks-toggle]')?.focus({preventScroll:true});
     const journey=document.querySelector('[data-profile-milestones]');
     if(journey){
       const best=Math.max(0,Number(p.bestStreak)||0);
@@ -1445,6 +1473,7 @@ window.BrainiProfileSections=(function(){
     window.BrainiContinuity?.render?.();
     hydrateRecentGames();
     hydrateDailyProgress();
+    window.BrainiProfileRewards?.render?.();
   }
 
 
@@ -1539,7 +1568,7 @@ window.BrainiProfileSections=(function(){
     window.addEventListener("popstate",()=>show(selected()));
     window.addEventListener("brainilab:progressionchange",hydrateRankHero);
     window.addEventListener("brainilab:daychange",hydrateRankHero);
-    window.addEventListener("brainilab:authchange",renderSecurity);
+    window.addEventListener("brainilab:authchange",()=>{renderSecurity();hydrateRankHero();});
 
     show(selected());
     hydrateRankHero();
