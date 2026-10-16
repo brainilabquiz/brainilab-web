@@ -43,14 +43,21 @@ window.BrainiAvatarAnnouncement=(()=>{
     document.body.append(card);
   }
   function schedule(){if(!finished&&!timer&&browsing.has(location.pathname)&&!signedIn()&&!seen())timer=setTimeout(show,15000);}
+  function afterInteraction(){
+    queueMicrotask(()=>{
+      if(blocked()){if(card)dismiss();}
+      else schedule();
+    });
+  }
   function boot(){
     schedule();
     window.addEventListener('brainilab:authchange',()=>{if(signedIn())dismiss();});
     window.addEventListener('brainilab:statistics-consent',schedule);
     window.addEventListener('storage',event=>{if(event.key===key&&card)dismiss();});
     document.addEventListener('visibilitychange',()=>{if(document.hidden)dismiss();else schedule();});
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&card)dismiss();});
-    document.addEventListener('click',()=>{if(card)queueMicrotask(()=>{if(card&&blocked())dismiss();});});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'){if(card)dismiss();afterInteraction();}},true);
+    // Capture before menus stop propagation; inspect after their open/close handlers.
+    document.addEventListener('click',afterInteraction,true);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   return {dismiss};

@@ -42,6 +42,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
+    root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
     root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||state.notice||(dirty?'Preview only. Save when you’re happy with it.':'');
@@ -49,6 +50,12 @@ window.BrainiProfileRewards=(function(){
   function bind(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
+      const surprise=event.target.closest('[data-avatar-surprise]');
+      if(surprise&&!surprise.disabled){
+        draft=C.surprise(draft,BrainiData.player().xp);
+        dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
+        return;
+      }
       const button=event.target.closest('[data-reward-kind]');
       if(button&&!button.disabled){
         const {rewardKind:kind,rewardId:id}=button.dataset;draft[kind]=id;
