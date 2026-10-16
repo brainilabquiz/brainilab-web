@@ -25,11 +25,11 @@
   "sources": [
     {
       "url": "https://www.nca.gov.au/education/canberras-history/canberra-seat-government",
-      "name": "National Capital Authority � Canberra, the Seat of Government"
+      "name": "National Capital Authority — Canberra, the Seat of Government"
     },
     {
       "url": "https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra",
-      "name": "National Capital Authority � The Siting and Naming of Canberra"
+      "name": "National Capital Authority — The Siting and Naming of Canberra"
     }
   ],
   "authorId": "biel-sarda",
@@ -37,23 +37,23 @@
   "sections": [
     {
       "id": "short-answer",
-      "title": "Why Canberra, not Sydney or Melbourne?",
-      "html": "<p><strong>Canberra is Australia�s capital because the new federation chose a separate home for its national government, rather than favouring Sydney or Melbourne.</strong> Rivalry between New South Wales and Victoria helped shape the compromise.</p><p>When six colonies united in 1901, the country needed a national capital. As the <a href=\"https://www.nca.gov.au/education/canberras-history/canberra-seat-government\">National Capital Authority explains</a>, the best-known city did not automatically get the job.</p>"
+      "html": "<p><strong>Canberra is Australia’s capital because the new federation chose a separate home for its national government, rather than favouring Sydney or Melbourne.</strong> Rivalry between New South Wales and Victoria helped shape the compromise.</p><p>When six colonies united in 1901, the country needed a national capital. As the <a href=\"https://www.nca.gov.au/education/canberras-history/canberra-seat-government\">National Capital Authority explains</a>, the best-known city did not automatically get the job.</p>",
+      "title": "Why Canberra, not Sydney or Melbourne?"
     },
     {
       "id": "distance-rule",
-      "title": "The rule that kept Sydney out",
-      "html": "<p>The Constitution required the capital�s territory to be within New South Wales and at least <strong>100 miles from Sydney</strong>, about 160 kilometres. Parliament would meet in Melbourne until the new capital was ready.</p><p>That was not a rule to build exactly halfway between the two cities. It was a political compromise, not a geometry puzzle.</p>"
+      "html": "<p>The Constitution required the capital’s territory to be within New South Wales and at least <strong>100 miles from Sydney</strong>, about 160 kilometres. Parliament would meet in Melbourne until the new capital was ready.</p><p>That was not a rule to build exactly halfway between the two cities. It was a political compromise, not a geometry puzzle.</p>",
+      "title": "The rule that kept Sydney out"
     },
     {
       "id": "three-dates",
-      "title": "When did Canberra become the capital?",
-      "html": "<p>The answer depends on which stage you mean:</p><ul><li><strong>1908:</strong> Parliament selected the Yass�Canberra district.</li><li><strong>12 March 1913:</strong> the city was officially named Canberra.</li><li><strong>1927:</strong> federal Parliament moved there from Melbourne.</li></ul><p>Choosing a site, naming a city and opening its Parliament were separate steps.</p>"
+      "html": "<p>The answer depends on which stage you mean:</p><ul><li><strong>1908:</strong> Parliament selected the Yass–Canberra district.</li><li><strong>12 March 1913:</strong> the city was officially named Canberra.</li><li><strong>1927:</strong> federal Parliament moved there from Melbourne.</li></ul><p>Choosing a site, naming a city and opening its Parliament were separate steps.</p>",
+      "title": "When did Canberra become the capital?"
     },
     {
       "id": "try-it",
-      "title": "Was Sydney ever Australia�s national capital?",
-      "html": "<p><strong>No: Sydney was not the national capital before Canberra.</strong> Melbourne was the temporary home of the federal Parliament.</p><p>Canberra was not the only candidate either. More than 60 New South Wales centres were proposed; Dalgety was an earlier parliamentary choice. The <a href=\"https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra\">National Capital Authority follows the selection</a>.</p><p>Try the <a href=\"/geography/world-capitals-quiz/\">World Capitals Quiz</a>: a famous skyline can make a surprisingly convincing wrong answer.</p>"
+      "html": "<p><strong>No: Sydney was not the national capital before Canberra.</strong> Melbourne was the temporary home of the federal Parliament.</p><p>Canberra was not the only candidate either. More than 60 New South Wales centres were proposed; Dalgety was an earlier parliamentary choice. The <a href=\"https://www.nca.gov.au/education/canberras-history/siting-and-naming-canberra\">National Capital Authority follows the selection</a>.</p><p>Try the <a href=\"/geography/world-capitals-quiz/\">World Capitals Quiz</a>: a famous skyline can make a surprisingly convincing wrong answer.</p>",
+      "title": "Was Sydney ever Australia’s national capital?"
     }
   ],
   "updatedAt": "2026-10-16T18:58:04Z",

@@ -65,7 +65,7 @@
   "sources": [
     {
       "url": "https://openstax.org/books/prealgebra-2e/pages/5-1-decimals",
-      "name": "OpenStax � Prealgebra 2e: Decimals (place value and fractions)"
+      "name": "OpenStax — Prealgebra 2e: Decimals (place value and fractions)"
     }
   ],
   "authorId": "biel-sarda",
@@ -73,26 +73,26 @@
   "sections": [
     {
       "id": "one-ribbon",
-      "title": "What are tenths and hundredths?",
-      "html": "<p><strong>A tenth is one of ten equal parts of a whole: 1/10 = 0.1. A hundredth is one of 100 equal parts: 1/100 = 0.01.</strong> The first digit after the decimal point counts tenths; the second counts hundredths.</p><p>Picture a ribbon exactly one metre long. Ten equal pieces give you tenths. Cut each piece into ten again and you have 100 little pieces: hundredths. <a href=\"https://openstax.org/books/prealgebra-2e/pages/5-1-decimals\">OpenStax explains the place values</a>.</p>"
+      "html": "<p><strong>A tenth is one of ten equal parts of a whole: 1/10 = 0.1. A hundredth is one of 100 equal parts: 1/100 = 0.01.</strong> The first digit after the decimal point counts tenths; the second counts hundredths.</p><p>Picture a ribbon exactly one metre long. Ten equal pieces give you tenths. Cut each piece into ten again and you have 100 little pieces: hundredths. <a href=\"https://openstax.org/books/prealgebra-2e/pages/5-1-decimals\">OpenStax explains the place values</a>.</p>",
+      "title": "What are tenths and hundredths?"
     },
     {
       "id": "five-pieces",
-      "title": "Five tenths as a decimal",
-      "html": "<p><strong>Five tenths is 0.5.</strong> Five of the ten equal ribbon pieces reach halfway along the original metre. So 5/10, 0.5 and one half describe the same length.</p><p>Read 0.5 as �zero point five�. The point separates the whole-number part from the smaller parts; it does not mean �add� or �multiply�.</p>"
+      "html": "<p><strong>Five tenths is 0.5.</strong> Five of the ten equal ribbon pieces reach halfway along the original metre. So 5/10, 0.5 and one half describe the same length.</p><p>Read 0.5 as “zero point five”. The point separates the whole-number part from the smaller parts; it does not mean “add” or “multiply”.</p>",
+      "title": "Five tenths as a decimal"
     },
     {
       "id": "smaller-pieces",
-      "title": "Read one place at a time",
-      "html": "<div class=\"table-scroll\"><table><caption>Tenths and hundredths in decimals</caption><thead><tr><th scope=\"col\">Decimal</th><th scope=\"col\">Meaning</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths</td></tr><tr><td>1.3</td><td>One whole and three tenths</td></tr></tbody></table></div><p>In 1.3 metres, the 1 counts complete metres and the 3 counts tenth-metre pieces. The position tells you the size.</p>"
+      "html": "<div class=\"table-scroll\"><table><caption>Tenths and hundredths in decimals</caption><thead><tr><th scope=\"col\">Decimal</th><th scope=\"col\">Meaning</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths</td></tr><tr><td>1.3</td><td>One whole and three tenths</td></tr></tbody></table></div><p>In 1.3 metres, the 1 counts complete metres and the 3 counts tenth-metre pieces. The position tells you the size.</p>",
+      "title": "Read one place at a time"
     },
     {
       "id": "same-amount",
-      "title": "Why does 0.5 equal 0.50, but not 0.05?",
-      "html": "<p><strong>Five tenths and fifty hundredths cover the same amount.</strong> Cutting each of your five pieces into ten gives you 50 smaller pieces, without changing their total length. That is why 0.5 = 0.50.</p><p>But <strong>0.05 is only five hundredths</strong>: five of the tiny pieces, rather than fifty. Moving a digit changes its place value; adding a zero at the end of the decimal here does not.</p><p>Continue with <a href=\"/learn/equivalent-fractions-same-amount/\">fractions that describe the same amount</a> or the <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">friendly guide to basic arithmetic</a>.</p>"
+      "html": "<p><strong>Five tenths and fifty hundredths cover the same amount.</strong> Cutting each of your five pieces into ten gives you 50 smaller pieces, without changing their total length. That is why 0.5 = 0.50.</p><p>But <strong>0.05 is only five hundredths</strong>: five of the tiny pieces, rather than fifty. Moving a digit changes its place value; adding a zero at the end of the decimal here does not.</p><p>Continue with <a href=\"/learn/equivalent-fractions-same-amount/\">fractions that describe the same amount</a> or the <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">friendly guide to basic arithmetic</a>.</p>",
+      "title": "Why does 0.5 equal 0.50, but not 0.05?"
     }
   ],
   "updatedAt": "2026-10-16T18:58:04Z",
-  "description": "One tenth is 0.1; one hundredth is 0.01. A ribbon makes decimal places easy to picture�and shows why 0.5 equals 0.50, but not 0.05.",
+  "description": "One tenth is 0.1; one hundredth is 0.01. A ribbon makes decimal places easy to picture—and shows why 0.5 equals 0.50, but not 0.05.",
   "publishedAt": "2026-10-01T15:18:01.509497+00:00"
 }
