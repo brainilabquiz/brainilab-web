@@ -1407,6 +1407,8 @@ window.BrainiProfileSections=(function(){
   async function hydrateRecentGames(){
     const request=++recentRequest,root=document.getElementById('recentResults');
     if(!root||!window.BrainiAnalytics?.fetchStats)return;
+    const folded=root.closest('[data-profile-activity]');
+    if(folded&&!folded.open)return;
     const owner=activityOwner();
     if(recentOwner!==null && recentOwner!==owner)root.replaceChildren();
     recentOwner=owner;
@@ -1561,6 +1563,9 @@ window.BrainiProfileSections=(function(){
   }
 
   function bind(){
+    document.querySelector('[data-profile-activity]')?.addEventListener('toggle',event=>{
+      if(event.currentTarget.open){hydrateRankHero();}
+    });
     document.querySelectorAll("[data-profile-tab]").forEach(btn=>{
       btn.onclick=()=>show(btn.dataset.profileTab,{push:true});
     });

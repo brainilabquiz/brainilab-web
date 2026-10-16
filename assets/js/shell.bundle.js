@@ -203,6 +203,88 @@ window.BrainiDailyRules=(()=>{
  return {config,active,lineup,max,points,model};
 })();
 
+/* ===== player-personalities.js ===== */
+
+/* Original BrainiLab knowledge portraits. Assignment is a game nickname, not a real identity. */
+window.BrainiPeople=(function(){
+ const PEOPLE=[{"id":"socrates","name":"Socrates","short":"Socrates","symbol":"scroll","avatar":"/assets/avatars/knowledge/socrates.svg"},{"id":"plato","name":"Plato","short":"Plato","symbol":"scroll","avatar":"/assets/avatars/knowledge/plato.svg"},{"id":"aristotle","name":"Aristotle","short":"Aristotle","symbol":"scroll","avatar":"/assets/avatars/knowledge/aristotle.svg"},{"id":"hypatia","name":"Hypatia","short":"Hypatia","symbol":"compass","avatar":"/assets/avatars/knowledge/hypatia.svg"},{"id":"confucius","name":"Confucius","short":"Confucius","symbol":"scroll","avatar":"/assets/avatars/knowledge/confucius.svg"},{"id":"al-khwarizmi","name":"Al-Khwarizmi","short":"Al-Khwarizmi","symbol":"compass","avatar":"/assets/avatars/knowledge/al-khwarizmi.svg"},{"id":"avicenna","name":"Avicenna","short":"Avicenna","symbol":"book","avatar":"/assets/avatars/knowledge/avicenna.svg"},{"id":"maimonides","name":"Maimonides","short":"Maimonides","symbol":"scroll","avatar":"/assets/avatars/knowledge/maimonides.svg"},{"id":"fibonacci","name":"Leonardo Fibonacci","short":"Fibonacci","symbol":"compass","avatar":"/assets/avatars/knowledge/fibonacci.svg"},{"id":"leonardo","name":"Leonardo da Vinci","short":"Leonardo","symbol":"gear","avatar":"/assets/avatars/knowledge/leonardo.svg"},{"id":"galileo","name":"Galileo Galilei","short":"Galileo","symbol":"telescope","avatar":"/assets/avatars/knowledge/galileo.svg"},{"id":"kepler","name":"Johannes Kepler","short":"Kepler","symbol":"compass","avatar":"/assets/avatars/knowledge/kepler.svg"},{"id":"newton","name":"Isaac Newton","short":"Newton","symbol":"prism","avatar":"/assets/avatars/knowledge/newton.svg"},{"id":"leibniz","name":"Gottfried Leibniz","short":"Leibniz","symbol":"compass","avatar":"/assets/avatars/knowledge/leibniz.svg"},{"id":"descartes","name":"René Descartes","short":"Descartes","symbol":"compass","avatar":"/assets/avatars/knowledge/descartes.svg"},{"id":"pascal","name":"Blaise Pascal","short":"Pascal","symbol":"gear","avatar":"/assets/avatars/knowledge/pascal.svg"},{"id":"euler","name":"Leonhard Euler","short":"Euler","symbol":"compass","avatar":"/assets/avatars/knowledge/euler.svg"},{"id":"gauss","name":"Carl Friedrich Gauss","short":"Gauss","symbol":"compass","avatar":"/assets/avatars/knowledge/gauss.svg"},{"id":"faraday","name":"Michael Faraday","short":"Faraday","symbol":"magnet","avatar":"/assets/avatars/knowledge/faraday.svg"},{"id":"darwin","name":"Charles Darwin","short":"Darwin","symbol":"leaf","avatar":"/assets/avatars/knowledge/darwin.svg"},{"id":"maxwell","name":"James Clerk Maxwell","short":"Maxwell","symbol":"atom","avatar":"/assets/avatars/knowledge/maxwell.svg"},{"id":"tesla","name":"Nikola Tesla","short":"Tesla","symbol":"bolt","avatar":"/assets/avatars/knowledge/tesla.svg"},{"id":"einstein","name":"Albert Einstein","short":"Einstein","symbol":"atom","avatar":"/assets/avatars/knowledge/einstein.svg"},{"id":"curie","name":"Marie Curie","short":"Curie","symbol":"flask","avatar":"/assets/avatars/knowledge/curie.svg"},{"id":"bohr","name":"Niels Bohr","short":"Bohr","symbol":"atom","avatar":"/assets/avatars/knowledge/bohr.svg"},{"id":"planck","name":"Max Planck","short":"Planck","symbol":"atom","avatar":"/assets/avatars/knowledge/planck.svg"},{"id":"schrodinger","name":"Erwin Schrödinger","short":"Schrödinger","symbol":"atom","avatar":"/assets/avatars/knowledge/schrodinger.svg"},{"id":"heisenberg","name":"Werner Heisenberg","short":"Heisenberg","symbol":"atom","avatar":"/assets/avatars/knowledge/heisenberg.svg"},{"id":"dirac","name":"Paul Dirac","short":"Dirac","symbol":"atom","avatar":"/assets/avatars/knowledge/dirac.svg"},{"id":"feynman","name":"Richard Feynman","short":"Feynman","symbol":"atom","avatar":"/assets/avatars/knowledge/feynman.svg"},{"id":"cajal","name":"Santiago Ramón y Cajal","short":"Ramón y Cajal","symbol":"neuron","avatar":"/assets/avatars/knowledge/cajal.svg"},{"id":"pavlov","name":"Ivan Pavlov","short":"Pavlov","symbol":"neuron","avatar":"/assets/avatars/knowledge/pavlov.svg"},{"id":"franklin","name":"Rosalind Franklin","short":"Franklin","symbol":"helix","avatar":"/assets/avatars/knowledge/franklin.svg"},{"id":"lovelace","name":"Ada Lovelace","short":"Lovelace","symbol":"gear","avatar":"/assets/avatars/knowledge/lovelace.svg"},{"id":"turing","name":"Alan Turing","short":"Turing","symbol":"chip","avatar":"/assets/avatars/knowledge/turing.svg"},{"id":"noether","name":"Emmy Noether","short":"Noether","symbol":"compass","avatar":"/assets/avatars/knowledge/noether.svg"},{"id":"ramanujan","name":"Srinivasa Ramanujan","short":"Ramanujan","symbol":"compass","avatar":"/assets/avatars/knowledge/ramanujan.svg"},{"id":"johnson","name":"Katherine Johnson","short":"Johnson","symbol":"orbit","avatar":"/assets/avatars/knowledge/johnson.svg"},{"id":"hopper","name":"Grace Hopper","short":"Hopper","symbol":"chip","avatar":"/assets/avatars/knowledge/hopper.svg"},{"id":"lamarr","name":"Hedy Lamarr","short":"Lamarr","symbol":"signal","avatar":"/assets/avatars/knowledge/lamarr.svg"},{"id":"wu","name":"Chien-Shiung Wu","short":"Wu","symbol":"atom","avatar":"/assets/avatars/knowledge/wu.svg"},{"id":"rubin","name":"Vera Rubin","short":"Rubin","symbol":"orbit","avatar":"/assets/avatars/knowledge/rubin.svg"},{"id":"mcclintock","name":"Barbara McClintock","short":"McClintock","symbol":"leaf","avatar":"/assets/avatars/knowledge/mcclintock.svg"},{"id":"hodgkin","name":"Dorothy Hodgkin","short":"Hodgkin","symbol":"helix","avatar":"/assets/avatars/knowledge/hodgkin.svg"},{"id":"tu-youyou","name":"Tu Youyou","short":"Tu Youyou","symbol":"flask","avatar":"/assets/avatars/knowledge/tu-youyou.svg"},{"id":"maathai","name":"Wangari Maathai","short":"Maathai","symbol":"leaf","avatar":"/assets/avatars/knowledge/maathai.svg"},{"id":"tagore","name":"Rabindranath Tagore","short":"Tagore","symbol":"pen","avatar":"/assets/avatars/knowledge/tagore.svg"},{"id":"mistral","name":"Gabriela Mistral","short":"Mistral","symbol":"pen","avatar":"/assets/avatars/knowledge/mistral.svg"},{"id":"ochoa","name":"Severo Ochoa","short":"Ochoa","symbol":"helix","avatar":"/assets/avatars/knowledge/ochoa.svg"},{"id":"salam","name":"Abdus Salam","short":"Salam","symbol":"atom","avatar":"/assets/avatars/knowledge/salam.svg"}];
+ const PREFIXES=['Curious','Bright','Clever','Cosmic','Bold','Keen','Merry','Witty'];
+ const hash=value=>{let n=2166136261;for(const c of String(value||'brainilab')){n^=c.charCodeAt(0);n=Math.imul(n,16777619);}return n>>>0;};
+ const legacy=value=>/^(?:Guest|Player) [0-9a-f]{10}$/i.test(String(value||'').trim());
+ function preset(value){const name=String(value||'').trim();return PEOPLE.find(p=>PREFIXES.some(a=>name===a+' '+p.short))||null;}
+ function identity(key){const n=hash(key),person=PEOPLE[n%PEOPLE.length];return {...person,nickname:PREFIXES[(n>>>8)%PREFIXES.length]+' '+person.short};}
+ function resolve(value={},fallback='brainilab'){
+   if(typeof value==='string')value={name:value};
+   const raw=String(value.identityName||value.name||value.displayName||'').trim();
+   const person=preset(raw),result=person?{...person,nickname:raw}:identity(raw&&!['You','Braini Player','Player'].includes(raw)?raw:(value.defaultSeed||fallback));
+   return {...result,displayName:!raw||legacy(raw)||['You','Braini Player','Player'].includes(raw)?result.nickname:raw};
+ }
+ return {PEOPLE,PREFIXES,identity,resolve,isLegacy:legacy,isPreset:value=>!!preset(value)};
+})();
+
+/* ===== avatar-design.js ===== */
+
+/* Original BrainiLab character artwork. Local SVG, no remote avatar service. */
+window.BrainiAvatarDesign=(function(){
+  const choices={
+    mode:[['picture','Your picture'],['built','Create an avatar']],
+    skin:[['sand','Sand','#f3c4a0'],['peach','Peach','#ffdbc4'],['honey','Honey','#d79d6b'],['cocoa','Cocoa','#a96b47'],['umber','Umber','#744630'],['ebony','Ebony','#4c3028']],
+    hair:[['sweep','Side sweep'],['curls','Curls'],['bob','Soft bob'],['crop','Short crop'],['bald','No hair']],
+    hairColor:[['brown','Brown','#644130'],['black','Black','#302c36'],['blond','Blond','#e6bd63'],['auburn','Auburn','#a34e30'],['silver','Silver','#b5b6c2']],
+    shirt:[['navy','Navy','#2d296e'],['green','Green','#397e39'],['orange','Orange','#d86725'],['blue','Blue','#3d86b0'],['berry','Berry','#aa4b77']],
+    background:[['lilac','Lilac','#eae6fa'],['sky','Sky','#dceef8'],['sage','Sage','#e1efdf'],['sunshine','Sunshine','#fff0b3'],['coral','Coral','#fce1d6']],
+    glasses:[['none','No glasses'],['round','Fresh eyes',null,150,'Round glasses. A fresh way to look at things.'],['sun','Bright mind',null,1000,'Sunglasses for a bright mind.'],['star','Star pupil',null,3500,'Star-shaped glasses. A little brilliance.']],
+    hat:[['none','No hat'],['beanie','Warm thoughts',null,500,'A cozy beanie for your best ideas.'],['cap','Thinking cap',null,1500,'Put your thinking cap on.'],['wizard','Quiz wizard',null,6000,'A starry hat for a little quiz magic.']],
+    prop:[['none','No extra'],['icepop','Brain freeze',null,800,'An ice pop to cool off a busy brain.'],['bulb','Bright idea',null,2500,'A light bulb for your next bright idea.'],['pencil','Sharp thinker',null,4500,'A well-sharpened pencil, ready for a sharp thinker.']]
+  };
+  const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description=''])=>Object.freeze({id,name,color,xp,description})))])));
+  const metadataKeys=Object.freeze(Object.fromEntries(Object.keys(options).map(key=>[key,'brainilab_avatar_'+key.replace(/[A-Z]/g,c=>'_'+c.toLowerCase())+'_v1'])));
+  function clean(value={}){
+    return Object.fromEntries(Object.entries(options).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
+  }
+  function available(value,xp=0){
+    const result=clean(value),total=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
+    for(const [key,list] of Object.entries(options))if(list.find(item=>item.id===result[key]).xp>total)result[key]=list[0].id;
+    return result;
+  }
+  function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
+  const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
+  function star(cx,cy,r=13){
+    return Array.from({length:10},(_,i)=>{const a=(i*36-90)*Math.PI/180,n=i%2?r*.46:r;return `${(cx+Math.cos(a)*n).toFixed(2)},${(cy+Math.sin(a)*n).toFixed(2)}`;}).join(' ');
+  }
+  function accessory(kind,id){
+    if(kind==='glasses'){
+      const arms='<path d="M65 94 53 89M135 94 147 89" fill="none" stroke="#302c46" stroke-width="4" stroke-linecap="round"/>';
+      if(id==='round')return `${arms}<g fill="#fff" fill-opacity=".17" stroke="#302c46" stroke-width="4"><circle cx="80" cy="96" r="14"/><circle cx="120" cy="96" r="14"/><path d="M94 95Q100 91 106 95" fill="none"/></g>`;
+      if(id==='sun')return `${arms}<g stroke="#302c46" stroke-width="4" stroke-linejoin="round"><path d="M63 88H95L92 105Q80 115 67 104ZM105 88H137L133 104Q120 115 108 105Z" fill="#302c46"/><path d="M95 94Q100 91 105 94" fill="none"/></g><path d="M69 93H82M111 93H122" stroke="#fff" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>`;
+      if(id==='star')return `${arms}<g fill="#f6cc4a" fill-opacity=".65" stroke="#7b6022" stroke-width="3" stroke-linejoin="round"><polygon points="${star(80,96)}"/><polygon points="${star(120,96)}"/><path d="M94 96H106"/></g>`;
+    }
+    if(kind==='hat'){
+      if(id==='beanie')return '<path d="M54 48Q53 12 100 12T146 48" fill="#d66c3e"/><path d="M64 42Q67 21 82 19M84 42 87 16M103 42 103 14M123 42 118 17M138 42 132 25" fill="none" stroke="#bc5331" stroke-width="3"/><rect x="49" y="39" width="102" height="21" rx="8" fill="#e8844e"/><rect x="92" y="43" width="18" height="12" rx="3" fill="#ffdc86"/>';
+      if(id==='cap')return '<path d="M55 48Q52 15 99 15Q137 15 145 48Z" fill="#3e856c"/><path d="M100 18Q116 26 116 46M60 46H145" fill="none" stroke="#286a56" stroke-width="3"/><path d="M103 43Q145 37 164 51Q152 62 109 55Z" fill="#286a56"/><circle cx="94" cy="30" r="5" fill="#ffdd75"/>';
+      if(id==='wizard')return `<path d="M56 52 105 5 144 53Z" fill="#4b4288"/><path d="M46 52Q98 39 156 53Q154 67 101 65Q47 65 46 52Z" fill="#342e6b"/><polygon points="${star(105,32,8)}" fill="#ffdb66"/><circle cx="86" cy="45" r="3" fill="#ffdb66"/>`;
+    }
+    if(kind==='prop'){
+      if(id==='icepop')return '<g transform="rotate(14 158 151)"><rect x="153" y="148" width="10" height="31" rx="5" fill="#c18d56"/><path d="M139 119Q139 104 158 104T177 119V151Q158 162 139 151Z" fill="#ef7095"/><path d="M139 130H177V144H139Z" fill="#fff4d6"/><path d="M139 144H177V151Q158 162 139 151Z" fill="#6ab9d5"/><path d="M147 116V128" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g><path d="M27 65V79M20 72H34M22 67 32 77M22 77 32 67" stroke="#78b8cb" stroke-width="2" stroke-linecap="round"/>';
+      if(id==='bulb')return '<g transform="rotate(12 160 135)"><path d="M147 137Q146 130 141 124Q129 103 147 94Q164 84 176 102Q183 116 171 128Q168 132 168 137Z" fill="#ffda6d" stroke="#b88b23" stroke-width="3"/><path d="M150 139H166M151 146H165M154 152H162M154 135 150 113 162 116 161 135" fill="none" stroke="#896b2d" stroke-width="3" stroke-linecap="round"/><path d="M135 86 130 80M158 78V70M180 86 185 80" stroke="#d6a72c" stroke-width="3" stroke-linecap="round"/></g>';
+      if(id==='pencil')return '<g transform="rotate(18 158 144)"><path d="M148 119H168V163L158 183 148 163Z" fill="#f5c75c" stroke="#8d6a31" stroke-width="2"/><path d="M149 163H167L158 183Z" fill="#e7bf94"/><path d="M154 175 158 183 162 175Z" fill="#41384c"/><rect x="147" y="106" width="22" height="14" rx="5" fill="#e98c9e"/><path d="M148 124H168M158 128V160" stroke="#b48b32" stroke-width="3"/></g>';
+    }
+    return '';
+  }
+  function markup(value,xp=0){
+    const v=available(value,xp),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt),bg=color('background',v.background);
+    const back=v.hair==='bob'?`<path d="M53 87Q46 39 101 38Q154 36 148 98L150 139Q99 158 49 138Z" fill="${hair}"/>`:'';
+    const hairFront={
+      sweep:`<path d="M58 91Q45 36 104 36Q150 35 143 86L131 71Q97 84 77 62Q67 78 58 91Z" fill="${hair}"/>`,
+      curls:`<g fill="${hair}"><circle cx="68" cy="64" r="18"/><circle cx="82" cy="48" r="18"/><circle cx="105" cy="46" r="19"/><circle cx="126" cy="53" r="18"/><circle cx="139" cy="69" r="15"/></g>`,
+      bob:`<path d="M57 85Q53 38 101 38Q151 39 144 89L130 69Q114 79 94 64Q80 81 57 85Z" fill="${hair}"/>`,
+      crop:`<path d="M59 75Q61 37 101 39Q140 40 142 77Q101 58 59 75Z" fill="${hair}"/>`,bald:''
+    }[v.hair];
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${back}<path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/><path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${hairFront}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g><path d="M100 100 96 113H103" fill="none" stroke="#302c46" stroke-opacity=".25" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="#673d3c" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
+  }
+  return Object.freeze({options,metadataKeys,clean,available,fromMetadata,markup});
+})();
+
 /* ===== data.js ===== */
 
 
@@ -552,6 +634,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   let state=loadState();
+  // Persist the browser identity before the first navigation or game.
+  save();
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); }catch(e){}
@@ -564,6 +648,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const last=p.lastStreakDate;
     p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
     p.streakSecuredToday=last===today && p.currentStreak>0;
+    p.identityName=state.auth.leaderboard?.displayName||p.displayName;
+    p.defaultSeed=state.auth.anonymousPlayerId;
+    const identity=window.BrainiPeople?.resolve(p);
+    if(identity){
+      p.defaultAvatarUrl=identity.avatar;
+      // The private display name can differ from the public ranking alias.
+      p.displayName=BrainiPeople.resolve({name:p.displayName,defaultSeed:p.defaultSeed}).displayName;
+    }
     return p;
   }
   function daily(){
@@ -1483,6 +1575,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const existingLeaderboard=state.auth?.leaderboard || {enabled:false,displayName:null};
     const email=(user.email||"").trim().toLowerCase();
     const meta=user.user_metadata||{};
+    // Cosmetic preferences only; never used to calculate XP, scores or access.
+    state.player.avatarDesign=window.BrainiAvatarDesign?.fromMetadata?.(meta)||null;
     const suggestedName=(
       meta.full_name ||
       meta.name ||
@@ -1521,6 +1615,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     window.dispatchEvent(new CustomEvent("brainilab:authchange",{detail:{status:"authenticated",provider,source:"supabase"}}));
     window.dispatchEvent(new CustomEvent("brainilab:datachange",{detail:{type:"auth"}}));
     return accountSnapshot();
+  }
+
+  function setAvatarDesign(value){
+    const design=window.BrainiAvatarDesign?.clean?.(value)||null;
+    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design))return;
+    state.player.avatarDesign=design;
+    save();
+    window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
   }
 
   function resetPlayerIdentity(){
@@ -1844,6 +1946,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     completeMockSignIn: async (provider,profile) => completeMockSignIn(provider,profile),
     signOut: async () => signOut(),
     updatePlayerProfile: async patch => updatePlayerProfile(patch),
+    setAvatarDesign: async value => setAvatarDesign(value),
     joinLeaderboard: async displayName => joinLeaderboard(displayName),
     leaveLeaderboard: async () => leaveLeaderboard(),
     submitSuggestion: async payload => submitSuggestion(payload),
@@ -2576,11 +2679,12 @@ window.BrainiProgressUI=(function(){
   }
 
   function xpProgress(level,xp){
-    const value=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
+    const value=Number.isFinite(Number(xp))?Math.max(0,Math.floor(Number(xp))):0;
     const n=Math.max(1,Math.floor(Math.sqrt(value/20))+1);
     const start=xpForLevel(n),end=xpForLevel(n+1);
     return {percent:Math.max(0,Math.min(100,(value-start)/(end-start)*100)),
       currentXp:value,nextXp:end,level:n,nextLevel:n+1,
+      startXp:start,earnedInLevel:value-start,neededInLevel:end-start,remainingXp:end-value,
       label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
 
@@ -2593,22 +2697,55 @@ window.BrainiProgressUI=(function(){
   function avatarMarkup(initial,level,extraClass=""){
     const t=tier(level);
     return `<span class="rank-avatar ${avatarClass(level)} ${extraClass}" title="${t.name} · Level ${Number(level||1)}">
-      ${defaultAvatarMarkup()}
+      ${defaultAvatarMarkup(typeof initial==="object"?initial:undefined)}
     </span>`;
   }
 
-  function defaultAvatarMarkup(){
-    return '<img class="default-player-avatar" src="/assets/icons/product/player-owl.svg" width="48" height="48" alt="">';
+  const escapeAvatar=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function defaultAvatarMarkup(person){
+    const identity=BrainiPeople.resolve(person||window.BrainiData?.player?.()||{});
+    return `<img class="default-player-avatar" src="${identity.avatar}" width="48" height="48" alt="" title="Illustration inspired by ${escapeAvatar(identity.name)}">`;
   }
 
-  // Capture image errors once: broken remote photos receive the same local avatar.
+  function avatarImageMarkup(person){
+    person=person||window.BrainiData?.player?.()||{};
+    if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
+      return BrainiAvatarDesign.markup(person.avatarDesign,person.xp);
+    }
+    const identity=BrainiPeople.resolve(person);
+    try{
+      if(person.avatarUrl){
+        const url=new URL(person.avatarUrl,location.origin);
+        if(['https:','http:'].includes(url.protocol)){
+          return `<img src="${escapeAvatar(url.href)}" data-fallback-avatar="${identity.id}" width="48" height="48" alt="">`;
+        }
+      }
+    }catch{}
+    return defaultAvatarMarkup(person);
+  }
+
+  // Failed custom photos retain the same portrait throughout the interface.
   document.addEventListener('error',event=>{
     const image=event.target;
-    if(image?.tagName==='IMG' && image.closest('.rank-avatar,.rank-header-avatar') && !image.classList.contains('default-player-avatar')){
-      image.classList.add('default-player-avatar');
-      image.src='/assets/icons/product/player-owl.svg';
+    if(image?.tagName==='IMG' && image.dataset.fallbackAvatar){
+      const person=BrainiPeople.PEOPLE.find(p=>p.id===image.dataset.fallbackAvatar);
+      delete image.dataset.fallbackAvatar;
+      if(person){image.classList.add('default-player-avatar');image.src=person.avatar;}
     }
   },true);
+
+  function ranksMarkup(person,{open=false}={}){
+    const progress=xpProgress(person.level,person.xp),current=tier(progress.level);
+    return `<details class="profile-ranks" ${open?'open':''}><summary data-ranks-toggle>Level titles <span aria-hidden="true">+</span></summary>
+      <p>Your avatar frame changes as you level up.</p>
+      <ol class="profile-rank-journey">${TIERS.map(t=>{
+        const reached=progress.level>=t.min,active=t.key===current.key;
+        return `<li class="${active?'is-current':reached?'is-reached':'is-ahead'}" ${active?'aria-current="step"':''}>
+          <span class="rank-avatar ${avatarClass(active?progress.level:t.min)}" aria-hidden="true">${avatarImageMarkup(person)}</span>
+          <span><strong>${t.name}</strong><small>Level ${t.min}</small></span>
+          <b>${active?'Your title':reached?'Reached':'Ahead'}</b></li>`;
+      }).join('')}</ol></details>`;
+  }
 
   function badgeMarkup(level){
     const t=tier(level);
@@ -2736,7 +2873,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();
@@ -2800,12 +2937,12 @@ window.BrainiContinuity=(()=>{
       const saved=window.BrainiData?.recentResults?.(result.gameId)?.find(r=>r.clientResultId===result.clientResultId)||result;
       const checked=saved.answersVerified===true||[saved.answerVerificationStatus,saved.dailyAnswerVerificationStatus,saved.dailyGameVerificationStatus].includes('verified');
       if(window.BrainiProgression?.getLastError?.())return '<p class="post-reward-note">Your result is saved. Progress is temporarily unavailable. <button type="button" class="post-refresh-progress" data-refresh-progress>Refresh progress</button></p>';
-      if(checked)return '<p class="post-reward-note">Result verified. <a href="/profile/?section=progress">See your progress</a>.</p>';
-      return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Result saved. XP is awaiting verification.':'Saved on this device. Waiting to sync.'}</p>`;
+      if(checked)return '<p class="post-reward-note">Your result is saved. <a href="/profile/?section=progress">See your progress</a>.</p>';
+      return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Your score is saved. We’re checking your XP.':'Saved on this device. Waiting to sync.'}</p>`;
     }
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp),change=changes.get(result.clientResultId),before=change&&BrainiProgressUI.xpProgress(1,change.before),up=before&&progress.level>before.level;
-    const player=window.BrainiData?.player?.()||{};let photo='';try{const u=new URL(player.avatarUrl);if(u.protocol==='https:')photo=esc(u.href);}catch{}
-    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>`;
+    const player=window.BrainiData?.player?.()||{};
+    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}">${BrainiProgressUI.avatarImageMarkup(player)}</span>`;
     const today=new Date().toISOString().slice(0,10),model=window.BrainiDailyRules?.model(today);
     const main=Number(result.dailyNumber)>0&&window.BrainiData?.dateForDailyNumber?.(Number(result.dailyNumber))===today&&model?.primary===result.gameId;
     const secured=main&&summary.continuity?.today===today&&summary.continuity.completed_today;
@@ -2860,7 +2997,7 @@ window.BrainiPostGame=(()=>{
   if(signedIn||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
   if(container.querySelector('[data-join-account]'))return;
   container.hidden=false;
-  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Make it your BrainiLab</p><h3>Your progress, wherever you play.</h3><p>Keep your game progress across devices and come back to your Academy lessons with a free account.</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
+  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>Keep your scores across devices and pick up your Academy lessons where you left off.</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
   container.querySelector('[data-dismiss-account]').onclick=()=>{dismissed.add(container);container.hidden=true;const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');fallback?.focus();};
   container.querySelector('[data-join-account]').onclick=async event=>{
    const button=event.currentTarget,error=container.querySelector('[data-account-error]');
@@ -2967,7 +3104,7 @@ window.BrainiPostGame=(()=>{
   const points=!practice&&result.dailyNumber&&window.BrainiData?.dailyPointsForResult?BrainiData.dailyPointsForResult(gameId,result):number(result.score??result.points);
   const message=summary||(timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Ready for another go?'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. A few new discoveries, too.':'There’s always something new to learn.');
   const art=window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
-  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Five short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
+  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${number(points).toLocaleString('en-GB')}</strong> ${!practice&&result.dailyNumber?'Daily points':'Quiz Points'}${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);resolveStatus(container,liveOptions);
@@ -3094,7 +3231,7 @@ window.BrainiPerf=(function(){
 
     cloudPromise=(async()=>{
       await ensureSupabase();
-      await loadScript(new URL(`cloud.bundle.js?v=41.53.0`,jsBase).href);
+      await loadScript(new URL(`cloud.bundle.js?v=41.54.0`,jsBase).href);
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
     })();
@@ -3574,7 +3711,7 @@ window.BrainiMonetization=(function(){
 
     if(!plusEnabled()){
       plusNotice(
-        "BrainiLab+ sales are currently disabled. Enable BrainiLab+ sales in Admin → Monetization for this test.",
+        "BrainiLab+ is not available yet. Nothing has been charged.",
         "warning"
       );
       return;
@@ -3595,7 +3732,7 @@ window.BrainiMonetization=(function(){
 
       if(!window.BrainiMonetizationBackend){
         throw new Error(
-          "The BrainiLab billing connection did not load. Hard-refresh the page and try again."
+          "The payment service could not load. Reload the page and try again."
         );
       }
 
@@ -3607,7 +3744,7 @@ window.BrainiMonetization=(function(){
 
       if(!data?.url){
         throw new Error(
-          "Stripe Checkout did not return a secure checkout URL."
+          "The checkout could not open. Please try again."
         );
       }
 
@@ -3827,8 +3964,7 @@ window.BrainiMonetization=(function(){
                 <span>BrainiLab+</span>
                 <strong>Coming soon</strong>
                 <p>
-                  The optional supporter membership is prepared
-                  but not available yet.
+                  Our optional supporter membership is not available yet.
                 </p>
               </div>
             </div>
@@ -3931,7 +4067,7 @@ window.BrainiMonetization=(function(){
       action=`
         <div class="plus-current-card">
           <span>COMING SOON</span>
-          <h2>BrainiLab+ is prepared for launch</h2>
+          <h2>BrainiLab+ is coming soon</h2>
           <p>
             Membership sales are currently disabled.
             Nothing will be charged.
@@ -4785,6 +4921,7 @@ window.BrainiAds=(function(){
 */
 window.BrainiAccountMenu=(function(){
   let openMenu=null;
+  const headerInvites=new WeakMap();
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function close(){
@@ -4799,21 +4936,6 @@ window.BrainiAccountMenu=(function(){
     const href=existing?.getAttribute("href")||"/profile/";
     const base=href.split("?")[0].split("#")[0];
     return section ? `${base}?section=${section}` : base;
-  }
-
-  function safePhotoUrl(value){
-    try{
-      if(!value) return "";
-      const u=new URL(value,location.origin);
-      if(!["https:","http:"].includes(u.protocol)) return "";
-      return u.href
-        .replaceAll("&","&amp;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;");
-    }catch(err){
-      return "";
-    }
   }
 
   async function signOut(){
@@ -4841,22 +4963,18 @@ window.BrainiAccountMenu=(function(){
 
   function menuMarkup(auth,p){
     const logged=auth.status==="authenticated";
-    const tier=window.BrainiProgressUI?.tier?.(p.level||1);
-    const photo=safePhotoUrl(p.avatarUrl);
     const progress=window.BrainiProgressUI?.xpProgress?.(p.level,p.xp);
+    const tier=window.BrainiProgressUI?.tier?.(progress?.level||1);
     const streak=Math.max(0,Number(p.currentStreak)||0);
 
     return `
       <div class="account-popover" role="menu" aria-label="BrainiLab account menu">
         <div class="account-popover-head">
           <span class="rank-avatar ${window.BrainiProgressUI
-            ? BrainiProgressUI.avatarClass(p.level||1)
+            ? BrainiProgressUI.avatarClass(progress.level)
             : ""
           } account-menu-avatar">
-            ${photo
-              ? `<img src="${photo}" alt="">`
-              : BrainiProgressUI.defaultAvatarMarkup()
-            }
+            ${BrainiProgressUI.avatarImageMarkup(p)}
           </span>
 
           <div>
@@ -5022,7 +5140,67 @@ window.BrainiAccountMenu=(function(){
     openFor(avatar);
   }
 
+  function isGuest(){
+    const auth=BrainiData.authState();
+    return auth.status==="guest" || (auth.status==="authenticated" && auth.user?.is_anonymous===true);
+  }
+
+  function hydrateHeaderInvite(){
+    if(/^\/(admin|auth)(\/|$)/.test(location.pathname)) return;
+    document.querySelectorAll(".topbar .nav").forEach(nav=>{
+      const right=nav.querySelector(".nav-right");
+      if(!right) return;
+      let entry=headerInvites.get(nav);
+      if(!entry){
+        const slot=document.createElement("div");
+        slot.className="header-account-invite";
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="header-account-button";
+        button.dataset.headerSignup="";
+        button.title="Keep your scores and progress across devices";
+        const status=document.createElement("span");
+        status.className="header-account-status";
+        status.setAttribute("role","status");
+        status.hidden=true;
+        slot.append(button,status);
+        right.prepend(slot);
+        entry={slot,button,status,pending:false};
+        headerInvites.set(nav,entry);
+        button.addEventListener("click",async()=>{
+          if(entry.pending || !isGuest()) return;
+          close();
+          entry.pending=true;
+          status.hidden=true;
+          hydrateHeaderInvite();
+          try{
+            if(!window.BrainiAuth?.open && window.BrainiPerf?.ensureCloud) await BrainiPerf.ensureCloud();
+            if(!isGuest()) return;
+            if(!window.BrainiAuth?.open) throw Error("Sign-up unavailable");
+            await BrainiAuth.open({source:"header",mode:"signup"});
+          }catch{
+            if(isGuest()){
+              status.textContent="Sign-up is unavailable right now. Please try again.";
+              status.hidden=false;
+            }
+          }finally{
+            entry.pending=false;
+            hydrateHeaderInvite();
+          }
+        });
+      }
+      const visible=isGuest();
+      entry.slot.hidden=!visible;
+      nav.classList.toggle("has-header-account-invite",visible);
+      entry.button.disabled=entry.pending;
+      entry.button.setAttribute("aria-busy",String(entry.pending));
+      entry.button.textContent=entry.pending?"Opening…":"Create free account";
+      if(!visible){entry.status.hidden=true;entry.status.textContent="";}
+    });
+  }
+
   function hydrate(){
+    hydrateHeaderInvite();
     const p=BrainiData.player();
 
     document.querySelectorAll(".avatar").forEach(avatar=>{
@@ -5031,31 +5209,16 @@ window.BrainiAccountMenu=(function(){
         .forEach(c=>avatar.classList.remove(c));
 
       if(window.BrainiProgressUI){
-        const t=BrainiProgressUI.tier(p.level||1);
+        const level=BrainiProgressUI.xpProgress(p.level,p.xp).level;
+        const t=BrainiProgressUI.tier(level);
         avatar.classList.add(
           "rank-header-avatar",
-          ...BrainiProgressUI.avatarClass(p.level||1).split(" ")
+          ...BrainiProgressUI.avatarClass(level).split(" ")
         );
-        avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${Number(p.level||1)}`;
+        avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${level}`;
       }
 
-      if(p.avatarUrl){
-        try{
-          const u=new URL(p.avatarUrl,location.origin);
-          if(!["https:","http:"].includes(u.protocol)){
-            throw new Error("Unsafe avatar URL");
-          }
-
-          const img=document.createElement("img");
-          img.src=u.href;
-          img.alt="";
-          avatar.replaceChildren(img);
-        }catch(err){
-          avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
-        }
-      }else{
-        avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
-      }
+      avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
     });
   }
 
@@ -5087,7 +5250,8 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("resize",close);
   window.addEventListener("scroll",close,{passive:true});
 
-  document.addEventListener("DOMContentLoaded",hydrate);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",hydrate,{once:true});
+  else hydrate();
   window.addEventListener("brainilab:authchange",hydrate);
   window.addEventListener("brainilab:profilechange",hydrate);
   window.addEventListener("brainilab:progressionchange",hydrate);
@@ -5108,6 +5272,8 @@ window.BrainiAccountMenu=(function(){
   Accessible navigation behavior shared by every public page.
 */
 window.BrainiMobileUI=(function(){
+  const readyNav=new WeakSet();
+  const readyCommunity=new WeakSet();
   function closeMenu(nav,button){
     nav?.classList.remove('mobile-open');
     button?.setAttribute('aria-expanded','false');
@@ -5127,7 +5293,8 @@ window.BrainiMobileUI=(function(){
         if(location.pathname.startsWith('/breaking-news'))link.setAttribute('aria-current','page');
         nav.append(link);
       }
-      if(!nav||!button) return;
+      if(!nav||!button||readyNav.has(nav)) return;
+      readyNav.add(nav);
 
       if(!nav.id) nav.id='mainNav';
       button.setAttribute('aria-controls',nav.id);
@@ -5180,6 +5347,69 @@ window.BrainiMobileUI=(function(){
     });
   }
 
+  function bootCommunity(){
+    document.querySelectorAll('.topbar .nav-community').forEach(group=>{
+      if(readyCommunity.has(group))return;
+      const summary=group.querySelector('summary');
+      if(!summary)return;
+      readyCommunity.add(group);
+      let mobile=window.innerWidth<=920;
+      let openedOnHover=false;
+      group.open=mobile;
+      const current=location.pathname.match(/^\/(rankings|groups)(?:\/|$)/)?.[1];
+      group.classList.toggle('is-current',Boolean(current));
+      group.querySelectorAll('a[href]').forEach(link=>{
+        if(current&&new URL(link.href,location.href).pathname.match(new RegExp('^/'+current+'(?:/|$)')))link.setAttribute('aria-current','page');
+        else link.removeAttribute('aria-current');
+      });
+      const close=()=>{group.open=false;openedOnHover=false;};
+      const open=()=>{group.open=true;window.BrainiAccountMenu?.close?.();};
+      // On a narrow screen both links are already visible when Menu opens.
+      // On desktop a mouse, touch, or keyboard can open the same disclosure.
+      group.addEventListener('pointerenter',event=>{
+        if(mobile||event.pointerType==='touch'||!window.matchMedia('(hover: hover) and (pointer: fine)').matches)return;
+        if(!group.open){open();openedOnHover=true;}
+      });
+      group.addEventListener('pointerleave',()=>{
+        if(!mobile&&!group.contains(document.activeElement))close();
+      });
+      summary.addEventListener('click',event=>{
+        if(mobile)return;
+        event.preventDefault();
+        if(openedOnHover&&event.detail>0)open();
+        else if(group.open)close();
+        else open();
+        openedOnHover=false;
+      });
+      summary.addEventListener('keydown',event=>{
+        if(!mobile&&(event.key==='ArrowDown'||event.key==='ArrowUp')){
+          event.preventDefault();open();
+          const links=group.querySelectorAll('a[href]');
+          (event.key==='ArrowUp'?links[links.length-1]:links[0])?.focus();
+        }
+      });
+      group.addEventListener('keydown',event=>{
+        if(event.key==='Escape'&&!mobile&&group.open){
+          event.preventDefault();event.stopPropagation();close();summary.focus();
+        }
+      });
+      group.addEventListener('focusout',event=>{
+        if(!mobile&&!group.contains(event.relatedTarget))close();
+      });
+      group.addEventListener('click',event=>{
+        if(!mobile&&event.target.closest('a'))close();
+      });
+      document.addEventListener('pointerdown',event=>{
+        if(!mobile&&!group.contains(event.target))close();
+      },{capture:true,passive:true});
+      window.addEventListener('resize',()=>{
+        const next=window.innerWidth<=920;
+        if(next===mobile)return;
+        mobile=next;openedOnHover=false;group.open=mobile;
+      },{passive:true});
+    });
+  }
+
   function centerActiveTabs(){
     document.querySelectorAll('.profile-tabs').forEach(tabs=>{
       const active=tabs.querySelector('.active');
@@ -5208,6 +5438,7 @@ window.BrainiMobileUI=(function(){
 
   function boot(){
     bootNav();
+    bootCommunity();
     centerActiveTabs();
     document.documentElement.classList.add('brainilab-mobile-ready');
   }

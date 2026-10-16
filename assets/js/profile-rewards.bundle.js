@@ -18,23 +18,24 @@ window.BrainiRewardCatalog=(function(){
     {id:'thinker',name:'Deep Thinker',xp:4500},
     {id:'sage',name:'BrainiLab Sage',xp:10000}
   ].map(Object.freeze));
+  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options});
+  const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys});
   const xp=value=>Number.isFinite(Number(value))?Math.max(0,Math.floor(Number(value))):0;
   function clean(value={}){
-    return {frame:frames.some(r=>r.id===value?.frame)?value.frame:'level',
-      title:titles.some(r=>r.id===value?.title)?value.title:'none'};
+    return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
   }
   function available(value,earned){
     const result=clean(value),total=xp(earned);
-    if(frames.find(r=>r.id===result.frame).xp>total)result.frame='level';
-    if(titles.find(r=>r.id===result.title).xp>total)result.title='none';
+    for(const [key,list] of Object.entries(groups))if(list.find(item=>item.id===result[key]).xp>total)result[key]=list[0].id;
     return result;
   }
   function next(earned){
     const total=xp(earned);
-    return [...frames.map(r=>({...r,kind:'frame'})),...titles.map(r=>({...r,kind:'title'}))]
+    return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
       .filter(r=>r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
-  return Object.freeze({frames,titles,xp,clean,available,next});
+  function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
+  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,fromMetadata});
 })();
 
 /* ===== profile-rewards-store.js ===== */
@@ -44,7 +45,7 @@ window.BrainiRewardStore=(function(){
   const prefix='brainilab-profile-style-v1:';
   // Separate top-level metadata keys avoid overwriting unrelated settings or
   // a frame/title saved independently in a second tab. These are not claims.
-  const keys={frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1'};
+  const keys=catalog.metadataKeys;
   let owner=null,saved=catalog.clean(),loading=false,saving=false,error='',notice='',generation=0;
   function identity(){
     const auth=BrainiData.authState();
@@ -54,13 +55,17 @@ window.BrainiRewardStore=(function(){
   }
   const total=()=>catalog.xp(BrainiData.player().xp);
   const emit=()=>window.dispatchEvent(new CustomEvent('brainilab:stylechange'));
+  const applyDesign=()=>BrainiData.api?.setAvatarDesign?.(saved);
   function bounded(request){
     let timer;
     return Promise.race([request,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Style request timed out')),12000);})])
       .finally(()=>clearTimeout(timer));
   }
   function cached(id){
-    try{return catalog.clean(JSON.parse(localStorage.getItem(prefix+id)||'{}'));}catch{return catalog.clean();}
+    try{
+      const raw=localStorage.getItem(prefix+id);
+      return catalog.clean(raw?JSON.parse(raw):BrainiData.player().avatarDesign||{});
+    }catch{return catalog.clean();}
   }
   function cache(id,value){
     try{localStorage.setItem(prefix+id,JSON.stringify(value));return true;}catch{return false;}
@@ -71,7 +76,7 @@ window.BrainiRewardStore=(function(){
     if(owner?.id===current.id&&(loading||saving))return;
     const run=++generation;owner=current;saved=cached(current.id);error='';notice='';
     loading=current.cloud;emit();
-    if(!current.cloud)return;
+    if(!current.cloud){applyDesign();return;}
     try{
       const sb=window.BrainiBackendAuth?.getClient?.();
       if(!sb)throw Error('Profile connection unavailable');
@@ -80,8 +85,9 @@ window.BrainiRewardStore=(function(){
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
       const meta=data.user.user_metadata||{};
-      saved=catalog.clean({frame:meta[keys.frame],title:meta[keys.title]});
+      saved=catalog.fromMetadata(meta);
       cache(current.id,saved);
+      applyDesign();
     }catch{
       if(run===generation)error='Your saved style could not be checked. Try again before changing it.';
     }finally{
@@ -93,7 +99,7 @@ window.BrainiRewardStore=(function(){
     const current=identity(),run=generation;
     if(current.id!==owner?.id){await load();return false;}
     const requested=catalog.clean(value),allowed=catalog.available(requested,total());
-    if(requested.frame!==allowed.frame||requested.title!==allowed.title){
+    if(Object.keys(keys).some(key=>requested[key]!==allowed[key])){
       error='That reward is still locked. Your XP has not changed.';emit();return false;
     }
     const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total())[key]);
@@ -108,7 +114,7 @@ window.BrainiRewardStore=(function(){
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
         const currentAllowed=catalog.available(allowed,total());
-        if(currentAllowed.frame!==allowed.frame||currentAllowed.title!==allowed.title)throw Error('XP changed');
+        if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('XP changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
         const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));
         if(writeError)throw writeError;
@@ -116,14 +122,14 @@ window.BrainiRewardStore=(function(){
         if(data?.user?.id!==current.uid)throw Error('Account changed');
         const meta=data.user.user_metadata||{};
         for(const key of changed)if(meta[keys[key]]!==allowed[key])throw Error('Style not confirmed');
-        saved=catalog.clean({frame:meta[keys.frame],title:meta[keys.title]});
+        saved=catalog.fromMetadata(meta);
         cache(current.id,saved);
         notice='Style saved to your account.';
       }else{
         if(!cache(current.id,allowed))throw Error('Browser storage unavailable');
         saved=allowed;notice='Style saved on this browser.';
       }
-      return true;
+      applyDesign();return true;
     }catch{
       if(run===generation)error='Your changes could not be confirmed. Your previous style is still shown. Try again.';
       return false;
@@ -137,109 +143,143 @@ window.BrainiRewardStore=(function(){
   }
   window.addEventListener('brainilab:authchange',changedOwner);
   window.addEventListener('storage',event=>{
-    if(owner&&!owner.cloud&&event.key===prefix+owner.id){saved=cached(owner.id);emit();}
+    if(owner&&!owner.cloud&&event.key===prefix+owner.id){saved=cached(owner.id);applyDesign();emit();}
   });
   window.addEventListener('online',()=>{if(owner?.cloud)load();});
   return {load,save,snapshot};
 })();
 
+/* ===== avatar-studio-ui.js ===== */
+
+window.BrainiAvatarStudioUI=(function(){
+  const C=BrainiRewardCatalog,A=BrainiAvatarDesign;
+  const panes={look:{label:'Your look',groups:{skin:'Skin tone',hair:'Hair',hairColor:'Hair colour',shirt:'Shirt',background:'Background'}},
+    extras:{label:'Little extras',groups:{glasses:'Glasses',hat:'Hats',prop:'A little personality'}},
+    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title'}}};
+  let active='look';
+  const number=n=>n.toLocaleString('en-GB');
+  function mount(root){
+    root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>A look, a little personality, and a few things to earn.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
+      <div class="avatar-studio-layout"><aside class="avatar-studio-stage" aria-label="Avatar preview">
+      <div class="avatar-stage-art"><span class="avatar-preview-label" data-style-preview-label>Your avatar</span><span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span></div>
+      <div class="avatar-stage-identity"><strong data-style-preview-name></strong><p data-style-preview-title></p><span data-avatar-level></span></div>
+      <div class="avatar-next-reward" data-next-reward></div>
+      <div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save my avatar</button><button class="btn-light" type="button" data-style-cancel>Cancel changes</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div>
+      <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p></aside>
+      <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><fieldset class="avatar-mode"><legend>Start with</legend><div class="reward-mode-grid" data-style-modes></div></fieldset>
+      <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Little extras for your illustrated avatar. Pick one to try it on.</p>':''}${Object.entries(p.groups).map(([kind,name])=>`<fieldset class="avatar-option-group"><legend>${name}</legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div></fieldset>`).join('')}</div>`).join('')}</div></div>`;
+    showPane(root,active);
+    root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
+      tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
+      tab.addEventListener('keydown',event=>{
+        const keys=Object.keys(panes),index=keys.indexOf(tab.dataset.avatarTab);
+        const next=event.key==='ArrowRight'?keys[(index+1)%keys.length]:event.key==='ArrowLeft'?keys[(index+keys.length-1)%keys.length]:event.key==='Home'?keys[0]:event.key==='End'?keys.at(-1):null;
+        if(next){event.preventDefault();showPane(root,next);root.querySelector(`[data-avatar-tab="${next}"]`).focus();}
+      });
+    });
+  }
+  function showPane(root,key){
+    active=key in panes?key:'look';
+    root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{const selected=tab.dataset.avatarTab===active;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1;});
+    root.querySelectorAll('[data-avatar-pane]').forEach(panel=>panel.hidden=panel.dataset.avatarPane!==active);
+  }
+  function sample(kind,item,draft){
+    if(kind==='title')return '';
+    if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
+    if(kind==='mode'&&item.id==='picture')return BrainiProgressUI.avatarImageMarkup({...BrainiData.player(),avatarDesign:null});
+    if(kind==='frame')return `<span class="reward-frame-sample" data-profile-frame="${item.id}">B</span>`;
+    return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
+  }
+  function choices(root,draft,total,busy){
+    for(const [kind,items] of Object.entries(C.groups)){
+      const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
+      for(const item of items){
+        let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
+        if(!button){
+          button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
+          button.innerHTML='<span class="reward-choice-art" aria-hidden="true"></span><strong></strong><small></small>';grid.append(button);
+        }
+        const art=sample(kind,item,draft),artRoot=button.querySelector('.reward-choice-art');
+        if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+        artRoot.hidden=!art;
+        const selected=draft[kind]===item.id,locked=item.xp>total;
+        button.disabled=busy||locked;button.setAttribute('aria-pressed',String(selected));
+        button.querySelector('strong').textContent=item.name;
+        button.querySelector('small').textContent=locked?`Locked · ${number(item.xp)} XP`:selected?'Selected':item.xp?'Unlocked':kind==='mode'?'Choose':'Free';
+        button.title=item.description||item.name;
+        button.setAttribute('aria-label',`${item.name}, ${locked?'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
+      }
+    }
+  }
+  function next(root,total){
+    const reward=C.next(total),target=root.querySelector('[data-next-reward]');
+    const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra'};
+    target.innerHTML='<span class="reward-kicker"></span><strong></strong><p></p><progress></progress>';
+    target.querySelector('span').textContent=reward?'UP NEXT':'YOUR COLLECTION';
+    target.querySelector('strong').textContent=reward?reward.name:'Every reward is unlocked';
+    target.querySelector('p').textContent=reward?`${number(reward.xp-total)} XP to go · ${labels[reward.kind]}`:'Pick your favourites and make them yours.';
+    const progress=target.querySelector('progress');progress.hidden=!reward;
+    if(reward){progress.max=reward.xp;progress.value=total;progress.setAttribute('aria-label',`${reward.name}: ${number(total)} of ${number(reward.xp)} XP`);}
+  }
+  return {mount,showPane,choices,next};
+})();
+
 /* ===== profile-rewards.js ===== */
 
 window.BrainiProfileRewards=(function(){
-  const catalog=BrainiRewardCatalog,store=BrainiRewardStore;
-  let root,draft=catalog.clean(),draftOwner=null,dirty=false,lastGrid='',editing=false;
-  const number=value=>value.toLocaleString('en-US');
-  function status(text){root.querySelector('[data-style-status]').textContent=text;}
-  function avatar(el,frame){
-    if(!el)return;
-    if(frame==='level')delete el.dataset.profileFrame;
-    else el.dataset.profileFrame=frame;
-  }
-  function renderNext(total){
-    const next=catalog.next(total),target=root.querySelector('[data-next-reward]');
-    target.replaceChildren();
-    const label=document.createElement('span'),name=document.createElement('strong'),hint=document.createElement('p');
-    label.className='reward-kicker';label.textContent=next?'Your next reward':'Your collection';
-    name.textContent=next?`${next.name} · ${next.kind==='frame'?'avatar frame':'profile title'}`:'Every reward is unlocked';
-    hint.textContent=next?`${number(next.xp-total)} XP to go · Unlocks at ${number(next.xp)} XP`:'Choose a frame and title you love. More discoveries await in the games.';
-    target.append(label,name,hint);
-    if(next){
-      const progress=document.createElement('progress');progress.max=next.xp;progress.value=total;
-      progress.setAttribute('aria-label',`Progress to ${next.name}: ${number(total)} of ${number(next.xp)} XP`);target.append(progress);
-    }
-  }
-  function renderGrid(kind,items,total,busy){
-    const grid=root.querySelector(`[data-style-${kind}s]`);grid.replaceChildren();
-    for(const item of items){
-      const button=document.createElement('button'),name=document.createElement('strong'),hint=document.createElement('small');
-      button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
-      button.disabled=busy||item.xp>total;button.setAttribute('aria-pressed',String(draft[kind]===item.id));
-      if(kind==='frame'){
-        const sample=document.createElement('span');sample.className='reward-frame-sample';sample.setAttribute('aria-hidden','true');
-        sample.dataset.profileFrame=item.id;sample.textContent='B';button.append(sample);
-      }
-      name.textContent=item.name;hint.textContent=item.xp>total?`Locked · ${number(item.xp)} XP`:item.xp===0?'Always available':'Unlocked';
-      button.append(name,hint);grid.append(button);
-    }
-  }
+  const C=BrainiRewardCatalog,S=BrainiRewardStore,A=BrainiAvatarDesign,U=BrainiAvatarStudioUI;
+  let root,draft=C.clean(),owner=null,dirty=false,editing=false;
+  function frame(el,id){if(el){if(id==='level')delete el.dataset.profileFrame;else el.dataset.profileFrame=id;}}
   function render(){
-    root=root||document.querySelector('[data-profile-rewards]');if(!root)return;
-    const state=store.snapshot(),total=catalog.xp(BrainiData.player().xp);
-    if(draftOwner!==state.owner){draftOwner=state.owner;dirty=false;lastGrid='';}
-    if(!dirty)draft={...state.style};
-    draft=catalog.available(draft,total);
-    const title=catalog.titles.find(r=>r.id===state.style.title);
-    avatar(document.querySelector('[data-profile-rank-hero] .rank-avatar'),state.style.frame);
-    avatar(document.querySelector('.nav-right .avatar'),state.style.frame);
+    root=root||document.querySelector('[data-profile-rewards]');if(!root?.querySelector('[data-style-status]'))return;
+    const state=S.snapshot(),player=BrainiData.player(),total=C.xp(player.xp);
+    if(owner!==state.owner){owner=state.owner;dirty=false;}
+    if(!dirty)draft={...state.style};draft=C.available(draft,total);
+    const equipped=state.style;
+    for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar')]){
+      if(avatar){frame(avatar,equipped.frame);avatar.innerHTML=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)});}
+    }
     const hero=document.querySelector('.profile-rank-main');
     if(hero){
-      let tag=hero.querySelector('[data-equipped-title]');
-      if(!tag){tag=document.createElement('p');tag.dataset.equippedTitle='';hero.querySelector('h2')?.after(tag);}
-      tag.hidden=title.id==='none';tag.textContent=title.id==='none'?'':title.name;
+      let title=hero.querySelector('[data-equipped-title]');
+      if(!title){title=document.createElement('p');title.dataset.equippedTitle='';hero.querySelector('h2')?.after(title);}
+      title.hidden=equipped.title==='none';title.textContent=C.titles.find(t=>t.id===equipped.title).name;
     }
-    renderNext(total);
-    const gridKey=JSON.stringify([total,state.loading,state.saving,state.error]);
-    if(lastGrid!==gridKey){
-      renderGrid('frame',catalog.frames,total,state.loading||state.saving||!!state.error);
-      renderGrid('title',catalog.titles,total,state.loading||state.saving||!!state.error);lastGrid=gridKey;
-    }
-    root.querySelectorAll('[data-reward-kind]').forEach(button=>button.setAttribute('aria-pressed',String(draft[button.dataset.rewardKind]===button.dataset.rewardId)));
     const preview=root.querySelector('[data-style-preview-avatar]');
-    preview.className='rank-avatar '+BrainiProgressUI.avatarClass(BrainiData.player().level||1);avatar(preview,draft.frame);
-    preview.innerHTML=BrainiProgressUI.avatarImageMarkup(BrainiData.player());
-    root.querySelector('[data-style-preview-name]').textContent=BrainiData.player().displayName;
-    const previewTitle=catalog.titles.find(r=>r.id===draft.title);
-    root.querySelector('[data-style-preview-title]').textContent=previewTitle.id==='none'?'No title selected':previewTitle.name;
-    root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. Your XP are never spent.':'Saved on this browser. Sign in to keep your style across devices. Your XP are never spent.';
-    const save=root.querySelector('[data-style-save]');save.disabled=!dirty||state.loading||state.saving||!!state.error;
-    save.textContent=state.saving?'Saving…':'Save my style';
+    preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(player.level||1);frame(preview,draft.frame);
+    preview.innerHTML=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    root.querySelector('[data-avatar-mini]').innerHTML=preview.innerHTML;
+    root.querySelector('[data-avatar-mini-label]').textContent=dirty?'Your preview':'Your avatar';
+    root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
+    root.querySelector('[data-style-preview-name]').textContent=player.displayName;
+    const title=C.titles.find(t=>t.id===draft.title),titleRoot=root.querySelector('[data-style-preview-title]');
+    titleRoot.textContent=title.id==='none'?'A little more you.':title.name;
+    const progress=BrainiProgressUI.xpProgress?.(player.level,total);
+    root.querySelector('[data-avatar-level]').textContent=`Level ${progress?.level||player.level||1} · ${total.toLocaleString('en-GB')} XP`;
+    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
+    root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
+    root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
-    status(state.loading?'Checking your saved style…':state.saving?'Saving your style…':state.error||state.notice||(dirty?'Preview only. Save to apply your choices.':''));
+    root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||state.notice||(dirty?'Preview only. Save when you’re happy with it.':'');
   }
   function bind(){
-    root=document.querySelector('[data-profile-rewards]');if(!root)return;
-    root.innerHTML=`<div class="profile-reward-intro"><div data-next-reward></div><a class="btn-light" href="#profile-style" data-style-open>Personalize your profile →</a></div>
-      <details id="profile-style"><summary>Frames &amp; titles</summary><div class="profile-style-editor">
-      <div class="profile-style-preview"><span class="rank-avatar" data-style-preview-avatar aria-hidden="true"></span><div><span class="reward-kicker">Preview</span><strong data-style-preview-name></strong><p data-style-preview-title></p></div></div>
-      <p class="profile-reward-help">Make it yours. Rewards unlock automatically with the XP you already earn.</p>
-      <fieldset><legend>Avatar frame</legend><div class="reward-grid" data-style-frames></div></fieldset>
-      <fieldset><legend>Profile title</legend><div class="reward-grid reward-title-grid" data-style-titles></div></fieldset>
-      <p class="profile-reward-help" data-style-storage></p><div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save my style</button><button class="btn-light" type="button" data-style-cancel>Cancel changes</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div>
-      <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p></div></details>`;
-    root.querySelector('[data-style-open]').addEventListener('click',event=>{
-      event.preventDefault();root.querySelector('details').open=true;root.querySelector('summary').focus();
-    });
+    root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
-      const choice=event.target.closest('[data-reward-kind]');
-      if(choice&&!choice.disabled){draft[choice.dataset.rewardKind]=choice.dataset.rewardId;dirty=true;render();}
+      const button=event.target.closest('[data-reward-kind]');
+      if(button&&!button.disabled){
+        const {rewardKind:kind,rewardId:id}=button.dataset;draft[kind]=id;
+        if(kind!=='mode'&&kind!=='frame'&&kind!=='title')draft.mode='built';
+        dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
+      }
       if(event.target.closest('[data-style-cancel]')){dirty=false;render();}
-      if(event.target.closest('[data-style-retry]')){dirty=false;await store.load();}
-      if(event.target.closest('[data-style-save]')){editing=true;const ok=await store.save(draft);editing=false;if(ok)dirty=false;render();}
+      if(event.target.closest('[data-style-retry]')){dirty=false;await S.load();}
+      if(event.target.closest('[data-style-save]')){editing=true;const ok=await S.save(draft);editing=false;if(ok)dirty=false;render();}
     });
     window.addEventListener('brainilab:stylechange',render);
     window.addEventListener('brainilab:datachange',()=>{if(!editing)render();});
-    store.load();render();
+    S.load();render();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
   return {render};

@@ -1286,6 +1286,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const existingLeaderboard=state.auth?.leaderboard || {enabled:false,displayName:null};
     const email=(user.email||"").trim().toLowerCase();
     const meta=user.user_metadata||{};
+    // Cosmetic preferences only; never used to calculate XP, scores or access.
+    state.player.avatarDesign=window.BrainiAvatarDesign?.fromMetadata?.(meta)||null;
     const suggestedName=(
       meta.full_name ||
       meta.name ||
@@ -1324,6 +1326,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     window.dispatchEvent(new CustomEvent("brainilab:authchange",{detail:{status:"authenticated",provider,source:"supabase"}}));
     window.dispatchEvent(new CustomEvent("brainilab:datachange",{detail:{type:"auth"}}));
     return accountSnapshot();
+  }
+
+  function setAvatarDesign(value){
+    const design=window.BrainiAvatarDesign?.clean?.(value)||null;
+    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design))return;
+    state.player.avatarDesign=design;
+    save();
+    window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
   }
 
   function resetPlayerIdentity(){
@@ -1647,6 +1657,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     completeMockSignIn: async (provider,profile) => completeMockSignIn(provider,profile),
     signOut: async () => signOut(),
     updatePlayerProfile: async patch => updatePlayerProfile(patch),
+    setAvatarDesign: async value => setAvatarDesign(value),
     joinLeaderboard: async displayName => joinLeaderboard(displayName),
     leaveLeaderboard: async () => leaveLeaderboard(),
     submitSuggestion: async payload => submitSuggestion(payload),
