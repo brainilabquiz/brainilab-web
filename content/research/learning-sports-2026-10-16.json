@@ -1,0 +1,166 @@
+{
+  "date": "2026-10-16",
+  "language": "English",
+  "market": "United States priority; worldwide English readers",
+  "demand": {
+    "source": "Native Google Trends chart tables",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=chunking%20memory,marathon%20distance&hl=en",
+    "filters": "United States;Past12months;Allcategories;WebSearch;English search terms",
+    "weeklyLabels": "12Oct2025–11Oct2026;lastweek may be partial",
+    "relativeAverages": {
+      "chunking memory": 8,
+      "marathon distance": 52
+    },
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limits": [
+      "Normalised relative interest, not search volumes, unique people, actual visits or guaranteed future traffic.",
+      "Marathon interest includes seasonal events; exact historical why-question volume is unknown.",
+      "Irrelevant rising homework/retrieval-practice query and off-topic race/Ironman rows excluded from keyword targets.",
+      "Same-day OpenSEO insufficient-credit state reused; no paid retry. Known GSC connector not_connected; new URLs have no own-query evidence. No keyword saving/tracking."
+    ]
+  },
+  "selection": [
+    {
+      "slug": "chunking-memory-familiar-groups",
+      "primaryKeyword": "chunking memory",
+      "intent": "Plain definition, familiar units and short concrete example",
+      "novelty": "Distinct from4existingLearningarticles on pretesting,recall,selfexplanation andfamiliarity;97articlefull-document check found no chunking or marathon overlap"
+    },
+    {
+      "slug": "why-marathon-26-2-miles",
+      "primaryKeyword": "marathon distance",
+      "secondaryQuestion": "why is a marathon26.2miles",
+      "intent": "Distance inkm/miles and documented1908→1921history,not training/coaching or upcomingrace dates",
+      "novelty": "Distinct fromtennis/golf/Olympicrings; no prior marathon article"
+    }
+  ],
+  "intentReview": "Focused free search results show educational psychology explainers and running distance/history pages. Primary sources checked separately; no competitor ranking/current own rank or traffic estimate inferred.",
+  "sourcesOpened": [
+    {
+      "url": "https://dictionary.apa.org/chunking",
+      "access": "Native browser; full entry checked after client rendering",
+      "claim": "Recoding groups into memory units; definition used without asserting a universal7item limit."
+    },
+    {
+      "url": "https://memory.psych.missouri.edu/assets/doc/articles/2009/CowanCheninpress07ThornPagevolume.pdf",
+      "access": "Opened author manuscript; pages2–3, PDFindices1–2",
+      "claim": "Cowan/Chen explain meaningful grouping, long-term knowledge and familiar acronym example; manuscript is a chapter draft, not a new intervention test."
+    },
+    {
+      "url": "https://worldathletics.org/disciplines/road-running/marathon",
+      "access": "Web extractor failed; native page successfully read and saved",
+      "claim": "42.195km/26miles385yards; London1908 origin;1921 standard. Royal-nursery story not repeated as established cause."
+    },
+    {
+      "url": "https://artsandculture.google.com/story/genau-42-195-km/UQUxmUDpLTLLUA",
+      "access": "Olympic Museum authored exhibit opened; native complete text checked when extraction later became intermittent",
+      "claim": "WindsorCastle→WhiteCity/RoyalBox,26miles385yards;Stockholm1912=40.2km;1921 standard/Paris1924;IAAFrecords do not explain choice of1908distance."
+    }
+  ],
+  "unavailableChecks": [
+    "APA web extraction initially empty, then full native definition read; WorldAthletics extraction failed then full native success.",
+    "IAAFhistoryPDF,CMUnews andPMCfulltext could not be read through extraction; not used as checked factual sources."
+  ],
+  "examples": {
+    "letterString": "CATDOGSUN",
+    "letters": 9,
+    "groups": [
+      "CAT",
+      "DOG",
+      "SUN"
+    ],
+    "sameOrder": true,
+    "marathonKm": 42.195,
+    "roundedMiles": 26.2,
+    "shortfallFrom42kmMetres": 195,
+    "imperialConversionKm": 42.194988
+  },
+  "reading": {
+    "bodyWords": [
+      255,
+      206
+    ],
+    "shortSectionsEach": 4,
+    "regularArticles": true,
+    "noNewQuizOrLargeWidgets": true,
+    "noUniversalMemoryCapacityClaim": true
+  },
+  "artwork": {
+    "mode": "Built-in image_gen",
+    "prompts": "image-prompts.json",
+    "sourcePNGs": "artwork/",
+    "variants": [
+      {
+        "path": "assets/images/learn/chunking-memory-familiar-groups.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 26178,
+        "sha256": "c8cf1eb8908b32b7ddc09ee01b85aa5247c5fc3baf4896be569e658d48073d33"
+      },
+      {
+        "path": "assets/images/learn/chunking-memory-familiar-groups-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 9318,
+        "sha256": "cd7050d19b39b8479b13ab9d173853d90e7bb425fb94380439f39c5d210e1173"
+      },
+      {
+        "path": "assets/images/learn/chunking-memory-familiar-groups-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 3648,
+        "sha256": "174aab2c7322466bfeb58d4d03893c25ee8b4fb9054b1fde10308e508433e03a"
+      },
+      {
+        "path": "assets/images/learn/why-marathon-26-2-miles.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 103046,
+        "sha256": "1c8b97ccb572180122c16c1fe66c7d32eb858fd75902198aa2b97eed639c3d7d"
+      },
+      {
+        "path": "assets/images/learn/why-marathon-26-2-miles-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 34032,
+        "sha256": "b2c0423743f7d3568ca2d4cd117a0151c0e4716fa997af5d29751b7c986be71e"
+      },
+      {
+        "path": "assets/images/learn/why-marathon-26-2-miles-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 10812,
+        "sha256": "8a0e123e1697901d8c5affd79dd703ec41d3cdefaea05d907cf4a051fc0bc550"
+      }
+    ],
+    "totalBytes": 187034,
+    "review": "Originals,240pxthumbnails,widecrops andactual1280/320pages inspected. CAT/DOG/SUN exactly3words9letters;42.195kmcorrect,fullshoes/signsafeincrops;honestillustrativecredits."
+  },
+  "verification": [
+    "Fullbuild964publicfiles/142assets passed",
+    "ExistingLearnSEO/library/navigation/8courses156quizquestiontests passed",
+    "Two generatedarticlechecks,metadata/schema/canonical/author/citations,covervariants,links/feed/sitemap passed",
+    "AtomicCMSpublicationtest:2mirrors,97priorarticles/8paths exact,duplicate rejection,rollback when secondarticleinvalid",
+    "Native1280/320botharticles no overflow,coversloaded; alloriginal97source/CMS docs agree andnoU+FFFD"
+  ],
+  "categories": {
+    "before": {
+      "Learning": 4,
+      "Sports": 5,
+      "Numbers & logic": 34
+    },
+    "after": {
+      "Learning": 5,
+      "Sports": 6,
+      "Numbers & logic": 34
+    }
+  },
+  "publication": {
+    "preparedAt": "2026-10-16T20:23:02.694163+00:00",
+    "status": "Prepublication checks passed; cover deploy/hash verification and guarded CMS insert follow",
+    "priorArticles": 97,
+    "priorPaths": 8
+  }
+}
