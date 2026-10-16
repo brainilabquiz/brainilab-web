@@ -170,3 +170,32 @@ https://support.chess.com/en/articles/8701403-how-do-i-change-my-icon-or-flair
 
 Official API reference checked 16 October 2026:
 https://supabase.com/docs/reference/javascript/auth-updateuser
+
+The wordplay collection now contains 24 accessories: seven glasses, eight hats
+and nine props (excluding None). New choices are Eye spy (2,250 XP), Dough-eyed
+(6,500), A-maize-ing (2,200), Brain waves (5,500), Train of thought (3,200) and
+On a roll (7,500). All previous IDs and unlock thresholds remain valid. Only one
+Little extras category opens at a time; each summary shows the current draft.
+Migration `20261016210748_avatar_wordplay_collection.sql` extends only the private
+cosmetic allowlist with a definition-hash guard. The four public RPCs, privacy
+guards and player tables remain untouched.
+
+The name, equipped title and canonical level/XP appear in a progress diploma.
+Its ten finishes follow the existing level ranks (1, 5, 10, 15, 20, 25, 30, 40,
+50 and 60), derived from earned XP. Borders, seals, laurels and corners become
+more detailed automatically. This is a game progress decoration, not an academic
+credential. It neither spends XP nor writes any progression or metadata.
+
+A nonmodal guest invitation appears after 15 seconds on Home, Games and the
+Daily overview. It is excluded from individual games, articles, profile and
+editor routes. It never steals focus, yields to visible cookie/auth/game dialogs,
+closes with Escape or its close button, and uses the existing signup flow.
+The functional browser preference limits it to once per 30 days; storage failure
+suppresses it. Signing in or a cross-tab dismissal removes it. No tracking event,
+new authentication flow or gameplay write is introduced.
+
+Additional validation: `tools/test-avatar-collection.mjs` checks all six unlocks,
+safe original SVG, accordion/cancel behavior and every diploma boundary;
+`tools/test-avatar-announcement.mjs` checks guest-only timing, routes, focus,
+frequency, blockers, storage failure, signup and errors. The isolated PostgreSQL
+suite checks every new public appearance threshold and previous payload parity.

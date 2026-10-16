@@ -27,8 +27,11 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     const title=C.titles.find(t=>t.id===draft.title),titleRoot=root.querySelector('[data-style-preview-title]');
-    titleRoot.textContent=title.id==='none'?'A little more you.':title.name;
+    titleRoot.textContent=title.id==='none'?'':title.name;titleRoot.hidden=title.id==='none';
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
+    const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
+    root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
+    root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Grows with your level';
     root.querySelector('[data-avatar-level]').textContent=`Level ${progress?.level||player.level||1} · ${total.toLocaleString('en-GB')} XP`;
     U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
