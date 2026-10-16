@@ -1,5 +1,5 @@
 import {newTabLinks} from '../lib/link-policy.js';
-import {assetVersion,versionAssets} from '../lib/asset-versions.js';
+import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -55,6 +55,15 @@ for(const file of publicFiles){
     assetVersions.set(file,assetVersion(await readFile(target)));
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
   }else if(!file.endsWith('.html')) await copyFile(source,target);
+}
+// A changed lazy feature must invalidate the loader even when its HTML entry
+// point has no direct script tag for that feature (for example profile social).
+const featureManifest=Buffer.from(`window.BrainiFeatureVersions=Object.freeze(${JSON.stringify(lazyFeatureVersions(assetVersions))});\n`);
+for(const file of ['assets/js/shell.bundle.js','assets/js/perf-loader.js']){
+  if(!assetVersions.has(file))continue;
+  const target=path.join(output,file),bytes=Buffer.concat([featureManifest,await readFile(target)]);
+  await writeFile(target,bytes);
+  assetVersions.set(file,assetVersion(bytes));compressed+=featureManifest.length;
 }
 for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   const html=newTabLinks(await readFile(path.join(root,file),'utf8'));

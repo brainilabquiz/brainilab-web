@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {assetVersion, versionAssets} from '../lib/asset-versions.js';
+import {assetVersion, versionAssets, lazyFeatureVersions} from '../lib/asset-versions.js';
 
 const versions = new Map([
   ['assets/css/site.css', assetVersion('body{color:#2d296e}')],
@@ -23,4 +23,10 @@ const scriptVersion = versions.get('assets/js/shell.bundle.js');
 assert.equal(versionAssets('<script defer src="/assets/js/shell.bundle.js?v=old"></script>', 'index.html', versions), `<script defer src="/assets/js/shell.bundle.js?v=${scriptVersion}"></script>`);
 assert.equal(versionAssets('<link rel="preload" as="script" href="/assets/js/shell.bundle.js?v=old">', 'index.html', versions), `<link rel="preload" as="script" href="/assets/js/shell.bundle.js?v=${scriptVersion}">`);
 assert.throws(() => versionAssets('<link rel="stylesheet" href="/assets/css/missing.css?v=old">', 'index.html', versions), /Missing published asset/);
+const featureMap=new Map([...versions,['assets/js/profile-social.bundle.js',assetVersion('old feature')],['assets/js/perf-loader.js','loader']]);
+const manifest=lazyFeatureVersions(featureMap);
+assert.deepEqual(Object.keys(manifest),['profile-social.bundle.js'],'no CSS or self-referential loader hashes');
+featureMap.set('assets/js/profile-social.bundle.js',assetVersion('new feature'));
+assert.notEqual(lazyFeatureVersions(featureMap)['profile-social.bundle.js'],manifest['profile-social.bundle.js'],'a feature-only edit invalidates the lazy URL');
+assert.deepEqual(lazyFeatureVersions(new Map([...featureMap].reverse())),lazyFeatureVersions(featureMap),'stable manifest independent of discovery order');
 console.log('PASS CSS/JS cache versions: updates, nested paths, query strings, unchanged content and missing assets.');
