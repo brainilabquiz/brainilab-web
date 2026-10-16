@@ -9,7 +9,7 @@ function page(auth={status:'guest'},path='/'){
  w.currentAuth=auth;w.opened=[];w.loaded=0;
  const player={displayName:'Player',avatarUrl:null,level:1,xp:0,currentStreak:0,totalGames:0,totalQuestions:0};
  w.BrainiData={authState:()=>w.currentAuth,player:()=>player,api:{getAuthState:async()=>w.currentAuth,getPlayer:async()=>player,track(){}}};
- w.BrainiProgressUI={defaultAvatarMarkup:()=>'<svg aria-hidden="true"></svg>',tier:()=>({name:'Rookie'}),avatarClass:()=> 'rank-fixture',xpProgress:()=>({level:1,percent:0,nextLevel:2,label:'Start with a game'})};
+ w.BrainiProgressUI={avatarImageMarkup:()=>'<svg aria-hidden="true"></svg>',defaultAvatarMarkup:()=>'<svg aria-hidden="true"></svg>',tier:()=>({name:'Rookie'}),avatarClass:()=> 'rank-fixture',xpProgress:()=>({level:1,percent:0,nextLevel:2,label:'Start with a game'})};
  w.BrainiPerf={ensureCloud:async()=>{w.loaded++;w.BrainiAuth={open:opts=>w.opened.push(opts)};return true;}};
  w.eval(source);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  return w;

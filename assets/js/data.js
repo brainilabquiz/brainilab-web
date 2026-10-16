@@ -345,6 +345,8 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   let state=loadState();
+  // Persist the browser identity before the first navigation or game.
+  save();
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); }catch(e){}
@@ -357,6 +359,14 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const last=p.lastStreakDate;
     p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
     p.streakSecuredToday=last===today && p.currentStreak>0;
+    p.identityName=state.auth.leaderboard?.displayName||p.displayName;
+    p.defaultSeed=state.auth.anonymousPlayerId;
+    const identity=window.BrainiPeople?.resolve(p);
+    if(identity){
+      p.defaultAvatarUrl=identity.avatar;
+      // The private display name can differ from the public ranking alias.
+      p.displayName=BrainiPeople.resolve({name:p.displayName,defaultSeed:p.defaultSeed}).displayName;
+    }
     return p;
   }
   function daily(){

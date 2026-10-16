@@ -50,20 +50,37 @@ window.BrainiProgressUI=(function(){
   function avatarMarkup(initial,level,extraClass=""){
     const t=tier(level);
     return `<span class="rank-avatar ${avatarClass(level)} ${extraClass}" title="${t.name} · Level ${Number(level||1)}">
-      ${defaultAvatarMarkup()}
+      ${defaultAvatarMarkup(typeof initial==="object"?initial:undefined)}
     </span>`;
   }
 
-  function defaultAvatarMarkup(){
-    return '<img class="default-player-avatar" src="/assets/icons/product/player-owl.svg" width="48" height="48" alt="">';
+  const escapeAvatar=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function defaultAvatarMarkup(person){
+    const identity=BrainiPeople.resolve(person||window.BrainiData?.player?.()||{});
+    return `<img class="default-player-avatar" src="${identity.avatar}" width="48" height="48" alt="" title="Illustration inspired by ${escapeAvatar(identity.name)}">`;
   }
 
-  // Capture image errors once: broken remote photos receive the same local avatar.
+  function avatarImageMarkup(person){
+    person=person||window.BrainiData?.player?.()||{};
+    const identity=BrainiPeople.resolve(person);
+    try{
+      if(person.avatarUrl){
+        const url=new URL(person.avatarUrl,location.origin);
+        if(['https:','http:'].includes(url.protocol)){
+          return `<img src="${escapeAvatar(url.href)}" data-fallback-avatar="${identity.id}" width="48" height="48" alt="">`;
+        }
+      }
+    }catch{}
+    return defaultAvatarMarkup(person);
+  }
+
+  // Failed custom photos retain the same portrait throughout the interface.
   document.addEventListener('error',event=>{
     const image=event.target;
-    if(image?.tagName==='IMG' && image.closest('.rank-avatar,.rank-header-avatar') && !image.classList.contains('default-player-avatar')){
-      image.classList.add('default-player-avatar');
-      image.src='/assets/icons/product/player-owl.svg';
+    if(image?.tagName==='IMG' && image.dataset.fallbackAvatar){
+      const person=BrainiPeople.PEOPLE.find(p=>p.id===image.dataset.fallbackAvatar);
+      delete image.dataset.fallbackAvatar;
+      if(person){image.classList.add('default-player-avatar');image.src=person.avatar;}
     }
   },true);
 
@@ -193,7 +210,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();

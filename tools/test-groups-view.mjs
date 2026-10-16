@@ -8,7 +8,7 @@ let signed=true,groups=[owner,{...owner,id:'two',name:'Other team',myRole:'membe
 w.BrainiData={isAuthenticated:()=>signed,authState:()=>({status:signed?'authenticated':'guest',user:{source:'supabase'}}),groups:()=>groups,socialState:()=>({groupInvites:[]}),friends:()=>[],player:()=>({countryCode:'ES'}),api:{track:()=>{}}};
 w.BrainiBackendAuth={isConfigured:()=>true};w.BrainiAuth={open:()=>{}};w.showToast=()=>{};
 w.BrainiGroups={refresh:async()=>{},create:async(payload)=>{lastPayload=payload;calls++;if(fail)throw Error('Please try again.');return new Promise(r=>resolveSave=r);},update:async()=>{},inviteFriend:async()=>{}};
-for(const f of ['icon-system.js','groups-view.js','social.js'])w.eval(readFileSync('assets/js/'+f,'utf8'));
+for(const f of ['player-personalities.js','progression-ui.js','icon-system.js','groups-view.js','social.js'])w.eval(readFileSync('assets/js/'+f,'utf8'));
 await new Promise(r=>setTimeout(r,0));const root=w.document.querySelector('[data-groups-root]');
 assert.equal(root.querySelectorAll('.group-room').length,2);assert.equal(root.querySelectorAll('[data-share-group]').length,1);
 assert.equal(root.querySelectorAll('[data-edit-group]').length,1,'one edit action per owned team');

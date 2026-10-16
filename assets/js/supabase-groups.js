@@ -30,7 +30,8 @@ window.BrainiGroups=(function(){
     const members=(g.members||[]).map(m=>({
       id:m.user_id,
       userId:m.user_id,
-      name:m.name||"Braini Player",
+      identityName:m.name||"Braini Player",
+      name:BrainiPeople.resolve({name:m.name}).displayName,
       avatar:m.avatar||((m.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:m.avatar_url||null,
       country:m.country||"",
@@ -45,7 +46,8 @@ window.BrainiGroups=(function(){
     const pendingInvites=(g.pending_invites||[]).map(i=>({
       id:i.id,
       userId:i.user_id,
-      name:i.name||"Braini Player",
+      identityName:i.name||"Braini Player",
+      name:BrainiPeople.resolve({name:i.name}).displayName,
       avatar:i.avatar||((i.name||"B")[0]||"B").toUpperCase(),
       country:i.country||"",
       createdAt:i.created_at||null

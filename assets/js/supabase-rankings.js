@@ -17,7 +17,8 @@ window.BrainiRankingsCloud=(function(){
   function normalizeRow(r){
     return {
       rank:Number(r.rank||0),
-      name:r.name||"Braini Player",
+      identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
       country:r.country||"",
       avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:r.avatar_url||null,

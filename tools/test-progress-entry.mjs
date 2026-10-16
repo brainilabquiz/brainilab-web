@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const dom=new JSDOM('<div data-braini-continuity="compact"></div><div id="recentResults"></div><div data-profile-rank-hero></div>',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only'}),w=dom.window;
 w.structuredClone=structuredClone;
-for(const file of ['icon-system.js','data.js','progression-ui.js','ui.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
+for(const file of ['player-personalities.js','icon-system.js','data.js','progression-ui.js','ui.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
 await w.BrainiData.syncExternalAuthUser({id:'player-a',email:'test@example.test'});
 const now=new Date(),today=now.toISOString().slice(0,10),tomorrow=new Date(now.getTime()+86400000).toISOString().slice(0,10);
 const summary={progression:{user_id:'player-a',xp:240,level:4,current_streak:4,best_streak:4,last_streak_date:today},continuity:{today,reset_at:tomorrow+'T00:00:00Z',completed_today:true,days:[{date:today,completed:true}]},today:{},week:{},month:{}};

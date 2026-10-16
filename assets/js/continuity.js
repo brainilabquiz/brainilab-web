@@ -59,8 +59,8 @@ window.BrainiContinuity=(()=>{
       return `<p class="post-reward-note" role="status">${saved.cloudSyncStatus==='synced'?'Your score is saved. We’re checking your XP.':'Saved on this device. Waiting to sync.'}</p>`;
     }
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp),change=changes.get(result.clientResultId),before=change&&BrainiProgressUI.xpProgress(1,change.before),up=before&&progress.level>before.level;
-    const player=window.BrainiData?.player?.()||{};let photo='';try{const u=new URL(player.avatarUrl);if(u.protocol==='https:')photo=esc(u.href);}catch{}
-    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>`;
+    const player=window.BrainiData?.player?.()||{};
+    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}">${BrainiProgressUI.avatarImageMarkup(player)}</span>`;
     const today=new Date().toISOString().slice(0,10),model=window.BrainiDailyRules?.model(today);
     const main=Number(result.dailyNumber)>0&&window.BrainiData?.dateForDailyNumber?.(Number(result.dailyNumber))===today&&model?.primary===result.gameId;
     const secured=main&&summary.continuity?.today===today&&summary.continuity.completed_today;

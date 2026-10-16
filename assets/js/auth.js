@@ -351,30 +351,8 @@ window.BrainiAuth = (function(){
 
       const avatar=nav.querySelector(".avatar");
       if(avatar){
-        if(auth.status==="authenticated"){
-          if(p.avatarUrl){
-            try{
-              const u=new URL(p.avatarUrl,location.origin);
-              if(!["https:","http:"].includes(u.protocol)){
-                throw new Error("Unsafe avatar URL");
-              }
-
-              const img=document.createElement("img");
-              img.src=u.href;
-              img.alt="";
-              avatar.replaceChildren(img);
-            }catch(err){
-              avatar.textContent=p.avatarInitial||"B";
-            }
-          }else{
-            avatar.textContent=p.avatarInitial||"B";
-          }
-
-          avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
-        }else{
-          avatar.textContent="B";
-          avatar.title="Guest profile & stats";
-        }
+        avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
+        avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
       }
     });
   }
@@ -442,20 +420,6 @@ window.BrainiAuth = (function(){
     );
     const friendCode=BrainiData.socialState().friendCode||"—";
 
-    let safeAvatarUrl="";
-    try{
-      if(p.avatarUrl){
-        const u=new URL(p.avatarUrl,location.origin);
-        if(["https:","http:"].includes(u.protocol)){
-          safeAvatarUrl=u.href
-            .replaceAll("&","&amp;")
-            .replaceAll('"',"&quot;")
-            .replaceAll("<","&lt;")
-            .replaceAll(">","&gt;");
-        }
-      }
-    }catch(err){}
-
     return `
       <section class="profile-account-panel">
         <div class="profile-account-head">
@@ -465,14 +429,11 @@ window.BrainiAuth = (function(){
                 ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
                 : ""
             }">
-              ${safeAvatarUrl
-                ? `<img src="${safeAvatarUrl}" alt="">`
-                : (p.avatarInitial||"B")
-              }
+              ${BrainiProgressUI.avatarImageMarkup(p)}
             </div>
             <div>
               <div class="auth-kicker">Edit Profile</div>
-              <h2>${p.displayName}</h2>
+              <h2>${String(p.displayName).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</h2>
               <p>${window.BrainiProgressUI
                 ? `${BrainiProgressUI.tier(p.level||1).name} · Level ${p.level||1}`
                 : `Level ${p.level||1}`
@@ -509,7 +470,7 @@ window.BrainiAuth = (function(){
           <div>
             <label>Rankings visibility</label>
             <div class="profile-leaderboard-setting">
-              <span>${lb.enabled ? `Visible as <strong>${String(lb.displayName||"Player").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
+              <span>${lb.enabled ? `Visible as <strong>${BrainiPeople.resolve({name:lb.displayName}).displayName.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
               <button type="button" data-leaderboard-toggle>${lb.enabled ? "Leave rankings" : "Join rankings"}</button>
             </div>
             <small class="profile-field-help">Completed games appear automatically under a public player name. You can hide your ranking at any time. Your email is never shown.</small>
@@ -522,10 +483,7 @@ window.BrainiAuth = (function(){
               ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
               : ""
           }">
-            ${safeAvatarUrl
-              ? `<img src="${safeAvatarUrl}" alt="">`
-              : `<span>${p.avatarInitial||"B"}</span>`
-            }
+            ${BrainiProgressUI.avatarImageMarkup(p)}
           </div>
 
           <div class="profile-photo-copy">

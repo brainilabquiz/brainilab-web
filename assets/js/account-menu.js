@@ -22,21 +22,6 @@ window.BrainiAccountMenu=(function(){
     return section ? `${base}?section=${section}` : base;
   }
 
-  function safePhotoUrl(value){
-    try{
-      if(!value) return "";
-      const u=new URL(value,location.origin);
-      if(!["https:","http:"].includes(u.protocol)) return "";
-      return u.href
-        .replaceAll("&","&amp;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;");
-    }catch(err){
-      return "";
-    }
-  }
-
   async function signOut(){
     close();
 
@@ -63,7 +48,6 @@ window.BrainiAccountMenu=(function(){
   function menuMarkup(auth,p){
     const logged=auth.status==="authenticated";
     const tier=window.BrainiProgressUI?.tier?.(p.level||1);
-    const photo=safePhotoUrl(p.avatarUrl);
     const progress=window.BrainiProgressUI?.xpProgress?.(p.level,p.xp);
     const streak=Math.max(0,Number(p.currentStreak)||0);
 
@@ -74,10 +58,7 @@ window.BrainiAccountMenu=(function(){
             ? BrainiProgressUI.avatarClass(p.level||1)
             : ""
           } account-menu-avatar">
-            ${photo
-              ? `<img src="${photo}" alt="">`
-              : BrainiProgressUI.defaultAvatarMarkup()
-            }
+            ${BrainiProgressUI.avatarImageMarkup(p)}
           </span>
 
           <div>
@@ -320,23 +301,7 @@ window.BrainiAccountMenu=(function(){
         avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${Number(p.level||1)}`;
       }
 
-      if(p.avatarUrl){
-        try{
-          const u=new URL(p.avatarUrl,location.origin);
-          if(!["https:","http:"].includes(u.protocol)){
-            throw new Error("Unsafe avatar URL");
-          }
-
-          const img=document.createElement("img");
-          img.src=u.href;
-          img.alt="";
-          avatar.replaceChildren(img);
-        }catch(err){
-          avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
-        }
-      }else{
-        avatar.innerHTML=BrainiProgressUI.defaultAvatarMarkup();
-      }
+      avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
     });
   }
 
