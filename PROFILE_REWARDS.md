@@ -182,8 +182,11 @@ guards and player tables remain untouched.
 
 The name, equipped title and canonical level/XP appear in a progress diploma.
 Its ten finishes follow the existing level ranks (1, 5, 10, 15, 20, 25, 30, 40,
-50 and 60), derived from earned XP. Borders, seals, laurels and corners become
-more detailed automatically. This is a game progress decoration, not an academic
+50 and 60), derived from earned XP. Quiet borders and corners become more detailed
+automatically. The compact white card uses the profile's rounded corners, places
+a small seal beside the name, and keeps the title, XP and next finish close
+together. It has no visible diploma heading or separate seal row. This is a
+game progress decoration, not an academic
 credential. It neither spends XP nor writes any progression or metadata.
 
 A nonmodal guest invitation appears after 15 seconds on Home, Games and the
