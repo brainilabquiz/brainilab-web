@@ -791,6 +791,7 @@ window.BrainiSocial = (function(){
                 <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
                 <span>
                   <strong>${groupEscape(f.name)}</strong>
+                  ${BrainiProgressUI.profileTitleMarkup(f)}
                   <small>${flag(f.country)} ${f.country||""}</small>
                 </span>
               </label>`).join("")
@@ -1214,6 +1215,7 @@ window.BrainiSocial = (function(){
               <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
+                ${BrainiProgressUI.profileTitleMarkup(r)}
                 <small>${flag(r.country)} ${r.country||""}</small>
               </div>
               <div class="friend-request-actions">
@@ -1232,6 +1234,7 @@ window.BrainiSocial = (function(){
               <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
+                ${BrainiProgressUI.profileTitleMarkup(r)}
                 <small>${flag(r.country)} ${r.country||""} · Pending</small>
               </div>
               <button class="friend-action" data-cancel-request="${r.id}">Cancel</button>
@@ -1247,6 +1250,7 @@ window.BrainiSocial = (function(){
             <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
             <div class="friend-main">
               <strong>${f.name}</strong>
+              ${BrainiProgressUI.profileTitleMarkup(f)}
               <small>${flag(f.country)} ${f.country||""} · Level ${f.level||1}</small>
             </div>
 
@@ -1432,6 +1436,7 @@ window.BrainiSocial = (function(){
                             : ""
                         }
                       </strong>
+                      ${BrainiProgressUI.profileTitleMarkup(m)}
 
                       <small>
                         ${flag(m.country)} ${m.country||""}

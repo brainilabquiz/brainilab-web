@@ -99,10 +99,27 @@ definer RPCs call it only for people already authorized in their response.
 Only allowlisted cosmetic IDs leave Auth metadata. Canonical
 `public.player_progression.xp` gates each accessory and frame. A public style
 includes a minimum rendering threshold, rather than exposing total XP, user IDs,
-emails, other metadata or titles on public rankings. Picture mode omits hidden
+emails or other metadata on public rankings. Picture mode omits hidden
 illustration choices. No player rows, scores, XP, relationships or photos are
 updated by this migration. `avatar-design.js` normalizes the appearance in each
 adapter; `progression-ui.js` renders it consistently, including rows without XP.
+
+The `My avatar` option selects the illustrated avatar; `Your picture` keeps the
+saved photo/preset. Migration `20261016201431_shared_player_titles.sql` extends only
+the existing private helper to include the equipped `title` ID in `avatar_style`.
+It checks the same title catalog and canonical XP thresholds as the profile:
+Explorer 250, Curious Mind 750, Puzzle Detective 2,000, Deep Thinker 4,500 and
+BrainiLab Sage 10,000. It never publishes the whole unlocked collection. None,
+unknown or still-locked selections show no badge. A title can accompany a photo
+without exposing unused illustration choices or increasing `render_xp`.
+
+An allowlisted label appears below the name in individual/friend rankings,
+friends/requests, group members and the group friend picker. It is distinct from
+the level title and team role, wraps on narrow screens, and has a screen-reader
+prefix. Existing visibility and membership rules apply through the same RPCs;
+the four public RPC definitions, score/XP tables and saving flow stay untouched.
+The helper definition-hash guard protects concurrent edits; its private ACL and
+empty search path remain unchanged. Unequipping removes the label on refresh.
 
 Validation: `tools/test-profile-rewards.mjs` and `tools/test-avatar-studio.mjs`
 (set `JSDOM_MODULE`), existing profile,

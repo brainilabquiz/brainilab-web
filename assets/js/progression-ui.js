@@ -83,6 +83,12 @@ window.BrainiProgressUI=(function(){
     return ['blue','green','copper','gold','orbit'].includes(frame)?`data-social-frame="${frame}"`:'';
   }
 
+  function profileTitleMarkup(person){
+    const titles=window.BrainiAvatarDesign?.profileTitles,id=person?.profileTitle;
+    const label=titles&&typeof id==='string'&&Object.hasOwn(titles,id)?titles[id]:'';
+    return label?`<span class="player-profile-title"><span class="profile-title-context">Profile title: </span>${label}</span>`:'';
+  }
+
   // Failed custom photos retain the same portrait throughout the interface.
   document.addEventListener('error',event=>{
     const image=event.target;
@@ -232,7 +238,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,avatarFrameAttribute,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,avatarFrameAttribute,profileTitleMarkup,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();

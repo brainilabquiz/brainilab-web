@@ -1,7 +1,7 @@
 /* Original BrainiLab character artwork. Local SVG, no remote avatar service. */
 window.BrainiAvatarDesign=(function(){
   const choices={
-    mode:[['picture','Your picture'],['built','Create an avatar']],
+    mode:[['picture','Your picture'],['built','My avatar']],
     skin:[['sand','Sand','#f3c4a0'],['peach','Peach','#ffdbc4'],['honey','Honey','#d79d6b'],['cocoa','Cocoa','#a96b47'],['umber','Umber','#744630'],['ebony','Ebony','#4c3028']],
     hair:[['sweep','Side sweep'],['curls','Curls'],['bob','Soft bob'],['crop','Short crop'],['bald','No hair'],['ponytail','Ponytail'],['waves','Long waves'],['braids','Braids']],
     hairColor:[['brown','Brown','#644130'],['black','Black','#302c36'],['blond','Blond','#e6bd63'],['auburn','Auburn','#a34e30'],['silver','Silver','#b5b6c2']],
@@ -25,12 +25,14 @@ window.BrainiAvatarDesign=(function(){
   // Public RPCs supply only sanitized cosmetics and their minimum render threshold,
   // never another player's auth metadata or total XP. Legacy payloads stay valid.
   const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,gold:3000,orbit:6000});
+  const profileTitles=Object.freeze({explorer:'Explorer',curious:'Curious Mind',detective:'Puzzle Detective',thinker:'Deep Thinker',sage:'BrainiLab Sage'});
   function fromPublicStyle(style){
     if(!style||typeof style!=='object'||Array.isArray(style))return {};
     const value=Number(style.render_xp),renderXp=Number.isFinite(value)?Math.max(0,Math.min(9000,value)):0;
     const frame=Object.hasOwn(frameXp,style.frame)&&renderXp>=frameXp[style.frame]?style.frame:'level';
     return {avatarDesign:style.design?.mode==='built'?available(style.design,renderXp):null,
-      avatarRenderXp:renderXp,avatarFrame:frame};
+      avatarRenderXp:renderXp,avatarFrame:frame,
+      profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none'};
   }
   const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
   function star(cx,cy,r=13){
@@ -81,5 +83,5 @@ window.BrainiAvatarDesign=(function(){
     }[v.hair];
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${back}<path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/><path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${hairFront}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g><path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
   }
-  return Object.freeze({options,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,markup});
+  return Object.freeze({options,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup});
 })();
