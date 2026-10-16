@@ -158,18 +158,25 @@ window.BrainiAvatarStudioUI=(function(){
     rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title'}}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
+  function group(kind,name,folded){
+    const field=`<fieldset class="avatar-option-group" ${folded?`aria-label="${name}"`:''}>${folded?'':`<legend>${name}</legend>`}<div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
+    return folded?`<details class="avatar-extra-group" data-avatar-extra="${kind}" ${kind==='glasses'?'open':''}><summary><strong>${name}</strong><span data-avatar-extra-label="${kind}"></span><b aria-hidden="true">+</b></summary>${field}</details>`:field;
+  }
   function mount(root){
     root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>Try a new look. Add a little extra. Make it you.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
       <div class="avatar-studio-layout"><aside class="avatar-studio-stage" aria-label="Avatar preview">
       <div class="avatar-stage-art"><span class="avatar-preview-label" data-style-preview-label>Your avatar</span><span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span></div>
-      <div class="avatar-stage-identity"><strong data-style-preview-name></strong><p data-style-preview-title></p><span data-avatar-level></span></div>
+      <div class="avatar-stage-identity" data-diploma-tier="rookie" aria-label="BrainiLab progress diploma"><span class="avatar-diploma-corners" aria-hidden="true"></span><span class="avatar-diploma-kicker">Progress diploma</span><strong data-style-preview-name></strong><p data-style-preview-title></p><span data-avatar-level></span><span class="avatar-diploma-seal" aria-hidden="true"><svg viewBox="0 0 64 44" fill="none"><g class="avatar-diploma-laurel" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 36C5 31 5 16 14 6M44 36C59 31 59 16 50 6"/><path d="m12 11-5-1 3 6m0 2-6 1 5 4m2 2-6 3 7 2m2 2-4 4 7-1m35-24 5-1-3 6m0 2 6 1-5 4m-2 2 6 3-7 2m-2 2 4 4-7-1"/></g><g transform="translate(12 2)"><path d="m14 26-3 11 9-5 9 5-3-11" fill="currentColor" opacity=".2"/><circle cx="20" cy="17" r="13" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="17" r="9" stroke="currentColor"/><path d="m20 10 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="currentColor"/></g></svg></span><small data-avatar-diploma-next></small></div>
       <div class="avatar-next-reward" data-next-reward></div>
       <div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save my avatar</button><button class="btn-light" type="button" data-style-cancel>Cancel changes</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div>
       <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></aside>
       <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><fieldset class="avatar-mode"><legend>Start with</legend><div class="reward-mode-grid" data-style-modes></div></fieldset>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Little extras for your illustrated avatar. Pick one to try it on.</p>':''}${Object.entries(p.groups).map(([kind,name])=>`<fieldset class="avatar-option-group"><legend>${name}</legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`).join('')}</div>`).join('')}</div></div>`;
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Open a category and try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name,key==='extras')).join('')}</div>`).join('')}</div></div>`;
     showPane(root,active);
+    root.querySelectorAll('[data-avatar-extra]').forEach(details=>details.querySelector('summary').addEventListener('click',()=>{
+      if(!details.open)root.querySelectorAll('[data-avatar-extra]').forEach(other=>{if(other!==details)other.open=false;});
+    }));
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
       tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
       tab.addEventListener('keydown',event=>{
@@ -212,6 +219,7 @@ window.BrainiAvatarStudioUI=(function(){
         button.setAttribute('aria-label',`${item.name}, ${locked?'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
       }
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
+      const label=root.querySelector(`[data-avatar-extra-label="${kind}"]`);if(label)label.textContent=chosen.name;
       if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}
     }
   }
@@ -259,8 +267,11 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     const title=C.titles.find(t=>t.id===draft.title),titleRoot=root.querySelector('[data-style-preview-title]');
-    titleRoot.textContent=title.id==='none'?'A little more you.':title.name;
+    titleRoot.textContent=title.id==='none'?'':title.name;titleRoot.hidden=title.id==='none';
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
+    const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
+    root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
+    root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Grows with your level';
     root.querySelector('[data-avatar-level]').textContent=`Level ${progress?.level||player.level||1} · ${total.toLocaleString('en-GB')} XP`;
     U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';

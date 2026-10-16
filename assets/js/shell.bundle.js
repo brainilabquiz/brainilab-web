@@ -233,9 +233,9 @@ window.BrainiAvatarDesign=(function(){
     hairColor:[['brown','Brown','#644130'],['black','Black','#302c36'],['blond','Blond','#e6bd63'],['auburn','Auburn','#a34e30'],['silver','Silver','#b5b6c2']],
     shirt:[['navy','Navy','#2d296e'],['green','Green','#397e39'],['orange','Orange','#d86725'],['blue','Blue','#3d86b0'],['berry','Berry','#aa4b77']],
     background:[['lilac','Lilac','#eae6fa'],['sky','Sky','#dceef8'],['sage','Sage','#e1efdf'],['sunshine','Sunshine','#fff0b3'],['coral','Coral','#fce1d6']],
-    glasses:[['none','No glasses'],['round','Fresh eyes',null,150,'Round glasses. A fresh way to look at things.'],['square','Square roots',null,600,'Square frames with a soft spot for math.'],['sun','Bright mind',null,1000,'Sunglasses for a bright mind.'],['star','Star pupil',null,3500,'Star-shaped glasses. A little brilliance.'],['visor','Eye-Q',null,5000,'A futuristic visor with an eye for good ideas.']],
-    hat:[['none','No hat'],['beanie','Warm thoughts',null,500,'A cozy beanie for your best ideas.'],['egg','Egghead',null,1200,'A sunny-side-up hat for a well-rounded thinker.'],['cap','Thinking cap',null,1500,'Put your thinking cap on.'],['cloud','Brainstorm',null,4000,'A little cloud with a bright idea brewing.'],['wizard','Quiz wizard',null,6000,'A starry hat for a little quiz magic.'],['graduate','Top of the class',null,8000,'A graduation cap. Your head is in a class of its own.']],
-    prop:[['none','No extra'],['cookie','Smart cookie',null,300,'A chocolate chip cookie. One clever little snack.'],['icepop','Brain freeze',null,800,'An ice pop to cool off a busy brain.'],['peas','Peas of mind',null,1800,'Peace of mind, one little pea at a time.'],['bulb','Bright idea',null,2500,'A light bulb for your next bright idea.'],['pencil','Sharp thinker',null,4500,'A well-sharpened pencil, ready for a sharp thinker.'],['rocket','Rocket science',null,7000,'A tiny rocket for ideas that are ready to take off.'],['book','Bookworm',null,9000,'A little worm who always has time for one more page.']]
+    glasses:[['none','No glasses'],['round','Fresh eyes',null,150,'Round glasses. A fresh way to look at things.'],['square','Square roots',null,600,'Square frames with a soft spot for math.'],['sun','Bright mind',null,1000,'Sunglasses for a bright mind.'],['monocle','Eye spy',null,2250,'A little monocle for spotting the smallest clues.'],['star','Star pupil',null,3500,'Star-shaped glasses. A little brilliance.'],['visor','Eye-Q',null,5000,'A futuristic visor with an eye for good ideas.'],['doughnut','Dough-eyed',null,6500,'Doughnut glasses. A sweet way to see the world.']],
+    hat:[['none','No hat'],['beanie','Warm thoughts',null,500,'A cozy beanie for your best ideas.'],['egg','Egghead',null,1200,'A sunny-side-up hat for a well-rounded thinker.'],['cap','Thinking cap',null,1500,'Put your thinking cap on.'],['corn','A-maize-ing',null,2200,'A corn hat for ideas that really pop.'],['cloud','Brainstorm',null,4000,'A little cloud with a bright idea brewing.'],['wave','Brain waves',null,5500,'A breaking wave. Go with the flow of a good idea.'],['wizard','Quiz wizard',null,6000,'A starry hat for a little quiz magic.'],['graduate','Top of the class',null,8000,'A graduation cap. Your head is in a class of its own.']],
+    prop:[['none','No extra'],['cookie','Smart cookie',null,300,'A chocolate chip cookie. One clever little snack.'],['icepop','Brain freeze',null,800,'An ice pop to cool off a busy brain.'],['peas','Peas of mind',null,1800,'Peace of mind, one little pea at a time.'],['bulb','Bright idea',null,2500,'A light bulb for your next bright idea.'],['train','Train of thought',null,3200,'A tiny steam engine. All aboard for your next idea.'],['pencil','Sharp thinker',null,4500,'A well-sharpened pencil, ready for a sharp thinker.'],['rocket','Rocket science',null,7000,'A tiny rocket for ideas that are ready to take off.'],['roll','On a roll',null,7500,'A cinnamon roll for when the ideas keep coming.'],['book','Bookworm',null,9000,'A little worm who always has time for one more page.']]
   };
   const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description=''])=>Object.freeze({id,name,color,xp,description})))])));
   const metadataKeys=Object.freeze(Object.fromEntries(Object.keys(options).map(key=>[key,'brainilab_avatar_'+key.replace(/[A-Z]/g,c=>'_'+c.toLowerCase())+'_v1'])));
@@ -272,6 +272,8 @@ window.BrainiAvatarDesign=(function(){
       if(id==='sun')return `${arms}<g stroke="#302c46" stroke-width="4" stroke-linejoin="round"><path d="M63 88H95L92 105Q80 115 67 104ZM105 88H137L133 104Q120 115 108 105Z" fill="#302c46"/><path d="M95 94Q100 91 105 94" fill="none"/></g><path d="M69 93H82M111 93H122" stroke="#fff" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>`;
       if(id==='star')return `${arms}<g fill="#f6cc4a" fill-opacity=".65" stroke="#7b6022" stroke-width="3" stroke-linejoin="round"><polygon points="${star(80,96)}"/><polygon points="${star(120,96)}"/><path d="M94 96H106"/></g>`;
       if(id==='visor')return '<path d="M55 89Q100 77 145 89L138 110Q100 119 62 110Z" fill="#347f8a" stroke="#263f60" stroke-width="4" stroke-linejoin="round"/><path d="M65 91Q100 84 135 91L131 104Q100 110 69 104Z" fill="#a7e6de"/><path d="M75 91 82 105M87 89 94 107" stroke="#fff" stroke-opacity=".6" stroke-width="4"/><path d="M52 90H61M139 90H148" stroke="#263f60" stroke-width="4" stroke-linecap="round"/>';
+      if(id==='monocle')return '<circle cx="119" cy="97" r="17" fill="#eff9ff" fill-opacity=".14" stroke="#997025" stroke-width="4"/><path d="M109 89 116 85" stroke="#fff7d5" stroke-width="3" stroke-linecap="round"/><path d="M132 109Q151 122 142 140Q137 149 149 155" fill="none" stroke="#997025" stroke-width="2.5" stroke-linecap="round"/><circle cx="149" cy="156" r="3" fill="#e5bf5c"/>';
+      if(id==='doughnut')return `${arms}<g fill="#fff" fill-opacity=".12" stroke="#c58c54" stroke-width="10"><circle cx="80" cy="96" r="13"/><circle cx="120" cy="96" r="13"/></g><path d="M63 92Q66 76 80 78Q94 77 97 92M103 92Q106 76 120 78Q134 77 137 92" fill="none" stroke="#e88fa7" stroke-width="6" stroke-linecap="round"/><path d="M71 80 73 84M85 81 88 78M111 80 114 83M125 80 128 77" stroke="#fff0bd" stroke-width="2.5" stroke-linecap="round"/><path d="M97 95H103" stroke="#6b4a39" stroke-width="4"/>`;
     }
     if(kind==='hat'){
       if(id==='beanie')return '<path d="M54 48Q53 12 100 12T146 48" fill="#d66c3e"/><path d="M64 42Q67 21 82 19M84 42 87 16M103 42 103 14M123 42 118 17M138 42 132 25" fill="none" stroke="#bc5331" stroke-width="3"/><rect x="49" y="39" width="102" height="21" rx="8" fill="#e8844e"/><rect x="92" y="43" width="18" height="12" rx="3" fill="#ffdc86"/>';
@@ -280,6 +282,8 @@ window.BrainiAvatarDesign=(function(){
       if(id==='egg')return '<path d="M49 48Q39 32 58 27Q66 8 83 20Q104 6 117 20Q142 13 146 31Q166 39 148 53Q142 65 123 58Q105 67 89 58Q64 67 55 54Z" fill="#fff7e8" stroke="#dfcbaa" stroke-width="2"/><ellipse cx="102" cy="38" rx="20" ry="16" fill="#f4bf41"/><path d="M91 32Q96 26 104 28" fill="none" stroke="#ffe48a" stroke-width="4" stroke-linecap="round"/>';
       if(id==='cloud')return '<path d="M52 51Q42 28 65 27Q73 9 94 21Q116 7 130 27Q154 25 153 45Q163 62 139 63H62Q45 63 52 51Z" fill="#eff7ff" stroke="#a7b8d0" stroke-width="2"/><path d="M98 50 86 67H99L94 80 114 59H101L110 50Z" fill="#f5c94e" stroke="#b58a28" stroke-width="1.5" stroke-linejoin="round"/><path d="M61 69 57 76M139 69 135 76" stroke="#669fc4" stroke-width="3" stroke-linecap="round"/>';
       if(id==='graduate')return '<path d="M75 34H129V57Q102 69 75 57Z" fill="#423d70"/><path d="M38 30 101 9 165 30 101 52Z" fill="#302b58" stroke="#6e659d" stroke-width="2" stroke-linejoin="round"/><path d="M101 30 146 39V65" fill="none" stroke="#efc653" stroke-width="3" stroke-linecap="round"/><path d="M142 64H150L153 77H139Z" fill="#efc653"/><circle cx="101" cy="30" r="4" fill="#efc653"/>';
+      if(id==='corn')return '<ellipse cx="101" cy="30" rx="22" ry="27" fill="#f5c34a" stroke="#c28d2e" stroke-width="2"/><path d="M83 17H119M80 28H122M81 39H121M93 5V52M104 4V54M114 9V48" stroke="#d39a30" stroke-width="2" fill="none"/><path d="M101 61Q68 64 53 31Q82 31 101 61Z" fill="#548b48" stroke="#376b3b" stroke-width="2"/><path d="M100 61Q121 25 150 29Q139 65 100 61Z" fill="#77a956" stroke="#376b3b" stroke-width="2"/><path d="M63 39Q84 43 100 59M138 37Q117 45 101 59" fill="none" stroke="#abc978" stroke-width="2.5" stroke-linecap="round"/>';
+      if(id==='wave')return '<path d="M48 58Q63 51 70 31Q78 5 109 9Q141 12 137 34Q133 46 118 42Q132 27 115 25Q96 25 106 43Q118 58 154 53L153 65Q96 72 48 65Z" fill="#5caec1" stroke="#327a98" stroke-width="2" stroke-linejoin="round"/><path d="M64 44Q71 13 100 10Q129 7 137 25Q128 13 112 17Q91 22 99 40Q106 52 128 55" fill="none" stroke="#e7f7f8" stroke-width="6" stroke-linecap="round"/><path d="M57 59Q82 65 103 58M115 63Q133 67 146 60" fill="none" stroke="#b6e1e3" stroke-width="3" stroke-linecap="round"/>';
     }
     if(kind==='prop'){
       if(id==='icepop')return '<g transform="rotate(14 158 151)"><rect x="153" y="148" width="10" height="31" rx="5" fill="#c18d56"/><path d="M139 119Q139 104 158 104T177 119V151Q158 162 139 151Z" fill="#ef7095"/><path d="M139 130H177V144H139Z" fill="#fff4d6"/><path d="M139 144H177V151Q158 162 139 151Z" fill="#6ab9d5"/><path d="M147 116V128" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g><path d="M27 65V79M20 72H34M22 67 32 77M22 77 32 67" stroke="#78b8cb" stroke-width="2" stroke-linecap="round"/>';
@@ -289,6 +293,8 @@ window.BrainiAvatarDesign=(function(){
       if(id==='peas')return '<g transform="rotate(16 158 138)"><path d="M160 102Q185 125 169 159L156 177Q136 151 140 128Q142 110 160 102Z" fill="#568b45" stroke="#366b39" stroke-width="2"/><path d="M158 108Q148 138 158 168" fill="none" stroke="#a5ce70" stroke-width="3"/><g fill="#a5cd72" stroke="#42733b" stroke-width="1.5"><circle cx="158" cy="122" r="9"/><circle cx="158" cy="141" r="9"/><circle cx="159" cy="159" r="8"/></g><path d="M153 121 155 122 157 121M160 121 162 122 164 121M155 140 157 141M161 140 163 141M156 145Q159 148 162 145" fill="none" stroke="#365d36" stroke-width="1.4" stroke-linecap="round"/><path d="M160 103Q157 94 165 94" fill="none" stroke="#366b39" stroke-width="3" stroke-linecap="round"/></g>';
       if(id==='rocket')return '<g transform="rotate(12 159 139)"><path d="M149 153 144 170 154 165M168 153 175 169 164 166" fill="#d87742" stroke="#9d4b30" stroke-width="2" stroke-linejoin="round"/><path d="M153 161Q146 174 159 182Q172 175 165 161Z" fill="#f2bc51"/><path d="M156 164Q152 174 159 177Q166 174 162 164Z" fill="#fff0b0"/><path d="M149 154Q139 122 158 98Q179 120 168 154L166 163H152Z" fill="#f8f0df" stroke="#85879f" stroke-width="2"/><path d="M147 117Q151 104 158 98Q168 108 171 118Z" fill="#d87742"/><circle cx="159" cy="134" r="8" fill="#79bfd1" stroke="#435673" stroke-width="3"/><path d="M153 154H166" stroke="#435673" stroke-width="3"/></g>';
       if(id==='book')return '<path d="M135 142Q148 137 160 145Q171 135 184 139L181 175Q170 171 160 180Q149 173 136 177Z" fill="#51477e"/><path d="M138 139Q149 136 160 142Q172 132 181 136L179 170Q169 166 160 176Q150 169 139 173Z" fill="#fff5dc" stroke="#cbbba0" stroke-width="1.5"/><path d="M160 143V174M143 147 153 150M143 154 153 157M167 145 176 141M167 152 176 148" stroke="#c8b796" stroke-width="1.5" stroke-linecap="round"/><path d="M145 148Q132 143 139 132Q148 122 147 114" fill="none" stroke="#578945" stroke-width="10" stroke-linecap="round"/><circle cx="147" cy="113" r="10" fill="#99c970" stroke="#578945" stroke-width="2"/><circle cx="144" cy="111" r="2" fill="#354437"/><circle cx="151" cy="111" r="2" fill="#354437"/><path d="M144 117Q148 121 152 116" fill="none" stroke="#354437" stroke-width="1.5" stroke-linecap="round"/>';
+      if(id==='train')return '<g transform="rotate(10 160 145)"><path d="M136 145H172V163H136Z" fill="#4b8d7d" stroke="#315e5e" stroke-width="2"/><path d="M157 123H174V151H157Z" fill="#d37a48" stroke="#8a5237" stroke-width="2"/><path d="M155 121H178" stroke="#51465c" stroke-width="5" stroke-linecap="round"/><rect x="160" y="127" width="10" height="12" rx="2" fill="#c9e7e9"/><path d="M139 144V131H147V144" fill="#51465c"/><path d="M134 162H179L183 167H134Z" fill="#51465c"/><g fill="#51465c" stroke="#e8bf60" stroke-width="2.5"><circle cx="143" cy="164" r="7"/><circle cx="165" cy="164" r="8"/></g><path d="M143 123Q137 115 145 110Q151 107 146 101" fill="none" stroke="#c6d8e1" stroke-width="6" stroke-linecap="round"/><circle cx="140" cy="92" r="5" fill="#dbe7ec"/></g>';
+      if(id==='roll')return '<g transform="rotate(12 159 145)"><ellipse cx="159" cy="153" rx="26" ry="23" fill="#c68d55" stroke="#95623d" stroke-width="2"/><ellipse cx="159" cy="143" rx="26" ry="22" fill="#ebbb7d" stroke="#a47041" stroke-width="2"/><path d="M139 147Q133 128 151 125Q173 119 179 137Q185 154 166 160Q145 165 142 148Q140 134 154 131Q167 128 171 139Q175 150 164 152Q154 154 151 146Q148 139 157 138Q163 137 163 143" fill="none" stroke="#a36b3d" stroke-width="4" stroke-linecap="round"/><path d="M140 133 147 158M152 124 162 160M168 124 177 149" stroke="#fff0d8" stroke-width="4" stroke-linecap="round" opacity=".85"/></g>';
     }
     return '';
   }
@@ -5488,6 +5494,66 @@ window.BrainiMobileUI=(function(){
   }
 
   return {boot};
+})();
+
+/* ===== avatar-announcement.js ===== */
+
+/* A dismissible invitation on browsing pages. No tracking or gameplay writes. */
+window.BrainiAvatarAnnouncement=(()=>{
+  const key='brainilab_avatar_announcement_seen_v1',cooldown=30*86400000;
+  const browsing=new Set(['/','/index.html','/games/','/games/index.html','/daily-quiz/','/daily-quiz/index.html']);
+  let card=null,timer=null,finished=false;
+  const signedIn=()=>window.BrainiData?.authState?.()?.status==='authenticated';
+  const visible=el=>!!el?.getClientRects().length;
+  function blocked(){
+    return document.hidden||signedIn()||[...document.querySelectorAll('.marketing-consent,.auth-modal.show,.modal.show,.quiz-modal.show,.account-popover,dialog[open],[role="dialog"][aria-modal="true"]')].some(visible);
+  }
+  function seen(){
+    try{const at=Number(localStorage.getItem(key));return Number.isFinite(at)&&at>0&&Date.now()-at<cooldown;}catch{return true;}
+  }
+  function dismiss(){
+    clearTimeout(timer);timer=null;
+    const focused=!!card?.contains(document.activeElement);
+    card?.remove();card=null;
+    if(focused)document.querySelector('.nav-right .avatar')?.focus({preventScroll:true});
+  }
+  async function join(){
+    const button=card?.querySelector('[data-avatar-join]'),error=card?.querySelector('[data-avatar-invite-error]');
+    if(!button||button.disabled)return;
+    button.disabled=true;error.hidden=true;
+    try{
+      if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
+      if(signedIn()){dismiss();return;}
+      if(!window.BrainiAuth?.open)throw Error('Sign-in unavailable');
+      if(!card?.isConnected)return;
+      dismiss();window.BrainiAuth.open({source:'avatar_announcement',mode:'signup'});
+    }catch{
+      if(error.isConnected){error.hidden=false;error.textContent='Sign-in could not open. Please try again.';}
+    }finally{if(button.isConnected)button.disabled=false;}
+  }
+  function show(){
+    timer=null;
+    if(finished||card||!browsing.has(location.pathname)||blocked()||seen())return;
+    // Remember the invitation before showing it, including across tabs/navigation.
+    try{const at=String(Date.now());localStorage.setItem(key,at);if(localStorage.getItem(key)!==at)return;}catch{return;}
+    finished=true;card=document.createElement('aside');card.className='avatar-announcement';card.setAttribute('aria-labelledby','avatar-announcement-title');
+    card.innerHTML=`<button class="avatar-announcement-close" type="button" aria-label="Dismiss avatar invitation">×</button><div class="avatar-announcement-heading"><span class="avatar-announcement-art" aria-hidden="true">${BrainiAvatarDesign.markup({mode:'built',skin:'honey',hair:'curls',shirt:'green',background:'sunshine',hat:'corn',glasses:'round',prop:'icepop'},2200)}</span><div><span class="avatar-announcement-kicker">A little more you</span><h2 id="avatar-announcement-title">Meet your avatar.</h2></div></div><p>Create a free account to save your look across devices. Play to unlock fun extras with XP.</p><button class="btn" type="button" data-avatar-join>Create my avatar <span aria-hidden="true">→</span></button><p class="avatar-announcement-error" role="status" data-avatar-invite-error hidden></p>`;
+    card.querySelector('.avatar-announcement-close').onclick=dismiss;
+    card.querySelector('[data-avatar-join]').onclick=join;
+    document.body.append(card);
+  }
+  function schedule(){if(!finished&&!timer&&browsing.has(location.pathname)&&!signedIn()&&!seen())timer=setTimeout(show,15000);}
+  function boot(){
+    schedule();
+    window.addEventListener('brainilab:authchange',()=>{if(signedIn())dismiss();});
+    window.addEventListener('brainilab:statistics-consent',schedule);
+    window.addEventListener('storage',event=>{if(event.key===key&&card)dismiss();});
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)dismiss();else schedule();});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&card)dismiss();});
+    document.addEventListener('click',()=>{if(card)queueMicrotask(()=>{if(card&&blocked())dismiss();});});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  return {dismiss};
 })();
 /* related-video bundle */
 (()=>{var d=e=>String(e??"").replace(/[&<>"']/g,n=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[n]);function u(e){if(typeof e!="string")return null;let n=e.trim();if(/^[\w-]{11}$/.test(n))return n;try{let t=new URL(n);if(t.protocol!=="https:"||t.username||t.password||t.port)return null;let r=null;return t.hostname==="youtu.be"&&(r=t.pathname.slice(1)),["youtube.com","www.youtube.com","m.youtube.com"].includes(t.hostname)&&(r=t.pathname==="/watch"?t.searchParams.get("v"):t.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{11})\/?$/)?.[1]),typeof r=="string"&&/^[\w-]{11}$/.test(r)?r:null}catch{return null}}function o(e){let n=u(e?.id),t=typeof e?.title=="string"?e.title.trim().slice(0,180):"";return n&&t?{id:n,title:t,showAfterGame:e.showAfterGame===!0}:null}function i(e,n="article"){let t=o(e);if(!t)return"";let r=n==="post_game"?"post_game":"article";return`<a class="related-video" data-related-video="${r}" data-video-id="${t.id}" href="https://www.youtube.com/watch?v=${t.id}" target="_blank" rel="noopener"><span class="related-video-art"><img src="/api/youtube-thumbnail/${t.id}" width="320" height="180" loading="lazy" decoding="async" alt=""/><span class="related-video-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 5v14l11-7z"/></svg></span></span><span class="related-video-copy"><span class="related-video-label">${r==="post_game"?"Fancy a video quiz?":"Play along on YouTube"}</span><strong>${d(t.title)}</strong><span class="related-video-link">Watch on YouTube <span aria-hidden="true">\u2197</span><span class="sr-only"> (opens in a new tab)</span></span></span></a>`}var s=Object.freeze({brainmix:"/games/brain-mix/",worldflags:"/geography/world-flags-quiz/",worldcapitals:"/geography/world-capitals-quiz/",generalknowledge:"/general-knowledge/general-knowledge-quiz/",science:"/science/science-quiz/",history:"/history/history-quiz/",sports:"/sports/sports-quiz/",connections:"/games/connections/",mathrush:"/games/math-rush/",sequence:"/games/sequence/",brainiword:"/games/brainiword/",numberroute:"/games/number-route/",orderup:"/games/order-up/",topicrush:"/games/topic-rush/",oddoneout:"/games/odd-one-out/",higherlower:"/games/higher-lower/",survival:"/games/survival/"});var a=new Map,l=new WeakMap;function c(e){return a.has(e)||a.set(e,fetch("/api/related-video?game="+encodeURIComponent(e),{credentials:"omit",signal:AbortSignal.timeout(6e3)}).then(async n=>{if(!n.ok)throw Error("Video unavailable");return o((await n.json()).video)}).catch(()=>(a.delete(e),null))),a.get(e)}async function p(e,{gameId:n}={}){if(!e)return;let t={};if(l.set(e,t),e.hidden=!0,e.replaceChildren(),!Object.hasOwn(s,n))return;let r=await c(n);!r||!e.isConnected||l.get(e)!==t||(e.innerHTML=i(r,"post_game"),e.hidden=!1)}document.addEventListener("error",e=>{let n=e.target;n?.matches?.(".related-video-art img")&&(n.hidden=!0)},!0);window.BrainiRelatedVideo={mount:p};})();

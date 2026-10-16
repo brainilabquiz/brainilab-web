@@ -12,6 +12,7 @@ const ids=Array.from({length:7},(_,i)=>`10000000-0000-4000-8000-${String(i+1).pa
 const [me,peer,automatic,hidden,suspended,claimed,stranger]=ids;
 const migration=readFileSync('supabase/migrations/20261016195312_shared_player_avatars.sql','utf8').replace(/\r\n/g,'\n');
 const titleMigration=readFileSync('supabase/migrations/20261016201431_shared_player_titles.sql','utf8').replace(/\r\n/g,'\n');
+const collectionMigration=readFileSync('supabase/migrations/20261016210748_avatar_wordplay_collection.sql','utf8').replace(/\r\n/g,'\n');
 const rpcNames=['get_brainilab_individual_rankings','get_my_brainilab_friends','get_my_brainilab_friends_ranking','get_my_brainilab_groups'];
 const strip=value=>Array.isArray(value)?value.map(strip):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['avatar_style','generated_at'].includes(k)).map(([k,v])=>[k,strip(v)])):value;
 const stripTitle=value=>Array.isArray(value)?value.map(stripTitle):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['title','generated_at'].includes(k)).map(([k,v])=>[k,stripTitle(v)])):value;
@@ -72,6 +73,10 @@ try{
  const avatarBaseline=await snapshot();
  const rpcDefinitions=await scalar("select jsonb_object_agg(proname,md5(pg_get_functiondef(oid))) from pg_proc where proname=any($1)",[rpcNames]);
  await db.exec(titleMigration);
+ const priorCollection=await snapshot();
+ await db.exec(collectionMigration);
+ const withoutGenerated=value=>Array.isArray(value)?value.map(withoutGenerated):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>k!=='generated_at').map(([k,v])=>[k,withoutGenerated(v)])):value;
+ assert.deepEqual(withoutGenerated(await snapshot()),withoutGenerated(priorCollection),'new collection preserves every prior equipped appearance and response field');
  let after=await snapshot();
  assert.deepEqual(stripTitle(after),stripTitle(avatarBaseline),'title extension leaves every existing avatar and response field intact');
  assert.deepEqual(await scalar("select jsonb_object_agg(proname,md5(pg_get_functiondef(oid))) from pg_proc where proname=any($1)",[rpcNames]),rpcDefinitions,'all four public RPC definitions stay untouched');
