@@ -1,0 +1,64 @@
+{
+  "slug": "why-marathon-26-2-miles",
+  "title": "Why is a marathon 26.2 miles? The story of those extra yards",
+  "description": "A marathon is 42.195 km, or about 26.2 miles. Discover how a London Olympic route left running with such a surprisingly precise distance.",
+  "topic": "Sports",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 139,
+  "publishedAt": "2026-10-16T20:19:29Z",
+  "updatedAt": "2026-10-16T20:19:29Z",
+  "game": {
+    "name": "Sports Quiz",
+    "url": "/sports/sports-quiz/"
+  },
+  "hub": {
+    "name": "Sports",
+    "url": "/sports/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-marathon-26-2-miles.webp",
+    "small": "/assets/images/learn/why-marathon-26-2-miles-small.webp",
+    "thumbnail": "/assets/images/learn/why-marathon-26-2-miles-thumb.webp",
+    "alt": "Indigo running shoes stand beside a cream sign reading 42.195 km near a white finish stripe on a tree-lined road",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; not a photograph of a study or an official event."
+  },
+  "sources": [
+    {
+      "name": "World Athletics — Marathon distance and history",
+      "url": "https://worldathletics.org/disciplines/road-running/marathon"
+    },
+    {
+      "name": "The Olympic Museum — Exactly 42.195 kilometres?",
+      "url": "https://artsandculture.google.com/story/genau-42-195-km/UQUxmUDpLTLLUA"
+    }
+  ],
+  "related": [
+    "what-olympic-rings-mean",
+    "why-golf-balls-have-dimples"
+  ],
+  "practice": "Try the Sports Quiz for more details hiding behind familiar events.",
+  "sections": [
+    {
+      "id": "the-distance",
+      "title": "Why stop at such an awkward number?",
+      "html": "<p><strong>A marathon is 42.195 kilometres, usually rounded to 26.2 miles. The modern distance comes from the London 1908 Olympic course and was standardised in 1921.</strong></p><p>A neat 40 km would be easier to remember. Running, apparently, kept the receipt for the extra distance.</p>"
+    },
+    {
+      "id": "london-route",
+      "title": "A castle, a stadium and a finish line",
+      "html": "<p>The <a href=\"https://artsandculture.google.com/story/genau-42-195-km/UQUxmUDpLTLLUA\">Olympic Museum traces the London route</a> from Windsor Castle to White City Stadium, finishing in front of the Royal Box.</p><p>Its recorded length was <strong>26 miles and 385 yards</strong>, the basis of the familiar 42.195 km. The precise-looking number has a history in miles, yards and the layout of a particular course.</p>"
+    },
+    {
+      "id": "not-instantly-standard",
+      "title": "It did not become the rule overnight",
+      "html": "<p>The next Olympic marathon, in Stockholm in <strong>1912</strong>, covered <strong>40.2 km</strong>. The London measurement was not immediately compulsory everywhere.</p><p><a href=\"https://worldathletics.org/disciplines/road-running/marathon\">World Athletics dates the standardisation to 1921</a>. The Olympic Museum notes that the IAAF records do not explain why that particular 1908 measurement was chosen. A tidy royal anecdote cannot fill that gap in the records.</p>"
+    },
+    {
+      "id": "remember-the-units",
+      "title": "Keep the number and the unit together",
+      "html": "<p><strong>42 km is 195 metres short of a marathon.</strong> And 26.2 is the rounded distance in miles, not kilometres. Those small-looking differences belong in the answer.</p><p>For another sporting symbol with a story people often misremember, discover <a href=\"/learn/what-olympic-rings-mean/\">what the Olympic ring colours actually mean</a>. Familiar does not always mean obvious.</p>"
+    }
+  ]
+}

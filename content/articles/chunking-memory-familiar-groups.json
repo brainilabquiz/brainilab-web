@@ -1,0 +1,64 @@
+{
+  "slug": "chunking-memory-familiar-groups",
+  "title": "What is chunking? Give your memory fewer things to juggle",
+  "description": "Chunking groups information into familiar units. See how CAT, DOG and SUN turn nine letters into three words, and why the connections matter.",
+  "topic": "Learning",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 138,
+  "publishedAt": "2026-10-16T20:19:29Z",
+  "updatedAt": "2026-10-16T20:19:29Z",
+  "game": {
+    "name": "Connections",
+    "url": "/games/connections/"
+  },
+  "hub": {
+    "name": "Learn",
+    "url": "/learn/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/chunking-memory-familiar-groups.webp",
+    "small": "/assets/images/learn/chunking-memory-familiar-groups-small.webp",
+    "thumbnail": "/assets/images/learn/chunking-memory-familiar-groups-thumb.webp",
+    "alt": "Three wooden blocks labelled CAT, DOG and SUN sit in separate groups on a soft green tabletop",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; not a photograph of a study or an official event."
+  },
+  "sources": [
+    {
+      "name": "American Psychological Association — Chunking",
+      "url": "https://dictionary.apa.org/chunking"
+    },
+    {
+      "name": "Cowan and Chen — How chunks form in long-term memory and affect short-term memory limits (author manuscript, PDF)",
+      "url": "https://memory.psych.missouri.edu/assets/doc/articles/2009/CowanCheninpress07ThornPagevolume.pdf"
+    }
+  ],
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "explain-an-answer-in-your-own-words"
+  ],
+  "practice": "Find the idea that connects a small group of clues in Connections.",
+  "sections": [
+    {
+      "id": "what-chunking-means",
+      "title": "A smaller pile of things to juggle",
+      "html": "<p><strong>Chunking means grouping pieces of information into units that mean something to you.</strong> Instead of holding every little piece separately, you can treat a familiar group as one item.</p><p>The <a href=\"https://dictionary.apa.org/chunking\">American Psychological Association describes this kind of recoding</a>. The information has not vanished; it has acquired some useful packaging.</p>"
+    },
+    {
+      "id": "nine-letters-three-words",
+      "title": "Nine letters, three familiar words",
+      "html": "<p>Look at <strong>C A T D O G S U N</strong>. Now give the same letters a little room: <strong>CAT · DOG · SUN</strong>.</p><p>Nothing has been removed or rearranged. There are still nine letters, in the same order. If you know these English words, you can recognise three groups instead of treating the line as nine unrelated symbols.</p><p>It is a small example of chunking, not a test or a score for your memory.</p>"
+    },
+    {
+      "id": "familiarity-matters",
+      "title": "The group needs to mean something",
+      "html": "<p>In <a href=\"https://memory.psych.missouri.edu/assets/doc/articles/2009/CowanCheninpress07ThornPagevolume.pdf\">their research chapter, Nelson Cowan and Zhijian Chen explain how familiar acronyms can help organise a string of letters</a>. Knowledge you already have helps you recognise the larger unit.</p><p>If CAT means nothing to you, extra spaces alone will not do the same job. The useful part is the connection, rather than making every group the same size.</p>"
+    },
+    {
+      "id": "use-it-gently",
+      "title": "Give one short list a shape",
+      "html": "<p>When you meet a short list, look for groups you can explain: related ideas, familiar words or meaningful steps. A label you understand is more useful than a mysterious code you must learn as well.</p><p>This organises information while you learn it; it does not promise unlimited memory. Checking what stays with you later is another step. Try our <a href=\"/learn/remember-quiz-answers-tomorrow/\">simple routine for recalling something you have learned</a>.</p>"
+    }
+  ]
+}
