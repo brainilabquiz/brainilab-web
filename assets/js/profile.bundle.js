@@ -268,11 +268,9 @@ window.BrainiStatsUI=(function(){
     container.innerHTML=`
       <div class="stats-signin-card">
         <span>MY STATS</span>
-        <h2>Build your personal performance history</h2>
+        <h2>Your games, at a glance</h2>
         <p>
-          Sign in to keep your BrainiLab statistics synced across devices
-          and unlock trends, category strengths, Daily performance and
-          detailed game analytics.
+          Sign in to see your scores, strongest topics and progress across devices.
         </p>
         <button
           class="btn"
@@ -368,7 +366,7 @@ window.BrainiStatsUI=(function(){
           <span>Quiz accuracy</span>
           <strong>${pct(s.quiz_accuracy)}</strong>
           <small>
-            Across verified/synced quiz results
+            From your saved quiz results
           </small>
         </article>
 
@@ -898,7 +896,7 @@ window.BrainiStatsUI=(function(){
             <span>DAILY PERFORMANCE</span>
             <h2>Your Daily Brain Score</h2>
             <p>
-              From 1 October 2026: up to 2,500 main Daily points plus 1,000 optional extra points. Earlier scores keep their original scale.
+              Up to 2,500 points from the main Daily, plus 1,000 from one optional extra. Older results used a different scale.
             </p>
           </div>
 
@@ -950,7 +948,7 @@ window.BrainiStatsUI=(function(){
             </div>
 
             <div>
-              <span>Full Dailies</span>
+              <span>Daily completions</span>
               <strong>${num(d.full_dailies)}</strong>
             </div>
 
@@ -1016,7 +1014,7 @@ window.BrainiStatsUI=(function(){
       {id:"sequence",primary:r=>r?pct(r.accuracy):"—",pl:"Average accuracy",secondary:r=>avg(r),sl:"Average score"}
     ];
     function card(c){const row=gameById(snapshot,c.id);return `<article class="stats-game-card"><div class="stats-game-card-head"><span>${icon(c.id)}</span><div><strong>${GAME_NAMES[c.id]}</strong><small>${row?`${num(row.games_played)} games in ${rangeLabel()}`:"No results in this range"}</small></div></div><div class="stats-game-card-metrics"><div><span>${c.pl}</span><strong>${c.primary(row)}</strong></div><div><span>${c.sl}</span><strong>${c.secondary(row)}</strong></div><div><span>All-time best</span><strong>${pbScore(row)}</strong></div></div></article>`}
-    return `<section class="stats-panel"><div class="stats-panel-head"><div><span>GAME PERFORMANCE</span><h2>Your BrainiLab games</h2><p>Every current mechanic is tracked with metrics that fit how that game is actually played.</p></div></div><div class="stats-game-grid">${configs.map(card).join("")}</div></section>`;
+    return `<section class="stats-panel"><div class="stats-panel-head"><div><span>GAME PERFORMANCE</span><h2>Your BrainiLab games</h2><p>See your results for each game.</p></div></div><div class="stats-game-grid">${configs.map(card).join("")}</div></section>`;
   }
 
   function insights(snapshot){
@@ -1116,7 +1114,7 @@ window.BrainiStatsUI=(function(){
       out.push({
         title:"Daily consistency",
         text:
-          `You completed ${num(daily.full_dailies)} Full Dailies in this range. Each completed main Daily counts from 1 October 2026.`
+          `You completed ${num(daily.full_dailies)} Dailies in this range. Each completed main Daily counts; older results required the full set.`
       });
     }
 
@@ -1141,7 +1139,7 @@ window.BrainiStatsUI=(function(){
             <span>PERSONAL INSIGHTS</span>
             <h2>What your results are saying</h2>
             <p>
-              Rule-based insights from your own BrainiLab history.
+              A few things your recent results show.
             </p>
           </div>
         </div>
@@ -1427,10 +1425,9 @@ window.BrainiProfileSections=(function(){
     const p=BrainiData.player();
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
     const tier=BrainiProgressUI.tier(progress.level);
-    let photo="";try{const url=new URL(p.avatarUrl);if(url.protocol==="https:")photo=url.href.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;",'\'':"&#39;"}[c]));}catch{}
 
     root.innerHTML=`
-      <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${photo?`<img src="${photo}" alt="">`:BrainiProgressUI.defaultAvatarMarkup()}</span>
+      <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span>
       <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
         <p>${Number(p.xp||0).toLocaleString()} XP earned</p>
         <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><span style="width:${progress.percent}%"></span></div>
@@ -1445,6 +1442,7 @@ window.BrainiProfileSections=(function(){
     window.BrainiContinuity?.render?.();
     hydrateRecentGames();
     hydrateDailyProgress();
+    window.BrainiProfileRewards?.render?.();
   }
 
 

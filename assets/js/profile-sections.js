@@ -114,6 +114,7 @@ window.BrainiProfileSections=(function(){
     window.BrainiContinuity?.render?.();
     hydrateRecentGames();
     hydrateDailyProgress();
+    window.BrainiProfileRewards?.render?.();
   }
 
 
