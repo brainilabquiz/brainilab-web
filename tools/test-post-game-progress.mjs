@@ -7,7 +7,7 @@ const today=new Date().toISOString().slice(0,10);
 let owner='me',summary={progression:{user_id:'me',xp:395,level:5,current_streak:4},continuity:{today,completed_today:true},recent_rewards:[]};
 w.BrainiData={getState:()=>({auth:{status:'authenticated',user:{id:owner}}}),player:()=>({}),dateForDailyNumber:()=>today};
 w.BrainiIcons={product:()=>'<svg></svg>'};w.BrainiProgression={getCached:()=>summary};w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',primary:'mathrush'})};
-for(const f of ['progression-ui','continuity','post-game'])w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
+for(const f of ['player-personalities','progression-ui','continuity','post-game'])w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
 const result={clientResultId:'new',gameId:'mathrush',dailyNumber:32,score:1000,correct:8,total:10};
 w.BrainiPostGame.mount(root,{result});assert.match(root.textContent,/Saved on this device/);assert.equal(root.querySelector('[role=progressbar]'),null);
 summary={...summary,progression:{...summary.progression,xp:615,level:6},recent_rewards:[{client_result_id:'new',verified:true,xp:220}]};w.dispatchEvent(new w.Event('brainilab:progressionchange'));

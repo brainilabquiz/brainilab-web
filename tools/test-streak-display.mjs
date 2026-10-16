@@ -6,7 +6,7 @@ const dom=new JSDOM('<div class="streak">🔥 <span data-player-streak>0</span><
 let now='2026-09-28T12:00:00Z';const NativeDate=Date;
 w.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[now]));}static now(){return NativeDate.parse(now);}};
 w.structuredClone=structuredClone;
-for(const file of ['icon-system.js','data.js','progression-ui.js','ui.js','account-menu.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
+for(const file of ['player-personalities.js','icon-system.js','data.js','progression-ui.js','ui.js','account-menu.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
 await new Promise(r=>setTimeout(r,0));
 assert.equal(w.BrainiData.player().currentStreak,0);assert.equal(w.document.querySelector('.streak').classList.contains('is-secured'),false);
 const sync=async(last,count=5)=>{await w.BrainiData.api.syncCloudProgression({progression:{current_streak:count,best_streak:8,last_streak_date:last,xp:240,level:4},today:{},week:{},month:{}});await w.BrainiUI.hydrate();};
@@ -18,8 +18,8 @@ now='2026-09-30T00:00:01Z';await w.BrainiUI.hydrate();assert.equal(w.BrainiData.
 w.BrainiAccountMenu.openFor(w.document.querySelector('.avatar'));
 assert.match(w.document.querySelector('.account-progress-link').textContent,/240 XP/);assert.match(w.document.querySelector('.account-streak').textContent,/0 days/);assert.match(w.document.querySelector('.account-progress-link').textContent,/XP to level 5/);
 assert.ok(w.document.querySelector('.account-menu-avatar .default-player-avatar'));
-const broken=w.document.createElement('img');broken.src='https://example.com/missing.jpg';w.document.querySelector('.account-menu-avatar').replaceChildren(broken);broken.dispatchEvent(new w.Event('error'));
-assert.equal(broken.getAttribute('src'),'/assets/icons/product/player-owl.svg');
+const broken=w.document.createElement('img');broken.src='https://example.com/missing.jpg';broken.dataset.fallbackAvatar=w.BrainiPeople.resolve(w.BrainiData.player()).id;w.document.querySelector('.account-menu-avatar').replaceChildren(broken);broken.dispatchEvent(new w.Event('error'));
+assert.equal(broken.getAttribute('src'),w.BrainiPeople.resolve(w.BrainiData.player()).avatar);
 assert.ok(broken.classList.contains('default-player-avatar'));
 assert.equal(w.document.querySelector('.account-xp-track').getAttribute('aria-valuenow'),'43');
 dom.window.close();console.log('PASS: new player zero, expired streak, yesterday grey, today lit, midnight reset, missed-day zero, preserved best and account progress card.');

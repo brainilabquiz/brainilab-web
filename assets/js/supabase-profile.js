@@ -43,8 +43,40 @@ window.BrainiProfiles = (function(){
       .single();
 
     if(error) throw error;
-    currentProfile=data;
-    return data;
+    currentProfile=await personaliseGuestDefault(data);
+    return currentProfile;
+  }
+
+  async function personaliseGuestDefault(profile){
+    const people=window.BrainiPeople;
+    if(!people || !profile?.leaderboard_enabled ||
+      !people.isLegacy(profile.display_name) ||
+      !people.isLegacy(profile.leaderboard_display_name)) return profile;
+    const session=await BrainiBackendAuth.getSession();
+    if(!session?.user?.is_anonymous || session.user.id!==profile.user_id) return profile;
+
+    // Carry the browser's first nickname into its anonymous account. Only the
+    // owner may replace an untouched generated alias; custom names stay intact.
+    const local=window.BrainiData?.player?.()?.displayName;
+    const nickname=people.isPreset(local)?local:people.resolve({name:profile.leaderboard_display_name}).displayName;
+    try{
+      const {data,error}=await client().from('profiles')
+        .update({display_name:nickname,leaderboard_display_name:nickname})
+        .eq('user_id',profile.user_id)
+        .eq('display_name',profile.display_name)
+        .eq('leaderboard_display_name',profile.leaderboard_display_name)
+        .select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at')
+        .maybeSingle();
+      if(error) throw error;
+      if(data) return data;
+      // A second tab or a profile edit may have won the compare-and-swap.
+      const fresh=await client().from('profiles').select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at').eq('user_id',profile.user_id).single();
+      if(!fresh.error && fresh.data) return fresh.data;
+    }catch(error){
+      // A cosmetic alias must never prevent a saved game or profile from loading.
+      console.warn('BrainiLab default nickname:',error.message||error);
+    }
+    return profile;
   }
 
   async function sync(){

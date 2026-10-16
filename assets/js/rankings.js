@@ -141,20 +141,16 @@ window.BrainiRankings=(function(){
   }
 
   function playerAvatar(row,small=false){
-    const initial=row?.avatar||row?.name?.[0]||"B";
     const photo=safeAvatarUrl(row?.avatarUrl);
 
     if(window.BrainiProgressUI){
       const rank=BrainiProgressUI.avatarClass(Number(row?.level||1));
       return `<span class="rank-avatar ${rank} ${small?"small":""}" title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
-        ${photo
-          ? `<img src="${photo}" alt="">`
-          : BrainiProgressUI.defaultAvatarMarkup()
-        }
+        ${BrainiProgressUI.avatarImageMarkup(row)}
       </span>`;
     }
 
-    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:'<img src="/assets/icons/product/player-owl.svg" alt="">'}</span>`;
+    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:`<img src="${BrainiPeople.resolve(row).avatar}" alt="">`}</span>`;
   }
 
   function tableRow(row){
@@ -270,7 +266,7 @@ window.BrainiRankings=(function(){
     if(state.mode!=="individual" || !cloudConfigured())return '';
     const guest=authState().status!=="authenticated";
     const enabled=data?.leaderboardEnabled;
-    return `<details class="ranking-privacy"><summary>${guest?'Playing as a guest':enabled?'Public as '+escapeText(data.leaderboardDisplayName||'Braini Player'):'Your ranking is private'} <span>Manage</span></summary>
+    return `<details class="ranking-privacy"><summary>${guest?'Playing as a guest':enabled?'Public as '+escapeText(BrainiPeople.resolve({name:data.leaderboardDisplayName}).displayName):'Your ranking is private'} <span>Manage</span></summary>
       <div><p>${guest?'Your guest name appears on the board. Sign in to keep your progress across devices.':enabled?'Only your public profile appears here. Your email stays private.':'Your progress is saved. Choose a public name to appear on the board.'}</p>
       <button class="ranking-privacy-action" ${guest?'data-ranking-signin':enabled?'data-ranking-hide':'data-ranking-join'}>${guest?'Save my progress':enabled?'Hide ranking profile':'Show my ranking'}</button></div></details>`;
   }

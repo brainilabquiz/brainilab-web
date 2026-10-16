@@ -11,7 +11,7 @@ w.BrainiBackendAuth={isConfigured:()=>true};w.BrainiIcons={product:()=>'<svg></s
 w.BrainiRankingsCloud={individual:async()=>{if(fail)throw Error('Unavailable');return data;}};
 w.BrainiFriends={ranking:async()=>data};w.BrainiGroups={ranking:async()=>({...data,myGroups:[{eligible:true}]})};
 w.BrainiAuth={open:()=>{}};
-for(const file of ['progression-ui.js','rankings.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
+for(const file of ['player-personalities.js','progression-ui.js','rankings.js'])w.eval(readFileSync('assets/js/'+file,'utf8'));
 await new Promise(r=>setTimeout(r,0));
 const root=w.document.querySelector('#rankingsRoot');
 assert.equal(w.BrainiRankings.state.period,'monthly','ordinary visits open this month');
@@ -31,7 +31,7 @@ assert.equal(root.querySelectorAll('.ranking-row').length,10,'top ten visible wi
 assert.equal(root.querySelectorAll('.ranking-medal').length,3);
 assert.ok(root.querySelector('.place-10'));
 assert.ok(root.querySelector('.default-player-avatar'));
-assert.equal(root.querySelector('.default-player-avatar').getAttribute('src'),'/assets/icons/product/player-owl.svg');
+assert.equal(root.querySelector('.default-player-avatar').getAttribute('src'),w.BrainiPeople.resolve({name:'Player 0'}).avatar);
 assert.notEqual(w.BrainiProgressUI.avatarClass(5),w.BrainiProgressUI.avatarClass(6),'frame accent evolves each level');
 assert.notEqual(w.BrainiProgressUI.avatarClass(24),w.BrainiProgressUI.avatarClass(25),'tier frames evolve');
 assert.equal(w.BrainiProgressUI.xpProgress(5,395).nextXp,500,'XP math unchanged');
