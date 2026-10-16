@@ -299,3 +299,12 @@ perform the usual backed-up, revision-checked, idempotent private import.
 
 Checks: `python -m unittest discover -s tools/growth -p 'test_*.py'` and
 `node tools/test-growth-search.mjs` (JSDOM_MODULE can point to an existing jsdom).
+
+
+## Private outreach counts
+
+`distribution.py` includes an optional aggregate `outreach` summary from the full private contact ledger. It derives the last 14 sending dates and the current date in Europe/Madrid, with a fixed 20/day limit, rather than trusting possibly unfinished daily-batch counters. Permanent bounces remain sends; reserved and uncertain messages consume capacity until reconciled in Gmail. Two permanent failures in the current sending cohort stop that batch. This panel never sends, retries or authorizes a message.
+
+Explicit human-response and automatic-acknowledgement statuses are counted separately and describe each sending cohort, including later responses. They are not acceptance, delivery/read rates, published links or acquisition. Unknown/invalid/undated records cause a review warning, and an old date cannot imply today has available slots. Only allowlisted aggregate counts are exported; correspondence, contact identities, addresses, message URLs and source details stay private. The existing domain guard and full native Gmail checks remain necessary. No browser session, OAuth scope or database permission changes are introduced.
+
+Checks: `python -m unittest discover -s tools/growth -p test_outreach_summary.py` and `node tools/test-growth-outreach.mjs`; existing distribution checks cover integration and backwards compatibility.

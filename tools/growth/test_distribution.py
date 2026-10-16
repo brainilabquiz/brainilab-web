@@ -73,6 +73,15 @@ class DistributionTest(unittest.TestCase):
         self.assertEqual(len(s['resources']), 1)
         self.assertNotIn('gmail.com', s['contactedDomains'])
 
+    def test_outreach_summary_survives_export_without_contact_data(self):
+        self.registry['emails'] = [{'id': 'private-id', 'recipient': 'secret@example.org',
+            'sentLocalDate': '2026-10-11', 'status': 'sent_verified', 'body': 'private body'}]
+        self.registry['dailyBatches'] = {'2026-10-11': {'sentVerified': 0}}
+        s = validate(self.snapshot())
+        self.assertEqual(s['outreach']['days'][0]['verifiedSends'], 1)
+        for secret in ('secret@', 'private-id', 'private body', 'dailyBatches'):
+            self.assertNotIn(secret, json.dumps(s))
+
     def test_failed_refresh_preserves_previous_snapshot_and_history(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(api, 'PRIVATE', Path(tmp)):
             folder = Path(tmp)

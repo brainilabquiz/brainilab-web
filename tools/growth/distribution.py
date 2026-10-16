@@ -7,8 +7,9 @@ import ipaddress
 import json
 import re
 import gsc_sync as api
+import outreach_summary
 
-PRODUCER_VERSION = 2
+PRODUCER_VERSION = 3
 
 
 def domain(value):
@@ -107,12 +108,17 @@ def build(registry, catalog, game_rows, now=None):
             resources[clean['path']] = clean
     if not resources:
         raise ValueError('No published resources')
-    stamp = (now or datetime.now(timezone.utc)).isoformat()
-    return {'schemaVersion': 1, 'source': 'Private outreach registry and published catalogue',
+    collected = now or datetime.now(timezone.utc)
+    stamp = collected.isoformat()
+    result = {'schemaVersion': 1, 'source': 'Private outreach registry and published catalogue',
             'observedAt': stamp, 'catalogCollectedAt': catalog['collectedAt'],
             'resources': sorted(resources.values(), key=lambda r: (r['kind'], r['title'])),
             'directories': sorted(directories.values(), key=lambda r: r['name'].lower()),
             'contactedDomains': sorted(blocked)}
+    outreach = outreach_summary.summary(registry, collected)
+    if outreach is not None:
+        result['outreach'] = outreach_summary.validate(outreach)
+    return result
 
 
 def validate(value):
@@ -120,6 +126,8 @@ def validate(value):
         raise ValueError('Unsupported distribution snapshot')
     clean = {k: value[k] for k in ('schemaVersion', 'observedAt', 'catalogCollectedAt')}
     clean['source'] = 'Private outreach registry and published catalogue'
+    if value.get('outreach') is not None:
+        clean['outreach'] = outreach_summary.validate(value['outreach'])
     clean['resources'] = [resource(r) for r in value['resources']]
     if not clean['resources'] or None in clean['resources'] or len(clean['resources']) > 1000:
         raise ValueError('Invalid resources')
