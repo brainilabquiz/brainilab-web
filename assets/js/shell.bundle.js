@@ -2774,14 +2774,14 @@ window.BrainiProgressUI=(function(){
 
   function ranksMarkup(person,{open=false}={}){
     const progress=xpProgress(person.level,person.xp),current=tier(progress.level);
-    return `<details class="profile-ranks" ${open?'open':''}><summary data-ranks-toggle>Level titles <span aria-hidden="true">+</span></summary>
-      <p>Your avatar frame changes as you level up.</p>
+    return `<details class="profile-ranks" ${open?'open':''}><summary data-ranks-toggle>Level ranks <span aria-hidden="true">+</span></summary>
+      <p>Your level unlocks these ranks. Choose your avatar frame and profile title in My Avatar.</p>
       <ol class="profile-rank-journey">${TIERS.map(t=>{
         const reached=progress.level>=t.min,active=t.key===current.key;
         return `<li class="${active?'is-current':reached?'is-reached':'is-ahead'}" ${active?'aria-current="step"':''}>
           <span class="rank-avatar ${avatarClass(active?progress.level:t.min)}" aria-hidden="true">${avatarImageMarkup(person)}</span>
           <span><strong>${t.name}</strong><small>Level ${t.min}</small></span>
-          <b>${active?'Your title':reached?'Reached':'Ahead'}</b></li>`;
+          <b>${active?'Your rank':reached?'Reached':'Ahead'}</b></li>`;
       }).join('')}</ol></details>`;
   }
 

@@ -426,8 +426,40 @@ window.BrainiProfiles = (function(){
       .single();
 
     if(error) throw error;
-    currentProfile=data;
-    return data;
+    currentProfile=await personaliseGuestDefault(data);
+    return currentProfile;
+  }
+
+  async function personaliseGuestDefault(profile){
+    const people=window.BrainiPeople;
+    if(!people || !profile?.leaderboard_enabled ||
+      !people.isLegacy(profile.display_name) ||
+      !people.isLegacy(profile.leaderboard_display_name)) return profile;
+    const session=await BrainiBackendAuth.getSession();
+    if(!session?.user?.is_anonymous || session.user.id!==profile.user_id) return profile;
+
+    // Carry the browser's first nickname into its anonymous account. Only the
+    // owner may replace an untouched generated alias; custom names stay intact.
+    const local=window.BrainiData?.player?.()?.displayName;
+    const nickname=people.isPreset(local)?local:people.resolve({name:profile.leaderboard_display_name}).displayName;
+    try{
+      const {data,error}=await client().from('profiles')
+        .update({display_name:nickname,leaderboard_display_name:nickname})
+        .eq('user_id',profile.user_id)
+        .eq('display_name',profile.display_name)
+        .eq('leaderboard_display_name',profile.leaderboard_display_name)
+        .select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at')
+        .maybeSingle();
+      if(error) throw error;
+      if(data) return data;
+      // A second tab or a profile edit may have won the compare-and-swap.
+      const fresh=await client().from('profiles').select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at').eq('user_id',profile.user_id).single();
+      if(!fresh.error && fresh.data) return fresh.data;
+    }catch(error){
+      // A cosmetic alias must never prevent a saved game or profile from loading.
+      console.warn('BrainiLab default nickname:',error.message||error);
+    }
+    return profile;
   }
 
   async function sync(){
@@ -1687,7 +1719,7 @@ window.BrainiAuth = (function(){
       <img class="auth-brandmark" src="/assets/brand/iso-multicolor.png" alt="" width="52" height="52">
       <div class="auth-kicker">Free BrainiLab account</div>
       <h2 id="authTitle">Save your progress</h2>
-      <p class="auth-lead">Your games and Academy progress, together in one free account.</p>
+      <p class="auth-lead">Keep your scores and course progress across devices. Join for free.</p>
 
       ${BrainiData.player().totalGames>0?`<div class="auth-keep">
         <div><strong>${stats[0]}</strong><span>kept on device</span></div>
@@ -1737,7 +1769,7 @@ window.BrainiAuth = (function(){
       <div class="auth-kicker">${reset?"Password reset":"Verify email"}</div>
       <h2 id="authTitle">Check your email</h2>
       <p class="auth-lead">${reset
-        ? `If an account exists for <strong>${pendingEmail}</strong>, Supabase will send a password-reset email.`
+        ? `If an account exists for <strong>${pendingEmail}</strong>, we’ll send a password-reset email.`
         : `We sent a confirmation link to <strong>${pendingEmail}</strong>. Open it to activate your BrainiLab account.`
       }</p>
       <button type="button" class="auth-primary" data-back-options>Back to sign in</button>
@@ -1751,7 +1783,7 @@ window.BrainiAuth = (function(){
       <div class="auth-success-icon">${BrainiIcons.product("success","auth-state-icon")}</div>
       <div class="auth-kicker">Progress saved</div>
       <h2 id="authTitle">Your BrainiLab is ready</h2>
-      <p class="auth-lead">Your account is active. Your profile, game results and progression can sync securely with BrainiLab.</p>
+      <p class="auth-lead">Your account is active. Your games and Academy progress can now sync across devices.</p>
       <div class="auth-success-stats">
         <div><strong>${BrainiIcons.product("streak","braini-inline-icon")} ${p.currentStreak}</strong><span>day streak</span></div>
         <div><strong>${d.brainScore.toLocaleString()}</strong><span>Daily Brain Score</span></div>
@@ -1868,7 +1900,7 @@ window.BrainiAuth = (function(){
             currentStep="resetSent";
             render();
           }catch(err){
-            error.textContent=err.message||"Could not send password reset.";
+            error.textContent=err.message||"We couldn’t send the reset email. Please try again.";
           }
         };
       }
@@ -1940,30 +1972,8 @@ window.BrainiAuth = (function(){
 
       const avatar=nav.querySelector(".avatar");
       if(avatar){
-        if(auth.status==="authenticated"){
-          if(p.avatarUrl){
-            try{
-              const u=new URL(p.avatarUrl,location.origin);
-              if(!["https:","http:"].includes(u.protocol)){
-                throw new Error("Unsafe avatar URL");
-              }
-
-              const img=document.createElement("img");
-              img.src=u.href;
-              img.alt="";
-              avatar.replaceChildren(img);
-            }catch(err){
-              avatar.textContent=p.avatarInitial||"B";
-            }
-          }else{
-            avatar.textContent=p.avatarInitial||"B";
-          }
-
-          avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
-        }else{
-          avatar.textContent="B";
-          avatar.title="Guest profile & stats";
-        }
+        avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
+        avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
       }
     });
   }
@@ -1974,10 +1984,10 @@ window.BrainiAuth = (function(){
       <aside class="save-progress-card">
         <div class="save-progress-icon">☁</div>
         <div class="save-progress-copy">
-          <strong>Save this progress</strong>
-          <span>Keep your ${p.currentStreak}-day streak, scores and personal bests across devices.</span>
+          <strong>Keep your progress</strong>
+          <span>Keep your scores and course progress across devices with a free account.</span>
         </div>
-        <button type="button" data-save-progress>Save progress</button>
+        <button type="button" data-save-progress>Create free account</button>
       </aside>`;
   }
 
@@ -2031,37 +2041,21 @@ window.BrainiAuth = (function(){
     );
     const friendCode=BrainiData.socialState().friendCode||"—";
 
-    let safeAvatarUrl="";
-    try{
-      if(p.avatarUrl){
-        const u=new URL(p.avatarUrl,location.origin);
-        if(["https:","http:"].includes(u.protocol)){
-          safeAvatarUrl=u.href
-            .replaceAll("&","&amp;")
-            .replaceAll('"',"&quot;")
-            .replaceAll("<","&lt;")
-            .replaceAll(">","&gt;");
-        }
-      }
-    }catch(err){}
-
     return `
       <section class="profile-account-panel">
         <div class="profile-account-head">
           <div class="profile-account-identity">
-            <div class="profile-account-avatar profile-edit-avatar ${
+            <div data-profile-account-avatar aria-hidden="true" class="profile-account-avatar rank-avatar profile-edit-avatar ${
               window.BrainiProgressUI
                 ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
                 : ""
             }">
-              ${safeAvatarUrl
-                ? `<img src="${safeAvatarUrl}" alt="">`
-                : (p.avatarInitial||"B")
-              }
+              ${BrainiProgressUI.avatarImageMarkup(p)}
             </div>
             <div>
               <div class="auth-kicker">Edit Profile</div>
-              <h2>${p.displayName}</h2>
+              <h2>${String(p.displayName).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</h2>
+              <span class="player-profile-title" data-profile-account-title hidden></span>
               <p>${window.BrainiProgressUI
                 ? `${BrainiProgressUI.tier(p.level||1).name} · Level ${p.level||1}`
                 : `Level ${p.level||1}`
@@ -2069,59 +2063,57 @@ window.BrainiAuth = (function(){
             </div>
           </div>
           <div class="profile-cloud-badge ${cloud?"synced":""}">
-            ${cloud?"☁ Profile synced":realAccount?"⚙ Profile setup needed":"Prototype account"}
+            ${cloud?"☁ Profile synced":realAccount?"Finish setting up your profile":"Saved on this device"}
           </div>
         </div>
 
         ${realAccount && !cloud ? `
           <div class="profile-backend-warning">
-            <strong>Supabase account connected, profile table pending.</strong>
-            <span>Run <code>supabase/step2_profiles.sql</code> in the Supabase SQL Editor, then reload this page.</span>
+            <strong>Your profile could not sync.</strong>
+            <span>Your account is connected. Reload the page to try again, or contact us if this continues.</span>
           </div>
         ` : ""}
 
         <div class="profile-settings-grid">
           <form data-profile-details-form>
-            <label>Display name</label>
+            <label for="profile-display-name">Display name</label>
             <div class="profile-setting-row">
-              <input name="displayName" maxlength="30" value="${(p.displayName||"").replace(/"/g,"&quot;")}" required>
+              <input id="profile-display-name" name="displayName" maxlength="30" value="${(p.displayName||"").replace(/"/g,"&quot;")}" required>
             </div>
 
-            <label>Country</label>
+            <label for="profile-country">Country</label>
             <div class="profile-setting-row">
-              <input name="countryCode" maxlength="2" pattern="[A-Za-z]{2}" value="${(p.countryCode||"").replace(/"/g,"&quot;")}" placeholder="ES">
+              <input id="profile-country" name="countryCode" aria-describedby="profile-country-help" maxlength="2" pattern="[A-Za-z]{2}" value="${(p.countryCode||"").replace(/"/g,"&quot;")}" placeholder="ES">
               <button type="submit">${cloud?"Save profile":"Save locally"}</button>
             </div>
-            <small class="profile-field-help">Use the 2-letter country code for now, e.g. ES, US, GB, FR. This powers local rankings.</small>
+            <small class="profile-field-help" id="profile-country-help">Enter your country’s two-letter code, such as ES, US or GB, for country rankings.</small>
           </form>
 
           <div>
             <label>Rankings visibility</label>
             <div class="profile-leaderboard-setting">
-              <span>${lb.enabled ? `Visible as <strong>${String(lb.displayName||"Player").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
+              <span>${lb.enabled ? `Visible as <strong>${BrainiPeople.resolve({name:lb.displayName}).displayName.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong>` : "Hidden from public rankings"}</span>
               <button type="button" data-leaderboard-toggle>${lb.enabled ? "Leave rankings" : "Join rankings"}</button>
             </div>
             <small class="profile-field-help">Completed games appear automatically under a public player name. You can hide your ranking at any time. Your email is never shown.</small>
           </div>
         </div>
 
+        <a class="profile-avatar-edit-link" href="?section=progress">Change avatar, frame &amp; title →</a>
         <div class="profile-photo-editor">
           <div class="profile-photo-preview ${
             window.BrainiProgressUI
               ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
               : ""
           }">
-            ${safeAvatarUrl
-              ? `<img src="${safeAvatarUrl}" alt="">`
-              : `<span>${p.avatarInitial||"B"}</span>`
-            }
+            ${BrainiProgressUI.avatarImageMarkup({...p,avatarDesign:null})}
           </div>
 
           <div class="profile-photo-copy">
             <label>Profile photo</label>
             <strong>${p.avatarUrl ? "Change your photo" : "Add a profile photo"}</strong>
             <span>
-              JPG, PNG or WebP. BrainiLab crops it square and stores a 512×512 version.
+              Choose a JPG, PNG or WebP image. Use it with “Your picture” in My Avatar.
             </span>
 
             ${realAccount && cloud ? `
@@ -2218,7 +2210,7 @@ window.BrainiAuth = (function(){
 
             try{
               if(!window.BrainiProfiles?.uploadAvatar){
-                throw new Error("Profile photo uploads are not configured yet.");
+                throw new Error("Photo uploads are unavailable. Please try again later.");
               }
 
               await BrainiProfiles.uploadAvatar(file);
@@ -2303,8 +2295,10 @@ window.BrainiAuth = (function(){
         };
 
 
+        window.BrainiProfileRewards?.render?.();
       }else{
-        account.innerHTML="";
+        account.innerHTML=guestProfileMarkup();
+        account.querySelector('[data-profile-save]').onclick=()=>open({source:'profile_details'});
       }
     }
   }
