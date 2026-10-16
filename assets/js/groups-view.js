@@ -6,7 +6,7 @@ window.BrainiGroupsView=(()=>{
   const icon=name=>`<svg class="group-ui-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${icons[name]||icons.people}</svg>`;
   const crest=g=>BrainiIcons.groupCrest(g.crest||{icon:'⚡',color:'#FFD813'},'group-room-crest');
   function avatar(member){
-    return `<span class="group-player-avatar">${BrainiProgressUI.avatarImageMarkup(member)}</span>`;
+    return `<span class="group-player-avatar" ${BrainiProgressUI.avatarFrameAttribute(member)}>${BrainiProgressUI.avatarImageMarkup(member)}</span>`;
   }
   function memberRow(member,group,owner){
     return `<div class="group-player">${avatar(member)}<div><strong>${esc(member.name||'Braini Player')}</strong><small>${member.role==='owner'?'Owner':member.role==='admin'?'Admin':'Member'} · ${number(member.dailyScore)} today</small></div>${owner&&member.role!=='owner'?`<button class="group-remove" data-remove-group-member="${esc(group.id)}|${esc(member.userId||member.id)}" aria-label="Remove ${esc(member.name)} from group">×</button>`:''}</div>`;

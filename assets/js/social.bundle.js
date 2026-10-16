@@ -32,10 +32,12 @@ window.BrainiFriends=(function(){
     const friends=(data?.friends||[]).map(f=>({
       id:f.user_id,
       userId:f.user_id,
-      name:f.name||"Braini Player",
+      identityName:f.name||"Braini Player",
+      name:BrainiPeople.resolve({name:f.name}).displayName,
       country:f.country||"",
       avatar:f.avatar||((f.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:f.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(f.avatar_style)||{}),
       currentStreak:Number(f.current_streak||0),
       bestStreak:Number(f.best_streak||0),
       xp:Number(f.xp||0),
@@ -53,10 +55,12 @@ window.BrainiFriends=(function(){
     const mapRequest=(r,direction)=>({
       id:r.id,
       userId:r.user_id,
-      name:r.name||"Braini Player",
+      identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
       country:r.country||"",
       avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:r.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
       direction,
       createdAt:r.created_at||null,
       cloud:true
@@ -190,10 +194,12 @@ window.BrainiFriends=(function(){
         rank:Number(r.rank||0),
         id:r.user_id,
         userId:r.user_id,
-        name:r.name||"Braini Player",
+        identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
         country:r.country||"",
         avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
         avatarUrl:r.avatar_url||null,
+        ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
         score:Number(r.score||0),
         streak:Number(r.streak||0),
         level:Number(r.level||1),
@@ -204,10 +210,12 @@ window.BrainiFriends=(function(){
         rank:Number(data.user.rank||0),
         id:data.user.user_id,
         userId:data.user.user_id,
-        name:data.user.name||"You",
+        identityName:data.user.name||"You",
+        name:BrainiPeople.resolve({name:data.user.name}).displayName,
         country:data.user.country||"",
         avatar:data.user.avatar||"B",
         avatarUrl:data.user.avatar_url||null,
+        ...(window.BrainiAvatarDesign?.fromPublicStyle?.(data.user.avatar_style)||{}),
         score:Number(data.user.score||0),
         streak:Number(data.user.streak||0),
         level:Number(data.user.level||1),
@@ -278,9 +286,11 @@ window.BrainiGroups=(function(){
     const members=(g.members||[]).map(m=>({
       id:m.user_id,
       userId:m.user_id,
-      name:m.name||"Braini Player",
+      identityName:m.name||"Braini Player",
+      name:BrainiPeople.resolve({name:m.name}).displayName,
       avatar:m.avatar||((m.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:m.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(m.avatar_style)||{}),
       country:m.country||"",
       role:m.role||"member",
       currentStreak:Number(m.current_streak||0),
@@ -293,7 +303,8 @@ window.BrainiGroups=(function(){
     const pendingInvites=(g.pending_invites||[]).map(i=>({
       id:i.id,
       userId:i.user_id,
-      name:i.name||"Braini Player",
+      identityName:i.name||"Braini Player",
+      name:BrainiPeople.resolve({name:i.name}).displayName,
       avatar:i.avatar||((i.name||"B")[0]||"B").toUpperCase(),
       country:i.country||"",
       createdAt:i.created_at||null
@@ -777,7 +788,7 @@ window.BrainiSocial = (function(){
                   value="${groupEscape(f.userId||f.id)}"
                   data-group-friend
                 >
-                <span class="social-avatar">${groupEscape(f.avatar||f.name?.[0]||"B")}</span>
+                <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
                 <span>
                   <strong>${groupEscape(f.name)}</strong>
                   <small>${flag(f.country)} ${f.country||""}</small>
@@ -1098,7 +1109,7 @@ window.BrainiSocial = (function(){
         if(cloudGroupsReady()){
           await BrainiGroups.acceptLink(code);
         }else{
-          throw new Error("Group invites require the BrainiLab cloud backend.");
+          throw new Error("Group invitations are unavailable. Please try again later.");
         }
 
         BrainiData.api.track("group_invite_accepted",{
@@ -1200,7 +1211,7 @@ window.BrainiSocial = (function(){
         <div class="friend-list">
           ${incoming.map(r=>`
             <div class="friend-row">
-              <span class="social-avatar">${r.avatar||r.name?.[0]||"B"}</span>
+              <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 <small>${flag(r.country)} ${r.country||""}</small>
@@ -1218,7 +1229,7 @@ window.BrainiSocial = (function(){
         <div class="friend-list">
           ${outgoing.map(r=>`
             <div class="friend-row">
-              <span class="social-avatar">${r.avatar||r.name?.[0]||"B"}</span>
+              <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 <small>${flag(r.country)} ${r.country||""} · Pending</small>
@@ -1233,7 +1244,7 @@ window.BrainiSocial = (function(){
       <div class="friend-list">
         ${social.friends.map(f=>`
           <div class="friend-row">
-            <span class="social-avatar">${f.avatar||f.name?.[0]||"B"}</span>
+            <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
             <div class="friend-main">
               <strong>${f.name}</strong>
               <small>${flag(f.country)} ${f.country||""} · Level ${f.level||1}</small>
@@ -1407,8 +1418,8 @@ window.BrainiSocial = (function(){
               <div class="group-members-real">
                 ${g.members.map(m=>`
                   <div class="group-member-real">
-                    <span class="social-avatar">
-                      ${m.avatar||m.name?.[0]||"B"}
+                    <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(m)}>
+                      ${BrainiProgressUI.avatarImageMarkup(m)}
                     </span>
 
                     <div>
@@ -1703,7 +1714,7 @@ window.BrainiSocial = (function(){
         b.onclick=async()=>{
           try{
             if(!cloudGroupsReady()){
-              throw new Error("Group invitations require cloud sync.");
+              throw new Error("Group invitations are unavailable. Please try again later.");
             }
 
             await BrainiGroups.acceptInvite(
@@ -1763,7 +1774,7 @@ window.BrainiSocial = (function(){
 
           try{
             if(!cloudGroupsReady()){
-              throw new Error("Member management requires cloud sync.");
+              throw new Error("Member settings are unavailable. Please try again later.");
             }
 
             await BrainiGroups.removeMember(

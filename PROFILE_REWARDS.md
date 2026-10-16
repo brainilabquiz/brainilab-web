@@ -72,7 +72,7 @@ All artwork stays local, static and original; there are no animated flashes.
 No avatar service, tracking call, third-party artwork or generated bitmap is used.
 The flat `brainilab_avatar_*_v1` metadata keys hold mode, skin, hair, hair color,
 shirt, background, glasses, hat and prop. Only changed keys are merged. Existing
-frame/title keys stay backward compatible. No schema, RPC, grant or score change.
+frame/title keys stay backward compatible. Saving a look does not change scores or XP.
 
 Previewing never equips an item. Save confirms the change before applying the
 illustrated avatar to the current player's profile, shared header and other
@@ -80,13 +80,38 @@ existing own-avatar surfaces. A compact mobile preview and Save button stay in
 view while choosing. Cancel discards the draft. Switching to Your picture restores
 the retained photo or preset without deleting the illustration choices. Choosing
 a look or accessory switches the preview to illustrated mode; frames/titles do not.
-The original level frame and no-title option can always be restored. Public
-ranking scores, positions, names, avatars and payloads are unchanged. These
-preferences are not published to other players through public ranking payloads.
+The original level frame and no-title option can always be restored.
+
+Saved illustrated avatars and cosmetic frames also appear in individual rankings,
+friends rankings, accepted friends, friend requests, group members and the friend
+picker. Existing picture/preset fallback stays available. Group crests remain
+group identities. Existing public ranking visibility is preserved: automatically
+assigned ranking identities do not publish a private photo or avatar design.
+
+Migration `20261016195312_shared_player_avatars.sql` adds `avatar_style` only to
+four existing RPCs. Their authentication, membership, visibility, moderation,
+eligibility, score calculations, ordering, previous fields and EXECUTE ACLs are
+preserved. A definition-hash guard aborts if another deployment edited an RPC.
+The private `brainilab_private.player_avatar(uuid)` helper is an invoker function
+with an empty search path and no direct PUBLIC/anon/authenticated access. Existing
+definer RPCs call it only for people already authorized in their response.
+
+Only allowlisted cosmetic IDs leave Auth metadata. Canonical
+`public.player_progression.xp` gates each accessory and frame. A public style
+includes a minimum rendering threshold, rather than exposing total XP, user IDs,
+emails, other metadata or titles on public rankings. Picture mode omits hidden
+illustration choices. No player rows, scores, XP, relationships or photos are
+updated by this migration. `avatar-design.js` normalizes the appearance in each
+adapter; `progression-ui.js` renders it consistently, including rows without XP.
 
 Validation: `tools/test-profile-rewards.mjs` and `tools/test-avatar-studio.mjs`
 (set `JSDOM_MODULE`), existing profile,
-progression, player identity, rankings and game-integrity suites; official build
+progression, player identity, rankings and game-integrity suites;
+`tools/test-social-avatars.mjs` executes all four real pre-change RPCs and the
+migration in isolated PostgreSQL (set `PGLITE_MODULE` and `JSDOM_MODULE`), compares
+all previous response fields and ACLs, checks privacy and every unlock threshold,
+and feeds the actual database results through the adapters and social views;
+official build
 and `tools/check-build.py`. Inspect the actual profile and a local sample fixture
 at 320/768/1024/1440px, keyboard activation and visible focus. Local fixtures and
 screenshots are outside the tracked public source and must not be deployed.

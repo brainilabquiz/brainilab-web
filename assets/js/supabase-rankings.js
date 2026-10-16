@@ -22,6 +22,7 @@ window.BrainiRankingsCloud=(function(){
       country:r.country||"",
       avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:r.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
       score:Number(r.score||0),
       streak:Number(r.streak||0),
       level:Number(r.level||1),

@@ -32,10 +32,12 @@ window.BrainiFriends=(function(){
     const friends=(data?.friends||[]).map(f=>({
       id:f.user_id,
       userId:f.user_id,
-      name:f.name||"Braini Player",
+      identityName:f.name||"Braini Player",
+      name:BrainiPeople.resolve({name:f.name}).displayName,
       country:f.country||"",
       avatar:f.avatar||((f.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:f.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(f.avatar_style)||{}),
       currentStreak:Number(f.current_streak||0),
       bestStreak:Number(f.best_streak||0),
       xp:Number(f.xp||0),
@@ -53,10 +55,12 @@ window.BrainiFriends=(function(){
     const mapRequest=(r,direction)=>({
       id:r.id,
       userId:r.user_id,
-      name:r.name||"Braini Player",
+      identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
       country:r.country||"",
       avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:r.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
       direction,
       createdAt:r.created_at||null,
       cloud:true
@@ -190,10 +194,12 @@ window.BrainiFriends=(function(){
         rank:Number(r.rank||0),
         id:r.user_id,
         userId:r.user_id,
-        name:r.name||"Braini Player",
+        identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
         country:r.country||"",
         avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
         avatarUrl:r.avatar_url||null,
+        ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
         score:Number(r.score||0),
         streak:Number(r.streak||0),
         level:Number(r.level||1),
@@ -204,10 +210,12 @@ window.BrainiFriends=(function(){
         rank:Number(data.user.rank||0),
         id:data.user.user_id,
         userId:data.user.user_id,
-        name:data.user.name||"You",
+        identityName:data.user.name||"You",
+        name:BrainiPeople.resolve({name:data.user.name}).displayName,
         country:data.user.country||"",
         avatar:data.user.avatar||"B",
         avatarUrl:data.user.avatar_url||null,
+        ...(window.BrainiAvatarDesign?.fromPublicStyle?.(data.user.avatar_style)||{}),
         score:Number(data.user.score||0),
         streak:Number(data.user.streak||0),
         level:Number(data.user.level||1),
@@ -278,9 +286,11 @@ window.BrainiGroups=(function(){
     const members=(g.members||[]).map(m=>({
       id:m.user_id,
       userId:m.user_id,
-      name:m.name||"Braini Player",
+      identityName:m.name||"Braini Player",
+      name:BrainiPeople.resolve({name:m.name}).displayName,
       avatar:m.avatar||((m.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:m.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(m.avatar_style)||{}),
       country:m.country||"",
       role:m.role||"member",
       currentStreak:Number(m.current_streak||0),
@@ -293,7 +303,8 @@ window.BrainiGroups=(function(){
     const pendingInvites=(g.pending_invites||[]).map(i=>({
       id:i.id,
       userId:i.user_id,
-      name:i.name||"Braini Player",
+      identityName:i.name||"Braini Player",
+      name:BrainiPeople.resolve({name:i.name}).displayName,
       avatar:i.avatar||((i.name||"B")[0]||"B").toUpperCase(),
       country:i.country||"",
       createdAt:i.created_at||null
@@ -622,10 +633,12 @@ window.BrainiRankingsCloud=(function(){
   function normalizeRow(r){
     return {
       rank:Number(r.rank||0),
-      name:r.name||"Braini Player",
+      identityName:r.name||"Braini Player",
+      name:BrainiPeople.resolve({name:r.name}).displayName,
       country:r.country||"",
       avatar:r.avatar||((r.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:r.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(r.avatar_style)||{}),
       score:Number(r.score||0),
       streak:Number(r.streak||0),
       level:Number(r.level||1),
@@ -702,7 +715,7 @@ window.BrainiRankings=(function(){
   const state={
     mode:"individual",
     region:"global",
-    period:"daily",
+    period:"monthly",
     gameId:"all",
     metric:"score",
     expanded:false
@@ -747,7 +760,7 @@ window.BrainiRankings=(function(){
   function currentPeriodLabel(){
     if(state.metric==="streak") return "Current";
 
-    return {daily:"Today",weekly:"This week",monthly:"This month"}[state.period];
+    return {daily:"Today",weekly:"This week",monthly:"This month",alltime:"All-time"}[state.period];
   }
 
   function syncControls(){
@@ -800,7 +813,7 @@ window.BrainiRankings=(function(){
       url.searchParams.set("region",state.region);
     }
 
-    if(state.period==="daily"){
+    if(state.period==="monthly"){
       url.searchParams.delete("period");
     }else{
       url.searchParams.set("period",state.period);
@@ -821,7 +834,7 @@ window.BrainiRankings=(function(){
     history.replaceState(
       {},
       document.title,
-      url.pathname+url.search
+      url.pathname+url.search+url.hash
     );
   }
 
@@ -841,20 +854,16 @@ window.BrainiRankings=(function(){
   }
 
   function playerAvatar(row,small=false){
-    const initial=row?.avatar||row?.name?.[0]||"B";
     const photo=safeAvatarUrl(row?.avatarUrl);
 
     if(window.BrainiProgressUI){
       const rank=BrainiProgressUI.avatarClass(Number(row?.level||1));
-      return `<span class="rank-avatar ${rank} ${small?"small":""}" title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
-        ${photo
-          ? `<img src="${photo}" alt="">`
-          : BrainiProgressUI.defaultAvatarMarkup()
-        }
+      return `<span class="rank-avatar ${rank} ${small?"small":""}" ${BrainiProgressUI.avatarFrameAttribute(row)} title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
+        ${BrainiProgressUI.avatarImageMarkup(row)}
       </span>`;
     }
 
-    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:'<img src="/assets/icons/product/player-owl.svg" alt="">'}</span>`;
+    return `<span class="ranking-avatar ${small?"small":""}">${photo?`<img src="${photo}" alt="">`:`<img src="${BrainiPeople.resolve(row).avatar}" alt="">`}</span>`;
   }
 
   function tableRow(row){
@@ -906,10 +915,10 @@ window.BrainiRankings=(function(){
     if(!p || !window.BrainiProgressUI)return '';
     const progress=BrainiProgressUI.xpProgress(p.level,p.xp);
     return `<a class="ranking-level" href="/profile/?section=progress" aria-label="Your level and XP progress">
-      ${playerAvatar({...p,name:p.displayName})}
-      <div><strong>Level ${Number(p.level)||1} <span>· ${escapeText(BrainiProgressUI.tier(p.level).name)}</span></strong>
+      ${playerAvatar({...p,name:p.displayName,level:progress.level})}
+      <div><strong>Level ${progress.level} <span>· ${escapeText(BrainiProgressUI.tier(progress.level).name)}</span></strong>
       <div class="ranking-xp-track" role="progressbar" aria-label="Progress to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><i style="width:${progress.percent}%"></i></div>
-      <small>${escapeText(progress.label)}</small></div><b>${Number(p.xp||0).toLocaleString()} XP <span>→</span></b>
+      <small>${escapeText(progress.label)}</small></div><b>${Number(progress.currentXp).toLocaleString()} XP <span>→</span></b>
     </a>`;
   }
 
@@ -917,8 +926,10 @@ window.BrainiRankings=(function(){
     const explanation=state.metric==='streak'
       ? 'Longer active streaks rank higher. Complete the main Daily to keep yours going.'
       : state.mode==='group'
-        ? 'Your team’s three highest scores count. Teams with the same score share a place.'
-        : 'Your score decides your place. Players with the same score share a position.';
+        ? 'Your team’s three highest scores count each day. Teams with the same score share a place.'
+        : state.period==='alltime'
+          ? 'Scores add up across days. Players with the same score share a position.'
+          : 'Your score decides your place. Players with the same score share a position.';
     return `<details class="ranking-rules"><summary>How rankings work</summary><p>${explanation}</p><p>XP builds your level and is separate from this ranking.</p></details>`;
   }
 
@@ -968,7 +979,7 @@ window.BrainiRankings=(function(){
     if(state.mode!=="individual" || !cloudConfigured())return '';
     const guest=authState().status!=="authenticated";
     const enabled=data?.leaderboardEnabled;
-    return `<details class="ranking-privacy"><summary>${guest?'Playing as a guest':enabled?'Public as '+escapeText(data.leaderboardDisplayName||'Braini Player'):'Your ranking is private'} <span>Manage</span></summary>
+    return `<details class="ranking-privacy"><summary>${guest?'Playing as a guest':enabled?'Public as '+escapeText(BrainiPeople.resolve({name:data.leaderboardDisplayName}).displayName):'Your ranking is private'} <span>Manage</span></summary>
       <div><p>${guest?'Your guest name appears on the board. Sign in to keep your progress across devices.':enabled?'Only your public profile appears here. Your email stays private.':'Your progress is saved. Choose a public name to appear on the board.'}</p>
       <button class="ranking-privacy-action" ${guest?'data-ranking-signin':enabled?'data-ranking-hide':'data-ranking-join'}>${guest?'Save my progress':enabled?'Hide ranking profile':'Show my ranking'}</button></div></details>`;
   }
@@ -1320,7 +1331,7 @@ window.BrainiRankings=(function(){
     }
 
     const period=params.get("period");
-    if(["daily","weekly","monthly"].includes(period)){
+    if(["daily","weekly","monthly","alltime"].includes(period)){
       state.period=period;
     }
 

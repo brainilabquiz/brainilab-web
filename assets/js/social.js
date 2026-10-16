@@ -172,7 +172,7 @@ window.BrainiSocial = (function(){
                   value="${groupEscape(f.userId||f.id)}"
                   data-group-friend
                 >
-                <span class="social-avatar">${BrainiProgressUI.avatarImageMarkup(f)}</span>
+                <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
                 <span>
                   <strong>${groupEscape(f.name)}</strong>
                   <small>${flag(f.country)} ${f.country||""}</small>
@@ -595,7 +595,7 @@ window.BrainiSocial = (function(){
         <div class="friend-list">
           ${incoming.map(r=>`
             <div class="friend-row">
-              <span class="social-avatar">${BrainiProgressUI.avatarImageMarkup(r)}</span>
+              <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 <small>${flag(r.country)} ${r.country||""}</small>
@@ -613,7 +613,7 @@ window.BrainiSocial = (function(){
         <div class="friend-list">
           ${outgoing.map(r=>`
             <div class="friend-row">
-              <span class="social-avatar">${BrainiProgressUI.avatarImageMarkup(r)}</span>
+              <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(r)}>${BrainiProgressUI.avatarImageMarkup(r)}</span>
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 <small>${flag(r.country)} ${r.country||""} · Pending</small>
@@ -628,7 +628,7 @@ window.BrainiSocial = (function(){
       <div class="friend-list">
         ${social.friends.map(f=>`
           <div class="friend-row">
-            <span class="social-avatar">${BrainiProgressUI.avatarImageMarkup(f)}</span>
+            <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(f)}>${BrainiProgressUI.avatarImageMarkup(f)}</span>
             <div class="friend-main">
               <strong>${f.name}</strong>
               <small>${flag(f.country)} ${f.country||""} · Level ${f.level||1}</small>
@@ -802,7 +802,7 @@ window.BrainiSocial = (function(){
               <div class="group-members-real">
                 ${g.members.map(m=>`
                   <div class="group-member-real">
-                    <span class="social-avatar">
+                    <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(m)}>
                       ${BrainiProgressUI.avatarImageMarkup(m)}
                     </span>
 
