@@ -173,6 +173,7 @@ window.BrainiAvatarStudioUI=(function(){
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
       tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
       tab.addEventListener('keydown',event=>{
+        if(event.altKey||event.ctrlKey||event.metaKey)return;
         const keys=Object.keys(panes),index=keys.indexOf(tab.dataset.avatarTab);
         const next=event.key==='ArrowRight'?keys[(index+1)%keys.length]:event.key==='ArrowLeft'?keys[(index+keys.length-1)%keys.length]:event.key==='Home'?keys[0]:event.key==='End'?keys.at(-1):null;
         if(next){event.preventDefault();showPane(root,next);root.querySelector(`[data-avatar-tab="${next}"]`).focus();}

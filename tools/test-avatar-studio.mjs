@@ -58,6 +58,8 @@ assert.deepEqual(omitDesign(savedState()),before);
 const look=root.querySelector('[data-avatar-tab=look]');look.focus();look.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
 assert.equal(w.document.activeElement.dataset.avatarTab,'extras');assert.equal(root.querySelector('[data-avatar-pane=look]').hidden,true);
 w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));assert.equal(w.document.activeElement.dataset.avatarTab,'rewards');
+const pageHome=new w.KeyboardEvent('keydown',{key:'Home',ctrlKey:true,bubbles:true,cancelable:true});w.document.activeElement.dispatchEvent(pageHome);
+assert.equal(pageHome.defaultPrevented,false);assert.equal(w.document.activeElement.dataset.avatarTab,'rewards','modified page-navigation keys are not captured');
 w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));assert.equal(w.document.activeElement,look);
 assert.equal(root.querySelectorAll('[role=tab][tabindex="0"]').length,1);
 // All renderable options are fixed local artwork, including malicious metadata.
