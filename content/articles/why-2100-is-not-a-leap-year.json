@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/why-2100-is-not-a-leap-year-thumb.webp"
   },
   "order": 17,
-  "title": "Why isn't 2100 a leap year?",
+  "title": "Is 2100 a leap year? Why the calendar skips it",
   "topic": "History",
   "status": "published",
   "related": [
@@ -65,11 +65,11 @@
   "sources": [
     {
       "url": "https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html",
-      "name": "NASA — Calendars and their History"
+      "name": "NASA � Calendars and their History"
     },
     {
       "url": "https://spaceplace.nasa.gov/leap-year/en/",
-      "name": "NASA Space Place — What Is a Leap Year?"
+      "name": "NASA Space Place � What Is a Leap Year?"
     }
   ],
   "authorId": "biel-sarda",
@@ -77,31 +77,31 @@
   "sections": [
     {
       "id": "why-add-a-day",
-      "html": "<p><strong>2100 will not be a leap year.</strong> In the calendar we use today, years ending in 00 need an extra check: can the year number be split into groups of 400 with nothing left over? For 2100, the answer is no.</p><p>But first, what is a leap year? An ordinary year has <strong>365 days</strong>. A leap year has <strong>366</strong>, with one extra date: <strong>29 February</strong>.</p><p>We need that extra day because a full cycle of seasons takes a little longer than 365 days: almost another quarter of a day. Those small amounts of time add up.</p><p>Adding a day roughly every four years helps our calendar stay in step with the seasons. The special check for years ending in 00 makes that match more accurate.</p>",
-      "title": "What is a leap day?"
-    },
-    {
-      "id": "short-answer",
-      "html": "<p>The leftover time is a little <strong>less</strong> than a quarter of a day. Adding a whole day every four years therefore adds slightly too much.</p><p>The calendar fixes this by leaving out a few leap days. The extra rule applies to years ending in <strong>00</strong>, such as 1900, 2000 and 2100.</p><p>These rules belong to the <strong>Gregorian calendar</strong>, the calendar widely used for everyday dates today.</p>",
-      "title": "Why “every four years” is not the whole story"
+      "title": "Is 2100 a leap year?",
+      "html": "<p><strong>No. In the Gregorian calendar, 2100 is not a leap year because it is divisible by 100 but not by 400.</strong> February will have 28 days, and the year will have 365.</p><p>The catch is easy to miss: �every four years� has an exception. <a href=\"https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html\">NASA�s calendar guide gives the full rule</a>.</p>"
     },
     {
       "id": "three-checks",
-      "html": "<p>First, a small maths phrase: <strong>“divisible by four”</strong> means you can split a number into groups of four with nothing left over. For example, 12 makes three complete groups of four; 13 leaves one over.</p><ol><li><strong>Can the year number be divided by 4 with nothing left over?</strong> If no, it is not a leap year. If yes, continue.</li><li><strong>Does the year end in 00?</strong> If no, it is a leap year. If yes, there is one last check.</li><li><strong>Can it be divided by 400 with nothing left over?</strong> If yes, keep the leap day. If no, skip it.</li></ol>",
-      "title": "Follow the checks one at a time"
+      "title": "The leap-year rule, one check at a time",
+      "html": "<p>�Divisible� means a division leaves no remainder. For example, 12 divides evenly by 4; 13 does not.</p><ol><li><strong>Not divisible by 4?</strong> It is an ordinary year.</li><li><strong>Divisible by 4, but not by 100?</strong> It is a leap year.</li><li><strong>Divisible by 100?</strong> It is a leap year only if it also divides evenly by 400.</li></ol><p>2100 passes the first check: 2100 � 4 = 525. But 2100 � 400 = 5.25, so it fails the final one.</p>"
     },
     {
       "id": "at-a-glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Both years end in 00, so check groups of 400</caption><thead><tr><th scope=\"col\">Year</th><th scope=\"col\">Groups of 400</th><th scope=\"col\">Leap day?</th></tr></thead><tbody><tr><td>2000</td><td>Five complete groups; nothing left over</td><td>Yes</td></tr><tr><td>2100</td><td>Five complete groups, with 100 left over</td><td>No</td></tr><tr><td>2400</td><td>Six complete groups; nothing left over</td><td>Yes</td></tr></tbody></table></div><p>That is why <strong>2100 will not have 29 February</strong>. It does pass the four-year check, but fails the extra check for years ending in 00.</p>",
-      "title": "Compare 2000 and 2100"
+      "title": "Why was 2000 a leap year, then?",
+      "html": "<p><strong>2000 � 400 = 5</strong>, with nothing left over. That century year kept its extra day. Compare:</p><ul><li><strong>1900:</strong> no leap day.</li><li><strong>2000:</strong> a leap year.</li><li><strong>2100:</strong> no leap day.</li><li><strong>2400:</strong> a leap year.</li></ul>"
+    },
+    {
+      "id": "short-answer",
+      "title": "Why leave out an extra day?",
+      "html": "<p>A cycle of seasons lasts a little less than 365� days. Adding a full day every four years would slowly add too much time. Skipping three century leap days in each 400-year cycle makes the calendar a closer match.</p><p><a href=\"https://spaceplace.nasa.gov/leap-year/en/\">NASA Space Place explains why the small difference adds up</a>. It is a calendar correction, not Earth deciding to take a day off.</p>"
     },
     {
       "id": "calendar-scope",
-      "html": "<p>Countries did not all start using this calendar at once. When reading about an old event, ask which calendar was in use there.</p><p>Next, see what happened when <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\" target=\"_blank\" rel=\"noopener noreferrer\">Britain changed its calendar in 1752</a>. The date jumped, but people did not lose eleven days of their lives.</p>",
-      "title": "An old date needs one extra question"
+      "title": "One calendar, several starting dates",
+      "html": "<p>These are Gregorian rules. Countries adopted them at different times, so old dates need care. See why <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\">Britain skipped eleven calendar dates in 1752</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
-  "description": "2100 will not have 29 February. See why years ending in 00 need an extra calendar check, with a simple comparison of 2000, 2100 and 2400.",
+  "updatedAt": "2026-10-16T18:58:04Z",
+  "description": "2100 is not a leap year: it divides by 100 but not by 400. See the simple rule, why 2000 was different and what happens to February.",
   "publishedAt": "2026-09-29T06:00:00Z"
 }
