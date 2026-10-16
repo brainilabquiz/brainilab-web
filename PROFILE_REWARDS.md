@@ -189,6 +189,22 @@ together. It has no visible diploma heading or separate seal row. This is a
 game progress decoration, not an academic
 credential. It neither spends XP nor writes any progression or metadata.
 
+Higher finishes have distinct seal shapes and surfaces within the same compact
+280px card: gold engraved corners for Graduate, a lilac hexagonal seal for PhD,
+teal side rails and an atom for Researcher, navy/gold and a book for Professor,
+forest/gold with a crown for Dean, and dark ink/gold with laurels and a rosette
+for Nobel Mind. Text remains readable on every surface. The seal stays beside
+the name, and all ornaments are decorative; no animation or extra profile rows.
+
+The mobile creator miniature now follows the draft frame as well as its artwork.
+Cancel restores the saved frame; saved header/social identities never show an
+unsaved preview. Both creator portraits use the existing canonical XP-derived
+level, matching the diploma even when a cached player level is stale. The player
+record and XP formula are unchanged. Retry/reconnect retains locally edited
+choices while rebasing untouched fields on refreshed saved metadata; account
+changes discard another owner's draft. Regressions cover failed reads/writes,
+remote changes, exact local-only save patches, cancellation and owner isolation.
+
 A nonmodal guest invitation appears after 15 seconds on Home, Games and the
 Daily overview. It is excluded from individual games, articles, profile and
 editor routes. It never steals focus, yields to visible cookie/auth/game dialogs,
