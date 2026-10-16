@@ -1,0 +1,136 @@
+{
+  "checkedAt": "2026-10-16T17:37:31.795749+00:00",
+  "type": "Two Academy lessons extending sky-colours2to4",
+  "demand": {
+    "source": "Native Google Trends chart tables",
+    "url": "https://trends.google.com/trends/explore?geo=US&q=how%20are%20rainbows%20formed,why%20do%20stars%20twinkle&hl=en",
+    "filters": "United States; Past12months; All categories; Web Search; English terms (not a search-language filter)",
+    "coverage": "Weekly labels12Oct2025–11Oct2026; latestweek may be partial",
+    "relativeAverages": {
+      "how are rainbows formed": 6,
+      "why do stars twinkle": 30
+    },
+    "volume": null,
+    "kd": null,
+    "cpc": null,
+    "limitations": "Sparse, irregular normalised indices, not volume or global popularity. A0 may indicate insufficient data. No paid retry after earlier credit limit."
+  },
+  "intent": "Free search results favour accessible physical explanations: MetOffice/NOAA for rainbow mechanisms and NASA for atmospheric starlight. No commercial/telescope-shopping intent targeted.",
+  "novelty": "93existing articles/8courses checked; no rainbow formation or twinkling article. Progression: scattering→longer air path→refraction/reflection in water→changing refraction through air. Old2lesson objects and quiz versions unchanged.",
+  "sourcesOpened": [
+    {
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows",
+      "claims": "Refraction/reflection; sunlight colours; continuous spectrum; observer geometry."
+    },
+    {
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow",
+      "claims": "Air/water bending; internal reflection; colours already in light; Sun behind; observer effect; full circle."
+    },
+    {
+      "url": "https://www.weather.gov/fgz/Rainbow",
+      "claims": "Refraction entering and leaving, internal reflection, primary bow redoutside; no total-internal-reflection claim."
+    },
+    {
+      "url": "https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html",
+      "claims": "Moving atmospheric air changes light paths, turbulence, low/horizon star more air."
+    },
+    {
+      "url": "https://imagine.gsfc.nasa.gov/ask_astro/night_sky.html#981217a",
+      "claims": "Exact nativeHTML id981217a checked. Temperature/density cells, refraction, planet disc averages variability. Usually steadier, not identification guarantee."
+    },
+    {
+      "url": "https://science.nasa.gov/image-article/apod-2000-july-25-why-stars-twinkle/",
+      "claims": "Stars appearpointlike; movingair changes/blurs the ground view. Original APOD2000page migrated to this canonical URL."
+    }
+  ],
+  "failedSources": [
+    "UCARrainbow page failed; not used as evidence or cited."
+  ],
+  "reviewed": [
+    "Original short281/299word British English; foursections each, directanswerfirst, curiosity headlines, no keyword stuffing or internal goals.",
+    "No mandatory widgets; two optional folded3question quizzes. All6keys/explanations checked;0/3and3/3tested.",
+    "Two bespoke built-in ImageGen covers, fullart and240px thumbs inspected; primarybow redouter/violetinner, no Sun in sameview, telescope/observatory illustrative only.",
+    "Two existing lessons unchanged;7othercourse documents and93oldarticles preserved. Saved courseprogress keeps old completions,2of4=50%.",
+    "Build890publicfiles; library/navigation/SEO/articlegame/learning156quizquestions pass.",
+    "Native1280/320views of both lessons passed: no overflow/broken images; optional quizzes closed; rainbow colour order and cover framing inspected."
+  ],
+  "covers": [
+    {
+      "path": "assets/images/learn/how-are-rainbows-formed.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 94188,
+      "sha256": "83c5aad79a839fb5f7af673966b73c9c0f5882ff11b6f9cc3e4f5d50f78d5822"
+    },
+    {
+      "path": "assets/images/learn/how-are-rainbows-formed-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 28154,
+      "sha256": "1a4f200cf89a83606e81f8312cf43c5674e87ceef91581169a00d7a623530c99"
+    },
+    {
+      "path": "assets/images/learn/how-are-rainbows-formed-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8432,
+      "sha256": "beda6ad9d0db6d7529767031b30c47e34f5bf401601f8b7ff8989283ca3b71ec"
+    },
+    {
+      "path": "assets/images/learn/why-do-stars-twinkle.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 52446,
+      "sha256": "23bbe6c9b9c967bfdfd7c94ea4b48578ea1af3d8cf4da30b43105e0d94ba9c93"
+    },
+    {
+      "path": "assets/images/learn/why-do-stars-twinkle-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 16504,
+      "sha256": "b06059c0f73f7c6790f5857daef6910884dc168a023c88523e8ecdae37251703"
+    },
+    {
+      "path": "assets/images/learn/why-do-stars-twinkle-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 5320,
+      "sha256": "4c25618892300133f5aa74c96542a9d272e7afc041023bfcedc66e6a4c2c116f"
+    }
+  ],
+  "publication": "Prepublication review; source/asset deploy and guarded CMS pending",
+  "visualProof": [
+    {
+      "slug": "how-are-rainbows-formed",
+      "width": 1280,
+      "broken": 0,
+      "coverLoaded": true,
+      "optionalClosed": true,
+      "overflow": false
+    },
+    {
+      "slug": "why-do-stars-twinkle",
+      "width": 1280,
+      "broken": 0,
+      "coverLoaded": true,
+      "optionalClosed": true,
+      "overflow": false
+    },
+    {
+      "slug": "why-do-stars-twinkle",
+      "width": 320,
+      "broken": 0,
+      "coverLoaded": true,
+      "optionalClosed": true,
+      "overflow": false
+    },
+    {
+      "slug": "how-are-rainbows-formed",
+      "width": 320,
+      "broken": 0,
+      "coverLoaded": true,
+      "optionalClosed": true,
+      "overflow": false
+    }
+  ]
+}

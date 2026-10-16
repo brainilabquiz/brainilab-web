@@ -1,15 +1,8 @@
 {
   "slug": "sky-colours",
-  "title": "Blue skies and red sunsets",
-  "description": "Discover why the sky is blue and sunsets turn red. Two short science lessons connect everyday sky colours to the journey of sunlight.",
+  "title": "Sky colours and starlight",
   "topic": "Science & nature",
   "status": "published",
-  "authorId": "biel-sarda",
-  "publishedAt": "2026-10-14T17:56:34.407Z",
-  "updatedAt": "2026-10-14T17:56:34.407Z",
-  "coverArticle": "why-is-the-sky-blue",
-  "introduction": "<p>A blue afternoon becomes an orange evening. What changed?</p><p>Start with the colours hidden in sunlight, then follow its longer path through the evening air. These two short lessons fit together; read at your own pace and try the optional quizzes.</p>",
-  "prerequisites": "No science background needed. Each new term is explained as it appears.",
   "lessons": [
     {
       "slug": "why-is-the-sky-blue",
@@ -20,26 +13,61 @@
       "slug": "why-are-sunsets-red",
       "level": "2 · Follow the evening light",
       "objective": "Explain how the low Sun’s longer air path changes the colours reaching us."
+    },
+    {
+      "slug": "how-are-rainbows-formed",
+      "level": "3 · Follow a raindrop",
+      "objective": "Distinguish refraction and reflection, and connect a rainbow to the colours already in sunlight."
+    },
+    {
+      "slug": "why-do-stars-twinkle",
+      "level": "4 · Watch the starlight",
+      "objective": "Explain atmospheric twinkling, compare low and high stars and understand why planets usually look steadier."
     }
   ],
   "sources": [
     {
-      "name": "NASA Space Place — Why is the sky blue?",
-      "url": "https://spaceplace.nasa.gov/blue-sky/en/"
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/",
+      "name": "NASA Space Place — Why is the sky blue?"
     },
     {
-      "name": "Met Office — Why the sky is blue and sunsets red",
-      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue"
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue",
+      "name": "Met Office — Why the sky is blue and sunsets red"
     },
     {
-      "name": "NOAA NESDIS — Sunlight, wavelengths and sky colour",
-      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue"
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue",
+      "name": "NOAA NESDIS — Sunlight, wavelengths and sky colour"
     },
     {
-      "name": "Royal Observatory Greenwich — Why is the sky blue?",
-      "url": "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue"
+      "url": "https://www.rmg.co.uk/stories/space-astronomy/why-sky-blue",
+      "name": "Royal Observatory Greenwich — Why is the sky blue?"
+    },
+    {
+      "name": "Met Office — Rainbows: optical wonders",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows"
+    },
+    {
+      "name": "NOAA NESDIS / NASA Space Place — What causes a rainbow?",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow"
+    },
+    {
+      "name": "National Weather Service — How do rainbows form?",
+      "url": "https://www.weather.gov/fgz/Rainbow"
+    },
+    {
+      "name": "NASA StarChild — Why do stars twinkle?",
+      "url": "https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html"
+    },
+    {
+      "name": "NASA Imagine the Universe — Why stars and planets look different",
+      "url": "https://imagine.gsfc.nasa.gov/ask_astro/night_sky.html#981217a"
+    },
+    {
+      "name": "NASA Astronomy Picture of the Day — Why stars twinkle",
+      "url": "https://science.nasa.gov/image-article/apod-2000-july-25-why-stars-twinkle/"
     }
   ],
+  "authorId": "biel-sarda",
   "glossary": [
     {
       "term": "Atmosphere",
@@ -56,11 +84,36 @@
     {
       "term": "Rayleigh scattering",
       "definition": "Scattering by very small particles such as air molecules, which redirects shorter wavelengths more strongly."
+    },
+    {
+      "term": "Refraction",
+      "definition": "A change in the direction of light as it passes between materials or regions where its speed differs."
+    },
+    {
+      "term": "Reflection",
+      "definition": "Light changing direction at a surface, like a bounce."
+    },
+    {
+      "term": "Dispersion",
+      "definition": "The separation of light into colours because different wavelengths bend by different amounts."
+    },
+    {
+      "term": "Turbulence",
+      "definition": "Irregular movement in air or another fluid."
     }
   ],
   "outcomes": [
     "Explain why a blue sky does not need a nearby sea.",
     "Compare the wavelengths of blue and red light.",
-    "Connect a low Sun with a longer route through the air and warmer arriving light."
-  ]
+    "Connect a low Sun with a longer route through the air and warmer arriving light.",
+    "Follow sunlight bending and reflecting inside a raindrop.",
+    "Explain why a rainbow’s appearance depends on the observer’s position.",
+    "Connect moving air to twinkling stars, and explain why planets usually look steadier."
+  ],
+  "updatedAt": "2026-10-16T17:34:35Z",
+  "description": "Why is the sky blue, how are rainbows formed and why do stars twinkle? Follow light through air and water in short, connected science lessons.",
+  "publishedAt": "2026-10-14T18:08:29.547429Z",
+  "coverArticle": "why-is-the-sky-blue",
+  "introduction": "<p>A blue afternoon becomes an orange evening. A shower brings a rainbow, and after dark a star seems to flicker. What is the light doing?</p><p>Start with sunlight scattered by air. Then follow light through a raindrop and discover how moving air changes our view of the stars. Read at your own pace; the short quizzes are optional.</p>",
+  "prerequisites": "No science background needed. Each new term is explained as it appears."
 }
