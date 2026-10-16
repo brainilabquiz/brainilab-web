@@ -12,7 +12,7 @@
     "questions": [
       {
         "answer": 2,
-        "prompt": "The rule repeats circle, square. After circle, square, circle comes�",
+        "prompt": "The rule repeats circle, square. After circle, square, circle comes…",
         "options": [
           "triangle",
           "circle",
@@ -64,7 +64,7 @@
   "sources": [
     {
       "url": "https://www.ncetm.org.uk/classroom-resources/ey-pattern/",
-      "name": "NCETM � Pattern: identifying the unit of repeat"
+      "name": "NCETM — Pattern: identifying the unit of repeat"
     }
   ],
   "authorId": "biel-sarda",
@@ -72,23 +72,23 @@
   "sections": [
     {
       "id": "a-rhythm-you-can-point-to",
-      "title": "What is the minimum period of a pattern?",
-      "html": "<p><strong>The minimum period is the length of the smallest block that repeats to make a repeating pattern.</strong> In ABABAB, that block is AB, so the minimum period is <strong>2</strong>.</p><p>The block is also called the <strong>unit of repeat</strong>. Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the whole scarf.</p>"
+      "html": "<p><strong>The minimum period is the length of the smallest block that repeats to make a repeating pattern.</strong> In ABABAB, that block is AB, so the minimum period is <strong>2</strong>.</p><p>The block is also called the <strong>unit of repeat</strong>. Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the whole scarf.</p>",
+      "title": "What is the minimum period of a pattern?"
     },
     {
       "id": "explore",
-      "title": "Try the shortest block first",
-      "html": "<ol><li><strong>Choose a short block</strong> from the start of the pattern.</li><li><strong>Repeat it</strong> and compare every item with the row you were given.</li><li><strong>If anything differs, try a longer block.</strong> The first length that works is the minimum period.</li></ol><p>For <strong>AABAABAAB</strong>, A alone fails when you reach B. AA fails there too. But <strong>AAB | AAB | AAB</strong> matches all nine letters, giving a minimum period of <strong>3</strong>.</p><p><a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\">NCETM�s pattern guide</a> explains why identifying the smallest unit is the useful step.</p>"
+      "html": "<ol><li><strong>Choose a short block</strong> from the start of the pattern.</li><li><strong>Repeat it</strong> and compare every item with the row you were given.</li><li><strong>If anything differs, try a longer block.</strong> The first length that works is the minimum period.</li></ol><p>For <strong>AABAABAAB</strong>, A alone fails when you reach B. AA fails there too. But <strong>AAB | AAB | AAB</strong> matches all nine letters, giving a minimum period of <strong>3</strong>.</p><p><a href=\"https://www.ncetm.org.uk/classroom-resources/ey-pattern/\">NCETM’s pattern guide</a> explains why identifying the smallest unit is the useful step.</p>",
+      "title": "Try the shortest block first"
     },
     {
       "id": "separate-a-repeat-from-growth",
-      "title": "The join can fool you",
-      "html": "<p>Repeat circle�square�circle and you get circle�square�circle | circle�square�circle. Two circles meet at the join. That pair is part of the rule, not an error.</p><p>Likewise, ABAB is a block you could repeat to make ABABABAB, but it is not the smallest: AB already works.</p>"
+      "html": "<p>Repeat circle–square–circle and you get circle–square–circle | circle–square–circle. Two circles meet at the join. That pair is part of the rule, not an error.</p><p>Likewise, ABAB is a block you could repeat to make ABABABAB, but it is not the smallest: AB already works.</p>",
+      "title": "The join can fool you"
     },
     {
       "id": "make-the-explanation-part-of-the-answer",
-      "title": "What comes after ABBABBAB?",
-      "html": "<p><strong>B, if the rule is to repeat ABB.</strong> Group it as ABB | ABB | AB. The last group is missing its final B; the displayed row can stop partway through a repeat.</p><p>A short row can fit several rules, so check the puzzle�s instructions. A growing pattern such as 2, 4, 6, 8 needs a different explanation. Next, try <a href=\"/learn/number-patterns-check-every-step/\">checking every step in a number pattern</a> or the <a href=\"/reasoning/\">Reasoning Challenge</a>.</p>"
+      "html": "<p><strong>B, if the rule is to repeat ABB.</strong> Group it as ABB | ABB | AB. The last group is missing its final B; the displayed row can stop partway through a repeat.</p><p>A short row can fit several rules, so check the puzzle’s instructions. A growing pattern such as 2, 4, 6, 8 needs a different explanation. Next, try <a href=\"/learn/number-patterns-check-every-step/\">checking every step in a number pattern</a> or the <a href=\"/reasoning/\">Reasoning Challenge</a>.</p>",
+      "title": "What comes after ABBABBAB?"
     }
   ],
   "updatedAt": "2026-10-16T18:58:04Z",

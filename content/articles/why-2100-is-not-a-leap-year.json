@@ -65,11 +65,11 @@
   "sources": [
     {
       "url": "https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html",
-      "name": "NASA � Calendars and their History"
+      "name": "NASA — Calendars and their History"
     },
     {
       "url": "https://spaceplace.nasa.gov/leap-year/en/",
-      "name": "NASA Space Place � What Is a Leap Year?"
+      "name": "NASA Space Place — What Is a Leap Year?"
     }
   ],
   "authorId": "biel-sarda",
@@ -77,28 +77,28 @@
   "sections": [
     {
       "id": "why-add-a-day",
-      "title": "Is 2100 a leap year?",
-      "html": "<p><strong>No. In the Gregorian calendar, 2100 is not a leap year because it is divisible by 100 but not by 400.</strong> February will have 28 days, and the year will have 365.</p><p>The catch is easy to miss: �every four years� has an exception. <a href=\"https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html\">NASA�s calendar guide gives the full rule</a>.</p>"
+      "html": "<p><strong>No. In the Gregorian calendar, 2100 is not a leap year because it is divisible by 100 but not by 400.</strong> February will have 28 days, and the year will have 365.</p><p>The catch is easy to miss: “every four years” has an exception. <a href=\"https://eclipse.gsfc.nasa.gov/SEhelp/calendars.html\">NASA’s calendar guide gives the full rule</a>.</p>",
+      "title": "Is 2100 a leap year?"
     },
     {
       "id": "three-checks",
-      "title": "The leap-year rule, one check at a time",
-      "html": "<p>�Divisible� means a division leaves no remainder. For example, 12 divides evenly by 4; 13 does not.</p><ol><li><strong>Not divisible by 4?</strong> It is an ordinary year.</li><li><strong>Divisible by 4, but not by 100?</strong> It is a leap year.</li><li><strong>Divisible by 100?</strong> It is a leap year only if it also divides evenly by 400.</li></ol><p>2100 passes the first check: 2100 � 4 = 525. But 2100 � 400 = 5.25, so it fails the final one.</p>"
+      "html": "<p>“Divisible” means a division leaves no remainder. For example, 12 divides evenly by 4; 13 does not.</p><ol><li><strong>Not divisible by 4?</strong> It is an ordinary year.</li><li><strong>Divisible by 4, but not by 100?</strong> It is a leap year.</li><li><strong>Divisible by 100?</strong> It is a leap year only if it also divides evenly by 400.</li></ol><p>2100 passes the first check: 2100 ÷ 4 = 525. But 2100 ÷ 400 = 5.25, so it fails the final one.</p>",
+      "title": "The leap-year rule, one check at a time"
     },
     {
       "id": "at-a-glance",
-      "title": "Why was 2000 a leap year, then?",
-      "html": "<p><strong>2000 � 400 = 5</strong>, with nothing left over. That century year kept its extra day. Compare:</p><ul><li><strong>1900:</strong> no leap day.</li><li><strong>2000:</strong> a leap year.</li><li><strong>2100:</strong> no leap day.</li><li><strong>2400:</strong> a leap year.</li></ul>"
+      "html": "<p><strong>2000 ÷ 400 = 5</strong>, with nothing left over. That century year kept its extra day. Compare:</p><ul><li><strong>1900:</strong> no leap day.</li><li><strong>2000:</strong> a leap year.</li><li><strong>2100:</strong> no leap day.</li><li><strong>2400:</strong> a leap year.</li></ul>",
+      "title": "Why was 2000 a leap year, then?"
     },
     {
       "id": "short-answer",
-      "title": "Why leave out an extra day?",
-      "html": "<p>A cycle of seasons lasts a little less than 365� days. Adding a full day every four years would slowly add too much time. Skipping three century leap days in each 400-year cycle makes the calendar a closer match.</p><p><a href=\"https://spaceplace.nasa.gov/leap-year/en/\">NASA Space Place explains why the small difference adds up</a>. It is a calendar correction, not Earth deciding to take a day off.</p>"
+      "html": "<p>A cycle of seasons lasts a little less than 365¼ days. Adding a full day every four years would slowly add too much time. Skipping three century leap days in each 400-year cycle makes the calendar a closer match.</p><p><a href=\"https://spaceplace.nasa.gov/leap-year/en/\">NASA Space Place explains why the small difference adds up</a>. It is a calendar correction, not Earth deciding to take a day off.</p>",
+      "title": "Why leave out an extra day?"
     },
     {
       "id": "calendar-scope",
-      "title": "One calendar, several starting dates",
-      "html": "<p>These are Gregorian rules. Countries adopted them at different times, so old dates need care. See why <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\">Britain skipped eleven calendar dates in 1752</a>.</p>"
+      "html": "<p>These are Gregorian rules. Countries adopted them at different times, so old dates need care. See why <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\">Britain skipped eleven calendar dates in 1752</a>.</p>",
+      "title": "One calendar, several starting dates"
     }
   ],
   "updatedAt": "2026-10-16T18:58:04Z",

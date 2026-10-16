@@ -1,0 +1,68 @@
+{
+  "slug": "cleopatra-pyramids-moon-landing",
+  "title": "Cleopatra and the Moon landing: closer than the pyramids?",
+  "description": "Cleopatra lived nearer in time to the Moon landing than to the building of the Great Pyramid. Three dates reveal just how ancient ancient Egypt was.",
+  "topic": "History",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 136,
+  "publishedAt": "2026-10-16T19:57:36Z",
+  "updatedAt": "2026-10-16T19:57:36Z",
+  "game": {
+    "name": "History Quiz",
+    "url": "/history/history-quiz/"
+  },
+  "hub": {
+    "name": "History",
+    "url": "/history/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/cleopatra-pyramids-moon-landing.webp",
+    "small": "/assets/images/learn/cleopatra-pyramids-moon-landing-small.webp",
+    "thumbnail": "/assets/images/learn/cleopatra-pyramids-moon-landing-thumb.webp",
+    "alt": "A pyramid model, an imagined royal profile medallion and a cratered Moon model arranged together on a sandy tabletop",
+    "position": 50,
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not historical objects, an authenticated portrait or a scale timeline."
+  },
+  "sources": [
+    {
+      "name": "Egyptian Ministry of Tourism and Antiquities — The Great Pyramid",
+      "url": "https://egymonuments.gov.eg/monuments/the-great-pyramid/"
+    },
+    {
+      "name": "The Metropolitan Museum of Art — Cleopatra and her life dates",
+      "url": "https://www.metmuseum.org/art/collection/search/12649"
+    },
+    {
+      "name": "NASA — Apollo 11 mission overview",
+      "url": "https://www.nasa.gov/history/apollo-11-mission-overview/"
+    }
+  ],
+  "related": [
+    "which-century-is-that-year",
+    "how-to-read-roman-numerals"
+  ],
+  "sections": [
+    {
+      "id": "the-surprising-answer",
+      "title": "The Moon landing wins this one",
+      "html": "<p><strong>Cleopatra VII lived closer in time to the 1969 Moon landing than to the building of the Great Pyramid of Giza.</strong> That pyramid was already ancient during her lifetime.</p><p>It is easy to picture a queen, a pyramid and a camel in one vaguely Egyptian scene. The dates are less willing to squeeze into the same photograph.</p>"
+    },
+    {
+      "id": "three-dates",
+      "title": "Three dates to put on the table",
+      "html": "<ul><li><strong>Great Pyramid:</strong> built for Khufu, whose reign the <a href=\"https://egymonuments.gov.eg/monuments/the-great-pyramid/\">Egyptian Ministry of Tourism and Antiquities dates to about 2589–2566 BCE</a>.</li><li><strong>Cleopatra VII:</strong> lived from <a href=\"https://www.metmuseum.org/art/collection/search/12649\">69 to 30 BCE, according to the Met</a>.</li><li><strong>Apollo 11:</strong> landed on the Moon on <a href=\"https://www.nasa.gov/history/apollo-11-mission-overview/\">20 July 1969</a>.</li></ul><p>BCE means “before the Common Era”; it uses the same year numbers as BC.</p>"
+    },
+    {
+      "id": "compare-the-gaps",
+      "title": "About 2,500 years back, 2,000 years forward",
+      "html": "<p>The gap between pyramid building and Cleopatra was roughly <strong>2,500 years</strong>. The gap from her lifetime to Apollo 11 was about <strong>2,000 years</strong>.</p><p>These are rounded comparisons, not claims that we know the pyramid’s exact finishing day. The difference is large enough that small changes in the ancient dates do not reverse the result.</p>"
+    },
+    {
+      "id": "ancient-is-a-big-word",
+      "title": "Ancient is doing a lot of work",
+      "html": "<p>“Ancient Egypt” covers a huge stretch of time. Sharing a label does not make two people or events neighbours on a timeline.</p><p>Next time a history fact sounds unlikely, put the dates beside it. Even <a href=\"/learn/which-century-is-that-year/\">working out which century a year belongs to</a> can spring a small surprise. A pyramid and a spacecraft simply make a particularly memorable pair.</p>"
+    }
+  ],
+  "practice": "Try a History Quiz and see which details you remember."
+}

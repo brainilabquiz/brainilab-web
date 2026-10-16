@@ -27,11 +27,11 @@
   "sources": [
     {
       "url": "https://jobs.sealedair.com/content/Our-History/?locale=en_US",
-      "name": "Sealed Air � Our history"
+      "name": "Sealed Air — Our history"
     },
     {
       "url": "https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day",
-      "name": "Sealed Air � The origins of Bubble Wrap"
+      "name": "Sealed Air — The origins of Bubble Wrap"
     }
   ],
   "authorId": "biel-sarda",
@@ -39,18 +39,18 @@
   "sections": [
     {
       "id": "wallpaper-first",
-      "title": "Wallpaper before wrapping paper",
-      "html": "<p><strong>Yes. Bubble wrap began in 1957 as an attempt to make textured wallpaper.</strong> Engineers Alfred Fielding and Marc Chavannes joined two plastic sheets with pockets of air trapped between them in Hawthorne, New Jersey.</p><p><a href=\"https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day\">Sealed Air tells the story of the original wall covering</a>. Picture the sheet from your last parcel spread across a living-room wall: the decorating plan was rather different from the result we know.</p>"
+      "html": "<p><strong>Yes. Bubble wrap began in 1957 as an attempt to make textured wallpaper.</strong> Engineers Alfred Fielding and Marc Chavannes joined two plastic sheets with pockets of air trapped between them in Hawthorne, New Jersey.</p><p><a href=\"https://www.sealedair.com/company/media-center/press-releases/sealed-air-national-bubble-wrap-appreciation-day\">Sealed Air tells the story of the original wall covering</a>. Picture the sheet from your last parcel spread across a living-room wall: the decorating plan was rather different from the result we know.</p>",
+      "title": "Wallpaper before wrapping paper"
     },
     {
       "id": "a-new-purpose",
-      "title": "Why do both 1957 and 1960 appear?",
-      "html": "<p>The wallpaper idea did not take off, but the air pockets offered another use: cushioning objects during shipping.</p><p><strong>1957 was the original experiment; 1960 was the founding of Sealed Air.</strong> Fielding and Chavannes started the company with Bubble Wrap as its signature product, according to <a href=\"https://jobs.sealedair.com/content/Our-History/?locale=en_US\">its published history</a>.</p>"
+      "html": "<p>The wallpaper idea did not take off, but the air pockets offered another use: cushioning objects during shipping.</p><p><strong>1957 was the original experiment; 1960 was the founding of Sealed Air.</strong> Fielding and Chavannes started the company with Bubble Wrap as its signature product, according to <a href=\"https://jobs.sealedair.com/content/Our-History/?locale=en_US\">its published history</a>.</p>",
+      "title": "Why do both 1957 and 1960 appear?"
     },
     {
       "id": "a-second-look",
-      "title": "A second job for a strange idea",
-      "html": "<p>The material�s useful feature was there all along. Air pockets gave the plastic its unusual texture; they also helped it protect objects. What changed was where people used it.</p><p>It is not the only everyday object with an unexpected beginning. <a href=\"/learn/how-post-it-notes-were-invented/\">Post-it notes also found a use for an initially awkward result</a>. Next time you open a parcel, spare a thought for the living-room wall that never happened.</p>"
+      "html": "<p>The material’s useful feature was there all along. Air pockets gave the plastic its unusual texture; they also helped it protect objects. What changed was where people used it.</p><p>It is not the only everyday object with an unexpected beginning. <a href=\"/learn/how-post-it-notes-were-invented/\">Post-it notes also found a use for an initially awkward result</a>. Next time you open a parcel, spare a thought for the living-room wall that never happened.</p>",
+      "title": "A second job for a strange idea"
     }
   ],
   "updatedAt": "2026-10-16T18:58:04Z",
