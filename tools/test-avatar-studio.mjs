@@ -13,6 +13,8 @@ function setup(){
 const {w,dom}=setup();await tick();
 const A=w.BrainiAvatarDesign,C=w.BrainiRewardCatalog,S=w.BrainiRewardStore,D=w.BrainiData,root=w.document.querySelector('[data-profile-rewards]');
 const option=(kind,id)=>root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`);
+assert.equal(option('mode','built').querySelector('strong').textContent,'My avatar');
+assert.match(option('mode','built').getAttribute('aria-label'),/^My avatar,/);
 const savedState=()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1'));
 const omitDesign=state=>{delete state.player.avatarDesign;return state;};
 // Every cosmetic threshold is retroactive, without granting or spending XP.

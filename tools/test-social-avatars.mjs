@@ -10,9 +10,11 @@ const scalar=async(sql,args=[])=>Object.values((await db.query(sql,args)).rows[0
 const actor=id=>scalar("select set_config('request.jwt.claim.sub',$1,false)",[id||'']);
 const ids=Array.from({length:7},(_,i)=>`10000000-0000-4000-8000-${String(i+1).padStart(12,'0')}`);
 const [me,peer,automatic,hidden,suspended,claimed,stranger]=ids;
-const migration=readFileSync('supabase/migrations/20261016195312_shared_player_avatars.sql','utf8');
+const migration=readFileSync('supabase/migrations/20261016195312_shared_player_avatars.sql','utf8').replace(/\r\n/g,'\n');
+const titleMigration=readFileSync('supabase/migrations/20261016201431_shared_player_titles.sql','utf8').replace(/\r\n/g,'\n');
 const rpcNames=['get_brainilab_individual_rankings','get_my_brainilab_friends','get_my_brainilab_friends_ranking','get_my_brainilab_groups'];
 const strip=value=>Array.isArray(value)?value.map(strip):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['avatar_style','generated_at'].includes(k)).map(([k,v])=>[k,strip(v)])):value;
+const stripTitle=value=>Array.isArray(value)?value.map(stripTitle):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['title','generated_at'].includes(k)).map(([k,v])=>[k,stripTitle(v)])):value;
 const snapshot=async()=>Object.fromEntries(await Promise.all(rpcNames.map(async name=>[name,await scalar(`select public.${name}()`)])));
 const dom=new JSDOM('<div data-friends-root></div><div data-groups-root></div>',{url:'https://brainilabgames.com/profile/?section=social',runScripts:'outside-only'}),w=dom.window;
 const load=f=>w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
@@ -47,7 +49,7 @@ try{
   const signature=name==='get_brainilab_individual_rankings'?'text,text,text,text,text,integer':name==='get_my_brainilab_friends_ranking'?'text,text,text':'';
   await db.exec(`revoke all on function ${name}(${signature}) from public;grant execute on function ${name}(${signature}) to authenticated,service_role${name===rpcNames[0]?',anon':''};`);
  }
- const metadata={brainilab_avatar_mode_v1:'built',brainilab_avatar_glasses_v1:'round',brainilab_avatar_prop_v1:'icepop',brainilab_avatar_hat_v1:'egg',brainilab_avatar_frame_v1:'copper',brainilab_avatar_skin_v1:'cocoa',email:'secret@example.test',brainilab_profile_title_v1:'sage',xp:999999};
+ const metadata={brainilab_avatar_mode_v1:'built',brainilab_avatar_glasses_v1:'round',brainilab_avatar_prop_v1:'icepop',brainilab_avatar_hat_v1:'egg',brainilab_avatar_frame_v1:'copper',brainilab_avatar_skin_v1:'cocoa',email:'secret@example.test',brainilab_profile_title_v1:'explorer',xp:999999};
  for(const [i,id] of ids.entries()){
   await db.query('insert into auth.users values($1,$2)',[id,JSON.stringify(i===0?{}:metadata)]);
   await db.query("insert into profiles(user_id,display_name,leaderboard_display_name,country_code,avatar_url,friend_code) values($1,$2,$2,'ES',$3,'BRN-TEST')",[id,'Test player '+i,'https://example.test/photo-'+i+'.jpg']);
@@ -67,7 +69,12 @@ try{
  const before=await snapshot(),acl=await scalar("select jsonb_object_agg(proname,proacl::text) from pg_proc where proname=any($1)",[rpcNames]);
  const progression=await scalar('select jsonb_agg(to_jsonb(p) order by user_id) from player_progression p');
  await db.exec(migration); // Includes production compare-and-swap guard.
+ const avatarBaseline=await snapshot();
+ const rpcDefinitions=await scalar("select jsonb_object_agg(proname,md5(pg_get_functiondef(oid))) from pg_proc where proname=any($1)",[rpcNames]);
+ await db.exec(titleMigration);
  let after=await snapshot();
+ assert.deepEqual(stripTitle(after),stripTitle(avatarBaseline),'title extension leaves every existing avatar and response field intact');
+ assert.deepEqual(await scalar("select jsonb_object_agg(proname,md5(pg_get_functiondef(oid))) from pg_proc where proname=any($1)",[rpcNames]),rpcDefinitions,'all four public RPC definitions stay untouched');
  assert.deepEqual(strip(after),strip(before),'all prior fields, scores, order, permissions and counts are identical');
  assert.deepEqual(await scalar("select jsonb_object_agg(proname,proacl::text) from pg_proc where proname=any($1)",[rpcNames]),acl,'existing RPC ACLs unchanged');
  assert.deepEqual(await scalar('select jsonb_agg(to_jsonb(p) order by user_id) from player_progression p'),progression,'no XP/progression writes');
@@ -75,6 +82,7 @@ try{
  assert.equal(after[rpcNames[0]].rows.length,4,'hidden, suspended and claimed players remain excluded');
  const style=after[rpcNames[0]].rows.find(r=>r.name==='Test player 1').avatar_style;
  assert.equal(style.design.prop,'icepop');assert.equal(style.render_xp,1500);assert.equal(style.frame,'copper');
+ assert.equal(style.title,'explorer');
  assert.equal(JSON.stringify(style).includes('secret'),false);assert.equal(JSON.stringify(style).includes('2700'),false);
  assert.equal(after[rpcNames[1]].friends[0].avatar_style.design.prop,'icepop');
  assert.equal(after[rpcNames[1]].incoming[0].avatar_style.design.hat,'egg');
@@ -92,21 +100,31 @@ try{
  for(const name of rpcNames.slice(1))await assert.rejects(()=>scalar('select '+name+'()'),'authentication remains required');
  await actor(me);
  // Real server unlock thresholds must match every current client option.
- for(const [kind,list] of Object.entries({...A.options,frame:C.frames}))for(const item of list){
-  const meta={brainilab_avatar_mode_v1:'built',[kind==='frame'?C.metadataKeys.frame:A.metadataKeys[kind]]:item.id};
+ for(const [kind,list] of Object.entries({...A.options,frame:C.frames,title:C.titles}))for(const item of list){
+  const meta={brainilab_avatar_mode_v1:'built',[C.metadataKeys[kind]]:item.id};
   await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify(meta),peer]);
   for(const xp of new Set([Math.max(0,item.xp-1),item.xp])){
    await db.query('update player_progression set xp=$1 where user_id=$2',[xp,peer]);
    const result=await scalar('select brainilab_private.player_avatar($1)',[peer]);
-   const selection=kind==='frame'?result?.frame:result?.design?.[kind];
+   const selection=kind==='frame'?result?.frame:kind==='title'?result?.title:result?.design?.[kind];
    const expected=xp>=item.xp?item.id:list[0].id;
    assert.equal(selection??list[0].id,expected,kind+' '+item.id+' at '+xp);
   }
  }
  await db.query('update player_progression set xp=2700 where user_id=$1',[peer]);
- await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({...metadata,brainilab_avatar_hat_v1:'wizard',brainilab_avatar_skin_v1:'<script>',brainilab_avatar_glasses_v1:['round'],brainilab_avatar_prop_v1:'book'}),peer]);
+ await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({...metadata,brainilab_avatar_hat_v1:'wizard',brainilab_avatar_skin_v1:'<script>',brainilab_avatar_glasses_v1:['round'],brainilab_avatar_prop_v1:'book',brainilab_profile_title_v1:'sage'}),peer]);
  const bad=await scalar('select brainilab_private.player_avatar($1)',[peer]);
  assert.equal(bad.design.hat,'none');assert.equal(bad.design.prop,'none');assert.equal(bad.design.skin,'sand');assert.equal(bad.design.glasses,'none');
+ assert.equal(bad.title,'none','metadata XP cannot unlock a title');
+ for(const invalid of ['<img src=x onerror=alert(1)>','__proto__',['explorer'],null]){
+  await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({...metadata,brainilab_profile_title_v1:invalid}),peer]);
+  assert.equal((await scalar('select brainilab_private.player_avatar($1)',[peer])).title,'none');
+ }
+ await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({brainilab_profile_title_v1:'explorer'}),peer]);
+ const titleOnly=await scalar('select brainilab_private.player_avatar($1)',[peer]);
+ assert.equal(titleOnly.title,'explorer');assert.equal(titleOnly.design,null);assert.equal(titleOnly.render_xp,0,'title does not inflate avatar rendering threshold');
+ await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({brainilab_profile_title_v1:'none'}),peer]);
+ assert.equal(await scalar('select brainilab_private.player_avatar($1)',[peer]),null,'no empty public title or avatar is invented');
  await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({...metadata,brainilab_avatar_mode_v1:'picture',brainilab_avatar_prop_v1:'book'}),peer]);
  await db.query('update player_progression set xp=10000 where user_id=$1',[peer]);
  const picture=await scalar('select brainilab_private.player_avatar($1)',[peer]);
@@ -133,16 +151,30 @@ try{
  assert.match(w.BrainiProgressUI.avatarImageMarkup({name:'Legacy'}),/default-player-avatar/);
  const unsafe=A.fromPublicStyle({frame:'gold\" onclick=bad',render_xp:Infinity,design:{mode:'built',prop:'book'}});
  assert.equal(unsafe.avatarFrame,'level');assert.equal(unsafe.avatarDesign.prop,'none');
+ assert.equal(publicPeer.profileTitle,'explorer');
+ assert.equal(w.BrainiProgressUI.profileTitleMarkup(publicPeer),w.BrainiProgressUI.profileTitleMarkup(friends.friends[0]));
+ assert.match(w.BrainiProgressUI.profileTitleMarkup(publicPeer),/Profile title: <\/span>Explorer/);
+ for(const invalid of ['none','<script>','__proto__',undefined,['explorer'],{}]){
+  assert.equal(w.BrainiProgressUI.profileTitleMarkup({profileTitle:invalid}),'');
+  assert.equal(A.fromPublicStyle({title:invalid}).profileTitle,'none');
+ }
+ for(const {id,name} of C.titles.filter(t=>t.id!=='none'))assert.equal(A.profileTitles[id],name,'public label matches existing reward catalog');
+ assert.equal(A.options.mode.find(m=>m.id==='built').name,'My avatar');
  load('social');await new Promise(r=>setTimeout(r,0));await w.BrainiSocial.render();
  assert.equal(w.document.querySelectorAll('[data-friends-root] .braini-built-avatar').length,3,'friends and request avatars render');
  assert.equal(w.document.querySelectorAll('[data-groups-root] .braini-built-avatar').length,1,'group member renders their design');
  assert.equal(w.document.querySelectorAll('[data-social-frame="copper"]').length,4,'earned frame follows each peer');
+ assert.equal(w.document.querySelectorAll('[data-friends-root] .player-profile-title').length,3,'equipped titles reach friends and requests');
+ assert.equal(w.document.querySelectorAll('[data-groups-root] .player-profile-title').length,1,'equipped title reaches group members');
  assert.equal(w.document.querySelectorAll('script,[onclick],[onerror]').length,0,'metadata cannot introduce executable markup');
  // A later refresh replaces an older avatar rather than retaining another person's look.
  after[rpcNames[1]].friends[0].avatar_style=null;
  await w.BrainiFriends.refresh();await w.BrainiSocial.render();
  assert.equal(w.document.querySelectorAll('[data-friends-root] .braini-built-avatar').length,2);
+ assert.equal(w.document.querySelectorAll('[data-friends-root] .player-profile-title').length,2,'unequipping removes the old title on refresh');
+ await assert.rejects(()=>db.exec(titleMigration),/Concurrent avatar helper edit/,'title migration protects concurrent helper edits');
+ await db.exec('rollback');
  await assert.rejects(()=>db.exec(migration),/Concurrent RPC edit/,'migration refuses to overwrite changed definitions');
  await db.exec('rollback');
- console.log('PASS: four real RPCs preserve rankings/XP/ACLs; privacy and every unlock threshold; all adapters, friends, groups, fallback and refresh.');
+ console.log('PASS: real RPC/XP/score/ACL and avatar parity; every title threshold, equip/none/invalid, privacy and CAS; social views, fallback, refresh and My avatar label.');
 }finally{dom.window.close();await db.close();}

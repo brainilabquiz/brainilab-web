@@ -166,6 +166,7 @@ window.BrainiRankings=(function(){
       : `${playerAvatar(row,true)}
          <div>
            <strong>${escapeText(row.name)}${row.isMe?'<em class="ranking-you">You</em>':''}</strong>
+           ${BrainiProgressUI.profileTitleMarkup(row)}
            <small>
              ${countryFlag(row.country)} ${escapeText(row.country||"")}
              ${row.level?` · ${BrainiProgressUI?.tier?.(row.level)?.name||"Level"} Lv ${row.level}`:""}
