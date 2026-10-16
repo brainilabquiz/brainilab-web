@@ -121,6 +121,15 @@ the four public RPC definitions, score/XP tables and saving flow stay untouched.
 The helper definition-hash guard protects concurrent edits; its private ACL and
 empty search path remain unchanged. Unequipping removes the label on refresh.
 
+The production build publishes a per-file digest manifest in the shell and
+standalone performance loader. Lazy features such as `profile-social.bundle.js`
+use their actual published hash instead of the old fixed `v=37` URL. A change to
+the feature also changes its loader's hash, so returning browsers receive the
+current titles/avatar renderer. Loader hosts are excluded from the manifest to
+avoid a digest cycle; unbuilt/local entry points retain a compatible fallback.
+`tools/test-lazy-feature-cache.mjs` checks the built loader, exact byte hashes,
+replacement of a cached version, script reuse and query/fragment preservation.
+
 Validation: `tools/test-profile-rewards.mjs` and `tools/test-avatar-studio.mjs`
 (set `JSDOM_MODULE`), existing profile,
 progression, player identity, rankings and game-integrity suites;

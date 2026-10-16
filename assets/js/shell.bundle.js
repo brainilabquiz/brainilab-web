@@ -3418,12 +3418,12 @@ window.BrainiPerf=(function(){
   }
 
   function loadFeature(filename){
-    return loadScript(
-      new URL(
-        `${filename}${filename.includes("?")?"&":"?"}v=37`,
-        jsBase
-      ).href
-    );
+    const url=new URL(filename,jsBase),name=url.pathname.split('/').pop();
+    const versions=window.BrainiFeatureVersions;
+    const version=url.origin===jsBase.origin&&url.pathname.startsWith(jsBase.pathname)
+      &&versions&&Object.hasOwn(versions,name)?versions[name]:null;
+    url.searchParams.set('v',version||url.searchParams.get('v')||'37');
+    return loadScript(url.href);
   }
 
   installNavigationPrefetch();
