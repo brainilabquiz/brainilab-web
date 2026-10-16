@@ -11,7 +11,7 @@ function setup({signed=false,xp=2700,metadata={},storage=true}={}){
   let player={displayName:'Curious Player',xp,level:12,score:1234};
   let meta={...metadata},readError=false,writeError=false,holdRead=null,writes=[];
   w.BrainiData={authState:()=>auth,player:()=>structuredClone(player)};
-  w.BrainiProgressUI={avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/people/einstein.svg" alt="">'};
+  w.BrainiProgressUI={avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
   w.BrainiBackendAuth={getClient:()=>({auth:{
     getUser:async()=>{
       if(holdRead)await holdRead;
@@ -79,5 +79,9 @@ const pending=account.w.BrainiRewardStore.save({frame:'blue',title:'none'});acco
 assert.equal(account.writes.length,count,'account switch while reading prevents the write');
 const fakeName=make({xp:0});await tick();fakeName.player.displayName='<img src=x onerror=alert(1)>';fakeName.w.BrainiProfileRewards.render();
 assert.equal(fakeName.w.document.querySelector('[data-style-preview-name] img'),null);
+const timeout=make({signed:true});await tick();
+const originalTimer=timeout.w.setTimeout.bind(timeout.w);timeout.w.setTimeout=(callback,ms)=>originalTimer(callback,ms===12000?1:ms);
+timeout.hold(new Promise(()=>{}));await timeout.w.BrainiRewardStore.load();
+assert.equal(timeout.w.BrainiRewardStore.snapshot().loading,false);assert.match(timeout.w.BrainiRewardStore.snapshot().error,/could not be checked/);
 for(const item of fixtures)item.dom.window.close();
 console.log('PASS reward thresholds, retroactive XP, next/all rewards, preview/save/cancel, guest reload/storage failure, owner isolation, concurrent metadata fields, offline retry, locked metadata and unchanged scores/XP/levels.');

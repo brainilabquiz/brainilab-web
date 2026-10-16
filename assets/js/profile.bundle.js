@@ -1384,18 +1384,29 @@ window.BrainiProfileSections=(function(){
     }
   }
 
-  let recentRequest=0;
+  let recentRequest=0,recentOwner=null;
+  const activityOwner=()=>{
+    const auth=BrainiData.authState();
+    return auth.user?.id||auth.guestUserId||auth.anonymousPlayerId||'local';
+  };
   async function hydrateRecentGames(){
     const request=++recentRequest,root=document.getElementById('recentResults');
     if(!root||!window.BrainiAnalytics?.fetchStats)return;
+    const owner=activityOwner();
+    if(recentOwner!==null && recentOwner!==owner)root.replaceChildren();
+    recentOwner=owner;
+    const hasRows=!!root.querySelector('.data-row');
+    root.setAttribute('aria-busy','true');
+    if(!hasRows && !BrainiData.recentResults().length)root.textContent='Loading recent games…';
     try{
       const snapshot=await BrainiAnalytics.fetchStats(0);
-      if(request!==recentRequest||!Array.isArray(snapshot?.recent_results))return;
+      if(request!==recentRequest||owner!==activityOwner())return;
+      if(!Array.isArray(snapshot?.recent_results)){BrainiUI.renderRecentResults(root,5);return;}
       const rows=snapshot.recent_results.map(r=>({gameId:r.game_id,playedAt:r.completed_at,score:r.score,correct:r.correct_answers,won:r.special?.won,attempts:r.special?.attempts}));
       BrainiUI.renderRecentResults(root,5,rows);
     }catch(error){
-      if(request===recentRequest&&!BrainiData.recentResults().length)root.textContent='Recent games could not be loaded. Please try again.';
-    }
+      if(request===recentRequest&&owner===activityOwner()&&!hasRows&&!BrainiData.recentResults().length)root.textContent='Recent games could not be loaded. Please try again.';
+    }finally{if(request===recentRequest)root.removeAttribute('aria-busy');}
   }
 
   function dailyProgress(daily){
@@ -1426,14 +1437,19 @@ window.BrainiProfileSections=(function(){
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
     const tier=BrainiProgressUI.tier(progress.level);
 
+    const next=BrainiProgressUI.nextTier(progress.level),format=n=>Number(n).toLocaleString('en-GB');
+    const ranksOpen=!!root.querySelector('.profile-ranks[open]');
+    const restoreFocus=root.querySelector('[data-ranks-toggle]')===document.activeElement;
     root.innerHTML=`
       <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span>
       <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
-        <p>${Number(p.xp||0).toLocaleString()} XP earned</p>
-        <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><span style="width:${progress.percent}%"></span></div>
-        <small>${progress.label}</small>
+        <p class="profile-level-goal">${progress.label}</p>
+        <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${format(progress.earnedInLevel)} of ${format(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><span style="width:${progress.percent}%"></span></div>
+        <div class="profile-level-numbers"><strong>${format(progress.earnedInLevel)} <span>/ ${format(progress.neededInLevel)} XP</span></strong><small>${format(progress.currentXp)} total XP</small></div>
       </div>
-      <a href="/rankings/" class="profile-rank-link">Your rankings →</a>`;
+      <div class="profile-next-rank">${next?`<span class="rank-avatar ${BrainiProgressUI.avatarClass(next.min)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span><span><small>Next title</small><strong>${next.name}</strong><span>Level ${next.min}</span></span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest title</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
+      <div class="profile-level-footer">${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link">Your rankings →</a></div>`;
+    if(restoreFocus)root.querySelector('[data-ranks-toggle]')?.focus({preventScroll:true});
     const journey=document.querySelector('[data-profile-milestones]');
     if(journey){
       const best=Math.max(0,Number(p.bestStreak)||0);
@@ -1537,7 +1553,7 @@ window.BrainiProfileSections=(function(){
     window.addEventListener("popstate",()=>show(selected()));
     window.addEventListener("brainilab:progressionchange",hydrateRankHero);
     window.addEventListener("brainilab:daychange",hydrateRankHero);
-    window.addEventListener("brainilab:authchange",renderSecurity);
+    window.addEventListener("brainilab:authchange",()=>{renderSecurity();hydrateRankHero();});
 
     show(selected());
     hydrateRankHero();

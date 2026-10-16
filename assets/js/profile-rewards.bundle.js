@@ -54,6 +54,11 @@ window.BrainiRewardStore=(function(){
   }
   const total=()=>catalog.xp(BrainiData.player().xp);
   const emit=()=>window.dispatchEvent(new CustomEvent('brainilab:stylechange'));
+  function bounded(request){
+    let timer;
+    return Promise.race([request,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Style request timed out')),12000);})])
+      .finally(()=>clearTimeout(timer));
+  }
   function cached(id){
     try{return catalog.clean(JSON.parse(localStorage.getItem(prefix+id)||'{}'));}catch{return catalog.clean();}
   }
@@ -70,7 +75,7 @@ window.BrainiRewardStore=(function(){
     try{
       const sb=window.BrainiBackendAuth?.getClient?.();
       if(!sb)throw Error('Profile connection unavailable');
-      const {data,error:readError}=await sb.auth.getUser();
+      const {data,error:readError}=await bounded(sb.auth.getUser());
       if(readError)throw readError;
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
@@ -98,12 +103,14 @@ window.BrainiRewardStore=(function(){
       if(current.cloud){
         const sb=window.BrainiBackendAuth?.getClient?.();
         if(!sb)throw Error('Profile connection unavailable');
-        const {data:before,error:readError}=await sb.auth.getUser();
+        const {data:before,error:readError}=await bounded(sb.auth.getUser());
         if(readError)throw readError;
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
+        const currentAllowed=catalog.available(allowed,total());
+        if(currentAllowed.frame!==allowed.frame||currentAllowed.title!==allowed.title)throw Error('XP changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
-        const {data,error:writeError}=await sb.auth.updateUser({data:patch});
+        const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));
         if(writeError)throw writeError;
         if(run!==generation||identity().id!==current.id)return false;
         if(data?.user?.id!==current.uid)throw Error('Account changed');

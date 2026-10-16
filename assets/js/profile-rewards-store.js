@@ -66,6 +66,8 @@ window.BrainiRewardStore=(function(){
         if(readError)throw readError;
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
+        const currentAllowed=catalog.available(allowed,total());
+        if(currentAllowed.frame!==allowed.frame||currentAllowed.title!==allowed.title)throw Error('XP changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
         const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));
         if(writeError)throw writeError;
