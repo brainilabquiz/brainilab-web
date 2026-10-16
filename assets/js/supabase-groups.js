@@ -34,6 +34,7 @@ window.BrainiGroups=(function(){
       name:BrainiPeople.resolve({name:m.name}).displayName,
       avatar:m.avatar||((m.name||"B")[0]||"B").toUpperCase(),
       avatarUrl:m.avatar_url||null,
+      ...(window.BrainiAvatarDesign?.fromPublicStyle?.(m.avatar_style)||{}),
       country:m.country||"",
       role:m.role||"member",
       currentStreak:Number(m.current_streak||0),

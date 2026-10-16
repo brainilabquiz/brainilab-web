@@ -145,7 +145,7 @@ window.BrainiRankings=(function(){
 
     if(window.BrainiProgressUI){
       const rank=BrainiProgressUI.avatarClass(Number(row?.level||1));
-      return `<span class="rank-avatar ${rank} ${small?"small":""}" title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
+      return `<span class="rank-avatar ${rank} ${small?"small":""}" ${BrainiProgressUI.avatarFrameAttribute(row)} title="${BrainiProgressUI.tier(Number(row?.level||1)).name} · Level ${Number(row?.level||1)}">
         ${BrainiProgressUI.avatarImageMarkup(row)}
       </span>`;
     }

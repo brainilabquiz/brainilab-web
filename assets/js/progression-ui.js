@@ -64,7 +64,7 @@ window.BrainiProgressUI=(function(){
   function avatarImageMarkup(person){
     person=person||window.BrainiData?.player?.()||{};
     if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
-      return BrainiAvatarDesign.markup(person.avatarDesign,person.xp);
+      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
     }
     const identity=BrainiPeople.resolve(person);
     try{
@@ -76,6 +76,11 @@ window.BrainiProgressUI=(function(){
       }
     }catch{}
     return defaultAvatarMarkup(person);
+  }
+
+  function avatarFrameAttribute(person){
+    const frame=person?.avatarFrame;
+    return ['blue','green','copper','gold','orbit'].includes(frame)?`data-social-frame="${frame}"`:'';
   }
 
   // Failed custom photos retain the same portrait throughout the interface.
@@ -227,7 +232,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,avatarFrameAttribute,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();

@@ -5948,3 +5948,12 @@ main > section.section,
 
 /* Original composed avatars fit existing header and profile containers. */
 .braini-built-avatar{display:block;width:100%;height:100%;max-width:100%;border-radius:inherit;position:relative;z-index:1;flex-shrink:0}
+
+/* Earned cosmetic frames accompany the same saved avatar on social surfaces. */
+[data-social-frame]{--social-frame:#2478ab;--social-frame-outline:var(--card)}
+[data-social-frame=green]{--social-frame:#3b832f}
+[data-social-frame=copper]{--social-frame:#af622f}
+[data-social-frame=gold]{--social-frame:#b38a0a;--social-frame-outline:#f4d86c}
+[data-social-frame=orbit]{--social-frame:var(--navy);--social-frame-outline:#ad9ce1}
+.rank-avatar[data-social-frame],.social-avatar[data-social-frame],.group-player-avatar[data-social-frame]{border:2px solid var(--social-frame)!important;box-shadow:0 0 0 1px var(--social-frame-outline),0 0 0 2px var(--social-frame)!important}
+.rank-avatar[data-social-frame]::after{display:none}
