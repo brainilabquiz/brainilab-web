@@ -35,6 +35,9 @@ assert.equal(root.querySelector('.default-player-avatar').getAttribute('src'),w.
 assert.notEqual(w.BrainiProgressUI.avatarClass(5),w.BrainiProgressUI.avatarClass(6),'frame accent evolves each level');
 assert.notEqual(w.BrainiProgressUI.avatarClass(24),w.BrainiProgressUI.avatarClass(25),'tier frames evolve');
 assert.equal(w.BrainiProgressUI.xpProgress(5,395).nextXp,500,'XP math unchanged');
+w.BrainiData.player=()=>({xp:2700,level:99});await w.BrainiRankings.render();
+assert.match(root.querySelector('.ranking-level strong').textContent,/Level 12/,'own level agrees with its XP bar');
+assert.ok(root.querySelector('.ranking-level .rank-highschool'),'own frame agrees with its XP-derived rank');
 data={...data,totalPlayers:1,rows:[row(1,'Only player',50)],user:null};await w.BrainiRankings.render();
 assert.equal(root.querySelector('.ranking-player-count').textContent,'1 player');
 assert.equal(root.querySelectorAll('.ranking-row').length,1);
