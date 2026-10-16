@@ -35,7 +35,8 @@ users have account persistence; guests have browser-only persistence. Choices
 from a previous account never become a new account's defaults.
 
 The avatar studio now leads My Progress. Skin tones, hair, hair colors, shirts
-and backgrounds are free choices. Three glasses, three hats and three playful
+and backgrounds are free choices. Eight hair styles include ponytail, long waves
+and braids. Five glasses, six hats and seven playful
 extras unlock with existing XP; they can be combined. The next reward includes
 all cosmetic groups. Progress, streaks, recent games and learning stay available
 in the closed-by-default `Progress & recent activity` panel. Recent cloud game
@@ -46,6 +47,26 @@ history is requested only when that panel opens; no history is deleted.
 | Fresh eyes | 150 | Warm thoughts | 500 | Brain freeze | 800 |
 | Bright mind | 1,000 | Thinking cap | 1,500 | Bright idea | 2,500 |
 | Star pupil | 3,500 | Quiz wizard | 6,000 | Sharp thinker | 4,500 |
+
+Additional collection (16 October 2026; original IDs and thresholds above stay unchanged):
+
+| Item | Category | XP |
+| --- | --- | ---: |
+| Smart cookie | Little extra: cookie with glasses | 300 |
+| Square roots | Glasses: square frames | 600 |
+| Egghead | Hat: sunny-side-up egg | 1,200 |
+| Peas of mind | Little extra: smiling peas | 1,800 |
+| Brainstorm | Hat: cloud and lightning | 4,000 |
+| Eye-Q | Glasses: teal visor | 5,000 |
+| Rocket science | Little extra: rocket | 7,000 |
+| Top of the class | Hat: graduation cap | 8,000 |
+| Bookworm | Little extra: worm and book | 9,000 |
+
+The selected accessory's short description is visible below its group, including
+on touchscreens; it is not restricted to a hover tooltip. Existing labels and the
+single save-status live region remain available to screen readers. Eye whites
+and lighter mouth/nose strokes keep facial features readable on dark skin tones.
+All artwork stays local, static and original; there are no animated flashes.
 
 `avatar-design.js` renders original local SVG illustrations from fixed allowlists.
 No avatar service, tracking call, third-party artwork or generated bitmap is used.

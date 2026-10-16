@@ -54,6 +54,26 @@ option('mode','picture').click();root.querySelector('[data-style-save]').click()
 assert.match(w.document.querySelector('.nav-right .avatar img').src,/keep-my-picture/);
 assert.equal(D.player().avatarUrl,photo);assert.equal(meta.brainilab_avatar_prop_v1,'icepop','restoring a picture retains the illustrated design');
 assert.deepEqual(omitDesign(savedState()),before);
+// Expanded collection: every new item draws something distinct and obeys its XP boundary.
+const added=[['prop','cookie',300],['glasses','square',600],['hat','egg',1200],['prop','peas',1800],['hat','cloud',4000],['glasses','visor',5000],['prop','rocket',7000],['hat','graduate',8000],['prop','book',9000]];
+for(const [kind,id,xp] of added){
+ assert.equal(C.groups[kind].find(x=>x.id===id).xp,xp);
+ assert.equal(A.markup({[kind]:id},xp-1),A.markup({},xp-1),'locked artwork falls back to the base avatar');
+ assert.notEqual(A.markup({[kind]:id},xp),A.markup({},xp),'unlocked artwork is visible');
+ assert.equal(C.fromMetadata({[C.metadataKeys[kind]]:id})[kind],id);
+}
+for(const hair of ['ponytail','waves','braids']){
+ assert.equal(A.available({hair},0).hair,hair);assert.notEqual(A.markup({hair},0),A.markup({},0));
+}
+for(const kind of ['glasses','hat','prop'])assert.equal(new Set(C.groups[kind].map(x=>x.id)).size,C.groups[kind].length);
+const original=[['glasses','round',150],['glasses','sun',1000],['glasses','star',3500],['hat','beanie',500],['hat','cap',1500],['hat','wizard',6000],['prop','icepop',800],['prop','bulb',2500],['prop','pencil',4500]];
+for(const [kind,id,xp] of original)assert.equal(C.groups[kind].find(x=>x.id===id).xp,xp,'existing unlocks keep their IDs and thresholds');
+root.querySelector('[data-avatar-tab=extras]').click();option('prop','cookie').click();option('glasses','square').click();option('hat','egg').click();
+assert.match(root.querySelector('[data-avatar-note=prop]').textContent,/Smart cookie.*clever little snack/);
+assert.equal(root.querySelector('[data-avatar-note=prop]').hidden,false);
+root.querySelector('[data-style-save]').click();await tick();await tick();await S.load();
+assert.equal(S.snapshot().style.prop,'cookie');assert.equal(S.snapshot().style.glasses,'square');assert.equal(S.snapshot().style.hat,'egg');
+assert.deepEqual(omitDesign(savedState()),before,'new collection saves still preserve every gameplay and ranking field');
 // Keyboard tabs follow the WAI-ARIA pattern without removing focus during render.
 const look=root.querySelector('[data-avatar-tab=look]');look.focus();look.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
 assert.equal(w.document.activeElement.dataset.avatarTab,'extras');assert.equal(root.querySelector('[data-avatar-pane=look]').hidden,true);

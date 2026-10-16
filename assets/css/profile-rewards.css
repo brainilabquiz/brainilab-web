@@ -37,6 +37,8 @@
 .avatar-studio-tabs button[aria-selected=true]{background:var(--navy);color:#fff}
 .avatar-studio-controls [role=tabpanel][hidden]{display:none}
 .avatar-pane-note{font-size:.8125rem;color:var(--muted);line-height:1.6;margin:0 0 1.25rem}
+.avatar-item-note{font-size:.8125rem;color:var(--muted);line-height:1.6;margin:.75rem 0 0;padding-left:.75rem;border-left:2px solid var(--line)}
+.avatar-item-note[hidden]{display:none}
 .reward-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.625rem}
 .reward-mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
 .reward-choice{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.375rem;min-width:0;padding:.75rem .375rem;border:1px solid var(--line);border-radius:.75rem;background:var(--card);color:var(--navy);cursor:pointer;font-family:inherit;line-height:1.35;overflow-wrap:anywhere;min-height:2.75rem;position:relative}
