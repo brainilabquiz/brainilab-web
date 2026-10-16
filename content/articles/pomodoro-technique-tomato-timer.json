@@ -1,0 +1,64 @@
+{
+  "slug": "pomodoro-technique-tomato-timer",
+  "title": "What is the Pomodoro technique? Meet the study tomato",
+  "description": "The Pomodoro technique pairs focused work with breaks. Find out why it has a tomato’s name and how to try a simple study session without chasing a timer.",
+  "topic": "Learning",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 144,
+  "publishedAt": "2026-10-16T21:28:06Z",
+  "updatedAt": "2026-10-16T21:28:06Z",
+  "game": {
+    "name": "General Knowledge Quiz",
+    "url": "/general-knowledge/general-knowledge-quiz/"
+  },
+  "hub": {
+    "name": "Learn",
+    "url": "/learn/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/pomodoro-technique-tomato-timer.webp",
+    "small": "/assets/images/learn/pomodoro-technique-tomato-timer-small.webp",
+    "thumbnail": "/assets/images/learn/pomodoro-technique-tomato-timer-thumb.webp",
+    "alt": "A red tomato-shaped kitchen timer sits beside an open notebook, a violet pencil and a yellow sticky note",
+    "position": 50,
+    "credit": "AI-generated illustrative cover created for BrainiLab; an invented generic timer, not Francesco Cirillo’s original object or a branded product photograph."
+  },
+  "sources": [
+    {
+      "name": "Francesco Cirillo — The creator’s account of the Pomodoro technique",
+      "url": "https://www.pomodorotechnique.com/francesco-cirillo/"
+    },
+    {
+      "name": "Maynooth University — A short Pomodoro study routine (PDF)",
+      "url": "https://www.maynoothuniversity.ie/sites/default/files/assets/document/The%20Pomodoro%20Technique_0.pdf"
+    }
+  ],
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "explain-an-answer-in-your-own-words"
+  ],
+  "practice": "Fancy a short change of pace? Try the General Knowledge Quiz.",
+  "sections": [
+    {
+      "id": "why-a-tomato",
+      "title": "Why is there a tomato on the desk?",
+      "html": "<p><strong>The Pomodoro technique is a way to organise focused work and breaks, named after the tomato-shaped kitchen timer used by its creator, Francesco Cirillo.</strong></p><p>A surprisingly cheerful name for something that begins with a familiar problem: sitting down to study, then finding twelve other things to do.</p>"
+    },
+    {
+      "id": "one-student-one-timer",
+      "title": "One student, one kitchen timer",
+      "html": "<p>Cirillo says he began developing the method <a href=\"https://www.pomodorotechnique.com/francesco-cirillo/\">as a university student in the 1980s</a>, when he struggled to concentrate on his studies.</p><p>He started by asking whether he could study for a short time without interruption. The tomato was a tool for that experiment, not a special ingredient for a better brain.</p>"
+    },
+    {
+      "id": "a-simple-start",
+      "title": "Give the next task a boundary",
+      "html": "<p><a href=\"https://www.maynoothuniversity.ie/sites/default/files/assets/document/The%20Pomodoro%20Technique_0.pdf\">Maynooth University’s short guide</a> gives a familiar starting routine: choose one task, work for <strong>25 minutes</strong>, then take a <strong>five-minute break</strong>.</p><p>If an unrelated job pops into your head, note it down and return to the task. After four work periods, the guide suggests a longer break.</p><p>“Review one page of notes” is a clearer task than “sort out all my studying”.</p>"
+    },
+    {
+      "id": "not-a-tomato-competition",
+      "title": "The timer is not keeping score",
+      "html": "<p>Cirillo stresses that the full technique goes beyond repeating 25-minute blocks. Planning, interruptions and noticing how you work also matter.</p><p>So use the timer as a boundary, not proof that learning happened. After reading, try <a href=\"/learn/explain-an-answer-in-your-own-words/\">explaining the idea in your own words</a>, then <a href=\"/learn/remember-quiz-answers-tomorrow/\">revisit it later</a>. Those are separate learning steps, not something a ticking tomato can do for you.</p>"
+    }
+  ]
+}
