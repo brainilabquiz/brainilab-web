@@ -15,13 +15,13 @@ for(const [kind,id,xp]of items){
  const svg=A.markup({[kind]:id},xp),parsed=new w.DOMParser().parseFromString(svg,'image/svg+xml');assert.equal(parsed.querySelector('parsererror'),null);assert.doesNotMatch(svg,/<script|<image|\bhref=|\bon\w+=/i);
 }
 assert.equal(C.next(3015).id,'train');assert.equal(C.next(10000),null);
-root.querySelector('[data-avatar-tab=extras]').click();assert.equal(root.querySelectorAll('[data-avatar-extra]').length,3);
-const hat=root.querySelector('[data-avatar-extra=hat]');hat.querySelector('summary').click();await tick();assert.equal(root.querySelectorAll('[data-avatar-extra][open]').length,1);assert.equal(hat.open,true);
-player.xp=10000;w.BrainiProfileRewards.render();root.querySelector('[data-reward-kind=hat][data-reward-id=corn]').click();assert.equal(root.querySelector('[data-avatar-extra-label=hat]').textContent,'A-maize-ing');assert.equal(writes,0);
-root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-avatar-extra-label=hat]').textContent,'No hat');
+root.querySelector('[data-avatar-tab=extras]').click();
+const extras=root.querySelector('[data-avatar-pane=extras]');assert.equal(extras.querySelectorAll('fieldset').length,3);assert.equal(extras.querySelectorAll('details').length,0,'all extra categories remain expanded');
+player.xp=10000;w.BrainiProfileRewards.render();root.querySelector('[data-reward-kind=hat][data-reward-id=corn]').click();assert.match(root.querySelector('[data-avatar-note=hat]').textContent,/A-maize-ing/);assert.equal(writes,0);
+root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-reward-kind=hat][data-reward-id=none]').getAttribute('aria-pressed'),'true');
 for(const [level,key]of [[1,'rookie'],[5,'elementary'],[10,'highschool'],[15,'college'],[20,'graduate'],[25,'phd'],[30,'researcher'],[40,'professor'],[50,'dean'],[60,'nobel']]){
  player.xp=20*(level-1)**2;const before=JSON.stringify(player);w.BrainiProfileRewards.render();assert.equal(root.querySelector('[data-diploma-tier]').dataset.diplomaTier,key,'diploma derives from XP, never a supplied level');assert.match(root.querySelector('[data-avatar-level]').textContent,new RegExp('Level '+level+' ·'));assert.equal(JSON.stringify(player),before);
  if(level>1){player.xp--;w.BrainiProfileRewards.render();assert.notEqual(root.querySelector('[data-diploma-tier]').dataset.diplomaTier,key,'upgrade boundary is exact');}
 }
 assert.equal(root.querySelectorAll('[data-diploma-tier]').length,1);assert.equal(writes,0,'all diploma upgrades are automatic presentation only');
-dom.window.close();console.log('PASS six original SVG unlocks, exact XP boundaries, safe art, clean accordion/draft labels, cancel, and ten automatic diploma tiers with no score/XP/metadata writes.');
+dom.window.close();console.log('PASS six original SVG unlocks, exact XP boundaries, safe art, expanded extra categories, cancel, and ten automatic diploma tiers with no score/XP/metadata writes.');

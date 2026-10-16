@@ -174,8 +174,9 @@ https://supabase.com/docs/reference/javascript/auth-updateuser
 The wordplay collection now contains 24 accessories: seven glasses, eight hats
 and nine props (excluding None). New choices are Eye spy (2,250 XP), Dough-eyed
 (6,500), A-maize-ing (2,200), Brain waves (5,500), Train of thought (3,200) and
-On a roll (7,500). All previous IDs and unlock thresholds remain valid. Only one
-Little extras category opens at a time; each summary shows the current draft.
+On a roll (7,500). All previous IDs and unlock thresholds remain valid. All
+Little extras categories remain expanded: glasses, hats and props are ordinary
+labelled fieldsets. The three main creator tabs remain available.
 Migration `20261016210748_avatar_wordplay_collection.sql` extends only the private
 cosmetic allowlist with a definition-hash guard. The four public RPCs, privacy
 guards and player tables remain untouched.
@@ -210,7 +211,10 @@ Daily overview. It is excluded from individual games, articles, profile and
 editor routes. It never steals focus, yields to visible cookie/auth/game dialogs,
 closes with Escape or its close button, and uses the existing signup flow.
 The functional browser preference limits it to once per 30 days; storage failure
-suppresses it. Signing in or a cross-tab dismissal removes it. No tracking event,
+suppresses it. Signing in or a cross-tab dismissal removes it. Capture-phase
+interaction handling yields to the real account menu even when it stops event
+propagation. If a menu/dialog blocks the first timer, closing it schedules a new
+15-second attempt; the once-per-30-day guard still applies. No tracking event,
 new authentication flow or gameplay write is introduced.
 
 Additional validation: `tools/test-avatar-collection.mjs` checks all six unlocks,
@@ -218,3 +222,14 @@ safe original SVG, accordion/cancel behavior and every diploma boundary;
 `tools/test-avatar-announcement.mjs` checks guest-only timing, routes, focus,
 frequency, blockers, storage failure, signup and errors. The isolated PostgreSQL
 suite checks every new public appearance threshold and previous payload parity.
+
+Surprise me creates an unsaved illustrated look from existing unlocked choices.
+It keeps the current available skin tone, frame and title, and randomizes hair,
+hair color, shirt, background and optional extras. Extras usually stay empty to
+keep the suggestion simple; an unchanged draw falls back to another hairstyle.
+The existing Save/Cancel flow remains the only way to confirm or discard it.
+The action is disabled during loading, saving or an unresolved store error.
+No new catalog item, metadata key, threshold or XP/score calculation is added.
+`tools/test-avatar-surprise.mjs` covers deterministic draws, unlock boundaries,
+identity preservation and no mutation; the studio suite verifies draft-only
+behavior, unchanged saved identity/gameplay and full cancellation.

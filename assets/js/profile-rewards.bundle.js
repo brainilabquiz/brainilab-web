@@ -34,8 +34,22 @@ window.BrainiRewardCatalog=(function(){
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
       .filter(r=>r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
+  function surprise(style,earned,random=Math.random){
+    const total=xp(earned),current=available(style,total),result={...current,mode:'built'};
+    const kinds=['hair','hairColor','shirt','background','glasses','hat','prop'];
+    // Skin tone, frame and title stay intentional. Extras stay absent in most draws.
+    for(const kind of kinds){
+      const unlocked=groups[kind].filter(item=>item.xp<=total);
+      const roll=Math.min(1-Number.EPSILON,Math.max(0,Number(random())||0));
+      const extra=['glasses','hat','prop'].includes(kind);
+      const pool=extra?unlocked.filter(item=>item.id!=='none'):unlocked;
+      result[kind]=extra&&(roll<.65||!pool.length)?'none':pool[Math.min(pool.length-1,Math.floor((extra?(roll-.65)/.35:roll)*pool.length))].id;
+    }
+    if(kinds.every(kind=>result[kind]===current[kind]))result.hair=groups.hair.find(item=>item.xp<=total&&item.id!==current.hair)?.id||current.hair;
+    return result;
+  }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,fromMetadata});
+  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();
 
 /* ===== profile-rewards-store.js ===== */
@@ -158,9 +172,8 @@ window.BrainiAvatarStudioUI=(function(){
     rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title'}}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
-  function group(kind,name,folded){
-    const field=`<fieldset class="avatar-option-group" ${folded?`aria-label="${name}"`:''}>${folded?'':`<legend>${name}</legend>`}<div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
-    return folded?`<details class="avatar-extra-group" data-avatar-extra="${kind}" ${kind==='glasses'?'open':''}><summary><strong>${name}</strong><span data-avatar-extra-label="${kind}"></span><b aria-hidden="true">+</b></summary>${field}</details>`:field;
+  function group(kind,name){
+    return `<fieldset class="avatar-option-group"><legend>${name}</legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
   }
   function mount(root){
     root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>Try a new look. Add a little extra. Make it you.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
@@ -170,13 +183,10 @@ window.BrainiAvatarStudioUI=(function(){
       <div class="avatar-next-reward" data-next-reward></div>
       <div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save my avatar</button><button class="btn-light" type="button" data-style-cancel>Cancel changes</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div>
       <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></aside>
-      <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><fieldset class="avatar-mode"><legend>Start with</legend><div class="reward-mode-grid" data-style-modes></div></fieldset>
+      <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><div class="avatar-mode-header"><span id="avatar-start-label">Start with</span><button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Try a new look using your unlocked items">Surprise me</button></div><div class="reward-mode-grid" data-style-modes></div></div>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Open a category and try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name,key==='extras')).join('')}</div>`).join('')}</div></div>`;
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
     showPane(root,active);
-    root.querySelectorAll('[data-avatar-extra]').forEach(details=>details.querySelector('summary').addEventListener('click',()=>{
-      if(!details.open)root.querySelectorAll('[data-avatar-extra]').forEach(other=>{if(other!==details)other.open=false;});
-    }));
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
       tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
       tab.addEventListener('keydown',event=>{
@@ -219,7 +229,6 @@ window.BrainiAvatarStudioUI=(function(){
         button.setAttribute('aria-label',`${item.name}, ${locked?'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
       }
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
-      const label=root.querySelector(`[data-avatar-extra-label="${kind}"]`);if(label)label.textContent=chosen.name;
       if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}
     }
   }
@@ -282,6 +291,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
+    root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
     root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||state.notice||(dirty?'Preview only. Save when you’re happy with it.':'');
@@ -289,6 +299,12 @@ window.BrainiProfileRewards=(function(){
   function bind(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
+      const surprise=event.target.closest('[data-avatar-surprise]');
+      if(surprise&&!surprise.disabled){
+        draft=C.surprise(draft,BrainiData.player().xp);
+        dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
+        return;
+      }
       const button=event.target.closest('[data-reward-kind]');
       if(button&&!button.disabled){
         const {rewardKind:kind,rewardId:id}=button.dataset;draft[kind]=id;

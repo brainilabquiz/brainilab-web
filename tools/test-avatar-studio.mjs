@@ -36,6 +36,19 @@ await D.api.syncCloudProgression({progression:{xp:2700,level:99,total_games:9},t
 }}})};
 await S.load();
 const before=omitDesign(savedState());
+// A suggested look is a reversible draft using current unlocks, never an automatic save.
+const surpriseButton=root.querySelector('[data-avatar-surprise]'),writesBeforeSurprise=writes.length,portraitBeforeSurprise=w.document.querySelector('.nav-right .avatar').innerHTML;
+const savedBeforeSurprise=JSON.parse(JSON.stringify(S.snapshot().style));
+surpriseButton.click();
+assert.equal(writes.length,writesBeforeSurprise);assert.equal(option('mode','built').getAttribute('aria-pressed'),'true');
+assert.equal(option('skin',savedBeforeSurprise.skin).getAttribute('aria-pressed'),'true');
+assert.equal(option('frame',savedBeforeSurprise.frame).getAttribute('aria-pressed'),'true');assert.equal(option('title',savedBeforeSurprise.title).getAttribute('aria-pressed'),'true');
+assert.equal(w.document.querySelector('.nav-right .avatar').innerHTML,portraitBeforeSurprise);assert.match(root.querySelector('[data-style-preview-label]').textContent,/not saved/);
+for(const [kind,list]of Object.entries(C.groups)){const selected=list.find(item=>option(kind,item.id).getAttribute('aria-pressed')==='true');assert.ok(selected.xp<=D.player().xp);}
+assert.deepEqual(omitDesign(savedState()),before);
+root.querySelector('[data-style-cancel]').click();
+assert.equal(writes.length,writesBeforeSurprise);assert.equal(root.querySelector('[data-style-save]').disabled,true);
+for(const [kind,id]of Object.entries(savedBeforeSurprise))assert.equal(option(kind,id).getAttribute('aria-pressed'),'true');
 option('mode','built').click();option('skin','cocoa').click();option('hair','curls').click();
 root.querySelector('[data-avatar-tab=extras]').click();option('glasses','round').click();option('hat','cap').click();option('prop','icepop').click();
  option('frame','copper').click();

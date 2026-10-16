@@ -32,6 +32,20 @@ window.BrainiRewardCatalog=(function(){
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
       .filter(r=>r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
+  function surprise(style,earned,random=Math.random){
+    const total=xp(earned),current=available(style,total),result={...current,mode:'built'};
+    const kinds=['hair','hairColor','shirt','background','glasses','hat','prop'];
+    // Skin tone, frame and title stay intentional. Extras stay absent in most draws.
+    for(const kind of kinds){
+      const unlocked=groups[kind].filter(item=>item.xp<=total);
+      const roll=Math.min(1-Number.EPSILON,Math.max(0,Number(random())||0));
+      const extra=['glasses','hat','prop'].includes(kind);
+      const pool=extra?unlocked.filter(item=>item.id!=='none'):unlocked;
+      result[kind]=extra&&(roll<.65||!pool.length)?'none':pool[Math.min(pool.length-1,Math.floor((extra?(roll-.65)/.35:roll)*pool.length))].id;
+    }
+    if(kinds.every(kind=>result[kind]===current[kind]))result.hair=groups.hair.find(item=>item.xp<=total&&item.id!==current.hair)?.id||current.hair;
+    return result;
+  }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,fromMetadata});
+  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();
