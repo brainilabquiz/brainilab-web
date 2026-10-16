@@ -1,0 +1,64 @@
+{
+  "slug": "why-does-popcorn-pop",
+  "title": "Why does popcorn pop? The science inside a tiny kernel",
+  "description": "A popcorn kernel traps water, builds pressure and turns starch into a fluffy snack. The jump and the familiar pop have their own surprising explanations.",
+  "topic": "Curiosity",
+  "status": "published",
+  "authorId": "biel-sarda",
+  "order": 143,
+  "publishedAt": "2026-10-16T20:58:25Z",
+  "updatedAt": "2026-10-16T20:58:25Z",
+  "game": {
+    "name": "Science Quiz",
+    "url": "/science/science-quiz/"
+  },
+  "hub": {
+    "name": "Learn",
+    "url": "/learn/"
+  },
+  "cover": {
+    "src": "/assets/images/learn/why-does-popcorn-pop.webp",
+    "small": "/assets/images/learn/why-does-popcorn-pop-small.webp",
+    "thumbnail": "/assets/images/learn/why-does-popcorn-pop-thumb.webp",
+    "alt": "A blue ceramic bowl of popcorn with three popped pieces above it and golden kernels on a sunlit table",
+    "position": 50,
+    "credit": "AI-generated illustrative scene created for BrainiLab; not a photograph of the experiment or a demonstration of popping in a bowl."
+  },
+  "sources": [
+    {
+      "name": "Virot and Ponomarenko (2015) — Popcorn: critical temperature, jump and sound (original research, PDF)",
+      "url": "https://yakari.polytechnique.fr/Django-pub/documents/virot2015rp-1pp.pdf"
+    },
+    {
+      "name": "The Royal Society — The science of popcorn and the researchers’ high-speed films",
+      "url": "https://royalsociety.org/blog/2015/02/the-science-of-popcorn/"
+    }
+  ],
+  "related": [
+    "curiosity-daily-2026-10-09",
+    "why-are-soap-bubbles-round"
+  ],
+  "practice": "Try the Science Quiz for more questions hiding in everyday things.",
+  "sections": [
+    {
+      "id": "pressure-inside",
+      "title": "A little pressure cooker",
+      "html": "<p><strong>Popcorn pops because heating builds pressure from water inside a kernel. When its tough outer hull splits, the starch expands into a fluffy, foamy shape.</strong></p><p>The familiar snack has packed a surprisingly busy transformation into one tiny seed. There is more going on than a shell simply cracking.</p>"
+    },
+    {
+      "id": "the-temperature",
+      "title": "The shell holds things together",
+      "html": "<p>The hull keeps the pressure contained until it can no longer hold. As it breaks, the sudden pressure drop lets the heated starch expand.</p><p>In <a href=\"https://yakari.polytechnique.fr/Django-pub/documents/virot2015rp-1pp.pdf\">Virot and Ponomarenko’s 2015 experiments</a>, most kernels in their oven tests popped at around <strong>180°C</strong>. That is an experimental finding, not a universal cooking instruction: the temperature of a pan is not automatically the temperature inside every kernel.</p>"
+    },
+    {
+      "id": "sound-and-jump",
+      "title": "The pop and the jump are different tricks",
+      "html": "<p>The researchers’ recordings supported <strong>escaping water vapour</strong> as the source of the sound, rather than the landing or the hull crack alone.</p><p>The jump had another explanation. A small protrusion of starch pressed against the hot surface and bounced the popcorn upwards, like a tiny springy leg. It was not a steam rocket.</p>"
+    },
+    {
+      "id": "watch-something-ordinary",
+      "title": "A cinema snack in slow motion",
+      "html": "<p><a href=\"https://royalsociety.org/blog/2015/02/the-science-of-popcorn/\">The Royal Society’s account</a> describes roughly 400 pieces used to record the jump films. Heating, filming and analysing them took rather longer than eating a bowl.</p><p>Next time popcorn catches your eye, remember the three separate questions: why it opens, why it jumps and where the sound comes from. Ordinary things become more interesting when you slow the question down.</p><p>For another small kitchen transformation, discover <a href=\"/learn/curiosity-daily-2026-10-09/\">how egg white becomes a cloud of meringue</a>.</p>"
+    }
+  ]
+}
