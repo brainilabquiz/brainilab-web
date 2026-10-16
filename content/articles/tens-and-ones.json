@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/tens-and-ones-thumb.webp"
   },
   "order": 41,
-  "title": "Why 23 means two tens and three ones",
+  "title": "Tens and ones: why 23 and 23 tens are different",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,26 +73,26 @@
   "sections": [
     {
       "id": "make-a-bundle",
-      "html": "<p>Counting 23 loose objects one at a time works, but it is easy to lose your place. Make a bundle of ten, then another bundle of ten. Three objects remain loose. You now have <strong>two tens and three ones</strong>.</p><p>The bundles have not created new objects. Two bundles contain 20 objects altogether, and the three loose ones bring the total to 23. You can check by unpacking every bundle and counting all the objects.</p>",
-      "title": "Make a bundle"
+      "title": "What does 23 mean in tens and ones?",
+      "html": "<p><strong>23 means two tens and three ones: 20 + 3.</strong> Imagine 23 loose counters. Put ten in one bundle and ten in another; three counters remain loose.</p><p>Nothing new has appeared. The bundles just make the same collection easier to count. This is <strong>place value</strong>: a digit’s position tells you its value, as <a href=\"https://openstax.org/books/prealgebra-2e/pages/1-1-introduction-to-whole-numbers\">OpenStax explains</a>.</p>"
     },
     {
       "id": "explore",
-      "html": "<p>Draw 19 little marks. Circle ten to make one bundle, leaving nine loose marks. Add one more: you can now circle a second bundle of ten, making 20 altogether.</p><p>Compare 23 with 32. Both numbers use the same two digits, but they mean different amounts: 23 has two tens, while 32 has three tens. The place occupied by each digit matters.</p>",
-      "title": "Try it yourself"
+      "title": "But what does “23 tens” mean?",
+      "html": "<p><strong>23 tens means 23 groups of ten: 23 × 10 = 230.</strong> That is different from the number 23, which has only two complete tens.</p><ul><li><strong>23:</strong> two tens and three ones.</li><li><strong>23 tens:</strong> twenty-three groups of ten, making 230.</li><li><strong>23 tens and 4 ones:</strong> 230 + 4 = 234.</li></ul><p>The word after the number matters. Twenty-three counters and twenty-three bags of ten counters are rather different deliveries.</p>"
     },
     {
       "id": "a-zero-can-hold-a-place",
-      "html": "<p>In 30, the three means three tens and the zero means no loose ones. Removing that zero would leave 3, which is only three ones. Zero is doing a useful job even though there are no little cubes to draw.</p><p>We call this <strong>place value</strong>. For these two-digit numbers, the rightmost digit counts ones and the digit immediately to its left counts tens. Larger numbers continue with hundreds and thousands, but two places are enough for now.</p>",
-      "title": "A zero can hold a place"
+      "title": "Why the zero in 30 matters",
+      "html": "<p>In <strong>30</strong>, the 3 counts tens and the 0 shows no loose ones. Remove the zero and you get <strong>3</strong>: just three ones.</p><p>Likewise, 23 and 32 use the same digits, but 32 has three tens and two ones. Moving the digits changes the amount.</p>"
     },
     {
       "id": "read-the-amount-not-just-the-digits",
-      "html": "<p>For 47, say “four tens and seven ones” before saying “forty-seven”. For 8, there are no complete tens and eight ones. A one-digit number still fits the same idea.</p><p>Try making 26 with small objects. Trade one bundle of ten for ten loose objects. The total stays 26. This exchange will become useful when you add or subtract across a ten.</p><p>For the full picture, explore <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">seven friendly starting points for basic arithmetic</a>.</p>",
-      "title": "Read the amount, not just the digits"
+      "title": "Read the groups, then the number",
+      "html": "<p>Try 47: four tens and seven ones. Then try eight ones: no complete tens, just eight loose counters.</p><p>Continue with <a href=\"/learn/arithmetic-from-zero-a-friendly-guide/\">the friendly guide to basic arithmetic</a> when you want another small step.</p>"
     }
   ],
-  "updatedAt": "2026-10-09T17:07:39.650554Z",
-  "description": "Bundle ten little cubes into one group and discover how the position of a digit changes its value.",
+  "updatedAt": "2026-10-16T19:33:25Z",
+  "description": "23 has two tens and three ones, but 23 tens means 230. Use simple bundles to see how place value works and why a zero can change the number.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

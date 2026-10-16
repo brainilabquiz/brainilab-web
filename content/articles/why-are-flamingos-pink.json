@@ -17,7 +17,7 @@
     "thumbnail": "/assets/images/learn/why-are-flamingos-pink-thumb.webp"
   },
   "order": 60,
-  "title": "Why are flamingos pink?",
+  "title": "Why are flamingos pink? It starts with dinner",
   "topic": "Science & nature",
   "status": "published",
   "related": [
@@ -39,26 +39,21 @@
   "sections": [
     {
       "id": "short-answer",
-      "html": "<p><strong>Flamingos are pink because of carotenoids: natural pigments in the algae and small animals they eat.</strong> Their bodies process those pigments, which colour the feathers as they grow.</p><p>The bird looks as though it arrived dressed for a party. Its food supply deserves some of the credit.</p><p>As the <a href=\"https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts\" target=\"_blank\" rel=\"noopener noreferrer\">Smithsonian’s National Zoo explains</a>, the pigments can reach a flamingo through algae or through brine shrimp that have eaten algae. The colour has travelled through a food chain before it reaches those feathers.</p>",
-      "title": "Pink is on the menu"
-    },
-    {
-      "id": "baby-flamingos",
-      "html": "<p>No. Flamingo chicks hatch with pale, white-grey down. Their familiar adult colour develops over time. A fluffy grey chick beside a pink parent is not a different kind of bird that wandered into the family photograph.</p><p>Young flamingos also start with a straighter bill. Both the colour and that distinctive adult curve take time to develop. Nature does not always deliver the finished costume on day one.</p>",
-      "title": "Are baby flamingos born pink?"
+      "title": "The colour starts in their food",
+      "html": "<p><strong>Flamingos are pink because their food contains carotenoids, natural pigments that their bodies process.</strong> Those pigments colour the feathers as they grow.</p><p>The <a href=\"https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts\">Smithsonian’s National Zoo explains</a> that flamingos can get them from algae or from brine shrimp that have eaten algae. The colour has travelled through a food chain before arriving at the party.</p>"
     },
     {
       "id": "not-just-shrimp",
-      "html": "<p>Shrimp are part of the story, but “they eat shrimp” is an incomplete answer. Flamingo species eat different mixtures of algae and small aquatic animals. The useful thing to remember is the <strong>pigment</strong>, rather than one item on the menu.</p><p>They are filter feeders: water moves through the bill while small food particles are trapped. <a href=\"https://animals.sandiegozoo.org/animals/flamingo\" target=\"_blank\" rel=\"noopener noreferrer\">San Diego Zoo describes</a> how different bill structures suit different-sized foods, from fine algae to small invertebrates.</p><p>At the zoo, a specially prepared diet can supply the pigments too. A flamingo does not need a miniature seafood restaurant to stay pink.</p>",
-      "title": "So is the answer just “shrimp”?"
+      "title": "Is it just because they eat shrimp?",
+      "html": "<p><strong>Shrimp are part of the story, not the whole answer.</strong> Flamingo species eat different mixtures of algae and small aquatic animals. The useful clue is the pigment, rather than one item on the menu.</p><p><a href=\"https://animals.sandiegozoo.org/animals/flamingo\">San Diego Zoo describes their filter feeding</a>: food particles are trapped as water passes through the bill. Different bill structures suit different-sized foods.</p>"
     },
     {
-      "id": "remember-it",
-      "html": "<p>The next time a flamingo appears in a quiz, think: <strong>food → pigments → feathers</strong>. That gives you the explanation, not just an answer to memorise.</p><p>And if unusual animals are your thing, an <a href=\"/learn/why-octopuses-have-three-hearts/\" target=\"_blank\" rel=\"noopener noreferrer\">octopus with three hearts</a> makes a good next stop. Apparently one perfectly ordinary heart was not enough.</p>",
-      "title": "One detail worth keeping"
+      "id": "baby-flamingos",
+      "title": "Are baby flamingos born pink?",
+      "html": "<p><strong>No. Chicks hatch with pale white-grey down.</strong> Their familiar adult colour develops over time. That fluffy grey bird beside a pink parent has not wandered into the wrong family photograph.</p><p>Remember <strong>food → pigments → feathers</strong>. For another animal surprise, discover <a href=\"/learn/why-octopuses-have-three-hearts/\">why octopuses have three hearts</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
-  "description": "A flamingo’s pink colour starts with its food. Find out why its feathers turn pink and why its chicks look so different.",
+  "updatedAt": "2026-10-16T19:33:25Z",
+  "description": "Flamingos get their pink colour from pigments in their food, not from being born pink. Follow the food chain—and meet the surprisingly grey chicks.",
   "publishedAt": "2026-10-07T15:40:00Z"
 }

@@ -52,7 +52,7 @@
     "credit": "AI-generated cover illustration created for BrainiLab."
   },
   "order": 4,
-  "title": "How do you work out a year’s century?",
+  "title": "What century is 1900? The dates that trip us up",
   "topic": "History",
   "status": "published",
   "related": [
@@ -69,27 +69,27 @@
   "practice": "Try History Quiz and see which periods you recognise.",
   "sections": [
     {
-      "id": "shelf",
-      "html": "<p>A <strong>century</strong> is a period of one hundred years. When we say “the first century”, we mean the first numbered group of one hundred years.</p><p>Imagine a box that holds 100 year cards. Put cards 1, 2, 3 and so on into it. Card <strong>100</strong> fills the last space. Card <strong>101</strong> must go in the next box.</p><p>The second box holds years 101 to 200. The third holds 201 to 300. Each box is one century.</p>",
-      "title": "One century holds one hundred years"
+      "id": "boundary",
+      "title": "Is 1900 in the 19th or 20th century?",
+      "html": "<p><strong>1900 is the last year of the 19th century. The 20th century begins in 1901 and ends in 2000.</strong> Those first two digits are a tempting shortcut, but they miss the boundary.</p><p>As the <a href=\"https://aa.usno.navy.mil/faq/millennium\">US Naval Observatory explains</a>, the Common Era starts with year 1, not year 0.</p>"
     },
     {
-      "id": "boundary",
-      "html": "<p>Following the same pattern, the nineteenth box starts at <strong>1801</strong> and finishes at <strong>1900</strong>. That is the <strong>19th century</strong>.</p><p>The twentieth box starts with the very next card: <strong>1901</strong>. It finishes at 2000.</p><p>It feels odd because 1900 and 1901 both start with “19”. But one is the last card in a full box, and the other is the first card in a new one.</p>",
-      "title": "Why 1900 belongs in the nineteenth box"
+      "id": "shelf",
+      "title": "Imagine boxes holding 100 year cards",
+      "html": "<p>Box one holds years <strong>1–100</strong>. Card 100 fills its last space, so 101 starts box two. Keep going and each numbered box is one century.</p><p>The same rule puts 1900 at the end of the nineteenth box. The next card, 1901, starts the twentieth.</p>"
     },
     {
       "id": "at-a-glance",
-      "html": "<div class=\"table-scroll\"><table><caption>First and last years in each century</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">First year</th><th scope=\"col\">Last year</th></tr></thead><tbody><tr><td>19th century</td><td>1801</td><td>1900</td></tr><tr><td>20th century</td><td>1901</td><td>2000</td></tr><tr><td>21st century</td><td>2001</td><td>2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>. The year 2000 was the final year of the twentieth box.</p>",
-      "title": "Three boxes you will often meet"
+      "title": "19th, 20th and 21st century dates",
+      "html": "<div class=\"table-scroll\"><table><caption>First and last years, using CE/AD numbering</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">Years</th></tr></thead><tbody><tr><td>19th</td><td>1801–1900</td></tr><tr><td>20th</td><td>1901–2000</td></tr><tr><td>21st</td><td>2001–2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>, even though the change to a year beginning with “20” happened in 2000.</p>"
     },
     {
       "id": "reading-dates",
-      "html": "<p>The 16th century runs from 1501 to 1600. Where should the next year, <strong>1601</strong>, go?</p><details class=\"practice-answer\"><summary>Open the next box</summary><p>Into the <strong>17th century</strong>. The old box finished with 1600, so 1601 starts a new one.</p></details><p>You may see <strong>CE</strong> after a year. It means “Common Era”; <strong>AD</strong> is another label used for the same year numbering. In this numbering, the first century begins with year 1, not year 0.</p><p>This article uses those year numbers. Dates marked BCE or BC describe earlier years and need a separate explanation.</p>",
-      "title": "Try a date on the edge"
+      "title": "Is “the 1900s” the same as the 20th century?",
+      "html": "<p>When it means the hundred-year range <strong>1900–1999</strong>, no: that range starts and ends a year earlier than the 20th century, <strong>1901–2000</strong>. The wording matters.</p><p>These examples use CE/AD dates. For another way old dates can look unfamiliar, try <a href=\"/learn/how-to-read-roman-numerals/\">reading Roman numerals in small chunks</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
-  "description": "A century is a group of one hundred years. Imagine putting the years into numbered boxes and the awkward dates start to make sense.",
+  "updatedAt": "2026-10-16T19:33:25Z",
+  "description": "1900 belongs to the 19th century; 1901 starts the 20th. Compare the 19th, 20th and 21st centuries, and see why “the 1900s” is a different range.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }
