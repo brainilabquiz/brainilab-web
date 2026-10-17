@@ -222,6 +222,170 @@ window.BrainiPeople=(function(){
  return {PEOPLE,PREFIXES,identity,resolve,isLegacy:legacy,isPreset:value=>!!preset(value)};
 })();
 
+/* ===== profile-achievements-model.js ===== */
+
+window.BrainiAchievementCatalog=(function(){
+  const metadataKey='brainilab_featured_achievements_v1';
+  const materials=Object.freeze(['Paper','Bronze','Silver','Gold','Platinum','Diamond','Titanium','Emerald','Obsidian','Prismatic']
+    .map((name,index)=>Object.freeze({level:index+1,key:name.toLowerCase(),name})));
+  const thresholds=Object.freeze({
+    first_game:Object.freeze([1,3,7,15,30,55,95,155,245,375]),
+    ten_games:Object.freeze([10,20,40,75,135,230,375,590,900,1350]),
+    fifty_games:Object.freeze([50,100,175,300,500,800,1250,1900,2800,4000]),
+    personal_bests_three:Object.freeze([0,10,25,55,110,210,385,680,1150,1900]),
+    daily_first:Object.freeze([1,3,7,15,30,55,95,155,245,375]),
+    daily_seven:Object.freeze([7,14,28,50,85,140,225,355,550,840]),
+    streak_three:Object.freeze([3,5,9,16,28,47,77,122,187,277]),
+    streak_seven:Object.freeze([7,10,16,26,42,67,105,160,240,350])
+  });
+  const variety=Object.freeze([3,3,4,4,5,5,6,6,7,8]);
+  const badges=Object.freeze([
+    {id:'first_game',name:'First spark',description:'Complete your first saved game.',metric:'totalGames',target:1},
+    {id:'ten_games',name:'Double digits',description:'Complete 10 saved games.',metric:'totalGames',target:10},
+    {id:'fifty_games',name:'Fifty nifty',description:'Complete 50 saved games.',metric:'totalGames',target:50},
+    {id:'personal_bests_three',name:'Mix it up',description:'Record a personal best in three different games.',metric:'personalBestGames',target:3},
+    {id:'daily_first',name:'Daily dose',description:'Complete your first Daily.',metric:'fullDailyCount',target:1},
+    {id:'daily_seven',name:'Daily regular',description:'Complete the Daily on seven different days.',metric:'fullDailyCount',target:7},
+    {id:'streak_three',name:'Three’s a charm',description:'Reach a best Daily streak of three days.',metric:'bestStreak',target:3},
+    {id:'streak_seven',name:'Week streak',description:'Reach a best Daily streak of seven days.',metric:'bestStreak',target:7}
+  ].map(badge=>Object.freeze({...badge,tiers:Object.freeze(materials.map(material=>Object.freeze({
+    level:material.level,key:material.key,material:material.name,
+    requirements:Object.freeze(badge.id==='personal_bests_three'
+      ? {totalGames:thresholds[badge.id][material.level-1],personalBestGames:variety[material.level-1]}
+      : {[badge.metric]:thresholds[badge.id][material.level-1]})
+  })))})));
+  const known=new Set(badges.map(b=>b.id));
+  const byId=new Map(badges.map(b=>[b.id,b]));
+  // Canonical IDs from BrainiData's game catalogue, including saved legacy games.
+  const gameIds=new Set(['brainmix','flagdash','orderup','maphunt','topicrush','brainiword',
+    'worldflags','worldcapitals','science','history','sports','generalknowledge','connections',
+    'survival','oddoneout','higherlower','mathrush','numberroute','sequence']);
+  const resultId=v=>typeof v==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v)&&!/^0{8}-0{4}-0{4}-0{4}-0{12}$/.test(v);
+  const count=v=>Number.isSafeInteger(v)&&v>=0;
+  function state(id,metrics){
+    const badge=byId.get(id);if(!badge)return null;
+    if(!metrics||!['totalGames','bestStreak','fullDailyCount','personalBestGames'].every(key=>count(metrics[key])))
+      return {id,available:false,level:null,current:null,next:null,progress:{ratio:0,conditions:[]}};
+    const reached=badge.tiers.filter(tier=>Object.entries(tier.requirements).every(([metric,target])=>metrics[metric]>=target));
+    const current=reached.at(-1)||null,next=badge.tiers[reached.length]||null;
+    const conditions=Object.entries((next||current).requirements).map(([metric,target])=>({metric,value:metrics[metric],target,met:metrics[metric]>=target}));
+    const ratio=Math.min(...conditions.map(({value,target})=>target===0?1:Math.min(1,value/target)));
+    return {id,available:true,level:reached.length,current,next,progress:{ratio,conditions}};
+  }
+  function clean(ids,earnedIds){
+    if(!Array.isArray(ids)||earnedIds!==undefined&&!Array.isArray(earnedIds))return [];
+    const allowed=earnedIds===undefined?known:new Set(earnedIds.filter(id=>known.has(id)));
+    return [...new Set(ids.filter(id=>typeof id==='string'&&known.has(id)&&allowed.has(id)))].slice(0,3);
+  }
+  function earned(summary,uid){
+    const unavailable=()=>({available:false,ids:[],metrics:null});
+    const p=summary?.progression;
+    if(typeof uid!=='string'||!uid||p?.user_id!==uid||
+      !['total_games','best_streak','full_daily_count'].every(key=>count(p[key]))||
+      !Array.isArray(summary.personal_bests))return unavailable();
+    const games=new Set(),results=new Set();
+    for(const row of summary.personal_bests){
+      if(!row||!gameIds.has(row.game_id)||!resultId(row.result_id)||results.has(row.result_id.toLowerCase())||games.has(row.game_id))continue;
+      games.add(row.game_id);results.add(row.result_id.toLowerCase());
+    }
+    const metrics={totalGames:p.total_games,bestStreak:p.best_streak,
+      fullDailyCount:p.full_daily_count,personalBestGames:games.size};
+    return {available:true,ids:badges.filter(b=>state(b.id,metrics).level>=1).map(b=>b.id),metrics};
+  }
+  // Display normalization for server-issued public payloads. This does not
+  // establish earning, and must never be used to validate account metadata.
+  function normalizePublic(value){
+    if(!Array.isArray(value)||value.length>3)return [];
+    const result=[],seen=new Set();
+    for(const entry of value){
+      if(!entry||!known.has(entry.id)||seen.has(entry.id)||!Number.isInteger(entry.tier)||entry.tier<1||entry.tier>materials.length)continue;
+      result.push({id:entry.id,tier:entry.tier});seen.add(entry.id);if(result.length===3)break;
+    }
+    return result;
+  }
+  return Object.freeze({metadataKey,materials,badges,clean,earned,state,normalizePublic});
+})();
+
+/* ===== achievement-display.js ===== */
+
+/* Shared cosmetic rendering. Public choices are server-derived, never owner-cache fallbacks. */
+window.BrainiAchievementDisplay=(function(){
+  const icons=Object.freeze({first_game:'play-now',ten_games:'medal-achievement',fifty_games:'ranking-trophy',
+    personal_bests_three:'games',daily_first:'calendar-daily',daily_seven:'check-completed',streak_three:'streak',streak_seven:'streak'});
+  const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const catalog=()=>window.BrainiAchievementCatalog;
+  const publicChoices=value=>catalog()?.normalizePublic(value)||[];
+  function describe(id,tier){
+    const badge=catalog()?.badges.find(b=>b.id===id);
+    const material=Number.isInteger(tier)&&tier>=1&&tier<=10?badge?.tiers[tier-1]:null;
+    return badge&&material?{id,name:badge.name,...material}:null;
+  }
+  function requirementsText(requirements={}){
+    const count=n=>n.toLocaleString('en-GB');
+    return Object.entries(requirements).filter(([,n])=>n>0).map(([metric,n])=>{
+      if(metric==='totalGames')return `${count(n)} saved game${n===1?'':'s'}`;
+      if(metric==='fullDailyCount')return `${count(n)} completed Dail${n===1?'y':'ies'}`;
+      if(metric==='bestStreak')return `a best Daily streak of ${count(n)} day${n===1?'':'s'}`;
+      if(metric==='personalBestGames')return `personal-best records in ${count(n)} different games`;
+      return '';
+    }).filter(Boolean).join(' and ');
+  }
+  function emblemMarkup(id,tier){
+    const badge=describe(id,tier);if(!badge)return '';
+    return `<span class="achievement-emblem" data-material="${badge.key}" data-tier="${tier}" aria-hidden="true"><img src="/assets/icons/product/${icons[id]}.svg" alt="" width="24" height="24"><span class="achievement-emblem-level">${tier}</span></span>`;
+  }
+  function markup(value,{interactive=true}={}){
+    const choices=publicChoices(value);if(!choices.length)return '';
+    const labels=choices.map(({id,tier})=>{const b=describe(id,tier);return `${b.name}: ${b.material}, level ${tier} of 10`;});
+    const label=escape('Featured badges. '+labels.join('. '));
+    const art=choices.map(({id,tier})=>emblemMarkup(id,tier)).join('');
+    if(!interactive)return `<span class="player-achievements is-static" role="img" aria-label="${label}" title="${label}">${art}</span>`;
+    const payload=choices.map(({id,tier})=>`${id}:${tier}`).join(',');
+    return `<button class="player-achievements" type="button" data-achievement-details="${payload}" aria-haspopup="dialog" aria-label="${label}. Open badge details." title="${label}">${art}</button>`;
+  }
+  let dialog=null,trigger=null;
+  function close(){
+    if(!dialog)return;
+    if(typeof dialog.close==='function'&&dialog.open)dialog.close();else dialog.removeAttribute('open');
+    if(trigger?.isConnected)trigger.focus();trigger=null;
+  }
+  function show(value,button){
+    const choices=publicChoices(value);if(!choices.length)return;
+    if(!dialog){
+      dialog=document.createElement('dialog');dialog.className='achievement-details-dialog';
+      dialog.setAttribute('aria-labelledby','achievement-details-title');
+      dialog.innerHTML='<div class="achievement-details-head"><h2 id="achievement-details-title">Featured badges</h2><button type="button" data-close-achievement-details aria-label="Close badge details">×</button></div><p class="achievement-details-note">Badge levels grow as you play. They never add or spend XP or ranking points.</p><ol></ol>';
+      document.body.append(dialog);
+      dialog.querySelector('[data-close-achievement-details]').addEventListener('click',close);
+      dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
+      dialog.addEventListener('close',()=>{if(trigger?.isConnected)trigger.focus();trigger=null;});
+      dialog.addEventListener('keydown',event=>{
+        if(event.key==='Escape'){event.preventDefault();close();}
+        if(event.key==='Tab'){event.preventDefault();dialog.querySelector('button').focus();}
+      });
+    }
+    const list=dialog.querySelector('ol');list.replaceChildren();
+    for(const {id,tier} of choices){
+      const badge=describe(id,tier),item=document.createElement('li'),art=document.createElement('span'),copy=document.createElement('div');
+      art.innerHTML=emblemMarkup(id,tier);
+      const name=document.createElement('h3'),level=document.createElement('p'),requirement=document.createElement('small');
+      name.textContent=badge.name;level.textContent=`${badge.material} · Level ${tier} of 10`;
+      requirement.textContent='Reached: '+requirementsText(badge.requirements)+'.';
+      copy.append(name,level,requirement);item.append(art,copy);list.append(item);
+    }
+    trigger=button;
+    if(!dialog.open){if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.setAttribute('open','');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');}}
+    dialog.querySelector('button').focus();
+  }
+  document.addEventListener('click',event=>{
+    const button=event.target.closest?.('button[data-achievement-details]');if(!button)return;
+    const choices=button.dataset.achievementDetails.split(',').map(part=>{const [id,n]=part.split(':');return {id,tier:Number(n)};});
+    if(!publicChoices(choices).length)return;
+    event.preventDefault();event.stopPropagation();show(choices,button);
+  },true);
+  return Object.freeze({icons,publicChoices,describe,requirementsText,emblemMarkup,markup});
+})();
+
 /* ===== avatar-design.js ===== */
 
 /* Original BrainiLab character artwork. Local SVG, no remote avatar service. */
@@ -258,7 +422,8 @@ window.BrainiAvatarDesign=(function(){
     const frame=Object.hasOwn(frameXp,style.frame)&&renderXp>=frameXp[style.frame]?style.frame:'level';
     return {avatarDesign:style.design?.mode==='built'?available(style.design,renderXp):null,
       avatarRenderXp:renderXp,avatarFrame:frame,
-      profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none'};
+      profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none',
+      profileAchievements:window.BrainiAchievementDisplay?.publicChoices(style.achievements)||[]};
   }
   const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
   function star(cx,cy,r=13){
@@ -2794,6 +2959,10 @@ window.BrainiProgressUI=(function(){
     return label?`<span class="player-profile-title"><span class="profile-title-context">Profile title: </span>${label}</span>`:'';
   }
 
+  function profileAchievementsMarkup(person,options){
+    return window.BrainiAchievementDisplay?.markup(person?.profileAchievements,options)||'';
+  }
+
   // Failed custom photos retain the same portrait throughout the interface.
   document.addEventListener('error',event=>{
     const image=event.target;
@@ -2943,7 +3112,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();
@@ -5602,5 +5771,3 @@ window.BrainiAvatarAnnouncement=(()=>{
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   return {dismiss};
 })();
-/* related-video bundle */
-(()=>{var d=e=>String(e??"").replace(/[&<>"']/g,n=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[n]);function u(e){if(typeof e!="string")return null;let n=e.trim();if(/^[\w-]{11}$/.test(n))return n;try{let t=new URL(n);if(t.protocol!=="https:"||t.username||t.password||t.port)return null;let r=null;return t.hostname==="youtu.be"&&(r=t.pathname.slice(1)),["youtube.com","www.youtube.com","m.youtube.com"].includes(t.hostname)&&(r=t.pathname==="/watch"?t.searchParams.get("v"):t.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{11})\/?$/)?.[1]),typeof r=="string"&&/^[\w-]{11}$/.test(r)?r:null}catch{return null}}function o(e){let n=u(e?.id),t=typeof e?.title=="string"?e.title.trim().slice(0,180):"";return n&&t?{id:n,title:t,showAfterGame:e.showAfterGame===!0}:null}function i(e,n="article"){let t=o(e);if(!t)return"";let r=n==="post_game"?"post_game":"article";return`<a class="related-video" data-related-video="${r}" data-video-id="${t.id}" href="https://www.youtube.com/watch?v=${t.id}" target="_blank" rel="noopener"><span class="related-video-art"><img src="/api/youtube-thumbnail/${t.id}" width="320" height="180" loading="lazy" decoding="async" alt=""/><span class="related-video-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 5v14l11-7z"/></svg></span></span><span class="related-video-copy"><span class="related-video-label">${r==="post_game"?"Fancy a video quiz?":"Play along on YouTube"}</span><strong>${d(t.title)}</strong><span class="related-video-link">Watch on YouTube <span aria-hidden="true">\u2197</span><span class="sr-only"> (opens in a new tab)</span></span></span></a>`}var s=Object.freeze({brainmix:"/games/brain-mix/",worldflags:"/geography/world-flags-quiz/",worldcapitals:"/geography/world-capitals-quiz/",generalknowledge:"/general-knowledge/general-knowledge-quiz/",science:"/science/science-quiz/",history:"/history/history-quiz/",sports:"/sports/sports-quiz/",connections:"/games/connections/",mathrush:"/games/math-rush/",sequence:"/games/sequence/",brainiword:"/games/brainiword/",numberroute:"/games/number-route/",orderup:"/games/order-up/",topicrush:"/games/topic-rush/",oddoneout:"/games/odd-one-out/",higherlower:"/games/higher-lower/",survival:"/games/survival/"});var a=new Map,l=new WeakMap;function c(e){return a.has(e)||a.set(e,fetch("/api/related-video?game="+encodeURIComponent(e),{credentials:"omit",signal:AbortSignal.timeout(6e3)}).then(async n=>{if(!n.ok)throw Error("Video unavailable");return o((await n.json()).video)}).catch(()=>(a.delete(e),null))),a.get(e)}async function p(e,{gameId:n}={}){if(!e)return;let t={};if(l.set(e,t),e.hidden=!0,e.replaceChildren(),!Object.hasOwn(s,n))return;let r=await c(n);!r||!e.isConnected||l.get(e)!==t||(e.innerHTML=i(r,"post_game"),e.hidden=!1)}document.addEventListener("error",e=>{let n=e.target;n?.matches?.(".related-video-art img")&&(n.hidden=!0)},!0);window.BrainiRelatedVideo={mount:p};})();

@@ -1,7 +1,7 @@
 # Profile achievements
 
 The Badges tab recognises existing saved game milestones. It never awards or
-spends XP, changes a result, changes a streak, or writes to rankings. Nothing is
+spends XP, changes a result, changes a streak, or alters ranking scores. Nothing is
 featured automatically. A signed-in player can choose zero to three earned badges,
 preview the choice, save it, cancel it or remove all featured badges.
 
@@ -33,8 +33,46 @@ the existing `auth.updateUser({data: ...})` API. It contains IDs, never earned f
 XP or scoring fields. Every read is filtered against the fixed catalogue and the
 owner's authoritative earned set. Raw saves reject unknown, repeated, locked or
 more-than-three IDs. The preference is cosmetic, not an authorization claim or a
-certificate. It is displayed on My BrainiLab only; leaderboard/group/friend badge
-exposure is outside this change.
+certificate. The saved choices also appear with the existing player identities
+in rankings, groups and friends, subject to their unchanged visibility rules.
+
+Each existing badge has ten automatic material levels: Paper, Bronze, Silver,
+Gold, Platinum, Diamond, Titanium, Emerald, Obsidian and Prismatic. Successive
+primary-count gaps grow; badge levels do not use or spend XP. The current material,
+level number and next requirements are shown in Badges. Best-streak milestones
+are retained when the current streak ends. Existing selected string IDs remain
+valid and automatically draw at their current earned material.
+
+| Badge | Requirements from level 1 through 10 |
+| --- | --- |
+| First spark | Saved games: 1, 3, 7, 15, 30, 55, 95, 155, 245, 375 |
+| Double digits | Saved games: 10, 20, 40, 75, 135, 230, 375, 590, 900, 1,350 |
+| Fifty nifty | Saved games: 50, 100, 175, 300, 500, 800, 1,250, 1,900, 2,800, 4,000 |
+| Mix it up | Saved games: 0, 10, 25, 55, 110, 210, 385, 680, 1,150, 1,900 **and** personal-best game types: 3, 3, 4, 4, 5, 5, 6, 6, 7, 8 |
+| Daily dose | Daily completions: 1, 3, 7, 15, 30, 55, 95, 155, 245, 375 |
+| Daily regular | Daily completions: 7, 14, 28, 50, 85, 140, 225, 355, 550, 840 |
+| Three's a charm | Best streak days: 3, 5, 9, 16, 28, 47, 77, 122, 187, 277 |
+| Week streak | Best streak days: 7, 10, 16, 26, 42, 67, 105, 160, 240, 350 |
+
+Mix it up keeps its original three-personal-best requirement at Paper. Higher
+levels require both more saved games and gradually more variety; eight game types
+is reachable with the existing catalogue. Its personal-best caveat still applies.
+
+The private invoker-only `brainilab_private.player_avatar(uuid)` helper derives
+`avatar_style.achievements` as at most three `{id,tier}` objects. It reads only
+the selected string IDs from metadata, then calculates eligibility and level from
+canonical progression and personal-best rows. Raw claimed tier objects, oversized
+arrays and anonymous badge claims do not produce badges. Other existing appearance
+fields remain valid. Badge outputs contain no owner ID, exact activity counters,
+total XP, auth metadata or history. The existing public ranking opt-in and friendship /
+group membership checks, score calculations and ordering functions are unchanged.
+
+The shared display is one small strip beside each existing identity, without a new
+table column. A read-only details dialog names the materials and minimum reached
+milestones. Friend-picker labels use static accessible icons so their checkbox
+stays the only interactive control. Legacy rows without badge payloads stay empty.
+The shared catalogue loads before avatar parsing; it does not load the owner store
+or consult a signed-in player's cache to draw another person.
 
 The store checks account identity before and after reads and writes, bounds calls
 at twelve seconds, preserves a same-owner confirmed selection on failed refresh,

@@ -214,4 +214,16 @@ function fixture({guest=false,meta={},summary=canonical(),fastTimeout=false,clie
  }finally{f.close();}
 }
 
-console.log('PASS achievements: owner-canonical eight milestones, strict max3, read sanitization, one-key confirmed saves, unchanged XP/scores, same-field conflict detection, failed-load recovery, stale-account reads/writes, unavailable evidence, one-shot late canonical readiness, explicit metadata retries and bounded timeout.');
+{
+ const f=fixture({meta:{[key]:['first_game','daily_first','streak_three'],achievement_tiers:{first_game:10}}});try{
+  await f.S.load();assert.equal(f.C.state('first_game',f.S.snapshot().evidence).level,3,'forged tier metadata cannot upgrade canonical progress');
+  const upgraded=canonical();Object.assign(upgraded.progression,{total_games:400,full_daily_count:400,best_streak:400});f.setSummary(upgraded);f.progress();
+  assert.deepEqual(plain(f.S.snapshot().selected),['first_game','daily_first','streak_three'],'selected legacy IDs automatically keep their places when tiers evolve');
+  for(const id of f.S.snapshot().selected)assert.equal(f.C.state(id,f.S.snapshot().evidence).level,10);
+  assert.equal(f.calls.writes.length,0,'tier evolution never writes the selection or any player field');assert.equal(f.calls.playerReads,0);
+  assert.deepEqual(f.untouched,{xp:3015,score:1237,level:13,rankings:{total:4321}});
+  assert.equal(await f.S.save([{id:'first_game',tier:10}]),false,'preferences cannot manufacture tier claims');assert.equal(f.calls.writes.length,0);
+ }finally{f.close();}
+}
+
+console.log('PASS achievements: owner-canonical eight milestones, strict max3, read sanitization, one-key confirmed saves, unchanged XP/scores, same-field conflict detection, failed-load recovery, stale-account reads/writes, unavailable evidence, one-shot late canonical readiness, explicit metadata retries, automatic canonical tier evolution and bounded timeout.');

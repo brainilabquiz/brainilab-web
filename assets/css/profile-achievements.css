@@ -10,6 +10,8 @@
 .achievement-slot-art>img{display:block;width:1.5rem;height:1.5rem;object-fit:contain}
 .achievement-slot.is-empty .achievement-slot-art{border-style:dashed;background:var(--page)}
 .achievement-slot-name{color:var(--navy);font-size:.625rem;font-weight:700;line-height:1.4;overflow-wrap:anywhere;max-width:100%}
+.achievement-slot-tier{font-size:.625rem;color:var(--muted);line-height:1.4}
+.achievement-slot-art:has(.achievement-emblem){border:0;border-radius:0;background:transparent;overflow:visible}
 .profile-achievements-panel{min-width:0;color:var(--navy)}
 .achievement-heading h3{font-size:1.25rem;line-height:1.3;margin:0 0 .5rem}
 .achievement-heading p{font-size:.8125rem;line-height:1.65;color:var(--muted);margin:0 0 1rem}
@@ -22,12 +24,24 @@
 .achievement-choice{position:relative;display:flex;align-items:flex-start;gap:.625rem;min-width:0;min-height:2.75rem;padding:.875rem .75rem;border:1px solid var(--line);border-radius:.75rem;background:var(--card);color:var(--navy);font:inherit;text-align:left;line-height:1.5;overflow-wrap:anywhere}
 .achievement-choice-art{display:grid;place-items:center;flex-shrink:0;width:2rem;height:2rem;border-radius:50%;background:var(--soft-yellow)}
 .achievement-choice-art>img{display:block;object-fit:contain;width:1.25rem;height:1.25rem}
+.achievement-choice-art:has(.achievement-emblem){width:2.75rem;height:2.75rem;background:transparent;border-radius:0}
+.achievement-material{display:block;color:var(--navy);font-size:.6875rem;font-weight:700;line-height:1.5;margin:0 0 .375rem}
 .achievement-choice-copy{display:block;min-width:0;flex:1}
 .achievement-choice-copy>strong{display:block;font-size:.8125rem;line-height:1.4;margin:0 0 .375rem;padding-right:.5rem}
 .achievement-description{display:block;font-size:.75rem;color:var(--muted);line-height:1.6}
 .achievement-choice-details{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.25rem .5rem;margin:.625rem 0 0;font-size:.625rem;line-height:1.5}
 .achievement-progress{color:var(--muted);font-variant-numeric:tabular-nums}
 .achievement-choice-state{font-weight:700;color:var(--navy)}
+.achievement-tier-progress{display:block;width:100%;height:.3rem;margin:.75rem 0 0;border:0;border-radius:1rem;overflow:hidden;background:var(--line);color:var(--green);accent-color:var(--green)}
+.achievement-tier-progress::-webkit-progress-bar{background:var(--line)}
+.achievement-tier-progress::-webkit-progress-value{background:var(--green);border-radius:1rem}
+.achievement-tier-progress::-moz-progress-bar{background:var(--green);border-radius:1rem}
+.achievement-level-guide{border-bottom:1px solid var(--line);margin:0 0 1rem;padding:0 0 .75rem}
+.achievement-level-guide summary{cursor:pointer;font-weight:700;font-size:.75rem;min-height:2.75rem;line-height:2.75rem;color:var(--navy)}
+.achievement-level-guide summary:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.achievement-level-guide ol{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem .5rem;margin:.75rem 0 1rem;padding:0}
+.achievement-level-guide li{display:flex;align-items:center;flex-direction:column;gap:.5rem;text-align:center;font-size:.625rem;line-height:1.5;color:var(--navy)}
+.achievement-level-guide p{font-size:.75rem;line-height:1.7;color:var(--muted);margin:0}
 .achievement-choice[aria-pressed=true]{border-color:var(--navy);outline:1px solid var(--navy);outline-offset:-2px;background:var(--soft-navy)}
 .achievement-choice[aria-pressed=true]::after{position:absolute;right:.5rem;top:.375rem;content:'✓';font-size:.75rem;font-weight:800;color:var(--navy)}
 .achievement-choice:disabled{cursor:default;opacity:1}
@@ -47,3 +61,4 @@
 @media(max-width:700px){[data-profile-rewards][data-studio-pane=badges] .avatar-studio-tabs{top:3.5rem}}
 @media(max-width:420px){.profile-page .avatar-studio-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.profile-page .avatar-studio-tabs>button{width:100%}}
 @media(max-width:380px){.achievement-collection{grid-template-columns:1fr}.achievement-choice{flex-direction:row;padding:.875rem}.achievement-choice-art{width:2.25rem;height:2.25rem}.achievement-choice-copy{width:auto}}
+@media(max-width:420px){.achievement-level-guide ol{grid-template-columns:repeat(3,minmax(0,1fr))}.achievement-choice-art:has(.achievement-emblem){width:2.5rem;height:2.5rem}.achievement-choice-art .achievement-emblem{width:2.5rem;height:2.5rem}}

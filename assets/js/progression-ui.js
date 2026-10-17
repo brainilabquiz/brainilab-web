@@ -109,6 +109,10 @@ window.BrainiProgressUI=(function(){
     return label?`<span class="player-profile-title"><span class="profile-title-context">Profile title: </span>${label}</span>`:'';
   }
 
+  function profileAchievementsMarkup(person,options){
+    return window.BrainiAchievementDisplay?.markup(person?.profileAchievements,options)||'';
+  }
+
   // Failed custom photos retain the same portrait throughout the interface.
   document.addEventListener('error',event=>{
     const image=event.target;
@@ -227,6 +231,6 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();
