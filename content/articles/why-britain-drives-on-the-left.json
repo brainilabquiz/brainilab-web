@@ -1,0 +1,73 @@
+{
+  "slug": "why-britain-drives-on-the-left",
+  "title": "Why does Britain drive on the left?",
+  "description": "Britain's keep-left custom is older than the motor car. Follow it into an 1835 law, and discover why the familiar sword-arm explanation needs care.",
+  "topic": "History",
+  "status": "published",
+  "order": 154,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-britain-drives-on-the-left.webp",
+    "small": "/assets/images/learn/why-britain-drives-on-the-left-small.webp",
+    "thumbnail": "/assets/images/learn/why-britain-drives-on-the-left-thumb.webp",
+    "alt": "A green car driving away on the left side of a British road and a cream car approaching on the right",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; a modern road scene, not a historical reconstruction.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/history/",
+    "name": "History"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Try the History Quiz for more stories behind familiar things.",
+  "related": [
+    "why-britain-skipped-eleven-days-in-1752",
+    "why-is-the-mona-lisa-famous"
+  ],
+  "sources": [
+    {
+      "url": "https://www.parliament.uk/about/living-heritage/transformingsociety/transportcomms/roadsrail/overview/parliamentaryroad/",
+      "name": "UK Parliament — Parliamentary roads and the 1835 keep-left rule"
+    },
+    {
+      "url": "https://www.legislation.gov.uk/ukpga/1835/50/pdfs/ukpga_18350050_en.pdf",
+      "name": "Highway Act 1835 — Original Act, section 78, printed page 400 (PDF)"
+    },
+    {
+      "url": "https://nationalmotormuseum.org.uk/help-centre/motoring-firsts/",
+      "name": "National Motor Museum — The older keep-left custom and its possible origins"
+    },
+    {
+      "url": "https://www.gov.uk/guidance/the-highway-code/using-the-road-159-to-203",
+      "name": "GOV.UK — The Highway Code, rule 160"
+    }
+  ],
+  "sections": [
+    {
+      "id": "an-old-custom-became-a-rule",
+      "title": "The custom came before the car",
+      "html": "<p><strong>Britain drives on the left because an older road custom became an established rule.</strong> Its earliest origins are less certain than the modern habit might suggest.</p><p><a href=\"https://www.parliament.uk/about/living-heritage/transformingsociety/transportcomms/roadsrail/overview/parliamentaryroad/\">Parliament's history explains that an 1835 Act formalised the practice</a>. Motorists inherited a convention already familiar to people travelling with horses and carts.</p>"
+    },
+    {
+      "id": "what-the-1835-act-said",
+      "title": "The law talks about waggons and mules",
+      "html": "<p><a href=\"https://www.legislation.gov.uk/ukpga/1835/50/pdfs/ukpga_18350050_en.pdf\">Section 78 of the original Highway Act 1835</a> required drivers meeting other traffic to keep their waggons, carts, carriages or animals on the left or near side.</p><p>This Act concerned highways in England. Its list of horses, mules and other working animals is a lovely reminder of the traffic the lawmakers had in mind.</p>"
+    },
+    {
+      "id": "the-sword-arm-explanation",
+      "title": "What about travellers with swords?",
+      "html": "<p>A familiar explanation pictures travellers passing with their sword arm towards an approaching stranger. The <a href=\"https://nationalmotormuseum.org.uk/help-centre/motoring-firsts/\">National Motor Museum presents the early origins as possible</a>, rather than a firmly established starting point.</p><p>It also describes coach drivers choosing the firmest part of a road before enforcement. The past was messier than a neat pair of painted lanes.</p>"
+    },
+    {
+      "id": "a-custom-still-on-the-road",
+      "title": "An old convention in today's code",
+      "html": "<p>Keeping left remains the general instruction in <a href=\"https://www.gov.uk/guidance/the-highway-code/using-the-road-159-to-203\">rule 160 of the Highway Code</a>, which also sets out exceptions.</p><p>The clearest part of the story is the continuity from an older custom into written rules. For another everyday convention with a surprising British history, discover <a href=\"/learn/why-britain-skipped-eleven-days-in-1752/\">why eleven calendar dates disappeared in 1752</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T09:14:51Z",
+  "updatedAt": "2026-10-17T09:14:51Z",
+  "minutes": 2
+}

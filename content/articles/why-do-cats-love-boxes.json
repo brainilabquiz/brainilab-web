@@ -1,0 +1,65 @@
+{
+  "slug": "why-do-cats-love-boxes",
+  "title": "Why do cats love boxes?",
+  "description": "A cardboard box can offer a cat somewhere to hide. Discover what two shelter studies found, and why the results do not explain every cat's favourite spot.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 155,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-cats-love-boxes.webp",
+    "small": "/assets/images/learn/why-do-cats-love-boxes-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-cats-love-boxes-thumb.webp",
+    "alt": "A relaxed ginger cat sitting inside an open cardboard box, with one paw resting on the rim",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a photograph of a study participant.",
+    "position": 5
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Try a General Knowledge quiz for more small surprises.",
+  "related": [
+    "why-does-popcorn-pop",
+    "curiosity-daily-2026-10-09"
+  ],
+  "sources": [
+    {
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223492",
+      "name": "Van der Leij and colleagues (2019) — Hiding boxes and Dutch shelter cats: original randomised trial"
+    },
+    {
+      "url": "https://research-portal.uu.nl/en/publications/will-a-hiding-box-provide-stress-reduction-for-shelter-cats/",
+      "name": "Vinke and colleagues (2014) — Original study abstract, Utrecht University"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-place-to-hide",
+      "title": "The packaging has a useful feature",
+      "html": "<p><strong>One reason boxes can appeal to cats is that they provide somewhere to hide.</strong> Research with newly arrived shelter cats supports the value of that concealed space, although it cannot explain every cat's favourite sleeping spot.</p><p>Imagine buying an impressive cat bed, only to find the cardboard packaging occupied. To you, it is rubbish. To the cat, it may be a retreat.</p>"
+    },
+    {
+      "id": "what-the-shelter-trial-found",
+      "title": "A box joined the experiment",
+      "html": "<p>A <a href=\"https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223492\">2019 Dutch shelter trial</a> reported results for 23 cats: 12 had a hiding box and 11 did not. The groups were assigned at random.</p><p>Over 12 days, researchers assessed stress using posture and behaviour. Scores fell in both groups, but they dropped faster among the cats with boxes.</p>"
+    },
+    {
+      "id": "an-earlier-study",
+      "title": "An earlier study pointed the same way",
+      "html": "<p>The <a href=\"https://research-portal.uu.nl/en/publications/will-a-hiding-box-provide-stress-reduction-for-shelter-cats/\">abstract of a 2014 study</a> describes 19 newly arrived shelter cats, randomly divided between groups with and without hiding boxes.</p><p>The box group reached lower behavioural stress scores sooner. By day 14, the groups' average scores were similar. The interesting difference was how quickly they settled.</p>"
+    },
+    {
+      "id": "what-a-box-does-not-prove",
+      "title": "A useful clue, with limits",
+      "html": "<p>These were small shelter studies, not a vote by every cat in every home. The 2019 trial did not find a significant difference in weight loss between its groups.</p><p>The evidence gives us one sensible explanation: a hiding place can help in an unfamiliar setting. For another ordinary object with a surprising story, discover <a href=\"/learn/why-does-popcorn-pop/\">what happens inside a popcorn kernel</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T09:14:51Z",
+  "updatedAt": "2026-10-17T09:14:51Z",
+  "minutes": 2
+}
