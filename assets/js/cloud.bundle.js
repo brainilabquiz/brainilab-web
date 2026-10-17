@@ -1963,8 +1963,9 @@ window.BrainiAuth = (function(){
   }
 
   async function hydrateHeader(){
-    const auth=await BrainiData.api.getAuthState();
-    const p=await BrainiData.api.getPlayer();
+    // Match the account menu's current cosmetics. A queued snapshot can retain
+    // an older photo or owner after the current player has already changed.
+    const p=BrainiData.player();
 
     document.querySelectorAll(".nav-right").forEach(nav=>{
       const oldCta=nav.querySelector("[data-auth-cta]");
