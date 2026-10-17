@@ -1,0 +1,355 @@
+{
+  "researchDate": "2026-10-17",
+  "timeZone": "Europe/Madrid",
+  "demand": {
+    "source": "Native Google Trends Explore chart table and related queries, checked by root and saved as task evidence",
+    "checked": "2026-10-17",
+    "filters": "United States; Past 12 months; All categories; Web Search; English interface",
+    "terms": [
+      "reading aloud benefits",
+      "basketball hoop height"
+    ],
+    "relativeAverages": {
+      "reading aloud benefits": 1,
+      "basketball hoop height": 47
+    },
+    "monthlySearchVolume": null,
+    "difficulty": null,
+    "cpc": null,
+    "rank": null,
+    "traffic": null,
+    "limits": [
+      "Relative indices only, not monthly searches, market share, rankings or traffic. The comparison scale suppresses a much smaller series; rounded zeros do not prove that nobody searched.",
+      "Learning related queries include benefits of reading aloud to children. This article instead addresses speaking during self-study and adult memory evidence; it makes no child reading or comprehension claim.",
+      "Basketball related queries include shopping, portable and adjustable hoops. Commercial and installation intents are excluded.",
+      "The reading-aloud series is sparse in this comparison, with most weeks rounded to zero. The child-focused related query is not targeted by adult memory evidence.",
+      "The basketball-height series has event peaks and mixed informational and shopping intent; its larger relative score does not establish traffic for the history article.",
+      "Root completed the native chart and related-query review; no further query is pending. Its fresh free Search Console check returned not_connected. Paid research was already unavailable; no paid tools were retried and no metrics were invented."
+    ],
+    "parentEvidencePending": false,
+    "evidenceFiles": [
+      "research/trends-focused.txt",
+      "research/trends-focused.png"
+    ],
+    "exploreUrl": "https://trends.google.com/trends/explore?geo=US&q=reading%20aloud%20benefits,basketball%20hoop%20height&hl=en",
+    "weeklyLabels": "12 October 2025 through 11 October 2026; the final week may be partial",
+    "relatedQueries": [
+      {
+        "parent": "reading aloud benefits",
+        "term": "benefits of reading aloud",
+        "type": "Top",
+        "relativeScore": 100
+      },
+      {
+        "parent": "reading aloud benefits",
+        "term": "benefits of reading aloud to children",
+        "type": "Top",
+        "relativeScore": 20,
+        "scope": "Excluded from this adult self-study article"
+      },
+      {
+        "parent": "basketball hoop height",
+        "term": "women's basketball hoop height",
+        "type": "Rising",
+        "change": "+650%",
+        "scope": "Observed related question; no separate gender-specific claim added"
+      },
+      {
+        "parent": "basketball hoop height",
+        "term": "official basketball hoop height",
+        "type": "Rising",
+        "change": "+130%",
+        "scope": "The article identifies the current FIBA top-edge measurement"
+      }
+    ],
+    "firstPartySearchConsole": {
+      "checked": "2026-10-17",
+      "status": "not_connected",
+      "queryDataAvailable": false
+    },
+    "evidenceSHA256": {
+      "research/trends-focused.txt": "f78699a3ce860f620452572dba752a0a6c0a83e9f17ebe85ec471fac2d55f255",
+      "research/trends-focused.png": "07e98a8b26bd33e06a4f2c6cb407e510b3c2255071672434fd1c3298d6ded161"
+    }
+  },
+  "intent": [
+    {
+      "slug": "does-reading-aloud-help-memory",
+      "primaryQuestion": "Does reading aloud help you remember?",
+      "naturalTerms": [
+        "reading aloud",
+        "memory",
+        "production effect"
+      ],
+      "distinctIntent": "Speaking selected material while studying, and the limits of laboratory memory findings. Separate from retrieval, self-explanation, familiarity, chunking, interleaving and planning with a timer."
+    },
+    {
+      "slug": "why-basketball-hoops-10-feet-high",
+      "primaryQuestion": "Why are basketball hoops 10 feet high?",
+      "naturalTerms": [
+        "basketball hoop height",
+        "10 feet",
+        "peach baskets"
+      ],
+      "distinctIntent": "Explain the historical origin of a sporting measurement and what FIBA currently measures. No basketball article exists in the baseline."
+    }
+  ],
+  "novelty": {
+    "scope": "All 109 complete article documents and eight complete course documents reviewed and scanned.",
+    "conclusions": {
+      "learning": "No full article explains reading aloud, the production effect, own-voice recognition or the distinct memory/comprehension result. All seven Learning articles have different central questions.",
+      "sports": "No article body or path explains basketball, Naismith, peach baskets or hoop height. Adds a sport beyond tennis, golf, marathon, football and Olympic symbols.",
+      "categoryFit": "One regular Learning article and one regular Sports article. No new lesson, path, quiz, widget, account requirement or maths expansion.",
+      "excludedFallback": "Drawing-to-remember candidate withdrawn after root supplied same-day recent sparse-demand and overlap evidence. Rugby-shape fallback not researched after selected candidates cleared."
+    },
+    "categoryCountsBefore": {
+      "Numbers & logic": 34,
+      "Words & puzzles": 10,
+      "Learning": 7,
+      "Getting started": 3,
+      "History": 8,
+      "Science & nature": 16,
+      "Curiosity": 8,
+      "Everyday inventions": 8,
+      "Geography": 8,
+      "Sports": 7
+    },
+    "regularVsAcademyBefore": {
+      "Numbers & logic": {
+        "regular": 4,
+        "academy": 30
+      },
+      "Words & puzzles": {
+        "regular": 2,
+        "academy": 8
+      },
+      "Learning": {
+        "regular": 7,
+        "academy": 0
+      },
+      "Getting started": {
+        "regular": 3,
+        "academy": 0
+      },
+      "History": {
+        "regular": 4,
+        "academy": 4
+      },
+      "Science & nature": {
+        "regular": 7,
+        "academy": 9
+      },
+      "Curiosity": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Everyday inventions": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Geography": {
+        "regular": 7,
+        "academy": 1
+      },
+      "Sports": {
+        "regular": 7,
+        "academy": 0
+      }
+    },
+    "LearningAfter": 8,
+    "SportsAfter": 8,
+    "newAcademyContent": false
+  },
+  "checkedSources": [
+    {
+      "id": "production-effect-2010",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20438265/",
+      "type": "Original paper abstract; the full paper was not read",
+      "access": "Web tool opened the complete abstract successfully. Direct download returned a cookie challenge, retained and marked as failed content access.",
+      "checkedDetails": [
+        "Eight recognition experiments compared producing words aloud with reading silently.",
+        "In the first three experiments, benefits appeared in mixed lists with some words spoken and others read silently.",
+        "The abstract proposes that producing words adds distinctive information useful for distinguishing studied items."
+      ],
+      "readScope": "Complete original abstract only. No claim to have read the full paper.",
+      "archive": "macleod-2010-web-abstract.txt contains the original abstract from the successful web open. production-effect-2010-abstract.html is the direct-download challenge response, not the paper."
+    },
+    {
+      "id": "forrin-macleod-2018",
+      "url": "https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/files/forrinmacleodmem18.pdf",
+      "type": "Original peer-reviewed research PDF hosted by the authors’ university",
+      "access": "Web PDF and locally saved PDF text checked",
+      "checkedDetails": [
+        "Published in Memory in 2018; first appeared online in 2017.",
+        "Ninety-five students began the recording session; 75 returned to complete the study and test session.",
+        "Twenty words were assigned to each of four conditions: silent reading, hearing another person, hearing oneself recorded and reading aloud.",
+        "The recognition test followed immediately after study; 80 studied words and 80 unstudied words appeared.",
+        "Aloud words had the highest mean hit rate. Hearing oneself recorded significantly exceeded hearing another person.",
+        "Reading aloud versus hearing oneself recorded yielded p = .08, so the article does not claim an established advantage for that pair."
+      ],
+      "readScope": "Abstract, methods, results, discussion and limitations, printed pages 574–577",
+      "archives": [
+        "forrin-macleod-2018.pdf",
+        "forrin-macleod-2018.txt"
+      ],
+      "uncertainty": "The first recording session may have reduced later differences. This experiment measured immediate word recognition rather than general understanding or lifelong memory."
+    },
+    {
+      "id": "roberts-2024",
+      "url": "https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/documents/mc-2024.pdf",
+      "type": "Original peer-reviewed research PDF hosted by the authors’ university",
+      "access": "Web PDF opened; PDF and text saved locally",
+      "checkedDetails": [
+        "Memory & Cognition, 2024, volume 52, pages 57–72; first published online on 13 July 2023.",
+        "Four experiments used written passages, with participants reading some passages aloud and others silently.",
+        "The study found a consistent advantage for questions focused on memory for the text.",
+        "It did not find a consistent advantage for questions requiring broader comprehension.",
+        "The first experiment contained weak positive comprehension evidence; later experiments did not confirm it. The article therefore says no consistent benefit, rather than no possible benefit."
+      ],
+      "readScope": "Abstract, scope, first-experiment methods and results, fourth-experiment results and general discussion, especially printed pages 68–69",
+      "archives": [
+        "roberts-and-colleagues-2024.pdf",
+        "roberts-and-colleagues-2024.txt"
+      ],
+      "uncertainty": "A distinction in these tasks does not establish an effect for every reader, subject or classroom. No child read-aloud or clinical claim is made."
+    },
+    {
+      "id": "springfield-history",
+      "url": "https://springfield.edu/about/birthplace-of-basketball",
+      "type": "Official institutional history from the college where basketball was invented",
+      "access": "Web page and saved HTML/text read",
+      "checkedDetails": [
+        "James Naismith devised basketball in 1891.",
+        "He wanted two boxes, but the janitor supplied two peach baskets.",
+        "He attached them to the lower rail of the gym balcony; the rail happened to be ten feet above the floor.",
+        "A man at each end of the balcony retrieved the ball from the basket and returned it to play."
+      ],
+      "readScope": "Full basketball-origin and Naismith history sections, plus the original-rules overview",
+      "archives": [
+        "springfield-basketball-history.html",
+        "springfield-basketball-history.txt"
+      ],
+      "uncertainty": "An attributed institutional historical account. The original artwork will be labelled an imaginative illustration, not an archival photograph or an exact court reconstruction."
+    },
+    {
+      "id": "fiba-2026-equipment",
+      "url": "https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf",
+      "type": "Current official governing-body equipment rules",
+      "access": "PDF opened with the web tool, downloaded and extracted with pypdf",
+      "checkedDetails": [
+        "Cover says valid from 1 October 2026.",
+        "Section 1.2.4, printed page 9, measures the top edge of the ring at 3,050 mm above the floor, with a maximum tolerance of ±6 mm.",
+        "Section 1.2.1 specifies solid steel rings; section 1.3 treats the net separately.",
+        "3,050 mm equals 3.05 metres. Ten feet equals 3.048 metres, so approximately ten feet is deliberate."
+      ],
+      "readScope": "Cover, introduction and sections 1.1–1.4, including the exact height clause",
+      "archives": [
+        "fiba-2026-equipment.pdf",
+        "fiba-2026-equipment.txt"
+      ],
+      "discovery": "The current official rule index leads to the official resource hub, which links the 2026 equipment v1.0 PDF directly.",
+      "uncertainty": "This is a FIBA specification. No claim covers every youth, recreational or alternative basketball format."
+    }
+  ],
+  "excludedOrLimitedSourceChecks": [
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20438265/",
+      "outcome": "Web abstract open succeeded. Direct HTTP response was a 203 cookie challenge, marked not OK in the download manifest."
+    },
+    {
+      "url": "https://about.fiba.basketball/en/our-sport/official-basketball-rules",
+      "outcome": "Web open returned an internal error. A later direct download succeeded; the index and its official resource-hub link were read."
+    },
+    {
+      "url": "https://library.fibairef.basketball/cdn/OBR2026_Equipment",
+      "outcome": "A guessed new CDN path failed to open. It is not cited."
+    },
+    {
+      "url": "https://refereeing.fiba.basketball/en/rule-zone",
+      "outcome": "Web open failed; its search index still showed 2024. The current corporate resource hub was used instead."
+    },
+    {
+      "url": "https://ak-static.cms.nba.com/wp-content/uploads/sites/25/2025/10/Official-2025-26-NBA-Playing-Rules.pdf",
+      "outcome": "Web open failed. It is not cited, and no claim is made to have read the NBA rulebook."
+    },
+    {
+      "url": "https://library.fibairef.basketball/cdn/OBR2024_Equipment",
+      "outcome": "Opened and saved as an explicitly historical 2024 document. The current 2026 edition is used in the article."
+    },
+    {
+      "type": "PDF extraction",
+      "outcome": "The first attempt lacked fitz. The PDFs had downloaded; extraction then succeeded with the installed pypdf library. The final download manifest records the successful extraction."
+    }
+  ],
+  "reading": {
+    "bodyWords": [
+      204,
+      219
+    ],
+    "sectionsEach": 4,
+    "BritishEnglish": true,
+    "noNewQuizWidgetCourseOrAccountWall": true,
+    "limitations": "Memory and comprehension are distinguished; FIBA 2026 scope and approximate feet conversion are explicit."
+  },
+  "artwork": {
+    "mode": "Built-in ImageGen; original illustrative covers",
+    "variants": [
+      {
+        "path": "assets/images/learn/does-reading-aloud-help-memory.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 36702,
+        "sha256": "b804df2d349c6241db29817b662d4399bf8495ac1ad34971ca031218411a021d"
+      },
+      {
+        "path": "assets/images/learn/does-reading-aloud-help-memory-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 12108,
+        "sha256": "3daef47a371ed72368d08183133cd668291babf7674fda253cb771ac6e80d688"
+      },
+      {
+        "path": "assets/images/learn/does-reading-aloud-help-memory-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 4366,
+        "sha256": "e54401c03a6e3f67187cb3739d1361e8f9f0f940a2f574d54847fad1557bba37"
+      },
+      {
+        "path": "assets/images/learn/why-basketball-hoops-10-feet-high.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 58092,
+        "sha256": "77da0b84b7a12f959acf615165b2060a01a2347ed5808442f8c338aba2d7429a"
+      },
+      {
+        "path": "assets/images/learn/why-basketball-hoops-10-feet-high-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 16778,
+        "sha256": "d66be9ca178cfacd94625088b34e3c6d2fa39b1b92a2b219d9a45231c41d1ab3"
+      },
+      {
+        "path": "assets/images/learn/why-basketball-hoops-10-feet-high-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 5060,
+        "sha256": "5da06433079777ff88aba6ade8c3933a5ea1aeea88818b1dd83e92ab6f5d8f5e"
+      }
+    ],
+    "totalBytes": 133106,
+    "review": "Originals, thumbnails and wide crops inspected. MOON lettering checked; historical basket scene is imaginative, not archival. Cover focus positions were checked in native desktop and mobile views."
+  },
+  "validation": {
+    "preparedAt": "2026-10-17T08:36:20.259476+00:00",
+    "metadataSchemaDiscoveryPassed": true,
+    "nativeWidths": [
+      320,
+      1280
+    ],
+    "oldArticlesPreserved": 109,
+    "oldCoursesPreserved": 8,
+    "transactionTestGroups": 8,
+    "status": "Prepared; cover deployment and guarded publication follow."
+  }
+}
