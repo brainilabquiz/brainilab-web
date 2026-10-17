@@ -100,3 +100,31 @@ for(const [pagePath,target] of [['/learn/','/games/math-rush/'],['/learn/moon/',
  assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click').length,0);w.close();
 }
 console.log('PASS article game measurement: current layout, child clicks, explicit consent, withdrawal, path-only data and unrelated link exclusion.');
+
+// Joining is an explicit action, not a page view or a confirmed new account.
+for(const [pagePath,placement] of [['/learn/','learn_library'],['/learn/why-2100-is-not-a-leap-year/','academy_result']]){
+ const w=page('https://brainilabgames.com'+pagePath+'?private=do-not-send');
+ const act=()=>{w.BrainiSiteAnalytics.learningAccountPrompt('click',placement);w.BrainiSiteAnalytics.learningAccountPrompt('open',placement);};
+ act();assert.equal(w.dataLayer,undefined);w.BrainiSiteAnalytics.setConsent(false);act();assert.equal(w.dataLayer,undefined);
+ w.BrainiSiteAnalytics.setConsent(true);act();
+ const events=w.dataLayer.filter(x=>x[0]==='event'&&x[1].startsWith('account_prompt_'));
+ assert.deepEqual(Array.from(events,x=>x[1]),['account_prompt_click','account_prompt_open']);
+ assert.ok(events.every(x=>x[2].placement===placement));
+ assert.equal(events[0][2].article_slug,placement==='academy_result'?'why-2100-is-not-a-leap-year':undefined);
+ assert.ok(!JSON.stringify(events).includes('do-not-send'));
+ assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&/registration|sign_up/.test(x[1])).length,0);
+ const count=w.dataLayer.length;w.BrainiSiteAnalytics.learningAccountPrompt('private@example.com',placement);w.BrainiSiteAnalytics.learningAccountPrompt('open','private@example.com');assert.equal(w.dataLayer.length,count);
+ w.BrainiSiteAnalytics.setConsent(false);act();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1].startsWith('account_prompt_')).length,0);w.close();
+}
+for(const [pagePath,placement] of [['/learn/','academy_result'],['/games/number-route/','learn_library'],['/learn/paths/calendars-explained/','academy_result']]){
+ const w=page('https://brainilabgames.com'+pagePath,{allowed:true,at:Date.now()});w.BrainiSiteAnalytics.learningAccountPrompt('open',placement);assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='account_prompt_open').length,0);w.close();
+}
+{
+ const w=page('https://brainilabgames.com/learn/why-2100-is-not-a-leap-year/');
+ w.document.body.innerHTML='<article class="article-body"><a href="/learn/paths/calendars-explained/?private=do-not-send"><span>Continue learning</span></a></article>';
+ w.document.addEventListener('click',e=>e.preventDefault());const click=()=>w.document.querySelector('span').dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+ click();assert.equal(w.dataLayer,undefined);w.BrainiSiteAnalytics.setConsent(true);click();
+ const events=w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_course_click');assert.equal(events.length,1);assert.equal(events[0][2].course_path,'/learn/paths/calendars-explained/');assert.equal(events[0][2].article_slug,'why-2100-is-not-a-leap-year');assert.ok(!JSON.stringify(events).includes('do-not-send'));
+ w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_course_click').length,0);w.close();
+}
+console.log('PASS learning discovery: consent, withdrawal, explicit sign-up actions, failed opens, approved placements and path-only course links.');
