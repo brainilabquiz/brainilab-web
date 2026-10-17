@@ -3305,7 +3305,10 @@ window.BrainiPerf=(function(){
     supabasePromise=loadScript(
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
       {crossorigin:"anonymous"}
-    );
+    ).catch(err=>{
+      supabasePromise=null;
+      throw err;
+    });
 
     return supabasePromise;
   }
@@ -3319,15 +3322,13 @@ window.BrainiPerf=(function(){
       await loadFeature('cloud.bundle.js');
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
-    })();
-
-    try{
-      return await cloudPromise;
-    }catch(err){
+    })().catch(err=>{
       cloudPromise=null;
       console.warn("BrainiLab cloud bootstrap:",err.message||err);
       return false;
-    }
+    });
+
+    return cloudPromise;
   }
 
   function idleCloud(){
