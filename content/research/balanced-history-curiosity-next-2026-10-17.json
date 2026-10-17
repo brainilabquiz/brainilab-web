@@ -1,0 +1,372 @@
+{
+  "researchDate": "2026-10-17",
+  "timeZone": "Europe/Madrid",
+  "demand": {
+    "checkedDate": "2026-10-17",
+    "market": "United States",
+    "language": "English query terms and English interface",
+    "source": "Native Google Trends chart tables and related-query lists checked by root; saved evidence read",
+    "range": "Past 12 months",
+    "chartDates": [
+      "2025-10-12",
+      "2026-10-11"
+    ],
+    "category": "All categories",
+    "searchType": "Web Search",
+    "comparisonTerms": [
+      "why does britain drive on the left",
+      "why do cats love boxes"
+    ],
+    "relativeAverages": {
+      "why does britain drive on the left": 2,
+      "why do cats love boxes": 3
+    },
+    "observations": [
+      "Both exact-question series are sparse and mostly rounded to zero.",
+      "Britain term has one non-zero displayed weekly point: 25 January 2026, index 100.",
+      "Cats term has non-zero weekly points at 11 January 2026 (96), 27 September (6), 4 October (28) and 11 October (27); other displayed weeks round to zero.",
+      "Britain related queries have insufficient data. Cats Top related query is why do cats love cardboard boxes, relative index 100."
+    ],
+    "relatedQueries": {
+      "britain": "Insufficient data",
+      "catsTop": [
+        {
+          "query": "why do cats love cardboard boxes",
+          "relativeIndex": 100
+        }
+      ]
+    },
+    "interpretation": "Both terms directly express the educational curiosity questions. Their sparse US series support focused intent wording but do not establish high search volume, stable demand, worldwide interest or expected traffic. The relative average 3 versus 2 is not a reliable basis for predicting page performance.",
+    "limitations": [
+      "Sampled, normalised relative indices in one comparison, not monthly search totals.",
+      "Rounded zero and insufficient data do not mean no actual searches.",
+      "Only the United States was measured; international demand unknown.",
+      "Latest week may be partial. Related-query index 100 uses a separate scale.",
+      "Absolute search volume, keyword difficulty, CPC, rank and traffic remain unknown."
+    ],
+    "monthlySearchVolume": null,
+    "difficulty": null,
+    "cpc": null,
+    "rank": null,
+    "traffic": null,
+    "firstPartySearchConsole": {
+      "status": "not_connected",
+      "checkedDate": "2026-10-17",
+      "scope": "Fresh free root connector check for this task; no site query, impression or click evidence available."
+    },
+    "paidResearch": "Known unavailable; no paid retry or invented estimates.",
+    "parentEvidencePending": false,
+    "evidenceFiles": [
+      "research/trends-focused.txt",
+      "research/trends-focused.png"
+    ],
+    "evidenceSHA256": {
+      "research/trends-focused.txt": "1adf491a34c7323a8f0c5d0119d01ad739e43dd47f2618887390689fd6c56bd6",
+      "research/trends-focused.png": "0cdfbb98b74dc5976b6a03d7b64d0de96f44976ad5c4cd5f9eedd1c969e77ff4"
+    }
+  },
+  "intent": [
+    {
+      "slug": "why-britain-drives-on-the-left",
+      "topic": "History",
+      "intent": "Why Britain retained left-hand traffic, separating a known legal milestone from uncertain early origin.",
+      "novelty": "No keep-left history among current 113 articles or eight paths."
+    },
+    {
+      "slug": "why-do-cats-love-boxes",
+      "topic": "Curiosity",
+      "intent": "One supported explanation for cats' attraction to boxes: the hiding opportunity, with evidence and scope.",
+      "novelty": "No cat-box behaviour explanation; existing cat words are language/memory examples."
+    }
+  ],
+  "novelty": {
+    "scope": "All 113 complete current intake article documents and eight full paths loaded and scanned, including all body, metadata, sources and quiz fields. All eight History bodies and all eight Curiosity bodies explicitly re-read from the actual current intake after a premature Oscar candidate was caught and rejected. Other same-day full body reviews and all eight full path reviews reused under the 30-day allowance in AGENTS.md; semantic comparisons prove no teaching-content changes from the previous task. Seven article date fields and one path date field differ only in metadata.",
+    "conclusions": [
+      {
+        "slug": "why-britain-drives-on-the-left",
+        "decision": "No existing article or Academy lesson explains Britain's keep-left history. Existing calendar-change History piece concerns dates, not roads; a contextual link connects two distinct conventions."
+      },
+      {
+        "slug": "why-do-cats-love-boxes",
+        "decision": "No existing cat-box behaviour article or lesson. Cat references in anagrams and chunking are word examples; calendar boxes are number analogies, not hiding-box explanations. The current Curiosity nature/food questions cover different mechanisms."
+      },
+      {
+        "candidate": "Why is an Oscar called an Oscar?",
+        "decision": "Rejected as duplicate after explicit category intake review: why-are-oscars-called-oscars already answers the same naming uncertainty and dates. Initial novelty assertion was premature and withdrawn; no duplicate draft created."
+      },
+      {
+        "candidate": "Why are movie trailers called trailers?",
+        "decision": "Not selected: institutional archive material found did not yet establish the precise name-origin claim; no unsupported first-trailer story adopted."
+      },
+      {
+        "candidate": "Why was PG-13 invented?",
+        "decision": "Not selected: root preferred subject variety through animal behaviour; no PG-13 draft created."
+      }
+    ],
+    "categoryCountsBefore": {
+      "Geography": 9,
+      "Words & puzzles": 10,
+      "Numbers & logic": 34,
+      "Learning": 8,
+      "Everyday inventions": 9,
+      "History": 8,
+      "Science & nature": 16,
+      "Getting started": 3,
+      "Sports": 8,
+      "Curiosity": 8
+    },
+    "regularVsAcademyBefore": {
+      "Geography": {
+        "regular": 8,
+        "academy": 1
+      },
+      "Words & puzzles": {
+        "regular": 2,
+        "academy": 8
+      },
+      "Numbers & logic": {
+        "regular": 4,
+        "academy": 30
+      },
+      "Learning": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Everyday inventions": {
+        "regular": 9,
+        "academy": 0
+      },
+      "History": {
+        "regular": 4,
+        "academy": 4
+      },
+      "Science & nature": {
+        "regular": 7,
+        "academy": 9
+      },
+      "Getting started": {
+        "regular": 3,
+        "academy": 0
+      },
+      "Sports": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Curiosity": {
+        "regular": 8,
+        "academy": 0
+      }
+    },
+    "categoryCountsAfterSelected": {
+      "Curiosity": 9,
+      "History": 9
+    },
+    "newAcademyContent": false
+  },
+  "checkedSources": [
+    {
+      "id": "parliament-roads",
+      "url": "https://www.parliament.uk/about/living-heritage/transformingsociety/transportcomms/roadsrail/overview/parliamentaryroad/",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "UK Parliament first-party history of its road legislation",
+      "access": "Complete relevant web page successfully opened. Direct download returned 403; a labelled excerpt of the relevant checked paragraph is archived instead.",
+      "webOpened": true,
+      "httpStatus": null,
+      "archives": [
+        "parliament-roads-web-excerpt.txt"
+      ],
+      "archiveSHA256": "242529892376fe5b9efe12f5c47c07c88d33965ac8968a60a10e07cc95cb0776",
+      "checkedDetails": [
+        "Parliament states the 1835 Act formalised the existing keep-left practice."
+      ],
+      "readScope": "Complete short Parliamentary roads body read, especially Public legislation. Archive contains the relevant paragraph, not an HTML download."
+    },
+    {
+      "id": "national-motor-museum",
+      "url": "https://nationalmotormuseum.org.uk/help-centre/motoring-firsts/",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "National Motor Museum research-service account",
+      "access": "Successful web open and direct source archive",
+      "webOpened": true,
+      "httpStatus": 200,
+      "archives": [
+        "national-motor-museum.html",
+        "national-motor-museum.txt"
+      ],
+      "archiveSHA256": "9427c4913a41eae460a0d41026890c9b1180a09fd1e8a99e4e69a2e99c59d859",
+      "checkedDetails": [
+        "Keep-left origins are presented as possible, not established; the sword-arm explanation is treated cautiously.",
+        "Before enforcement, coach drivers leaving London could choose the firmest road surface."
+      ],
+      "readScope": "Relevant keep-left question and context. Broad 1835 all-Britain-and-Ireland wording is not repeated; the original Act is specifically scoped to England."
+    },
+    {
+      "id": "highway-act-1835",
+      "url": "https://www.legislation.gov.uk/ukpga/1835/50/pdfs/ukpga_18350050_en.pdf",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "Original historical statute PDF",
+      "access": "Successful web open and direct source archive",
+      "webOpened": true,
+      "httpStatus": 200,
+      "archives": [
+        "highway-act-1835.pdf",
+        "highway-act-1835.txt"
+      ],
+      "archiveSHA256": "3ec3cb9ffa6221449751222f6ca8d1b90b7f1bacbef7f3d7af76a068524101e7",
+      "checkedDetails": [
+        "Section 78 (LXXVIII), printed pages 399–400, requires waggons, carts, carriages and animals meeting other traffic to keep left or near side.",
+        "Original title and scope identify highways in England."
+      ],
+      "readScope": "Relevant original title/scope and section 78 checked in full; PDF pages 31–32 (one-based), with the keep-left text on PDF page 32 / printed page 400. Not a claim to have read every other provision or to give current legal advice."
+    },
+    {
+      "id": "highway-code-rule-160",
+      "url": "https://www.gov.uk/guidance/the-highway-code/using-the-road-159-to-203",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "Current Department for Transport Highway Code",
+      "access": "Successful web open and direct source archive",
+      "webOpened": true,
+      "httpStatus": 200,
+      "archives": [
+        "highway-code-rule-160.html",
+        "highway-code-rule-160.txt"
+      ],
+      "archiveSHA256": "c329fcf7e3b5a1720925086de77f714d1c398442ce0fc5c857f07e7848d2a31c",
+      "checkedDetails": [
+        "Rule 160 retains keeping left as the general instruction and explicitly provides exceptions."
+      ],
+      "readScope": "Rule 160 opened and checked on 17 October 2026. No simplified universal driving instruction replaces its conditions."
+    },
+    {
+      "id": "hiding-boxes-2019",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223492",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "Original peer-reviewed open-access randomised trial",
+      "access": "Successful web open and direct source archive",
+      "webOpened": true,
+      "httpStatus": 200,
+      "archives": [
+        "hiding-boxes-2019.html",
+        "hiding-boxes-2019.txt"
+      ],
+      "archiveSHA256": "afb267d27f887fec64473b37347a4b4dc4eac95da0a6ce3c0b6f2842f146c981",
+      "checkedDetails": [
+        "Published 14 October 2019; reported results for 23 Dutch shelter cats, 12 with boxes and 11 controls; 12-day behavioural observations.",
+        "Stress scores declined faster with hiding boxes. No significant between-group weight-loss difference."
+      ],
+      "readScope": "Full article introduction, methods, results, discussion and conclusion checked. Methods also report two earlier exclusions; no total initial-enrolment number inferred. Posture/behaviour score is not a direct report of feelings. Small, individually housed shelter sample; no universal home-cat preference, cure, cortisol or adoption benefit claimed."
+    },
+    {
+      "id": "hiding-boxes-2014-abstract",
+      "url": "https://research-portal.uu.nl/en/publications/will-a-hiding-box-provide-stress-reduction-for-shelter-cats/",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "type": "Original research abstract on authors' Utrecht University portal",
+      "access": "Successful web open and direct source archive",
+      "webOpened": true,
+      "httpStatus": 200,
+      "archives": [
+        "hiding-boxes-2014-abstract.html",
+        "hiding-boxes-2014-abstract.txt"
+      ],
+      "archiveSHA256": "afd51df44b045f789fe0c35b82d08ae2207e0c88a156739ef61b238f7a2f2e2a",
+      "checkedDetails": [
+        "Abstract reports 19 newly arrived shelter cats randomly assigned, 10 with boxes and nine controls.",
+        "Box group improved earlier; average scores similar by day 14."
+      ],
+      "readScope": "Complete original abstract only. Full article listed as embargoed until 2050 and not read. No claim based on inaccessible full text."
+    }
+  ],
+  "excludedOrLimitedSourceChecks": [
+    {
+      "id": "parliament-roads",
+      "url": "https://www.parliament.uk/about/living-heritage/transformingsociety/transportcomms/roadsrail/overview/parliamentaryroad/",
+      "result": "HTTP Error 403: Forbidden",
+      "usedForClaimsViaThisAccess": false,
+      "notes": "Successful separate web access is recorded in checkedSources where applicable."
+    },
+    {
+      "id": "hiding-boxes-2014-full-text",
+      "url": "https://doi.org/10.1016/j.applanim.2014.09.002",
+      "result": "University portal explicitly lists full version under embargo until 2050. No claim to have read it and no bypass attempted.",
+      "usedForClaimsViaThisAccess": false,
+      "notes": "Public original abstract successfully read and archived; public article identifies that scope."
+    }
+  ],
+  "reading": {
+    "bodyWords": [
+      214,
+      219
+    ],
+    "sectionsEach": 4,
+    "BritishEnglish": true,
+    "noNewQuizWidgetCourseOrAccountWall": true,
+    "limitations": "The original 1835 Act is scoped to England; early keep-left origins are uncertain and modern rule 160 has exceptions. Small shelter studies support a hiding-space explanation without establishing universal home-cat preferences or preventing weight loss. The 2014 source is the original abstract, not inaccessible full text."
+  },
+  "artwork": {
+    "mode": "Built-in ImageGen; original conceptual covers",
+    "variants": [
+      {
+        "path": "assets/images/learn/why-britain-drives-on-the-left.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 146612,
+        "sha256": "fb5046016da6b33a96eb63193a1ad260c18c8043120fd51797942aadb7c6b36a"
+      },
+      {
+        "path": "assets/images/learn/why-britain-drives-on-the-left-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 39914,
+        "sha256": "c6801ed7341f0c2259abacdcf8b4248e581b321d1384259941b21239e04ec1d4"
+      },
+      {
+        "path": "assets/images/learn/why-britain-drives-on-the-left-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 10224,
+        "sha256": "6f8c244c2c2de21203e4c7f30564d0592d42c1209d46940e3171fb759a37c587"
+      },
+      {
+        "path": "assets/images/learn/why-do-cats-love-boxes.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 48586,
+        "sha256": "154b73d7ae73c8291b1908c588caff4b08f1465763efbc9da73e92d861cf664f"
+      },
+      {
+        "path": "assets/images/learn/why-do-cats-love-boxes-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 12946,
+        "sha256": "a1a47473662c383788010fbf809f9a0017db7b358bc21a23da2f25012f64d6bf"
+      },
+      {
+        "path": "assets/images/learn/why-do-cats-love-boxes-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 4302,
+        "sha256": "1f035641423bc6ff75e63f63518ddbd09896b4473f8dc67e406fe82f657a4f99"
+      }
+    ],
+    "totalBytes": 262584,
+    "review": "Root inspected originals, thumbnails and crops, then checked covers in native desktop and mobile views. The historical road scene is conceptual; the cat and box do not depict study animals or materials."
+  },
+  "validation": {
+    "preparedAt": "2026-10-17T09:19:41.205453+00:00",
+    "metadataSchemaDiscoveryPassed": true,
+    "nativeWidths": [
+      320,
+      1280
+    ],
+    "oldArticlesPreserved": 113,
+    "oldCoursesPreserved": 8,
+    "transactionTestGroups": 8,
+    "status": "Prepared; cover deployment and guarded publication follow."
+  }
+}
