@@ -176,6 +176,7 @@ window.BrainiSocial = (function(){
                 <span>
                   <strong>${groupEscape(f.name)}</strong>
                   ${BrainiProgressUI.profileTitleMarkup(f)}
+                  ${BrainiProgressUI.profileAchievementsMarkup(f,{interactive:false})}
                   <small>${flag(f.country)} ${f.country||""}</small>
                 </span>
               </label>`).join("")
@@ -601,6 +602,7 @@ window.BrainiSocial = (function(){
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 ${BrainiProgressUI.profileTitleMarkup(r)}
+                ${BrainiProgressUI.profileAchievementsMarkup(r)}
                 <small>${flag(r.country)} ${r.country||""}</small>
               </div>
               <div class="friend-request-actions">
@@ -620,6 +622,7 @@ window.BrainiSocial = (function(){
               <div class="friend-main">
                 <strong>${r.name}</strong>
                 ${BrainiProgressUI.profileTitleMarkup(r)}
+                ${BrainiProgressUI.profileAchievementsMarkup(r)}
                 <small>${flag(r.country)} ${r.country||""} · Pending</small>
               </div>
               <button class="friend-action" data-cancel-request="${r.id}">Cancel</button>
@@ -636,6 +639,7 @@ window.BrainiSocial = (function(){
             <div class="friend-main">
               <strong>${f.name}</strong>
               ${BrainiProgressUI.profileTitleMarkup(f)}
+              ${BrainiProgressUI.profileAchievementsMarkup(f)}
               <small>${flag(f.country)} ${f.country||""} · Level ${f.level||1}</small>
             </div>
 
@@ -822,6 +826,7 @@ window.BrainiSocial = (function(){
                         }
                       </strong>
                       ${BrainiProgressUI.profileTitleMarkup(m)}
+                      ${BrainiProgressUI.profileAchievementsMarkup(m)}
 
                       <small>
                         ${flag(m.country)} ${m.country||""}
