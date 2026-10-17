@@ -5,6 +5,19 @@ spend XP, change scores, levels, streaks, ranking identity/visibility, game resu
 or permissions. Existing players immediately see rewards for their current XP;
 nothing new is automatically equipped.
 
+Profile backgrounds are an owner-only decorative preference in the existing
+Frames & titles pane: Plain & simple (0 XP), Booked in / library (1,500),
+In your element / lab (3,500), and Night thinker / starry sky (6,000).
+They are distinct from the avatar's background colour. The studio artwork
+previews a draft; the profile header uses only the confirmed saved scene.
+Save/Cancel use the existing cosmetic controls, and scene selection never
+switches a photo into an illustrated avatar. Surprise me preserves the scene.
+Only the changed `brainilab_profile_scene_v1` string key is saved. Same-field
+concurrent scene edits are checked before writing (best effort, not atomic Auth
+CAS); errors keep the confirmed scene until a successful reread. No scene field
+is added to public rankings, friends or groups, and no SQL/permission change is
+needed. A tampered metadata value cannot change XP or authorize anything.
+
 | Frame | XP | Title | XP |
 | --- | ---: | --- | ---: |
 | Your level (existing frame) | 0 | No title | 0 |

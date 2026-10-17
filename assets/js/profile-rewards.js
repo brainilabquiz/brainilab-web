@@ -13,6 +13,9 @@ window.BrainiProfileRewards=(function(){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
     const equipped=state.style;
+    // Header uses the confirmed choice. Only the studio artwork previews drafts.
+    document.body.dataset.profileScene=equipped.scene;
+    root.dataset.profileScene=draft.scene;
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){frame(avatar,equipped.frame);BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)}));}
     }
@@ -59,7 +62,7 @@ window.BrainiProfileRewards=(function(){
       const button=event.target.closest('[data-reward-kind]');
       if(button&&!button.disabled){
         const {rewardKind:kind,rewardId:id}=button.dataset;draft[kind]=id;
-        if(kind!=='mode'&&kind!=='frame'&&kind!=='title')draft.mode='built';
+        if(!['mode','frame','title','scene'].includes(kind))draft.mode='built';
         dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
       }
       if(event.target.closest('[data-style-cancel]')){dirty=false;render();}
