@@ -1,0 +1,65 @@
+{
+  "slug": "why-did-the-titanic-sink",
+  "title": "Why did the Titanic sink? How flooding overwhelmed the ship",
+  "description": "Titanic struck an iceberg, but flooding explains why she sank. Follow the damaged compartments, the limits of the bulkheads and the evidence in the inquiry.",
+  "topic": "History",
+  "status": "published",
+  "order": 159,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-did-the-titanic-sink.webp",
+    "small": "/assets/images/learn/why-did-the-titanic-sink-small.webp",
+    "thumbnail": "/assets/images/learn/why-did-the-titanic-sink-thumb.webp",
+    "alt": "An ocean-liner scale model with four funnels on a wooden table beside a small iceberg model",
+    "credit": "AI-generated conceptual model scene created for BrainiLab; not an archival photograph or an exact reconstruction.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/history/",
+    "name": "History"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Explore another historical question in the History Quiz.",
+  "related": [
+    "why-britain-drives-on-the-left",
+    "why-roman-concrete-lasts"
+  ],
+  "sources": [
+    {
+      "url": "https://www.govinfo.gov/content/pkg/SERIALSET-06179_00_00-019-0933-0000/pdf/SERIALSET-06179_00_00-019-0933-0000.pdf",
+      "name": "British Wreck Commissioner’s inquiry (1912) — Report on the loss of the steamship Titanic, pages 5, 35 and 45"
+    },
+    {
+      "url": "https://sanctuaries.noaa.gov/maritime/titanic/expedition_results.html",
+      "name": "NOAA Maritime Heritage Program — The 2010 expedition and mapping of Titanic’s wreck"
+    }
+  ],
+  "sections": [
+    {
+      "id": "collision-and-flooding",
+      "title": "The iceberg began a chain of flooding",
+      "html": "<p><strong>Titanic sank because an iceberg collision let seawater flood more compartments than the ship could survive.</strong> The damage was below the waterline, where the hull—the ship’s outer body—needed to keep water out.</p><p>She struck the iceberg late on <strong>14 April 1912</strong> and sank early on <strong>15 April</strong> in the North Atlantic.</p>"
+    },
+    {
+      "id": "limits-of-the-compartments",
+      "title": "Watertight had its limits",
+      "html": "<p>The ship’s interior was divided by <strong>bulkheads</strong>: upright walls separating compartments. This arrangement could keep her afloat with certain spaces flooded, but not with unlimited damage.</p><p><a href=\"https://www.govinfo.gov/content/pkg/SERIALSET-06179_00_00-019-0933-0000/pdf/SERIALSET-06179_00_00-019-0933-0000.pdf\">The 1912 inquiry explained the crucial limit</a>: flooding in the forward compartments and front boiler room pulled the ship too low to remain afloat.</p>"
+    },
+    {
+      "id": "water-spreads-aft",
+      "title": "Water could pass over the walls",
+      "html": "<p>As the bow sank deeper, water rose above the top of a bulkhead and flowed into the next boiler room. That room filled, allowing the process to continue farther back.</p><p>The compartments were not individually sealed boxes all the way up. Closing their doors could not stop water passing over the tops as the ship settled.</p>"
+    },
+    {
+      "id": "records-and-wreck-evidence",
+      "title": "The inquiry and the wreck tell different parts",
+      "html": "<p>The British inquiry attributed the iceberg collision to excessive speed. That was its finding about navigation; the progressive flooding explains how the damage became fatal to the ship.</p><p>Later wreck mapping, <a href=\"https://sanctuaries.noaa.gov/maritime/titanic/expedition_results.html\">described by NOAA</a>, documented separate bow and stern sections. The broken wreck adds physical evidence to the written record: the ship came apart as she sank.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T11:21:51Z",
+  "updatedAt": "2026-10-17T11:21:51Z",
+  "minutes": 2
+}
