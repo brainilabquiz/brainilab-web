@@ -7,7 +7,8 @@ const today=new Date().toISOString().slice(0,10),yesterday=new Date(Date.now()-8
 const d=new JSDOM('<title>Daily</title><div data-friend-invitation hidden></div><main></main>',{url:'https://brainilabgames.com/daily-quiz/?friend='+today,runScripts:'outside-only'}),w=d.window;
 w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this.dispatchEvent(new w.Event('close'));};
 w.BrainiData={dateForDailyNumber:n=>n===32?today:yesterday};w.eval(source);const api=w.BrainiFriendChallenge;
-const status={dailyNumber:32,completedCount:1,brainScore:1800,answers:['SECRET'],email:'PRIVATE@example.com'};
+// The result action requires a confirmed completed game, not just a total count.
+const status={dailyNumber:32,completedCount:1,brainScore:1800,games:{brainmix:{completed:true,points:1800}},answers:['SECRET'],email:'PRIVATE@example.com'};
 const invite=api.buildInvite(status);assert.equal(invite.url,'https://brainilabgames.com/daily-quiz/?friend='+today);assert.match(invite.text,/1 game down, 3 to go/);assert.match(invite.text,/Fancy joining me/);assert.ok(!/PRIVATE|SECRET/.test(invite.text));assert.equal(api.buildInvite({...status,dailyNumber:31}),null);
 assert.match(api.buildInvite({...status,completedCount:4,brainScore:7800}).text,/7,800 points/);
 assert.match(api.buildInvite({...status,completedCount:0}).text,/Fancy a little challenge/);
