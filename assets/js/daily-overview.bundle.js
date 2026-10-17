@@ -15,6 +15,7 @@ window.BrainiDaily = (function(){
   let cachedToday=null;
   let lastError=null;
   let inFlight=null;
+  let fallbackLoading=null;
 
   const CACHE_PREFIX="brainilab_daily_payload_v1_";
   const REQUEST_TIMEOUT_MS=4500;
@@ -130,28 +131,28 @@ window.BrainiDaily = (function(){
 
   async function ensureFallbackPacks(){
     if(window.BrainiQuizPacks) return window.BrainiQuizPacks;
+    if(fallbackLoading) return fallbackLoading;
 
-    return new Promise((resolve,reject)=>{
-      const existing=document.querySelector('script[data-braini-daily-fallback]');
-      if(existing){
-        existing.addEventListener("load",()=>resolve(window.BrainiQuizPacks),{once:true});
-        existing.addEventListener("error",()=>reject(new Error("Could not load Daily fallback content.")),{once:true});
-        return;
+    fallbackLoading=(async()=>{
+      if(window.BrainiPerf?.loadFeature){
+        await BrainiPerf.loadFeature("quiz-packs.js");
+      }else{
+        await new Promise((resolve,reject)=>{
+          const s=document.createElement("script");
+          s.src=scriptBase
+            ? new URL("quiz-packs.js",scriptBase).href
+            : "/assets/js/quiz-packs.js";
+          s.onload=resolve;
+          s.onerror=()=>{s.remove();reject(new Error("Could not load Daily fallback content."));};
+          document.head.appendChild(s);
+        });
       }
-
-      const s=document.createElement("script");
-      s.dataset.brainiDailyFallback="1";
-      s.src=scriptBase
-        ? new URL("quiz-packs.js",scriptBase).href
-        : "/assets/js/quiz-packs.js";
-
-      s.onload=()=>{
-        if(window.BrainiQuizPacks) resolve(window.BrainiQuizPacks);
-        else reject(new Error("Daily fallback content loaded incorrectly."));
-      };
-      s.onerror=()=>reject(new Error("Could not load Daily fallback content."));
-      document.head.appendChild(s);
-    });
+      if(typeof window.BrainiQuizPacks?.get!=="function"){
+        throw new Error("Daily fallback content loaded incorrectly.");
+      }
+      return window.BrainiQuizPacks;
+    })().catch(error=>{fallbackLoading=null;throw error;});
+    return fallbackLoading;
   }
 
   function hash(text){
@@ -1496,7 +1497,7 @@ window.BrainiDailyJourney=(function(){
       const meta=META[id],game=status.games[id]||{},max=BrainiDailyRules.max(id,day);
       const unavailable=!isPrimary&&(!primary.completed||bonus&&bonus!==id);
       const href=gameHref(id,day);
-      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Available after your Daily'):`Up to ${formatPoints(max)} points`;
+      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Finish the main Daily first'):`Up to ${formatPoints(max)} points`;
       return `<article class="daily-choice-card ${isPrimary?'is-primary':''} ${game.completed?'is-complete':''} ${unavailable?'is-unavailable':''}"><span class="daily-choice-art">${BrainiIcons.game(meta.icon,'mini','braini-game-mini')}</span><div><span class="daily-choice-role">${isPrimary?"Today’s Daily":bonus===id?'Your extra':'Optional extra'}</span><h3>${meta.name}</h3><p>${message}</p></div>${game.completed?'<strong class="daily-choice-done">Completed ✓</strong>':unavailable?'':`<a class="btn" href="${href}">${isPrimary?'Play today’s Daily':bonus===id?'Continue extra':'Choose '+meta.name}</a>`}</article>`;
     }
     return `<section class="daily-choice" aria-label="Today’s Daily games"><div class="daily-choice-heading"><span>Daily #${status.dailyNumber}</span><span>${formatPoints(status.brainScore)} / ${formatPoints(model.maxScore)} points</span></div>${card(model.primary,true)}<div id="daily-extras" class="daily-choice-extra-heading"><h3>${done?'All done for today':bonus?'Your extra':'Fancy one more?'}</h3><p>${done?'You’ve played your Daily and your extra.':bonus?'Up to 1,000 more points. Your streak is already safe.':'Choose one extra. Up to 1,000 points. Your streak only needs the main Daily.'}</p></div><div class="daily-choice-extras">${model.choices.map(id=>card(id,false)).join('')}</div><p class="daily-choice-note">${done?'A fresh challenge arrives tomorrow.':'Your extra is fixed when you open it. A new choice is available tomorrow.'}</p></section>`;
@@ -1537,10 +1538,10 @@ window.BrainiDailyOverview=(function(){
     if(extraHeading){const h2=document.createElement('h2');h2.textContent=extraHeading.textContent;extraHeading.replaceWith(h2);}
     if(choice){const heading=document.createElement('h2');heading.className='daily-main-heading';heading.textContent='Your main challenge';container.querySelector('.daily-choice-heading').after(heading);}
   }
-  function rules(choice){return choice?'<p>Finish the main Daily for up to <strong>2,500 ranking points</strong> and <strong>250 completion XP</strong>. It is the only game needed for your streak.</p><p>Afterwards, choose one of two extras for up to <strong>1,000 more points</strong>. Opening an extra fixes your choice for today.</p>':'<p>Today has four challenges, worth up to <strong>2,500 points each</strong>. Your Daily Brain Score adds them together, up to 10,000.</p><p>Finish all four for the <strong>250 XP Full Daily bonus</strong>. Your first three verified games of each kind per UTC day earn game XP.</p>';}
+  function rules(choice){return choice?'<p>The main Daily keeps your streak going and earns up to <strong>2,500 points</strong>.</p><p>Want another round? Choose one extra for up to <strong>1,000 more points</strong>. Opening it locks your choice for today.</p>':'<p>Today has four challenges, worth up to <strong>2,500 points each</strong>. Your Daily Brain Score adds them together, up to 10,000.</p><p>Finish all four for the <strong>250 XP Full Daily bonus</strong>. Your first three verified games of each kind per UTC day earn game XP.</p>';}
   function guide(choice){
     const el=document.querySelector('[data-daily-guide]');if(!el)return;
-    el.innerHTML='<h2>A quick guide to the Daily</h2><div class="daily-faqs"><details><summary>What counts towards my Daily score?</summary>'+rules(choice)+'<p>Account XP and ranking points are different totals.</p></details><details><summary>Can I practise first?</summary><p>Yes. Use Try first when it is offered, or explore the games library. Rounds marked as practice do not change your Daily score, streak, XP or rankings.</p><p><a href="/learn/daily-or-anytime/">Daily and Anytime, explained →</a></p></details><details><summary>When does a new Daily arrive?</summary><p>Every day at 00:00 UTC. Everyone gets the same daily selection. Finished results stay locked for that day.</p></details></div>';
+    el.innerHTML='<h2>A quick guide to the Daily</h2><div class="daily-faqs"><details><summary>What counts towards my Daily score?</summary>'+rules(choice)+'<p>XP builds your level. Points decide your ranking.</p></details><details><summary>Can I practise first?</summary><p>Yes. Use Try first when it is offered, or explore the games library. Rounds marked as practice do not change your Daily score, streak, XP or rankings.</p><p><a href="/learn/daily-or-anytime/">Daily and Anytime, explained →</a></p></details><details><summary>When does a new Daily arrive?</summary><p>Every day at 00:00 UTC. Everyone gets the same daily selection. Finished results stay locked for that day.</p></details></div>';
   }
   async function render(){
     const root=document.querySelector('[data-daily-overview]');if(!root)return;
@@ -1553,12 +1554,12 @@ window.BrainiDailyOverview=(function(){
       const progress=choice?(primaryDone?'Daily complete':'Ready when you are'):(Number(status.completedCount)||0)+' of 4 complete';
       const title=done?'That’s today’s Daily done.':'Your daily brain break.';
       const intro=done?'Your result is saved. Stay for another game, or come back for tomorrow’s challenge.':choice?'One fresh challenge for your streak. An optional extra when you fancy more.':'Four fresh puzzles. Pick one, get curious, and see what you discover.';
-      root.innerHTML='<header class="daily-discovery-header"><div><p class="daily-date">Daily #'+Number(status.dailyNumber)+' <span>·</span> <time datetime="'+day+'">'+date+'</time></p><h1>'+title+'</h1><p class="daily-intro">'+intro+'</p></div><a class="daily-progress-link" href="/profile/?section=progress">My progress ↗</a></header><div class="daily-dashboard"><div class="daily-play-panel" id="todays-games"><div data-daily-journey-hub></div></div><aside class="daily-side" aria-label="Your Daily progress"><section class="daily-score-summary"><h2>Your day so far</h2><p class="daily-score-value"><strong>'+points(status.brainScore)+'</strong><span> / '+points(choice?status.model.maxScore:10000)+'</span></p><p>Daily ranking points</p><p class="daily-completion '+(done?'is-complete':'')+'">'+(done?'✓ ':'')+progress+'</p><a href="/rankings/">View rankings →</a></section><div data-braini-continuity>'+(window.BrainiContinuity?.markup?.()||'')+'</div><details class="daily-points-guide"><summary>How points and XP work</summary>'+rules(choice)+'<p>New challenges arrive at 00:00 UTC.</p></details></aside></div>';
+      root.innerHTML='<header class="daily-discovery-header"><div><p class="daily-date">Daily #'+Number(status.dailyNumber)+' <span>·</span> <time datetime="'+day+'">'+date+'</time></p><h1>'+title+'</h1><p class="daily-intro">'+intro+'</p></div><a class="daily-progress-link" href="/profile/?section=progress">My progress ↗</a></header><div class="daily-dashboard"><div class="daily-play-panel" id="todays-games"><div data-daily-journey-hub></div></div><aside class="daily-side" aria-label="Your Daily progress"><section class="daily-score-summary"><h2>Your day so far</h2><p class="daily-score-value"><strong>'+points(status.brainScore)+'</strong><span> / '+points(choice?status.model.maxScore:10000)+'</span></p><p>Daily ranking points</p><p class="daily-completion '+(done?'is-complete':'')+'">'+(done?'✓ ':'')+progress+'</p><a href="/rankings/">View rankings →</a></section><div data-braini-continuity>'+(window.BrainiContinuity?.markup?.()||'')+'</div><details class="daily-points-guide"><summary>How points work</summary>'+rules(choice)+'<p>New challenges arrive at 00:00 UTC.</p></details></aside></div>';
       await BrainiDailyJourney.render(root.querySelector('[data-daily-journey-hub]'),{status});if(request!==revision)return;
       decorateJourney(root,status);guide(choice);revealExtra();
     }catch(err){
       if(request!==revision)return;console.error('Daily overview:',err);
-      root.innerHTML='<section class="daily-load-error"><h1>A small pause in today’s play.</h1><p>We could not load the Daily. Check your connection and try again.</p><button type="button" data-daily-retry>Try again</button><a href="/games/">Explore the games</a></section>';
+      root.innerHTML='<section class="daily-load-error"><h1>Today’s Daily could not load.</h1><p>Check your connection and try again.</p><button type="button" data-daily-retry>Try again</button><a href="/games/">Explore the games</a></section>';
       root.querySelector('[data-daily-retry]').addEventListener('click',render);
     }finally{if(request===revision)root.removeAttribute('aria-busy');}
   }

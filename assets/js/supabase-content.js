@@ -47,15 +47,25 @@ window.BrainiContent = (function(){
     if(window.BrainiQuizPacks) return window.BrainiQuizPacks;
     if(fallbackLoading) return fallbackLoading;
 
-    fallbackLoading=new Promise((resolve,reject)=>{
-      const s=document.createElement("script");
-      s.src=scriptBase
-        ? new URL("quiz-packs.js",scriptBase).href
-        : "assets/js/quiz-packs.js";
-      s.onload=()=>resolve(window.BrainiQuizPacks);
-      s.onerror=()=>reject(new Error("Could not load local quiz fallback."));
-      document.head.appendChild(s);
-    });
+    fallbackLoading=(async()=>{
+      if(window.BrainiPerf?.loadFeature){
+        await BrainiPerf.loadFeature("quiz-packs.js");
+      }else{
+        await new Promise((resolve,reject)=>{
+          const s=document.createElement("script");
+          s.src=scriptBase
+            ? new URL("quiz-packs.js",scriptBase).href
+            : "/assets/js/quiz-packs.js";
+          s.onload=resolve;
+          s.onerror=()=>{s.remove();reject(new Error("Could not load local quiz fallback."));};
+          document.head.appendChild(s);
+        });
+      }
+      if(typeof window.BrainiQuizPacks?.get!=="function"){
+        throw new Error("Local quiz fallback loaded incorrectly.");
+      }
+      return window.BrainiQuizPacks;
+    })().catch(error=>{fallbackLoading=null;throw error;});
 
     return fallbackLoading;
   }

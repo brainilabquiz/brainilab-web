@@ -67,8 +67,8 @@
 </div>
 <section class="challenge-wrap">
 <div class="wrap">
-<article class="challenge" id="leafQuiz">
-<div class="challenge-inner">
+<article class="challenge" id="leafQuiz" aria-busy="true"><div class="quiz-pack-status" data-quiz-pack-status role="status"><strong>Getting your questions ready…</strong></div><noscript><p>Enable JavaScript to play. You can still read the guides below.</p></noscript>
+<div class="challenge-inner" hidden>
 <div class="challenge-labels">
 <span class="challenge-pill">Science · <span data-difficulty-label="">Easy</span></span>
 <span class="challenge-pill" data-label="">Question 1 of 20</span>
@@ -97,7 +97,7 @@
  const params=new URLSearchParams(location.search);
  const difficulty=BrainiContent.normalizeDifficulty(params.get("difficulty")||"easy");
  const set=Math.max(1,parseInt(params.get("set")||"1",10)||1);
- const pack=await BrainiContent.loadQuizPack("science",difficulty,set);
+ const pack=await BrainiQuiz.loadPack(root,"science",difficulty,set);
  const questions=pack.questions;
  const usingCloud=pack.source==="supabase";
 

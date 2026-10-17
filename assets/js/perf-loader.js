@@ -17,7 +17,10 @@ window.BrainiPerf=(function(){
           return;
         }
         existing.addEventListener("load",resolve,{once:true});
-        existing.addEventListener("error",reject,{once:true});
+        existing.addEventListener("error",()=>{
+          existing.remove();
+          reject(new Error(`Could not load ${src}`));
+        },{once:true});
         return;
       }
 
@@ -32,7 +35,10 @@ window.BrainiPerf=(function(){
         s.dataset.loaded="1";
         resolve();
       },{once:true});
-      s.addEventListener("error",()=>reject(new Error(`Could not load ${src}`)),{once:true});
+      s.addEventListener("error",()=>{
+        s.remove();
+        reject(new Error(`Could not load ${src}`));
+      },{once:true});
       document.head.appendChild(s);
     });
   }
