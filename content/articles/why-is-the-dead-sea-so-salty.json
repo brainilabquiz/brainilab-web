@@ -1,0 +1,69 @@
+{
+  "slug": "why-is-the-dead-sea-so-salty",
+  "title": "Why is the Dead Sea so salty?",
+  "description": "The Dead Sea has water coming in but no river carrying it out. Discover how evaporation concentrates its salts, and where some of those salts end up.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 152,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-is-the-dead-sea-so-salty.webp",
+    "small": "/assets/images/learn/why-is-the-dead-sea-so-salty-small.webp",
+    "thumbnail": "/assets/images/learn/why-is-the-dead-sea-so-salty-thumb.webp",
+    "alt": "White salt crystals beside calm turquoise lake water and dry desert hills",
+    "credit": "AI-generated conceptual illustration inspired by the Dead Sea; not a photograph of a particular shoreline or date.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/geography/",
+    "name": "Geography"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Try a General Knowledge quiz for more surprises from our planet.",
+  "related": [
+    "why-is-the-ocean-salty",
+    "what-is-a-river-meander"
+  ],
+  "sources": [
+    {
+      "url": "https://eros.usgs.gov/earthshots/industry-the-dead-sea",
+      "name": "USGS Earthshots — Industry: The Dead Sea"
+    },
+    {
+      "url": "https://www.usgs.gov/mission-areas/water-resources/science/chloride-salinity-and-dissolved-solids",
+      "name": "USGS — Chloride, salinity and dissolved solids"
+    },
+    {
+      "url": "https://science.nasa.gov/earth/earth-observatory/getting-saltier-145373/",
+      "name": "NASA Earth Observatory — Getting Saltier (2019)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-lake-with-no-river-exit",
+      "title": "Water arrives, but has no river exit",
+      "html": "<p><strong>The Dead Sea is so salty because it has no outlet: water evaporates, leaving dissolved minerals behind.</strong> Despite its name, it is a lake. The Jordan River brings water in, but no river carries the lake water away.</p><p><a href=\"https://eros.usgs.gov/earthshots/industry-the-dead-sea\">USGS describes this crucial difference</a>. Water can leave as vapour; the salts do not make that escape with it.</p>"
+    },
+    {
+      "id": "where-the-minerals-come-from",
+      "title": "Fresh water brings hidden passengers",
+      "html": "<p>Fresh water is not empty water. It contains dissolved minerals picked up through contact with soils and rocks, as <a href=\"https://www.usgs.gov/mission-areas/water-resources/science/chloride-salinity-and-dissolved-solids\">USGS explains</a>.</p><p>In a lake without an outlet, incoming water brings minerals while evaporation removes water. That combination concentrates the salts. Think of a delivery service with no matching collection van.</p>"
+    },
+    {
+      "id": "salt-on-the-lakebed",
+      "title": "Some salt becomes solid",
+      "html": "<p>That does not mean every grain stays dissolved forever. <a href=\"https://science.nasa.gov/earth/earth-observatory/getting-saltier-145373/\">NASA reported in 2019</a> that researchers had found salt coming out of the water as crystals and coating the lakebed.</p><p>The lake is therefore more than a bowl of concentrated brine: it is also a place where solid salt deposits form.</p>"
+    },
+    {
+      "id": "evaporation-ponds",
+      "title": "The same process has a practical use",
+      "html": "<p>Evaporation also matters to local industry. USGS describes Dead Sea water being pumped into evaporation ponds, where minerals are extracted for fertiliser production.</p><p>The landscape's unusual chemistry starts with a simple geographical fact: no outlet. For the wider salt story, discover <a href=\"/learn/why-is-the-ocean-salty/\">why the ocean is salty even though rivers taste fresh</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:54:23Z",
+  "updatedAt": "2026-10-17T08:54:23Z",
+  "minutes": 2
+}

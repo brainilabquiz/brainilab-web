@@ -1,0 +1,73 @@
+{
+  "slug": "why-microwaves-have-a-turntable",
+  "title": "Why does a microwave have a turntable?",
+  "description": "A microwave's spinning plate helps reduce uneven heating. Discover why it turns, why either direction can be normal and how some models manage without one.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 153,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-microwaves-have-a-turntable.webp",
+    "small": "/assets/images/learn/why-microwaves-have-a-turntable-small.webp",
+    "thumbnail": "/assets/images/learn/why-microwaves-have-a-turntable-thumb.webp",
+    "alt": "A bowl of vegetable soup on a clear glass turntable inside an open, switched-off microwave",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; the open microwave is switched off.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try the Science Quiz for more explanations hiding in everyday life.",
+  "related": [
+    "how-does-a-toilet-flush",
+    "why-ballpoint-pens-have-a-tiny-ball"
+  ],
+  "sources": [
+    {
+      "url": "https://patents.google.com/patent/US20100155392A1/en",
+      "name": "Whirlpool engineering patent — Microwave oven switching between predefined modes (2010), background"
+    },
+    {
+      "url": "https://products.geappliances.com/appliance/gea-support-search-content?contentId=21123",
+      "name": "GE Appliances — Microwave turntable operation"
+    },
+    {
+      "url": "https://shop.panasonic.com/blogs/news/thermo-sensor-microwave",
+      "name": "Panasonic — NN-SF57RM flatbed microwave and its hidden antenna"
+    },
+    {
+      "url": "https://help.na.panasonic.com/answers/how-to-tips-on-cooking-evenly/",
+      "name": "Panasonic Support — Tips on cooking evenly"
+    }
+  ],
+  "sections": [
+    {
+      "id": "why-the-plate-spins",
+      "title": "A small turn helps with uneven heating",
+      "html": "<p><strong>A microwave turntable rotates the food to help reduce uneven heating.</strong> The microwave field inside the oven can have stronger and weaker spots. Moving the food through different positions helps reduce their effect.</p><p><a href=\"https://patents.google.com/patent/US20100155392A1/en\">Whirlpool's engineering description</a> explains this familiar solution and its limit: a turntable does not produce perfectly uniform heating. The soup gets a ride, but that is not the whole cooking job.</p>"
+    },
+    {
+      "id": "either-direction-can-be-normal",
+      "title": "Clockwise is not a special ingredient",
+      "html": "<p>Noticed the plate turning the other way next time? <a href=\"https://products.geappliances.com/appliance/gea-support-search-content?contentId=21123\">GE says its turntables can normally rotate in either direction</a>.</p><p>They do not have to alternate between starts. For those models, a change of direction is ordinary behaviour, rather than evidence that dinner has confused the machine.</p>"
+    },
+    {
+      "id": "microwaves-without-turntables",
+      "title": "Some ovens move the energy instead",
+      "html": "<p>A visible spinning plate is not compulsory in every design. <a href=\"https://shop.panasonic.com/blogs/news/thermo-sensor-microwave\">Panasonic describes a hidden antenna beneath the floor</a> of its NN-SF57RM flatbed model, which rotates microwave energy around the food.</p><p>That is one example of a different arrangement. It does not mean every flatbed microwave uses exactly the same system.</p>"
+    },
+    {
+      "id": "turning-is-not-stirring",
+      "title": "Turning the bowl is not stirring the soup",
+      "html": "<p>The plate carries the container around; it does not mix what is inside. <a href=\"https://help.na.panasonic.com/answers/how-to-tips-on-cooking-evenly/\">Panasonic's cooking guidance</a> still calls for stirring, following food instructions and allowing the specified standing time so heat can spread.</p><p>That little rotating stage helps, but the food's instructions still matter. For another clever household mechanism, discover <a href=\"/learn/how-does-a-toilet-flush/\">how a toilet flushes without electricity</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:54:23Z",
+  "updatedAt": "2026-10-17T08:54:23Z",
+  "minutes": 2
+}

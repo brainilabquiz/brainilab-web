@@ -1,0 +1,419 @@
+{
+  "researchDate": "2026-10-17",
+  "timeZone": "Europe/Madrid",
+  "demand": {
+    "checkedDate": "2026-10-17",
+    "market": "United States",
+    "language": "English query terms and English interface",
+    "source": "Native Google Trends browser chart table and related-query lists, checked by root",
+    "range": "Past 12 months",
+    "chartDates": [
+      "2025-10-12",
+      "2026-10-11"
+    ],
+    "category": "All categories",
+    "searchType": "Web Search",
+    "comparisonTerms": [
+      "why is the dead sea so salty",
+      "microwave turntable",
+      "why does a microwave spin"
+    ],
+    "relativeAverages": {
+      "why is the dead sea so salty": 0,
+      "microwave turntable": 30,
+      "why does a microwave spin": 0
+    },
+    "observations": [
+      "Dead Sea exact why-query is sparse: nearly all weekly values round to zero, with 1 in weeks labelled 4 and 11 October 2026.",
+      "Microwave turntable has non-zero data in all 53 displayed weeks, peaking at 100 in the week labelled 12 April 2026. This broad equipment term includes replacement-shopping intent.",
+      "Why does a microwave spin has insufficient related-query/subregion data and a displayed average rounded to zero; this does not mean no searches occur."
+    ],
+    "relatedQueries": {
+      "deadSeaTop": [
+        {
+          "query": "why is the dead sea called the dead sea",
+          "relativeIndex": 100
+        },
+        {
+          "query": "why is the dead sea so salty and full of minerals?",
+          "relativeIndex": 88
+        }
+      ],
+      "microwaveRising": [
+        {
+          "query": "glass turntable for microwave",
+          "growthPercent": 160
+        },
+        {
+          "query": "turntable microwave oven",
+          "growthPercent": 100
+        },
+        {
+          "query": "microwave oven",
+          "growthPercent": 100
+        },
+        {
+          "query": "flatbed microwave",
+          "growthPercent": 90
+        },
+        {
+          "query": "microwave glass turntable",
+          "growthPercent": 70
+        }
+      ],
+      "microwaveExclusion": "Replacement, shopping and repair intent excluded. Exact visible native rows transcribed; these Rising figures do not measure demand for a mechanism explanation."
+    },
+    "interpretation": "Educational curiosity intent is supported by direct question wording and relevant search results. The exact Dead Sea and spin terms show low or sparse relative evidence. Broad turntable interest does not prove the size of demand for the mechanism question. No high-volume or expected-traffic claim.",
+    "limitations": [
+      "Sampled, normalised relative indices in one three-term comparison, not monthly searches or market share.",
+      "Only United States observed; international demand not measured.",
+      "Rounded zero and insufficient data are not zero actual search volume.",
+      "Final week may be partial. Related-query indices and Rising growth percentages are separate measures.",
+      "Absolute volume, keyword difficulty, CPC, rank and traffic are unknown."
+    ],
+    "monthlySearchVolume": null,
+    "difficulty": null,
+    "cpc": null,
+    "rank": null,
+    "traffic": null,
+    "firstPartySearchConsole": {
+      "status": "not_connected",
+      "checkedDate": "2026-10-17",
+      "scope": "Fresh free root connector check for this task; no site query, impression or click data available."
+    },
+    "paidResearch": "Known unavailable; no paid retry or invented estimates.",
+    "parentEvidencePending": false,
+    "evidenceFiles": [
+      "research/trends-focused.txt",
+      "research/trends-focused.png"
+    ],
+    "evidenceSHA256": {
+      "research/trends-focused.txt": "c63293f541c26bd993ae55298e3012646806cf247ff8e37372120b0d83c250a2",
+      "research/trends-focused.png": "c925d232a1998d42fcd3fe24ed8a3d0dd34f7a52a73f1bde3e3b07c6f3569610"
+    }
+  },
+  "intent": [
+    {
+      "slug": "why-is-the-dead-sea-so-salty",
+      "topic": "Geography",
+      "intent": "Why is this named inland lake unusually salty?",
+      "demandScope": "Exact why-query sparse; related minerals question supports educational wording without a volume claim.",
+      "novelty": "Distinct from existing general ocean-salt explanation; the new piece centres on a landlocked lake, deposits and evaporation ponds."
+    },
+    {
+      "slug": "why-microwaves-have-a-turntable",
+      "topic": "Everyday inventions",
+      "intent": "Why does the plate rotate, and do all microwaves need one?",
+      "demandScope": "Broad term has relative interest but much shopping intent; exact spin query is insufficient. Exclude replacements and repairs.",
+      "novelty": "No microwave/turntable/flatbed explanation in the full current library."
+    }
+  ],
+  "novelty": {
+    "scope": "All 111 current complete article JSON documents and all eight complete paths loaded and scanned. The full same-day review of 109 prior article bodies and eight paths is reused under AGENTS.md: semantic comparison proves all teaching content unchanged. Seven articles and one path have only date changes. Both added Learning/Sports full documents and bodies read in the current snapshot. Geography and Everyday inventions articles, including the ocean-salt and time-zone closest matches, checked in full.",
+    "conclusions": [
+      {
+        "slug": "why-is-the-dead-sea-so-salty",
+        "decision": "Distinct location-specific closed-basin question; no Dead Sea reference anywhere in 111 existing articles or eight paths. Existing ocean-salt article explains ocean sources and average salinity, but does not discuss this lake, its absence of a river outlet, deposits or evaporation ponds. Reuse only the essential evaporation background and link to the existing broader explanation."
+      },
+      {
+        "slug": "why-microwaves-have-a-turntable",
+        "decision": "Distinct everyday mechanism. No microwave, turntable or flatbed explanation found anywhere in 111 articles or eight paths. Direction, non-turntable designs and remaining stirring/standing instructions support one focused answer."
+      },
+      {
+        "candidate": "why do we have time zones",
+        "decision": "Rejected: existing why-time-zones-get-messy and sun-moon-and-time Academy path already answer the same intent."
+      }
+    ],
+    "categoryCountsBefore": {
+      "Geography": 8,
+      "Words & puzzles": 10,
+      "Numbers & logic": 34,
+      "Learning": 8,
+      "Everyday inventions": 8,
+      "History": 8,
+      "Science & nature": 16,
+      "Getting started": 3,
+      "Sports": 8,
+      "Curiosity": 8
+    },
+    "regularVsAcademyBefore": {
+      "Geography": {
+        "regular": 7,
+        "academy": 1
+      },
+      "Words & puzzles": {
+        "regular": 2,
+        "academy": 8
+      },
+      "Numbers & logic": {
+        "regular": 4,
+        "academy": 30
+      },
+      "Learning": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Everyday inventions": {
+        "regular": 8,
+        "academy": 0
+      },
+      "History": {
+        "regular": 4,
+        "academy": 4
+      },
+      "Science & nature": {
+        "regular": 7,
+        "academy": 9
+      },
+      "Getting started": {
+        "regular": 3,
+        "academy": 0
+      },
+      "Sports": {
+        "regular": 8,
+        "academy": 0
+      },
+      "Curiosity": {
+        "regular": 8,
+        "academy": 0
+      }
+    },
+    "categoryCountsAfterSelected": {
+      "Geography": 9,
+      "Everyday inventions": 9
+    },
+    "newAcademyContent": false
+  },
+  "checkedSources": [
+    {
+      "id": "panasonic-cooking-evenly",
+      "url": "https://help.na.panasonic.com/answers/how-to-tips-on-cooking-evenly/",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "panasonic-cooking-evenly.html",
+        "panasonic-cooking-evenly.txt"
+      ],
+      "archiveSHA256": "ec841bf289b9636e2a1fa05fa42f3fdcdae865a35e03eb9c552b1b7f693f3ea0",
+      "httpStatus": 200,
+      "type": "Panasonic manufacturer operating support",
+      "checkedDetails": [
+        "Stir food to distribute heat; follow food packaging instructions, accounting for wattage.",
+        "Use proper standing time for better heat distribution."
+      ],
+      "readScope": "Complete concise support body read. Advice in article remains conditional on food instructions; no temperature, safety or uniformity guarantee added."
+    },
+    {
+      "id": "whirlpool-original-patent",
+      "url": "https://patents.google.com/patent/US20100155392A1/en",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "whirlpool-original-patent.html",
+        "whirlpool-original-patent.txt"
+      ],
+      "archiveSHA256": "d1826fee374db82930fbb5522c49a89eb228f20f2c6a2290913febfdb9751d60",
+      "httpStatus": 200,
+      "type": "Original Whirlpool engineering patent application, public text hosted by Google Patents",
+      "checkedDetails": [
+        "Background explicitly identifies hot/cold field spots and a turntable rotating the load as a conventional way to reduce their effect.",
+        "The next sentence acknowledges that the techniques do not fully satisfy heating uniformity."
+      ],
+      "readScope": "Publication US20100155392A1, 24 June 2010; original assignee Whirlpool. Background description paragraphs at web lines 369–373 and locally archived full patent checked. No patent legal-status claim and no performance guarantee used."
+    },
+    {
+      "id": "usgs-dead-sea-industry",
+      "url": "https://eros.usgs.gov/earthshots/industry-the-dead-sea",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "usgs-dead-sea-industry.html",
+        "usgs-dead-sea-industry.txt"
+      ],
+      "archiveSHA256": "85318bdbf113dc21afbde04fbbe3263f03488bf613655034d74ddb18f1d10d08",
+      "httpStatus": 200,
+      "type": "USGS first-party Earthshots explanation",
+      "checkedDetails": [
+        "No outlet; water exits by evaporation, leaving dissolved minerals behind.",
+        "Industry pumps Dead Sea water into evaporation ponds and extracts potash raw material for fertiliser."
+      ],
+      "readScope": "Complete relevant article body. Future water-level projection and medical/cosmetic statements excluded."
+    },
+    {
+      "id": "usgs-dissolved-solids",
+      "url": "https://www.usgs.gov/mission-areas/water-resources/science/chloride-salinity-and-dissolved-solids",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "usgs-dissolved-solids.html",
+        "usgs-dissolved-solids.txt"
+      ],
+      "archiveSHA256": "77b9b19cea186184de70a030b8eaa1b3f98c63adfadb0ed7518347309e71d0f6",
+      "httpStatus": 200,
+      "type": "USGS water-science explanation",
+      "checkedDetails": [
+        "All natural waters contain dissolved solids from contact with soils, rocks and other natural materials."
+      ],
+      "readScope": "Overview and relevant mineral/weathering explanation checked. Regional US groundwater measurements are not transferred to the Dead Sea."
+    },
+    {
+      "id": "nasa-getting-saltier",
+      "url": "https://science.nasa.gov/earth/earth-observatory/getting-saltier-145373/",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "nasa-getting-saltier.html",
+        "nasa-getting-saltier.txt"
+      ],
+      "archiveSHA256": "f38c83f3377e15a9f796be3618d3b586f47a9874811c5183876c1f5f71dd16c5",
+      "httpStatus": 200,
+      "type": "NASA Earth Observatory satellite account and attributed research explanation",
+      "checkedDetails": [
+        "The Dead Sea is a salt lake; Jordan River water is an inflow.",
+        "Dated 31 July 2019: researchers found salt precipitating from water and coating the lakebed."
+      ],
+      "readScope": "Complete relevant 2019 article read. Satellite image is 21 July 2019. No present salinity, lake level, rate, saltiest-lake rank, only-tributary or no-life claims used."
+    },
+    {
+      "id": "ge-turntable-operation",
+      "url": "https://products.geappliances.com/appliance/gea-support-search-content?contentId=21123",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "ge-turntable-operation.html",
+        "ge-turntable-operation.txt"
+      ],
+      "archiveSHA256": "b11aacfc7f0b3b3bde7d35eccbf87d1ad33a65d788ea1c6bf4a83d9261ca930d",
+      "httpStatus": 200,
+      "type": "GE Appliances manufacturer support",
+      "checkedDetails": [
+        "GE turntables can normally turn clockwise or anticlockwise and need not alternate direction on subsequent starts."
+      ],
+      "readScope": "Complete relevant support explanation. Direction normality is explicitly bounded to GE models, not every microwave brand."
+    },
+    {
+      "id": "panasonic-flatbed",
+      "url": "https://shop.panasonic.com/blogs/news/thermo-sensor-microwave",
+      "publicCitation": true,
+      "checkedDate": "2026-10-17",
+      "access": "Opened with web tool; raw HTML and extracted text archived locally",
+      "archives": [
+        "panasonic-flatbed.html",
+        "panasonic-flatbed.txt"
+      ],
+      "archiveSHA256": "587f8b85a83249722d1a3b4954373d77b096d316ce3b00041356a97f06075e50",
+      "httpStatus": 200,
+      "type": "Panasonic first-party model-specific engineering/product explanation",
+      "checkedDetails": [
+        "NN-SF57RM has a hidden antenna beneath the floor which rotates microwave energy around the food without a visible turntable."
+      ],
+      "readScope": "Relevant model-specific mechanism and operating-limit paragraphs checked. No sensor accuracy, cooking performance or all-flatbed claim adopted."
+    }
+  ],
+  "excludedOrLimitedSourceChecks": [
+    {
+      "id": "ge-turntable-purpose",
+      "url": "https://www.geappliances.com/appliance/GE-Appliances-9-5-inch-Microwave-Glass-Tray-Replacement-UNIVTRAY095-UNIVTRAY095",
+      "result": "Content-type mismatch for intended support purpose: commercial replacement-tray product page, HTTP 200. Not an unavailable-page failure.",
+      "usedForClaims": false
+    },
+    {
+      "id": "whirlpool-plate-spinning",
+      "url": "https://homedelivery.whirlpoolcorp.com/blog/kitchen/microwave-not-spinning.html",
+      "result": "HTTP Error 403: Forbidden",
+      "usedForClaims": false,
+      "readScope": "No claim of successful original page/PDF access. Search snippets were not used as checked article evidence."
+    },
+    {
+      "id": "usda-microwave-cooking",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/cooking-microwave-ovens",
+      "result": "HTTP Error 403: Forbidden",
+      "usedForClaims": false,
+      "readScope": "No claim of successful original page/PDF access. Search snippets were not used as checked article evidence."
+    },
+    {
+      "id": "whirlpool-control-guide",
+      "url": "https://www.whirlpool.com/content/dam/global/documents/202107/control-guide-w11417283-revA.pdf",
+      "result": "HTTP Error 403: Forbidden",
+      "usedForClaims": false,
+      "readScope": "No claim of successful original page/PDF access. Search snippets were not used as checked article evidence."
+    }
+  ],
+  "reading": {
+    "bodyWords": [
+      211,
+      218
+    ],
+    "sectionsEach": 4,
+    "BritishEnglish": true,
+    "noNewQuizWidgetCourseOrAccountWall": true,
+    "limitations": "Dead Sea deposits are explicitly attributed to a 2019 NASA account; no present salinity number. Turntable rotation helps reduce uneven heating without guaranteeing uniformity; GE direction and Panasonic flatbed statements retain manufacturer/model scope."
+  },
+  "artwork": {
+    "mode": "Built-in ImageGen; original conceptual covers",
+    "variants": [
+      {
+        "path": "assets/images/learn/why-is-the-dead-sea-so-salty.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 118696,
+        "sha256": "4ab2120f845afce8d87c5a1781f30a36c0af423c1dd5cecee4690411ece50ca2"
+      },
+      {
+        "path": "assets/images/learn/why-is-the-dead-sea-so-salty-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 31144,
+        "sha256": "e885d57928e7f457cd8efb94ebd193d9c15d580f7d93c016d5b1dea3e52909d3"
+      },
+      {
+        "path": "assets/images/learn/why-is-the-dead-sea-so-salty-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 7902,
+        "sha256": "fbcc17746bdb0c204bd486d8685f8d3785e7bd24e112e3eb00274beb2f1cb507"
+      },
+      {
+        "path": "assets/images/learn/why-microwaves-have-a-turntable.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 55816,
+        "sha256": "d1c35952e0ee4e50bb79b25fb3d3c1e89cc67cfd3c5f088ea1831193a5dcfb0f"
+      },
+      {
+        "path": "assets/images/learn/why-microwaves-have-a-turntable-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 14150,
+        "sha256": "04f3b353ab771e1ed818de55bb75524fb6d7549c61463bf275a8987e14ec6e0c"
+      },
+      {
+        "path": "assets/images/learn/why-microwaves-have-a-turntable-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 4240,
+        "sha256": "03caca10bb1fceed8a106ca41546647818c63c8d92b083f29118868dca90ffa3"
+      }
+    ],
+    "totalBytes": 231948,
+    "review": "Root inspected originals, thumbnails and crops, then checked covers in native desktop and mobile views. The lake scene is conceptual; the pictured open microwave is switched off."
+  },
+  "validation": {
+    "preparedAt": "2026-10-17T08:57:13.067847+00:00",
+    "metadataSchemaDiscoveryPassed": true,
+    "nativeWidths": [
+      320,
+      1280
+    ],
+    "oldArticlesPreserved": 111,
+    "oldCoursesPreserved": 8,
+    "transactionTestGroups": 8,
+    "status": "Prepared; cover deployment and guarded publication follow."
+  }
+}
