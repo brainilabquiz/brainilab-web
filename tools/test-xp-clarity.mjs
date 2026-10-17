@@ -12,7 +12,7 @@ await new Promise(resolve=>setTimeout(resolve,0));
 const hero=w.document.querySelector('[data-profile-rank-hero]');
 assert.equal(w.document.querySelectorAll('[data-profile-rank-hero]').length,1);
 assert.equal(hero.closest('details'),null,'level is visible without opening an activity disclosure');
-assert.ok(hero.compareDocumentPosition(w.document.querySelector('[data-profile-rewards]'))&w.Node.DOCUMENT_POSITION_FOLLOWING);
+assert.ok(hero.compareDocumentPosition(w.document.querySelector('[data-profile-rewards]'))&w.Node.DOCUMENT_POSITION_PRECEDING);
 const render=xp=>{player={...player,xp};w.BrainiProfileSections.hydrateRankHero();return hero.querySelector('.profile-next-rank');};
 assert.match(render(0).textContent,/Blue sky/);
 assert.match(hero.textContent,/100 XP to go/);assert.match(hero.querySelector('h2').textContent,/Level 1/);

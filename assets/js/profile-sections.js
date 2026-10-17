@@ -121,8 +121,7 @@ window.BrainiProfileSections=(function(){
         <div class="profile-level-numbers"><strong>${format(progress.earnedInLevel)} <span>/ ${format(progress.neededInLevel)} XP</span></strong><small>${format(progress.currentXp)} total XP</small></div>
       </div>
       <div class="profile-next-rank">${goal?`<span class="profile-goal-art" aria-hidden="true">${goal.art}</span><span><small>Next unlock · ${goal.detail}</small><strong>${goal.name}</strong><span>${format(goal.remaining)} XP to go</span>${goal.kind!=='rank'?`<a href="#my-avatar" data-progress-goal-kind="${goal.kind}" data-progress-focus="reward">Take a look →</a>`:''}</span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest level rank</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
-      <div class="profile-level-footer">${earningGuide()}<a href="${p.streakSecuredToday?'/learn/paths/':'/daily-quiz/'}" class="profile-earn-action" data-progress-focus="earn">${p.streakSecuredToday?'Explore Academy':'Play today’s Daily'} <span aria-hidden="true">→</span></a></div>
-      <div class="profile-optional-ranks">${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link" data-progress-focus="rankings">Your rankings →</a></div>`;
+      <div class="profile-level-footer">${earningGuide()}${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link" data-progress-focus="rankings">Your rankings →</a><a href="${p.streakSecuredToday?'/learn/paths/':'/daily-quiz/'}" class="profile-earn-action" data-progress-focus="earn">${p.streakSecuredToday?'Explore Academy':'Play today’s Daily'} <span aria-hidden="true">→</span></a></div>`;
     root.querySelector('.profile-xp-guide').open=guideOpen;
     if(focusKey){
       const target=['ranks-toggle','xp-guide-toggle'].includes(focusKey)?`[data-${focusKey}]`:`[data-progress-focus="${focusKey}"]`;
@@ -228,7 +227,7 @@ window.BrainiProfileSections=(function(){
     const studio=document.querySelector('[data-profile-rewards]');
     if(!item||!studio||!window.BrainiAvatarStudioUI||selected()!=='progress')return;
     const pane=['glasses','hat','prop'].includes(item.kind)?'extras':'rewards';
-    if(open){BrainiAvatarStudioUI.showPane(studio,pane);window.BrainiWardrobeUI?.reveal(studio,item);}
+    if(open)BrainiAvatarStudioUI.showPane(studio,pane);
     // Highlight a real catalogue item without changing the saved avatar.
     const choice=studio.querySelector(`[data-reward-kind="${item.kind}"][data-reward-id="${item.id}"]`);
     if(choice){choice.classList.add('is-reward-target');choice.setAttribute('aria-describedby','linked-reward-note');
@@ -243,7 +242,6 @@ window.BrainiProfileSections=(function(){
       if(!goal||!studio||!window.BrainiAvatarStudioUI)return;
       const pane=['glasses','hat','prop'].includes(goal.dataset.progressGoalKind)?'extras':'rewards';
       BrainiAvatarStudioUI.showPane(studio,pane);
-      const item=BrainiRewardCatalog.next(BrainiData.player().xp);if(item)window.BrainiWardrobeUI?.reveal(studio,item);
       studio.querySelector(`[data-avatar-tab="${pane}"]`)?.focus({preventScroll:true});
     });
     document.querySelector('[data-profile-activity]')?.addEventListener('toggle',event=>{

@@ -118,3 +118,22 @@
 @media(max-width:1024px){.profile-next-rank{min-width:200px;max-width:290px}}
 @media(max-width:700px){.profile-next-rank{width:100%;max-width:none;box-sizing:border-box}.profile-next-rank>span:last-child{display:grid;grid-template-columns:1fr;gap:4px}.profile-next-rank>span>span{justify-self:start}.profile-next-rank small{grid-column:auto}.profile-goal-art{width:56px;height:56px}.profile-goal-art>svg{width:54px;height:54px}.profile-xp-guide dl{grid-template-columns:1fr;gap:12px}.profile-xp-guide dl>div+div{border-left:0;border-top:1px solid var(--line);padding:12px 0 0}.profile-xp-guide dt{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}.profile-optional-ranks{flex-wrap:wrap;gap:0 16px}.profile-optional-ranks .profile-rank-link{font-size:12px}}
 @media(max-width:380px){.profile-level-footer{gap:8px}.profile-earn-action{width:100%;justify-content:center;box-sizing:border-box}.profile-xp-guide{flex-basis:100%}}
+
+/* The editor comes first; progress is a compact summary below it. */
+.profile-page .profile-rank-hero{grid-template-columns:56px minmax(0,1fr) auto;gap:12px 16px;padding:16px 20px;border-top-width:3px;border-radius:14px;margin-bottom:20px}
+.profile-page .profile-progress-avatar{width:52px;height:52px}
+.profile-page .profile-rank-main h2{font-size:24px;margin:2px 0 6px}
+.profile-page .profile-rank-main h2 small{font-size:12px;padding:3px 6px}
+.profile-page .profile-rank-main .profile-level-goal{font-size:13px}
+.profile-page .profile-rank-progress{height:6px;margin:8px 0 6px}
+.profile-level-numbers{font-size:12px}
+.profile-next-rank{min-width:0;max-width:260px;padding:10px 12px;gap:10px;border-radius:10px}
+.profile-next-rank strong{font-size:15px}.profile-next-rank small{font-size:11px}.profile-next-rank>span>span{font-size:12px}
+.profile-goal-art{width:44px;height:44px;border-radius:8px}.profile-goal-art>svg{width:42px;height:42px}
+.profile-level-footer{padding-top:8px;gap:8px 20px;align-items:center}
+.profile-level-footer .profile-xp-guide,.profile-level-footer .profile-ranks{flex:0 1 auto}
+.profile-level-footer :is(.profile-xp-guide,.profile-ranks) summary{font-size:12px}
+.profile-level-footer .profile-earn-action{margin-left:auto;font-size:12px;padding:0 12px}
+.profile-level-footer .profile-rank-link{font-size:12px}
+.profile-level-footer :is(.profile-xp-guide,.profile-ranks)[open]{flex-basis:100%}
+@media(max-width:700px){.profile-page .profile-rank-hero{grid-template-columns:44px minmax(0,1fr);gap:12px;padding:16px}.profile-page .profile-progress-avatar{width:40px;height:40px}.profile-page .profile-rank-main h2{font-size:22px}.profile-next-rank{max-width:none;width:100%;box-sizing:border-box}.profile-next-rank>span:last-child{grid-template-columns:1fr auto;gap:2px 8px}.profile-next-rank small{grid-column:1/-1}.profile-next-rank a{grid-column:1/-1}.profile-level-footer{gap:0 16px}.profile-level-footer .profile-earn-action{width:auto;flex-basis:auto;margin-left:0}}
