@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-river-meander",
+  "title": "What is a river meander? Meet a bend that moves",
+  "description": "A river meander is a bend that can slowly shift across the land. Follow its sandy inside edge and discover how a river can leave a lake behind.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 146,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-river-meander.webp",
+    "small": "/assets/images/learn/what-is-a-river-meander-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-river-meander-thumb.webp",
+    "alt": "An illustrated blue river bends across green land, with pale sand on the inside of its curves",
+    "credit": "AI-generated cover illustration created for BrainiLab; a conceptual landscape, not a map of a real river.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/geography/",
+    "name": "Geography"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Take a quick General Knowledge quiz and see what else surprises you about our planet.",
+  "related": [
+    "why-is-the-ocean-salty",
+    "why-greenland-looks-so-big"
+  ],
+  "sources": [
+    {
+      "url": "https://pubs.usgs.gov/ha/ha730/ch_f/F-text2.html",
+      "name": "US Geological Survey — How meandering streams reshape the Mississippi flood plain"
+    },
+    {
+      "url": "https://eros.usgs.gov/earthshots/oxbow-lakes",
+      "name": "US Geological Survey EROS — Oxbow lakes on the Mamoré River"
+    }
+  ],
+  "sections": [
+    {
+      "id": "what-is-a-meander",
+      "title": "A bend with a wandering habit",
+      "html": "<p><strong>A river meander is a winding bend in a river. It can change position as flowing water wears away one bank and leaves sediment along another.</strong></p><p>On a map, a looping river can look like someone dropped a piece of blue ribbon. The surprising part is that the ribbon does not have to stay in the same place.</p>"
+    },
+    {
+      "id": "outside-and-inside",
+      "title": "One side loses, the other gains",
+      "html": "<p>The two banks have different jobs. Water erodes the <strong>outside</strong> of a bend, carrying material away. Sand and other sediment collect on the <strong>inside</strong>, building a deposit called a point bar.</p><p>The <a href=\"https://pubs.usgs.gov/ha/ha730/ch_f/F-text2.html\">US Geological Survey describes this process</a> along the Mississippi. As erosion and deposition continue, a bend can shift sideways across its flood plain.</p>"
+    },
+    {
+      "id": "how-an-oxbow-forms",
+      "title": "Sometimes the river takes a shortcut",
+      "html": "<p>A loop can grow until the river cuts through a shorter route. The abandoned bend may become a separate, curved <strong>oxbow lake</strong>.</p><p><a href=\"https://eros.usgs.gov/earthshots/oxbow-lakes\">USGS satellite images of Bolivia’s Mamoré River</a> show these cutoffs over time. Those little curved lakes beside the channel are clues to where the river used to flow.</p>"
+    },
+    {
+      "id": "look-for-old-bends",
+      "title": "Read the landscape’s old handwriting",
+      "html": "<p>Look at a satellite view of a winding river. Can you spot an abandoned loop beside the present channel? You may be looking at an earlier version of the same river.</p><p>Follow the water farther downstream and there is another puzzle: <a href=\"/learn/why-is-the-ocean-salty/\">why are rivers fresh when the ocean is salty?</a></p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T07:43:38Z",
+  "updatedAt": "2026-10-17T07:43:38Z",
+  "minutes": 2
+}
