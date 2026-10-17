@@ -1,0 +1,371 @@
+{
+  "researchDate": "2026-10-17",
+  "timeZone": "Europe/Madrid",
+  "demand": {
+    "source": "Native Google Trends Explore, observed in Codex browser by root",
+    "evidenceFiles": [
+      "trends-focused.txt",
+      "trends-focused.png"
+    ],
+    "date": "2026-10-17",
+    "market": "United States",
+    "queryLanguage": "English",
+    "interfaceLanguage": "Catalan",
+    "timeRange": "Past 12 months; chart labels 12 October 2025 through 11 October 2026; last week partial",
+    "searchType": "Web Search",
+    "categories": "All categories",
+    "comparison": [
+      {
+        "term": "why is the keyboard qwerty",
+        "relativeAverage": 1,
+        "qualification": "Sparse query with many rounded zero weeks; not a monthly search volume"
+      },
+      {
+        "term": "what is a meander",
+        "relativeAverage": 41
+      },
+      {
+        "term": "qwerty meaning",
+        "relativeAverage": 16
+      }
+    ],
+    "relatedEvidence": [
+      {
+        "parent": "why is the keyboard qwerty",
+        "term": "why is the keyboard qwerty and not abc",
+        "type": "Rising",
+        "label": "Breakout"
+      },
+      {
+        "parent": "what is a meander",
+        "term": "what is a meander in geography",
+        "type": "Rising",
+        "change": "+140%"
+      },
+      {
+        "parent": "qwerty meaning",
+        "term": "qwerty keyboard",
+        "type": "Top",
+        "relativeScore": 100
+      },
+      {
+        "parent": "qwerty meaning",
+        "term": "qwerty keyboard meaning",
+        "type": "Top",
+        "relativeScore": 97
+      },
+      {
+        "parent": "qwerty meaning",
+        "term": "qwerty definition",
+        "type": "Top",
+        "relativeScore": 19
+      }
+    ],
+    "selection": "Use meander definition plus erosion/oxbow explanation, rather than claim exact why-do-rivers-meander demand. Use QWERTY meaning, typewriter history and uncertainty, excluding broad keyboard shopping/device terms and keysmash queries.",
+    "limits": "Normalised sampled relative interest, not absolute searches, search difficulty, international totals or promised visits. The two articles are written in English for an international audience, but the observed market is the US only. Zeros do not prove no searches."
+  },
+  "intent": [
+    {
+      "slug": "what-is-a-river-meander",
+      "primaryKeyword": "what is a meander",
+      "naturalVariants": [
+        "river meander",
+        "meander in geography",
+        "oxbow lake",
+        "erosion and deposition"
+      ],
+      "readerNeed": "Define the feature quickly, explain why the shape moves and recognise an abandoned loop without a long school-style worksheet.",
+      "serpObserved": "Searches for why do rivers meander and USGS meander return explanatory geography pages, school materials, USGS educational/research records and oxbow discussions. Root's native Trends refinement selects the supported definition intent rather than the unmeasured exact why query.",
+      "competingExamples": [
+        {
+          "url": "https://www.usgs.gov/educational-resources/find-feature-meander",
+          "type": "Official educational definition; discovery result reviewed but direct opening timed out; excluded from article citations"
+        },
+        {
+          "url": "https://geographyworlds.com/blog/why-do-rivers-meander/",
+          "type": "Long explanatory geography result; not used as a factual source"
+        },
+        {
+          "url": "https://eros.usgs.gov/earthshots/oxbow-lakes",
+          "type": "Official satellite-image explainer; opened and cited"
+        }
+      ],
+      "ownDifference": "215-word accessible explanation, two-bank contrast, actual USGS time-series link and one connected salinity read; no unsupported universal claim that all rivers develop the same shape."
+    },
+    {
+      "slug": "why-keyboard-qwerty-layout",
+      "primaryKeyword": "why is the keyboard qwerty",
+      "naturalVariants": [
+        "QWERTY meaning",
+        "QWERTY keyboard",
+        "keyboard not ABC",
+        "typewriter"
+      ],
+      "readerNeed": "Explain the odd name and inherited layout while distinguishing evidence from the familiar oversimplified slow-typists story.",
+      "serpObserved": "Exact question returns WSU's fresh historian interview, innovation histories, commercial keyboard/typing blogs and explanatory videos. Broad qwerty keyboard queries also contain device shopping intent; excluded from selection.",
+      "competingExamples": [
+        {
+          "url": "https://askdruniverse.wsu.edu/2026/08/27/keyboard-keys-not-abc-order/",
+          "type": "Expert interview; opened and cited"
+        },
+        {
+          "url": "https://invention.si.edu/invention-stories/was-patent-application-typewriter-handwritten",
+          "type": "Museum historical explainer; discovery text available, direct fetch forbidden; excluded from article citations"
+        },
+        {
+          "url": "https://fasttypinglab.com/blog/why-is-keyboard-qwerty/",
+          "type": "Typing tool blog; search-result intent only, not a factual source"
+        }
+      ],
+      "ownDifference": "Short original explanation uses an inspected original 1878 patent drawing and explicit uncertainty, without claiming that QWERTY was certainly designed to slow typing or that it is the best layout."
+    }
+  ],
+  "checkedSources": [
+    {
+      "id": "usgs-aquifer",
+      "url": "https://pubs.usgs.gov/ha/ha730/ch_f/F-text2.html",
+      "publisher": "US Geological Survey",
+      "title": "Ground Water Atlas of the United States, Segment 5 \u2014 Surficial aquifer system",
+      "type": "Government scientific explanation based on Mississippi alluvial geology",
+      "opening": "Web browser fetch returned 403, but independent Python HTTPS GET returned 200. Full HTML and parsed text saved and exact paragraph read. This is not a claim that the web fetch succeeded.",
+      "files": [
+        "usgs-aquifer.html",
+        "usgs-aquifer.txt"
+      ],
+      "supports": [
+        "Meandering streams shift by eroding the outside of bends and depositing sediment on the inside of downstream bends",
+        "Point bars and flood-plain landforms",
+        "A cutoff shortens the channel and can leave a crescent-shaped oxbow lake"
+      ],
+      "bounds": [
+        "No numerical meander migration rate asserted",
+        "No claim that every river meanders",
+        "No one-force explanation of all river shapes",
+        "No river safety or engineering guidance"
+      ]
+    },
+    {
+      "id": "usgs-oxbow",
+      "url": "https://eros.usgs.gov/earthshots/oxbow-lakes",
+      "publisher": "US Geological Survey EROS",
+      "title": "Oxbow Lakes",
+      "type": "Government observation with dated Landsat image series",
+      "opening": "Web tool opened full page and independent HTTPS GET returned 200. Full HTML and text saved.",
+      "files": [
+        "usgs-oxbow.html",
+        "usgs-oxbow.txt"
+      ],
+      "supports": [
+        "A meander can form a cutoff leaving a separate oxbow lake",
+        "Dated imagery explicitly identifies the Mamor\u00e9 River in Bolivia, including images from 1984 through 2023",
+        "Curved water bodies beside the channel can mark old bends"
+      ],
+      "bounds": [
+        "Cover is conceptual, not an illustration of the Mamor\u00e9",
+        "No guaranteed timing of cutoff",
+        "No claim oxbow lakes remain permanently unchanged"
+      ]
+    },
+    {
+      "id": "wsu-qwerty",
+      "url": "https://askdruniverse.wsu.edu/2026/08/27/keyboard-keys-not-abc-order/",
+      "publisher": "Washington State University",
+      "title": "Why are the keyboard keys not in ABC order?",
+      "publishedDate": "2026-08-27",
+      "type": "Firsthand interview with librarian and trained historian Erin Hvizdak",
+      "opening": "Web tool opened full article and independent HTTPS GET returned 200. Full HTML and parsed text saved.",
+      "files": [
+        "wsu-qwerty.html",
+        "wsu-qwerty.txt"
+      ],
+      "supports": [
+        "QWERTY name comes from top-row letters",
+        "1870s typewriter origin",
+        "Exact design motive remains disputed",
+        "Slow-typing/jamming account is questioned and telegraph-operator explanation discussed",
+        "Familiarity contributed to persistence into computers"
+      ],
+      "bounds": [
+        "Competing explanations attributed as explanations, not established fact",
+        "No claim QWERTY is faster, better or the only keyboard",
+        "No unsupported learning-speed or ergonomic claims"
+      ]
+    },
+    {
+      "id": "sholes-patent",
+      "url": "https://patents.google.com/patent/US207559A/en",
+      "originalPdf": "https://patentimages.storage.googleapis.com/d4/a4/c2/15e7e6b7bc73dd/US207559.pdf",
+      "publisher": "Original US Patent Office patent, hosted by Google Patents",
+      "title": "C. Latham Sholes \u2014 Improvement in type-writing machines, US207559",
+      "publishedDate": "1878-08-27",
+      "type": "Original primary document and diagram",
+      "opening": "Google Patents page and seven-page PDF opened in web tool; actual PDF downloaded via HTTPS200; page2 rendered using Poppler and visually inspected. OCR is imperfect, so date, inventor and Fig3 lettering checked against drawing.",
+      "files": [
+        "US207559.pdf",
+        "US207559-sheet2.png"
+      ],
+      "supports": [
+        "Patent number207559 dated27August1878 names C.L.Sholes",
+        "Figure3 top letter row starts QWERTY; other details differ from modern keyboard, so article avoids saying identical",
+        "Description of key/type movement, printing against inking substance and paper, and letter-space movement"
+      ],
+      "bounds": [
+        "Patent is evidence of layout and mechanics, not proof of intention",
+        "No claim this is the first keyboard or first patent",
+        "Original figure not reused as cover artwork"
+      ]
+    }
+  ],
+  "claimMap": {
+    "what-is-a-river-meander": [
+      {
+        "section": "what-is-a-meander",
+        "claims": "Bend definition and changing course",
+        "sources": [
+          "usgs-aquifer",
+          "usgs-oxbow"
+        ]
+      },
+      {
+        "section": "outside-and-inside",
+        "claims": "Outer erosion, inner deposition, point bar, lateral movement",
+        "sources": [
+          "usgs-aquifer"
+        ]
+      },
+      {
+        "section": "how-an-oxbow-forms",
+        "claims": "Shortcut, isolated lake and Mamor\u00e9 satellite sequence",
+        "sources": [
+          "usgs-oxbow"
+        ]
+      },
+      {
+        "section": "look-for-old-bends",
+        "claims": "Optional observation linked to documented cutoff mechanism; salinity internal link is a separate existing explanation",
+        "sources": [
+          "usgs-oxbow"
+        ]
+      }
+    ],
+    "why-keyboard-qwerty-layout": [
+      {
+        "section": "what-qwerty-means",
+        "claims": "Name, typewriter origins and uncertainty",
+        "sources": [
+          "wsu-qwerty",
+          "sholes-patent"
+        ]
+      },
+      {
+        "section": "the-patent-paper-trail",
+        "claims": "Patent Fig3, date and mechanical impression/letter space",
+        "sources": [
+          "sholes-patent"
+        ]
+      },
+      {
+        "section": "was-qwerty-meant-to-slow-typing",
+        "claims": "Two debated theories attributed to historian interview",
+        "sources": [
+          "wsu-qwerty"
+        ]
+      },
+      {
+        "section": "why-the-layout-stayed",
+        "claims": "Offices and schools, familiarity into computers; finger-location remark is reader observation rather than a research finding",
+        "sources": [
+          "wsu-qwerty"
+        ]
+      }
+    ]
+  },
+  "publicCopyChecks": [
+    "British English",
+    "Direct answer first",
+    "Four short sections each",
+    "200\u2013280 body words",
+    "No forced trending words or keyword list",
+    "No internal SEO or monetisation objectives in body",
+    "No IQ/learning/traffic promises",
+    "No artificial FAQ block",
+    "No mandatory activity or account wall",
+    "No changed existing Academy lesson/quiz data"
+  ],
+  "metrics": {
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "trafficPromise": false
+  },
+  "reading": {
+    "bodyWords": [
+      215,
+      220
+    ],
+    "shortRegularArticles": true,
+    "sectionsEach": 4,
+    "newQuiz": false
+  },
+  "artwork": {
+    "mode": "Built-in image_gen",
+    "variants": [
+      {
+        "path": "assets/images/learn/what-is-a-river-meander.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 171432,
+        "sha256": "a50867e4894f149a77c906324cb6dd9842022a7b9566767486dfafaee4bd3429"
+      },
+      {
+        "path": "assets/images/learn/what-is-a-river-meander-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 45412,
+        "sha256": "c1c10c3a8867104e0eaadb9e9ef17d9b7d7900c3b86693535866d03a8f5e3448"
+      },
+      {
+        "path": "assets/images/learn/what-is-a-river-meander-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 11684,
+        "sha256": "27149ddc092ef4f460a13a246e14f95e0d0bed977cf413e91df9ebd3f48db800"
+      },
+      {
+        "path": "assets/images/learn/why-keyboard-qwerty-layout.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 71616,
+        "sha256": "b46944f4e86ca85d9a29db89e871460d44c3fad3bef4f3fd3658761c37811bab"
+      },
+      {
+        "path": "assets/images/learn/why-keyboard-qwerty-layout-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 24638,
+        "sha256": "5e8450854e6a108f5de3f0bf9c7797fe19fd31d9bc719f16a17752d2f5db1e26"
+      },
+      {
+        "path": "assets/images/learn/why-keyboard-qwerty-layout-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 8360,
+        "sha256": "3a14d3fdb3f4cd57e751390cd99ef545a6193c5355f0e2c30c04a08e1db42250"
+      }
+    ],
+    "totalBytes": 333142,
+    "review": "Originals, thumbnails and wide crops inspected. Exact Q W E R T Y labels; sand on inner river bends. Conceptual original illustrations with honest credits."
+  },
+  "validation": {
+    "preparedAt": "2026-10-17T07:48:44.885221+00:00",
+    "metadataSchemaDiscoveryPassed": true,
+    "nativeWidths": [
+      320,
+      1280
+    ],
+    "oldArticlesPreserved": 105,
+    "oldCoursesPreserved": 8,
+    "transactionTestGroups": 8,
+    "status": "Prepared; cover deployment then guarded publication and live checks follow."
+  }
+}
