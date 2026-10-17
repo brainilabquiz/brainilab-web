@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-the-stroop-effect",
+  "title": "What is the Stroop effect? When a word gets in the way",
+  "description": "The Stroop effect makes a simple colour task surprisingly awkward. Discover what happens when a colour word and its ink disagree, and what experiments show.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 156,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-the-stroop-effect.webp",
+    "small": "/assets/images/learn/what-is-the-stroop-effect-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-the-stroop-effect-thumb.webp",
+    "alt": "Two cream cards on a wooden desk: BLUE printed in red and RED printed in blue, with a hand pointing towards them",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a photograph of a research participant.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Fancy a word puzzle? Try a round of Connections.",
+  "related": [
+    "does-reading-aloud-help-memory",
+    "confidence-is-not-a-memory-test"
+  ],
+  "sources": [
+    {
+      "url": "https://psychclassics.yorku.ca/Stroop/",
+      "name": "J. Ridley Stroop (1935) — Studies of interference in serial verbal reactions: original article"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6600873/",
+      "name": "Kinoshita, De Wit and Norris (2017) — The Magic of Words Reconsidered: original experiments"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-word-and-its-ink",
+      "title": "The word says one thing; the ink says another",
+      "html": "<p><strong>The Stroop effect is the interference that can make naming a colour slower when a printed word names a different colour.</strong></p><p>Imagine <strong>RED printed in blue ink</strong>. The task is to say “blue”, ignoring the word. A perfectly familiar word has suddenly become an unhelpful neighbour.</p>"
+    },
+    {
+      "id": "what-stroop-compared",
+      "title": "A simple task became a classic experiment",
+      "html": "<p>In <a href=\"https://psychclassics.yorku.ca/Stroop/\">his 1935 study</a>, J. Ridley Stroop asked 100 students to name ink colours while ignoring conflicting colour words. He also timed them naming coloured squares.</p><p>On average, naming colours took much longer with the conflicting words. The task was not simply to read a colourful page: the instruction changed which information mattered.</p>"
+    },
+    {
+      "id": "two-responses-compete",
+      "title": "Reading can intrude on another job",
+      "html": "<p>A familiar written word can bring its spoken name to mind while you are trying to name the ink. Those competing responses help explain the awkward pause.</p><p>Researchers study this as part of <strong>selective attention</strong>: following one feature while ignoring another. The exact processes behind the interference are still debated.</p>"
+    },
+    {
+      "id": "a-task-with-limits",
+      "title": "One mix-up is not a verdict on your brain",
+      "html": "<p><a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC6600873/\">Two experiments published in 2017</a> found interference both when participants spoke colour names and when they pressed keys. Other distraction patterns differed between the tasks, showing that the details matter.</p><p>This small illustration is not an intelligence or medical test. For another surprise involving familiar things, discover <a href=\"/learn/confidence-is-not-a-memory-test/\">why recognising a logo does not guarantee remembering its details</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T10:55:44Z",
+  "updatedAt": "2026-10-17T10:55:44Z",
+  "minutes": 2
+}
