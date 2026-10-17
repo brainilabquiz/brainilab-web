@@ -1,0 +1,320 @@
+{
+  "checkedDate": "2026-10-17",
+  "articles": [
+    {
+      "slug": "what-is-a-fjord",
+      "title": "What is a fjord? A valley with the sea inside",
+      "topic": "Geography",
+      "url": "https://brainilabgames.com/learn/what-is-a-fjord/",
+      "queryIntent": "A geographic definition with a short formation explanation; not cruise or travel-booking advice.",
+      "sources": [
+        {
+          "url": "https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm",
+          "name": "National Park Service — U-Shaped Valleys, Fjords, and Hanging Valleys",
+          "type": "Official geoscience explanation",
+          "location": "U-Shaped Valleys and Fjords sections",
+          "supports": "Moving glaciers widen valleys and steepen their sides; a glacial trough occupied by seawater forms a fjord."
+        },
+        {
+          "url": "https://www.nps.gov/kefj/learn/nature/glaciers.htm",
+          "name": "National Park Service — Kenai Fjords: glacier movement and erosion",
+          "type": "Official explanation of Kenai Fjords glacial processes",
+          "location": "Slip Sliding Away; All that the Glacier Leaves Behind",
+          "supports": "Flowing ice erodes the landscape; rock carried in ice can scratch and gouge bedrock."
+        },
+        {
+          "url": "https://oceanservice.noaa.gov/education/tutorial_estuaries/est04_geology.html",
+          "name": "NOAA — Classifying Estuaries: By Geology, Fjords section",
+          "type": "Official marine-science explanation",
+          "location": "Fjords section",
+          "supports": "Retreat can expose a trough to seawater, with freshwater inputs as well. Examples extend beyond Norway."
+        }
+      ],
+      "claimLimits": [
+        "A glacial valley needs seawater occupation to be a fjord; not every U-shaped valley qualifies.",
+        "No universal formation duration, salinity, depth or exclusive Norway claim.",
+        "The sparse how-formed query is covered naturally within the definition article, not treated as a separate proven opportunity."
+      ],
+      "art": {
+        "alt": "A narrow sea inlet between steep rocky valley sides, with a small kayak on the calm water",
+        "credit": "AI-generated conceptual landscape created for BrainiLab; not a photograph of a named fjord.",
+        "position": 50,
+        "variants": [
+          {
+            "path": "assets/images/learn/what-is-a-fjord.webp",
+            "width": 960,
+            "height": 640,
+            "bytes": 132262,
+            "sha256": "885e56406cec63c971d6fbc4a5101c939675c4ce2abfdb5be6bf8eb2ab524e13"
+          },
+          {
+            "path": "assets/images/learn/what-is-a-fjord-small.webp",
+            "width": 480,
+            "height": 320,
+            "bytes": 36502,
+            "sha256": "e588197484734d29748e2659974e12b933aa40424f9699fcf427edd4575d7151"
+          },
+          {
+            "path": "assets/images/learn/what-is-a-fjord-thumb.webp",
+            "width": 240,
+            "height": 160,
+            "bytes": 9816,
+            "sha256": "b1a618a33e8adf31d54f8950c7beae54ce847ffce673f40950a397c9de700653"
+          }
+        ],
+        "scope": "A conceptual glacial sea inlet, not a photograph or map of a named location."
+      }
+    },
+    {
+      "slug": "why-did-the-titanic-sink",
+      "title": "Why did the Titanic sink? How flooding overwhelmed the ship",
+      "topic": "History",
+      "url": "https://brainilabgames.com/learn/why-did-the-titanic-sink/",
+      "queryIntent": "The historical physical sinking mechanism, rather than the film, a conspiracy or the casualty count.",
+      "sources": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/SERIALSET-06179_00_00-019-0933-0000/pdf/SERIALSET-06179_00_00-019-0933-0000.pdf",
+          "name": "British Wreck Commissioner’s inquiry (1912) — Report on the loss of the steamship Titanic, pages 5, 35 and 45",
+          "type": "Original British inquiry, U.S. Senate reprint",
+          "location": "Printed pages 5, 35 and 45",
+          "supports": "The historical inquiry records the dates, attributes the collision to excessive speed, and explains progressive flooding above the bulkheads."
+        },
+        {
+          "url": "https://sanctuaries.noaa.gov/maritime/titanic/expedition_results.html",
+          "name": "NOAA Maritime Heritage Program — The 2010 expedition and mapping of Titanic’s wreck",
+          "type": "Official 2010 expedition-results account",
+          "location": "Wreck photo-mosaics and detached hull sections",
+          "supports": "Later mapping documents separated bow and stern sections; it does not establish the iceberg wound geometry."
+        }
+      ],
+      "claimLimits": [
+        "The inquiry is primary evidence of its own findings, not the final word on all later forensic questions.",
+        "No claim that any arbitrary four compartments were safe or exactly five compartments were damaged.",
+        "No steel, rivet, lifeboat or movie scene is presented as the proven sole sinking cause.",
+        "The inquiry’s obsolete intact-sinking description is not repeated as modern fact."
+      ],
+      "art": {
+        "alt": "An ocean-liner scale model with four funnels on a wooden table beside a small iceberg model",
+        "credit": "AI-generated conceptual model scene created for BrainiLab; not an archival photograph or an exact reconstruction.",
+        "position": 50,
+        "variants": [
+          {
+            "path": "assets/images/learn/why-did-the-titanic-sink.webp",
+            "width": 960,
+            "height": 640,
+            "bytes": 100872,
+            "sha256": "d5c18c78e56ebafdd84bc0a49b86c6134b4a38842453e3b327e58221280b5824"
+          },
+          {
+            "path": "assets/images/learn/why-did-the-titanic-sink-small.webp",
+            "width": 480,
+            "height": 320,
+            "bytes": 34244,
+            "sha256": "4a6d2b81acb1eb86a902464ab3f49bf69f541c2ef66c8a8d91e3089307eb7f55"
+          },
+          {
+            "path": "assets/images/learn/why-did-the-titanic-sink-thumb.webp",
+            "width": 240,
+            "height": 160,
+            "bytes": 11100,
+            "sha256": "815a807b9217553a4eb3671589bc5fe414fd1cc005f67426d22758df5797b678"
+          }
+        ],
+        "scope": "A conceptual ocean-liner illustration, not an archival image or exact collision reconstruction."
+      }
+    }
+  ],
+  "demand": {
+    "tool": "Native Google Trends",
+    "terms": [
+      "what is a fjord",
+      "how are fjords formed",
+      "why did the titanic sink"
+    ],
+    "scope": "Past 12 months, All categories, Web Search, English terms; no searcher-language filter.",
+    "markets": [
+      {
+        "market": "Worldwide",
+        "capturedAt": "2026-10-17T11:15:31.863Z",
+        "url": "https://trends.google.com/trends/explore?q=what%20is%20a%20fjord,how%20are%20fjords%20formed,why%20did%20the%20titanic%20sink&hl=en",
+        "range": "Past12months; weekly labels12Oct2025–11Oct2026; latest week possibly partial",
+        "category": "All categories",
+        "searchType": "Web Search",
+        "language": "English search terms/UI, not a searcher-language filter",
+        "series": [
+          {
+            "term": "what is a fjord",
+            "displayedRelativeAverage": 63,
+            "weeks": 53,
+            "nonZeroWeeks": 53,
+            "minimum": 31,
+            "median": 63,
+            "maximum": 100,
+            "latest": 41,
+            "peakDates": [
+              "‪Nov 30, 2025‬",
+              "‪May 3, 2026‬"
+            ]
+          },
+          {
+            "term": "how are fjords formed",
+            "displayedRelativeAverage": 0,
+            "weeks": 53,
+            "nonZeroWeeks": 3,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 9,
+            "latest": 1,
+            "peakDates": [
+              "‪Jun 14, 2026‬"
+            ]
+          },
+          {
+            "term": "why did the titanic sink",
+            "displayedRelativeAverage": 24,
+            "weeks": 53,
+            "nonZeroWeeks": 52,
+            "minimum": 0,
+            "median": 22,
+            "maximum": 51,
+            "latest": 17,
+            "peakDates": [
+              "‪Apr 12, 2026‬"
+            ]
+          }
+        ]
+      },
+      {
+        "market": "United States",
+        "capturedAt": "2026-10-17T11:16:03.721Z",
+        "url": "https://trends.google.com/trends/explore?geo=US&q=what%20is%20a%20fjord,how%20are%20fjords%20formed,why%20did%20the%20titanic%20sink&hl=en",
+        "range": "Past12months; weekly labels12Oct2025–11Oct2026; latest week possibly partial",
+        "category": "All categories",
+        "searchType": "Web Search",
+        "language": "English search terms/UI, not a searcher-language filter",
+        "series": [
+          {
+            "term": "what is a fjord",
+            "displayedRelativeAverage": 71,
+            "weeks": 53,
+            "nonZeroWeeks": 53,
+            "minimum": 31,
+            "median": 71,
+            "maximum": 100,
+            "latest": 60,
+            "peakDates": [
+              "‪Mar 1, 2026‬",
+              "‪May 24, 2026‬"
+            ]
+          },
+          {
+            "term": "how are fjords formed",
+            "displayedRelativeAverage": 0,
+            "weeks": 53,
+            "nonZeroWeeks": 2,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 3,
+            "latest": 2,
+            "peakDates": [
+              "‪Oct 4, 2026‬"
+            ]
+          },
+          {
+            "term": "why did the titanic sink",
+            "displayedRelativeAverage": 37,
+            "weeks": 53,
+            "nonZeroWeeks": 46,
+            "minimum": 0,
+            "median": 38,
+            "maximum": 86,
+            "latest": 24,
+            "peakDates": [
+              "‪Apr 12, 2026‬"
+            ]
+          }
+        ]
+      },
+      {
+        "market": "United Kingdom",
+        "capturedAt": "2026-10-17T11:16:36.457Z",
+        "url": "https://trends.google.com/trends/explore?geo=GB&q=what%20is%20a%20fjord,how%20are%20fjords%20formed,why%20did%20the%20titanic%20sink&hl=en",
+        "range": "Past12months; weekly labels12Oct2025–11Oct2026; latest week possibly partial",
+        "category": "All categories",
+        "searchType": "Web Search",
+        "language": "English search terms/UI, not a searcher-language filter",
+        "series": [
+          {
+            "term": "what is a fjord",
+            "displayedRelativeAverage": 14,
+            "weeks": 53,
+            "nonZeroWeeks": 13,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 100,
+            "latest": 20,
+            "peakDates": [
+              "‪Dec 21, 2025‬"
+            ]
+          },
+          {
+            "term": "how are fjords formed",
+            "displayedRelativeAverage": 0,
+            "weeks": 53,
+            "nonZeroWeeks": 0,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 0,
+            "latest": 0,
+            "peakDates": []
+          },
+          {
+            "term": "why did the titanic sink",
+            "displayedRelativeAverage": 4,
+            "weeks": 53,
+            "nonZeroWeeks": 5,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 63,
+            "latest": 18,
+            "peakDates": [
+              "‪Jan 18, 2026‬"
+            ]
+          }
+        ]
+      }
+    ],
+    "relevantTopQueries": {
+      "what is a fjord": {
+        "what is a fjord in norway": 73,
+        "fjord meaning": 29,
+        "fjord definition": 29
+      },
+      "why did the titanic sink": {
+        "how did the titanic sink": 100,
+        "when did the titanic sink": 72
+      }
+    },
+    "interpretation": "The definition and historical sinking questions recur in the worldwide and U.S. comparisons. UK exact-question data is sparse. Film/movie rising queries are excluded from the rationale.",
+    "limits": [
+      "Each market/chart is separately normalised; indices are not monthly volume and not comparable across countries. Do not sum close variants.",
+      "The formation variant is weak/sparse: a displayed zero is not evidence of no searches. It is addressed naturally within the useful fjord definition, not a separate targeted post.",
+      "GB exact-question observations are sparse and do not establish strong recurring UK demand.",
+      "Worldwide fjord rising film/movie rows and Titanic film rows are explicitly excluded from the justification. Top definition/how-sinking questions and US/Worldwide recurring rows support the actual educational intents.",
+      "English query terms do not filter all searchers to English, and Trends matches search terms rather than supplying exact-query monthly counts.",
+      "Search-result intent checked via primary educational/governing sources; no current Google organic position or guaranteed ranking is claimed."
+    ],
+    "absoluteMonthlyVolume": null,
+    "difficulty": null,
+    "cpc": null,
+    "ranking": null,
+    "trafficEstimate": null
+  },
+  "sourceAccessLimits": [
+    "The original inquiry PDF was downloaded from the government archive; relevant scanned pages and its public-domain transcription were checked.",
+    "The NOAA expedition page contains a server-side include warning, while the substantive expedition account remains readable.",
+    "Unsuccessful USGS and Library of Congress opens were not counted as read sources."
+  ],
+  "editorialFormat": "Two short regular articles, each with four sections, a direct opening answer, contextual links and an optional game invitation.",
+  "performanceLimit": "Research and access checks do not establish indexing, rankings, visits, account creation or AI citations."
+}

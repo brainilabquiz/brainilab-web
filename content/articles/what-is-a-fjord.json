@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-a-fjord",
+  "title": "What is a fjord? A valley with the sea inside",
+  "description": "A fjord is a sea inlet shaped by glaciers. Discover how moving ice carves its steep valley, why seawater fills it and where to find examples beyond Norway.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 158,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-fjord.webp",
+    "small": "/assets/images/learn/what-is-a-fjord-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-fjord-thumb.webp",
+    "alt": "A narrow sea inlet between steep rocky valley sides, with a small kayak on the calm water",
+    "credit": "AI-generated conceptual landscape created for BrainiLab; not a photograph of a named fjord.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/geography/",
+    "name": "Geography"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals"
+  },
+  "practice": "Fancy a geography round? Try the World Capitals Quiz.",
+  "related": [
+    "what-is-a-river-meander",
+    "why-is-the-ocean-salty"
+  ],
+  "sources": [
+    {
+      "url": "https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm",
+      "name": "National Park Service — U-Shaped Valleys, Fjords, and Hanging Valleys"
+    },
+    {
+      "url": "https://www.nps.gov/kefj/learn/nature/glaciers.htm",
+      "name": "National Park Service — Kenai Fjords: glacier movement and erosion"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/education/tutorial_estuaries/est04_geology.html",
+      "name": "NOAA — Classifying Estuaries: By Geology, Fjords section"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-sea-filled-valley",
+      "title": "A piece of sea reaches inland",
+      "html": "<p><strong>A fjord is a long, narrow sea inlet occupying a steep-sided valley shaped by glaciers.</strong> Its water connects to the ocean; the dramatic walls tell an older story about ice.</p><p>At first glance, it might look like a river with exceptionally ambitious banks. The difference is how that valley was made.</p>"
+    },
+    {
+      "id": "ice-shapes-the-trough",
+      "title": "The landscape had a very heavy sculptor",
+      "html": "<p>Glaciers are moving masses of ice. As they flow through valleys, they can widen the floor and steepen the sides, leaving a <strong>U-shaped cross-section</strong>. <a href=\"https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm\">The National Park Service explains this reshaping</a>.</p><p>Rock and gravel carried by the ice can scratch and gouge bedrock. <a href=\"https://www.nps.gov/kefj/learn/nature/glaciers.htm\">Kenai Fjords’ glacier guide</a> shows these smaller marks alongside the much larger valleys.</p>"
+    },
+    {
+      "id": "the-sea-takes-the-space",
+      "title": "When the ice retreats, water occupies the trough",
+      "html": "<p>Where the glacier-shaped valley extends below sea level and opens to the ocean, seawater can fill it. That makes the inlet a fjord.</p><p>It is not simply a valley full of melted ice. Rivers and meltwater can enter a fjord, but its sea connection matters. <a href=\"https://oceanservice.noaa.gov/education/tutorial_estuaries/est04_geology.html\">NOAA describes the flooding and freshwater input</a>.</p>"
+    },
+    {
+      "id": "beyond-norway",
+      "title": "Norway has company",
+      "html": "<p>Norway is famous for fjords, but they also occur in places including Alaska, Canada, Chile and New Zealand. The useful clues are the glacially shaped valley and the sea inside it.</p><p>For a different kind of watery landscape, meet <a href=\"/learn/what-is-a-river-meander/\">a river bend that can move</a>. Flowing water and moving ice leave different signatures.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T11:21:51Z",
+  "updatedAt": "2026-10-17T11:21:51Z",
+  "minutes": 2
+}
