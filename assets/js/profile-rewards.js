@@ -5,7 +5,7 @@ window.BrainiProfileRewards=(function(){
   function render(){
     root=root||document.querySelector('[data-profile-rewards]');if(!root?.querySelector('[data-style-status]'))return;
     const state=S.snapshot(),player=BrainiData.player(),total=C.xp(player.xp);
-    if(owner!==state.owner){owner=state.owner;dirty=false;window.BrainiWardrobeUI?.reset(root);}
+    if(owner!==state.owner){owner=state.owner;dirty=false;}
     // Reconnects can refresh fields edited in another tab. Keep only this draft's changes.
     const changes=dirty?Object.fromEntries(Object.keys(C.groups).filter(key=>draft[key]!==baseline[key]).map(key=>[key,draft[key]])):{};
     draft=C.available({...state.style,...changes},total,state.academy,state.discovery);baseline={...state.style};
