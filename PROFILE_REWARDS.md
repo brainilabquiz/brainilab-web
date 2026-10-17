@@ -171,8 +171,8 @@ https://support.chess.com/en/articles/8701403-how-do-i-change-my-icon-or-flair
 Official API reference checked 16 October 2026:
 https://supabase.com/docs/reference/javascript/auth-updateuser
 
-The wordplay collection now contains 24 accessories: seven glasses, eight hats
-and nine props (excluding None). New choices are Eye spy (2,250 XP), Dough-eyed
+The first wordplay extension introduced 24 accessories: seven glasses, eight hats
+and nine props (excluding None). Those choices include Eye spy (2,250 XP), Dough-eyed
 (6,500), A-maize-ing (2,200), Brain waves (5,500), Train of thought (3,200) and
 On a roll (7,500). All previous IDs and unlock thresholds remain valid. All
 Little extras categories remain expanded: glasses, hats and props are ordinary
@@ -218,7 +218,7 @@ propagation. If a menu/dialog blocks the first timer, closing it schedules a new
 new authentication flow or gameplay write is introduced.
 
 Additional validation: `tools/test-avatar-collection.mjs` checks all six unlocks,
-safe original SVG, accordion/cancel behavior and every diploma boundary;
+safe original SVG, expanded categories/cancel behavior and every diploma boundary;
 `tools/test-avatar-announcement.mjs` checks guest-only timing, routes, focus,
 frequency, blockers, storage failure, signup and errors. The isolated PostgreSQL
 suite checks every new public appearance threshold and previous payload parity.
@@ -233,3 +233,26 @@ No new catalog item, metadata key, threshold or XP/score calculation is added.
 `tools/test-avatar-surprise.mjs` covers deterministic draws, unlock boundaries,
 identity preservation and no mutation; the studio suite verifies draft-only
 behavior, unchanged saved identity/gameplay and full cancellation.
+
+## Second wordplay extension, 17 October 2026
+
+Thirty accessories now use the same existing creator and unlock rules: nine
+glasses, ten hats and eleven props, excluding None. Six original local SVG
+choices join the collection, ordered by the XP already earned:
+
+| Choice | Kind | XP |
+| --- | --- | ---: |
+| Specs appeal | Heart-shaped glasses | 2,750 |
+| Food for thought | Toast hat | 2,800 |
+| Hoo knew? | Owl companion | 3,800 |
+| Cap-puccino | Coffee hat | 4,750 |
+| Nacho average | Nacho companion | 5,750 |
+| Focus mode | Camera glasses | 8,250 |
+
+These are cosmetic unlocks, with no XP spent or granted. Existing item IDs,
+thresholds, metadata keys, title/frame choices, all three expanded extra
+categories and the explicit Save/Cancel behavior stay unchanged. Surprise me
+can draw the new accessories only when earned. The private server allowlist
+is extended with an exact definition-hash guard, keeping the public ranking,
+friends and group RPCs, privacy checks, permissions and score/XP tables intact.
+The maximum public rendering threshold remains 9,000, enough for every item.
