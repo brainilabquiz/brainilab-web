@@ -49,10 +49,12 @@
   "cover": {
     "alt": "Three clocks showing different times",
     "src": "/assets/images/learn/why-time-zones-get-messy.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "small": "/assets/images/learn/why-time-zones-get-messy-small.webp",
+    "thumbnail": "/assets/images/learn/why-time-zones-get-messy-thumb.webp"
   },
   "order": 11,
-  "title": "Why isn’t it the same time everywhere?",
+  "title": "Why do we have time zones? One planet, different clocks",
   "topic": "Geography",
   "status": "published",
   "related": [
@@ -74,7 +76,7 @@
   "sections": [
     {
       "id": "simple-idea",
-      "html": "<p>Imagine calling a friend far away. You have just finished lunch, but your friend is eating breakfast. Your clocks show different times.</p><p>Earth turns, so different places face the Sun at different moments. If every clock showed the same local time, “nine in the morning” could happen in darkness in some places.</p><p>A <strong>time zone</strong> is an area that follows the same rules for its clocks.</p>",
+      "html": "<p><strong>We have time zones because different places face the Sun at different moments as Earth turns.</strong> A time zone is an area that follows the same rules for its clocks.</p><p>You might have just finished lunch while a friend far away is eating breakfast. If every clock showed the same local time, “nine in the morning” could happen in darkness in some places.</p>",
       "title": "Your afternoon can be someone else’s morning"
     },
     {
@@ -103,7 +105,7 @@
       "title": "For a real call, check the city and date"
     }
   ],
-  "updatedAt": "2026-10-07T16:54:30Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Your afternoon might be someone else’s morning. Start with a turning Earth, then see why the lines on a time-zone map bend around countries.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

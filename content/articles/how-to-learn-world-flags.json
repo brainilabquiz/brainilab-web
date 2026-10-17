@@ -11,7 +11,9 @@
   "cover": {
     "alt": "Table flags of Japan, Italy and Sweden beside a notebook",
     "src": "/assets/images/learn/how-to-learn-world-flags.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "small": "/assets/images/learn/how-to-learn-world-flags-small.webp",
+    "thumbnail": "/assets/images/learn/how-to-learn-world-flags-thumb.webp"
   },
   "order": 1,
   "title": "How to learn world flags without mixing them up",
@@ -64,7 +66,7 @@
       "title": "Keep a short list for next time"
     }
   ],
-  "updatedAt": "2026-10-09T06:09:09Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Learn world flags by spotting layout, colour order and symbols. Compare France with the Netherlands, then test a small set without the labels.",
   "publishedAt": "2026-09-23T15:00:00Z"
 }

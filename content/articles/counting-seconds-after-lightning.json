@@ -11,7 +11,9 @@
   "cover": {
     "alt": "Distant lightning seen through a rain-covered window",
     "src": "/assets/images/learn/counting-seconds-after-lightning.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "small": "/assets/images/learn/counting-seconds-after-lightning-small.webp",
+    "thumbnail": "/assets/images/learn/counting-seconds-after-lightning-thumb.webp"
   },
   "order": 12,
   "title": "Why does thunder come after lightning?",
@@ -31,6 +33,7 @@
       "name": "National Weather Service — Lightning safety"
     }
   ],
+  "authorId": "biel-sarda",
   "practice": "Explore more everyday science with a round of Science Quiz.",
   "sections": [
     {
@@ -54,8 +57,7 @@
       "title": "Try the calculation"
     }
   ],
-  "updatedAt": "2026-09-29T20:07:50Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "The delay between a flash and its thunder tells you how far the sound has travelled. Here’s how the estimate works.",
-  "publishedAt": "2026-09-23T19:51:37Z",
-  "authorId": "biel-sarda"
+  "publishedAt": "2026-09-23T19:51:37Z"
 }

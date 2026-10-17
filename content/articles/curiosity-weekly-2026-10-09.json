@@ -26,16 +26,16 @@
   ],
   "sources": [
     {
-      "name": "Visit Norway — The midnight sun",
-      "url": "https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/"
+      "url": "https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/",
+      "name": "Visit Norway — The midnight sun"
     },
     {
-      "name": "NASA — Seasons on Earth, Mars, and beyond",
-      "url": "https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/"
+      "url": "https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/",
+      "name": "NASA — Seasons on Earth, Mars, and beyond"
     },
     {
-      "name": "Met Office — Reading a weather forecast",
-      "url": "https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean"
+      "url": "https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean",
+      "name": "Met Office — Reading a weather forecast"
     }
   ],
   "authorId": "biel-sarda",
@@ -43,26 +43,26 @@
   "sections": [
     {
       "id": "midnight-without-sunset",
-      "title": "Midnight, but the day is still here",
-      "html": "<p>Imagine finishing dinner in northern Norway, taking a long walk and checking your watch. It is almost midnight. The Sun is still above the horizon. You have not accidentally slept through an entire day.</p><p>During part of the summer, places north of the Arctic Circle experience the midnight sun: Earth keeps turning, but the Sun does not dip below the horizon. The clue is the angle at which our planet spins.</p>"
+      "html": "<p>Imagine finishing dinner in northern Norway, taking a long walk and checking your watch. It is almost midnight. The Sun is still above the horizon. You have not accidentally slept through an entire day.</p><p>During part of the summer, places north of the Arctic Circle experience the midnight sun: Earth keeps turning, but the Sun does not dip below the horizon. The clue is the angle at which our planet spins.</p>",
+      "title": "Midnight, but the day is still here"
     },
     {
       "id": "a-tilted-spin",
-      "title": "A spin that never carries you into darkness",
-      "html": "<p>Earth’s axis is tilted by about 23 degrees. As the planet travels around the Sun, that tilt gives each hemisphere its turn leaning towards the sunlight. <a href=\"https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/\">NASA’s explanation of the seasons</a> connects this tilt with the changing length of our days.</p><p>In the far north during summer, the daily rotation can carry a place around in a circle that stays entirely on the sunlit side of Earth. The planet completes its turn; that place simply never crosses into the dark half.</p><p>Think of a tiny mark near the top of a tilted globe. With a lamp shining towards that end, turn the globe slowly. The mark can travel all the way round without losing the light. That is the useful picture behind the midnight sun.</p>"
+      "html": "<p>Earth’s axis is tilted by about 23 degrees. As the planet travels around the Sun, that tilt gives each hemisphere its turn leaning towards the sunlight. <a href=\"https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/\">NASA’s explanation of the seasons</a> connects this tilt with the changing length of our days.</p><p>In the far north during summer, the daily rotation can carry a place around in a circle that stays entirely on the sunlit side of Earth. The planet completes its turn; that place simply never crosses into the dark half.</p><p>Think of a tiny mark near the top of a tilted globe. With a lamp shining towards that end, turn the globe slowly. The mark can travel all the way round without losing the light. That is the useful picture behind the midnight sun.</p>",
+      "title": "A spin that never carries you into darkness"
     },
     {
       "id": "how-long-does-it-last",
-      "title": "Head farther north and the day gets longer",
-      "html": "<p>The effect lasts longer as you move towards the pole. <a href=\"https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/\">Visit Norway’s guide</a> gives Tromsø a midnight-sun season from about 20 May to 22 July. Farther north, Svalbard’s stretches roughly from 20 April to 22 August.</p><p>Those dates describe a summer phenomenon. Norway does not have midnight sunshine all year, and its southern cities do not share the far north’s round-the-clock Sun.</p><p>There is an opposite chapter too. When the northern hemisphere leans away from the Sun, places far enough north spend part of winter without a sunrise. The same tilt can produce both extremes.</p>"
+      "html": "<p>The effect lasts longer as you move towards the pole. <a href=\"https://www.visitnorway.com/things-to-do/nature-attractions/midnight-sun/\">Visit Norway’s guide</a> gives Tromsø a midnight-sun season from about 20 May to 22 July. Farther north, Svalbard’s stretches roughly from 20 April to 22 August.</p><p>Those dates describe a summer phenomenon. Norway does not have midnight sunshine all year, and its southern cities do not share the far north’s round-the-clock Sun.</p><p>There is an opposite chapter too. When the northern hemisphere leans away from the Sun, places far enough north spend part of winter without a sunrise. The same tilt can produce both extremes.</p>",
+      "title": "Head farther north and the day gets longer"
     },
     {
       "id": "daylight-isnt-a-weather-forecast",
-      "title": "A bright night can still be chilly",
-      "html": "<p>Before packing for a midnight walk, check the weather tomorrow as well as the daylight hours. The Sun being above the horizon does not guarantee a clear sky or a warm evening.</p><p>Temperature and daylight tell you different things. And the forecast’s “feels like” temperature also takes factors such as wind and humidity into account, as the <a href=\"https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean\">Met Office explains</a>. A bright sky is not a substitute for a jacket.</p><p>Perhaps that is what makes the midnight sun so strange: the clock says one thing, the light suggests another, and both are right. If that tilted globe has you curious, take a closer look at <a href=\"/learn/what-really-causes-seasons/\">what causes the seasons</a>.</p>"
+      "html": "<p>Before packing for a midnight walk, check the local forecast as well as the daylight hours. The Sun being above the horizon does not guarantee a clear sky or a warm evening.</p><p>Temperature and daylight tell you different things. And the forecast’s “feels like” temperature also takes factors such as wind and humidity into account, as the <a href=\"https://weather.metoffice.gov.uk/guides/what-does-this-forecast-mean\">Met Office explains</a>. A bright sky is not a substitute for a jacket.</p><p>Perhaps that is what makes the midnight sun so strange: the clock says one thing, the light suggests another, and both are right. If that tilted globe has you curious, take a closer look at <a href=\"/learn/what-really-causes-seasons/\">what causes the seasons</a>.</p>",
+      "title": "A bright night can still be chilly"
     }
   ],
-  "updatedAt": "2026-10-09T16:34:33.051771Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Imagine checking the clock at midnight and finding the Sun still above the sea. A small tilt of our planet makes this northern summer surprise possible.",
   "publishedAt": "2026-10-09T16:03:10Z"
 }

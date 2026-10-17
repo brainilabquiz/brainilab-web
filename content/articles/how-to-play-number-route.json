@@ -54,7 +54,7 @@
     },
     {
       "id": "division",
-      "html": "<p>Easy routes use whole-number division. If the running total is 5 and the next number is 2, division is unavailable because 5 ÷ 2 is 2.5. If the total is 6, division by 2 is valid and gives 3.</p><p>You must use all four numbers, even if you reach the target after the first or second operation. Reset clears the chosen signs so you can try another route. Skip reveals a solution if you would rather move on.</p>",
+      "html": "<p>In this game, division must give a whole number. If the running total is 5 and the next number is 2, division is unavailable because 5 ÷ 2 is 2.5. If the total is 6, division by 2 is valid and gives 3.</p><p>You must use all four numbers, even if you reach the target after the first or second operation. Reset clears the chosen signs so you can try another route. Skip reveals a solution if you would rather move on.</p>",
       "title": "Why a division button can be unavailable"
     },
     {
@@ -63,7 +63,7 @@
       "title": "Your turn: reach 21"
     }
   ],
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Four numbers, three missing signs and one target. Learn the left-to-right rule with a complete example, then try a route yourself.",
-  "publishedAt": "2026-09-29T20:12:34.329468Z",
-  "updatedAt": "2026-10-09T15:53:35Z"
+  "publishedAt": "2026-09-29T20:12:34.329468Z"
 }

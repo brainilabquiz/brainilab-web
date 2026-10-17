@@ -49,7 +49,9 @@
   "cover": {
     "alt": "An open history book and magnifying glass in a library",
     "src": "/assets/images/learn/which-century-is-that-year.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab."
+    "credit": "AI-generated cover illustration created for BrainiLab.",
+    "small": "/assets/images/learn/which-century-is-that-year-small.webp",
+    "thumbnail": "/assets/images/learn/which-century-is-that-year-thumb.webp"
   },
   "order": 4,
   "title": "What century is 1900? The dates that trip us up",
@@ -70,26 +72,26 @@
   "sections": [
     {
       "id": "boundary",
-      "title": "Is 1900 in the 19th or 20th century?",
-      "html": "<p><strong>1900 is the last year of the 19th century. The 20th century begins in 1901 and ends in 2000.</strong> Those first two digits are a tempting shortcut, but they miss the boundary.</p><p>As the <a href=\"https://aa.usno.navy.mil/faq/millennium\">US Naval Observatory explains</a>, the Common Era starts with year 1, not year 0.</p>"
+      "html": "<p><strong>1900 is the last year of the 19th century. The 20th century begins in 1901 and ends in 2000.</strong> Those first two digits are a tempting shortcut, but they miss the boundary.</p><p>As the <a href=\"https://aa.usno.navy.mil/faq/millennium\">US Naval Observatory explains</a>, the Common Era starts with year 1, not year 0.</p>",
+      "title": "Is 1900 in the 19th or 20th century?"
     },
     {
       "id": "shelf",
-      "title": "Imagine boxes holding 100 year cards",
-      "html": "<p>Box one holds years <strong>1–100</strong>. Card 100 fills its last space, so 101 starts box two. Keep going and each numbered box is one century.</p><p>The same rule puts 1900 at the end of the nineteenth box. The next card, 1901, starts the twentieth.</p>"
+      "html": "<p>Box one holds years <strong>1–100</strong>. Card 100 fills its last space, so 101 starts box two. Keep going and each numbered box is one century.</p><p>The same rule puts 1900 at the end of the nineteenth box. The next card, 1901, starts the twentieth.</p>",
+      "title": "Imagine boxes holding 100 year cards"
     },
     {
       "id": "at-a-glance",
-      "title": "19th, 20th and 21st century dates",
-      "html": "<div class=\"table-scroll\"><table><caption>First and last years, using CE/AD numbering</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">Years</th></tr></thead><tbody><tr><td>19th</td><td>1801–1900</td></tr><tr><td>20th</td><td>1901–2000</td></tr><tr><td>21st</td><td>2001–2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>, even though the change to a year beginning with “20” happened in 2000.</p>"
+      "html": "<div class=\"table-scroll\"><table><caption>First and last years, using CE/AD numbering</caption><thead><tr><th scope=\"col\">Century</th><th scope=\"col\">Years</th></tr></thead><tbody><tr><td>19th</td><td>1801–1900</td></tr><tr><td>20th</td><td>1901–2000</td></tr><tr><td>21st</td><td>2001–2100</td></tr></tbody></table></div><p>So the <strong>21st century began in 2001</strong>, even though the change to a year beginning with “20” happened in 2000.</p>",
+      "title": "19th, 20th and 21st century dates"
     },
     {
       "id": "reading-dates",
-      "title": "Is “the 1900s” the same as the 20th century?",
-      "html": "<p>When it means the hundred-year range <strong>1900–1999</strong>, no: that range starts and ends a year earlier than the 20th century, <strong>1901–2000</strong>. The wording matters.</p><p>These examples use CE/AD dates. For another way old dates can look unfamiliar, try <a href=\"/learn/how-to-read-roman-numerals/\">reading Roman numerals in small chunks</a>.</p>"
+      "html": "<p>When it means the hundred-year range <strong>1900–1999</strong>, no: that range starts and ends a year earlier than the 20th century, <strong>1901–2000</strong>. The wording matters.</p><p>These examples use CE/AD dates. For another way old dates can look unfamiliar, try <a href=\"/learn/how-to-read-roman-numerals/\">reading Roman numerals in small chunks</a>.</p>",
+      "title": "Is “the 1900s” the same as the 20th century?"
     }
   ],
-  "updatedAt": "2026-10-16T19:33:25Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "1900 belongs to the 19th century; 1901 starts the 20th. Compare the 19th, 20th and 21st centuries, and see why “the 1900s” is a different range.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

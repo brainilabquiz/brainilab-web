@@ -73,7 +73,7 @@
   "sections": [
     {
       "id": "same-letters",
-      "html": "<p>Write <strong>CAT</strong> on three scraps of paper. Slide the C to the middle: <strong>ACT</strong>. Nothing has been added or thrown away, yet the animal has turned into something you can do.</p><p><strong>An anagram rearranges all the letters of a word or phrase to make another word or phrase.</strong> The letters move; their counts stay the same. That is the idea in <a href=\"https://www.merriam-webster.com/dictionary/anagram\">Merriam-Webster’s definition</a>.</p><p><strong>LISTEN → SILENT</strong> is a pleasing example. It sounds like someone has hidden an instruction inside the word. In fact, the puzzle only needs the matching letters; the meanings do not have to be related.</p>",
+      "html": "<p><strong>An anagram rearranges all the letters of a word or phrase to make another word or phrase.</strong> The letters move; their counts stay the same. That is the idea in <a href=\"https://www.merriam-webster.com/dictionary/anagram\">Merriam-Webster’s definition</a>.</p><p>Write <strong>CAT</strong> on three scraps of paper. Slide the C to the middle: <strong>ACT</strong>. Nothing has been added or thrown away, yet the animal has turned into something you can do.</p><p><strong>LISTEN → SILENT</strong> is a pleasing example. It sounds like someone has hidden an instruction inside the word. In fact, the puzzle only needs the matching letters; the meanings do not have to be related.</p>",
       "title": "The cat has not gained a single letter"
     },
     {
@@ -92,7 +92,7 @@
       "title": "Same letters, different trick"
     }
   ],
-  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "A small shuffle can turn a cat into an act. Discover the trick behind anagrams, the repeated-letter trap and a few words to try yourself.",
   "publishedAt": "2026-10-11T17:08:31.614Z"
 }

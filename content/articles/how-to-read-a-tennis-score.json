@@ -11,10 +11,10 @@
   "cover": {
     "alt": "Two tennis balls beside a racket on a sunlit green court",
     "src": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0.webp",
-    "small": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0-640.webp",
+    "small": "/assets/images/learn/how-to-read-a-tennis-score-c40093d7d52f-small.webp",
     "credit": "AI-generated cover illustration created for BrainiLab.",
     "position": 55,
-    "thumbnail": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/5c0244c9-8271-40bf-8c75-a6d59522c2a0-320.webp"
+    "thumbnail": "/assets/images/learn/how-to-read-a-tennis-score-c40093d7d52f-thumb.webp"
   },
   "order": 16,
   "title": "Tennis scoring explained: love, deuce and advantage",
@@ -39,26 +39,26 @@
   "sections": [
     {
       "id": "score",
-      "title": "Love, 15, 30, 40: the first four scores",
-      "html": "<p><strong>In tennis, love means zero; 15, 30 and 40 mean one, two and three points won in a game.</strong> Points build games, games build sets, and sets decide the match.</p><p>Call the server’s score first. At <strong>30–40</strong>, the server has won two points and the receiver three. If the receiver wins the next rally, they win the game. If the server wins, the score becomes <strong>deuce</strong>.</p><p>The <a href=\"https://www.usta.com/en/home/improve/tips-and-instruction/national/tennis-scoring-rules.html\">USTA scoring guide</a> explains those unfamiliar numbers. Nobody has secretly won forty rallies.</p>"
+      "html": "<p><strong>In tennis, love means zero; 15, 30 and 40 mean one, two and three points won in a game.</strong> Points build games, games build sets, and sets decide the match.</p><p>Call the server’s score first. At <strong>30–40</strong>, the server has won two points and the receiver three. If the receiver wins the next rally, they win the game. If the server wins, the score becomes <strong>deuce</strong>.</p><p>The <a href=\"https://www.usta.com/en/home/improve/tips-and-instruction/national/tennis-scoring-rules.html\">USTA scoring guide</a> explains those unfamiliar numbers. Nobody has secretly won forty rallies.</p>",
+      "title": "Love, 15, 30, 40: the first four scores"
     },
     {
       "id": "deuce",
-      "title": "What comes after deuce?",
-      "html": "<p><strong>Deuce is a tie at 40–40.</strong> Under advantage scoring, a player then needs two points in a row:</p><ol><li>Win the next point: <strong>advantage</strong>.</li><li>Win again: <strong>game</strong>. Lose instead: back to deuce.</li></ol><p>So winning one rally from deuce does not finish the game. Some matches use <strong>no-ad scoring</strong>, where one deciding point settles it instead. The <a href=\"https://www.lta.org.uk/play/how-to-get-started/rules-scoring/\">LTA describes both formats</a>.</p>"
+      "html": "<p><strong>Deuce is a tie at 40–40.</strong> Under advantage scoring, a player then needs two points in a row:</p><ol><li>Win the next point: <strong>advantage</strong>.</li><li>Win again: <strong>game</strong>. Lose instead: back to deuce.</li></ol><p>So winning one rally from deuce does not finish the game. Some matches use <strong>no-ad scoring</strong>, where one deciding point settles it instead. The <a href=\"https://www.lta.org.uk/play/how-to-get-started/rules-scoring/\">LTA describes both formats</a>.</p>",
+      "title": "What comes after deuce?"
     },
     {
       "id": "scoreboard",
-      "title": "Read the scoreboard in layers",
-      "html": "<p>Keep the current game’s points separate from the set’s games. A player can lead <strong>4–3 in games</strong> while trailing <strong>30–40 in the current game</strong>.</p><p>In a usual tie-break set, 6–6 in games triggers a tie-break. That uses ordinary numbers, 1, 2, 3… A standard seven-point tie-break still needs a two-point lead; other formats exist.</p>"
+      "html": "<p>Keep the current game’s points separate from the set’s games. A player can lead <strong>4–3 in games</strong> while trailing <strong>30–40 in the current game</strong>.</p><p>In a usual tie-break set, 6–6 in games triggers a tie-break. That uses ordinary numbers, 1, 2, 3… A standard seven-point tie-break still needs a two-point lead; other formats exist.</p>",
+      "title": "Read the scoreboard in layers"
     },
     {
       "id": "practice",
-      "title": "Try following one game",
-      "html": "<p>Watch who serves, then follow the points until that game ends. Add sets once those numbers feel familiar. Next, find out <a href=\"/learn/why-tennis-players-change-ends/\">when the players swap ends</a>.</p>"
+      "html": "<p>Watch who serves, then follow the points until that game ends. Add sets once those numbers feel familiar. Next, find out <a href=\"/learn/why-tennis-players-change-ends/\">when the players swap ends</a>.</p>",
+      "title": "Try following one game"
     }
   ],
-  "updatedAt": "2026-10-16T19:33:25Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "What do love, 30–40 and deuce mean? Follow tennis points, advantage and tie-breaks with one simple example, then read a scoreboard without guessing.",
   "publishedAt": "2026-09-28T18:48:21.926724+00:00"
 }
