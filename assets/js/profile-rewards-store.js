@@ -5,7 +5,7 @@ window.BrainiRewardStore=(function(){
   // a frame/title saved independently in a second tab. These are not claims.
   const keys=catalog.metadataKeys;
   let owner=null,saved=catalog.clean(),loading=false,saving=false,error='',notice='',generation=0;
-  let academy=[];
+  let academy=[],discovery=[];
   function identity(){
     const auth=BrainiData.authState();
     return auth.status==='authenticated'&&auth.user?.id
@@ -29,7 +29,12 @@ window.BrainiRewardStore=(function(){
   function cache(id,value){
     try{localStorage.setItem(prefix+id,JSON.stringify(value));return true;}catch{return false;}
   }
-  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy),academy:academy.slice(),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy,discovery),academy:academy.slice(),discovery:discovery.slice(),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  async function readDiscovery(sb,uid){
+    const result=await bounded(sb.rpc('get_my_brainilab_discoveries'));
+    if(result.error||result.data?.owner!==uid||!Array.isArray(result.data?.games))throw Error('Discovery progress unavailable');
+    return catalog.gameIds(result.data.games);
+  }
   async function readAcademy(sb,uid){
     // SELECT only. RLS binds this collection to the signed-in owner; metadata,
     // local reading progress and XP cannot grant course rewards.
@@ -41,7 +46,7 @@ window.BrainiRewardStore=(function(){
     const current=identity();
     if(owner?.id===current.id&&(loading||saving))return;
     const same=owner?.id===current.id;
-    const run=++generation;owner=current;if(!same)academy=[];saved=cached(current.id);error='';notice='';
+    const run=++generation;owner=current;if(!same){academy=[];discovery=[];}saved=cached(current.id);error='';notice='';
     loading=current.cloud;emit();
     if(!current.cloud){applyDesign();return;}
     try{
@@ -51,9 +56,10 @@ window.BrainiRewardStore=(function(){
       if(readError)throw readError;
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
-      const collection=await readAcademy(sb,current.uid);
+      const [collection,played]=await Promise.all([readAcademy(sb,current.uid),readDiscovery(sb,current.uid)]);
       if(run!==generation||identity().id!==current.id)return;
       academy=collection;
+      discovery=played;
       const meta=data.user.user_metadata||{};
       saved=catalog.fromMetadata(meta);
       cache(current.id,saved);
@@ -68,11 +74,11 @@ window.BrainiRewardStore=(function(){
     if(saving||loading||error)return false;
     const current=identity(),run=generation;
     if(current.id!==owner?.id){await load();return false;}
-    const requested=catalog.clean(value),allowed=catalog.available(requested,total(),academy);
+    const requested=catalog.clean(value),allowed=catalog.available(requested,total(),academy,discovery);
     if(Object.keys(keys).some(key=>requested[key]!==allowed[key])){
-      error='That reward is still locked. Complete its course or earn the required XP. Nothing has been spent.';emit();return false;
+      error='That extra is still locked. Check its course, challenge or XP requirement. Nothing has been spent.';emit();return false;
     }
-    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total(),academy)[key]);
+    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total(),academy,discovery)[key]);
     if(!changed.length)return true;
     saving=true;notice='';emit();
     try{
@@ -89,7 +95,12 @@ window.BrainiRewardStore=(function(){
           if(run!==generation||identity().id!==current.id)return false;
           academy=collection;
         }
-        const currentAllowed=catalog.available(allowed,total(),academy);
+        if(changed.some(key=>catalog.groups[key].find(item=>item.id===allowed[key])?.challenge)){
+          const played=await readDiscovery(sb,current.uid);
+          if(run!==generation||identity().id!==current.id)return false;
+          discovery=played;
+        }
+        const currentAllowed=catalog.available(allowed,total(),academy,discovery);
         if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('Reward eligibility changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
         const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));

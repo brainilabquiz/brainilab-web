@@ -164,14 +164,16 @@ window.BrainiRankings=(function(){
            </small>
          </div>`
       : `${playerAvatar(row,true)}
-         <div>
-           <strong>${escapeText(row.name)}${row.isMe?'<em class="ranking-you">You</em>':''}</strong>
-           ${BrainiProgressUI.profileTitleMarkup(row)}
-           ${BrainiProgressUI.profileAchievementsMarkup(row)}
-           <small>
+         <div class="ranking-player-copy">
+           <strong class="ranking-player-name">${escapeText(row.name)}${row.isMe?'<em class="ranking-you">You</em>':''}</strong>
+           <div class="ranking-player-details">
+             ${BrainiProgressUI.profileTitleMarkup(row)}
+             ${BrainiProgressUI.profileAchievementsMarkup(row)}
+             <small>
              ${countryFlag(row.country)} ${escapeText(row.country||"")}
              ${row.level?` · ${BrainiProgressUI?.tier?.(row.level)?.name||"Level"} Lv ${row.level}`:""}
-           </small>
+             </small>
+           </div>
          </div>`;
 
     const rank=Number(row.rank);

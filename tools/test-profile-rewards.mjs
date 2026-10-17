@@ -13,7 +13,7 @@ function setup({signed=false,xp=2700,metadata={},storage=true}={}){
   let meta={...metadata},readError=false,writeError=false,holdRead=null,writes=[];
   w.BrainiData={authState:()=>auth,player:()=>structuredClone(player)};
   w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
-  w.BrainiBackendAuth={getClient:()=>({from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
+  w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:auth.user?.id,games:[]},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
     getUser:async()=>{
       if(holdRead)await holdRead;
       return {data:{user:{id:auth.user?.id,user_metadata:{...meta}}},error:readError?Error('offline'):null};

@@ -128,3 +128,11 @@
  .rankings-page .rank-avatar.small,.rankings-page .place-1 .rank-avatar.small{width:34px;height:34px;min-width:34px;margin:0 2px}.ranking-medal{width:34px;height:43px}
  .rankings-page .ranking-position>span{width:28px}.rankings-page :is(.place-4,.place-5,.place-6,.place-7,.place-8,.place-9,.place-10) .ranking-position>span{width:26px;height:28px;font-size:13px}
 }
+
+.rankings-page .ranking-player-copy{display:grid;grid-template-columns:minmax(6rem,1fr) minmax(0,1.1fr);align-items:center;gap:.5rem 1rem;width:100%;min-width:0}
+.rankings-page .ranking-player-name{min-width:0;overflow-wrap:anywhere}
+.rankings-page .ranking-player-details{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:.25rem .5rem;min-width:0;text-align:right}
+.rankings-page .ranking-player-details .profile-equipped-title,.rankings-page .ranking-player-details .player-profile-title{margin:0;max-width:100%}
+.rankings-page .ranking-player-details .player-achievements{margin:0;flex-shrink:0}
+.rankings-page .ranking-player-details>small{flex-basis:100%;margin:0;font-size:.6875rem}
+@media(max-width:650px){.rankings-page .ranking-player-copy{grid-template-columns:minmax(0,1fr);gap:.25rem}.rankings-page .ranking-player-details{justify-content:flex-start;text-align:left;gap:.25rem .375rem}.rankings-page .ranking-player-details>small{font-size:.625rem}}
