@@ -3,7 +3,7 @@ window.BrainiAvatarStudioUI=(function(){
   const panes={look:{label:'Your look',groups:{skin:'Skin tone',hair:'Hair',hairColor:'Hair colour',shirt:'Shirt',background:'Background'}},
     extras:{label:'Little extras',groups:{glasses:'Glasses',hat:'Hats',prop:'A little personality'}},
     rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title',scene:'Profile background'}},
-    academy:{label:'Academy',groups:{}}};
+    challenges:{label:'Challenges',groups:{}},academy:{label:'Academy',groups:{}}};
   if(window.BrainiAchievementCatalog)panes.badges={label:'Badges',groups:{}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
@@ -21,7 +21,7 @@ window.BrainiAvatarStudioUI=(function(){
       <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></aside>
       <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><div class="avatar-mode-header"><span id="avatar-start-label">Start with</span><button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Try a new look using your unlocked items">Surprise me</button></div><div class="reward-mode-grid" data-style-modes></div></div>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='academy'?'<p class="avatar-pane-note">A little something for everything you learn. Finish every lesson quiz in a course while signed in to unlock its extra. Earlier account completions count, and earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<p class="avatar-pane-note">Try a new game. Find a little extra. Completed rounds saved to your account count, including earlier games. Practice and unfinished rounds don’t count. No XP are spent or awarded.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">A little something for everything you learn. Finish every lesson quiz in a course while signed in to unlock its extra. Earlier account completions count, and earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
     showPane(root,active);
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
       tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
@@ -51,11 +51,11 @@ window.BrainiAvatarStudioUI=(function(){
     if(kind==='frame')return `<span class="reward-frame-sample" data-profile-frame="${item.id}">B</span>`;
     return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
   }
-  function choices(root,draft,total,busy,academy=[]){
+  function choices(root,draft,total,busy,academy=[],discovery=[]){
     for(const [kind,items] of Object.entries(C.groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       for(const item of items){
-        if(item.course)continue;
+        if(item.course||item.challenge)continue;
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
         if(!button){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
@@ -95,6 +95,30 @@ window.BrainiAvatarStudioUI=(function(){
     }
     const count=C.academyIds(academy).length;
     root.querySelector('[data-academy-count]').textContent=`${count} of ${C.academyRewards.length} extras unlocked · no XP needed`;
+    challengeChoices(root,draft,total,busy,discovery);
+  }
+  function challengeChoices(root,draft,total,busy,discovery){
+    const grid=root.querySelector('[data-discovery-rewards]');if(!grid)return;
+    for(const item of C.discoveryRewards){
+      let card=grid.querySelector(`[data-discovery-card="${item.id}"]`);
+      if(!card){
+        card=document.createElement('section');card.className='avatar-challenge-card';card.dataset.discoveryCard=item.id;
+        card.innerHTML='<button class="reward-choice" type="button"><span class="reward-choice-art" aria-hidden="true"></span><strong></strong><small></small></button><div class="avatar-challenge-progress"><h3></h3><p data-challenge-rule></p><p data-challenge-status></p><progress></progress><p class="avatar-challenge-missing" data-challenge-missing></p><a></a></div>';
+        const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
+      }
+      const proof=C.discoveryProgress(item,discovery),selected=draft[item.kind]===item.id,button=card.querySelector('button');
+      const art=sample(item.kind,item,draft),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+      button.disabled=busy||!proof.earned;button.setAttribute('aria-pressed',String(selected));
+      button.querySelector('strong').textContent=item.name;button.querySelector('small').textContent=selected?'Selected':proof.earned?'Unlocked':'Finish the challenge';
+      button.setAttribute('aria-label',`${item.name}, ${selected?'selected':proof.earned?'unlocked':'finish '+item.challenge+' to unlock'}. ${item.description}`);button.title=item.description;
+      card.querySelector('h3').textContent=item.challenge;
+      card.querySelector('[data-challenge-rule]').textContent=item.target?`Complete ${item.target} different games.`:'Complete '+item.games.map(id=>C.discoveryGames.find(g=>g.id===id).name).join(', ')+'.';
+      card.querySelector('[data-challenge-status]').textContent=busy?'Checking saved progress…':`${proof.completed} of ${proof.target} games completed`;
+      const progress=card.querySelector('progress');progress.max=proof.target;progress.value=proof.completed;progress.setAttribute('aria-label',`${item.challenge}: ${proof.completed} of ${proof.target} games`);
+      const missing=card.querySelector('[data-challenge-missing]');missing.textContent=item.games&&!proof.earned?'Still to try: '+proof.missing.map(id=>C.discoveryGames.find(g=>g.id===id).name).join(', ')+'.':'';missing.hidden=!missing.textContent;
+      const next=C.discoveryGames.find(g=>g.id===proof.missing[0]),link=card.querySelector('a');
+      link.href=proof.earned||item.target?'/games/':next?.path||'/games/';link.textContent=proof.earned?'Explore more games →':item.target?'Find a different game →':`Play ${next?.name||'a game'} →`;
+    }
   }
   function next(root,total){
     const reward=C.next(total),target=root.querySelector('[data-next-reward]');

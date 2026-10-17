@@ -24,7 +24,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  const D=w.BrainiData;
  if(signed){await D.api.syncExternalAuthUser({id:uid,email:'fixture@example.test',user_metadata:accounts.get(uid)});await D.api.syncCloudProfile({user_id:uid,display_name:'Fictional player'});await D.api.syncCloudProgression(summaryFor(uid));}
  w.BrainiProgression={getCached:()=>clone(proof),sync:async()=>{syncs++;return clone(proof);}};
- w.BrainiBackendAuth={getClient:()=>({from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
+ w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:[]},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
   getUser:async()=>{reads++;const requested=uid,result={data:{user:{id:readUID||requested,user_metadata:clone(accounts.get(requested)||{})}},error:readError?Error('offline'):null};if(holdRead)await holdRead;return result;},
   updateUser:async payload=>{const requested=uid;writes.push(clone(payload));if(holdWrite)await holdWrite;if(writeError)return {data:null,error:Error('offline')};accounts.set(requested,{...accounts.get(requested),...clone(payload.data)});return {data:{user:{id:writeUID||requested,user_metadata:clone(accounts.get(requested))}},error:null};}
  }})};
@@ -45,7 +45,7 @@ const click=(f,selector)=>{const element=f.root.querySelector(selector);assert.o
 const selectedIn=(f,selector)=>[...f.root.querySelectorAll(selector+' .achievement-slot-art[data-badge]')].map(el=>el.dataset.badge).filter(Boolean);
 try{
  const f=await setup(),{w,root,S}=f,C=w.BrainiAchievementCatalog;
- assert.equal(root.querySelectorAll('[data-avatar-tab]').length,5);
+ assert.equal(root.querySelectorAll('[data-avatar-tab]').length,6);
  assert.equal(root.querySelectorAll('[data-achievement-id]').length,8);
  assert.equal(root.querySelectorAll('.achievement-level-guide li').length,10,'the material guide exposes all ten levels');
  assert.match(root.querySelector('[data-achievement-id=personal_bests_three] [data-achievement-progress]').textContent,/12 of 25 saved games/);
@@ -147,5 +147,5 @@ try{
  const timeout=await setup({selected:['first_game']});const timer=timeout.w.setTimeout.bind(timeout.w);timeout.w.setTimeout=(callback,ms)=>timer(callback,ms===12000?1:ms);timeout.holdRead(new Promise(()=>{}));await timeout.S.load();assert.equal(timeout.S.snapshot().loading,false);assert.ok(timeout.S.snapshot().error);
  for(const fixture of [f,invalid,concurrent,pending,late,recovering,evolving,unavailable,cold,zero,guest,timeout])assert.equal(fixture.network,0);
  assert.deepEqual(runtimeErrors,[],'actual UI handlers emit no uncaught runtime errors');
- console.log('PASS achievements: canonical owner evidence and exact thresholds; eight stable cards/five keyboard tabs; max-three preview/save/clear/cancel; separate avatar draft; one metadata field; conflicts, auth errors/timeouts and late-owner isolation; zero network/player/scoring/XP writes.');
+ console.log('PASS achievements: canonical owner evidence and exact thresholds; eight stable cards/six keyboard tabs; max-three preview/save/clear/cancel; separate avatar draft; one metadata field; conflicts, auth errors/timeouts and late-owner isolation; zero network/player/scoring/XP writes.');
 }finally{for(const dom of fixtures)dom.window.close();}

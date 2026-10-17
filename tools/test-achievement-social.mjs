@@ -91,6 +91,14 @@ try{
   assert.equal(rankRoot.querySelectorAll('.ranking-identity .player-achievements').length,2,'Individual ranking strips');
   assert.equal(rankRoot.querySelectorAll('[role=columnheader]').length,3,'No added ranking column');
   assert.equal(rankRoot.querySelector('.ranking-row-score').textContent,localNumber(1234));
+  for(const copy of rankRoot.querySelectorAll('.ranking-player-copy')){
+    assert.ok(copy.querySelector(':scope > .ranking-player-name'),'Name is a separate left column');
+    const details=copy.querySelector(':scope > .ranking-player-details');
+    assert.ok(details?.querySelector('small'),'Country and level stay in the right-hand detail block');
+    const title=copy.querySelector('.player-profile-title');if(title)assert.equal(title.parentElement,details,'Title belongs to details');
+    const badges=copy.querySelector('.player-achievements');if(badges)assert.equal(badges.parentElement,details);
+  }
+
   assert.match(rankRoot.querySelector('.ranking-identity .player-profile-title').textContent,/Explorer/);
   assert.equal(rankRoot.querySelector('.ranking-identity [data-social-frame]').dataset.socialFrame,'copper');
   assert.ok(rankRoot.querySelector('.ranking-row .braini-built-avatar'));
