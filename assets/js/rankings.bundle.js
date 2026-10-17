@@ -723,7 +723,13 @@ window.BrainiRankings=(function(){
 
   const $=s=>document.querySelector(s);
   const escapeText=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  let renderToken=0;
+  let renderToken=0,renderedKey=null,lastMarkup=null;
+  function viewKey(){
+    const auth=authState(),person=BrainiData.player();
+    return JSON.stringify([auth.status,auth.user?.id||auth.guestUserId||auth.anonymousPlayerId||'browser',
+      auth.leaderboard?.enabled??null,person?.countryCode||null,
+      state.mode,state.region,state.period,state.gameId,state.metric,state.expanded]);
+  }
 
   function authState(){
     return BrainiData.authState();
@@ -1222,47 +1228,60 @@ window.BrainiRankings=(function(){
     const root=$("#rankingsRoot");
     if(!root) return;
 
-    const token=++renderToken;
+    const token=++renderToken,key=viewKey();
+    const sameView=key===renderedKey&&lastMarkup!==null;
+    const commit=markup=>{
+      root.removeAttribute('aria-busy');
+      root.querySelector('[data-ranking-refresh-error]')?.remove();
+      // Preserve portraits, open details and keyboard focus for identical data.
+      if(key!==renderedKey||markup!==lastMarkup){root.innerHTML=markup;bindDynamicActions(root);}
+      renderedKey=key;lastMarkup=markup;
+    };
     const gate=gateMarkup();
 
     if(gate){
-      root.innerHTML=gate;
-      bindDynamicActions(root);
+      commit(gate);
       return;
     }
 
-    root.innerHTML=loadingMarkup();
+    // A background sync is not a fresh navigation. Keep the confirmed view.
+    if(!sameView){root.innerHTML=loadingMarkup();renderedKey=null;lastMarkup=null;}
+    root.setAttribute('aria-busy','true');
 
     let data;
 
     try{
       data=await loadData();
     }catch(err){
-      if(token!==renderToken) return;
+      if(token!==renderToken||key!==viewKey()) return;
       console.error("BrainiLab Rankings:",err);
 
-      root.innerHTML=errorMarkup(err);
-      bindDynamicActions(root);
+      root.removeAttribute('aria-busy');
+      if(sameView){
+        let note=root.querySelector('[data-ranking-refresh-error]');
+        if(!note){note=document.createElement('p');note.className='ranking-refresh-note';note.dataset.rankingRefreshError='';note.setAttribute('role','status');note.innerHTML='Couldn’t refresh rankings. Showing the last loaded results. <button type="button" data-ranking-refresh-retry>Try again</button>';root.append(note);}
+        note.querySelector('button').onclick=()=>render();
+      }else{root.innerHTML=errorMarkup(err);bindDynamicActions(root);}
+
       return;
     }
 
-    if(token!==renderToken) return;
+    if(token!==renderToken||key!==viewKey()) return;
 
+    root.removeAttribute('aria-busy');
     data=data||{};
     const rows=data.rows||[];
 
     if(data.countryRequired){
-      root.innerHTML=`
+      commit(`
         ${individualPrivacyMarkup(data)}
         ${countryRequiredMarkup()}
-      `;
-      bindDynamicActions(root);
+      `);
       return;
     }
 
     if(state.mode==="friends" && Number(data.totalPlayers||0)<=1){
-      root.innerHTML=rankingEmptyMarkup(data);
-      bindDynamicActions(root);
+      commit(rankingEmptyMarkup(data));
       return;
     }
 
@@ -1270,7 +1289,7 @@ window.BrainiRankings=(function(){
       const myGroups=data.myGroups||[];
 
       if(myGroups.length===0){
-        root.innerHTML=`
+        commit(`
           <div class="ranking-friends-empty">
             <div class="ranking-friends-empty-icon">🛡️</div>
             <h2>Create or join a group first</h2>
@@ -1282,7 +1301,7 @@ window.BrainiRankings=(function(){
             <a class="btn-secondary" href="../groups/index.html">
               Create a group
             </a>
-          </div>`;
+          </div>`);
         return;
       }
 
@@ -1296,7 +1315,7 @@ window.BrainiRankings=(function(){
           3-(closest?.members||0)
         );
 
-        root.innerHTML=`
+        commit(`
           <div class="ranking-friends-empty group-ranking-waiting">
             <div class="ranking-friends-empty-icon">
               ${crestHtml(closest?.crest)}
@@ -1311,14 +1330,12 @@ window.BrainiRankings=(function(){
             <a class="btn-secondary" href="../groups/index.html">
               Manage group
             </a>
-          </div>`;
+          </div>`);
         return;
       }
     }
 
-    root.innerHTML=boardMarkup(data,rows);
-
-    bindDynamicActions(root);
+    commit(boardMarkup(data,rows));
   }
 
   function applyUrlState(){

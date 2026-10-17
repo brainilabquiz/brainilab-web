@@ -136,3 +136,5 @@
 .rankings-page .ranking-player-details .player-achievements{margin:0;flex-shrink:0}
 .rankings-page .ranking-player-details>small{flex-basis:100%;margin:0;font-size:.6875rem}
 @media(max-width:650px){.rankings-page .ranking-player-copy{grid-template-columns:minmax(0,1fr);gap:.25rem}.rankings-page .ranking-player-details{justify-content:flex-start;text-align:left;gap:.25rem .375rem}.rankings-page .ranking-player-details>small{font-size:.625rem}}
+
+.rankings-page .ranking-refresh-note{font-size:.8125rem;line-height:1.6;color:var(--rank-muted);margin:1rem 0}.rankings-page .ranking-refresh-note button{min-height:2.75rem;margin-left:.5rem;background:transparent;border:0;color:var(--navy);text-decoration:underline;font:inherit;font-weight:700;cursor:pointer}

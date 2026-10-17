@@ -24,7 +24,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  const D=w.BrainiData;
  if(signed){await D.api.syncExternalAuthUser({id:uid,email:'fixture@example.test',user_metadata:accounts.get(uid)});await D.api.syncCloudProfile({user_id:uid,display_name:'Fictional player'});await D.api.syncCloudProgression(summaryFor(uid));}
  w.BrainiProgression={getCached:()=>clone(proof),sync:async()=>{syncs++;return clone(proof);}};
- w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:[]},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
+ w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:[],activeDays:0},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
   getUser:async()=>{reads++;const requested=uid,result={data:{user:{id:readUID||requested,user_metadata:clone(accounts.get(requested)||{})}},error:readError?Error('offline'):null};if(holdRead)await holdRead;return result;},
   updateUser:async payload=>{const requested=uid;writes.push(clone(payload));if(holdWrite)await holdWrite;if(writeError)return {data:null,error:Error('offline')};accounts.set(requested,{...accounts.get(requested),...clone(payload.data)});return {data:{user:{id:writeUID||requested,user_metadata:clone(accounts.get(requested))}},error:null};}
  }})};

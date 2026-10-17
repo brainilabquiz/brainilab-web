@@ -203,3 +203,9 @@
 .avatar-next-reward>strong{font-size:14px}.avatar-next-reward>p{font-size:12px;margin:4px 0 8px}.avatar-next-reward>progress{height:4px}
 @media(max-width:1024px){.avatar-studio-controls .reward-grid-hair{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background){grid-template-columns:repeat(3,minmax(0,1fr))}.avatar-next-reward{margin:0;padding:12px}}
+
+.avatar-day-collection{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--line)}
+.avatar-collection-heading{font-size:1rem;line-height:1.4;color:var(--navy);margin:0 0 .5rem}
+.avatar-day-card .reward-choice{min-height:7.5rem}
+.avatar-challenge-progress h4{font-size:.875rem;margin:.75rem 0 .375rem;line-height:1.4;color:var(--navy)}
+.avatar-challenge-progress [data-day-status]{font-weight:700;color:var(--navy)}

@@ -13,7 +13,7 @@ const D=w.BrainiData,meta=new Map([['one',{custom:'keep',brainilab_avatar_mode_v
 let uid='one',offline=false;
 await D.api.syncExternalAuthUser({id:uid,user_metadata:meta.get(uid)});
 await D.api.syncCloudProgression({progression:{xp:3430,level:14,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
-w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:uid==='one'?['brainiword','connections','brainmix']:[]},error:offline?Error('offline'):null}),from:()=>({select:()=>({eq:async()=>({data:(earned.get(uid)||[]).map(reward_id=>({reward_id})),error:offline?Error('offline'):null})})}),auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...data});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}})};
+w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:uid==='one'?['brainiword','connections','brainmix']:[],activeDays:0},error:offline?Error('offline'):null}),from:()=>({select:()=>({eq:async()=>({data:(earned.get(uid)||[]).map(reward_id=>({reward_id})),error:offline?Error('offline'):null})})}),auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...data});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}})};
 for(const name of ['profile-rewards-model','profile-rewards-store','avatar-studio-ui','avatar-wardrobe-ui','profile-rewards'])w.eval(source(name));
 await settle();
 
