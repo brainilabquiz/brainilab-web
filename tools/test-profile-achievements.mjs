@@ -20,7 +20,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  let syncs=0,network=0,reads=0;const writes=[];
  const accounts=new Map([[uid,{full_name:'Fictional player',brainilab_avatar_frame_v1:'copper',brainilab_profile_title_v1:'explorer',[key]:selected,...metadata}]]);
  w.fetch=()=>{network++;throw Error('Real network forbidden in fixture');};
- for(const name of ['icon-system','player-personalities','avatar-design','data','progression-ui'])w.eval(source(name));
+ for(const name of ['icon-system','profile-achievements-model','player-personalities','avatar-design','achievement-display','data','progression-ui'])w.eval(source(name));
  const D=w.BrainiData;
  if(signed){await D.api.syncExternalAuthUser({id:uid,email:'fixture@example.test',user_metadata:accounts.get(uid)});await D.api.syncCloudProfile({user_id:uid,display_name:'Fictional player'});await D.api.syncCloudProgression(summaryFor(uid));}
  w.BrainiProgression={getCached:()=>clone(proof),sync:async()=>{syncs++;return clone(proof);}};
@@ -29,7 +29,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
   updateUser:async payload=>{const requested=uid;writes.push(clone(payload));if(holdWrite)await holdWrite;if(writeError)return {data:null,error:Error('offline')};accounts.set(requested,{...accounts.get(requested),...clone(payload.data)});return {data:{user:{id:writeUID||requested,user_metadata:clone(accounts.get(requested))}},error:null};}
  }})};
  if(process.env.ACHIEVEMENTS_BUNDLE==='1')w.eval(source('profile-rewards.bundle'));
- else for(const name of ['profile-rewards-model','profile-rewards-store','profile-achievements-model','profile-achievements-store','profile-achievements-ui','avatar-studio-ui','profile-rewards','profile-achievements'])w.eval(source(name));
+ else for(const name of ['profile-rewards-model','profile-rewards-store','profile-achievements-store','profile-achievements-ui','avatar-studio-ui','profile-rewards','profile-achievements'])w.eval(source(name));
  await settle();
  const root=w.document.querySelector('[data-profile-rewards]'),S=w.BrainiAchievementStore;
  const state=()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1'));
@@ -47,6 +47,9 @@ try{
  const f=await setup(),{w,root,S}=f,C=w.BrainiAchievementCatalog;
  assert.equal(root.querySelectorAll('[data-avatar-tab]').length,4);
  assert.equal(root.querySelectorAll('[data-achievement-id]').length,8);
+ assert.equal(root.querySelectorAll('.achievement-level-guide li').length,10,'the material guide exposes all ten levels');
+ assert.match(root.querySelector('[data-achievement-id=personal_bests_three] [data-achievement-progress]').textContent,/12 of 25 saved games/);
+ assert.match(root.querySelector('[data-achievement-id=personal_bests_three] [data-achievement-progress]').textContent,/3 of 4 games with a personal best/,'variety tiers explain both conditions');
  assert.deepEqual(plain(S.snapshot().earned),ids,'earned facts come from the canonical owner summary');
  assert.equal(S.snapshot().selected.length,0);
  assert.equal(f.writes.length,0,'loading and mounting never write metadata');
@@ -120,6 +123,15 @@ try{
  assert.doesNotMatch(recovering.root.querySelector('[data-achievement-status]').textContent,/changed elsewhere/,'temporary unavailable evidence is not an external preference edit');
  assert.equal(recovering.writes.length,0);await recovering.switchOwner('owner-b');assert.deepEqual(selectedIn(recovering,'[data-achievement-draft-preview]'),[],'the evidence-gap draft is still isolated from a new owner');
 
+ const evolving=await setup({selected:['first_game','daily_first','streak_three']});click(evolving,'[data-achievement-choose]');
+ const unchangedPlayer=JSON.stringify(evolving.state()),focusedBadge=evolving.root.querySelector('[data-achievement-id=first_game]');focusedBadge.focus();
+ assert.equal(evolving.root.querySelector('[data-featured-achievements] .achievement-emblem').dataset.material,'silver');
+ evolving.setProof(summaryFor(evolving.uid,{total_games:400,full_daily_count:400,best_streak:400}));
+ const emblems=[...evolving.root.querySelectorAll('[data-featured-achievements] .achievement-emblem')];assert.equal(emblems.length,3);assert.ok(emblems.every(art=>art.dataset.material==='prismatic'&&art.dataset.tier==='10'),'all three confirmed choices evolve their displayed material automatically');
+ assert.equal(evolving.w.document.activeElement,focusedBadge);assert.equal(evolving.root.querySelector('[data-achievement-id=first_game]'),focusedBadge,'tier paint preserves the focused choice node');
+ assert.match(focusedBadge.querySelector('[data-achievement-material]').textContent,/Prismatic.*10 of 10/);assert.match(focusedBadge.querySelector('[data-achievement-progress]').textContent,/Highest level reached/);
+ assert.equal(evolving.root.querySelector('[data-achievement-save]').disabled,true,'tier evolution does not create a cosmetic preference draft');assert.equal(evolving.writes.length,0);assert.equal(JSON.stringify(evolving.state()),unchangedPlayer,'tier rendering leaves local XP, score, privacy and results untouched');
+
  const unavailable=await setup({summary:null});assert.equal(unavailable.syncs,1);assert.equal(unavailable.S.snapshot().available,false);assert.equal(unavailable.root.querySelector('[data-achievement-id=first_game]').dataset.state,'unknown');assert.match(unavailable.root.querySelector('[data-achievement-status]').textContent,/Waiting for your saved progress/);assert.equal(unavailable.root.querySelector('[data-achievement-status]').classList.contains('is-error'),false);assert.equal(unavailable.root.querySelector('[data-achievements-panel]').getAttribute('aria-busy'),'false');assert.equal(unavailable.root.querySelector('[data-achievement-retry]').hidden,false);assert.equal(unavailable.writes.length,0);
  const cold=await setup({summary:null,selected:['first_game']});click(cold,'[data-achievement-choose]');const startupReads=cold.reads;
  assert.match(cold.root.querySelector('[data-achievement-counter]').textContent,/Waiting/);assert.doesNotMatch(cold.root.querySelector('[data-achievement-counter]').textContent,/could not be checked/);
@@ -133,7 +145,7 @@ try{
  zero.setProof(summaryFor('owner-a'));assert.equal(zero.S.snapshot().earned.length,5);assert.deepEqual(plain(zero.S.snapshot().selected),[],'new milestones never auto-equip badges');assert.equal(zero.writes.length,0);
  const guest=await setup({signed:false});assert.equal(guest.S.snapshot().owner,null);assert.equal(guest.S.snapshot().available,false);assert.equal(guest.root.querySelector('[data-achievement-signin]').hidden,false);assert.equal(await guest.S.save(['first_game']),false);assert.equal(guest.writes.length,0);
  const timeout=await setup({selected:['first_game']});const timer=timeout.w.setTimeout.bind(timeout.w);timeout.w.setTimeout=(callback,ms)=>timer(callback,ms===12000?1:ms);timeout.holdRead(new Promise(()=>{}));await timeout.S.load();assert.equal(timeout.S.snapshot().loading,false);assert.ok(timeout.S.snapshot().error);
- for(const fixture of [f,invalid,concurrent,pending,late,recovering,unavailable,cold,zero,guest,timeout])assert.equal(fixture.network,0);
+ for(const fixture of [f,invalid,concurrent,pending,late,recovering,evolving,unavailable,cold,zero,guest,timeout])assert.equal(fixture.network,0);
  assert.deepEqual(runtimeErrors,[],'actual UI handlers emit no uncaught runtime errors');
  console.log('PASS achievements: canonical owner evidence and exact thresholds; eight stable cards/four keyboard tabs; max-three preview/save/clear/cancel; separate avatar draft; one metadata field; conflicts, auth errors/timeouts and late-owner isolation; zero network/player/scoring/XP writes.');
 }finally{for(const dom of fixtures)dom.window.close();}

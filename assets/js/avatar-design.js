@@ -32,7 +32,8 @@ window.BrainiAvatarDesign=(function(){
     const frame=Object.hasOwn(frameXp,style.frame)&&renderXp>=frameXp[style.frame]?style.frame:'level';
     return {avatarDesign:style.design?.mode==='built'?available(style.design,renderXp):null,
       avatarRenderXp:renderXp,avatarFrame:frame,
-      profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none'};
+      profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none',
+      profileAchievements:window.BrainiAchievementDisplay?.publicChoices(style.achievements)||[]};
   }
   const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
   function star(cx,cy,r=13){
