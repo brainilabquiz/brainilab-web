@@ -1,0 +1,69 @@
+{
+  "slug": "offside-rule-football-explained",
+  "title": "What is the offside rule in football?",
+  "description": "Offside depends on position, timing and involvement. Follow the ball and the second-last opponent, then learn the three direct-restart exceptions.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 157,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/offside-rule-football-explained.webp",
+    "small": "/assets/images/learn/offside-rule-football-explained-small.webp",
+    "thumbnail": "/assets/images/learn/offside-rule-football-explained-thumb.webp",
+    "alt": "An assistant referee holding a yellow-and-orange checked flag beside a quiet football pitch",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a real match or a diagram of an offside decision.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/sports/",
+    "name": "Sports"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Fancy another sporting question? Try the Sports Quiz.",
+  "related": [
+    "why-football-cards-red-yellow",
+    "how-to-read-a-tennis-score"
+  ],
+  "sources": [
+    {
+      "url": "https://theifab.com/laws/latest/offside/",
+      "name": "IFAB — Law 11: Offside, checked against the 2026/27 edition"
+    },
+    {
+      "url": "https://www.footballrules.com/offences-sanctions/offside/",
+      "name": "IFAB Football Rules — Offside: position alone is not an offence"
+    },
+    {
+      "url": "https://downloads.theifab.com/downloads/laws-of-the-game-202627-single-pages?l=en",
+      "name": "IFAB — Laws of the Game 2026/27, Law 11, printed pages 109–111 (PDF)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "position-and-involvement",
+      "title": "Position is only half the story",
+      "html": "<p><strong>An offside offence combines an attacking player’s position when a team-mate plays or touches the ball with their involvement in play.</strong></p><p>Simply standing beyond opponents is not automatically an offence. <a href=\"https://www.footballrules.com/offences-sanctions/offside/\">The IFAB’s simple explainer makes that distinction</a>. The sofa argument needs more than a freeze-frame of someone near the goal.</p>"
+    },
+    {
+      "id": "the-position-check",
+      "title": "Count the ball and the opponents",
+      "html": "<p>Under <a href=\"https://theifab.com/laws/latest/offside/\">Law 11</a>, an offside position means part of the head, body or feet is in the opponents’ half, beyond halfway, and nearer their goal line than <strong>both the ball and the second-last opponent</strong>.</p><p>Level is onside. Hands and arms do not count. Count opponents, not just outfield defenders: the goalkeeper is not guaranteed to be the last one.</p>"
+    },
+    {
+      "id": "the-moment-that-matters",
+      "title": "Freeze the pass, not the arrival",
+      "html": "<p>Use the <strong>first contact</strong> when the team-mate plays or touches the ball. For a goalkeeper’s throw, use the moment of release instead.</p><p>An attacker who is onside at that moment can run past opponents before receiving the pass. Looking only at where they receive it misses the important moment.</p>"
+    },
+    {
+      "id": "offences-and-direct-exceptions",
+      "title": "Getting involved changes the decision",
+      "html": "<p>The player must become involved: for example, by playing the ball or clearly blocking the goalkeeper’s view so they cannot play it.</p><p>There is no offside offence when receiving the ball <strong>directly from a throw-in, goal kick or corner kick</strong>. Rebounds, saves and deliberate opponent touches have extra rules in <a href=\"https://downloads.theifab.com/downloads/laws-of-the-game-202627-single-pages?l=en\">the full law</a>.</p><p>Next, discover <a href=\"/learn/why-football-cards-red-yellow/\">why football’s cards are red and yellow</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T10:55:44Z",
+  "updatedAt": "2026-10-17T10:55:44Z",
+  "minutes": 2
+}

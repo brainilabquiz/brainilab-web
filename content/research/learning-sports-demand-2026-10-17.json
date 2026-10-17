@@ -1,0 +1,285 @@
+{
+  "checkedDate": "2026-10-17",
+  "articles": [
+    {
+      "slug": "what-is-the-stroop-effect",
+      "title": "What is the Stroop effect? When a word gets in the way",
+      "topic": "Learning",
+      "url": "https://brainilabgames.com/learn/what-is-the-stroop-effect/",
+      "queryIntent": "A short explanation of the Stroop effect, rather than a diagnosis or online test.",
+      "sources": [
+        {
+          "url": "https://psychclassics.yorku.ca/Stroop/",
+          "type": "Original experimental paper, transcribed by York University",
+          "location": "Experiment 2, original pages 650–652",
+          "supports": "Experiment 2 involved 100 students; conflicting colour words slowed ink-colour naming compared with coloured squares."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6600873/",
+          "type": "Original two-experiment author manuscript",
+          "location": "Abstract; Experiments 1 and 2; General Discussion",
+          "supports": "Colour-word interference appeared with spoken and keyed responses; other distraction effects differed by task."
+        }
+      ],
+      "claimLimits": [
+        "No universal slowdown, intelligence score, medical assessment or proven benefit from playing BrainiLab.",
+        "The second paper appeared online in 2016 and in the March 2017 journal issue."
+      ],
+      "art": {
+        "alt": "Two cream cards on a wooden desk: BLUE printed in red and RED printed in blue, with a hand pointing towards them",
+        "credit": "AI-generated conceptual illustration created for BrainiLab; not a photograph of a research participant.",
+        "position": 50,
+        "variants": [
+          {
+            "path": "assets/images/learn/what-is-the-stroop-effect.webp",
+            "width": 960,
+            "height": 640,
+            "bytes": 58136,
+            "sha256": "2cc32dcc03189a3742d9fc777443a17c0818f260f8143c2671addd48796f7b2b"
+          },
+          {
+            "path": "assets/images/learn/what-is-the-stroop-effect-small.webp",
+            "width": 480,
+            "height": 320,
+            "bytes": 22250,
+            "sha256": "39933de9213ed65053ff3d6867d707ab74522bb24d701616f34793bfb163a60d"
+          },
+          {
+            "path": "assets/images/learn/what-is-the-stroop-effect-thumb.webp",
+            "width": 240,
+            "height": 160,
+            "bytes": 8464,
+            "sha256": "d79530aacac8e3dfd3f63927e0ac53a5290ab3d9b7f68b29e16c9cd39c422f4b"
+          }
+        ],
+        "visualCheck": "BLUE appears in red and RED appears in blue; both cards remain clear in the two-to-one crop and small thumbnail."
+      }
+    },
+    {
+      "slug": "offside-rule-football-explained",
+      "title": "What is the offside rule in football?",
+      "topic": "Sports",
+      "url": "https://brainilabgames.com/learn/offside-rule-football-explained/",
+      "queryIntent": "A short explanation of association-football offside, rather than another sport or a rule-change trial.",
+      "sources": [
+        {
+          "url": "https://theifab.com/laws/latest/offside/",
+          "type": "Current official governing law",
+          "location": "11.1, 11.2 and timing footnote, 11.3; FAQs",
+          "supports": "Position and involvement are separate checks; ball/opponent position, contact timing and direct-restart exceptions matter."
+        },
+        {
+          "url": "https://www.footballrules.com/offences-sanctions/offside/",
+          "type": "Official IFAB simplified rules explanation",
+          "location": "Visible What happens if… a player is in an offside position? FAQ",
+          "supports": "Its visible FAQ distinguishes being in an offside position from committing an offence."
+        },
+        {
+          "url": "https://downloads.theifab.com/downloads/laws-of-the-game-202627-single-pages?l=en",
+          "type": "Exact-edition official law, same underlying Law 11 as the HTML",
+          "location": "Printed/PDF pages 109–111, Laws of the Game 2026/27, Law 11",
+          "supports": "Exact 2026/27 edition of the same Law 11, not an independent source of evidence."
+        }
+      ],
+      "claimLimits": [
+        "The latest official law was checked on 17 October 2026 against the 2026/27 edition.",
+        "The goalkeeper need not be the last opponent; incidental touches do not automatically reset offside.",
+        "Rebounds, saves and deliberate-play details are deferred to the full law."
+      ],
+      "art": {
+        "alt": "An assistant referee holding a yellow-and-orange checked flag beside a quiet football pitch",
+        "credit": "AI-generated conceptual illustration created for BrainiLab; not a real match or a diagram of an offside decision.",
+        "position": 50,
+        "variants": [
+          {
+            "path": "assets/images/learn/offside-rule-football-explained.webp",
+            "width": 960,
+            "height": 640,
+            "bytes": 87722,
+            "sha256": "39b5bfd076dc2e904546eae8e4e06e6b075dc4fc387d91baa50c5aa970dfc9d5"
+          },
+          {
+            "path": "assets/images/learn/offside-rule-football-explained-small.webp",
+            "width": 480,
+            "height": 320,
+            "bytes": 32440,
+            "sha256": "3f5acc843c3d1eba1a0a0a30fa0e2dc247a4bf6b8f56696d99d9a988d89e0510"
+          },
+          {
+            "path": "assets/images/learn/offside-rule-football-explained-thumb.webp",
+            "width": 240,
+            "height": 160,
+            "bytes": 11278,
+            "sha256": "59e1e3ddff64af796198c91da11e75da890db2cea4a69e3ea406e972ed7e7899"
+          }
+        ],
+        "visualCheck": "The assistant referee and checked flag remain recognisable in the two-to-one crop and small thumbnail; this is a conceptual cover, not a decision diagram."
+      }
+    }
+  ],
+  "demand": {
+    "tool": "Native Google Trends",
+    "terms": [
+      "Stroop effect",
+      "offside rule football"
+    ],
+    "scope": "Past 12 months, All categories, Web Search, English search terms; no language filter on searchers.",
+    "markets": [
+      {
+        "market": "Worldwide",
+        "capturedAt": "2026-10-17T10:48:15.466Z",
+        "url": "https://trends.google.com/trends/explore?q=Stroop%20effect,offside%20rule%20football&hl=en",
+        "range": "Past12months,2025-10-12to2026-10-11weeklylabels; latestweekpossiblypartial",
+        "category": "All categories",
+        "searchType": "WebSearch",
+        "language": "English search terms/UI, not a filter restricting searchers to one language",
+        "series": [
+          {
+            "term": "Stroop effect",
+            "displayedRelativeAverage": 16,
+            "weeks": 53,
+            "nonZeroWeeks": 53,
+            "minimum": 7,
+            "median": 17,
+            "maximum": 29,
+            "latest": 15,
+            "peakDates": [
+              "‪Nov 30, 2025‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          },
+          {
+            "term": "offside rule football",
+            "displayedRelativeAverage": 15,
+            "weeks": 53,
+            "nonZeroWeeks": 53,
+            "minimum": 4,
+            "median": 8,
+            "maximum": 100,
+            "latest": 6,
+            "peakDates": [
+              "‪Jun 28, 2026‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          }
+        ]
+      },
+      {
+        "market": "United States",
+        "capturedAt": "2026-10-17T10:48:44.795Z",
+        "url": "https://trends.google.com/trends/explore?geo=US&q=Stroop%20effect,offside%20rule%20football&hl=en",
+        "range": "Past12months,2025-10-12to2026-10-11weeklylabels; latestweekpossiblypartial",
+        "category": "All categories",
+        "searchType": "WebSearch",
+        "language": "English search terms/UI, not a filter restricting searchers to one language",
+        "series": [
+          {
+            "term": "Stroop effect",
+            "displayedRelativeAverage": 22,
+            "weeks": 53,
+            "nonZeroWeeks": 46,
+            "minimum": 0,
+            "median": 22,
+            "maximum": 44,
+            "latest": 29,
+            "peakDates": [
+              "‪Feb 22, 2026‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          },
+          {
+            "term": "offside rule football",
+            "displayedRelativeAverage": 5,
+            "weeks": 53,
+            "nonZeroWeeks": 9,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 100,
+            "latest": 3,
+            "peakDates": [
+              "‪Jun 28, 2026‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          }
+        ]
+      },
+      {
+        "market": "United Kingdom",
+        "capturedAt": "2026-10-17T10:49:22.647Z",
+        "url": "https://trends.google.com/trends/explore?geo=GB&q=Stroop%20effect,offside%20rule%20football&hl=en",
+        "range": "Past12months,2025-10-12to2026-10-11weeklylabels; latestweekpossiblypartial",
+        "category": "All categories",
+        "searchType": "WebSearch",
+        "language": "English search terms/UI, not a filter restricting searchers to one language",
+        "series": [
+          {
+            "term": "Stroop effect",
+            "displayedRelativeAverage": 1,
+            "weeks": 53,
+            "nonZeroWeeks": 5,
+            "minimum": 0,
+            "median": 0,
+            "maximum": 11,
+            "latest": 2,
+            "peakDates": [
+              "‪Nov 30, 2025‬",
+              "‪Mar 1, 2026‬",
+              "‪Aug 23, 2026‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          },
+          {
+            "term": "offside rule football",
+            "displayedRelativeAverage": 14,
+            "weeks": 53,
+            "nonZeroWeeks": 28,
+            "minimum": 0,
+            "median": 7,
+            "maximum": 100,
+            "latest": 7,
+            "peakDates": [
+              "‪Jul 5, 2026‬"
+            ],
+            "interpretation": "Country-specific normalised Google Trends index; neither absolute search volume nor directly comparable with a different country chart."
+          }
+        ]
+      }
+    ],
+    "matchedTopQueries": {
+      "Stroop effect": {
+        "the stroop effect": 100,
+        "what is stroop effect": 43,
+        "stroop test": 35,
+        "stroop effect test": 35,
+        "what is the stroop effect": 35
+      },
+      "offside rule football": {
+        "offside rule in football": 100,
+        "offside in football": 96,
+        "the offside rule": 38,
+        "the offside rule in football": 31,
+        "what is offside rule in football": 25
+      }
+    },
+    "interpretation": "Both exact terms appeared throughout the worldwide weekly comparison. Relevant Top queries support explanatory intent; country patterns vary and football has a June/July event peak.",
+    "limits": [
+      "The tool normalises each comparison and market; do not compare indices across markets, sum variants or convert to monthly searches.",
+      "Worldwide English-term interest does not mean the article will rank worldwide.",
+      "US exactfootballphrase has many rounded-zero weeks; zero does not mean no searches.",
+      "Offside has a June/July2026 event peak, but the worldwide term remains nonzero throughout the rest of the year.",
+      "No monthly volume, keyword difficulty, cost per click, current organic rank or traffic estimates obtained."
+    ],
+    "absoluteMonthlyVolume": null,
+    "difficulty": null,
+    "cpc": null,
+    "ranking": null,
+    "trafficEstimate": null
+  },
+  "sourceAccessLimits": [
+    "The original Stroop text was read through the public web text tool; a separate local archive request failed certificate verification.",
+    "The simplified IFAB page supports its visible FAQ only; diagrams omitted from text extraction were not treated as read.",
+    "The exact-edition IFAB PDF was read by the source reviewer after a web-tool size/access failure. The independent review also checked the live official HTML."
+  ],
+  "editorialFormat": "Two short regular articles, each with four sections, a direct opening answer, contextual reading links and an optional game invitation.",
+  "performanceLimit": "Research and publication checks do not establish indexing, rankings, traffic or AI citations."
+}
