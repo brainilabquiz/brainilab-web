@@ -152,6 +152,7 @@ window.BrainiProgressUI=(function(){
   // A celebration is feedback for an action on this page, never for loading
   // an old account, claiming guest history or refreshing another device's XP.
   let owner=null,previousXp=null,lessonAward=null,toast=null,toastTimer=null,returnFocus=null;
+  const resultChanges=new Map();
   const pendingResults=new Set(),knownRewards=new Set(),knownLessons=new Set(),announced=new Map();
   function currentOwner(){
     const auth=window.BrainiData?.getState?.()?.auth||window.BrainiData?.authState?.();
@@ -165,7 +166,7 @@ window.BrainiProgressUI=(function(){
     returnFocus=null;
   }
   function resetCelebration(){
-    owner=currentOwner();previousXp=null;pendingResults.clear();knownRewards.clear();knownLessons.clear();lessonAward=null;
+    owner=currentOwner();previousXp=null;resultChanges.clear();pendingResults.clear();knownRewards.clear();knownLessons.clear();lessonAward=null;
     closeCelebration();
   }
   function activeOwner(){
@@ -202,6 +203,12 @@ window.BrainiProgressUI=(function(){
     const lessonReady=lessonAward&&p.xp>=lessonAward.targetXp;
     const before=lessonReady?Math.min(previousXp??p.xp,lessonAward.beforeXp):previousXp;
     const earned=verified.length>0||lessonReady;
+    // Tie feedback to one result actively played on this page. Passive cloud
+    // history, ambiguous batches and simultaneous lesson awards are not receipts.
+    if(before!==null&&verified.length===1&&!lessonReady&&p.xp>before){
+      if(resultChanges.size>=20)resultChanges.delete(resultChanges.keys().next().value);
+      resultChanges.set(verified[0].client_result_id,Object.freeze({before,after:p.xp}));
+    }
     const level=xpProgress(1,p.xp).level;
     if(before!==null&&earned&&p.xp>before&&level>xpProgress(1,before).level)showLevelUp(level);
     rewards.forEach(r=>{pendingResults.delete(r.client_result_id);knownRewards.add(r.client_result_id);});
@@ -229,8 +236,11 @@ window.BrainiProgressUI=(function(){
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!event.defaultPrevented)closeCelebration();});
   resetCelebration();
 
+  function resultProgress(id){
+    return currentOwner()===owner?resultChanges.get(id)||null:null;
+  }
   return {
-    TIERS,tier,nextTier,xpForLevel,xpProgress,
+    resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,
     avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();

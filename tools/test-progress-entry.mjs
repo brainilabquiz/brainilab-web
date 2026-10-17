@@ -17,6 +17,6 @@ await w.BrainiData.clearExternalAuthUser();
 assert.equal(w.BrainiContinuity.displaySummary().progression.current_streak,0,'sign-out clears prior account snapshot');
 assert.equal(w.BrainiContinuity.displaySummary().continuity.completed_today,false);
 w.BrainiAnalytics={fetchStats:async()=>({recent_results:[{game_id:'science',completed_at:today+'T10:00:00Z',score:2500,correct_answers:5}]})};
-w.eval(readFileSync('assets/js/profile-sections.js','utf8'));w.BrainiProfileSections.hydrateRankHero();await new Promise(r=>setTimeout(r,0));
+w.eval(readFileSync('assets/js/reward-journey.js','utf8'));w.eval(readFileSync('assets/js/profile-sections.js','utf8'));w.BrainiProfileSections.hydrateRankHero();await new Promise(r=>setTimeout(r,0));
 assert.match(w.document.querySelector('#recentResults').textContent,/Science/);assert.match(w.document.querySelector('#recentResults').textContent,/2[,.]?500/);
 dom.window.close();console.log('PASS instant cached streak, compact copy, account isolation and cloud recent activity.');

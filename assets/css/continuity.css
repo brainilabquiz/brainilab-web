@@ -18,3 +18,22 @@
 .post-reward .post-earned>span{display:block;font-size:10px;font-weight:600;line-height:1.4;color:#59634b;margin-bottom:2px}
 .post-reward .post-daily-bonus{padding:10px 0 0;border-top:1px solid #d7e2c9;color:#4e5b42}
 .post-daily-bonus>b{display:block;font-size:12px;font-weight:750}
+
+/* One reward preview shares the existing progress card. No extra pop-up. */
+.post-reward{padding:14px 16px}.post-reward>.post-reward-identity{margin-bottom:10px}
+.post-reward>.post-unlock{display:flex;align-items:center;gap:12px;margin:14px 0 0;padding-top:14px;border-top:1px solid #d7e2c9}
+.post-unlock-art{display:grid;place-items:center;width:56px;height:56px;flex:none;background:#fffdf9;border:1px solid #dedbcb;border-radius:12px;overflow:hidden}
+.post-unlock-art>.braini-built-avatar{width:54px;height:54px}
+.post-unlock-art .rank-avatar{width:42px;height:42px}
+.post-unlock-art .profile-scene-sample{display:block;width:48px;height:44px;border-radius:8px;object-fit:cover}
+.post-unlock-art .profile-goal-letter{font-size:26px;font-weight:800}
+.post-unlock-copy{display:grid;gap:3px;flex:1;min-width:0}
+.post-unlock-copy>span{font-size:11px;color:#62644f;font-weight:650}
+.post-unlock-copy>strong{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.post-reward .post-unlock-copy>small{font-size:12px;line-height:1.4;margin:0;color:#62644f}
+.post-unlock.is-unlocked .post-unlock-copy>span{font-weight:800;color:#346627}
+.post-unlock.is-unlocked .post-unlock-art{background:#fff6ca;border-color:#dfca72}
+.post-unlock-arrow{color:#30296f;font-size:19px}
+.post-reward .post-daily-bonus{font-size:11px;line-height:1.45;padding-top:10px;margin-top:10px}
+.post-reward:focus-visible{outline:3px solid #34752c;outline-offset:4px}
+@media(max-width:380px){.post-reward>.post-unlock{gap:10px}.post-unlock-art{width:48px;height:48px}.post-unlock-art>.braini-built-avatar{width:46px;height:46px}.post-unlock-copy>strong{font-size:16px}}
