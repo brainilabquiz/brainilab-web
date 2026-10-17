@@ -5,10 +5,10 @@ window.BrainiProfileRewards=(function(){
   function render(){
     root=root||document.querySelector('[data-profile-rewards]');if(!root?.querySelector('[data-style-status]'))return;
     const state=S.snapshot(),player=BrainiData.player(),total=C.xp(player.xp);
-    if(owner!==state.owner){owner=state.owner;dirty=false;}
+    if(owner!==state.owner){owner=state.owner;dirty=false;window.BrainiWardrobeUI?.reset(root);}
     // Reconnects can refresh fields edited in another tab. Keep only this draft's changes.
     const changes=dirty?Object.fromEntries(Object.keys(C.groups).filter(key=>draft[key]!==baseline[key]).map(key=>[key,draft[key]])):{};
-    draft=C.available({...state.style,...changes},total,state.academy,state.discovery,state.activeDays);baseline={...state.style};
+    draft=C.available({...state.style,...changes},total,state.academy,state.discovery);baseline={...state.style};
     dirty=Object.keys(C.groups).some(key=>draft[key]!==baseline[key]);
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
@@ -33,7 +33,8 @@ window.BrainiProfileRewards=(function(){
     const mini=root.querySelector('[data-avatar-mini]');
     mini.className='rank-avatar avatar-mobile-portrait '+BrainiProgressUI.avatarClass(level);frame(mini,draft.frame);
     BrainiProgressUI.setAvatarMarkup(mini,preview.innerHTML);
-    root.querySelector('[data-avatar-mini-label]').textContent=dirty?'Your preview':'Your avatar';
+    const changeCount=Object.keys(C.groups).filter(key=>draft[key]!==baseline[key]).length;
+    root.querySelector('[data-avatar-mini-label]').textContent=dirty?`Preview · ${changeCount} ${changeCount===1?'change':'changes'}`:'Your saved look';
     root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     const title=C.titles.find(t=>t.id===draft.title),titleRoot=root.querySelector('[data-style-preview-title]');
@@ -41,10 +42,10 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;
-    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,state.activeDays);
+    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error});
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
-    root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
+    root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save look';});
     root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
@@ -55,7 +56,7 @@ window.BrainiProfileRewards=(function(){
     root.addEventListener('click',async event=>{
       const surprise=event.target.closest('[data-avatar-surprise]');
       if(surprise&&!surprise.disabled){
-        draft=C.surprise(draft,BrainiData.player().xp,Math.random,S.snapshot().academy,S.snapshot().discovery,S.snapshot().activeDays);
+        draft=C.surprise(draft,BrainiData.player().xp,Math.random,S.snapshot().academy,S.snapshot().discovery);
         dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
         return;
       }

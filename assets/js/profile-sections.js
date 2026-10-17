@@ -228,7 +228,7 @@ window.BrainiProfileSections=(function(){
     const studio=document.querySelector('[data-profile-rewards]');
     if(!item||!studio||!window.BrainiAvatarStudioUI||selected()!=='progress')return;
     const pane=['glasses','hat','prop'].includes(item.kind)?'extras':'rewards';
-    if(open)BrainiAvatarStudioUI.showPane(studio,pane);
+    if(open){BrainiAvatarStudioUI.showPane(studio,pane);window.BrainiWardrobeUI?.reveal(studio,item);}
     // Highlight a real catalogue item without changing the saved avatar.
     const choice=studio.querySelector(`[data-reward-kind="${item.kind}"][data-reward-id="${item.id}"]`);
     if(choice){choice.classList.add('is-reward-target');choice.setAttribute('aria-describedby','linked-reward-note');
@@ -243,6 +243,7 @@ window.BrainiProfileSections=(function(){
       if(!goal||!studio||!window.BrainiAvatarStudioUI)return;
       const pane=['glasses','hat','prop'].includes(goal.dataset.progressGoalKind)?'extras':'rewards';
       BrainiAvatarStudioUI.showPane(studio,pane);
+      const item=BrainiRewardCatalog.next(BrainiData.player().xp);if(item)window.BrainiWardrobeUI?.reveal(studio,item);
       studio.querySelector(`[data-avatar-tab="${pane}"]`)?.focus({preventScroll:true});
     });
     document.querySelector('[data-profile-activity]')?.addEventListener('toggle',event=>{
