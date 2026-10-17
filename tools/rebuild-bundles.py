@@ -3,7 +3,7 @@ ROOT=Path(__file__).resolve().parents[1]
 JS=ROOT/'assets/js'
 BUNDLES={
  'consent.bundle.js':['site-analytics.js','meta-pixel.js'],
- 'shell.bundle.js':['link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js','profile-achievements-model.js','achievement-display.js','avatar-design.js','data.js','share.js','friend-challenge.js','try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js','progression-ui.js','continuity.js','post-game.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js'],
+ 'shell.bundle.js':['link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js','profile-achievements-model.js','achievement-display.js','avatar-design.js','profile-rewards-model.js','data.js','share.js','friend-challenge.js','try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js','progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js'],
  'cloud.bundle.js':['supabase-config.js','supabase-auth.js','growth-conversions.js','supabase-profile.js','supabase-games.js','result-recovery.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
  'quiz.bundle.js':['supabase-content.js','quiz.js'],
  'daily.bundle.js':['supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
@@ -13,7 +13,7 @@ BUNDLES={
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],
  'profile.bundle.js':['supabase-analytics.js','stats-ui.js','profile-sections.js'],
- 'profile-rewards.bundle.js':['profile-rewards-model.js','profile-rewards-store.js','profile-achievements-store.js','avatar-studio-ui.js','profile-achievements-ui.js','profile-rewards.js','profile-achievements.js'],
+ 'profile-rewards.bundle.js':['profile-rewards-store.js','profile-achievements-store.js','avatar-studio-ui.js','profile-achievements-ui.js','profile-rewards.js','profile-achievements.js'],
  'profile-social.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','groups-view.js','social.js'],
  'suggestions.bundle.js':['supabase-feedback.js','suggestions-ui.js'],
 }

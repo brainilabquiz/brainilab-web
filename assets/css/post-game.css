@@ -53,3 +53,17 @@
 .post-game .post-score-context{margin:6px 0 0;font-size:12px;line-height:1.5;color:#625b6b}
 .post-score-context[hidden]{display:none}
 .quiz-score-context{max-width:620px;margin:12px auto 0;color:#dedcf7;font-size:12px;line-height:1.6;text-align:center}
+
+/* Leave room for one useful reward, with fewer repeated blocks above it. */
+.post-heading{margin-bottom:16px}
+.post-art{width:52px;height:52px;border-radius:14px}
+.post-art>svg,.post-art>img{width:46px;height:46px}
+.post-score-panel{padding:16px 14px}
+.post-game .post-score:not(.is-word-result){font-size:clamp(44px,7vw,64px)}
+.post-game .post-score-label{margin:4px 0 8px}
+.post-game .post-message{font-size:15px;margin-bottom:8px}
+.post-metrics{margin-top:8px}
+.post-metrics>div{display:flex;align-items:baseline;justify-content:center;gap:6px 8px;flex-wrap:wrap;padding:5px 8px}
+.post-metrics dt{font-size:12px}.post-metrics dd{font-size:18px;margin:0}
+.post-game [data-result-reward]{margin:14px 0}
+.post-actions{margin-top:16px}

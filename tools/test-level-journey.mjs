@@ -7,7 +7,7 @@ w.BrainiData={player:()=>player,recentResults:()=>recent,authState:()=>({status:
 w.BrainiAnalytics={fetchStats:()=>new Promise((resolve,reject)=>reads.push({resolve,reject}))};
 w.BrainiUI={renderRecentResults:(root,limit,rows)=>{localCalls++;root.innerHTML=(rows||recent).length?'<div class="data-row">A real saved game</div>':'No games played yet.';}};
 w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',choices:[]})};w.BrainiContinuity={render:()=>{}};
-for(const f of ['player-personalities.js','icon-system.js','progression-ui.js','profile-sections.js'])w.eval(readFileSync('assets/js/'+f,'utf8'));
+for(const f of ['player-personalities.js','icon-system.js','progression-ui.js','reward-journey.js','profile-sections.js'])w.eval(readFileSync('assets/js/'+f,'utf8'));
 w.document.dispatchEvent(new w.Event('DOMContentLoaded'));await tick();
 const p=w.BrainiProgressUI,root=w.document.querySelector('[data-profile-rank-hero]'),activity=w.document.querySelector('#recentResults');
 for(let level=1;level<=1000;level++){

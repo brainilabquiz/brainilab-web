@@ -7,7 +7,7 @@ const w=new JSDOM(html,{url:'https://brainilabgames.com/profile/?section=progres
 let player={displayName:'Curious Curie',xp:0,level:99,bestStreak:0},done=false,owner='one';
 w.BrainiData={player:()=>({...player,streakSecuredToday:done}),authState:()=>({status:'guest',guestUserId:owner}),daily:()=>({key:'2026-10-17',completedGames:done?['mathrush']:[]}),recentResults:()=>[]};
 w.BrainiDailyRules={model:()=>({version:'daily-choice-v1',primary:'mathrush',choices:['sequence','connections']})};
-for(const name of ['player-personalities','icon-system','avatar-design','progression-ui','profile-rewards-model','profile-sections'])w.eval(readFileSync('assets/js/'+name+'.js','utf8'));
+for(const name of ['player-personalities','icon-system','avatar-design','progression-ui','profile-rewards-model','reward-journey','profile-sections'])w.eval(readFileSync('assets/js/'+name+'.js','utf8'));
 await new Promise(resolve=>setTimeout(resolve,0));
 const hero=w.document.querySelector('[data-profile-rank-hero]');
 assert.equal(w.document.querySelectorAll('[data-profile-rank-hero]').length,1);
@@ -29,7 +29,7 @@ render(0);hero.querySelector('[data-progress-goal-kind]').click();assert.equal(o
 assert.match(render(2700).textContent,/Specs appeal/);assert.match(hero.querySelector('.profile-next-rank').textContent,/50 XP to go/);
 assert.match(render(3200).textContent,/Star pupil/);
 const catalog=w.BrainiRewardCatalog;
-w.BrainiRewardCatalog={...catalog,next:()=>({...catalog.scenes.find(item=>item.id==='lab'),kind:'scene'})};
+w.BrainiRewardCatalog={...catalog,groups:{scene:catalog.scenes}};
 assert.match(render(3200).textContent,/In your element/);assert.ok(hero.querySelector('[data-profile-scene="lab"]'));
 w.BrainiRewardCatalog=catalog;
 assert.match(render(3800).textContent,/College/);assert.match(hero.querySelector('.profile-next-rank').textContent,/120 XP to go/);
