@@ -44,6 +44,12 @@ the read baseline before writing; unrelated metadata is preserved by a one-key
 patch. Supabase Auth metadata does not offer atomic compare-and-swap, so this is
 best-effort conflict detection rather than a database revision guarantee.
 
+On the initial visit, the existing account progression may arrive after the
+profile UI. A single current-owner progression event can resume a check that was
+waiting only for that initial evidence. This never equips a badge or writes a
+preference. Metadata errors and later failed refreshes still require explicit
+retry; no timer or polling loop retries them.
+
 The three compact saved badges appear below the diploma. The collection lives in
 the fourth studio tab; its draft preview appears only while editing. Badge Save
 and Cancel are separate from avatar Save and Cancel. Switching tabs keeps both

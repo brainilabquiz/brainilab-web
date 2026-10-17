@@ -12,7 +12,7 @@ const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);re
 const canonical=(uid='account-a')=>({progression:{user_id:uid,total_games:12,best_streak:3,full_daily_count:1,xp:999999},
   personal_bests:['brainmix','numberroute','brainiword'].map((game_id,n)=>({game_id,result_id:`12345678-1234-4123-8123-${String(n+1).padStart(12,'0')}`}))});
 
-function fixture({guest=false,meta={},summary=canonical(),fastTimeout=false}={}){
+function fixture({guest=false,meta={},summary=canonical(),fastTimeout=false,clientReady=true}={}){
  const dom=new JSDOM('<main></main>',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only'}),w=dom.window;
  let uid=guest?null:'account-a',cached=summary,read=null,write=null,sync=null;
  const metadata=new Map([['account-a',copy(meta)],['account-b',{}]]),calls={read:0,sync:0,writes:[],playerReads:0};
@@ -22,13 +22,14 @@ function fixture({guest=false,meta={},summary=canonical(),fastTimeout=false}={})
  w.BrainiData={authState:()=>uid?{status:'authenticated',user:{id:uid,is_anonymous:false}}:{status:'guest',guestUserId:'guest-only'},
   player:()=>{calls.playerReads++;throw Error('Local player progress is not authoritative');}};
  w.BrainiProgression={getCached:()=>cached?copy(cached):null,sync:async()=>{calls.sync++;return sync?sync():null;}};
- w.BrainiBackendAuth={getClient:()=>({auth:{
+ w.BrainiBackendAuth={getClient:()=>clientReady?({auth:{
   getUser:()=>{calls.read++;return read?read():Promise.resolve(response());},
   updateUser:async patch=>{calls.writes.push(copy(patch));if(write)return write(patch);metadata.set(uid,{...metadata.get(uid),...copy(patch.data)});return response();}
- }})};
+ }}):null};
  w.eval(model);w.eval(store);
  return {dom,w,C:w.BrainiAchievementCatalog,S:w.BrainiAchievementStore,calls,untouched,response,
   setRead:fn=>read=fn,setWrite:fn=>write=fn,setSync:fn=>sync=fn,setSummary:value=>cached=value,
+  setClientReady:value=>clientReady=value,progress:()=>w.dispatchEvent(new w.Event('brainilab:progressionchange')),
   meta:(owner=uid)=>metadata.get(owner),setMeta:(value,owner=uid)=>metadata.set(owner,copy(value)),
   setOwner:owner=>{uid=owner;cached=owner?canonical(owner):null;w.dispatchEvent(new w.Event('brainilab:authchange'));},
   close:()=>w.close()};
@@ -163,4 +164,54 @@ function fixture({guest=false,meta={},summary=canonical(),fastTimeout=false}={})
  }finally{f.close();}
 }
 
-console.log('PASS achievements: owner-canonical eight milestones, strict max3, read sanitization, one-key confirmed saves, unchanged XP/scores, same-field conflict detection, failed-load recovery, stale-account reads/writes, unavailable evidence and bounded timeout.');
+
+{
+ const f=fixture({summary:null,clientReady:false,meta:{[key]:['first_game']}});try{
+  assert.equal(await f.S.load(),false);assert.equal(f.calls.sync,1);assert.equal(f.calls.read,0);
+  f.progress();f.setSummary(canonical('account-b'));f.progress();await tick();
+  assert.equal(f.calls.read,0,'missing or other-account progress cannot start a metadata read');
+  const ready=deferred();f.setRead(()=>ready.promise);f.setClientReady(true);f.setSummary(canonical());
+  f.progress();f.progress();f.progress();await tick();
+  assert.equal(f.calls.read,1,'late canonical readiness resumes a single shared metadata read');
+  assert.equal(f.calls.sync,1,'canonical readiness never repeats the progression RPC');
+  assert.equal(f.S.snapshot().loading,true);assert.equal(f.S.snapshot().available,false);
+  ready.resolve(f.response());await tick();
+  assert.equal(f.S.snapshot().available,true);assert.deepEqual(plain(f.S.snapshot().selected),['first_game']);
+  assert.equal(f.S.snapshot().error,'');f.progress();await tick();assert.equal(f.calls.read,1);
+  assert.equal(f.calls.writes.length,0);assert.equal(f.calls.playerReads,0);
+ }finally{f.close();}
+}
+
+{
+ const f=fixture({summary:null});try{
+  await f.S.load();f.setRead(async()=>({error:Error('Offline')}));f.setSummary(canonical());f.progress();await tick();
+  assert.equal(f.calls.read,1);assert.match(f.S.snapshot().error,/could not be loaded/);
+  f.progress();f.setSummary(null);f.progress();f.setSummary(canonical());f.progress();await tick();
+  assert.equal(f.calls.read,1,'a metadata failure after bootstrap readiness needs an explicit retry');
+  f.setRead(null);assert.equal(await f.S.load(),true);assert.equal(f.calls.read,2);
+ }finally{f.close();}
+}
+
+{
+ const f=fixture();try{
+  f.setRead(async()=>({error:Error('Offline')}));assert.equal(await f.S.load(),false);
+  f.progress();f.progress();await tick();assert.equal(f.calls.read,1,'ordinary metadata errors are never auto-retried');
+  f.setRead(null);assert.equal(await f.S.load(),true);
+  f.setSummary(null);assert.equal(await f.S.load(),false);f.setSummary(canonical());f.progress();await tick();
+  assert.equal(f.calls.read,2,'a previously confirmed owner keeps the explicit refresh behavior');
+ }finally{f.close();}
+}
+
+{
+ const f=fixture({summary:null});try{
+  await f.S.load();const old=deferred();f.setRead(()=>f.calls.read===1?old.promise:Promise.resolve(f.response()));
+  f.setSummary(canonical());f.progress();await tick();assert.equal(f.calls.read,1);
+  f.setMeta({[key]:['daily_first']},'account-b');f.setOwner('account-b');await tick();
+  old.resolve({data:{user:{id:'account-a',user_metadata:{[key]:['ten_games']}}},error:null});await tick();
+  assert.equal(f.S.snapshot().owner,'account:account-b');assert.deepEqual(plain(f.S.snapshot().selected),['daily_first']);
+  f.setOwner(null);f.progress();await tick();assert.equal(f.S.snapshot().cloud,false);assert.equal(f.calls.read,2);
+  assert.equal(f.calls.writes.length,0);
+ }finally{f.close();}
+}
+
+console.log('PASS achievements: owner-canonical eight milestones, strict max3, read sanitization, one-key confirmed saves, unchanged XP/scores, same-field conflict detection, failed-load recovery, stale-account reads/writes, unavailable evidence, one-shot late canonical readiness, explicit metadata retries and bounded timeout.');

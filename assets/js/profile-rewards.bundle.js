@@ -211,7 +211,7 @@ window.BrainiAchievementCatalog=(function(){
 
 window.BrainiAchievementStore=(function(){
   const catalog=BrainiAchievementCatalog,key=catalog.metadataKey;
-  let owner=null,confirmedOwner=null,selected=[],baseline=null,loading=false,saving=false,error='',notice='',generation=0,pending=null;
+  let owner=null,confirmedOwner=null,selected=[],baseline=null,loading=false,saving=false,error='',notice='',generation=0,pending=null,waitingForProgress=false,progressResumeUsed=false;
   function identity(){
     const auth=window.BrainiData?.authState?.();
     return auth?.status==='authenticated'&&typeof auth.user?.id==='string'&&auth.user.id&&auth.user.is_anonymous!==true
@@ -225,7 +225,7 @@ window.BrainiAchievementStore=(function(){
   }
   const metadata=user=>user?.user_metadata&&typeof user.user_metadata==='object'&&!Array.isArray(user.user_metadata)?user.user_metadata:{};
   const fingerprint=meta=>JSON.stringify([Object.hasOwn(meta,key),meta[key]]);
-  function fail(message){const failure=new Error(message);failure.achievementMessage=message;throw failure;}
+  function fail(message,reason=''){const failure=new Error(message);failure.achievementMessage=message;failure.achievementReason=reason;throw failure;}
   function bounded(request){
     let timer;
     return Promise.race([request,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Achievement request timed out')),12000);})])
@@ -236,25 +236,26 @@ window.BrainiAchievementStore=(function(){
     const proof=same&&confirmedOwner===account.uid?evidence(account):{available:false,ids:[],metrics:null};
     return {owner:same?owner.id:null,selected:proof.available?catalog.clean(selected,proof.ids):[],
       earned:proof.ids.slice(),evidence:proof.metrics?{...proof.metrics}:null,available:proof.available,
-      loading:same&&loading,saving:same&&saving,error:same?error:'',notice:same?notice:'',cloud:!!account};
+      loading:same&&loading,saving:same&&saving,waitingForProgress:same&&waitingForProgress,
+      error:same?error:'',notice:same?notice:'',cloud:!!account};
   }
   function load(){
     const account=identity();
     if(account?.uid===owner?.uid&&(loading||saving))return pending||Promise.resolve(false);
     const same=!!account&&account.uid===owner?.uid;
-    const run=++generation;owner=account;if(!same){selected=[];baseline=null;confirmedOwner=null;}error='';notice='';
+    const run=++generation;owner=account;if(!same){selected=[];baseline=null;confirmedOwner=null;progressResumeUsed=false;}waitingForProgress=false;error='';notice='';
     loading=!!account;saving=false;emit();
     if(!account)return Promise.resolve(false);
     const job=(async()=>{
       try{
         let proof=evidence(account);
         if(!proof.available){
-          if(!window.BrainiProgression?.sync)fail('Your account progress could not be checked. Try again.');
+          if(!window.BrainiProgression?.sync)fail('Your account progress could not be checked. Try again.','progress-unavailable');
           await bounded(BrainiProgression.sync());
           if(!current(account,run))return false;
           proof=evidence(account);
         }
-        if(!proof.available)fail('Your account progress could not be checked. Try again.');
+        if(!proof.available)fail('Your account progress could not be checked. Try again.','progress-unavailable');
         const sb=window.BrainiBackendAuth?.getClient?.();
         if(!sb)fail('Your featured badges could not be loaded. Try again.');
         const {data,error:readError}=await bounded(sb.auth.getUser());
@@ -267,7 +268,10 @@ window.BrainiAchievementStore=(function(){
         selected=catalog.clean(meta[key],proof.ids);baseline=fingerprint(meta);confirmedOwner=account.uid;
         return true;
       }catch(caught){
-        if(current(account,run))error=caught.achievementMessage||'Your featured badges could not be loaded. Try again.';
+        if(current(account,run)){
+          error=caught.achievementMessage||'Your featured badges could not be loaded. Try again.';
+          waitingForProgress=caught.achievementReason==='progress-unavailable'&&confirmedOwner!==account.uid&&!progressResumeUsed;
+        }
         return false;
       }finally{
         if(current(account,run)){loading=false;pending=null;emit();}
@@ -318,10 +322,19 @@ window.BrainiAchievementStore=(function(){
   }
   window.addEventListener('brainilab:authchange',()=>{
     if(identity()?.uid===owner?.uid)return;
-    generation++;owner=null;confirmedOwner=null;selected=[];baseline=null;loading=false;saving=false;pending=null;error='';notice='';
+    generation++;owner=null;confirmedOwner=null;selected=[];baseline=null;loading=false;saving=false;pending=null;waitingForProgress=false;progressResumeUsed=false;error='';notice='';
     void load();
   });
-  window.addEventListener('brainilab:progressionchange',()=>{if(identity()?.uid===owner?.uid)emit();});
+  window.addEventListener('brainilab:progressionchange',()=>{
+    const account=identity();
+    if(!account||account.uid!==owner?.uid)return;
+    // Startup can precede the SDK/progression cache. Resume that read once when
+    // the current account's proof arrives; metadata errors still need Try again.
+    if(waitingForProgress&&!progressResumeUsed&&confirmedOwner!==account.uid&&!loading&&!saving&&evidence(account).available){
+      waitingForProgress=false;progressResumeUsed=true;void load();return;
+    }
+    emit();
+  });
   return {load,save,snapshot};
 })();
 
@@ -504,18 +517,18 @@ window.BrainiAchievementUI=(function(){
   function render(root,{state={},draft=[],dirty=false,feedback=''}={}){
     const view=mount(root);if(!view)return;
     const {badges}=view,earned=new Set(Array.isArray(state.earned)?state.earned:[]);
-    const available=state.available===true,loading=state.loading===true,saving=state.saving===true,busy=loading||saving;
+    const available=state.available===true,loading=state.loading===true,saving=state.saving===true,busy=loading||saving,waiting=!available&&state.waitingForProgress===true;
     const saved=clean(state.selected,badges).filter(id=>available&&earned.has(id));
     const selected=clean(draft,badges).filter(id=>available&&earned.has(id));
     const earnedCount=badges.filter(badge=>available&&earned.has(badge.id)).length;
     const error=message(state.error),notice=message(feedback)||message(state.notice);
     view.panel.setAttribute('aria-busy',String(busy));
     renderSlots(view.savedSlots,saved,badges);renderSlots(view.draftSlots,selected,badges);
-    text(view.featuredNote,loading&&!available?'Checking saved badges…':!available?'Saved badges are not available yet.':saved.length?'Shown on your profile.':'Choose up to 3 earned badges.');
+    text(view.featuredNote,waiting?'Waiting for saved progress…':loading&&!available?'Checking saved badges…':!available?'Saved badges are not available yet.':saved.length?'Shown on your profile.':'Choose up to 3 earned badges.');
     text(view.previewLabel,'Preview — not saved');
     const preview=view.panel.querySelector('[data-achievement-draft-preview]');
     preview.hidden=!dirty;preview.classList.toggle('is-dirty',!!dirty);
-    text(view.counter,available?`${earnedCount} of ${badges.length} earned · ${selected.length} of 3 selected${selected.length===3?' · Remove one to choose another.':''}`:loading?'Checking saved achievements…':state.cloud?'Saved progress could not be checked.':'Sign in to check your saved achievements.');
+    text(view.counter,available?`${earnedCount} of ${badges.length} earned · ${selected.length} of 3 selected${selected.length===3?' · Remove one to choose another.':''}`:waiting?'Waiting for saved progress…':loading?'Checking saved achievements…':state.cloud?'Saved progress could not be checked.':'Sign in to check your saved achievements.');
     for(const badge of badges){
       const choice=view.choices.get(badge.id),isEarned=available&&earned.has(badge.id),isSelected=selected.includes(badge.id);
       const capped=selected.length===3&&!isSelected,target=Math.max(1,number(badge.target)),value=Math.min(target,number(state.evidence?.[badge.metric]));
@@ -533,8 +546,8 @@ window.BrainiAchievementUI=(function(){
     text(view.save,saving?'Saving…':'Save badges');
     view.signin.hidden=!!state.cloud||loading;
     view.retry.hidden=!state.cloud||busy||(!error&&available);
-    const status=saving?'Saving your badges…':loading?'Checking saved achievements…':error||notice||(dirty?'Preview only. Save badges to update your profile.':available&&!earnedCount?'No badges earned yet. Finish a game to reach your first milestone.':'');
-    text(view.status,status);view.status.classList.toggle('is-error',!busy&&!!error);
+    const status=saving?'Saving your badges…':loading?'Checking saved achievements…':waiting?'Waiting for your saved progress. Your badges will load when it arrives.':error||notice||(dirty?'Preview only. Save badges to update your profile.':available&&!earnedCount?'No badges earned yet. Finish a game to reach your first milestone.':'');
+    text(view.status,status);view.status.classList.toggle('is-error',!busy&&!waiting&&!!error);
   }
   return Object.freeze({mount,render});
 })();

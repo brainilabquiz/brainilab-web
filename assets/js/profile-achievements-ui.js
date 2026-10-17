@@ -86,18 +86,18 @@ window.BrainiAchievementUI=(function(){
   function render(root,{state={},draft=[],dirty=false,feedback=''}={}){
     const view=mount(root);if(!view)return;
     const {badges}=view,earned=new Set(Array.isArray(state.earned)?state.earned:[]);
-    const available=state.available===true,loading=state.loading===true,saving=state.saving===true,busy=loading||saving;
+    const available=state.available===true,loading=state.loading===true,saving=state.saving===true,busy=loading||saving,waiting=!available&&state.waitingForProgress===true;
     const saved=clean(state.selected,badges).filter(id=>available&&earned.has(id));
     const selected=clean(draft,badges).filter(id=>available&&earned.has(id));
     const earnedCount=badges.filter(badge=>available&&earned.has(badge.id)).length;
     const error=message(state.error),notice=message(feedback)||message(state.notice);
     view.panel.setAttribute('aria-busy',String(busy));
     renderSlots(view.savedSlots,saved,badges);renderSlots(view.draftSlots,selected,badges);
-    text(view.featuredNote,loading&&!available?'Checking saved badges…':!available?'Saved badges are not available yet.':saved.length?'Shown on your profile.':'Choose up to 3 earned badges.');
+    text(view.featuredNote,waiting?'Waiting for saved progress…':loading&&!available?'Checking saved badges…':!available?'Saved badges are not available yet.':saved.length?'Shown on your profile.':'Choose up to 3 earned badges.');
     text(view.previewLabel,'Preview — not saved');
     const preview=view.panel.querySelector('[data-achievement-draft-preview]');
     preview.hidden=!dirty;preview.classList.toggle('is-dirty',!!dirty);
-    text(view.counter,available?`${earnedCount} of ${badges.length} earned · ${selected.length} of 3 selected${selected.length===3?' · Remove one to choose another.':''}`:loading?'Checking saved achievements…':state.cloud?'Saved progress could not be checked.':'Sign in to check your saved achievements.');
+    text(view.counter,available?`${earnedCount} of ${badges.length} earned · ${selected.length} of 3 selected${selected.length===3?' · Remove one to choose another.':''}`:waiting?'Waiting for saved progress…':loading?'Checking saved achievements…':state.cloud?'Saved progress could not be checked.':'Sign in to check your saved achievements.');
     for(const badge of badges){
       const choice=view.choices.get(badge.id),isEarned=available&&earned.has(badge.id),isSelected=selected.includes(badge.id);
       const capped=selected.length===3&&!isSelected,target=Math.max(1,number(badge.target)),value=Math.min(target,number(state.evidence?.[badge.metric]));
@@ -115,8 +115,8 @@ window.BrainiAchievementUI=(function(){
     text(view.save,saving?'Saving…':'Save badges');
     view.signin.hidden=!!state.cloud||loading;
     view.retry.hidden=!state.cloud||busy||(!error&&available);
-    const status=saving?'Saving your badges…':loading?'Checking saved achievements…':error||notice||(dirty?'Preview only. Save badges to update your profile.':available&&!earnedCount?'No badges earned yet. Finish a game to reach your first milestone.':'');
-    text(view.status,status);view.status.classList.toggle('is-error',!busy&&!!error);
+    const status=saving?'Saving your badges…':loading?'Checking saved achievements…':waiting?'Waiting for your saved progress. Your badges will load when it arrives.':error||notice||(dirty?'Preview only. Save badges to update your profile.':available&&!earnedCount?'No badges earned yet. Finish a game to reach your first milestone.':'');
+    text(view.status,status);view.status.classList.toggle('is-error',!busy&&!waiting&&!!error);
   }
   return Object.freeze({mount,render});
 })();
