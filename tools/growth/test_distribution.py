@@ -82,6 +82,19 @@ class DistributionTest(unittest.TestCase):
         for secret in ('secret@', 'private-id', 'private body', 'dailyBatches'):
             self.assertNotIn(secret, json.dumps(s))
 
+    def test_authorized_uncapped_outreach_survives_distribution_without_quote(self):
+        self.registry.update(dailyTarget=None, totalLimit=None, policyAuthorization={
+            'effectiveLocalDate': '2026-10-11', 'dailyLimit': None,
+            'humanAuthorization': 'PRIVATE AUTHORIZATION', 'providerLimitsApply': True})
+        self.registry['emails'] = [{'id': f'email-{n}', 'status': 'sent_verified', 'sentLocalDate': '2026-10-11'} for n in range(23)]
+        s = validate(self.snapshot())
+        self.assertIsNone(s['outreach']['dailyLimit'])
+        self.assertEqual(s['outreach']['days'][0]['verifiedSends'], 23)
+        self.assertNotIn('humanAuthorization', json.dumps(s))
+        self.assertNotIn('PRIVATE', json.dumps(s))
+        self.registry['policyAuthorization']['providerLimitsApply'] = False
+        self.assertNotIn('outreach', validate(self.snapshot()))
+
     def test_failed_refresh_preserves_previous_snapshot_and_history(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(api, 'PRIVATE', Path(tmp)):
             folder = Path(tmp)
@@ -131,6 +144,35 @@ class DistributionTest(unittest.TestCase):
             self.assertEqual([p.read_bytes() for p in paths], inputs)
             saved = json.loads((folder / 'distribution-history' / (hashlib.sha256(old_bytes).hexdigest() + '.json')).read_text())
             self.assertEqual(saved, old)
+            self.assertTrue(refresh(*paths)['reused'])
+
+    def test_uncapped_policy_upgrade_replaces_old_same_input_cap_and_keeps_history(self):
+        self.registry.update(dailyTarget=None, policyAuthorization={
+            'effectiveLocalDate': '2026-10-11', 'dailyLimit': None,
+            'humanAuthorization': 'PRIVATE AUTHORIZATION', 'providerLimitsApply': True})
+        self.registry['emails'] = [{'id': f'email-{n}', 'status': 'sent_verified', 'sentLocalDate': '2026-10-11'} for n in range(23)]
+        with tempfile.TemporaryDirectory() as tmp, patch.object(api, 'PRIVATE', Path(tmp)), patch('distribution.datetime', wraps=datetime) as clock:
+            clock.now.return_value = datetime.fromisoformat(STAMP)
+            folder = Path(tmp)
+            paths = [folder / 'registry.json', folder / 'catalog.json', folder / 'games.html']
+            paths[0].write_text(json.dumps(self.registry), encoding='utf-8')
+            paths[1].write_text(json.dumps(self.catalog), encoding='utf-8')
+            paths[2].write_text('<script type="application/ld+json">{"@graph":[{"@type":"ItemList","itemListElement":[]}]}</script>', encoding='utf-8')
+            inputs = [p.read_bytes() for p in paths]
+            old = self.snapshot()
+            old['outreach']['dailyLimit'] = 20
+            del old['outreach']['policyAuthorization']
+            p = folder / 'distribution-latest.json'
+            p.write_text(json.dumps(old), encoding='utf-8')
+            old_bytes = p.read_bytes()
+            old_digest = hashlib.sha256(json.dumps([3, *[hashlib.sha256(b).hexdigest() for b in inputs]]).encode()).hexdigest()
+            (folder / 'distribution-state.json').write_text(json.dumps({'day': datetime.fromisoformat(STAMP).date().isoformat(), 'inputsHash': old_digest, 'snapshotHash': hashlib.sha256(old_bytes).hexdigest()}), encoding='utf-8')
+            self.assertFalse(refresh(*paths)['reused'])
+            saved = json.loads(p.read_text(encoding='utf-8'))
+            self.assertIsNone(saved['outreach']['dailyLimit'])
+            self.assertEqual(sum(row['verifiedSends'] for row in saved['outreach']['days']), 23)
+            self.assertEqual([p.read_bytes() for p in paths], inputs)
+            self.assertEqual(json.loads((folder / 'distribution-history' / (hashlib.sha256(old_bytes).hexdigest() + '.json')).read_text(encoding='utf-8')), old)
             self.assertTrue(refresh(*paths)['reused'])
 
 

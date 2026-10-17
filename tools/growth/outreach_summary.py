@@ -17,6 +17,29 @@ def local_day(value):
         return None
 
 
+def unlimited_policy(value, as_of, require_human=False):
+    """Allowlist an explicit policy without exporting the private authorization text."""
+    if not isinstance(value, dict) or 'dailyLimit' not in value or value['dailyLimit'] is not None or value.get('providerLimitsApply') is not True:
+        return None
+    effective = local_day(value.get('effectiveLocalDate'))
+    if not effective or effective > as_of:
+        return None
+    if require_human and (not isinstance(value.get('humanAuthorization'), str) or not value['humanAuthorization'].strip()):
+        return None
+    return {'effectiveLocalDate': effective, 'dailyLimit': None, 'providerLimitsApply': True}
+
+
+def registry_policy(registry, as_of):
+    target = registry.get('dailyTarget', LIMIT)
+    if type(target) is int and target == LIMIT:
+        return {'dailyLimit': LIMIT}
+    if target is None:
+        authorization = unlimited_policy(registry.get('policyAuthorization'), as_of, require_human=True)
+        if authorization:
+            return {'dailyLimit': None, 'policyAuthorization': authorization}
+    return None
+
+
 def summary(registry, now):
     """Return only counts. Missing/ambiguous ledgers stay unavailable, never fabricated zero."""
     emails, responses = registry.get('emails'), registry.get('responses', [])
@@ -26,6 +49,9 @@ def summary(registry, now):
     if len(identities) != len(emails) or any(not isinstance(i, str) or not i for i in identities) or len(set(identities)) != len(identities):
         return None
     today = now.astimezone(ZONE).date()
+    policy = registry_policy(registry, str(today))
+    if policy is None:
+        return None
     days = {str(today-timedelta(days=n)): {'localDate': str(today-timedelta(days=n)),
             'verifiedSends': 0, 'unresolvedSends': 0, 'permanentFailures': 0,
             'humanReplies': 0, 'automaticAcknowledgements': 0} for n in range(14)}
@@ -51,13 +77,20 @@ def summary(registry, now):
         row['humanReplies'] += int(any(r.get('status') in HUMAN_REPLIES for r in linked))
         row['automaticAcknowledgements'] += int(any(r.get('status') == 'automatic_acknowledgement' for r in linked))
     return {'schemaVersion': 1, 'timezone': 'Europe/Madrid', 'asOfLocalDate': str(today),
-            'dailyLimit': LIMIT, 'undatedSends': undated,
+            **policy, 'undatedSends': undated,
             'days': sorted(days.values(), key=lambda r: r['localDate'], reverse=True)}
 
 
 def validate(value):
-    if not isinstance(value, dict) or value.get('schemaVersion') != 1 or value.get('timezone') != 'Europe/Madrid' or value.get('dailyLimit') != LIMIT or not local_day(value.get('asOfLocalDate')):
+    if not isinstance(value, dict) or value.get('schemaVersion') != 1 or value.get('timezone') != 'Europe/Madrid' or not local_day(value.get('asOfLocalDate')):
         raise ValueError('Invalid outreach summary')
+    limit = value.get('dailyLimit')
+    if type(limit) is int and limit == LIMIT:
+        policy = {'dailyLimit': LIMIT}
+    elif 'dailyLimit' in value and limit is None and (authorization := unlimited_policy(value.get('policyAuthorization'), value['asOfLocalDate'])):
+        policy = {'dailyLimit': None, 'policyAuthorization': authorization}
+    else:
+        raise ValueError('Invalid outreach policy')
     counts = ('verifiedSends', 'unresolvedSends', 'permanentFailures', 'humanReplies', 'automaticAcknowledgements')
     integer = lambda n: type(n) is int and 0 <= n <= 100000
     rows = value.get('days')
@@ -72,4 +105,4 @@ def validate(value):
             raise ValueError('Invalid outreach totals')
         clean.append({k: row[k] for k in ('localDate', *counts)})
     return {'schemaVersion': 1, 'timezone': 'Europe/Madrid', 'asOfLocalDate': value['asOfLocalDate'],
-            'dailyLimit': LIMIT, 'undatedSends': value['undatedSends'], 'days': sorted(clean, key=lambda r: r['localDate'], reverse=True)}
+            **policy, 'undatedSends': value['undatedSends'], 'days': sorted(clean, key=lambda r: r['localDate'], reverse=True)}
