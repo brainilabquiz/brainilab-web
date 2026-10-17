@@ -65,6 +65,14 @@
     {
       "url": "https://www.mathsisfun.com/sets/venn-diagrams.html",
       "name": "Math is Fun — Sets and Venn Diagrams"
+    },
+    {
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-1-statements-and-quantifiers",
+      "name": "OpenStax — Statements and Quantifiers"
+    },
+    {
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/2-5-equivalent-statements",
+      "name": "OpenStax — Equivalent Statements"
     }
   ],
   "authorId": "biel-sarda",
@@ -91,7 +99,7 @@
       "title": "Before the challenge"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Draw a few coloured tokens to see the difference between something you know for sure and something that could be true.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

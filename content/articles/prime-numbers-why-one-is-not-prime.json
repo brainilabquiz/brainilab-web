@@ -1,70 +1,17 @@
 {
-  "slug": "prime-numbers-why-one-is-not-prime",
-  "title": "Prime numbers: why does 1 get left out?",
-  "description": "Seven biscuits, a stubborn number and a tiny counting rule. Discover what makes a prime number, why 1 is neither prime nor composite, and why 2 is special.",
-  "topic": "Numbers & logic",
-  "status": "published",
-  "authorId": "biel-sarda",
-  "order": 121,
-  "publishedAt": "2026-10-12T17:00:36Z",
-  "updatedAt": "2026-10-12T17:00:36Z",
-  "game": {
-    "name": "Math Rush",
-    "url": "/games/math-rush/"
-  },
   "hub": {
-    "name": "Maths from zero",
-    "url": "/learn/paths/maths-from-zero/"
+    "url": "/learn/paths/maths-from-zero/",
+    "name": "Maths from zero"
   },
-  "cover": {
-    "src": "/assets/images/learn/prime-numbers-why-one-is-not-prime.webp",
-    "small": "/assets/images/learn/prime-numbers-why-one-is-not-prime-small.webp",
-    "thumbnail": "/assets/images/learn/prime-numbers-why-one-is-not-prime-thumb.webp",
-    "alt": "Wooden number tile 1 separated from a group of tiles showing the prime numbers 2, 3, 5 and 7",
-    "position": 50,
-    "credit": "AI-generated cover image created for BrainiLab."
+  "game": {
+    "url": "/games/math-rush/",
+    "name": "Math Rush"
   },
-  "sources": [
-    {
-      "name": "OpenStax — Prealgebra 2e: Find Multiples and Factors",
-      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors"
-    },
-    {
-      "name": "OpenStax — Contemporary Mathematics: Prime and Composite Numbers",
-      "url": "https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers"
-    }
-  ],
-  "related": [
-    "division-sharing-equally",
-    "square-numbers-why-they-make-a-square"
-  ],
-  "practice": "Keep playing with numbers in a quick round of Math Rush.",
-  "sections": [
-    {
-      "id": "what-is-a-prime-number",
-      "title": "The number that refuses to split",
-      "html": "<p><strong>A prime number is a whole number greater than 1 with exactly two different positive factors: 1 and itself.</strong> A factor divides a number exactly, leaving no remainder. <a href=\"https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors\">OpenStax explains this two-factor rule</a>.</p><p>Imagine arranging biscuits on a tray. Six biscuits can form two rows of three. Seven are less cooperative: for a complete rectangle, you can only make one row of seven or seven rows of one. Seven is prime. Nobody needs to eat the awkward biscuit.</p>"
-    },
-    {
-      "id": "prime-and-composite-examples",
-      "title": "Give every factor a seat",
-      "html": "<p>The positive factors of <strong>7 are 1 and 7</strong>. The factors of <strong>9 are 1, 3 and 9</strong>: three different factors, so 9 is composite. That means a whole number greater than 1 with more than two positive factors.</p><p><a href=\"https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers\">OpenStax connects primes with these possible groupings</a>. Think back to <a href=\"/learn/division-sharing-equally/\">sharing equally</a>: can you make more than one group, with more than one item in each, and nothing left over?</p>"
-    },
-    {
-      "id": "why-one-is-not-prime",
-      "title": "Why is 1 not a prime number?",
-      "html": "<p><strong>One has only one positive factor: 1.</strong> Saying “1 and itself” names the same factor twice. It does not create two different factors.</p><p>So 1 is <strong>neither prime nor composite</strong>. It fails the two-factor test for primes and the more-than-two test for composites. There is no missing category to memorise; count the different factors and the exception makes sense.</p>"
-    },
-    {
-      "id": "only-even-prime",
-      "title": "The even number allowed into the club",
-      "html": "<p>The first five prime numbers are <strong>2, 3, 5, 7 and 11</strong>. Two has exactly the factors 1 and 2, making it the <strong>only even prime</strong>. Every larger even number also has 2 as a factor, alongside 1 and itself.</p><p>But being odd is not a membership pass: 9 and 15 are odd and composite. Here is a quick check for your next number: count its different positive factors. Two? Prime. More than two? Composite. Only one? You have found 1 again, sitting happily at its own table.</p>"
-    }
-  ],
   "quiz": {
     "version": "math-primes-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "Why is 1 not prime?",
         "options": [
           "It is too small to count",
@@ -72,10 +19,10 @@
           "It has three positive factors",
           "All odd numbers are composite"
         ],
-        "answer": 1,
         "explanation": "The only positive factor of 1 is 1. A prime must have exactly two different positive factors and be greater than 1."
       },
       {
+        "answer": 2,
         "prompt": "Which number is prime?",
         "options": [
           "9",
@@ -83,10 +30,10 @@
           "7",
           "1"
         ],
-        "answer": 2,
         "explanation": "Seven has exactly two positive factors: 1 and 7. Nine has 1, 3 and 9; fifteen has 1, 3, 5 and 15."
       },
       {
+        "answer": 0,
         "prompt": "Which is the only even prime number?",
         "options": [
           "2",
@@ -94,9 +41,62 @@
           "6",
           "8"
         ],
-        "answer": 0,
         "explanation": "Two has factors 1 and 2. Every even whole number greater than 2 also has 2 as an additional factor."
       }
     ]
-  }
+  },
+  "slug": "prime-numbers-why-one-is-not-prime",
+  "cover": {
+    "alt": "Wooden number tile 1 separated from a group of tiles showing the prime numbers 2, 3, 5 and 7",
+    "src": "/assets/images/learn/prime-numbers-why-one-is-not-prime.webp",
+    "small": "/assets/images/learn/prime-numbers-why-one-is-not-prime-small.webp",
+    "credit": "AI-generated cover image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/prime-numbers-why-one-is-not-prime-thumb.webp"
+  },
+  "order": 121,
+  "title": "Prime numbers: why does 1 get left out?",
+  "topic": "Numbers & logic",
+  "status": "published",
+  "related": [
+    "division-sharing-equally",
+    "square-numbers-why-they-make-a-square"
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors",
+      "name": "OpenStax — Prealgebra 2e: Find Multiples and Factors"
+    },
+    {
+      "url": "https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers",
+      "name": "OpenStax — Contemporary Mathematics: Prime and Composite Numbers"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Keep playing with numbers in a quick round of Math Rush.",
+  "sections": [
+    {
+      "id": "what-is-a-prime-number",
+      "html": "<p><strong>A prime number is a whole number greater than 1 with exactly two different positive factors: 1 and itself.</strong> A factor divides a number exactly, leaving no remainder. <a href=\"https://openstax.org/books/prealgebra-2e/pages/2-4-find-multiples-and-factors\">OpenStax explains this two-factor rule</a>.</p><p>Imagine arranging biscuits on a tray. Six biscuits can form two rows of three. Seven are less cooperative: for a complete rectangle, you can only make one row of seven or seven rows of one. Seven is prime. Nobody needs to eat the awkward biscuit.</p>",
+      "title": "The number that refuses to split"
+    },
+    {
+      "id": "prime-and-composite-examples",
+      "html": "<p>The positive factors of <strong>7 are 1 and 7</strong>. The factors of <strong>9 are 1, 3 and 9</strong>: three different factors, so 9 is composite. That means a whole number greater than 1 with more than two positive factors.</p><p><a href=\"https://openstax.org/books/contemporary-mathematics/pages/3-1-prime-and-composite-numbers\">OpenStax connects primes with these possible groupings</a>. Think back to <a href=\"/learn/division-sharing-equally/\">sharing equally</a>: can you make more than one group, with more than one item in each, and nothing left over?</p>",
+      "title": "Give every factor a seat"
+    },
+    {
+      "id": "why-one-is-not-prime",
+      "html": "<p><strong>One has only one positive factor: 1.</strong> Saying “1 and itself” names the same factor twice. It does not create two different factors.</p><p>So 1 is <strong>neither prime nor composite</strong>. It fails the two-factor test for primes and the more-than-two test for composites. There is no missing category to memorise; count the different factors and the exception makes sense.</p>",
+      "title": "Why is 1 not a prime number?"
+    },
+    {
+      "id": "only-even-prime",
+      "html": "<p>The first five prime numbers are <strong>2, 3, 5, 7 and 11</strong>. Two has exactly the factors 1 and 2, making it the <strong>only even prime</strong>. Every larger even number also has 2 as a factor, alongside 1 and itself.</p><p>But being odd is not a membership pass: 9 and 15 are odd and composite. Here is a quick check for a positive whole number: count its different positive factors. Two? Prime. More than two? Composite. Only one? You have found 1 again, sitting happily at its own table.</p>",
+      "title": "The even number allowed into the club"
+    }
+  ],
+  "updatedAt": "2026-10-17T09:54:01Z",
+  "description": "Seven biscuits, a stubborn number and a tiny counting rule. Discover what makes a prime number, why 1 is neither prime nor composite, and why 2 is special.",
+  "publishedAt": "2026-10-12T17:00:36Z"
 }

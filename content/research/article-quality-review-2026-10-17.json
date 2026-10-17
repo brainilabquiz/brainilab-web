@@ -1,0 +1,471 @@
+{
+  "date": "2026-10-17",
+  "scope": "All 115 public Learn articles and the references in their existing eight learning paths. An editorial and technical review, not proof of search rankings or indexing.",
+  "articleCount": 115,
+  "copyRevisions": 21,
+  "sourceRevisions": 3,
+  "coverMetadataRevisions": 15,
+  "totalRevisedArticles": 34,
+  "articlesRetainedWithoutRevision": 81,
+  "method": [
+    "Complete bodies, headlines, descriptions, examples and named references reviewed; existing research reused with its original market, date and limitations.",
+    "Primary references reopened where a claim or citation needed correction. HTTP availability checks alone do not prove factual support.",
+    "Original cover compositions inspected in 115 thumbnail crops; 16 lightweight derivatives preserve the existing artwork.",
+    "Every public article returned HTTP200 with consistent canonical URL, headline, description, Article citations and source disclosure.",
+    "34 revised article pages checked natively at1280px and320px. Eight learning paths and156quizquestions validated; existing quiz versions preserved."
+  ],
+  "limits": [
+    "No claim that every external reference was newly read in full. Blocked, rate-limited and unavailable sources are recorded separately in local working evidence.",
+    "Search demand is not established for every exact topic. Sparse or broad relative trends are not monthly search volumes or proof of worldwide popularity.",
+    "Missing query rows are not zero demand; page impressions are not visits. No indexed/ranking/traffic/account/AI-citation improvement is claimed."
+  ],
+  "checkedNewReferences": [
+    "https://mediabic.bic.com/image/upload/v1758021347/Press_kit_BIC_Cristal_75_ans_EN_6d77fc7443.pdf",
+    "https://www.mathsisfun.com/geometry/reflection.html",
+    "https://openstax.org/books/contemporary-mathematics/pages/2-1-statements-and-quantifiers",
+    "https://openstax.org/books/contemporary-mathematics/pages/2-5-equivalent-statements"
+  ],
+  "revisions": [
+    {
+      "slug": "anagrams-rearrange-the-same-letters",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Place the definition and dictionary citation before the CAT/ACT scene. Do not alter the counted-letter examples, answer keys or course data."
+      ]
+    },
+    {
+      "slug": "arithmetic-from-zero-a-friendly-guide",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Match this teaser to the linked decimal lesson,which now uses a metre-long ribbon rather than coins."
+      ]
+    },
+    {
+      "slug": "can-a-wrong-guess-help-you-learn",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "The title’s conditional answer currently arrives after a compulsory-sounding exercise; state it immediately.",
+        "Make the illustrative sequence optional without changing its numbers, later explanation or the original study limits.",
+        "Original 2009 PDF re-opened and checked; this is a clarity change, not a claim of measured ranking uplift."
+      ]
+    },
+    {
+      "slug": "confidence-is-not-a-memory-test",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "The current page opens with several commands before explaining the memory distinction; answer the title first.",
+        "Make the drawing activity optional and accessible through a verbal alternative; retain existing study figures and later comparison.",
+        "UCLA’s own account re-opened; no unmeasured search demand or site-learning benefit claimed."
+      ]
+    },
+    {
+      "slug": "connections-puzzles-find-the-hidden-link",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "counting-seconds-after-lightning",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "curiosity-weekly-2026-10-09",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Weather tomorrow appears because of an unrelated broad trend seed; it is awkward in a timeless midnight-sun explanation.",
+        "Use the natural phrase local forecast while preserving the weather distinction, Met Office source and all scientific facts."
+      ]
+    },
+    {
+      "slug": "daily-or-anytime",
+      "changedFields": [
+        "cover",
+        "sections"
+      ],
+      "reason": [
+        "Replace a retired location label with the actual current profile-menu sign-in location.",
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "how-post-it-notes-were-invented",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Put the two inventors and the removable-adhesive/bookmark answer before the scene-setting, using only facts already present. Keep the 1974 date and choir context."
+      ]
+    },
+    {
+      "slug": "how-to-learn-world-flags",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "how-to-play-number-route",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Current number-route.js requires integer division in every mode;remove the unexplained Easy limitation."
+      ]
+    },
+    {
+      "slug": "how-to-read-a-tennis-score",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Current uploaded cover has no matching local derivatives; add immutable 480px and 240px versions of the exact current artwork instead of downloading its full image in cards."
+      ]
+    },
+    {
+      "slug": "how-to-read-roman-numerals",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "logic-what-must-be-true",
+      "changedFields": [
+        "sources"
+      ],
+      "reason": [
+        "Add checked primary textbook references for quantifiers, subset inclusion and conditional/converse logic; retain the existing Venn reference."
+      ]
+    },
+    {
+      "slug": "mental-percentages-without-a-calculator",
+      "changedFields": [
+        "cover",
+        "sections"
+      ],
+      "reason": [
+        "Make the switch from80worked-example oranges to a separate20-orange question explicit;preserve answer and optional fold.",
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "number-sequences-look-at-the-gaps",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "palindromes-words-that-read-both-ways",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Place the definition before the LEVEL story, making a standalone lesson opening answer its subject at once. Retain the word examples, dictionary citation and all later letter checks."
+      ]
+    },
+    {
+      "slug": "prime-numbers-why-one-is-not-prime",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Limit the final factor-count classifier to positive whole numbers;zero is neither prime nor composite."
+      ]
+    },
+    {
+      "slug": "remember-quiz-answers-tomorrow",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "repeated-letters-in-five-letter-word-games",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Make the ALLEY/APPLE deduction complete: the single L cannot be in the second OR third position, because exact-position matches take priority. Current first yellow L rules out position2 and the grey duplicate rules out position3. No tile colours or examples change."
+      ]
+    },
+    {
+      "slug": "rotation-or-reflection",
+      "changedFields": [
+        "sources"
+      ],
+      "reason": [
+        "Add a checked direct reflection reference while retaining the existing rotation reference."
+      ]
+    },
+    {
+      "slug": "solar-eclipse-vs-lunar-eclipse",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Use “roughly once a month” rather than imply that every calendar month necessarily contains both phases. Keep new/full-Moon eclipse geometry and safety guidance unchanged. NASA phase cycle is about29.5days."
+      ]
+    },
+    {
+      "slug": "was-bubble-wrap-invented-as-wallpaper",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Avoid calling the plastic packaging “wrapping paper” in the section heading; the article already correctly identifies its plastic sheets."
+      ]
+    },
+    {
+      "slug": "what-really-causes-seasons",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "which-century-is-that-year",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "why-a-hurricanes-eye-is-calm",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "The existing NOAA structure source explicitly says eye formation is not fully understood; the article omits this uncertainty.",
+        "Add one short qualification to the existing account without changing source URLs, safety guidance or storm facts."
+      ]
+    },
+    {
+      "slug": "why-ballpoint-pens-have-a-tiny-ball",
+      "changedFields": [
+        "sections",
+        "sources"
+      ],
+      "reason": [
+        "Remove duplicated nested strong markup around the diameter explanation; the numeric example and product/date scope stay unchanged.",
+        "Replace awkward “modern successful ballpoint pen” with the existing intended phrase “modern ballpoint pen”.",
+        "Root confirmed the2011 BICPDF returns410. Replace it with the opened current75th-anniversary primary presskit and cite it in the body. Keep its verified tungsten-carbide/1mm-diameter claims; remove the old0.4mm-line comparison, which this new document does not state. Its0.4figure refers to grams of ink and is not reused as a line width."
+      ]
+    },
+    {
+      "slug": "why-day-turns-into-night",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Replace the awkward phrase “that place is in nighttime” with plain English. Scientific model, examples and limitations stay unchanged."
+      ]
+    },
+    {
+      "slug": "why-greenland-looks-so-big",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "why-microwaves-have-a-turntable",
+      "changedFields": [
+        "sections"
+      ],
+      "reason": [
+        "Correct the tense mismatch in “Noticed ... next time?”; retain the manufacturer-specific qualification and all heating guidance."
+      ]
+    },
+    {
+      "slug": "why-octopuses-have-three-hearts",
+      "changedFields": [
+        "cover"
+      ],
+      "reason": [
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "why-the-moon-changes-shape",
+      "changedFields": [
+        "cover",
+        "sections"
+      ],
+      "reason": [
+        "Start with the existing answer rather than two scene-setting sentences. Keep the reflective-light explanation, phase examples and caveats unchanged.",
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "why-time-zones-get-messy",
+      "changedFields": [
+        "cover",
+        "sections",
+        "title"
+      ],
+      "reason": [
+        "Name time zones in the headline so readers can identify the real subject immediately; no ranking claim is implied.",
+        "Move the already-present turning-Earth explanation before the imagined phone call. Keep offsets, dates, civil-time caveats and the worked calculation unchanged.",
+        "Use a dedicated 240px thumbnail instead of the larger 480px card image, retaining the original artwork and crop."
+      ]
+    },
+    {
+      "slug": "why-zippers-have-interlocking-teeth",
+      "changedFields": [
+        "description",
+        "sections"
+      ],
+      "reason": [
+        "The563-word article repeats its core mechanism and ends with a long compulsory-sounding challenge. Trim repetition while retaining six section IDs, all source/internal links, the small parts table, historical patent qualification and an optional folded answer.",
+        "Replace a challenge-led description with the actual mechanism and useful parts."
+      ]
+    }
+  ],
+  "covers": [
+    {
+      "path": "assets/images/learn/how-to-learn-world-flags-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8946,
+      "sha256": "9c0fb934318e4de663566d59b70f2b2258d64406dc375c0e00fdc9e79924ed61"
+    },
+    {
+      "path": "assets/images/learn/why-greenland-looks-so-big-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 9606,
+      "sha256": "118218edf6fd9a8c264a1a0b68b33b8912241b48c306a7598856d2c8f77feed8"
+    },
+    {
+      "path": "assets/images/learn/why-time-zones-get-messy-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 9044,
+      "sha256": "44d16861937d85683b35ac5c6667111946ff9b59beb5ae92370c0428a36d968c"
+    },
+    {
+      "path": "assets/images/learn/daily-or-anytime-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 10096,
+      "sha256": "f8fc502764e58ac46919732c8f0ec9bf224bf361b35650a70eef8149f848756c"
+    },
+    {
+      "path": "assets/images/learn/which-century-is-that-year-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8752,
+      "sha256": "a9ea8f228590a1f4cd35b995b05a6e4541e24c491f6d78b5c07f80e73f8b18e6"
+    },
+    {
+      "path": "assets/images/learn/how-to-read-roman-numerals-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 10826,
+      "sha256": "78fd2901fefdc2c9a1b705c680d25444cbf6f85a7aa872e2da89e02a404c6bb7"
+    },
+    {
+      "path": "assets/images/learn/remember-quiz-answers-tomorrow-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 9364,
+      "sha256": "cbe4eb7ef3d80cabe3c314e2abf1f267730e23ee19da6f304ba8b2adc081f1e2"
+    },
+    {
+      "path": "assets/images/learn/mental-percentages-without-a-calculator-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 12934,
+      "sha256": "8d258ebe8ceee3ca609319b2085c701676cf117e0e567968309c57a7052883e0"
+    },
+    {
+      "path": "assets/images/learn/number-sequences-look-at-the-gaps-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 6276,
+      "sha256": "187a11c7b93be0599d4beda932c7e0637f40391552613a5ebc295ebc01ce199a"
+    },
+    {
+      "path": "assets/images/learn/why-the-moon-changes-shape-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 3802,
+      "sha256": "ccd7c7312506cb4332016651f5ceda126df452ea7ec63587f69342e157dcec67"
+    },
+    {
+      "path": "assets/images/learn/why-octopuses-have-three-hearts-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 13216,
+      "sha256": "dd517350f3e766aab5f7745d84fc7dfc3bc4d770561c53c87c5b70b34de3e69b"
+    },
+    {
+      "path": "assets/images/learn/what-really-causes-seasons-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 16856,
+      "sha256": "3c74592f2b659afc6065ffa23812fb93e71d1a7b93b9c3b908eb08cf800157a5"
+    },
+    {
+      "path": "assets/images/learn/counting-seconds-after-lightning-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 5614,
+      "sha256": "14cbc37c031d5a314cacb9bd2e14dad7a8dd6a33307dac00e13d94db82a32054"
+    },
+    {
+      "path": "assets/images/learn/how-to-read-a-tennis-score-c40093d7d52f-small.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 24800,
+      "sha256": "47b181cbd850d84788af178d59c2850de193e9173f6e6fc29f8d06b3d1b67e14"
+    },
+    {
+      "path": "assets/images/learn/how-to-read-a-tennis-score-c40093d7d52f-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8604,
+      "sha256": "f044ef91956f20e32e3b7a6828449d182f257a41624d1e50a7dbac9baa98aaad"
+    },
+    {
+      "path": "assets/images/learn/connections-puzzles-find-the-hidden-link-thumb.webp",
+      "width": 240,
+      "height": 160,
+      "bytes": 8452,
+      "sha256": "8458f3fa9fbee1e53a6f7b909f7859881cd8648a89fc003aba4c199c234d4ac5"
+    }
+  ]
+}

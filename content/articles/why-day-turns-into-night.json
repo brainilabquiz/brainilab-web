@@ -78,7 +78,7 @@
   "sections": [
     {
       "id": "keep-the-lamp-still",
-      "html": "<p><strong>We have day and night because Earth rotates.</strong> A place has daylight while it faces the Sun and night while it faces away. Picture a globe beside a lamp: put a sticker on the globe and slowly turn it.</p><p>When the sticker faces the light, its place is in daytime. When it turns away, that place is in nighttime. The Sun does not need to circle Earth every day for this change to happen: Earth rotates.</p>",
+      "html": "<p><strong>We have day and night because Earth rotates.</strong> A place has daylight while it faces the Sun and night while it faces away. Picture a globe beside a lamp: put a sticker on the globe and slowly turn it.</p><p>When the sticker faces the light, its place is in daytime. When it turns away, it is night there. The Sun does not need to circle Earth every day for this change to happen: Earth rotates.</p>",
       "title": "Keep the lamp still"
     },
     {
@@ -97,7 +97,7 @@
       "title": "Why someone else is awake"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Shine a lamp on a globe and turn it slowly. See why your side of Earth has day while the other side has night.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

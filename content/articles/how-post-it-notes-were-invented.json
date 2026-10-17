@@ -43,7 +43,7 @@
   "sections": [
     {
       "id": "a-bookmark-that-would-stay",
-      "html": "<p>Imagine finding the right song in a book, marking it with a scrap of paper, then watching the marker fall out. For <strong>Art Fry</strong>, who sang in a church choir, this was a familiar annoyance.</p><p>In 1974, that slipping bookmark gave the 3M researcher an idea: perhaps an unusual adhesive developed by his colleague <strong>Spencer Silver</strong> could hold the marker in place. It needed to stay put, then come off when he wanted to move it.</p>",
+      "html": "<p><strong>Post-it Notes grew from Spencer Silver’s removable adhesive and Art Fry’s search for a bookmark that would stay put.</strong></p><p>Fry sang in a church choir, where loose paper markers kept slipping out of his songbook. In <strong>1974</strong>, he realised that Silver’s unusual adhesive might hold a marker in place, then let him remove it when he wanted to turn the page.</p>",
       "title": "The problem was losing the page"
     },
     {
@@ -62,7 +62,7 @@
       "title": "Would stronger glue have been better?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "A bookmark kept falling out. A glue was not very sticky. Together, those two problems led to Post-it Notes.",
   "publishedAt": "2026-09-30T05:28:02.99054+00:00"
 }

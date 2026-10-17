@@ -30,8 +30,8 @@
       "name": "National Inventors Hall of Fame — László Bíró and the modern ballpoint pen"
     },
     {
-      "url": "https://us.bic.com/media/bicworld/files/SHAREHOLDERS-LETTERS/BIC_ShareholdersLetter_15_HD.pdf",
-      "name": "BIC — Cristal ball material, point size and line width (2011 product description)"
+      "url": "https://mediabic.bic.com/image/upload/v1758021347/Press_kit_BIC_Cristal_75_ans_EN_6d77fc7443.pdf",
+      "name": "BIC — Cristal 75th anniversary press kit: Engineering in miniature (pages 10–11)"
     }
   ],
   "authorId": "biel-sarda",
@@ -44,12 +44,12 @@
     },
     {
       "id": "ink-problem",
-      "html": "<p>The National Inventors Hall of Fame credits <strong>László Bíró</strong> with the modern successful ballpoint pen. As a journalist, he noticed that newspaper printing ink dried faster than fountain-pen ink.</p><p>But putting printing ink into a fountain pen did not solve the problem: it was too thick to flow through the tip. Bíró developed a rotating-ball design that could carry ink onto the paper instead.</p><p>Changing the ink alone was not enough. The ink and the way it reached the page had to work together.</p>",
+      "html": "<p>The National Inventors Hall of Fame credits <strong>László Bíró</strong> with the modern ballpoint pen. As a journalist, he noticed that newspaper printing ink dried faster than fountain-pen ink.</p><p>But putting printing ink into a fountain pen did not solve the problem: it was too thick to flow through the tip. Bíró developed a rotating-ball design that could carry ink onto the paper instead.</p><p>Changing the ink alone was not enough. The ink and the way it reached the page had to work together.</p>",
       "title": "Better ink needed a different way out"
     },
     {
       "id": "small-and-tough",
-      "html": "<p>The ball needs to keep its shape while rubbing against paper. For example, BIC says its Cristal pen uses a ball made of <strong>tungsten carbide</strong>, a hard material that resists wear. That is a detail of that product, not a claim that every ballpoint uses the same material.</p><p>The same manufacturer’s description gives a useful size comparison: its medium point measures 1.0 millimetre, while the stated line width is 0.4 millimetres. <strong>The distance across the ball is its <strong>diameter</strong>. It is not the same as the width of the line it draws.</strong></p>",
+      "html": "<p>The ball needs to keep its shape while rubbing against paper. BIC’s <a href=\"https://mediabic.bic.com/image/upload/v1758021347/Press_kit_BIC_Cristal_75_ans_EN_6d77fc7443.pdf\">75th-anniversary Cristal press kit</a> describes a <strong>tungsten carbide ball one millimetre in diameter</strong>, checked for roundness and resistance.</p><p>Diameter means the distance across the ball. That describes the moving part, rather than the line it draws. These are details of the Cristal described in the press kit; other ballpoints can use different materials or sizes.</p>",
       "title": "A tiny component has a demanding job"
     },
     {
@@ -58,7 +58,7 @@
       "title": "Can you sketch the ink’s journey?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

@@ -50,7 +50,7 @@
     },
     {
       "id": "next-guess",
-      "html": "<p>After the ALLEY example, write down what you actually know: A is first, E is somewhere other than fourth, L is somewhere other than second, and Y is absent. Because the second L is grey, a candidate with two Ls will not fit.</p><p>You do not need to remember a technical rulebook. Ask two questions: “Where can this letter go?” and “How many copies do these tiles allow?” They help you separate position from quantity.</p><p>If you like this kind of careful reading, try <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">finding the link in a Connections puzzle</a>, where checking every clue matters just as much.</p>",
+      "html": "<p>After the ALLEY example, write down what you actually know: A is first, E is somewhere other than fourth, L is somewhere other than second or third, and Y is absent. Because the second L is grey, a candidate with two Ls will not fit.</p><p>You do not need to remember a technical rulebook. Ask two questions: “Where can this letter go?” and “How many copies do these tiles allow?” They help you separate position from quantity.</p><p>If you like this kind of careful reading, try <a href=\"/learn/connections-puzzles-find-the-hidden-link/\" target=\"_blank\" rel=\"noopener noreferrer\">finding the link in a Connections puzzle</a>, where checking every clue matters just as much.</p>",
       "title": "Use the clue in your next guess"
     },
     {
@@ -59,7 +59,7 @@
       "title": "A quick note before you play BrainiWord"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "One L turns yellow; the other turns grey. A worked example explains what repeated letters tell you in a five-letter word puzzle.",
   "publishedAt": "2026-09-30T17:15:00Z"
 }

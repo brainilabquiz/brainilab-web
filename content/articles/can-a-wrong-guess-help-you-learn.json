@@ -35,8 +35,8 @@
   "sections": [
     {
       "id": "guess-first",
-      "html": "<p>Without looking it up: <strong>what number comes next—3, 6, 12, 24?</strong> Make a guess and think of a rule that explains it.</p><p>You might say 48 because each number doubles. Keep both parts of your answer in mind: the number and your reason. We will return to them below.</p><p>Trying a question before studying its answer is often called <strong>pretesting</strong>. It can feel backwards. Why attempt something you have not learned yet?</p>",
-      "title": "Try this before reading on"
+      "html": "<p><strong>Trying a question before studying the correct information can sometimes help you remember that information later.</strong> Researchers call this <strong>pretesting</strong>. The studying afterwards matters; guessing alone is not the useful sequence.</p><p>If you fancy a short example, what number comes next—<strong>3, 6, 12, 24?</strong> Think of a rule as well as a number.</p><p>You might say 48 because each number doubles. Keep both parts of your answer in mind: the number and your reason. We will return to them below.</p>",
+      "title": "Why try before studying?"
     },
     {
       "id": "study",
@@ -54,7 +54,7 @@
       "title": "Give yourself one question to look out for"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Guessing before reading can sometimes help you learn. Try a short question, then see what a pretesting study found—and what it did not.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

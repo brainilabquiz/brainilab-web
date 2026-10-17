@@ -66,6 +66,10 @@
     {
       "url": "https://www.mathsisfun.com/geometry/rotation.html",
       "name": "Math is Fun — Rotation"
+    },
+    {
+      "url": "https://www.mathsisfun.com/geometry/reflection.html",
+      "name": "Math is Fun — Reflection"
     }
   ],
   "authorId": "biel-sarda",
@@ -92,7 +96,7 @@
       "title": "Follow one marked corner"
     }
   ],
-  "updatedAt": "2026-10-12T17:50:01.663034+00:00",
+  "updatedAt": "2026-10-17T09:54:01Z",
   "description": "Turn a paper shape, then look at it in a mirror. Follow a marked corner to see what changes.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
