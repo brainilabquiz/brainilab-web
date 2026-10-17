@@ -263,7 +263,7 @@ window.BrainiProfileRewards=(function(){
     const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
     const equipped=state.style;
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
-      if(avatar){frame(avatar,equipped.frame);avatar.innerHTML=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)});}
+      if(avatar){frame(avatar,equipped.frame);BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)}));}
     }
     const hero=document.querySelector('.profile-rank-main');
     if(hero){
@@ -275,10 +275,10 @@ window.BrainiProfileRewards=(function(){
     if(accountTitle){accountTitle.hidden=equipped.title==='none';accountTitle.textContent=C.titles.find(t=>t.id===equipped.title).name;}
     const preview=root.querySelector('[data-style-preview-avatar]');
     preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(level);frame(preview,draft.frame);
-    preview.innerHTML=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    BrainiProgressUI.setAvatarMarkup(preview,draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null}));
     const mini=root.querySelector('[data-avatar-mini]');
     mini.className='rank-avatar avatar-mobile-portrait '+BrainiProgressUI.avatarClass(level);frame(mini,draft.frame);
-    mini.innerHTML=preview.innerHTML;
+    BrainiProgressUI.setAvatarMarkup(mini,preview.innerHTML);
     root.querySelector('[data-avatar-mini-label]').textContent=dirty?'Your preview':'Your avatar';
     root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;

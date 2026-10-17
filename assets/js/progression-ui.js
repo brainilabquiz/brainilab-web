@@ -78,6 +78,18 @@ window.BrainiProgressUI=(function(){
     return defaultAvatarMarkup(person);
   }
 
+  const paintedAvatars=new WeakMap();
+  // Startup, cloud sync and cosmetic events can repeat the same portrait. Keep
+  // its decoded image/SVG (including a failed photo's fallback) until it changes.
+  function setAvatarMarkup(element,markup){
+    const previous=paintedAvatars.get(element);
+    if(previous?.markup===markup && previous.child===element.firstChild &&
+      previous.count===element.childNodes.length)return false;
+    element.innerHTML=markup;
+    paintedAvatars.set(element,{markup,child:element.firstChild,count:element.childNodes.length});
+    return true;
+  }
+
   function avatarFrameAttribute(person){
     const frame=person?.avatarFrame;
     if(['blue','green','copper','gold','orbit'].includes(frame))return `data-social-frame="${frame}"`;
@@ -246,7 +258,7 @@ window.BrainiProgressUI=(function(){
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,avatarFrameAttribute,profileTitleMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,ranksMarkup,badgeMarkup,xpEarned,
     showRankUp,rememberRank
   };
 })();

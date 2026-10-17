@@ -11,7 +11,7 @@ function setup({signed=false,xp=2700,metadata={},storage=true}={}){
   let player={displayName:'Curious Player',xp,level:12,score:1234};
   let meta={...metadata},readError=false,writeError=false,holdRead=null,writes=[];
   w.BrainiData={authState:()=>auth,player:()=>structuredClone(player)};
-  w.BrainiProgressUI={avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
+  w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
   w.BrainiBackendAuth={getClient:()=>({auth:{
     getUser:async()=>{
       if(holdRead)await holdRead;
