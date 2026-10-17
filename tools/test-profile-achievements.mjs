@@ -17,7 +17,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  const dom=new JSDOM('<body class="profile-page"><div class="nav-right"><a class="avatar"></a></div><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole});
  fixtures.push(dom);const w=dom.window;
  let uid='owner-a',proof=summary===undefined?summaryFor(uid):summary,readError=false,writeError=false,readUID=null,writeUID=null,holdRead=null,holdWrite=null;
- let syncs=0,network=0;const writes=[];
+ let syncs=0,network=0,reads=0;const writes=[];
  const accounts=new Map([[uid,{full_name:'Fictional player',brainilab_avatar_frame_v1:'copper',brainilab_profile_title_v1:'explorer',[key]:selected,...metadata}]]);
  w.fetch=()=>{network++;throw Error('Real network forbidden in fixture');};
  for(const name of ['icon-system','player-personalities','avatar-design','data','progression-ui'])w.eval(source(name));
@@ -25,7 +25,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  if(signed){await D.api.syncExternalAuthUser({id:uid,email:'fixture@example.test',user_metadata:accounts.get(uid)});await D.api.syncCloudProfile({user_id:uid,display_name:'Fictional player'});await D.api.syncCloudProgression(summaryFor(uid));}
  w.BrainiProgression={getCached:()=>clone(proof),sync:async()=>{syncs++;return clone(proof);}};
  w.BrainiBackendAuth={getClient:()=>({auth:{
-  getUser:async()=>{const requested=uid,result={data:{user:{id:readUID||requested,user_metadata:clone(accounts.get(requested)||{})}},error:readError?Error('offline'):null};if(holdRead)await holdRead;return result;},
+  getUser:async()=>{reads++;const requested=uid,result={data:{user:{id:readUID||requested,user_metadata:clone(accounts.get(requested)||{})}},error:readError?Error('offline'):null};if(holdRead)await holdRead;return result;},
   updateUser:async payload=>{const requested=uid;writes.push(clone(payload));if(holdWrite)await holdWrite;if(writeError)return {data:null,error:Error('offline')};accounts.set(requested,{...accounts.get(requested),...clone(payload.data)});return {data:{user:{id:writeUID||requested,user_metadata:clone(accounts.get(requested))}},error:null};}
  }})};
  if(process.env.ACHIEVEMENTS_BUNDLE==='1')w.eval(source('profile-rewards.bundle'));
@@ -33,7 +33,7 @@ async function setup({signed=true,selected=[],summary,metadata={}}={}){
  await settle();
  const root=w.document.querySelector('[data-profile-rewards]'),S=w.BrainiAchievementStore;
  const state=()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1'));
- return {w,dom,root,S,D,writes,state,accounts,get uid(){return uid;},get network(){return network;},get syncs(){return syncs;},
+ return {w,dom,root,S,D,writes,state,accounts,get uid(){return uid;},get network(){return network;},get syncs(){return syncs;},get reads(){return reads;},
   get meta(){return accounts.get(uid);},setProof(value){proof=value;w.dispatchEvent(new w.CustomEvent('brainilab:progressionchange'));},
   setMeta(value){accounts.set(uid,{...accounts.get(uid),...clone(value)});},readError(value){readError=value;},writeError(value){writeError=value;},readUID(value){readUID=value;},writeUID(value){writeUID=value;},holdRead(value){holdRead=value;},holdWrite(value){holdWrite=value;},
   async switchOwner(next){uid=next;proof=summaryFor(next);if(!accounts.has(next))accounts.set(next,{[key]:[]});await D.api.syncExternalAuthUser({id:next,email:'fixture@example.test',user_metadata:accounts.get(next)});await settle();},
@@ -120,12 +120,20 @@ try{
  assert.doesNotMatch(recovering.root.querySelector('[data-achievement-status]').textContent,/changed elsewhere/,'temporary unavailable evidence is not an external preference edit');
  assert.equal(recovering.writes.length,0);await recovering.switchOwner('owner-b');assert.deepEqual(selectedIn(recovering,'[data-achievement-draft-preview]'),[],'the evidence-gap draft is still isolated from a new owner');
 
- const unavailable=await setup({summary:null});assert.equal(unavailable.syncs,1);assert.equal(unavailable.S.snapshot().available,false);assert.equal(unavailable.root.querySelector('[data-achievement-id=first_game]').dataset.state,'unknown');assert.match(unavailable.root.querySelector('[data-achievement-status]').textContent,/could not be checked/);assert.equal(unavailable.writes.length,0);
+ const unavailable=await setup({summary:null});assert.equal(unavailable.syncs,1);assert.equal(unavailable.S.snapshot().available,false);assert.equal(unavailable.root.querySelector('[data-achievement-id=first_game]').dataset.state,'unknown');assert.match(unavailable.root.querySelector('[data-achievement-status]').textContent,/Waiting for your saved progress/);assert.equal(unavailable.root.querySelector('[data-achievement-status]').classList.contains('is-error'),false);assert.equal(unavailable.root.querySelector('[data-achievements-panel]').getAttribute('aria-busy'),'false');assert.equal(unavailable.root.querySelector('[data-achievement-retry]').hidden,false);assert.equal(unavailable.writes.length,0);
+ const cold=await setup({summary:null,selected:['first_game']});click(cold,'[data-achievement-choose]');const startupReads=cold.reads;
+ assert.match(cold.root.querySelector('[data-achievement-counter]').textContent,/Waiting/);assert.doesNotMatch(cold.root.querySelector('[data-achievement-counter]').textContent,/could not be checked/);
+ cold.setProof(summaryFor('another-owner',{best_streak:7}));await settle();assert.equal(cold.reads,startupReads,'other-owner progress cannot resume the initial metadata read');
+ const lateCanonical=summaryFor(cold.uid,{best_streak:7});cold.setProof(lateCanonical);cold.setProof(lateCanonical);cold.setProof(lateCanonical);await settle();
+ assert.equal(cold.S.snapshot().available,true,'late canonical progress automatically readies the Badges pane without Try again');assert.equal(cold.S.snapshot().earned.length,6);assert.match(cold.root.querySelector('[data-achievement-counter]').textContent,/^6 of 8 earned/);
+ assert.equal(cold.S.snapshot().error,'');assert.equal(cold.S.snapshot().waitingForProgress,false);assert.equal(cold.root.querySelector('[data-achievement-retry]').hidden,true);assert.deepEqual(selectedIn(cold,'[data-featured-achievements]'),['first_game']);assert.equal(cold.syncs,1,'readiness does not repeat the progression RPC');assert.equal(cold.reads,startupReads+1,'duplicate readiness events share one badge metadata read');assert.equal(cold.writes.length,0);
+ cold.readError(true);await cold.S.load();const failedMetadataReads=cold.reads;cold.readError(false);cold.setProof(lateCanonical);cold.setProof(lateCanonical);await settle();
+ assert.equal(cold.reads,failedMetadataReads,'metadata errors still require an explicit retry');assert.ok(cold.S.snapshot().error);assert.equal(cold.root.querySelector('[data-achievement-status]').classList.contains('is-error'),true);assert.equal(cold.root.querySelector('[data-achievement-retry]').hidden,false);await cold.S.load();assert.equal(cold.S.snapshot().error,'');assert.equal(cold.writes.length,0);
  const zero=await setup({summary:{progression:{user_id:'owner-a',total_games:0,best_streak:0,full_daily_count:0},personal_bests:[]}});assert.equal(zero.S.snapshot().earned.length,0);assert.match(zero.root.querySelector('[data-achievement-status]').textContent,/No badges earned yet/);
  zero.setProof(summaryFor('owner-a'));assert.equal(zero.S.snapshot().earned.length,5);assert.deepEqual(plain(zero.S.snapshot().selected),[],'new milestones never auto-equip badges');assert.equal(zero.writes.length,0);
  const guest=await setup({signed:false});assert.equal(guest.S.snapshot().owner,null);assert.equal(guest.S.snapshot().available,false);assert.equal(guest.root.querySelector('[data-achievement-signin]').hidden,false);assert.equal(await guest.S.save(['first_game']),false);assert.equal(guest.writes.length,0);
  const timeout=await setup({selected:['first_game']});const timer=timeout.w.setTimeout.bind(timeout.w);timeout.w.setTimeout=(callback,ms)=>timer(callback,ms===12000?1:ms);timeout.holdRead(new Promise(()=>{}));await timeout.S.load();assert.equal(timeout.S.snapshot().loading,false);assert.ok(timeout.S.snapshot().error);
- for(const fixture of [f,invalid,concurrent,pending,late,recovering,unavailable,zero,guest,timeout])assert.equal(fixture.network,0);
+ for(const fixture of [f,invalid,concurrent,pending,late,recovering,unavailable,cold,zero,guest,timeout])assert.equal(fixture.network,0);
  assert.deepEqual(runtimeErrors,[],'actual UI handlers emit no uncaught runtime errors');
  console.log('PASS achievements: canonical owner evidence and exact thresholds; eight stable cards/four keyboard tabs; max-three preview/save/clear/cancel; separate avatar draft; one metadata field; conflicts, auth errors/timeouts and late-owner isolation; zero network/player/scoring/XP writes.');
 }finally{for(const dom of fixtures)dom.window.close();}

@@ -1,6 +1,6 @@
 window.BrainiAchievementStore=(function(){
   const catalog=BrainiAchievementCatalog,key=catalog.metadataKey;
-  let owner=null,confirmedOwner=null,selected=[],baseline=null,loading=false,saving=false,error='',notice='',generation=0,pending=null;
+  let owner=null,confirmedOwner=null,selected=[],baseline=null,loading=false,saving=false,error='',notice='',generation=0,pending=null,waitingForProgress=false,progressResumeUsed=false;
   function identity(){
     const auth=window.BrainiData?.authState?.();
     return auth?.status==='authenticated'&&typeof auth.user?.id==='string'&&auth.user.id&&auth.user.is_anonymous!==true
@@ -14,7 +14,7 @@ window.BrainiAchievementStore=(function(){
   }
   const metadata=user=>user?.user_metadata&&typeof user.user_metadata==='object'&&!Array.isArray(user.user_metadata)?user.user_metadata:{};
   const fingerprint=meta=>JSON.stringify([Object.hasOwn(meta,key),meta[key]]);
-  function fail(message){const failure=new Error(message);failure.achievementMessage=message;throw failure;}
+  function fail(message,reason=''){const failure=new Error(message);failure.achievementMessage=message;failure.achievementReason=reason;throw failure;}
   function bounded(request){
     let timer;
     return Promise.race([request,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Achievement request timed out')),12000);})])
@@ -25,25 +25,26 @@ window.BrainiAchievementStore=(function(){
     const proof=same&&confirmedOwner===account.uid?evidence(account):{available:false,ids:[],metrics:null};
     return {owner:same?owner.id:null,selected:proof.available?catalog.clean(selected,proof.ids):[],
       earned:proof.ids.slice(),evidence:proof.metrics?{...proof.metrics}:null,available:proof.available,
-      loading:same&&loading,saving:same&&saving,error:same?error:'',notice:same?notice:'',cloud:!!account};
+      loading:same&&loading,saving:same&&saving,waitingForProgress:same&&waitingForProgress,
+      error:same?error:'',notice:same?notice:'',cloud:!!account};
   }
   function load(){
     const account=identity();
     if(account?.uid===owner?.uid&&(loading||saving))return pending||Promise.resolve(false);
     const same=!!account&&account.uid===owner?.uid;
-    const run=++generation;owner=account;if(!same){selected=[];baseline=null;confirmedOwner=null;}error='';notice='';
+    const run=++generation;owner=account;if(!same){selected=[];baseline=null;confirmedOwner=null;progressResumeUsed=false;}waitingForProgress=false;error='';notice='';
     loading=!!account;saving=false;emit();
     if(!account)return Promise.resolve(false);
     const job=(async()=>{
       try{
         let proof=evidence(account);
         if(!proof.available){
-          if(!window.BrainiProgression?.sync)fail('Your account progress could not be checked. Try again.');
+          if(!window.BrainiProgression?.sync)fail('Your account progress could not be checked. Try again.','progress-unavailable');
           await bounded(BrainiProgression.sync());
           if(!current(account,run))return false;
           proof=evidence(account);
         }
-        if(!proof.available)fail('Your account progress could not be checked. Try again.');
+        if(!proof.available)fail('Your account progress could not be checked. Try again.','progress-unavailable');
         const sb=window.BrainiBackendAuth?.getClient?.();
         if(!sb)fail('Your featured badges could not be loaded. Try again.');
         const {data,error:readError}=await bounded(sb.auth.getUser());
@@ -56,7 +57,10 @@ window.BrainiAchievementStore=(function(){
         selected=catalog.clean(meta[key],proof.ids);baseline=fingerprint(meta);confirmedOwner=account.uid;
         return true;
       }catch(caught){
-        if(current(account,run))error=caught.achievementMessage||'Your featured badges could not be loaded. Try again.';
+        if(current(account,run)){
+          error=caught.achievementMessage||'Your featured badges could not be loaded. Try again.';
+          waitingForProgress=caught.achievementReason==='progress-unavailable'&&confirmedOwner!==account.uid&&!progressResumeUsed;
+        }
         return false;
       }finally{
         if(current(account,run)){loading=false;pending=null;emit();}
@@ -107,9 +111,18 @@ window.BrainiAchievementStore=(function(){
   }
   window.addEventListener('brainilab:authchange',()=>{
     if(identity()?.uid===owner?.uid)return;
-    generation++;owner=null;confirmedOwner=null;selected=[];baseline=null;loading=false;saving=false;pending=null;error='';notice='';
+    generation++;owner=null;confirmedOwner=null;selected=[];baseline=null;loading=false;saving=false;pending=null;waitingForProgress=false;progressResumeUsed=false;error='';notice='';
     void load();
   });
-  window.addEventListener('brainilab:progressionchange',()=>{if(identity()?.uid===owner?.uid)emit();});
+  window.addEventListener('brainilab:progressionchange',()=>{
+    const account=identity();
+    if(!account||account.uid!==owner?.uid)return;
+    // Startup can precede the SDK/progression cache. Resume that read once when
+    // the current account's proof arrives; metadata errors still need Try again.
+    if(waitingForProgress&&!progressResumeUsed&&confirmedOwner!==account.uid&&!loading&&!saving&&evidence(account).available){
+      waitingForProgress=false;progressResumeUsed=true;void load();return;
+    }
+    emit();
+  });
   return {load,save,snapshot};
 })();
