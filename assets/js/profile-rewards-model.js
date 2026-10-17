@@ -28,30 +28,33 @@ window.BrainiRewardCatalog=(function(){
   function clean(value={}){
     return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
   }
-  function available(value,earned){
+  const academyRewards=BrainiAvatarDesign.academyRewards;
+  function academyIds(value){return Array.isArray(value)?[...new Set(value.filter(id=>academyRewards.some(item=>item.id===id)))]:[];}
+  const unlocked=(item,earned,academy=[])=>item.course?academyIds(academy).includes(item.id):item.xp<=xp(earned);
+  function available(value,earned,academy=[]){
     const result=clean(value),total=xp(earned);
-    for(const [key,list] of Object.entries(groups))if(list.find(item=>item.id===result[key]).xp>total)result[key]=list[0].id;
+    for(const [key,list] of Object.entries(groups))if(!unlocked(list.find(item=>item.id===result[key]),total,academy))result[key]=list[0].id;
     return result;
   }
   function next(earned){
     const total=xp(earned);
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
-      .filter(r=>r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
+      .filter(r=>!r.course&&r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
-  function surprise(style,earned,random=Math.random){
-    const total=xp(earned),current=available(style,total),result={...current,mode:'built'};
+  function surprise(style,earned,random=Math.random,academy=[]){
+    const total=xp(earned),current=available(style,total,academy),result={...current,mode:'built'};
     const kinds=['hair','hairColor','shirt','background','glasses','hat','prop'];
     // Skin tone, frame and title stay intentional. Extras stay absent in most draws.
     for(const kind of kinds){
-      const unlocked=groups[kind].filter(item=>item.xp<=total);
+      const earnedItems=groups[kind].filter(item=>unlocked(item,total,academy));
       const roll=Math.min(1-Number.EPSILON,Math.max(0,Number(random())||0));
       const extra=['glasses','hat','prop'].includes(kind);
-      const pool=extra?unlocked.filter(item=>item.id!=='none'):unlocked;
+      const pool=extra?earnedItems.filter(item=>item.id!=='none'):earnedItems;
       result[kind]=extra&&(roll<.65||!pool.length)?'none':pool[Math.min(pool.length-1,Math.floor((extra?(roll-.65)/.35:roll)*pool.length))].id;
     }
     if(kinds.every(kind=>result[kind]===current[kind]))result.hair=groups.hair.find(item=>item.xp<=total&&item.id!==current.hair)?.id||current.hair;
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,unlocked,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();

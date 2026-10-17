@@ -13,7 +13,7 @@ function setup({signed=false,xp=2700,metadata={},storage=true}={}){
   let meta={...metadata},readError=false,writeError=false,holdRead=null,writes=[];
   w.BrainiData={authState:()=>auth,player:()=>structuredClone(player)};
   w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
-  w.BrainiBackendAuth={getClient:()=>({auth:{
+  w.BrainiBackendAuth={getClient:()=>({from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
     getUser:async()=>{
       if(holdRead)await holdRead;
       return {data:{user:{id:auth.user?.id,user_metadata:{...meta}}},error:readError?Error('offline'):null};
@@ -58,7 +58,7 @@ assert.equal(await S.save({frame:'orbit',title:'sage'}),false,'a forged locked s
 assert.equal(S.snapshot().style.frame,'copper');assert.equal(JSON.stringify(guest.player),before);
 await S.load();guest.setXP(3000);w.BrainiProfileRewards.render();
 assert.equal(root.querySelector('[data-reward-id=gold]').disabled,false);assert.equal(S.snapshot().style.frame,'copper','new reward is not auto-equipped');
-guest.setXP(10000);w.BrainiProfileRewards.render();assert.match(root.querySelector('[data-next-reward]').textContent,/Every reward is unlocked/);
+guest.setXP(10000);w.BrainiProfileRewards.render();assert.match(root.querySelector('[data-next-reward]').textContent,/Every XP reward is unlocked/);
 root.querySelector('[data-reward-kind=title][data-reward-id=none]').click();root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-style-preview-title]').textContent,'Puzzle Detective');
 const blocked=make({storage:false});await tick();assert.equal(await blocked.w.BrainiRewardStore.save({frame:'blue'}),false);assert.equal(blocked.w.BrainiRewardStore.snapshot().style.frame,'level');assert.match(blocked.w.BrainiRewardStore.snapshot().error,/could not be confirmed/);
 const account=make({signed:true,metadata:{full_name:'Keep me',brainilab_avatar_frame_v1:'green',brainilab_profile_title_v1:'explorer'}});await tick();
