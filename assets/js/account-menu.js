@@ -288,21 +288,19 @@ window.BrainiAccountMenu=(function(){
     const p=BrainiData.player();
 
     document.querySelectorAll(".avatar").forEach(avatar=>{
-      [...avatar.classList]
-        .filter(c=>c.startsWith("rank-") && c!=="rank-header-avatar")
-        .forEach(c=>avatar.classList.remove(c));
-
       if(window.BrainiProgressUI){
         const level=BrainiProgressUI.xpProgress(p.level,p.xp).level;
         const t=BrainiProgressUI.tier(level);
-        avatar.classList.add(
-          "rank-header-avatar",
-          ...BrainiProgressUI.avatarClass(level).split(" ")
-        );
-        avatar.title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${level}`;
+        const classes=new Set(["rank-header-avatar",...BrainiProgressUI.avatarClass(level).split(" ")]);
+        for(const name of [...avatar.classList]){
+          if(name.startsWith("rank-")&&!classes.has(name))avatar.classList.remove(name);
+        }
+        for(const name of classes)if(!avatar.classList.contains(name))avatar.classList.add(name);
+        const title=`${p.displayName||"My BrainiLab"} · ${t.name} · Level ${level}`;
+        if(avatar.title!==title)avatar.title=title;
       }
 
-      avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
+      BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
     });
   }
 

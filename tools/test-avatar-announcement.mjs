@@ -13,7 +13,7 @@ async function make({path='/',signed=false,seen=null,storage=true,overlay=null,a
  if(overlay){const el=w.document.createElement('aside');el.className=overlay;w.document.body.append(el);}
  w.eval(readFileSync('assets/js/avatar-design.js','utf8'));
  if(accountMenu){
-  w.BrainiProgressUI={xpProgress:()=>({level:1}),tier:()=>({name:'Rookie'}),avatarClass:()=> 'rank-level-1',avatarImageMarkup:()=>''};
+  w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},xpProgress:()=>({level:1}),tier:()=>({name:'Rookie'}),avatarClass:()=> 'rank-level-1',avatarImageMarkup:()=>''};
   w.eval(readFileSync('assets/js/account-menu.js','utf8'));
  }
  w.eval(source);await tick();
