@@ -1,0 +1,69 @@
+{
+  "slug": "does-reading-aloud-help-memory",
+  "title": "Does reading aloud help you remember?",
+  "description": "Reading aloud can help words stand out in memory. Discover the production effect, what studies found and why understanding is a different question.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 150,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/does-reading-aloud-help-memory.webp",
+    "small": "/assets/images/learn/does-reading-aloud-help-memory-small.webp",
+    "thumbnail": "/assets/images/learn/does-reading-aloud-help-memory-thumb.webp",
+    "alt": "A person in a green jumper reads the word MOON from a small cream card",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a participant photograph or a reconstruction of the experiments.",
+    "position": 25
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Fancy a few new facts? Try a short General Knowledge quiz.",
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "explain-an-answer-in-your-own-words"
+  ],
+  "sources": [
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20438265/",
+      "name": "MacLeod and colleagues (2010) — The production effect: original study abstract"
+    },
+    {
+      "url": "https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/files/forrinmacleodmem18.pdf",
+      "name": "Forrin and MacLeod (2018) — This time it’s personal: the memory benefit of hearing oneself (original research, PDF)"
+    },
+    {
+      "url": "https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/documents/mc-2024.pdf",
+      "name": "Roberts and colleagues (2024) — Reading text aloud benefits memory but not comprehension (original research, PDF)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "reading-aloud-and-memory",
+      "title": "Give one word a voice",
+      "html": "<p><strong>Reading aloud can make selected words easier to recognise later than reading them silently.</strong> Researchers call this the <a href=\"https://pubmed.ncbi.nlm.nih.gov/20438265/\">production effect</a>. One explanation is that saying a word gives it extra, distinctive clues in memory.</p><p>Imagine quietly reading a list of words, then saying “moon” aloud. That one item has acquired a voice.</p>"
+    },
+    {
+      "id": "what-the-word-study-found",
+      "title": "Your own voice joined the experiment",
+      "html": "<p>In <a href=\"https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/files/forrinmacleodmem18.pdf\">a study published in 2018</a>, Noah Forrin and Colin MacLeod compared reading silently, hearing another person, hearing a recording of yourself and reading aloud.</p><p>Seventy-five students completed both sessions. On an immediate word-recognition test, reading aloud had the highest average score. Hearing their own recording also beat hearing someone else.</p>"
+    },
+    {
+      "id": "what-the-result-does-not-show",
+      "title": "A textbook is a different question",
+      "html": "<p><a href=\"https://uwaterloo.ca/memory-attention-cognition-lab/sites/default/files/uploads/documents/mc-2024.pdf\">A 2024 paper</a> reported four experiments with written passages. Reading aloud consistently helped with questions testing memory for the text. It did not consistently help with questions requiring broader understanding.</p><p>The 2018 word study had another limit: it did not clearly establish that reading aloud beat hearing your own recording.</p>"
+    },
+    {
+      "id": "one-small-option",
+      "title": "No dramatic narrator required",
+      "html": "<p>If you fancy trying it, choose one useful term in a short list and say it aloud as you study. No dramatic narrator’s voice required.</p><p>Treat that as a small option, not a guarantee. To check what you can bring to mind afterwards, try our separate <a href=\"/learn/remember-quiz-answers-tomorrow/\">recall routine</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:31:22Z",
+  "updatedAt": "2026-10-17T08:31:22Z",
+  "minutes": 2
+}

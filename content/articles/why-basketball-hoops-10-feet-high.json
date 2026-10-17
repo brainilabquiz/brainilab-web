@@ -1,0 +1,65 @@
+{
+  "slug": "why-basketball-hoops-10-feet-high",
+  "title": "Why are basketball hoops 10 feet high?",
+  "description": "Basketball’s hoop height began with a gym balcony and two peach baskets. Follow the 1891 story, then check what today’s FIBA rules actually measure.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 151,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-basketball-hoops-10-feet-high.webp",
+    "small": "/assets/images/learn/why-basketball-hoops-10-feet-high-small.webp",
+    "thumbnail": "/assets/images/learn/why-basketball-hoops-10-feet-high-thumb.webp",
+    "alt": "An orange basketball rests in a wooden peach basket, with a modern hoop and white net behind",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not the original 1891 gym or a measurement diagram.",
+    "position": 35
+  },
+  "hub": {
+    "url": "/sports/",
+    "name": "Sports"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Try the Sports Quiz for more stories hiding behind familiar games.",
+  "related": [
+    "why-marathon-26-2-miles",
+    "why-football-cards-red-yellow"
+  ],
+  "sources": [
+    {
+      "url": "https://springfield.edu/about/birthplace-of-basketball",
+      "name": "Springfield College — The peach baskets, balcony and invention of basketball"
+    },
+    {
+      "url": "https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf",
+      "name": "FIBA — 2026 Basketball Equipment, section 1.2.4: ring height (PDF)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "why-the-hoop-is-ten-feet-high",
+      "title": "A balcony set the starting height",
+      "html": "<p><strong>Basketball’s familiar 10-foot hoop height began with a gym balcony.</strong> In 1891, James Naismith attached peach baskets to a rail at Springfield College that happened to be ten feet above the floor.</p><p><a href=\"https://springfield.edu/about/birthplace-of-basketball\">Springfield’s history tells the surprisingly practical story</a>. A feature of one room became part of a worldwide game.</p>"
+    },
+    {
+      "id": "the-peach-baskets",
+      "title": "Scoring came with a retrieval job",
+      "html": "<p>Naismith wanted two boxes for goals. The janitor brought two peach baskets instead, so he fixed one at each end of the balcony.</p><p>The bottoms were still in place. A man at each end retrieved the ball after a score and returned it to play. A basket is an excellent container—slightly too good at containing things, in this case.</p>"
+    },
+    {
+      "id": "the-current-fiba-height",
+      "title": "What is the official hoop height now?",
+      "html": "<p><a href=\"https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf\">FIBA’s 2026 equipment rules</a> put the <strong>top edge of each ring at 3,050 mm above the floor</strong>: 3.05 metres, approximately ten feet. The rule allows a maximum difference of 6 mm either way.</p><p>That height refers to the rim’s upper edge, rather than the bottom of the net or the top of the backboard.</p>"
+    },
+    {
+      "id": "the-history-in-the-number",
+      "title": "A little history above every shot",
+      "html": "<p>The original baskets and today’s steel rings look very different. Yet that old balcony measurement is still recognisable in the modern rules.</p><p>Next time a hoop looks impossibly high, picture the peach baskets and the person waiting to retrieve the ball. For another memorable sporting measurement, discover <a href=\"/learn/why-marathon-26-2-miles/\">why a marathon is 26.2 miles</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:31:22Z",
+  "updatedAt": "2026-10-17T08:31:22Z",
+  "minutes": 2
+}
