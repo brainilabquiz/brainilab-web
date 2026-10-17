@@ -55,7 +55,7 @@ window.BrainiPerf=(function(){
 
     cloudPromise=(async()=>{
       await ensureSupabase();
-      await loadScript(new URL(`cloud.bundle.js?v=41.54.0`,jsBase).href);
+      await loadFeature('cloud.bundle.js');
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
     })();
