@@ -14,3 +14,7 @@
 .post-streak-earned>.post-streak-flame{width:20px;height:24px;flex:0 0 20px;object-fit:contain}.post-streak-earned strong{white-space:nowrap}.post-score-panel .post-points{font-variant-numeric:tabular-nums}
 /* A progress refresh only reads confirmed rewards; it never replays a game. */
 .post-refresh-progress{display:inline;padding:0;border:0;background:none;color:var(--purple,#2d296e);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}.post-refresh-progress:disabled{cursor:wait;opacity:.65}.post-refresh-progress:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+.post-reward .post-earned>span{display:block;font-size:10px;font-weight:600;line-height:1.4;color:#59634b;margin-bottom:2px}
+.post-reward .post-daily-bonus{padding:10px 0 0;border-top:1px solid #d7e2c9;color:#4e5b42}
+.post-daily-bonus>b{display:block;font-size:12px;font-weight:750}
