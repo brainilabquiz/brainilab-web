@@ -26,10 +26,12 @@ function paintAccountInvites(){
   el.querySelector('[data-learning-dismiss]').onclick=()=>{dismissedInvites.add(el);el.hidden=true;(document.querySelector('#learn-search')||el.closest('[data-completion-panel]')?.querySelector('[data-review-round]'))?.focus();};
   el.querySelector('[data-learning-join]').onclick=async event=>{
    const button=event.currentTarget,error=el.querySelector('[data-learning-account-error]');button.disabled=true;error.hidden=true;
+   try{window.BrainiSiteAnalytics?.learningAccountPrompt?.('click',el.dataset.learningAccountInvite);}catch{}
    try{
     if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
     if(!window.BrainiAuth?.open)throw Error('Account service unavailable');
     window.BrainiAuth.open({source:el.dataset.learningAccountInvite,mode:'signup'});
+    try{window.BrainiSiteAnalytics?.learningAccountPrompt?.('open',el.dataset.learningAccountInvite);}catch{}
    }catch{error.textContent='We couldn’t open sign-up. Please try again. You can keep reading.';error.hidden=false;}
    finally{button.disabled=false;}
   };

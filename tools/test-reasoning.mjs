@@ -9,8 +9,13 @@ questions.forEach(q=>{assert.equal(new Set(q.options).size,4);assert.ok(q.answer
 assert.deepEqual(questions.map(q=>q.options[q.answer]),['Triangle','14','Right','Red circle','17','Friday','Bottom-right','It is not a triangle','47','13','Up','27']);
 assert.equal(scoreAnswers(questions.map(q=>q.answer)).correct,12);assert.equal(scoreAnswers(questions.map(q=>(q.answer+1)%4)).correct,0);
 const html=readFileSync('reasoning/index.html','utf8'),js=readFileSync('assets/js/reasoning.bundle.js','utf8');
+const staticDom=new JSDOM(html),intro=staticDom.window.document.querySelector('.reason-intro');
+assert.ok(intro,'The first HTML response explains the challenge without JavaScript');
+assert.match(intro.textContent,/Twelve free reasoning puzzles/);assert.match(intro.textContent,/no account is needed/);
+assert.match(intro.textContent,/not an IQ measurement/);assert.ok(intro.querySelector('[data-start]').disabled);
+const introText=intro.querySelector('h2').textContent;staticDom.window.close();
 function page(saved){const dom=new JSDOM(html,{url:'https://brainilabgames.com/reasoning/',runScripts:'outside-only'});dom.window.HTMLElement.prototype.scrollIntoView=()=>{};if(saved)dom.window.sessionStorage.setItem('brainilab-reasoning:'+challengeVersion,saved);dom.window.eval(js);return dom;}
-let dom=page(),w=dom.window,root=w.document.querySelector('[data-reasoning]');root.querySelector('[data-start]').click();assert.equal(root.querySelector('[data-check]').disabled,true);
+let dom=page(),w=dom.window,root=w.document.querySelector('[data-reasoning]');assert.equal(root.querySelector('h2').textContent,introText);assert.ok(!root.querySelector('[data-start]').disabled);assert.ok(root.querySelector('[data-fresh]').hidden);root.querySelector('[data-start]').click();assert.equal(root.querySelector('[data-check]').disabled,true);
 for(let i=0;i<12;i++){
  const choice=i%2===0?questions[i].answer:(questions[i].answer+1)%4;
  const input=root.querySelector(`input[value="${choice}"]`);input.checked=true;input.dispatchEvent(new w.Event('change',{bubbles:true}));root.querySelector('[data-check]').click();

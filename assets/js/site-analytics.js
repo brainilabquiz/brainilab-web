@@ -85,6 +85,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(url.origin===location.origin&&url.pathname==='/assets/resources/five-number-puzzles.pdf')send('resource_download',{resource_id:'five_number_puzzles'});
     if(url.origin===location.origin&&/^\/learn\/[a-z0-9-]+\/$/.test(path())&&a.closest('[data-article-game],.article-game-link,.article-practice,.sidebar-game')&&/^\/(?:games\/(?:math-rush|connections|sequence|odd-one-out|number-route|brainiword)\/|geography\/world-(?:flags|capitals)-quiz\/|(?:science|history|sports)\/[a-z-]+-quiz\/|general-knowledge\/general-knowledge-quiz\/|reasoning\/|daily-quiz\/|games\/)$/.test(url.pathname))send('article_game_click',{article_slug:path().split('/')[2],game_path:url.pathname});
     if(url.origin===location.origin&&a.closest('[data-game-guides]')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('game_guide_click',{article_slug:url.pathname.split('/')[2],game_path:path()});
+    if(url.origin===location.origin&&/^\/learn\/[a-z0-9-]+\/$/.test(path())&&/^\/learn\/paths\/[a-z0-9-]+\/$/.test(url.pathname)&&a.closest('.article-body,.article-next'))send('article_course_click',{article_slug:path().split('/')[2],course_path:url.pathname});
     if(url.origin===location.origin&&a.closest('.topic-discovery')&&['/general-knowledge/','/history/','/sports/'].includes(path())){
       if(a.matches('.topic-level'))send('topic_game_click',{topic_path:path(),difficulty:['easy','medium','hard'].includes(url.searchParams.get('difficulty'))?url.searchParams.get('difficulty'):'unknown'});
       if(a.closest('.topic-reading')&&/^\/learn\/[a-z0-9-]+\/$/.test(url.pathname))send('topic_article_click',{topic_path:path(),article_slug:url.pathname.split('/')[2]});
@@ -104,5 +105,11 @@ window.BrainiSiteAnalytics=(()=>{
     if(!['click','open'].includes(action)||!['game_result','practice_result'].includes(placement)||!['brainmix','brainiword','orderup','topicrush','generalknowledge','connections','survival','oddoneout','higherlower','mathrush','numberroute','sequence','worldflags','europeflags','worldcapitals','science','history','sports'].includes(gameId))return;
     send('account_prompt_'+action,{placement,game_id:gameId});
   }
-  return {setConsent,gameStart,practiceComplete,accountPrompt,registrationContext:()=>allowed()?{...entryContext()}:null,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
+  function learningAccountPrompt(action,placement){
+    if(!['click','open'].includes(action))return;
+    const article=/^\/learn\/([a-z0-9-]+)\/$/.exec(path());
+    if(placement==='learn_library'&&path()==='/learn/')send('account_prompt_'+action,{placement});
+    else if(placement==='academy_result'&&article)send('account_prompt_'+action,{placement,article_slug:article[1]});
+  }
+  return {setConsent,gameStart,practiceComplete,accountPrompt,learningAccountPrompt,registrationContext:()=>allowed()?{...entryContext()}:null,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true};
 })();

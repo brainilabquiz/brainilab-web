@@ -9,7 +9,10 @@ function focus(){root.querySelector('h2')?.focus({preventScroll:true});root.scro
 function visual(q){return q.grid?`<table class="reason-grid"><caption>Each row follows the same rule</caption><tbody>${q.grid.map(row=>`<tr>${row.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>`:q.visual?`<div class="reason-tiles" aria-hidden="true">${q.visual.map(v=>`<span>${esc(v)}</span>`).join('')}</div><p class="sr-only">${q.visual.map(v=>({'●':'circle','■':'square','▲':'triangle','↑':'up arrow','→':'right arrow','↻':'clockwise turn','↕':'horizontal reflection','?':'question mark'})[v]||v).join(', ')}</p>`:'';}
 function intro(){
  answers=readSaved();
- root.innerHTML=`<div class="reason-intro"><span class="reason-icon" aria-hidden="true">✦</span><p class="eyebrow">Patterns · numbers · space · logic</p><h2 tabindex="-1">Take a moment. Work it out.</h2><p>Twelve puzzles, one at a time. Choose an answer, then see the reasoning behind it. There is no timer.</p><div class="reason-facts"><span><strong>12</strong> puzzles</span><span><strong>4</strong> kinds of thinking</span><span><strong>1</strong> point per answer</span></div><button class="btn" data-start>${answers.length&&answers.length<questions.length?'Continue your challenge':answers.length===questions.length?'See your result':'Start the challenge'}</button><p class="reason-note">A score for these puzzles, not an IQ measurement.</p>${answers.length?'<button class="reason-text-button" data-fresh>Start again with the same puzzles</button>':''}</div>`;
+ const startButton=root.querySelector('[data-start]');
+ startButton.disabled=false;
+ startButton.textContent=answers.length&&answers.length<questions.length?'Continue your challenge':answers.length===questions.length?'See your result':'Start the challenge';
+ root.querySelector('[data-fresh]').hidden=answers.length===0;
  root.querySelector('[data-start]').onclick=()=>{index=answers.length;selected=null;checked=false;index===questions.length?result():question();focus();};
  root.querySelector('[data-fresh]')?.addEventListener('click',()=>{answers=[];index=0;selected=null;checked=false;save();question();focus();});
 }
