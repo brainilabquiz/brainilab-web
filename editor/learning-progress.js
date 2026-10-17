@@ -51,7 +51,9 @@ async function sync(el,quiz,answers,token){
  const round=el.dataset.round;let error,data;try{({error,data}=await sb.rpc('complete_learn_lesson',{p_slug:el.dataset.quizSlug,p_version:quiz.version,p_answers:answers}));}catch(e){error=e;}
  if(token!==epoch||round!==el.dataset.round)return;
  if(error){completionXP(el,'Saved on this browser only. Retry to save your progress and check XP with your account.','error');pending={el,quiz,answers,token};el.querySelector('[data-sync-retry]').hidden=false;}
- else{pending=null;el.querySelector('[data-sync-retry]').hidden=true;completionXP(el,data?.xp_awarded>0?`+${data.xp_awarded} XP added to your account`:data?.xp_awarded===0?'Progress saved. You already earned this lesson’s XP.':'Progress saved to your account.',data?.xp_awarded>0?'awarded':'saved');void window.BrainiProgression?.sync?.();}
+ else{pending=null;el.querySelector('[data-sync-retry]').hidden=true;completionXP(el,data?.xp_awarded>0?`+${data.xp_awarded} XP added to your account`:data?.xp_awarded===0?'Progress saved. You already earned this lesson’s XP.':'Progress saved to your account.',data?.xp_awarded>0?'awarded':'saved');
+  if(Number.isSafeInteger(data?.xp_awarded)&&data.xp_awarded>0)window.dispatchEvent(new CustomEvent('brainilab:lessonreward',{detail:{userId:account,slug:el.dataset.quizSlug,version:quiz.version,xpAwarded:data.xp_awarded}}));
+  void window.BrainiProgression?.sync?.({fresh:true});}
 }
 for(const el of blocks){
  const quiz=JSON.parse(el.querySelector('[data-quiz-data]').textContent),form=el.querySelector('form'),result=el.querySelector('[data-quiz-result]');
@@ -94,7 +96,8 @@ window.addEventListener('storage',e=>{if(e.key===key()){load();paint();}});
 window.addEventListener('brainilab:backend-auth',e=>{sb=window.BrainiBackendAuth?.getClient();void identify(e.detail.session);});
 // Resolve the existing session without creating anonymous auth users.
 async function initSession(){
- try{if(window.BrainiPerf?.ensureCloud)await window.BrainiPerf.ensureCloud();sb=window.BrainiBackendAuth?.getClient();if(!sb){identified=true;paintAccountInvites();return;}const {data}=await sb.auth.getSession();await identify(data?.session);}catch{identified=true;paintAccountInvites();note('Progress is saved on this browser. Sign-in is unavailable right now.');}
+ const started=epoch;
+ try{if(window.BrainiPerf?.ensureCloud)await window.BrainiPerf.ensureCloud();if(started!==epoch)return;sb=window.BrainiBackendAuth?.getClient();if(!sb){identified=true;paintAccountInvites();return;}const {data}=await sb.auth.getSession();if(started!==epoch)return;await identify(data?.session);}catch{if(started!==epoch)return;identified=true;paintAccountInvites();note('Progress is saved on this browser. Sign-in is unavailable right now.');}
 }
 const sessionReady=initSession();
 

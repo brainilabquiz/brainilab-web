@@ -149,120 +149,88 @@ window.BrainiProgressUI=(function(){
     return 50+Math.min(50,Math.max(0,Number(correct||0)))*5;
   }
 
-  function rankStorageKey(){
-    const auth=window.BrainiData?.authState?.();
-    const id=auth?.user?.id||"guest";
-    return `brainilab-rank-tier-v38-${id}`;
+  // A celebration is feedback for an action on this page, never for loading
+  // an old account, claiming guest history or refreshing another device's XP.
+  let owner=null,previousXp=null,lessonAward=null,toast=null,toastTimer=null,returnFocus=null;
+  const pendingResults=new Set(),knownRewards=new Set(),knownLessons=new Set(),announced=new Map();
+  function currentOwner(){
+    const auth=window.BrainiData?.getState?.()?.auth||window.BrainiData?.authState?.();
+    return auth?.user?.id||auth?.guestUserId||null;
   }
-
-  function showRankUp(level){
-    const current=tier(level);
-
-    document.querySelector(".rank-up-toast")?.remove();
-
-    const el=document.createElement("aside");
-    el.className=`rank-up-toast rank-${current.key}`;
-    el.setAttribute("role","status");
-    el.innerHTML=`
-      <button
-        type="button"
-        class="rank-up-close"
-        aria-label="Close rank celebration"
-      >×</button>
-
-      <span class="rank-up-kicker">NEW BRAIN RANK UNLOCKED</span>
-
-      <div class="rank-up-main">
-        <span class="brain-rank-icon">${BrainiIcons.rankHalo(current.halo,"brain-rank-halo")}</span>
-        <div>
-          <strong>${current.name}</strong>
-          <small>Level ${Number(level||1)}</small>
-        </div>
-      </div>
-
-      <p>
-        Your BrainiLab rank just moved up.
-        Keep playing to reach the next tier.
-      </p>
-    `;
-
-    document.body.appendChild(el);
-
-    const close=()=>el.remove();
-    el.querySelector(".rank-up-close")?.addEventListener("click",close);
-
-    requestAnimationFrame(
-      ()=>el.classList.add("show")
-    );
-
-    setTimeout(close,6500);
+  function closeCelebration(){
+    clearTimeout(toastTimer);toastTimer=null;
+    const restore=toast?.contains(document.activeElement);
+    toast?.remove();toast=null;
+    if(restore&&returnFocus?.isConnected)returnFocus.focus?.({preventScroll:true});
+    returnFocus=null;
   }
-
-  function rememberRank(level,{celebrate=true}={}){
-    const current=tier(level);
-    const key=rankStorageKey();
-
-    let previous=null;
-    try{
-      previous=localStorage.getItem(key);
-    }catch(err){}
-
-    const previousIndex=TIERS.findIndex(
-      x=>x.key===previous
-    );
-    const currentIndex=TIERS.findIndex(
-      x=>x.key===current.key
-    );
-
-    try{
-      localStorage.setItem(key,current.key);
-    }catch(err){}
-
-    if(
-      celebrate &&
-      previous &&
-      previousIndex>=0 &&
-      currentIndex>previousIndex
-    ){
-      showRankUp(level);
-    }
+  function resetCelebration(){
+    owner=currentOwner();previousXp=null;pendingResults.clear();knownRewards.clear();knownLessons.clear();lessonAward=null;
+    closeCelebration();
   }
-
-  function watchRankUps(){
-    // Store a baseline on page load. Existing high-rank players do not
-    // receive a fake "unlock" just because they opened a new page.
-    const initial=window.BrainiData?.player?.();
-    if(initial?.level){
-      rememberRank(initial.level,{celebrate:false});
-    }
-
-    window.addEventListener(
-      "brainilab:progressionchange",
-      event=>{
-        const level=
-          event.detail?.summary?.progression?.level
-          || window.BrainiData?.player?.()?.level;
-
-        if(level){
-          rememberRank(level,{celebrate:true});
-        }
-      }
-    );
+  function activeOwner(){
+    if(currentOwner()!==owner)resetCelebration();
+    return owner;
   }
-
-  if(document.readyState==="loading"){
-    document.addEventListener(
-      "DOMContentLoaded",
-      watchRankUps,
-      {once:true}
-    );
-  }else{
-    queueMicrotask(watchRankUps);
+  function showLevelUp(level){
+    if(document.hidden||!document.body)return;
+    const key=`brainilab_level_celebration_v1:${owner}`;
+    let seen=announced.get(owner)||0;
+    try{seen=Math.max(seen,Number(localStorage.getItem(key))||0);}catch{}
+    if(level<=seen)return;
+    announced.set(owner,level);
+    try{localStorage.setItem(key,String(level));}catch{}
+    closeCelebration();
+    returnFocus=document.activeElement;
+    toast=document.createElement('aside');toast.className='level-up-toast';
+    toast.setAttribute('aria-label','Level celebration');
+    const current=tier(level),person=window.BrainiData?.player?.()||{};
+    toast.innerHTML=`<span class="level-up-emblem" aria-hidden="true"><span class="rank-avatar ${avatarClass(level)}">${avatarImageMarkup(person)}</span><b>${level}</b><i></i><i></i><i></i></span><span class="level-up-message" role="status" aria-live="polite" aria-atomic="true"><span>Level up!</span><strong>Level ${level}</strong><small>${current.name}</small></span><button type="button" class="level-up-close" aria-label="Dismiss level celebration">×</button>`;
+    const card=toast;
+    const pause=()=>{clearTimeout(toastTimer);toastTimer=null;};
+    const resume=()=>{if(toast!==card)return;pause();if(!card.contains(document.activeElement)&&!card.matches(':hover'))toastTimer=setTimeout(closeCelebration,5000);};
+    card.querySelector('button').addEventListener('click',closeCelebration);
+    card.addEventListener('pointerenter',pause);card.addEventListener('pointerleave',resume);
+    card.addEventListener('focusin',pause);card.addEventListener('focusout',()=>queueMicrotask(resume));
+    document.body.appendChild(card);resume();
   }
+  function observeProgression(summary){
+    const id=activeOwner(),p=summary?.progression;
+    if(!id||p?.user_id!==id||!Number.isSafeInteger(p.xp)||p.xp<0)return;
+    const rewards=(Array.isArray(summary.recent_rewards)?summary.recent_rewards:[]).filter(r=>r?.verified===true&&typeof r.client_result_id==='string');
+    const verified=rewards.filter(r=>pendingResults.has(r.client_result_id)&&!knownRewards.has(r.client_result_id));
+    const lessonReady=lessonAward&&p.xp>=lessonAward.targetXp;
+    const before=lessonReady?Math.min(previousXp??p.xp,lessonAward.beforeXp):previousXp;
+    const earned=verified.length>0||lessonReady;
+    const level=xpProgress(1,p.xp).level;
+    if(before!==null&&earned&&p.xp>before&&level>xpProgress(1,before).level)showLevelUp(level);
+    rewards.forEach(r=>{pendingResults.delete(r.client_result_id);knownRewards.add(r.client_result_id);});
+    if(lessonReady)lessonAward=null;
+    previousXp=p.xp;
+  }
+  window.addEventListener('brainilab:datachange',event=>{
+    if(event.detail?.type!=='game_result'||document.hidden||!activeOwner())return;
+    const result=event.detail.result;
+    if(typeof result?.clientResultId!=='string'||!result.clientResultId||result.practice||result.tryFirst||result.dailyReplayBlocked||result.ownerUserId!==owner||knownRewards.has(result.clientResultId))return;
+    // Bound UI-only pending state; this never grants or changes XP.
+    if(pendingResults.size>=20)pendingResults.delete(pendingResults.values().next().value);
+    pendingResults.add(result.clientResultId);
+  });
+  window.addEventListener('brainilab:lessonreward',event=>{
+    const award=event.detail;
+    if(document.hidden||!activeOwner()||award?.userId!==owner||!award.slug||!award.version||!Number.isSafeInteger(award.xpAwarded)||award.xpAwarded<=0)return;
+    const key=JSON.stringify([award.slug,award.version]);
+    if(previousXp===null||knownLessons.has(key))return;
+    knownLessons.add(key);lessonAward={beforeXp:previousXp,targetXp:previousXp+award.xpAwarded};
+  });
+  window.addEventListener('brainilab:progressionchange',event=>observeProgression(event.detail?.summary||window.BrainiProgression?.getCached?.()));
+  window.addEventListener('brainilab:authchange',()=>{activeOwner();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)resetCelebration();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!event.defaultPrevented)closeCelebration();});
+  resetCelebration();
 
   return {
     TIERS,tier,nextTier,xpForLevel,xpProgress,
     avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
-    showRankUp,rememberRank
   };
 })();
