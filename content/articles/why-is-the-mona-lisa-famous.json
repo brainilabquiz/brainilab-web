@@ -1,0 +1,69 @@
+{
+  "slug": "why-is-the-mona-lisa-famous",
+  "title": "Why is the Mona Lisa famous? A smile and a theft",
+  "description": "Leonardo’s Mona Lisa was admired long before it vanished in 1911. Discover how soft paint, a puzzling smile and a theft helped turn it into a celebrity.",
+  "topic": "History",
+  "status": "published",
+  "order": 148,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-is-the-mona-lisa-famous.webp",
+    "small": "/assets/images/learn/why-is-the-mona-lisa-famous-small.webp",
+    "thumbnail": "/assets/images/learn/why-is-the-mona-lisa-famous-thumb.webp",
+    "alt": "An original painted reinterpretation of the Mona Lisa in a gold frame against a softly lit cream gallery wall",
+    "credit": "AI-generated illustration created for BrainiLab, inspired by Leonardo’s painting; not an archival photograph or the actual Louvre display.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/history/",
+    "name": "History"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Try a quick History Quiz for more surprising stories behind familiar names.",
+  "related": [
+    "cleopatra-pyramids-moon-landing",
+    "why-roman-concrete-lasts"
+  ],
+  "sources": [
+    {
+      "url": "https://www.louvre.fr/en/explore/visitor-trails/the-louvre-s-masterpieces/a-superstar-and-a-wedding-crowd",
+      "name": "Musée du Louvre — The Mona Lisa’s appeal and the 1911 theft"
+    },
+    {
+      "url": "https://collections.louvre.fr/en/ark:/53355/cl010062370",
+      "name": "Musée du Louvre — Mona Lisa collection record and curator Vincent Delieuvin’s account"
+    },
+    {
+      "url": "https://musee.louvre.fr/en/explore/the-palace/from-the-mona-lisa-to-the-wedding-feast-at-cana",
+      "name": "Musée du Louvre — Sfumato, the painting’s history and its recovery"
+    }
+  ],
+  "sections": [
+    {
+      "id": "why-the-mona-lisa-is-famous",
+      "title": "A masterpiece became a celebrity",
+      "html": "<p><strong>The Mona Lisa is famous for Leonardo da Vinci’s skill, its intriguing smile and centuries of admiration. Its theft in 1911 then brought a much wider audience.</strong></p><p>The <a href=\"https://www.louvre.fr/en/explore/visitor-trails/the-louvre-s-masterpieces/a-superstar-and-a-wedding-crowd\">Louvre points to both the painting’s artistry and its eventful history</a>. The smile helped; the newspaper headlines certainly did too.</p>"
+    },
+    {
+      "id": "what-sfumato-does",
+      "title": "The edges are part of the trick",
+      "html": "<p>Look at the face. Instead of a hard outline, Leonardo used delicate changes between light and shadow. Thin layers of paint soften the edges.</p><p>This is <strong>sfumato</strong>, a smoky blending effect. The <a href=\"https://collections.louvre.fr/en/ark:/53355/cl010062370\">Louvre’s collection account</a> explains how it helps give the figure and her subtle smile a sense of life.</p>"
+    },
+    {
+      "id": "the-mona-lisa-theft",
+      "title": "The day the wall had a gap",
+      "html": "<p>On <strong>21 August 1911</strong>, the painting disappeared. Vincenzo Peruggia, a glazier who had worked at the Louvre, had stolen it.</p><p>The <a href=\"https://musee.louvre.fr/en/explore/the-palace/from-the-mona-lisa-to-the-wedding-feast-at-cana\">museum describes the uproar and the recovery</a>: Peruggia tried to sell it to an Italian art dealer, who alerted the authorities. It was found in <strong>1913</strong>, with its fame greater than before.</p>"
+    },
+    {
+      "id": "famous-before-the-theft",
+      "title": "She was already somebody",
+      "html": "<p>The theft did not turn an unknown painting into a masterpiece. Artists admired it in Leonardo’s lifetime; Giorgio Vasari praised it in his writing in <strong>1550</strong>.</p><p>Artistic reputation came first. A real-life mystery helped spread that reputation much further.</p><p>For another historical surprise, discover <a href=\"/learn/cleopatra-pyramids-moon-landing/\">why Cleopatra lived closer to the Moon landing than to the building of the Great Pyramid</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:03:43Z",
+  "updatedAt": "2026-10-17T08:03:43Z",
+  "minutes": 2
+}
