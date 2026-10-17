@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
+const sourceRoot=process.env.AVATAR_SOURCE_ROOT||'.';
+const source=file=>readFileSync(path.join(sourceRoot,'assets/js',file+'.js'),'utf8');
+const dom=new JSDOM('<header><div class="nav"><nav class="links"></nav><div class="nav-right"><a class="avatar" href="/profile/">B</a></div></div></header>',{url:'https://brainilabgames.com/learn/',runScripts:'outside-only',pretendToBeVisual:true});
+const w=dom.window,d=w.document;
+let auth={status:'authenticated',user:{id:'account-a',is_anonymous:false}};
+let player={displayName:'Player A',avatarUrl:'https://example.test/photo-a.png',level:13,xp:3015,score:1234};
+let holdSnapshots=false;
+const releases=[];
+w.BrainiData={player:()=>structuredClone(player),authState:()=>structuredClone(auth),api:{getAuthState:async()=>structuredClone(auth),getPlayer:async()=>{const snapshot=structuredClone(player);return holdSnapshots?new Promise(resolve=>releases.push(()=>resolve(snapshot))):snapshot;}}};
+w.BrainiBackendAuth={init:async()=>{},isConfigured:()=>false};
+for(const file of ['player-personalities','avatar-design','progression-ui','account-menu','auth'])w.eval(source(file));
+await tick();
+const avatar=d.querySelector('.avatar');
+holdSnapshots=true;
+const oldPhotoHydration=w.BrainiAuth.hydrateHeader();
+await tick();
+const built=w.BrainiAvatarDesign.clean({mode:'built',glasses:'sun',prop:'bulb'});
+player={...player,avatarDesign:built};
+w.BrainiAccountMenu.hydrate();w.BrainiAccountMenu.openFor(avatar);
+assert.ok(d.querySelector('.account-menu-avatar svg'),'current menu uses the equipped illustrated avatar');
+for(const release of releases.splice(0))release();
+await oldPhotoHydration;await tick();
+const sameOwnerStyleRetained=!!avatar.querySelector('svg');
+w.BrainiAccountMenu.close();
+
+// An old account snapshot finishing after logout must never repaint that account.
+holdSnapshots=false;player={displayName:'Player A',avatarUrl:'https://example.test/photo-a.png',level:13,xp:3015,score:1234};
+await w.BrainiAuth.hydrateHeader();
+holdSnapshots=true;
+const oldOwnerHydration=w.BrainiAuth.hydrateHeader();
+await tick();
+auth={status:'guest',guestUserId:'guest-b'};
+player={displayName:'Guest B',avatarUrl:null,level:1,xp:0,score:0};
+holdSnapshots=false;
+w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));
+await tick();
+for(const release of releases.splice(0))release();
+await oldOwnerHydration;await tick();
+const newOwnerRetained=!avatar.querySelector('img[src="https://example.test/photo-a.png"]')&&avatar.title.includes('Guest B');
+const noPlayerMutation=JSON.stringify(player)===JSON.stringify({displayName:'Guest B',avatarUrl:null,level:1,xp:0,score:0});
+console.log(JSON.stringify({sameOwnerStyleRetained,newOwnerRetained,noPlayerMutation}));
+if(!process.argv.includes('--measure-only')){
+ assert.equal(sameOwnerStyleRetained,true,'a stale async photo cannot overwrite current cosmetics');
+ assert.equal(newOwnerRetained,true,'a late prior-account snapshot cannot overwrite the current guest');
+ assert.equal(noPlayerMutation,true,'rendering cannot write to player state');
+}
+w.close();
