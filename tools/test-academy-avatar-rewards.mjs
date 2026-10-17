@@ -14,7 +14,7 @@ async function setup({xp=0,guest=false}={}){
  let uid='owner-a',offline=false,hold=null;const writes=[],queries=[];
  if(!guest){await D.api.syncExternalAuthUser({id:uid,email:'fixture@example.test',user_metadata:accounts.get(uid)});await D.api.syncCloudProgression({progression:{xp,level:1,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});}
  w.BrainiBackendAuth={getClient:()=>({
-  rpc:async()=>({data:{owner:uid,games:[]},error:null}),
+  rpc:async()=>({data:{owner:uid,games:[],activeDays:0},error:null}),
   from:table=>({select:columns=>({eq:async(key,id)=>{queries.push({table,columns,key,id});const result={data:(earned.get(id)||[]).map(reward_id=>({reward_id})),error:offline?Error('offline'):null};if(hold)await hold;return result;}})}),
   auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(accounts.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));accounts.set(uid,{...accounts.get(uid),...plain(data)});return {data:{user:{id:uid,user_metadata:plain(accounts.get(uid))}},error:null};}}
  })};
@@ -32,7 +32,7 @@ try{
  assert.equal(C.academyRewards.length,8);assert.equal(new Set(C.academyRewards.map(r=>r.course)).size,8);
  const migration=readFileSync('supabase/migrations/20261017144853_academy_avatar_rewards.sql','utf8');
  const serverCatalog=JSON.parse(migration.match(/v_catalog constant jsonb := '(.*?)'::jsonb;/s)[1]);
- for(const [kind,list]of Object.entries(A.options))assert.deepEqual(serverCatalog[kind],plain(list.filter(i=>!i.challenge).map(i=>[i.id,i.xp])),'client and server artwork/XP catalogs agree');
+ for(const [kind,list]of Object.entries(A.options))assert.deepEqual(serverCatalog[kind],plain(list.filter(i=>!i.challenge&&!i.days).map(i=>[i.id,i.xp])),'client and server artwork/XP catalogs agree');
  for(const item of C.academyRewards)assert.ok(migration.includes(`('${item.id}','${item.course}')`),'course mapping agrees with the grant helper');
  const fixture=readFileSync('supabase/tests/academy_avatar_rewards.sql','utf8');
  const normal=s=>s.replaceAll('pg_temp.','public.').replace('public.users','auth.users');

@@ -13,7 +13,7 @@ async function setup({guest=false}={}){
  if(!guest){await D.api.syncExternalAuthUser({id:uid,email:'fictional@example.test',user_metadata:meta.get(uid)});await D.api.syncCloudProgression({progression:{xp:100000,level:71,total_games:10},today:{daily_brain_score:1234},recent_rewards:[]});}
  w.BrainiBackendAuth={getClient:()=>({
   from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),
-  rpc:async name=>{reads.push({name,owner:uid});const value={data:{owner:wrongOwner?'wrong-owner':uid,games:plain(played.get(uid))},error:failed?Error('offline'):null};if(hold)await hold;return value;},
+  rpc:async name=>{reads.push({name,owner:uid});const value={data:{owner:wrongOwner?'wrong-owner':uid,games:plain(played.get(uid)),activeDays:0},error:failed?Error('offline'):null};if(hold)await hold;return value;},
   auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...plain(data)});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}
  })};
  for(const name of ['profile-rewards-model','profile-rewards-store','avatar-studio-ui','profile-rewards'])w.eval(source(name));await settle();
@@ -34,7 +34,7 @@ try{
  const rpcBody=sql.split('$discovery$')[1].replaceAll('public.game_sessions','pg_temp.game_sessions').replaceAll('public.game_results','pg_temp.game_results');
  assert.ok(fixture.includes(rpcBody),'SQL tests exercise the exact invoker RPC predicate');
  const serverOptions=JSON.parse(sql.match(/v_catalog constant jsonb := '(.*?)'::jsonb;/s)[1]);
- for(const [kind,list]of Object.entries(A.options))assert.deepEqual(serverOptions[kind],plain(list.map(i=>[i.id,i.xp])));
+ for(const [kind,list]of Object.entries(A.options))assert.deepEqual(serverOptions[kind],plain(list.filter(i=>!i.days).map(i=>[i.id,i.xp])));
  const rules=JSON.parse(sql.match(/v_discovery_catalog constant jsonb := '(.*?)'::jsonb;/s)[1]);
  const drawings=new Set();
  for(const item of C.discoveryRewards){

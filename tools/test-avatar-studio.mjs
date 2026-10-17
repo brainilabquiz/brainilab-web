@@ -19,7 +19,7 @@ const savedState=()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1'));
 const omitDesign=state=>{delete state.player.avatarDesign;return state;};
 // Every cosmetic threshold is retroactive, without granting or spending XP.
 for(const [kind,list] of Object.entries(C.groups))for(const item of list){
- if(item.course||item.challenge)continue;
+ if(item.course||item.challenge||item.days)continue;
  if(item.xp)assert.notEqual(C.available({[kind]:item.id},item.xp-1)[kind],item.id);
  assert.equal(C.available({[kind]:item.id},item.xp)[kind],item.id);
 }
@@ -31,7 +31,7 @@ await D.api.syncExternalAuthUser({id:'cosmetic-owner',email:'fixture@example.tes
 await D.api.syncCloudProfile({user_id:'cosmetic-owner',display_name:'Curious Player',avatar_url:photo});
 await D.api.syncCloudProgression({progression:{xp:2700,level:99,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
  let meta={full_name:'Preserve this',custom_setting:'untouched'},writes=[],readError=false,writeError=false,currentUserId='cosmetic-owner';
- w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:currentUserId,games:[]},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{getUser:async()=>({data:{user:{id:currentUserId,user_metadata:meta}},error:readError?Error('offline'):null}),updateUser:async({data})=>{
+ w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:currentUserId,games:[],activeDays:0},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{getUser:async()=>({data:{user:{id:currentUserId,user_metadata:meta}},error:readError?Error('offline'):null}),updateUser:async({data})=>{
   writes.push({...data});if(writeError)return {data:null,error:Error('offline')};
   meta={...meta,...data};return {data:{user:{id:currentUserId,user_metadata:meta}}};
 }}})};
