@@ -1,0 +1,65 @@
+{
+  "slug": "why-are-oscars-called-oscars",
+  "title": "Why are the Oscars called Oscars? A Hollywood mystery",
+  "description": "The Oscar’s official name is the Academy Award of Merit. Its nickname has a less certain story, involving an uncle, a columnist and a surprisingly late debut.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 149,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-are-oscars-called-oscars.webp",
+    "small": "/assets/images/learn/why-are-oscars-called-oscars-small.webp",
+    "thumbnail": "/assets/images/learn/why-are-oscars-called-oscars-thumb.webp",
+    "alt": "A generic gold cinema award beside a curl of film and a blank name tag on a dark blue background",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; a generic cinema award, not an official Oscar statuette or Academy image.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/general-knowledge/",
+    "name": "General Knowledge"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Try a mixed General Knowledge quiz for more familiar names with surprising stories.",
+  "related": [
+    "why-does-popcorn-pop",
+    "why-keyboard-qwerty-layout"
+  ],
+  "sources": [
+    {
+      "url": "https://www.oscars.org/oscars/statuette",
+      "name": "Academy of Motion Picture Arts and Sciences — Oscar Statuette: name, timeline and design"
+    },
+    {
+      "url": "https://www.oscars.org/news/origin-oscar",
+      "name": "Academy of Motion Picture Arts and Sciences — The unresolved origin of Oscar’s nickname"
+    }
+  ],
+  "sections": [
+    {
+      "id": "what-oscar-is-short-for",
+      "title": "A very grand prize with a friendly name",
+      "html": "<p><strong>Oscar is a nickname for the Academy Award of Merit. The exact origin of the nickname is uncertain.</strong> Even the <a href=\"https://www.oscars.org/news/origin-oscar\">Academy describes the origin as unresolved</a>.</p><p>It is a wonderfully ordinary name for a trophy that can change a filmmaker’s evening rather dramatically.</p>"
+    },
+    {
+      "id": "the-uncle-oscar-story",
+      "title": "Did it look like somebody’s uncle?",
+      "html": "<p>One popular story involves <strong>Margaret Herrick</strong>, an Academy librarian who later became its executive director. Supposedly, she thought the statuette resembled her Uncle Oscar.</p><p>The <a href=\"https://www.oscars.org/oscars/statuette\">Academy’s own history presents this as a popular story</a>, rather than a proven explanation. An excellent anecdote still needs evidence.</p>"
+    },
+    {
+      "id": "when-the-name-became-official",
+      "title": "The nickname arrived before the paperwork",
+      "html": "<p>By <strong>1934</strong>, columnist Sidney Skolsky was using Oscar when writing about Katharine Hepburn’s first Best Actress win.</p><p>The Academy officially adopted the nickname in <strong>1939</strong>. That gap gives us a useful clue: a name can catch on long before an organisation makes it official. It does not tell us who said it first.</p>"
+    },
+    {
+      "id": "the-knight-on-a-film-reel",
+      "title": "There is a film reel under his feet",
+      "html": "<p>The figure is a <strong>knight holding a sword</strong>, standing on a reel of film. The reel’s five spokes represent the Academy’s original five branches: actors, directors, producers, technicians and writers.</p><p>The name may be uncertain, but the cinema connection is built into the design.</p><p>For another cinema curiosity, discover <a href=\"/learn/why-does-popcorn-pop/\">what makes popcorn pop</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-17T08:03:43Z",
+  "updatedAt": "2026-10-17T08:03:43Z",
+  "minutes": 2
+}

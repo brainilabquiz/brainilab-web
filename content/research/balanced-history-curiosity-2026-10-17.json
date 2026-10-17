@@ -1,0 +1,247 @@
+{
+  "researchDate": "2026-10-17",
+  "timeZone": "Europe/Madrid",
+  "demand": {
+    "source": "Native Google Trends Explore chart tables and related queries",
+    "date": "2026-10-17",
+    "market": "United States",
+    "queryLanguage": "English",
+    "filters": "Past 12 months; All categories; Web Search",
+    "weeklyLabels": "12 October 2025 through11 October2026,lastweekpossiblypartial",
+    "comparison": [
+      {
+        "term": "why is the mona lisa famous",
+        "relativeAverage": 27
+      },
+      {
+        "term": "why are the oscars called oscars",
+        "relativeAverage": 1,
+        "qualification": "Sparse: mostweeksroundedzero,33week15March2026; no claim of steady demand"
+      }
+    ],
+    "related": [
+      {
+        "parent": "why is the mona lisa famous",
+        "term": "vincenzo peruggia",
+        "type": "Rising",
+        "change": "+250%"
+      },
+      {
+        "parent": "why is the mona lisa famous",
+        "term": "when was the mona lisa stolen",
+        "type": "Rising",
+        "change": "+250%"
+      },
+      {
+        "parent": "why are the oscars called oscars",
+        "term": "why are they called the oscars",
+        "type": "Top",
+        "relativeScore": 100
+      },
+      {
+        "parent": "why are the oscars called oscars",
+        "term": "why are the academy awards called oscars",
+        "type": "Top",
+        "relativeScore": 96
+      }
+    ],
+    "monthlySearchVolume": null,
+    "keywordDifficulty": null,
+    "cpc": null,
+    "limits": [
+      "Normalised sampled relative interest, not absolute search volume, international totals, percentages or expected visits.",
+      "MonaLisa peak100week19Oct2025 is news-sensitive; article addresses supported1911history, not current museum news.",
+      "Oscar question is seasonal around award ceremony; sparse rounded zeros do not prove no searches.",
+      "No unrelated trending keyword insertion or guaranteed ranking/indexing/AI citation."
+    ]
+  },
+  "intent": [
+    {
+      "slug": "why-is-the-mona-lisa-famous",
+      "keyword": "why is the mona lisa famous",
+      "need": "Artistic skill,pre-theft reputation and1911popular celebrity without claiming a single cause"
+    },
+    {
+      "slug": "why-are-oscars-called-oscars",
+      "keyword": "why are the oscars called oscars",
+      "need": "Friendly nickname and documentedtimeline while explicitly preserving unresolved origin"
+    }
+  ],
+  "novelty": "All107 complete public documents/eightcourse documents reviewed; no existing article on either intent. Separate regular-article and lesson counts checked.",
+  "checkedSources": [
+    {
+      "id": "louvre-masterpieces",
+      "url": "https://www.louvre.fr/en/explore/visitor-trails/the-louvre-s-masterpieces/a-superstar-and-a-wedding-crowd",
+      "publisher": "Mus\u00e9e du Louvre",
+      "title": "A superstar\u2026 and a wedding crowd!",
+      "type": "Collection-holder visitor guide",
+      "opening": "Full web tool page opened and read; independent HTTPS GET200; HTML and parsed text saved.",
+      "supports": [
+        "The Mona Lisa's appeal includes technical skill, smile, landscape and sfumato",
+        "Already a prominent painting when it arrived in the Louvre",
+        "1911 theft provoked newspaper attention, adding celebrity"
+      ],
+      "bounds": [
+        "Do not claim the painting was unknown before the theft",
+        "No current museum visitor numbers, access arrangements or ticket claims",
+        "No assertion that there is one single measurable cause of fame"
+      ]
+    },
+    {
+      "id": "louvre-collection",
+      "url": "https://collections.louvre.fr/en/ark:/53355/cl010062370",
+      "publisher": "Mus\u00e9e du Louvre, D\u00e9partement des Peintures",
+      "title": "Portrait de Lisa Gherardini, \u00e9pouse de Francesco del Giocondo, dit La Joconde ou Monna Lisa",
+      "type": "Museum object record and curator Vincent Delieuvin's July2021 essay",
+      "opening": "Full web tool page opened; French curator text read and translated in notes; independent HTTPS200; full HTML and text saved.",
+      "supports": [
+        "Raphael admired the painting during Florence1504\u20131508",
+        "Vasari's1550 text helped build its reputation",
+        "Thin oil glazes and gradual light/shadow transitions soften contours: sfumato",
+        "Vincenzo Peruggia1911theft brought broad popular worldwide fame",
+        "Recovered1913"
+      ],
+      "bounds": [
+        "Do not call sfumato a secret code",
+        "Do not claim Leonardo invented smiling portraits",
+        "No conspiracy, hidden identity, price or value claims"
+      ]
+    },
+    {
+      "id": "louvre-palace",
+      "url": "https://musee.louvre.fr/en/explore/the-palace/from-the-mona-lisa-to-the-wedding-feast-at-cana",
+      "publisher": "Mus\u00e9e du Louvre",
+      "title": "From the Mona Lisa to The Wedding Feast at Cana \u2014 The Salle des \u00c9tats",
+      "type": "Museum explanation of the painting and room",
+      "opening": "Independent HTTPS200; full HTML and text saved. Relevant paragraphs read from actual saved page.",
+      "supports": [
+        "21August1911 disappearance",
+        "Peruggia was a glazier who had worked at the Louvre",
+        "He tried to sell the painting to an Italian art dealer who alerted authorities",
+        "Recovery increased fame",
+        "Sfumato uses glazes to create smoky soft contours",
+        "Wooden panel rather than canvas"
+      ],
+      "bounds": [
+        "No invented detailed theft reconstruction",
+        "No claim of a current display location beyond source; article avoids mutable visitor logistics"
+      ]
+    },
+    {
+      "id": "oscars-statuette",
+      "url": "https://www.oscars.org/oscars/statuette",
+      "publisher": "Academy of Motion Picture Arts and Sciences",
+      "title": "Oscar Statuette",
+      "type": "Award organiser's official description",
+      "opening": "Full web tool page opened and read147lines. Independent Python request403; no claim that independent fetch succeeded. Facts read in web tool are separately recorded here.",
+      "supports": [
+        "Formal award name Academy Award of Merit",
+        "Origin of Oscar nickname unclear",
+        "Popular story that Margaret Herrick thought the trophy resembled Uncle Oscar, explicitly only a story",
+        "Sidney Skolsky used nickname1934 in reference to Katharine Hepburn",
+        "Academy officially adopted nickname1939",
+        "Design: knight holding sword on a five-spoke film reel; Cedric Gibbons design realised by George Stanley",
+        "Five spokes represent original actors/directors/producers/technicians/writers branches"
+      ],
+      "bounds": [
+        "Do not present Herrick story as established fact",
+        "Do not infer the real uncle's identity or exact wording",
+        "Page includes stale2019 ceremony facts; no current category count, trophy total or manufacturer claims used",
+        "No award-winning film predictions, odds or purchase advice"
+      ]
+    },
+    {
+      "id": "oscars-origin",
+      "url": "https://www.oscars.org/news/origin-oscar",
+      "publisher": "Academy of Motion Picture Arts and Sciences",
+      "title": "The Origin of the Oscar",
+      "date": "2015-02-18",
+      "type": "Award organiser's posted interview summary",
+      "opening": "Full web tool page opened and read23lines; video itself not viewed and not cited as watched.",
+      "supports": [
+        "Official description calls the nickname's origin unresolved",
+        "Multiple people claimed naming it"
+      ],
+      "bounds": [
+        "Summary's around1935 date is approximate and conflicts with clearer1934 usage on officialstatuettepage; article uses only latter exactdate",
+        "No claim to have watched embeddedvideo"
+      ]
+    }
+  ],
+  "excludedSources": [
+    {
+      "url": "https://www.oscars.org/sites/oscars/files/94aa_oscar_history.pdf",
+      "result": "Web opened2pagePDF but extraction gave4lines without body; independentdownload403. Not treated as fully read or relied upon."
+    }
+  ],
+  "reading": {
+    "bodyWords": [
+      218,
+      201
+    ],
+    "sectionsEach": 4,
+    "BritishEnglish": true,
+    "noNewQuizWidgetCourseOrAccountWall": true
+  },
+  "artwork": {
+    "mode": "Built-in image_gen; Oscar targeted composition edit",
+    "variants": [
+      {
+        "path": "assets/images/learn/why-is-the-mona-lisa-famous.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 76354,
+        "sha256": "15e50ac28c073aec17395f9567a42d7894cc445c01a652ff24cad86f3f2eddb7"
+      },
+      {
+        "path": "assets/images/learn/why-is-the-mona-lisa-famous-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 18770,
+        "sha256": "fc69a27b5b05c223968369890c7af46baaab8cb8cefd6976ef5d8fc62c37231d"
+      },
+      {
+        "path": "assets/images/learn/why-is-the-mona-lisa-famous-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 5092,
+        "sha256": "bf12b278ca8eb7978a6cf9ef9a403df8af3d3fb31a6903ac74affa8d244a2a54"
+      },
+      {
+        "path": "assets/images/learn/why-are-oscars-called-oscars.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 30536,
+        "sha256": "679416726d1fe3c5cfe3d3a39cfde9f1f6aff5355cd4c1f3dc8a7c54f727ee93"
+      },
+      {
+        "path": "assets/images/learn/why-are-oscars-called-oscars-small.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 9200,
+        "sha256": "12e0b87f01ed20d9ebd0ed46d2d81750a17523eb80196afe4c0c023a42497f1f"
+      },
+      {
+        "path": "assets/images/learn/why-are-oscars-called-oscars-thumb.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 2898,
+        "sha256": "55fcb46942f7516680b060162a902d4e4ee52e11df4fbc4d4941930147ce77b2"
+      }
+    ],
+    "totalBytes": 142850,
+    "review": "Originals/thumbnails/2:1 crops inspected; Mona Lisa-inspired conceptual illustration, generic gold award with blank tag, never claimed archival or official images."
+  },
+  "validation": {
+    "preparedAt": "2026-10-17T08:09:06.866843+00:00",
+    "metadataSchemaDiscoveryPassed": true,
+    "nativeWidths": [
+      320,
+      1280
+    ],
+    "oldArticlesPreserved": 107,
+    "oldCoursesPreserved": 8,
+    "transactionTestGroups": 8,
+    "status": "Prepared; cover deployment and guarded publication follow."
+  }
+}
