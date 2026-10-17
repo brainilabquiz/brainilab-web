@@ -50,3 +50,6 @@
 @media(max-width:600px){.post-game{padding:20px 16px;border-radius:20px}.post-heading{margin-bottom:16px}.post-score-panel{padding:18px 12px}.post-art{width:52px;height:52px}.post-art>svg,.post-art>img{width:46px;height:46px}.post-footer{column-gap:14px}}
 
 .post-game{scroll-margin-top:7rem}
+.post-game .post-score-context{margin:6px 0 0;font-size:12px;line-height:1.5;color:#625b6b}
+.post-score-context[hidden]{display:none}
+.quiz-score-context{max-width:620px;margin:12px auto 0;color:#dedcf7;font-size:12px;line-height:1.6;text-align:center}
