@@ -191,7 +191,7 @@ lazy.BrainiData={player:()=>({displayName:'Local sample',level:12,xp:2700}),auth
 lazy.BrainiAnalytics={fetchStats:async()=>{historyReads++;return {recent_results:[]};}};
 lazy.BrainiUI={renderRecentResults:root=>root.textContent='No games played yet.'};
 lazy.BrainiDailyRules={model:()=>({version:'daily-choice-v1',choices:[]})};lazy.BrainiContinuity={render:()=>{}};
-for(const f of ['player-personalities','icon-system','progression-ui','profile-sections'])lazy.eval(source(f));
+for(const f of ['player-personalities','icon-system','avatar-design','profile-rewards-model','progression-ui','reward-journey','profile-sections'])lazy.eval(source(f));
 await tick();assert.equal(historyReads,0,'closed progress does not request private game history');
 lazy.document.querySelector('details').open=true;await tick();await tick();assert.ok(historyReads>0);
 assert.match(lazy.document.querySelector('#recentResults').textContent,/No games/);lazy.close();
