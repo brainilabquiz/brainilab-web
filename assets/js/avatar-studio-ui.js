@@ -20,7 +20,7 @@ window.BrainiAvatarStudioUI=(function(){
       <details class="avatar-help"><summary>About your look</summary><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></details></aside>
       <div class="avatar-studio-controls"><div class="avatar-mobile-preview avatar-apply-bar"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><div class="profile-style-actions"><button class="btn" type="button" data-style-save>Save look</button><button class="btn-light" type="button" data-style-cancel>Cancel</button><button class="btn-light" type="button" data-style-retry hidden>Try again</button></div></div><p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><div class="avatar-mode-header"><span id="avatar-start-label">Start with</span><button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Try a new look using your unlocked items">Surprise me</button></div><div class="reward-mode-grid" data-style-modes></div></div>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<p class="avatar-pane-note">Try different games to earn a little extra. Completed rounds saved to your account count.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">Complete all lesson quizzes in a course while signed in. Earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<section class="avatar-day-collection" aria-labelledby="avatar-days-title"><h3 id="avatar-days-title" class="avatar-collection-heading">Days played</h3><p class="avatar-pane-note">A little time to play, whenever it suits you. Finish a saved game on different days to unlock these extras. Breaks never reset your progress. Earlier qualifying games count. Each date counts once, using UTC.</p><p class="avatar-academy-count" data-active-days-count></p><div class="avatar-challenge-grid" data-day-rewards></div></section><p class="avatar-pane-note">Try different games to earn a little extra. Completed rounds saved to your account count.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">Complete all lesson quizzes in a course while signed in. Earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
     window.BrainiWardrobeUI?.mount(root,panes);
     showPane(root,active);
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
@@ -55,7 +55,7 @@ window.BrainiAvatarStudioUI=(function(){
     for(const [kind,items] of Object.entries(C.groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       for(const item of items){
-        if(item.course||item.challenge)continue;
+        if(item.course||item.challenge||item.days)continue;
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
         if(!button){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
@@ -96,6 +96,7 @@ window.BrainiAvatarStudioUI=(function(){
     const count=C.academyIds(academy).length;
     root.querySelector('[data-academy-count]').textContent=options.loading?'Checking your course rewards…':options.error?'Course rewards could not be checked.':`${count} of ${C.academyRewards.length} extras unlocked · no XP needed`;
     challengeChoices(root,draft,total,busy,discovery);
+    dayChoices(root,draft,busy,options.activeDays);
     window.BrainiWardrobeUI?.render(root,{draft,equipped,total,busy,academy,discovery,...options});
   }
   function challengeChoices(root,draft,total,busy,discovery){
@@ -119,6 +120,27 @@ window.BrainiAvatarStudioUI=(function(){
       const missing=card.querySelector('[data-challenge-missing]');missing.textContent=item.games&&!proof.earned?'Still to try: '+proof.missing.map(id=>C.discoveryGames.find(g=>g.id===id).name).join(', ')+'.':'';missing.hidden=!missing.textContent;
       const next=C.discoveryGames.find(g=>g.id===proof.missing[0]),link=card.querySelector('a');
       link.href=proof.earned||item.target?'/games/':next?.path||'/games/';link.textContent=proof.earned?'Explore more games →':item.target?'Find a different game →':`Play ${next?.name||'a game'} →`;
+    }
+  }
+  function dayChoices(root,draft,busy,activeDays){
+    const grid=root.querySelector('[data-day-rewards]');if(!grid)return;
+    const days=C.dayCount(activeDays);
+    root.querySelector('[data-active-days-count]').textContent=busy?'Checking saved days…':`${number(days)} ${days===1?'day':'days'} played · no streak needed`;
+    for(const item of C.dayRewards){
+      let card=grid.querySelector(`[data-day-card="${item.id}"]`);
+      if(!card){
+        card=document.createElement('section');card.className='avatar-challenge-card avatar-day-card';card.dataset.dayCard=item.id;
+        card.innerHTML='<button class="reward-choice" type="button"><span class="reward-choice-art" aria-hidden="true"></span><strong></strong><small></small></button><div class="avatar-challenge-progress"><h4></h4><p data-day-status></p><progress></progress><a href="/games/">Find a game →</a></div>';
+        const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
+      }
+      const earned=days>=item.days,selected=draft[item.kind]===item.id,button=card.querySelector('button');
+      const art=sample(item.kind,item,draft),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+      button.disabled=busy||!earned;button.setAttribute('aria-pressed',String(selected));
+      button.querySelector('strong').textContent=item.name;button.querySelector('small').textContent=selected?'Selected':earned?'Unlocked':`${number(item.days)} days to unlock`;
+      button.setAttribute('aria-label',`${item.name}, ${selected?'selected':earned?'unlocked':'play on '+item.days+' different days to unlock'}. ${item.description}`);button.title=item.description;
+      card.querySelector('h4').textContent=`Play on ${number(item.days)} different days`;
+      card.querySelector('[data-day-status]').textContent=busy?'Checking saved progress…':`${number(Math.min(days,item.days))} of ${number(item.days)} days played`;
+      const progress=card.querySelector('progress');progress.max=item.days;progress.value=Math.min(days,item.days);progress.setAttribute('aria-label',`${item.name}: ${number(Math.min(days,item.days))} of ${number(item.days)} days played`);
     }
   }
   function next(root,total){

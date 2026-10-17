@@ -31,19 +31,19 @@ window.BrainiWardrobeUI=(()=>{
   function itemFor(button){return C.groups[button.dataset.rewardKind]?.find(item=>item.id===button.dataset.rewardId);}
   function apply(root){
     const state=states.get(root),ctx=state?.context;if(!ctx)return;
-    const {draft,equipped,total,academy,discovery,loading,error}=ctx,unknown=loading||!!error;
-    if(state.pin&&!unknown){const {pane,item}=state.pin;state.views[pane]=C.unlocked(item,total,academy,discovery)?'unlocked':'locked';}
+    const {draft,equipped,total,academy,discovery,activeDays=0,loading,error}=ctx,unknown=loading||!!error;
+    if(state.pin&&!unknown){const {pane,item}=state.pin;state.views[pane]=C.unlocked(item,total,academy,discovery,activeDays)?'unlocked':'locked';}
     for(const button of root.querySelectorAll('[data-reward-kind]')){
       const item=itemFor(button);if(!item)continue;
-      const kind=button.dataset.rewardKind,unlocked=C.unlocked(item,total,academy,discovery),picked=draft[kind]===item.id;
+      const kind=button.dataset.rewardKind,unlocked=C.unlocked(item,total,academy,discovery,activeDays),picked=draft[kind]===item.id;
       const preview=picked&&(draft[kind]!==equipped[kind]||(visualKinds.has(kind)&&draft.mode!==equipped.mode))&&(!visualKinds.has(kind)||draft.mode==='built');
       const inUse=equipped[kind]===item.id&&(!visualKinds.has(kind)||equipped.mode==='built');
       const saved=equipped[kind]===item.id;
       button.dataset.wardrobeState=preview?'preview':inUse?'equipped':saved?'saved':'available';
       button.dataset.wardrobeUnlocked=String(unlocked);
-      const status=loading?'Checking…':error?'Unavailable':!unlocked?item.course?'Finish course':item.challenge?'Finish challenge':`${Math.max(0,item.xp-total).toLocaleString('en-GB')} XP to go`:preview?'Preview':inUse?'In use':saved?'Saved choice':kind==='mode'?'Choose':'Try on';
+      const status=loading?'Checking…':error?'Unavailable':!unlocked?item.course?'Finish course':item.challenge?'Finish challenge':item.days?`${Math.max(0,item.days-C.dayCount(activeDays)).toLocaleString('en-GB')} days to go`:`${Math.max(0,item.xp-total).toLocaleString('en-GB')} XP to go`:preview?'Preview':inUse?'In use':saved?'Saved choice':kind==='mode'?'Choose':'Try on';
       button.querySelector('small').textContent=status;
-      const requirement=item.challenge?'finish '+item.challenge+' to unlock':item.course?'complete '+item.courseTitle+' to unlock':'unlocks at '+item.xp.toLocaleString('en-GB')+' XP';
+      const requirement=item.days?'play on '+item.days+' different days to unlock':item.challenge?'finish '+item.challenge+' to unlock':item.course?'complete '+item.courseTitle+' to unlock':'unlocks at '+item.xp.toLocaleString('en-GB')+' XP';
       button.setAttribute('aria-label',`${item.name}, ${picked?'selected, ':''}${unknown?status:unlocked?status:requirement}${item.description?'. '+item.description:''}`);
     }
     for(const [key,pane]of Object.entries(state.panes)){
@@ -62,13 +62,13 @@ window.BrainiWardrobeUI=(()=>{
         const matchesKind=['academy','challenges'].includes(key)||button.dataset.rewardKind===kind;
         const matchesView=key==='look'||button.dataset.wardrobeUnlocked===String(view==='unlocked');
         const visible=matchesKind&&matchesView;
-        if(['academy','challenges'].includes(key))button.closest('[data-academy-card],[data-discovery-card]').hidden=!visible;else button.hidden=!visible;
+        if(['academy','challenges'].includes(key))button.closest('[data-academy-card],[data-discovery-card],[data-day-card]').hidden=!visible;else button.hidden=!visible;
       }
       const visible=key==='look'?buttons.length:view==='unlocked'?ready:locked,empty=panel.querySelector('[data-wardrobe-empty]');
       empty.hidden=visible>0;
       if(!visible){
         empty.querySelector('strong').textContent=loading?'Checking your collection…':error?'Your collection is unavailable.':view==='locked'?'All yours.':key==='academy'?'Your first course reward is waiting.':key==='challenges'?'Your next discovery is waiting.':'No unlocked items here yet.';
-        empty.querySelector('p').textContent=unknown?'':view==='locked'?'Every item in this category is unlocked.':key==='academy'?'Finish a course to earn its extra.':key==='challenges'?'Try different games to earn a little extra.':'Play a game to work towards your next reward.';
+        empty.querySelector('p').textContent=unknown?'':view==='locked'?'Every item in this category is unlocked.':key==='academy'?'Finish a course to earn its extra.':key==='challenges'?'Play on different days or discover a new game to earn a little extra.':'Play a game to work towards your next reward.';
         const button=empty.querySelector('button');button.hidden=unknown;button.textContent=view==='locked'?'See unlocked items':key==='academy'?'See course rewards':key==='challenges'?'See challenges':'See what’s next';
       }
     }

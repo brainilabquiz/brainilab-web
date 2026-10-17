@@ -16,7 +16,7 @@ async function setup({guest=false}={}){
   rpc:async name=>{reads.push({name,owner:uid});const value={data:{owner:wrongOwner?'wrong-owner':uid,games:plain(played.get(uid)),activeDays:calendar.get(uid)},error:failed?Error('offline'):null};if(hold)await hold;return value;},
   auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...plain(data)});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}
  })};
- for(const name of ['profile-rewards-model','profile-rewards-store','avatar-studio-ui','profile-rewards'])w.eval(source(name));await settle();
+ for(const name of ['profile-rewards-model','profile-rewards-store','avatar-studio-ui','avatar-wardrobe-ui','profile-rewards'])w.eval(source(name));await settle();
  return {dom,w,D,meta,played,calendar,writes,reads,S:w.BrainiRewardStore,C:w.BrainiRewardCatalog,root:w.document.querySelector('[data-profile-rewards]'),state:()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1')),
   fail:v=>failed=v,wrong:v=>wrongOwner=v,hold:v=>hold=v,
   async switchOwner(next){uid=next;await D.api.syncExternalAuthUser({id:uid,email:'fictional@example.test',user_metadata:meta.get(uid)});await settle();}

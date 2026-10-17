@@ -13,7 +13,7 @@ const D=w.BrainiData,meta=new Map([['one',{custom:'keep',brainilab_avatar_mode_v
 let uid='one',offline=false;
 await D.api.syncExternalAuthUser({id:uid,user_metadata:meta.get(uid)});
 await D.api.syncCloudProgression({progression:{xp:3430,level:14,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
-w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:uid==='one'?['brainiword','connections','brainmix']:[]},error:offline?Error('offline'):null}),from:()=>({select:()=>({eq:async()=>({data:(earned.get(uid)||[]).map(reward_id=>({reward_id})),error:offline?Error('offline'):null})})}),auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...data});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}})};
+w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:uid,games:uid==='one'?['brainiword','connections','brainmix']:[],activeDays:0},error:offline?Error('offline'):null}),from:()=>({select:()=>({eq:async()=>({data:(earned.get(uid)||[]).map(reward_id=>({reward_id})),error:offline?Error('offline'):null})})}),auth:{getUser:async()=>({data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null}),updateUser:async({data})=>{writes.push(plain(data));meta.set(uid,{...meta.get(uid),...data});return {data:{user:{id:uid,user_metadata:plain(meta.get(uid))}},error:null};}}})};
 for(const name of ['profile-rewards-model','profile-rewards-store','avatar-studio-ui','avatar-wardrobe-ui','profile-rewards'])w.eval(source(name));
 await settle();
 const root=w.document.querySelector('[data-profile-rewards]'),C=w.BrainiRewardCatalog,U=w.BrainiAvatarStudioUI,S=w.BrainiRewardStore;
@@ -53,7 +53,7 @@ assert.equal(S.snapshot().style.prop,'academy_pie');assert.deepEqual(writes[1],{
 offline=true;await S.load();assert.match(S.snapshot().error,/could not be checked/);assert.match(filter('academy','unlocked').textContent,/…/);assert.equal(label('academy_pie'),'Unavailable');assert.equal(item('academy_pie').disabled,true);
 assert.equal(root.querySelector('[data-academy-count]').textContent,'Course rewards could not be checked.');assert.equal(root.querySelector('[data-style-retry]').hidden,false);offline=false;root.querySelector('[data-style-retry]').click();await settle();assert.equal(label('academy_pie'),'In use');assert.equal(writes.length,2);
 
-tab('challenges');assert.equal(filter('challenges','unlocked').textContent,'Unlocked (2)');assert.equal(filter('challenges','locked').textContent,'To unlock (3)');
+tab('challenges');assert.equal(filter('challenges','unlocked').textContent,'Unlocked (2)');assert.equal(filter('challenges','locked').textContent,'To unlock (7)');
 assert.equal(item('discovery_trailmix').closest('[data-discovery-card]').hidden,false);assert.equal(item('discovery_gameface').closest('[data-discovery-card]').hidden,true);
 item('discovery_trailmix').click();assert.equal(label('discovery_trailmix'),'Preview');assert.equal(writes.length,2);root.querySelector('[data-style-cancel]').click();
 filter('challenges','locked').click();assert.equal(label('discovery_gameface'),'Finish challenge');assert.equal(item('discovery_gameface').disabled,true);

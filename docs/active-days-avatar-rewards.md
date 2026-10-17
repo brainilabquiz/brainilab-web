@@ -23,7 +23,7 @@ day extras. Metadata stores choices, never proof. The count is separate from
 existing Daily/streak statistics; those formulas and all XP/scoring code remain
 unchanged. There are no new tables, triggers, grants or gameplay writes.
 
-The studio retains its six tabs and expanded XP extras. It shows actual account
+The studio retains its six tabs and current category/availability controls. It shows actual account
 progress, preview and explicit Save/Cancel. A newly selected day extra requires a
 fresh owner-bound read before Save. Missing/malformed evidence and account changes
 fail closed. Nothing is equipped automatically and XP are never spent or awarded.
