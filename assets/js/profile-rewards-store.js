@@ -71,6 +71,7 @@ window.BrainiRewardStore=(function(){
         if(readError)throw readError;
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
+        if(changed.includes('scene')&&catalog.fromMetadata(before.user.user_metadata||{}).scene!==catalog.clean(saved).scene)throw Error('Background changed in another tab');
         const currentAllowed=catalog.available(allowed,total());
         if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('XP changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));

@@ -16,8 +16,14 @@ window.BrainiRewardCatalog=(function(){
     {id:'thinker',name:'Deep Thinker',xp:4500},
     {id:'sage',name:'BrainiLab Sage',xp:10000}
   ].map(Object.freeze));
-  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options});
-  const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys});
+  const scenes=Object.freeze([
+    {id:'none',name:'Plain & simple',xp:0,description:'Your usual clean profile.'},
+    {id:'library',name:'Booked in',xp:1500,description:'A quiet library corner for a curious mind.'},
+    {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
+    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
+  ].map(Object.freeze));
+  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options,scene:scenes});
+  const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys,scene:'brainilab_profile_scene_v1'});
   const xp=value=>Number.isFinite(Number(value))?Math.max(0,Math.floor(Number(value))):0;
   function clean(value={}){
     return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
@@ -47,5 +53,5 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();

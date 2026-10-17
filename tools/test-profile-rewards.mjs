@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const sourceRoot=process.env.AVATAR_SOURCE_ROOT||'.';
 const files=['avatar-design.js','profile-rewards-model.js','profile-rewards-store.js','avatar-studio-ui.js','profile-rewards.js'];
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
 function setup({signed=false,xp=2700,metadata={},storage=true}={}){
@@ -25,7 +26,7 @@ function setup({signed=false,xp=2700,metadata={},storage=true}={}){
     }
   }})};
   if(!storage)Object.defineProperty(w,'localStorage',{get(){throw Error('storage blocked');}});
-  for(const file of files)w.eval(readFileSync('assets/js/'+file,'utf8'));
+  for(const file of files)w.eval(readFileSync(sourceRoot+'/assets/js/'+file,'utf8'));
   return {w,dom,writes,get meta(){return meta;},get player(){return player;},setMeta:value=>meta={...meta,...value},setXP:value=>player.xp=value,
     setReadError:value=>readError=value,setWriteError:value=>writeError=value,hold:value=>holdRead=value,
     switchAccount(id){auth={status:'authenticated',user:{id}};w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));}};
@@ -83,5 +84,33 @@ const timeout=make({signed:true});await tick();
 const originalTimer=timeout.w.setTimeout.bind(timeout.w);timeout.w.setTimeout=(callback,ms)=>originalTimer(callback,ms===12000?1:ms);
 timeout.hold(new Promise(()=>{}));await timeout.w.BrainiRewardStore.load();
 assert.equal(timeout.w.BrainiRewardStore.snapshot().loading,false);assert.match(timeout.w.BrainiRewardStore.snapshot().error,/could not be checked/);
+// Profile scenes reuse the existing cosmetic transaction, never the avatar identity.
+assert.equal(C.metadataKeys.scene,'brainilab_profile_scene_v1');
+for(const item of C.scenes){
+ if(item.xp)assert.equal(C.available({scene:item.id},item.xp-1).scene,'none');
+ assert.equal(C.available({scene:item.id},item.xp).scene,item.id);
+}
+const scene=make({signed:true,xp:6000,metadata:{full_name:'Preserved',brainilab_avatar_mode_v1:'picture',brainilab_profile_scene_v1:'library'}});await tick();
+const sceneRoot=scene.w.document.querySelector('[data-profile-rewards]'),sceneStore=scene.w.BrainiRewardStore;
+const scenePlayer=JSON.stringify(scene.player);
+assert.equal(scene.w.document.body.dataset.profileScene,'library');
+sceneRoot.querySelector('[data-reward-kind=scene][data-reward-id=stars]').click();
+assert.equal(sceneRoot.dataset.profileScene,'stars','studio previews the draft');
+assert.equal(scene.w.document.body.dataset.profileScene,'library','header stays confirmed until save');
+assert.equal(sceneRoot.querySelector('[data-style-preview-avatar] img')!==null,true,'scene does not force an illustrated avatar');
+sceneRoot.querySelector('[data-style-cancel]').click();assert.equal(sceneRoot.dataset.profileScene,'library');
+assert.equal(scene.w.BrainiRewardCatalog.surprise({scene:'stars'},6000,()=>.5).scene,'stars','surprise preserves the chosen scene');
+sceneRoot.querySelector('[data-reward-kind=scene][data-reward-id=stars]').click();
+sceneRoot.querySelector('[data-style-save]').click();await tick();
+assert.deepEqual(scene.writes,[{data:{brainilab_profile_scene_v1:'stars'}}],'scene save touches only its metadata key');
+assert.equal(scene.meta.full_name,'Preserved');assert.equal(scene.meta.brainilab_avatar_mode_v1,'picture');
+assert.equal(scene.w.document.body.dataset.profileScene,'stars');assert.equal(JSON.stringify(scene.player),scenePlayer);
+scene.setMeta({brainilab_profile_scene_v1:'lab'});
+assert.equal(await sceneStore.save({...sceneStore.snapshot().style,scene:'none'}),false,'concurrent scene change prevents overwrite');
+assert.equal(scene.writes.length,1);assert.equal(scene.w.document.body.dataset.profileScene,'stars');
+await sceneStore.load();assert.equal(scene.w.document.body.dataset.profileScene,'lab','successful reread recovers the current scene');
+scene.setWriteError(true);assert.equal(await sceneStore.save({...sceneStore.snapshot().style,scene:'none'}),false);
+assert.equal(scene.w.document.body.dataset.profileScene,'lab','failed save keeps confirmed scene');
+assert.equal(JSON.stringify(scene.player),scenePlayer,'scene operations never change XP, score or level');
 for(const item of fixtures)item.dom.window.close();
 console.log('PASS reward thresholds, retroactive XP, next/all rewards, preview/save/cancel, guest reload/storage failure, owner isolation, concurrent metadata fields, offline retry, locked metadata and unchanged scores/XP/levels.');

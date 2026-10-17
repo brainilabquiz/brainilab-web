@@ -18,8 +18,14 @@ window.BrainiRewardCatalog=(function(){
     {id:'thinker',name:'Deep Thinker',xp:4500},
     {id:'sage',name:'BrainiLab Sage',xp:10000}
   ].map(Object.freeze));
-  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options});
-  const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys});
+  const scenes=Object.freeze([
+    {id:'none',name:'Plain & simple',xp:0,description:'Your usual clean profile.'},
+    {id:'library',name:'Booked in',xp:1500,description:'A quiet library corner for a curious mind.'},
+    {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
+    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
+  ].map(Object.freeze));
+  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options,scene:scenes});
+  const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys,scene:'brainilab_profile_scene_v1'});
   const xp=value=>Number.isFinite(Number(value))?Math.max(0,Math.floor(Number(value))):0;
   function clean(value={}){
     return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
@@ -49,7 +55,7 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();
 
 /* ===== profile-rewards-store.js ===== */
@@ -127,6 +133,7 @@ window.BrainiRewardStore=(function(){
         if(readError)throw readError;
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
+        if(changed.includes('scene')&&catalog.fromMetadata(before.user.user_metadata||{}).scene!==catalog.clean(saved).scene)throw Error('Background changed in another tab');
         const currentAllowed=catalog.available(allowed,total());
         if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('XP changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
@@ -300,7 +307,7 @@ window.BrainiAvatarStudioUI=(function(){
   const C=BrainiRewardCatalog,A=BrainiAvatarDesign;
   const panes={look:{label:'Your look',groups:{skin:'Skin tone',hair:'Hair',hairColor:'Hair colour',shirt:'Shirt',background:'Background'}},
     extras:{label:'Little extras',groups:{glasses:'Glasses',hat:'Hats',prop:'A little personality'}},
-    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title'}}};
+    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title',scene:'Profile background'}}};
   if(window.BrainiAchievementCatalog)panes.badges={label:'Badges',groups:{}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
@@ -341,6 +348,7 @@ window.BrainiAvatarStudioUI=(function(){
     root.dispatchEvent(new CustomEvent('brainilab:avatarpanechange',{detail:{pane:active}}));
   }
   function sample(kind,item,draft){
+    if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     if(kind==='title')return '';
     if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
     if(kind==='mode'&&item.id==='picture')return BrainiProgressUI.avatarImageMarkup({...BrainiData.player(),avatarDesign:null});
@@ -372,7 +380,7 @@ window.BrainiAvatarStudioUI=(function(){
   }
   function next(root,total){
     const reward=C.next(total),target=root.querySelector('[data-next-reward]');
-    const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra'};
+    const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra',scene:'profile background'};
     target.innerHTML='<span class="reward-kicker"></span><strong></strong><p></p><progress></progress>';
     target.querySelector('span').textContent=reward?'UP NEXT':'YOUR COLLECTION';
     target.querySelector('strong').textContent=reward?reward.name:'Every reward is unlocked';
@@ -553,6 +561,9 @@ window.BrainiProfileRewards=(function(){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
     const equipped=state.style;
+    // Header uses the confirmed choice. Only the studio artwork previews drafts.
+    document.body.dataset.profileScene=equipped.scene;
+    root.dataset.profileScene=draft.scene;
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){frame(avatar,equipped.frame);BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)}));}
     }
@@ -599,7 +610,7 @@ window.BrainiProfileRewards=(function(){
       const button=event.target.closest('[data-reward-kind]');
       if(button&&!button.disabled){
         const {rewardKind:kind,rewardId:id}=button.dataset;draft[kind]=id;
-        if(kind!=='mode'&&kind!=='frame'&&kind!=='title')draft.mode='built';
+        if(!['mode','frame','title','scene'].includes(kind))draft.mode='built';
         dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
       }
       if(event.target.closest('[data-style-cancel]')){dirty=false;render();}

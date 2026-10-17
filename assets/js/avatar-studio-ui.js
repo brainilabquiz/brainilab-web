@@ -2,7 +2,7 @@ window.BrainiAvatarStudioUI=(function(){
   const C=BrainiRewardCatalog,A=BrainiAvatarDesign;
   const panes={look:{label:'Your look',groups:{skin:'Skin tone',hair:'Hair',hairColor:'Hair colour',shirt:'Shirt',background:'Background'}},
     extras:{label:'Little extras',groups:{glasses:'Glasses',hat:'Hats',prop:'A little personality'}},
-    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title'}}};
+    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title',scene:'Profile background'}}};
   if(window.BrainiAchievementCatalog)panes.badges={label:'Badges',groups:{}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
@@ -43,6 +43,7 @@ window.BrainiAvatarStudioUI=(function(){
     root.dispatchEvent(new CustomEvent('brainilab:avatarpanechange',{detail:{pane:active}}));
   }
   function sample(kind,item,draft){
+    if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     if(kind==='title')return '';
     if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
     if(kind==='mode'&&item.id==='picture')return BrainiProgressUI.avatarImageMarkup({...BrainiData.player(),avatarDesign:null});
@@ -74,7 +75,7 @@ window.BrainiAvatarStudioUI=(function(){
   }
   function next(root,total){
     const reward=C.next(total),target=root.querySelector('[data-next-reward]');
-    const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra'};
+    const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra',scene:'profile background'};
     target.innerHTML='<span class="reward-kicker"></span><strong></strong><p></p><progress></progress>';
     target.querySelector('span').textContent=reward?'UP NEXT':'YOUR COLLECTION';
     target.querySelector('strong').textContent=reward?reward.name:'Every reward is unlocked';
