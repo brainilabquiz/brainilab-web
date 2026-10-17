@@ -411,6 +411,17 @@ window.BrainiQuiz = (function(){
     const bar=el.querySelector("[data-bar]");
     const timer=el.querySelector("[data-timer]");
 
+    const pointLabel=el.querySelector('.quiz-tools>span:not([data-timer])');
+    if(pointLabel)pointLabel.textContent='Game points · correct answers';
+    const scoreDailyNumber=opts.dailyScoreNumber??opts.dailyNumber;
+    const practice=opts.practice||opts.tryFirst||new URLSearchParams(location.search).has('archive')||new URLSearchParams(location.search).get('try')==='1';
+    if(!practice&&scoreDailyNumber&&(opts.gameId||inferGameId())==='brainmix'&&typeof window.BrainiData?.dailyPointsForResult==='function'){
+      const dailyPoints=BrainiData.dailyPointsForResult('brainmix',{score:1000,correct:1,total:questions.length,dailyNumber:scoreDailyNumber});
+      const note=document.createElement('p');note.className='quiz-score-context';
+      note.textContent=`Each correct answer adds ${Number(dailyPoints).toLocaleString('en-GB')} Daily points. The counter shows 1,000 game points per answer.`;
+      el.querySelector('.quiz-tools')?.after(note);
+    }
+
     const fmt=(ms)=>{
       const s=Math.floor(ms/1000);
       return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
@@ -484,7 +495,7 @@ window.BrainiQuiz = (function(){
 
       if(label) label.textContent=`Question ${index+1} of ${questions.length}`;
       if(count) count.textContent=`${index+1} / ${questions.length}`;
-      if(score) score.textContent=points.toLocaleString()+" pts";
+      if(score) score.textContent=points.toLocaleString('en-GB')+" game pts";
       if(bar) bar.style.width=((index+1)/questions.length*100)+"%";
 
       answers.innerHTML="";
@@ -634,7 +645,7 @@ window.BrainiQuiz = (function(){
         pointsAwarded:gained
       });
 
-      if(score) score.textContent=points.toLocaleString()+" pts";
+      if(score) score.textContent=points.toLocaleString('en-GB')+" game pts";
       readyForNext=true;
       if(next) next.hidden=false;
     }

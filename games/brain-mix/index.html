@@ -183,6 +183,7 @@
     }
 
     BrainiQuiz.mount(root,questions,{
+      dailyScoreNumber:archiveMode?null:daily.dailyNumber,
       checkAnswer:usingCloud
         ? (item,choice,context)=>BrainiContent.checkAnswer(item,choice,context)
         : null,
