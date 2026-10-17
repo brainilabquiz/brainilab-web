@@ -13,6 +13,8 @@ const [me,peer,automatic,hidden,suspended,claimed,stranger]=ids;
 const migration=readFileSync('supabase/migrations/20261016195312_shared_player_avatars.sql','utf8').replace(/\r\n/g,'\n');
 const titleMigration=readFileSync('supabase/migrations/20261016201431_shared_player_titles.sql','utf8').replace(/\r\n/g,'\n');
 const collectionMigration=readFileSync('supabase/migrations/20261016210748_avatar_wordplay_collection.sql','utf8').replace(/\r\n/g,'\n');
+const moreWordplayMigration=readFileSync('supabase/migrations/20261017073754_avatar_more_wordplay.sql','utf8').replace(/\r\n/g,'\n');
+const newWordplay=[['glasses','heart',2750],['glasses','camera',8250],['hat','toast',2800],['hat','coffee',4750],['prop','owl',3800],['prop','nacho',5750]];
 const rpcNames=['get_brainilab_individual_rankings','get_my_brainilab_friends','get_my_brainilab_friends_ranking','get_my_brainilab_groups'];
 const strip=value=>Array.isArray(value)?value.map(strip):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['avatar_style','generated_at'].includes(k)).map(([k,v])=>[k,strip(v)])):value;
 const stripTitle=value=>Array.isArray(value)?value.map(stripTitle):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['title','generated_at'].includes(k)).map(([k,v])=>[k,stripTitle(v)])):value;
@@ -21,6 +23,7 @@ const dom=new JSDOM('<div data-friends-root></div><div data-groups-root></div>',
 const load=f=>w.eval(readFileSync('assets/js/'+f+'.js','utf8'));
 for(const f of ['player-personalities','avatar-design','data','progression-ui','profile-rewards-model','icon-system'])load(f);
 const A=w.BrainiAvatarDesign,C=w.BrainiRewardCatalog;
+for(const [kind,id,xp] of newWordplay)assert.equal(A.options[kind].find(item=>item.id===id)?.xp,xp,'exact new cosmetic threshold: '+kind+' '+id);
 try{
  await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;
  create table auth.users(id uuid primary key,raw_user_meta_data jsonb);
@@ -76,6 +79,21 @@ try{
  const priorCollection=await snapshot();
  await db.exec(collectionMigration);
  const withoutGenerated=value=>Array.isArray(value)?value.map(withoutGenerated):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>k!=='generated_at').map(([k,v])=>[k,withoutGenerated(v)])):value;
+ const priorWordplay=await snapshot();
+ const playerTables=['auth.users','public.profiles','public.player_progression','public.fixture_scores','public.game_sessions','public.game_results','public.friendships','public.friend_requests','public.player_daily_stats','public.player_period_stats','public.groups','public.group_members','public.group_invites','public.group_daily_stats','public.group_period_stats','public.admin_ranking_suspensions'];
+ const tableSnapshot=async()=>Object.fromEntries(await Promise.all(playerTables.map(async name=>[name,await scalar(`select coalesce(jsonb_agg(to_jsonb(t) order by to_jsonb(t)::text),'[]'::jsonb) from ${name} t`)])));
+ const beforeTables=await tableSnapshot();
+ const helperState=async()=>await scalar("select jsonb_build_object('definition',pg_get_functiondef(oid),'md5',md5(pg_get_functiondef(oid)),'acl',proacl::text,'owner',proowner,'securityDefiner',prosecdef,'config',proconfig) from pg_proc where oid='brainilab_private.player_avatar(uuid)'::regprocedure");
+ const helperBefore=await helperState();
+ assert.equal(helperBefore.md5,'109bf55494bad27b1b4cb9dbafbeafd0','migration starts from the captured production definition');
+ await db.exec(moreWordplayMigration);
+ const helperAfter=await helperState();
+ assert.equal(helperAfter.md5,'ef67f28d81589f0918465d679764a479');
+ const catalogOnly=definition=>definition.replace(/(v_catalog constant jsonb := ')[^']+('::jsonb;)/,'$1CATALOG$2');
+ assert.equal(catalogOnly(helperAfter.definition),catalogOnly(helperBefore.definition),'only the cosmetic allowlist changes in the private helper');
+ for(const key of ['acl','owner','securityDefiner','config'])assert.deepEqual(helperAfter[key],helperBefore[key],key+' is preserved');
+ assert.deepEqual(await tableSnapshot(),beforeTables,'all 16 existing identity, score, game and social tables are unchanged');
+ assert.deepEqual(withoutGenerated(await snapshot()),withoutGenerated(priorWordplay),'six added choices preserve every previously equipped appearance and RPC payload');
  assert.deepEqual(withoutGenerated(await snapshot()),withoutGenerated(priorCollection),'new collection preserves every prior equipped appearance and response field');
  let after=await snapshot();
  assert.deepEqual(stripTitle(after),stripTitle(avatarBaseline),'title extension leaves every existing avatar and response field intact');
@@ -114,6 +132,13 @@ try{
    const selection=kind==='frame'?result?.frame:kind==='title'?result?.title:result?.design?.[kind];
    const expected=xp>=item.xp?item.id:list[0].id;
    assert.equal(selection??list[0].id,expected,kind+' '+item.id+' at '+xp);
+   if(newWordplay.some(([newKind,newId])=>kind===newKind&&item.id===newId)){
+    const adapted=A.fromPublicStyle(result);
+    assert.equal(adapted.avatarDesign[kind],expected,'new server choice reaches renderer at the same threshold');
+    assert.equal(A.markup(adapted.avatarDesign,adapted.avatarRenderXp),A.markup({[kind]:expected},xp),'server and local SVG match for '+kind+' '+item.id+' at '+xp);
+    assert.equal(result.render_xp,xp>=item.xp?item.xp:0,'only the minimum cosmetic rendering threshold is exposed');
+    assert.equal(Object.hasOwn(result,'xp'),false,'total earned XP stays private');
+   }
   }
  }
  await db.query('update player_progression set xp=2700 where user_id=$1',[peer]);
@@ -177,9 +202,11 @@ try{
  await w.BrainiFriends.refresh();await w.BrainiSocial.render();
  assert.equal(w.document.querySelectorAll('[data-friends-root] .braini-built-avatar').length,2);
  assert.equal(w.document.querySelectorAll('[data-friends-root] .player-profile-title').length,2,'unequipping removes the old title on refresh');
+ await assert.rejects(()=>db.exec(moreWordplayMigration),/Concurrent avatar helper edit/,'new collection refuses to overwrite a changed helper or rerun blindly');
+ await db.exec('rollback');
  await assert.rejects(()=>db.exec(titleMigration),/Concurrent avatar helper edit/,'title migration protects concurrent helper edits');
  await db.exec('rollback');
  await assert.rejects(()=>db.exec(migration),/Concurrent RPC edit/,'migration refuses to overwrite changed definitions');
  await db.exec('rollback');
- console.log('PASS: real RPC/XP/score/ACL and avatar parity; every title threshold, equip/none/invalid, privacy and CAS; social views, fallback, refresh and My avatar label.');
+ console.log('PASS: all 16 player tables unchanged by the six new cosmetics; exact client/server/render thresholds; real RPC/XP/score/ACL, invoker/search_path/owner/privacy and CAS; social views, fallback, refresh and My avatar label.');
 }finally{dom.window.close();await db.close();}
