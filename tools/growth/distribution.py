@@ -9,7 +9,7 @@ import re
 import gsc_sync as api
 import outreach_summary
 
-PRODUCER_VERSION = 3
+PRODUCER_VERSION = 4
 
 
 def domain(value):
