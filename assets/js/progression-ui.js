@@ -80,7 +80,15 @@ window.BrainiProgressUI=(function(){
 
   function avatarFrameAttribute(person){
     const frame=person?.avatarFrame;
-    return ['blue','green','copper','gold','orbit'].includes(frame)?`data-social-frame="${frame}"`:'';
+    if(['blue','green','copper','gold','orbit'].includes(frame))return `data-social-frame="${frame}"`;
+    // Automatic nicknames keep one recognizable palette everywhere. This is
+    // default portrait decoration, never an equipped reward or a profile write.
+    const raw=String(person?.identityName||person?.name||person?.displayName||'').trim();
+    if(person?.avatarUrl||person?.avatarDesign?.mode==='built'||
+      ![BrainiPeople.isLegacy(raw),BrainiPeople.isPreset(raw)].some(Boolean))return '';
+    let seed=2166136261;
+    for(const letter of BrainiPeople.resolve(person).displayName){seed^=letter.charCodeAt(0);seed=Math.imul(seed,16777619);}
+    return `data-default-palette="${(seed>>>0)%8}"`;
   }
 
   function profileTitleMarkup(person){

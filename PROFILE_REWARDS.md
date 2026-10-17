@@ -256,3 +256,14 @@ can draw the new accessories only when earned. The private server allowlist
 is extended with an exact definition-hash guard, keeping the public ranking,
 friends and group RPCs, privacy checks, permissions and score/XP tables intact.
 The maximum public rendering threshold remains 9,000, enough for every item.
+
+## Automatic portrait palettes
+
+Legacy guest aliases and generated knowledge nicknames without a chosen photo,
+created avatar or equipped frame now use eight stable accent palettes. The same
+public nickname keeps its color on rankings, friends and groups, regardless of
+row position, score or refresh. Its existing level frame shape and inner progress
+still follow the real level; the portrait artwork and skin colors are unchanged.
+These default decorations do not equip a reward, imply a cosmetic unlock, write
+profile metadata or change scores, XP, public visibility or ranking order. Chosen
+photos, created avatars and equipped frames retain their existing appearance.

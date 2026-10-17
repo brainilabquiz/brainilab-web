@@ -5958,6 +5958,20 @@ main > section.section,
 .rank-avatar[data-social-frame],.social-avatar[data-social-frame],.group-player-avatar[data-social-frame]{border:2px solid var(--social-frame)!important;box-shadow:0 0 0 1px var(--social-frame-outline),0 0 0 2px var(--social-frame)!important}
 .rank-avatar[data-social-frame]::after{display:none}
 
+/* Stable automatic portrait colors; the existing level frame keeps its shape. */
+[data-default-palette="0"]{--default-accent:#2478ab}
+[data-default-palette="1"]{--default-accent:#a44a72}
+[data-default-palette="2"]{--default-accent:#528533}
+[data-default-palette="3"]{--default-accent:#b96630}
+[data-default-palette="4"]{--default-accent:#7061ad}
+[data-default-palette="5"]{--default-accent:#248782}
+[data-default-palette="6"]{--default-accent:#ad8030}
+[data-default-palette="7"]{--default-accent:#be5360}
+.rank-avatar[data-default-palette]{--ring:var(--default-accent)}
+.rank-avatar[data-default-palette]::after{background:var(--default-accent);-webkit-mask:var(--player-frame) center/contain no-repeat;mask:var(--player-frame) center/contain no-repeat}
+[data-default-palette]>.default-player-avatar{outline:2px solid var(--default-accent);outline-offset:-2px}
+.social-avatar[data-default-palette],.group-player-avatar[data-default-palette]{border-color:var(--default-accent);box-shadow:0 0 0 2px var(--default-accent)}
+
 /* An equipped cosmetic title stays distinct from a player's level and team role. */
 .player-profile-title{display:table;max-width:100%;margin-top:4px;padding:3px 7px;border:1px solid var(--line);border-radius:6px;background:var(--soft-navy);color:var(--navy);font-size:11px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
 .profile-title-context{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
