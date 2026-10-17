@@ -15,6 +15,7 @@ window.BrainiDaily = (function(){
   let cachedToday=null;
   let lastError=null;
   let inFlight=null;
+  let fallbackLoading=null;
 
   const CACHE_PREFIX="brainilab_daily_payload_v1_";
   const REQUEST_TIMEOUT_MS=4500;
@@ -130,28 +131,28 @@ window.BrainiDaily = (function(){
 
   async function ensureFallbackPacks(){
     if(window.BrainiQuizPacks) return window.BrainiQuizPacks;
+    if(fallbackLoading) return fallbackLoading;
 
-    return new Promise((resolve,reject)=>{
-      const existing=document.querySelector('script[data-braini-daily-fallback]');
-      if(existing){
-        existing.addEventListener("load",()=>resolve(window.BrainiQuizPacks),{once:true});
-        existing.addEventListener("error",()=>reject(new Error("Could not load Daily fallback content.")),{once:true});
-        return;
+    fallbackLoading=(async()=>{
+      if(window.BrainiPerf?.loadFeature){
+        await BrainiPerf.loadFeature("quiz-packs.js");
+      }else{
+        await new Promise((resolve,reject)=>{
+          const s=document.createElement("script");
+          s.src=scriptBase
+            ? new URL("quiz-packs.js",scriptBase).href
+            : "/assets/js/quiz-packs.js";
+          s.onload=resolve;
+          s.onerror=()=>{s.remove();reject(new Error("Could not load Daily fallback content."));};
+          document.head.appendChild(s);
+        });
       }
-
-      const s=document.createElement("script");
-      s.dataset.brainiDailyFallback="1";
-      s.src=scriptBase
-        ? new URL("quiz-packs.js",scriptBase).href
-        : "/assets/js/quiz-packs.js";
-
-      s.onload=()=>{
-        if(window.BrainiQuizPacks) resolve(window.BrainiQuizPacks);
-        else reject(new Error("Daily fallback content loaded incorrectly."));
-      };
-      s.onerror=()=>reject(new Error("Could not load Daily fallback content."));
-      document.head.appendChild(s);
-    });
+      if(typeof window.BrainiQuizPacks?.get!=="function"){
+        throw new Error("Daily fallback content loaded incorrectly.");
+      }
+      return window.BrainiQuizPacks;
+    })().catch(error=>{fallbackLoading=null;throw error;});
+    return fallbackLoading;
   }
 
   function hash(text){
@@ -934,7 +935,7 @@ window.BrainiDailyJourney=(function(){
       const meta=META[id],game=status.games[id]||{},max=BrainiDailyRules.max(id,day);
       const unavailable=!isPrimary&&(!primary.completed||bonus&&bonus!==id);
       const href=gameHref(id,day);
-      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Available after your Daily'):`Up to ${formatPoints(max)} points`;
+      const message=game.completed?`${formatPoints(game.points)} / ${formatPoints(max)} points`:unavailable?(bonus?'You chose the other extra':'Finish the main Daily first'):`Up to ${formatPoints(max)} points`;
       return `<article class="daily-choice-card ${isPrimary?'is-primary':''} ${game.completed?'is-complete':''} ${unavailable?'is-unavailable':''}"><span class="daily-choice-art">${BrainiIcons.game(meta.icon,'mini','braini-game-mini')}</span><div><span class="daily-choice-role">${isPrimary?"Today’s Daily":bonus===id?'Your extra':'Optional extra'}</span><h3>${meta.name}</h3><p>${message}</p></div>${game.completed?'<strong class="daily-choice-done">Completed ✓</strong>':unavailable?'':`<a class="btn" href="${href}">${isPrimary?'Play today’s Daily':bonus===id?'Continue extra':'Choose '+meta.name}</a>`}</article>`;
     }
     return `<section class="daily-choice" aria-label="Today’s Daily games"><div class="daily-choice-heading"><span>Daily #${status.dailyNumber}</span><span>${formatPoints(status.brainScore)} / ${formatPoints(model.maxScore)} points</span></div>${card(model.primary,true)}<div id="daily-extras" class="daily-choice-extra-heading"><h3>${done?'All done for today':bonus?'Your extra':'Fancy one more?'}</h3><p>${done?'You’ve played your Daily and your extra.':bonus?'Up to 1,000 more points. Your streak is already safe.':'Choose one extra. Up to 1,000 points. Your streak only needs the main Daily.'}</p></div><div class="daily-choice-extras">${model.choices.map(id=>card(id,false)).join('')}</div><p class="daily-choice-note">${done?'A fresh challenge arrives tomorrow.':'Your extra is fixed when you open it. A new choice is available tomorrow.'}</p></section>`;

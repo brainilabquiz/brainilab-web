@@ -13,6 +13,7 @@ window.BrainiDaily = (function(){
   let cachedToday=null;
   let lastError=null;
   let inFlight=null;
+  let fallbackLoading=null;
 
   const CACHE_PREFIX="brainilab_daily_payload_v1_";
   const REQUEST_TIMEOUT_MS=4500;
@@ -128,28 +129,28 @@ window.BrainiDaily = (function(){
 
   async function ensureFallbackPacks(){
     if(window.BrainiQuizPacks) return window.BrainiQuizPacks;
+    if(fallbackLoading) return fallbackLoading;
 
-    return new Promise((resolve,reject)=>{
-      const existing=document.querySelector('script[data-braini-daily-fallback]');
-      if(existing){
-        existing.addEventListener("load",()=>resolve(window.BrainiQuizPacks),{once:true});
-        existing.addEventListener("error",()=>reject(new Error("Could not load Daily fallback content.")),{once:true});
-        return;
+    fallbackLoading=(async()=>{
+      if(window.BrainiPerf?.loadFeature){
+        await BrainiPerf.loadFeature("quiz-packs.js");
+      }else{
+        await new Promise((resolve,reject)=>{
+          const s=document.createElement("script");
+          s.src=scriptBase
+            ? new URL("quiz-packs.js",scriptBase).href
+            : "/assets/js/quiz-packs.js";
+          s.onload=resolve;
+          s.onerror=()=>{s.remove();reject(new Error("Could not load Daily fallback content."));};
+          document.head.appendChild(s);
+        });
       }
-
-      const s=document.createElement("script");
-      s.dataset.brainiDailyFallback="1";
-      s.src=scriptBase
-        ? new URL("quiz-packs.js",scriptBase).href
-        : "/assets/js/quiz-packs.js";
-
-      s.onload=()=>{
-        if(window.BrainiQuizPacks) resolve(window.BrainiQuizPacks);
-        else reject(new Error("Daily fallback content loaded incorrectly."));
-      };
-      s.onerror=()=>reject(new Error("Could not load Daily fallback content."));
-      document.head.appendChild(s);
-    });
+      if(typeof window.BrainiQuizPacks?.get!=="function"){
+        throw new Error("Daily fallback content loaded incorrectly.");
+      }
+      return window.BrainiQuizPacks;
+    })().catch(error=>{fallbackLoading=null;throw error;});
+    return fallbackLoading;
   }
 
   function hash(text){

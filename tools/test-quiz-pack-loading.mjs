@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
+const sourceRoot=process.env.QUIZ_SOURCE_ROOT||'.';
+const source=file=>readFileSync(path.join(sourceRoot,file),'utf8');
+const pages=[['science/science-quiz/','science'],['history/history-quiz/','history'],['sports/sports-quiz/','sports'],['geography/world-capitals-quiz/','worldcapitals'],['geography/world-flags-quiz/','worldflags'],['general-knowledge/general-knowledge-quiz/','generalknowledge']];
+const results=[];
+for(const [page,topic] of pages){
+ const dom=new JSDOM(source(page+'index.html'),{url:'https://brainilabgames.com/'+page+'?difficulty=medium&set=1&try=1',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
+ const rpcNames=[];let writes=0,packRequests=0,recovered=false,releaseRetry;
+ w.BrainiBackendAuth={isConfigured:()=>true,getClient:()=>({rpc:async name=>{rpcNames.push(name);return {data:null,error:Error('Test cloud connection unavailable')};}})};
+ w.BrainiData={anytimePlayedIds:()=>[],api:{submitGameResult:()=>{writes++;throw Error('No game may be submitted during loading');}}};
+ w.console.warn=()=>{};
+ const append=d.head.appendChild.bind(d.head);
+ d.head.appendChild=node=>{
+  const value=append(node);
+  if(node.tagName==='SCRIPT'){
+   packRequests++;
+   if(!recovered)setTimeout(()=>node.dispatchEvent(new w.Event('error')),0);
+   else releaseRetry=()=>{w.eval(source('assets/js/quiz-packs.js'));node.dispatchEvent(new w.Event('load'));};
+  }
+  return value;
+ };
+ Object.defineProperty(d,'currentScript',{get:()=>({src:'https://brainilabgames.com/assets/js/quiz.bundle.js?v=current'})});
+ for(const name of ['perf-loader','supabase-content','quiz'])w.eval(source('assets/js/'+name+'.js'));
+ let init;
+ const add=d.addEventListener.bind(d);
+ d.addEventListener=(name,handler,...options)=>name==='DOMContentLoaded'?(init=handler):add(name,handler,...options);
+ const inline=[...d.scripts].find(script=>!script.src&&script.textContent.includes('const pack=await BrainiQuiz.loadPack'));
+ assert.ok(inline,'the actual page uses the shared recoverable loader');
+ w.eval(inline.textContent);d.addEventListener=add;
+ const initialization=init();
+ await tick();await tick();
+ const root=d.getElementById('leafQuiz'),stage=root.querySelector('.challenge-inner'),status=root.querySelector('[data-quiz-pack-status]'),retry=status.querySelector('button');
+ assert.equal(root.getAttribute('aria-busy'),'false');assert.equal(stage.hidden,true);
+ assert.equal(status.hidden,false);assert.equal(status.getAttribute('role'),'status');
+ assert.match(status.textContent,/questions couldn’t load/);assert.equal(retry.hidden,false);assert.equal(retry.disabled,false);
+ assert.equal(root.querySelectorAll('[data-answers] button').length,0,'no answer controls mount after failed loading');
+ recovered=true;retry.focus();retry.click();retry.click();
+ await tick();
+ assert.equal(root.getAttribute('aria-busy'),'true');assert.equal(retry.disabled,true);
+ assert.equal(packRequests,2,'one failed load and one retry, despite repeated activation');
+ assert.equal(rpcNames.length,4,'each attempt tries the two existing read-only cloud selectors once');
+ releaseRetry();await initialization;await tick();
+ assert.equal(root.getAttribute('aria-busy'),'false');assert.equal(status.hidden,true);assert.equal(stage.hidden,false);
+ assert.equal(root.querySelectorAll('[data-answers] button').length,4,'real quiz mounts once after successful recovery');
+ assert.equal(d.activeElement,root.querySelector('[data-q]'),'keyboard retry transfers focus to the ready question');
+ assert.equal(root.querySelector('[data-difficulty-label]').textContent,'Medium');
+ const expected=w.BrainiQuizPacks.get(topic,'medium','1')[0].q;
+ assert.ok(root.querySelector('[data-q]').textContent.replace(/\s+/g,' ').includes(expected.replace(/[\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim()),'selected topic and difficulty are preserved');
+ assert.ok(rpcNames.every(name=>['get_brainilab_anytime_quiz','get_brainilab_quiz_pack'].includes(name)));
+ assert.equal(writes,0,'loading/recovery cannot submit a result or alter player progress');
+ results.push({page,packRequests,cloudReads:rpcNames.length,answers:4,writes});
+ w.close();
+}
+console.log(JSON.stringify(results));
+console.log('PASS six real quiz entry points: failed cloud and fallback show a recoverable error, one guarded retry mounts the original quiz, keyboard focus and zero player writes.');

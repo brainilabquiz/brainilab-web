@@ -49,15 +49,25 @@ window.BrainiContent = (function(){
     if(window.BrainiQuizPacks) return window.BrainiQuizPacks;
     if(fallbackLoading) return fallbackLoading;
 
-    fallbackLoading=new Promise((resolve,reject)=>{
-      const s=document.createElement("script");
-      s.src=scriptBase
-        ? new URL("quiz-packs.js",scriptBase).href
-        : "assets/js/quiz-packs.js";
-      s.onload=()=>resolve(window.BrainiQuizPacks);
-      s.onerror=()=>reject(new Error("Could not load local quiz fallback."));
-      document.head.appendChild(s);
-    });
+    fallbackLoading=(async()=>{
+      if(window.BrainiPerf?.loadFeature){
+        await BrainiPerf.loadFeature("quiz-packs.js");
+      }else{
+        await new Promise((resolve,reject)=>{
+          const s=document.createElement("script");
+          s.src=scriptBase
+            ? new URL("quiz-packs.js",scriptBase).href
+            : "/assets/js/quiz-packs.js";
+          s.onload=resolve;
+          s.onerror=()=>{s.remove();reject(new Error("Could not load local quiz fallback."));};
+          document.head.appendChild(s);
+        });
+      }
+      if(typeof window.BrainiQuizPacks?.get!=="function"){
+        throw new Error("Local quiz fallback loaded incorrectly.");
+      }
+      return window.BrainiQuizPacks;
+    })().catch(error=>{fallbackLoading=null;throw error;});
 
     return fallbackLoading;
   }
@@ -373,6 +383,49 @@ window.BrainiContent = (function(){
 
 
 window.BrainiQuiz = (function(){
+  function loadPack(root,topic,difficulty="easy",setNumber=1){
+    const stage=root.querySelector('.challenge-inner');
+    let status=root.querySelector('[data-quiz-pack-status]');
+    if(!status){
+      status=document.createElement('div');
+      status.className='quiz-pack-status';
+      status.dataset.quizPackStatus='';
+      status.setAttribute('role','status');
+      root.prepend(status);
+    }
+    status.innerHTML='<strong></strong><p></p><button class="btn-secondary" type="button" hidden>Try again</button>';
+    const heading=status.querySelector('strong'),detail=status.querySelector('p'),retry=status.querySelector('button');
+    let pending=false,ready=false,focusAfterRetry=false;
+    return new Promise(resolve=>{
+      async function load(){
+        if(pending||ready)return;
+        pending=true;retry.disabled=true;
+        root.setAttribute('aria-busy','true');stage.hidden=true;status.hidden=false;
+        heading.textContent='Getting your questions ready…';
+        detail.textContent='You can read the guide below while the quiz loads.';
+        try{
+          const pack=await BrainiContent.loadQuizPack(topic,difficulty,setNumber);
+          if(!Array.isArray(pack?.questions)||pack.questions.length!==20)throw Error('Incomplete quiz pack');
+          ready=true;status.hidden=true;stage.hidden=false;
+          root.setAttribute('aria-busy','false');resolve(pack);
+          if(focusAfterRetry)queueMicrotask(()=>{
+            if(root.isConnected&&(status.contains(document.activeElement)||document.activeElement===document.body)){
+              const question=root.querySelector('[data-q]');question.tabIndex=-1;question.focus();
+            }
+          });
+        }catch{
+          root.setAttribute('aria-busy','false');
+          heading.textContent='Your questions couldn’t load.';
+          detail.textContent='Check your connection and try again. Your progress hasn’t changed.';
+          retry.hidden=false;retry.disabled=false;
+          if(focusAfterRetry)retry.focus();
+        }finally{pending=false;}
+      }
+      retry.onclick=()=>{focusAfterRetry=document.activeElement===retry;void load();};
+      void load();
+    });
+  }
+
   function inferGameId(){
     const p=location.pathname.toLowerCase();
     if(p.includes("/games/brain-mix/")) return "brainmix";
@@ -795,7 +848,7 @@ window.BrainiQuiz = (function(){
     };
   }
 
-  return {mount};
+  return {mount,loadPack};
 })();
 
 window.showToast=function(msg){
