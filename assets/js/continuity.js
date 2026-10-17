@@ -48,7 +48,7 @@ window.BrainiContinuity=(()=>{
     if(!result?.clientResultId)return '';
     const auth=window.BrainiData?.getState?.()?.auth||window.BrainiData?.authState?.()||{},owner=auth.user?.id||auth.guestUserId;
     const summary=window.BrainiProgression?.getCached?.();
-    const validOwner=!summary?.progression?.user_id||owner===summary.progression.user_id;
+    const validOwner=!!owner&&owner===summary?.progression?.user_id;
     const reward=validOwner&&summary?.recent_rewards?.find(r=>r.client_result_id===result.clientResultId);
     if(!reward?.verified){
       if(auth.status!=='authenticated')return '<p class="post-reward-note">Playing as a guest. <a data-post-action="progress" href="/profile/?section=progress">Sign in to keep your progress across devices</a>.</p>';
@@ -64,7 +64,12 @@ window.BrainiContinuity=(()=>{
     const today=new Date().toISOString().slice(0,10),model=window.BrainiDailyRules?.model(today);
     const main=Number(result.dailyNumber)>0&&window.BrainiData?.dateForDailyNumber?.(Number(result.dailyNumber))===today&&model?.primary===result.gameId;
     const secured=main&&summary.continuity?.today===today&&summary.continuity.completed_today;
-    return `<a class="post-reward ${up?'is-level-up':''}" href="/profile/?section=progress" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned">${reward.daily_limit_reached?'XP complete':'+'+count(reward.xp)+' XP'}</b></span><span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${reward.daily_limit_reached?'<small>You can still improve your score. Try another game for more XP.</small>':''}</a>`;
+    // The receipt reports game XP only. The once-per-day bonus belongs to the
+    // day's confirmed total; never infer a new award from a local result/score.
+    const bonus=Number(summary.reward_rules?.full_daily_xp);
+    const bonusNote=secured&&model?.version==='daily-choice-v1'&&Number.isSafeInteger(bonus)&&bonus>0
+      ? `<small class="post-daily-bonus"><b>Today’s Daily bonus: ${bonus.toLocaleString('en-GB')} XP</b>Included in your total XP, once today.</small>`:'';
+    return `<a class="post-reward ${up?'is-level-up':''}" href="/profile/?section=progress" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned"><span>Game XP</span>+${count(reward.xp)} XP</b></span><span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${count(progress.earnedInLevel)} of ${count(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${bonusNote}${reward.daily_limit_reached?'<small>You’ve earned XP for three rounds of this game today. Try a different game for more XP, or return tomorrow.</small>':''}</a>`;
   }
   function animateReward(root){
     const card=root?.querySelector('[data-reward-id]');if(!card)return;
