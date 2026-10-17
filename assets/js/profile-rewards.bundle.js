@@ -30,32 +30,35 @@ window.BrainiRewardCatalog=(function(){
   function clean(value={}){
     return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
   }
-  function available(value,earned){
+  const academyRewards=BrainiAvatarDesign.academyRewards;
+  function academyIds(value){return Array.isArray(value)?[...new Set(value.filter(id=>academyRewards.some(item=>item.id===id)))]:[];}
+  const unlocked=(item,earned,academy=[])=>item.course?academyIds(academy).includes(item.id):item.xp<=xp(earned);
+  function available(value,earned,academy=[]){
     const result=clean(value),total=xp(earned);
-    for(const [key,list] of Object.entries(groups))if(list.find(item=>item.id===result[key]).xp>total)result[key]=list[0].id;
+    for(const [key,list] of Object.entries(groups))if(!unlocked(list.find(item=>item.id===result[key]),total,academy))result[key]=list[0].id;
     return result;
   }
   function next(earned){
     const total=xp(earned);
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
-      .filter(r=>r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
+      .filter(r=>!r.course&&r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
-  function surprise(style,earned,random=Math.random){
-    const total=xp(earned),current=available(style,total),result={...current,mode:'built'};
+  function surprise(style,earned,random=Math.random,academy=[]){
+    const total=xp(earned),current=available(style,total,academy),result={...current,mode:'built'};
     const kinds=['hair','hairColor','shirt','background','glasses','hat','prop'];
     // Skin tone, frame and title stay intentional. Extras stay absent in most draws.
     for(const kind of kinds){
-      const unlocked=groups[kind].filter(item=>item.xp<=total);
+      const earnedItems=groups[kind].filter(item=>unlocked(item,total,academy));
       const roll=Math.min(1-Number.EPSILON,Math.max(0,Number(random())||0));
       const extra=['glasses','hat','prop'].includes(kind);
-      const pool=extra?unlocked.filter(item=>item.id!=='none'):unlocked;
+      const pool=extra?earnedItems.filter(item=>item.id!=='none'):earnedItems;
       result[kind]=extra&&(roll<.65||!pool.length)?'none':pool[Math.min(pool.length-1,Math.floor((extra?(roll-.65)/.35:roll)*pool.length))].id;
     }
     if(kinds.every(kind=>result[kind]===current[kind]))result.hair=groups.hair.find(item=>item.xp<=total&&item.id!==current.hair)?.id||current.hair;
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,groups,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,unlocked,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
 })();
 
 /* ===== profile-rewards-store.js ===== */
@@ -67,6 +70,7 @@ window.BrainiRewardStore=(function(){
   // a frame/title saved independently in a second tab. These are not claims.
   const keys=catalog.metadataKeys;
   let owner=null,saved=catalog.clean(),loading=false,saving=false,error='',notice='',generation=0;
+  let academy=[];
   function identity(){
     const auth=BrainiData.authState();
     return auth.status==='authenticated'&&auth.user?.id
@@ -90,11 +94,19 @@ window.BrainiRewardStore=(function(){
   function cache(id,value){
     try{localStorage.setItem(prefix+id,JSON.stringify(value));return true;}catch{return false;}
   }
-  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total()),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy),academy:academy.slice(),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  async function readAcademy(sb,uid){
+    // SELECT only. RLS binds this collection to the signed-in owner; metadata,
+    // local reading progress and XP cannot grant course rewards.
+    const result=await bounded(sb.from('learn_avatar_unlocks').select('reward_id').eq('user_id',uid));
+    if(result.error||!Array.isArray(result.data))throw Error('Academy rewards unavailable');
+    return catalog.academyIds(result.data.map(row=>row.reward_id));
+  }
   async function load(){
     const current=identity();
     if(owner?.id===current.id&&(loading||saving))return;
-    const run=++generation;owner=current;saved=cached(current.id);error='';notice='';
+    const same=owner?.id===current.id;
+    const run=++generation;owner=current;if(!same)academy=[];saved=cached(current.id);error='';notice='';
     loading=current.cloud;emit();
     if(!current.cloud){applyDesign();return;}
     try{
@@ -104,6 +116,9 @@ window.BrainiRewardStore=(function(){
       if(readError)throw readError;
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
+      const collection=await readAcademy(sb,current.uid);
+      if(run!==generation||identity().id!==current.id)return;
+      academy=collection;
       const meta=data.user.user_metadata||{};
       saved=catalog.fromMetadata(meta);
       cache(current.id,saved);
@@ -118,11 +133,11 @@ window.BrainiRewardStore=(function(){
     if(saving||loading||error)return false;
     const current=identity(),run=generation;
     if(current.id!==owner?.id){await load();return false;}
-    const requested=catalog.clean(value),allowed=catalog.available(requested,total());
+    const requested=catalog.clean(value),allowed=catalog.available(requested,total(),academy);
     if(Object.keys(keys).some(key=>requested[key]!==allowed[key])){
-      error='That reward is still locked. Your XP has not changed.';emit();return false;
+      error='That reward is still locked. Complete its course or earn the required XP. Nothing has been spent.';emit();return false;
     }
-    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total())[key]);
+    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total(),academy)[key]);
     if(!changed.length)return true;
     saving=true;notice='';emit();
     try{
@@ -134,8 +149,13 @@ window.BrainiRewardStore=(function(){
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
         if(changed.includes('scene')&&catalog.fromMetadata(before.user.user_metadata||{}).scene!==catalog.clean(saved).scene)throw Error('Background changed in another tab');
-        const currentAllowed=catalog.available(allowed,total());
-        if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('XP changed');
+        if(changed.some(key=>catalog.groups[key].find(item=>item.id===allowed[key])?.course)){
+          const collection=await readAcademy(sb,current.uid);
+          if(run!==generation||identity().id!==current.id)return false;
+          academy=collection;
+        }
+        const currentAllowed=catalog.available(allowed,total(),academy);
+        if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('Reward eligibility changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
         const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));
         if(writeError)throw writeError;
@@ -167,6 +187,7 @@ window.BrainiRewardStore=(function(){
     if(owner&&!owner.cloud&&event.key===prefix+owner.id){saved=cached(owner.id);applyDesign();emit();}
   });
   window.addEventListener('online',()=>{if(owner?.cloud)load();});
+  window.addEventListener('pageshow',event=>{if(event.persisted&&owner?.cloud)load();});
   return {load,save,snapshot};
 })();
 
@@ -307,7 +328,8 @@ window.BrainiAvatarStudioUI=(function(){
   const C=BrainiRewardCatalog,A=BrainiAvatarDesign;
   const panes={look:{label:'Your look',groups:{skin:'Skin tone',hair:'Hair',hairColor:'Hair colour',shirt:'Shirt',background:'Background'}},
     extras:{label:'Little extras',groups:{glasses:'Glasses',hat:'Hats',prop:'A little personality'}},
-    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title',scene:'Profile background'}}};
+    rewards:{label:'Frames & titles',groups:{frame:'Avatar frame',title:'Profile title',scene:'Profile background'}},
+    academy:{label:'Academy',groups:{}}};
   if(window.BrainiAchievementCatalog)panes.badges={label:'Badges',groups:{}};
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
@@ -325,7 +347,7 @@ window.BrainiAvatarStudioUI=(function(){
       <p class="profile-style-status" role="status" aria-live="polite" data-style-status></p><p class="avatar-storage-note" data-style-storage></p><p class="avatar-sharing-note" data-style-sharing></p></aside>
       <div class="avatar-studio-controls"><div class="avatar-mobile-preview"><span data-avatar-mini aria-hidden="true"></span><span data-avatar-mini-label></span><button class="btn" type="button" data-style-save>Save my avatar</button></div><div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><div class="avatar-mode-header"><span id="avatar-start-label">Start with</span><button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Try a new look using your unlocked items">Surprise me</button></div><div class="reward-mode-grid" data-style-modes></div></div>
       <div class="avatar-studio-tabs" role="tablist" aria-label="Avatar options">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}</button>`).join('')}</div>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='academy'?'<p class="avatar-pane-note">A little something for everything you learn. Finish every lesson quiz in a course while signed in to unlock its extra. Earlier account completions count, and earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='extras'?'<p class="avatar-pane-note">Try something on. Extras unlock with XP you’ve earned.</p>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}</div></div>`;
     showPane(root,active);
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
       tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
@@ -355,10 +377,11 @@ window.BrainiAvatarStudioUI=(function(){
     if(kind==='frame')return `<span class="reward-frame-sample" data-profile-frame="${item.id}">B</span>`;
     return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
   }
-  function choices(root,draft,total,busy){
+  function choices(root,draft,total,busy,academy=[]){
     for(const [kind,items] of Object.entries(C.groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       for(const item of items){
+        if(item.course)continue;
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
         if(!button){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
@@ -377,13 +400,34 @@ window.BrainiAvatarStudioUI=(function(){
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
       if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}
     }
+    const grid=root.querySelector('[data-academy-rewards]');
+    for(const item of C.academyRewards){
+      let card=grid.querySelector(`[data-academy-card="${item.id}"]`);
+      if(!card){
+        card=document.createElement('div');card.className='avatar-academy-card';card.dataset.academyCard=item.id;
+        card.innerHTML='<button class="reward-choice" type="button"><span class="reward-choice-art" aria-hidden="true"></span><strong></strong><small></small></button><a></a>';
+        const link=card.querySelector('a');link.href='/learn/paths/'+item.course+'/';link.textContent=item.courseTitle+' →';
+        link.setAttribute('aria-label','Open course: '+item.courseTitle);
+        const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
+      }
+      const button=card.querySelector('button'),selected=draft[item.kind]===item.id,earned=C.unlocked(item,total,academy);
+      const artRoot=button.querySelector('.reward-choice-art'),art=sample(item.kind,item,draft);
+      if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+      button.disabled=busy||!earned;button.setAttribute('aria-pressed',String(selected));
+      button.querySelector('strong').textContent=item.name;
+      button.querySelector('small').textContent=selected?'Selected':earned?'Unlocked':'Complete the course';
+      button.setAttribute('aria-label',`${item.name}, ${selected?'selected':earned?'unlocked':'complete '+item.courseTitle+' to unlock'}. ${item.description}`);
+      button.title=item.description;
+    }
+    const count=C.academyIds(academy).length;
+    root.querySelector('[data-academy-count]').textContent=`${count} of ${C.academyRewards.length} extras unlocked · no XP needed`;
   }
   function next(root,total){
     const reward=C.next(total),target=root.querySelector('[data-next-reward]');
     const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra',scene:'profile background'};
     target.innerHTML='<span class="reward-kicker"></span><strong></strong><p></p><progress></progress>';
     target.querySelector('span').textContent=reward?'UP NEXT':'YOUR COLLECTION';
-    target.querySelector('strong').textContent=reward?reward.name:'Every reward is unlocked';
+    target.querySelector('strong').textContent=reward?reward.name:'Every XP reward is unlocked';
     target.querySelector('p').textContent=reward?`${number(reward.xp-total)} XP to go · ${labels[reward.kind]}`:'Pick your favourites and make them yours.';
     const progress=target.querySelector('progress');progress.hidden=!reward;
     if(reward){progress.max=reward.xp;progress.value=total;progress.setAttribute('aria-label',`${reward.name}: ${number(total)} of ${number(reward.xp)} XP`);}
@@ -556,7 +600,7 @@ window.BrainiProfileRewards=(function(){
     if(owner!==state.owner){owner=state.owner;dirty=false;}
     // Reconnects can refresh fields edited in another tab. Keep only this draft's changes.
     const changes=dirty?Object.fromEntries(Object.keys(C.groups).filter(key=>draft[key]!==baseline[key]).map(key=>[key,draft[key]])):{};
-    draft=C.available({...state.style,...changes},total);baseline={...state.style};
+    draft=C.available({...state.style,...changes},total,state.academy);baseline={...state.style};
     dirty=Object.keys(C.groups).some(key=>draft[key]!==baseline[key]);
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     const level=progress?.level||player.level||1,tier=BrainiProgressUI.tier?.(level),nextTier=BrainiProgressUI.nextTier?.(level);
@@ -589,7 +633,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;
-    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error);
+    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy);
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save my avatar';});
@@ -603,7 +647,7 @@ window.BrainiProfileRewards=(function(){
     root.addEventListener('click',async event=>{
       const surprise=event.target.closest('[data-avatar-surprise]');
       if(surprise&&!surprise.disabled){
-        draft=C.surprise(draft,BrainiData.player().xp);
+        draft=C.surprise(draft,BrainiData.player().xp,Math.random,S.snapshot().academy);
         dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
         return;
       }

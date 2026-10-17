@@ -5,6 +5,7 @@ window.BrainiRewardStore=(function(){
   // a frame/title saved independently in a second tab. These are not claims.
   const keys=catalog.metadataKeys;
   let owner=null,saved=catalog.clean(),loading=false,saving=false,error='',notice='',generation=0;
+  let academy=[];
   function identity(){
     const auth=BrainiData.authState();
     return auth.status==='authenticated'&&auth.user?.id
@@ -28,11 +29,19 @@ window.BrainiRewardStore=(function(){
   function cache(id,value){
     try{localStorage.setItem(prefix+id,JSON.stringify(value));return true;}catch{return false;}
   }
-  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total()),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy),academy:academy.slice(),loading,saving,error,notice,cloud:!!owner?.cloud};}
+  async function readAcademy(sb,uid){
+    // SELECT only. RLS binds this collection to the signed-in owner; metadata,
+    // local reading progress and XP cannot grant course rewards.
+    const result=await bounded(sb.from('learn_avatar_unlocks').select('reward_id').eq('user_id',uid));
+    if(result.error||!Array.isArray(result.data))throw Error('Academy rewards unavailable');
+    return catalog.academyIds(result.data.map(row=>row.reward_id));
+  }
   async function load(){
     const current=identity();
     if(owner?.id===current.id&&(loading||saving))return;
-    const run=++generation;owner=current;saved=cached(current.id);error='';notice='';
+    const same=owner?.id===current.id;
+    const run=++generation;owner=current;if(!same)academy=[];saved=cached(current.id);error='';notice='';
     loading=current.cloud;emit();
     if(!current.cloud){applyDesign();return;}
     try{
@@ -42,6 +51,9 @@ window.BrainiRewardStore=(function(){
       if(readError)throw readError;
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
+      const collection=await readAcademy(sb,current.uid);
+      if(run!==generation||identity().id!==current.id)return;
+      academy=collection;
       const meta=data.user.user_metadata||{};
       saved=catalog.fromMetadata(meta);
       cache(current.id,saved);
@@ -56,11 +68,11 @@ window.BrainiRewardStore=(function(){
     if(saving||loading||error)return false;
     const current=identity(),run=generation;
     if(current.id!==owner?.id){await load();return false;}
-    const requested=catalog.clean(value),allowed=catalog.available(requested,total());
+    const requested=catalog.clean(value),allowed=catalog.available(requested,total(),academy);
     if(Object.keys(keys).some(key=>requested[key]!==allowed[key])){
-      error='That reward is still locked. Your XP has not changed.';emit();return false;
+      error='That reward is still locked. Complete its course or earn the required XP. Nothing has been spent.';emit();return false;
     }
-    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total())[key]);
+    const changed=Object.keys(keys).filter(key=>allowed[key]!==catalog.available(saved,total(),academy)[key]);
     if(!changed.length)return true;
     saving=true;notice='';emit();
     try{
@@ -72,8 +84,13 @@ window.BrainiRewardStore=(function(){
         if(run!==generation||identity().id!==current.id)return false;
         if(before?.user?.id!==current.uid)throw Error('Account changed');
         if(changed.includes('scene')&&catalog.fromMetadata(before.user.user_metadata||{}).scene!==catalog.clean(saved).scene)throw Error('Background changed in another tab');
-        const currentAllowed=catalog.available(allowed,total());
-        if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('XP changed');
+        if(changed.some(key=>catalog.groups[key].find(item=>item.id===allowed[key])?.course)){
+          const collection=await readAcademy(sb,current.uid);
+          if(run!==generation||identity().id!==current.id)return false;
+          academy=collection;
+        }
+        const currentAllowed=catalog.available(allowed,total(),academy);
+        if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('Reward eligibility changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
         const {data,error:writeError}=await bounded(sb.auth.updateUser({data:patch}));
         if(writeError)throw writeError;
@@ -105,5 +122,6 @@ window.BrainiRewardStore=(function(){
     if(owner&&!owner.cloud&&event.key===prefix+owner.id){saved=cached(owner.id);applyDesign();emit();}
   });
   window.addEventListener('online',()=>{if(owner?.cloud)load();});
+  window.addEventListener('pageshow',event=>{if(event.persisted&&owner?.cloud)load();});
   return {load,save,snapshot};
 })();

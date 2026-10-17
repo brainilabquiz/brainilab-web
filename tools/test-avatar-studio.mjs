@@ -19,6 +19,7 @@ const savedState=()=>JSON.parse(w.localStorage.getItem('brainilab.mock.v1'));
 const omitDesign=state=>{delete state.player.avatarDesign;return state;};
 // Every cosmetic threshold is retroactive, without granting or spending XP.
 for(const [kind,list] of Object.entries(C.groups))for(const item of list){
+ if(item.course)continue;
  if(item.xp)assert.notEqual(C.available({[kind]:item.id},item.xp-1)[kind],item.id);
  assert.equal(C.available({[kind]:item.id},item.xp)[kind],item.id);
 }
@@ -30,7 +31,7 @@ await D.api.syncExternalAuthUser({id:'cosmetic-owner',email:'fixture@example.tes
 await D.api.syncCloudProfile({user_id:'cosmetic-owner',display_name:'Curious Player',avatar_url:photo});
 await D.api.syncCloudProgression({progression:{xp:2700,level:99,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
  let meta={full_name:'Preserve this',custom_setting:'untouched'},writes=[],readError=false,writeError=false,currentUserId='cosmetic-owner';
- w.BrainiBackendAuth={getClient:()=>({auth:{getUser:async()=>({data:{user:{id:currentUserId,user_metadata:meta}},error:readError?Error('offline'):null}),updateUser:async({data})=>{
+ w.BrainiBackendAuth={getClient:()=>({from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{getUser:async()=>({data:{user:{id:currentUserId,user_metadata:meta}},error:readError?Error('offline'):null}),updateUser:async({data})=>{
   writes.push({...data});if(writeError)return {data:null,error:Error('offline')};
   meta={...meta,...data};return {data:{user:{id:currentUserId,user_metadata:meta}}};
 }}})};
@@ -149,9 +150,9 @@ assert.deepEqual(omitDesign(savedState()),before,'new collection saves still pre
 // Keyboard tabs follow the WAI-ARIA pattern without removing focus during render.
 const look=root.querySelector('[data-avatar-tab=look]');look.focus();look.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
 assert.equal(w.document.activeElement.dataset.avatarTab,'extras');assert.equal(root.querySelector('[data-avatar-pane=look]').hidden,true);
-w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));assert.equal(w.document.activeElement.dataset.avatarTab,'rewards');
+w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));assert.equal(w.document.activeElement.dataset.avatarTab,'academy');
 const pageHome=new w.KeyboardEvent('keydown',{key:'Home',ctrlKey:true,bubbles:true,cancelable:true});w.document.activeElement.dispatchEvent(pageHome);
-assert.equal(pageHome.defaultPrevented,false);assert.equal(w.document.activeElement.dataset.avatarTab,'rewards','modified page-navigation keys are not captured');
+assert.equal(pageHome.defaultPrevented,false);assert.equal(w.document.activeElement.dataset.avatarTab,'academy','modified page-navigation keys are not captured');
 w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));assert.equal(w.document.activeElement,look);
 assert.equal(root.querySelectorAll('[role=tab][tabindex="0"]').length,1);
 // All renderable options are fixed local artwork, including malicious metadata.
