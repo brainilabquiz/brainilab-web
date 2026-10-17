@@ -1972,7 +1972,7 @@ window.BrainiAuth = (function(){
 
       const avatar=nav.querySelector(".avatar");
       if(avatar){
-        avatar.innerHTML=BrainiProgressUI.avatarImageMarkup(p);
+        BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
         avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
       }
     });
