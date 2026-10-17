@@ -10,11 +10,13 @@ const dom=new JSDOM('<header class="topbar"><div class="nav"><nav class="links">
 const w=dom.window,d=w.document;
 let player={id:'owner-a',displayName:'Player A',avatarUrl:'https://example.com/photo-a.png',level:12,xp:2700,score:1234};
 let auth={status:'authenticated',user:{id:'owner-a',is_anonymous:false}};
-w.BrainiData={player:()=>player,authState:()=>auth};
+w.BrainiData={player:()=>player,authState:()=>auth,api:{getAuthState:async()=>auth,getPlayer:async()=>player}};
+w.BrainiBackendAuth={init:async()=>{},isConfigured:()=>false};
 for(const file of ['player-personalities.js','avatar-design.js','progression-ui.js','account-menu.js','profile-rewards-model.js','avatar-studio-ui.js'])w.eval(source(file));
 let style=w.BrainiRewardCatalog.clean({});
 w.BrainiRewardStore={snapshot:()=>({owner:auth.user?.id||'guest',style,cloud:auth.status==='authenticated',loading:false,saving:false,error:'',notice:''}),load:async()=>{}};
 w.eval(source('profile-rewards.js'));
+w.eval(source('auth.js'));
 await tick();
 const portraits=[d.querySelector('.avatar'),d.querySelector('[data-profile-rank-hero] .rank-avatar'),d.querySelector('[data-profile-account-avatar]'),d.querySelector('[data-style-preview-avatar]'),d.querySelector('[data-avatar-mini]')];
 const initial=portraits.map(el=>el.firstChild),unchangedPlayer=JSON.stringify(player);
@@ -39,7 +41,10 @@ photo.dispatchEvent(new w.Event('error'));
 assert.ok(photo.classList.contains('default-player-avatar'));
 const fallback=photo.src;
 w.dispatchEvent(new w.CustomEvent('brainilab:datachange'));
+w.dispatchEvent(new w.CustomEvent('brainilab:profilechange'));
+w.dispatchEvent(new w.CustomEvent('brainilab:progressionchange'));
 w.BrainiProfileRewards.render();
+await tick();
 assert.equal(portraits[0].firstChild,photo);
 assert.equal(photo.src,fallback,'the working fallback remains in place');
 
@@ -47,6 +52,7 @@ assert.equal(photo.src,fallback,'the working fallback remains in place');
 player={...player,avatarUrl:'https://example.com/photo-b.png'};
 w.dispatchEvent(new w.CustomEvent('brainilab:profilechange'));
 w.BrainiProfileRewards.render();
+await tick();
 const changed=portraits[0].firstChild;
 assert.notEqual(changed,photo);assert.equal(changed.src,player.avatarUrl);
 const previousTitle=portraits[0].title;
@@ -55,6 +61,9 @@ w.dispatchEvent(new w.CustomEvent('brainilab:progressionchange'));
 assert.equal(portraits[0].firstChild,changed,'XP decoration does not reload the same photo');
 assert.notEqual(portraits[0].title,previousTitle);assert.match(portraits[0].title,/Level 13/);
 assert.equal(portraits[0].classList.contains('rank-step-4'),false,'old ring classes are removed');
+await tick();
+assert.equal(portraits[0].firstChild,changed,'the async auth renderer retains the same decoded photo');
+assert.equal(portraits[0].title,'Player A · account & stats','preserve the existing async auth tooltip');
 
 // Equipped choices still update immediately and produce stable SVG nodes.
 style=w.BrainiRewardCatalog.clean({mode:'built',glasses:'sun',prop:'icepop',frame:'copper'});
@@ -65,6 +74,7 @@ assert.ok(built.every(el=>el.tagName.toLowerCase()==='svg'));
 assert.equal(portraits[0].dataset.profileFrame,'copper');
 w.dispatchEvent(new w.CustomEvent('brainilab:datachange'));
 w.BrainiProfileRewards.render();
+await tick();
 assert.ok(portraits.every((el,i)=>el.firstChild===built[i]),'saved custom artwork remains stable across both renderers');
 
 // Account switch/logout must replace the previous person's artwork immediately.
@@ -73,11 +83,13 @@ style=w.BrainiRewardCatalog.clean({});
 player={id:'owner-b',displayName:'Player B',avatarUrl:null,level:1,xp:0,score:0};
 w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));
 w.BrainiProfileRewards.render();
+await tick();
 assert.equal(portraits[0].querySelector('svg'),null);assert.match(portraits[0].title,/Player B/);
 auth={status:'guest',guestUserId:'guest-c'};
 player={...player,id:'guest-c',displayName:'Guest C',avatarUrl:'https://example.com/photo-c.png'};
 w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));
 w.BrainiProfileRewards.render();
+await tick();
 assert.equal(portraits[0].firstChild.src,player.avatarUrl);assert.match(portraits[0].title,/Guest C/);
 
 // Restore an externally replaced/cleared container rather than trusting the cache.

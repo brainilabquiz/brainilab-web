@@ -8,7 +8,7 @@ No authentication, storage, network request, scoring, progression, navigation, c
 
 ## Reproduction and checks
 
-`tools/test-avatar-render-stability.mjs` uses the real account, progression, artwork and profile renderers with controlled local player/store data. The same sequence of 12 repeated events and three profile renders produced **42 portrait replacements** on base `2ffef06eed741da0df434c9b521753dfc6cd4eec`. With this change it produces **zero replacements** and retains all five portrait nodes.
+`tools/test-avatar-render-stability.mjs` uses the real account-menu, async auth, progression, artwork and profile renderers with controlled local player/store data. The same sequence of 12 repeated events and three profile renders produced **51 portrait replacements** on base `2ffef06eed741da0df434c9b521753dfc6cd4eec`. With this change it produces **zero replacements** and retains all five portrait nodes.
 
 The regression also checks failed-photo fallback, a real photo change, an XP-only decoration change, equipped custom SVGs, account switch, logout, recovery from an externally cleared container, and unchanged player score/XP/level. Run it with the existing JSDOM dependency:
 
