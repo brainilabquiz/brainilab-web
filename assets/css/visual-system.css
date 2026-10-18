@@ -1,7 +1,7 @@
 /* BrainiLab visual system. Colour blocking informed by the bundled Miro study;
    native components, original brand assets and game state styles are retained. */
 body.braini-visual{
-  --page:#f7f7fb;--card:#fff;--muted:#5d596f;--line:#dedce9;
+  --page:#f7f7fb;--card:#fff;--muted:#5d596f;--line:#dedce9;--focus-ring:#a74600;
   --discovery-paper:var(--page);--discovery-surface:#fff;--discovery-line:var(--line);--discovery-muted:var(--muted);
   --rank-paper:var(--page);--rank-surface:#fff;--rank-line:var(--line);--rank-muted:var(--muted);
   --group-paper:var(--page);--group-surface:#fff;--group-line:var(--line);--group-muted:var(--muted);
@@ -10,8 +10,9 @@ body.braini-visual{
 .braini-visual .topbar{background:#fff;border-bottom:1px solid var(--line);backdrop-filter:none}
 .braini-visual .links a{position:relative;padding-block:12px}
 .braini-visual .links a[aria-current=page]::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;border-radius:3px;background:var(--green)}
-.braini-visual :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #a74600;outline-offset:3px}
-.braini-visual :is(.btn,.btn-secondary,.btn-light){min-height:44px;border-radius:12px;font-size:15px;line-height:1.35}
+.braini-visual :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid var(--focus-ring);outline-offset:4px;box-shadow:0 0 0 3px #fff}
+.braini-visual :is(.btn,.btn-secondary,.btn-light){min-height:44px;border-radius:12px;font-size:15px;font-weight:700;line-height:1.4}
+.braini-visual .links a{font-weight:700}
 .braini-visual .btn-light{border:1px solid var(--line)}
 .braini-visual :is(.breadcrumb,.article-byline,.learn-count){font-size:13px;line-height:1.6}
 .braini-visual :is(.page-hero-card,.challenge){box-shadow:none;border-radius:20px}
@@ -40,7 +41,8 @@ body.braini-visual{
 .braini-visual.games-library-page .anytime-category-icon{background:#f0eef8;border:1px solid #e4e0f1}
 .braini-visual.games-library-page .anytime-game-card{border-radius:16px}
 .braini-visual.games-library-page .difficulty-actions a{min-height:44px}
-.braini-visual.games-library-page .game-card-footer{margin-top:14px;padding-top:12px}
+/* Let the footer absorb spare height in a grid row, including wrapped copy. */
+.braini-visual.games-library-page :is(.game-card-footer,.game-difficulty-footer){margin-top:auto;padding-top:12px}
 .braini-visual.topic-page .card-grid{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:18px}
 .braini-visual.topic-page .card{min-height:206px;padding:24px;border-radius:16px;box-shadow:none;border-top:4px solid var(--yellow)}
 .braini-visual.topic-page .card.accent-green{border-top-color:var(--green)}
@@ -73,6 +75,15 @@ body.braini-visual{
 .braini-visual.editorial-page .academy-course .path-lessons>li{background:white;border-radius:16px}
 .braini-visual.editorial-page .academy-course .lesson-copy>p:not(.eyebrow){font-size:15px}
 .braini-visual.editorial-page .academy-course .path-lessons>li>a{min-height:44px;display:inline-flex;align-items:center;border-radius:10px;background:var(--navy);color:white}
+.editorial-page.braini-visual:has(.learn-catalog),.editorial-page.braini-visual:has(.topic-index){background:var(--page)}
+.braini-visual.editorial-page .learn-catalog .learn-card{border-radius:16px}
+.braini-visual.editorial-page .learn-catalog .learn-card h3{font-size:22px;line-height:1.3}
+.braini-visual.editorial-page .learn-catalog .learn-card-description{font-size:14px;line-height:1.6}
+.braini-visual.editorial-page .learn-catalog :is(.learn-search input,.learn-topic-select select){background:var(--card);border-color:var(--line);border-radius:12px;color:var(--navy);font-weight:500}
+.braini-visual.editorial-page .learn-catalog .learn-count{font-size:13px}
+.braini-visual.editorial-page :is(.learn-format-filters button,.learn-surprise-button,.learn-more button,.path-continue){font-weight:700}
+.braini-visual.editorial-page .learn-more button{border-color:var(--line);border-radius:12px;background:var(--card)}
+.braini-visual.editorial-page .academy-outline{background:var(--card);border-color:var(--line);border-top-color:var(--green);border-radius:16px}
 .braini-visual .team-section> .wrap>p{max-width:65ch;line-height:1.7}
 .braini-visual .team-card{border-color:var(--line);border-top:4px solid var(--green);border-radius:16px}
 .braini-visual .person-initials{background:var(--navy);color:var(--yellow)}
@@ -82,6 +93,8 @@ body.braini-visual{
 .braini-visual :is(.ranking-mode-tabs,.profile-tabs){background:#eae8f4}
 .braini-visual.rankings-page .ranking-filters{background:white;border:1px solid var(--line);border-radius:16px;padding:20px}
 .braini-visual.rankings-page .ranking-filter label{font-size:13px;color:var(--muted)}
+.braini-visual.rankings-page .ranking-filter select{font-size:14px;font-weight:500;border-radius:12px;background:var(--card)}
+.braini-visual :is(.ranking-mode-tabs,.profile-tabs) button{font-weight:700;border-radius:10px;line-height:1.4}
 .braini-visual.rankings-page .ranking-board{border-top:4px solid var(--yellow)}
 .braini-visual.rankings-page .ranking-mode-tabs button:not(.active):hover{background:#dcd8ef}
 .braini-visual.groups-page .group-welcome{background:#eef7e9;border-color:#c8ddbd;border-top:4px solid var(--green);padding:36px 24px}
@@ -128,12 +141,22 @@ body.braini-visual{
   .braini-visual.home-page .home-hero{gap:24px}
   .braini-visual.games-library-page .game-starters a{padding:12px}
   .braini-visual.editorial-page .learn-card h3{font-size:22px}
+  .braini-visual.editorial-page .learn-catalog .learn-card h3{font-size:20px}
+  .braini-visual.editorial-page .learn-catalog :is(.learn-search input,.learn-topic-select select),.braini-visual.rankings-page .ranking-filter select{font-size:16px}
   .braini-visual.editorial-page .article-header{padding-block:22px}
   .braini-visual.editorial-page .article-header h1{max-width:none;font-size:32px}
   .braini-visual.play-page .challenge-question{font-size:28px;line-height:1.2}
   .braini-visual.play-page .answer{font-size:16px;min-height:56px}
   .braini-visual.rankings-page .ranking-filters{padding:16px}
   .braini-visual.groups-page .group-welcome{padding:28px 20px}
+}
+@media(max-width:600px){
+  .braini-visual.games-library-page :is(.game-card-footer,.game-difficulty-footer){margin-top:0}
+}
+@media(max-width:460px){
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar{row-gap:8px}
+  .braini-visual.editorial-page .learn-catalog .learn-topic-select{grid-column:1/-1;grid-row:auto;width:100%;min-width:0}
+  .braini-visual.editorial-page .learn-catalog .learn-topic-select select{width:100%;min-height:44px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

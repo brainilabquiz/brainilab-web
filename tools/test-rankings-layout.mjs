@@ -63,7 +63,7 @@ w.BrainiRankings.state.mode='group';data={...data,rows:[{...row(1,'Team',25),mem
 assert.equal(root.querySelector('.ranking-player-count').textContent,'1 team');assert.equal(root.querySelector('.ranking-progress'),null);
 w.BrainiRankings.state.mode='individual';fail=true;w.console.error=()=>{};await w.BrainiRankings.render();assert.ok(root.querySelector('[data-ranking-retry]'));
 fail=false;root.querySelector('[data-ranking-retry]').click();await new Promise(r=>setTimeout(r,0));assert.ok(root.querySelector('[role=table]'));
-w.BrainiRankingsCloud.individual=()=>new Promise(r=>resolvePending=r);const pending=w.BrainiRankings.render();assert.ok(root.querySelector('.ranking-skeleton[role=status]'));resolvePending(data);await pending;
+w.BrainiRankingsCloud.individual=()=>new Promise(r=>resolvePending=r);const loadedBoard=root.querySelector('[role=table]');const pending=w.BrainiRankings.render();assert.equal(root.querySelector('[role=table]'),loadedBoard,'A refresh of the same view preserves the loaded board');assert.equal(root.querySelector('.ranking-skeleton[role=status]'),null);assert.equal(root.getAttribute('aria-busy'),'true');resolvePending(data);await pending;
 dom.window.close();
 for(const [query,expected] of [['','monthly'],['?period=daily','daily'],['?period=weekly','weekly'],['?period=monthly','monthly'],['?period=alltime','alltime'],['?period=unknown','monthly']]){
  const reload=new JSDOM(readFileSync('rankings/index.html','utf8'),{url:'https://brainilabgames.com/rankings/'+query,runScripts:'outside-only'}),rw=reload.window;

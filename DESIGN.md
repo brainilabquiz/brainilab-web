@@ -55,3 +55,27 @@ Verified: 79 styled entry points and 5 untouched redirects. All 35 article templ
 ## Academy continuity, 1 October 2026
 
 The quiz completion panel uses a pale green surface inside the navy quiz, a clear chapter count and the first unfinished lesson as the next action. Confirmed new XP is yellow; guest, previously earned and failed-sync states have distinct honest messages. Course completion can lead from arithmetic to fractions and then mental maths. Decimal grids use the existing accessible native controls; column filling connects tenths to hundredths. No new dependencies or scoring changes.
+
+## Existing-page consistency, 18 October 2026
+
+Keep the existing Pally/Montserrat/Georgia hierarchy and illustrations. This pass
+changes presentation only:
+
+- Games card actions sit on the same baseline within each grid row. Auto margins
+  absorb wrapped descriptions; single-column cards keep their compact spacing.
+- Shared buttons and account/community tabs use a consistent 700 weight. Fields
+  have 12px corners, and mobile library/ranking fields use 16px text.
+- Learn discovery and topic indexes share the lavender application background and
+  white cards. Long articles retain their warm reading surface and Georgia body.
+- Narrow Learn screens give the topic selector its own full-width row. Card titles
+  use a calmer 20px size; descriptions remain hidden on narrow screens as before.
+- Games status text and frame/title unlock labels are at least 12px. Frame/title
+  choices retain their existing layout, locks, previews and expanded categories.
+- Shared keyboard focus has a dark orange outline plus a white separation ring,
+  so it remains visible on both white cards and navy game panels.
+
+No game state, account behavior, reward thresholds, XP, leaderboard calculations,
+content, navigation destinations or publication settings change. Validate with
+browser renders across 320, 375, 390, 768, 1024 and 1440px, including filters,
+library search, Academy, reading, forms and expanded avatar choices. Viewport
+checks are not physical Android/iPhone or Safari certification.
