@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/mental-math-round-and-adjust-thumb.webp"
   },
   "order": 22,
-  "title": "An easier way to add numbers in your head",
+  "title": "Mental maths: round a number, then undo the change",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -77,31 +77,31 @@
   "sections": [
     {
       "id": "quick-answer",
-      "title": "First, let’s make ten",
-      "html": "<p>Imagine you have <strong>9 counters</strong>. A friend gives you <strong>6 more</strong>. How many do you have altogether?</p><p>Take one of your friend’s counters and put it beside your nine. You now have <strong>10 counters in one group</strong> and <strong>5 left in the other</strong>.</p><p>Ten and five make <strong>15</strong>. You did not add an extra counter or lose one. You just moved one to make the groups easier to count.</p><p>That is the idea behind this trick: a number ending in zero is often easier to work with.</p>"
+      "title": "How does rounding help mental maths?",
+      "html": "<p><strong>Use a nearby easy number, then undo the change to get the exact answer.</strong> For <strong>38 + 27</strong>, try 40 + 27 = 67. You added two extra, so take them away: <strong>65</strong>.</p><p>Think of the extra two as borrowed stickers. They made counting easier, but they cannot stay in your collection.</p>"
     },
     {
       "id": "addition",
-      "title": "Now try it with 38 stickers",
-      "html": "<p>You have <strong>38 stickers</strong> and get <strong>27 more</strong>. We want to find the total: 38 + 27.</p><ol><li><strong>Pretend you have two extra stickers.</strong> Your first pile becomes 40 instead of 38. Remember: those two extras are only pretend.</li><li><strong>Add the 27 real stickers.</strong> First add 20 to 40. That makes 60. Then add the remaining 7. That makes 67.</li><li><strong>Take away the two pretend stickers.</strong> You counted them to make the sum easier, but they were never really there. Two fewer than 67 is <strong>65</strong>.</li></ol><p>So 38 + 27 is <strong>65</strong>. If the last step feels confusing, draw two extra circles in a different colour. Cross them out at the end.</p>"
+      "title": "Follow the two extra stickers",
+      "html": "<ol><li><strong>Make 38 into 40.</strong> Pretend you have two extra stickers.</li><li><strong>Add 27.</strong> Forty plus twenty is sixty; seven more makes 67.</li><li><strong>Remove the pretend extras.</strong> 67 − 2 = <strong>65</strong>.</li></ol><p>You could also move two from the 27 to the 38: <strong>40 + 25 = 65</strong>. That is <a href=\"/learn/make-ten-mental-maths/\">making a ten by moving, rather than adding, counters</a>.</p>"
     },
     {
       "id": "subtraction",
-      "title": "Taking things away works a little differently",
-      "html": "<p>Imagine you have <strong>72 stickers</strong> and give away <strong>29</strong>. How many are left?</p><ol><li>It is easier to count 30 than 29. Pretend you give away 30: take away 20 first, leaving 52, then another 10, leaving <strong>42</strong>.</li><li>But you only meant to give away 29. You took away <strong>one sticker too many</strong>.</li><li>Put that one back. Now you have <strong>43</strong>.</li></ol><p>Notice the difference. In the first example we added pretend extras, so we took them away. Here we took away too much, so we put one back.</p>"
+      "title": "What changes when you subtract?",
+      "html": "<p>For <strong>72 − 29</strong>, take away 30 first: 72 − 30 = 42. You removed one too many, so put it back: <strong>42 + 1 = 43</strong>.</p><p>In the addition example, remove the extra you added. Here, return the extra you took away.</p>"
     },
     {
       "id": "check-yourself",
-      "title": "Have a go with one small sum",
-      "html": "<p>Try <strong>19 + 6</strong>. Make the 19 into 20 by adding one pretend counter. What should you do after adding the six?</p><details class=\"practice-answer\"><summary>Show me, one step at a time</summary><p>Twenty and six make 26. One of those counters was pretend. Take it away: <strong>25</strong>.</p></details><p>You can use real objects, draw dots or write each step. There is no need to do everything in your head straight away.</p>"
+      "title": "Try 19 + 6",
+      "html": "<p>Make 19 into 20, then add six. What should happen to the extra one?</p><details class=\"practice-answer\"><summary>Show the answer</summary><p>20 + 6 = 26. Remove the one pretend counter: <strong>25</strong>.</p></details><p>Draw dots or use objects if it helps. The last adjustment matters more than speed.</p>"
     },
     {
       "id": "at-a-glance",
-      "title": "The one thing to remember",
-      "html": "<div class=\"table-scroll\"><table><caption>Undo the change you made</caption><thead><tr><th scope=\"col\">If you…</th><th scope=\"col\">Then…</th></tr></thead><tbody><tr><td>Added two pretend stickers</td><td>Take those two away at the end</td></tr><tr><td>Took away one sticker too many</td><td>Put that one back</td></tr></tbody></table></div><p>Ask yourself: <strong>what did I change?</strong> That question matters more than memorising a formula. Once this feels comfortable, try <a href=\"/learn/multiply-by-11-in-your-head/\">an easy way to multiply by 11</a>.</p>"
+      "title": "Ask: what did I change?",
+      "html": "<p>Rounding gives you a convenient starting point, not permission to forget the difference. Undoing the change makes these answers exact.</p><p><a href=\"https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties\">OpenStax explains regrouping sums</a>. For another shortcut, try <a href=\"/learn/multiply-by-11-in-your-head/\">multiplying by 11</a>.</p>"
     }
   ],
-  "updatedAt": "2026-09-30T19:26:19.699889+00:00",
-  "description": "Start with a handful of counters, then try 38 + 27. One small change can make a sum easier, as long as you undo it afterwards.",
+  "updatedAt": "2026-10-18T12:41:32Z",
+  "description": "Make 38 + 27 easier by using 40, then take the extra two away. Try rounding and adjusting for addition and subtraction, with two short examples.",
   "publishedAt": "2026-09-29T20:12:35.334945Z"
 }
