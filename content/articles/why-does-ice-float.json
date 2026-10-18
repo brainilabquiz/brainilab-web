@@ -1,0 +1,65 @@
+{
+  "slug": "why-does-ice-float",
+  "title": "Why does ice float? The solid that takes up more room",
+  "description": "Ice floats because it is less dense than liquid water. Discover the roomy arrangement behind an ice cube, and why freezing water can even lift a road.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 162,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-does-ice-float.webp",
+    "small": "/assets/images/learn/why-does-ice-float-small.webp",
+    "thumbnail": "/assets/images/learn/why-does-ice-float-thumb.webp",
+    "alt": "A pale-blue ice cube floating mostly below the waterline in a clear glass on a sunlit wooden table",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual scene, not a scientific diagram.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Fancy another everyday mystery? Try the Science Quiz.",
+  "related": [
+    "why-are-soap-bubbles-round",
+    "curiosity-daily-2026-10-09"
+  ],
+  "sources": [
+    {
+      "url": "https://www.usgs.gov/water-science-school/science/water-density",
+      "name": "US Geological Survey Water Science School — Water density"
+    },
+    {
+      "url": "https://nsidc.org/learn/parts-cryosphere/frozen-ground-permafrost/science-frozen-ground",
+      "name": "National Snow and Ice Data Center — Science of frozen ground: the density of frozen water"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-solid-with-room-to-spare",
+      "title": "Your drink contains a small surprise",
+      "html": "<p><strong>Ordinary ice floats in water because it is less dense than the liquid around it.</strong> In other words, the same volume of ice contains less mass.</p><p>Drop a cube into a glass and it bobs at the surface. Becoming solid has not made it sink. Water has a rather unusual party trick.</p>"
+    },
+    {
+      "id": "what-freezing-changes",
+      "title": "Same molecules, roomier arrangement",
+      "html": "<p>When water freezes into ordinary ice, its molecules settle into an open, ordered structure. They are more spread out than in liquid water, so the same amount takes up more space.</p><p>The <a href=\"https://www.usgs.gov/water-science-school/science/water-density\">US Geological Survey explains this change in density</a>. Think of the same guests spreading out across a bigger room: nobody has disappeared, but the crowd is less tightly packed.</p>"
+    },
+    {
+      "id": "mostly-underwater",
+      "title": "Floating does not mean sitting on top",
+      "html": "<p>Most of a floating ice cube is still underwater. The <a href=\"https://nsidc.org/learn/parts-cryosphere/frozen-ground-permafrost/science-frozen-ground\">National Snow and Ice Data Center</a> describes ice as roughly 90% as dense as water. An iceberg floats for the same basic reason as the cube in your drink.</p><p>“Ice is lighter” needs a little care: freezing a fixed amount of water does not make its mass vanish. Its volume increases instead.</p>"
+    },
+    {
+      "id": "beyond-the-glass",
+      "title": "The trick can reach the road outside",
+      "html": "<p>That expansion matters beyond the kitchen. NSIDC explains how water freezing beneath a road can swell the ground and push the surface upwards, forming a frost heave.</p><p>A floating cube and a bump in the road share an unexpected starting point. For another everyday shape with physics behind it, discover <a href=\"/learn/why-are-soap-bubbles-round/\">why soap bubbles are round</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T11:07:09Z",
+  "updatedAt": "2026-10-18T11:07:09Z",
+  "minutes": 2
+}
