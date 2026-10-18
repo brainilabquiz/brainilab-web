@@ -18,3 +18,9 @@ Official guidance checked 18 October 2026:
 - https://developers.google.com/search/docs/appearance/title-link
 
 After deployment, verify the actual public titles and graph, one WebSite entity, canonical, crawlability, home and About rendering, and the unchanged mobile game-first order. If requesting a recrawl for changed content, submit once after publication; processing can take days or weeks. Check spelling-corrected and literal branded searches separately before describing an outcome.
+
+## Shared page identity
+
+The static build and CMS Learn/Academy renderers use lib/brand-identity.js. It supplies one og:site_name tag and the same publisher identity used on Home/About. It does not add visible text, change canonical or noindex directives, or add a WebSite entity to every page. Page titles retain the page subject; a title that already contains BrainiLab is not given a second brand suffix. Academy supplies its own current social title and description rather than inheriting article metadata.
+
+The build runs tools/test-brand-identity.mjs to protect repeated rendering, publisher agreement and the unchanged body, canonical, robots and unrelated schema. When reviewing the catalogue, distinguish tracked HTML templates from all pages generated from current content. Do not describe a missing social site-name tag as evidence of an indexing problem or as the proven cause of query autocorrection.
