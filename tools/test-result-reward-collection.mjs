@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+const {JSDOM,VirtualConsole}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const dom=new JSDOM('<main data-result-reward="round"></main>',{url:'https://brainilabgames.com/games/math-rush/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window;
+let owner='player',summary,player={xp:1450,displayName:'Test player',avatarFrame:'blue'},writes=0;
+w.BrainiData={player:()=>player,authState:()=>({status:'authenticated',user:{id:owner}}),getState:()=>({auth:{status:'authenticated',user:{id:owner}}}),recentResults:()=>[],api:{setAvatarDesign:()=>writes++}};
+w.BrainiProgression={getCached:()=>summary};
+for(const name of ['player-personalities','icon-system','avatar-design','profile-rewards-model','progression-ui','reward-journey','continuity'])w.eval(readFileSync('assets/js/'+name+'.js','utf8'));
+const J=w.BrainiRewardJourney,C=w.BrainiContinuity,root=w.document.querySelector('main');
+function emit(xp,rewards=[]){player.xp=xp;summary={progression:{user_id:owner,xp},reward_rules:{base_xp:50,correct_xp:5,per_game_daily_limit:3,full_daily_xp:250},recent_rewards:rewards};w.dispatchEvent(new w.CustomEvent('brainilab:progressionchange',{detail:{summary}}));}
+emit(1450);w.dispatchEvent(new w.CustomEvent('brainilab:datachange',{detail:{type:'game_result',result:{clientResultId:'round',ownerUserId:owner}}}));
+emit(1600,[{client_result_id:'round',verified:true,xp:150}]);
+assert.equal(root.querySelectorAll('.post-reward-shell').length,1);
+assert.equal(root.querySelectorAll('.post-unlock').length,1,'one primary reward preview');
+let more=root.querySelector('.post-unlock-more');assert.ok(more);assert.equal(more.open,false);
+assert.equal(more.closest('a'),null,'the disclosure and its links are outside the main card link');
+assert.equal(more.querySelectorAll('li>a').length,2);assert.match(more.querySelector('summary').textContent,/2 more unlocked/);
+assert.match(root.querySelector('.post-unlock').textContent,/Copper glow.*Avatar frame · Try it on/s);
+assert.equal(root.querySelectorAll('[role=progressbar]').length,1,'no second progress meter');
+assert.equal(root.querySelector('.post-reward').getAttribute('href'),'/profile/?section=progress&reward=frame%3Acopper#my-avatar');
+for(const link of more.querySelectorAll('li>a')){const url=new URL(link.href);assert.equal(url.origin,'https://brainilabgames.com');assert.equal(url.pathname,'/profile/');assert.ok(J.fromLink(url.searchParams.get('reward')));}
+more.open=true;more.querySelector('summary').focus();player.avatarFrame='green';C.updateReward(root,C.rewardMarkup({clientResultId:'round'}));
+more=root.querySelector('.post-unlock-more');assert.equal(more.open,true);assert.equal(w.document.activeElement,more.querySelector('summary'));
+const savedLink=more.querySelector('li>a');savedLink.focus();const id=savedLink.dataset.unlockedReward;
+player.avatarFrame='gold';C.updateReward(root,C.rewardMarkup({clientResultId:'round'}));
+assert.equal(w.document.activeElement.dataset.unlockedReward,id,'async refresh retains the specific focused reward');
+more=root.querySelector('.post-unlock-more');const same=more;C.updateReward(root,C.rewardMarkup({clientResultId:'round'}));assert.equal(root.querySelector('.post-unlock-more'),same,'an identical refresh keeps the disclosure DOM');
+assert.match(J.art({kind:'hat',id:'cloud'},{}),/data-cosmetic-kind="hat" data-cosmetic-id="cloud"/);
+assert.doesNotMatch(J.art({kind:'hat',id:'cloud'},{}),/braini-built-avatar/,'show the reward itself, not another whole face');
+assert.equal(J.next(3800).name,'College','the profile journey keeps its existing rank order');
+assert.equal(J.resultGoal(3800).item.name,'Brainstorm','the result reward slot complements the level bar');
+assert.match(J.markup({},3800),/Next avatar extra.*Brainstorm.*200 XP to go/s);
+assert.match(J.resultHref(3800),/reward=hat%3Acloud/);
+const crossedRank={before:3910,after:4010};assert.match(J.markup({},4010,crossedRank),/Unlocked!.*Brainstorm/s);assert.equal(J.moreMarkup({},4010,crossedRank),'','do not count an already-shown new diploma as another cosmetic');
+assert.match(J.markup({},3950,{before:3900,after:3950}),/New diploma.*College.*View progress/s);
+assert.equal(J.resultHref(3950,{before:3900,after:3950}),'/profile/?section=progress');
+assert.equal(J.resultGoal(10000).item.kind,'rank','retain a level goal when all XP cosmetics are unlocked');
+assert.match(J.markup({},10000),/Next diploma.*PhD/s);
+assert.equal(J.markup({},69620),'');
+for(const value of [-1,Infinity,1.5,'1600']){assert.equal(J.moreMarkup({},value,{before:1450,after:value}),'');assert.equal(J.resultGoal(value).item,null);}
+assert.equal(J.moreMarkup({},1600,{before:1450,after:1601}),'','stale XP changes never claim extra unlocks');
+summary.recent_rewards[0].verified=false;C.render();assert.equal(root.querySelector('.post-unlock-more'),null);
+summary.recent_rewards[0].verified=true;owner='other';C.render();assert.equal(root.querySelector('.post-reward-shell'),null,'a different owner cannot see the old result rewards');
+assert.equal(writes,0);assert.deepEqual(errors,[]);dom.window.close();
+console.log('PASS one compact reward card, real object previews, optional accessible extra unlocks, correct safe deep links, preserved focus/expansion during async refresh, complementary level/cosmetic goals, diploma-only and fully-unlocked states, stale/invalid/owner guards and no automatic equip or award writes.');

@@ -65,8 +65,9 @@ window.BrainiContinuity=(()=>{
     const bonusNote=secured&&model?.version==='daily-choice-v1'&&Number.isSafeInteger(bonus)&&bonus>0
       ? `<small class="post-daily-bonus"><b>Today’s Daily bonus: ${bonus.toLocaleString('en-GB')} XP</b>Included in your total XP, once today.</small>`:'';
     const unlock=window.BrainiRewardJourney?.markup(player,p.xp,change)||'';
+    const more=window.BrainiRewardJourney?.moreMarkup(player,p.xp,change)||'';
     const rewardHref=unlock?BrainiRewardJourney.resultHref(p.xp,change):'/profile/?section=progress';
-    return `<a class="post-reward ${up?'is-level-up':''}" href="${esc(rewardHref)}" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned"><span>Game XP</span>+${count(reward.xp)} XP</b></span>${xpDetail}<span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${count(progress.earnedInLevel)} of ${count(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${bonusNote}${unlock}${reward.daily_limit_reached?'<small>No more XP from this game today. Try a different game for more XP.</small>':''}</a>`;
+    return `<div class="post-reward-shell ${up?'is-level-up':''}"><a class="post-reward ${up?'is-level-up':''}" href="${esc(rewardHref)}" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned"><span>Game XP</span>+${count(reward.xp)} XP</b></span>${xpDetail}<span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${count(progress.earnedInLevel)} of ${count(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${bonusNote}${unlock}${reward.daily_limit_reached?'<small>No more XP from this game today. Try a different game for more XP.</small>':''}</a>${more}</div>`;
   }
   function animateReward(root){
     const card=root?.querySelector('[data-reward-id]');if(!card)return;
@@ -74,10 +75,25 @@ window.BrainiContinuity=(()=>{
     if(animated.size>=100)animated.delete(animated.values().next().value);
     animated.add(id);card.classList.add('is-fresh');
   }
+  function updateReward(el,html){
+    if(el.dataset.rewardHtml===html)return;
+    const id=el.querySelector('[data-reward-id]')?.dataset.rewardId,focused=document.activeElement;
+    const disclosure=el.querySelector('.post-unlock-more'),opened=disclosure?.open;
+    const inCard=el.contains(focused),inMore=disclosure?.contains(focused);
+    const reward=inMore?focused.closest('[data-unlocked-reward]')?.dataset.unlockedReward:null;
+    const wasSummary=inMore&&focused===disclosure.querySelector('summary');
+    el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);
+    const sameResult=!!id&&id===el.querySelector('[data-reward-id]')?.dataset.rewardId,newMore=el.querySelector('.post-unlock-more');
+    if(sameResult&&opened&&newMore)newMore.open=true;
+    if(inCard){
+      const target=sameResult&&wasSummary?newMore?.querySelector('summary'):sameResult&&reward?[...el.querySelectorAll('[data-unlocked-reward]')].find(link=>link.dataset.unlockedReward===reward):null;
+      (target||el.querySelector('[data-refresh-progress]')||el.querySelector('a'))?.focus({preventScroll:true});
+    }
+  }
   function render(){
     window.BrainiUI?.hydrate?.();
     document.querySelectorAll('[data-braini-continuity]').forEach(el=>{el.innerHTML=markup({compact:el.dataset.brainiContinuity==='compact'});el.hidden=!el.innerHTML;});
-    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward){const html=rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)});if(el.dataset.rewardHtml!==html){const restoreFocus=el.querySelector('[data-refresh-progress]')===document.activeElement;el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);if(restoreFocus)(el.querySelector('[data-refresh-progress]')||el.querySelector('a'))?.focus({preventScroll:true});}}});
+    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward)updateReward(el,rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)}));});
   }
   render(); // Deferred shell runs after HTML parsing, before cloud requests complete.
   document.addEventListener('DOMContentLoaded',render);
@@ -97,5 +113,5 @@ window.BrainiContinuity=(()=>{
     setTimeout(()=>{render();window.dispatchEvent(new CustomEvent('brainilab:daychange'));window.BrainiProgression?.sync?.();scheduleReset();},next-now+1000);
   }
   scheduleReset();
-  return {markup,rewardMarkup,render,displaySummary,animateReward};
+  return {markup,rewardMarkup,render,displaySummary,animateReward,updateReward};
 })();

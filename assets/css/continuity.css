@@ -38,3 +38,25 @@
 .post-reward .post-daily-bonus{font-size:11px;line-height:1.45;padding-top:10px;margin-top:10px}
 .post-reward:focus-visible{outline:3px solid #34752c;outline-offset:4px}
 @media(max-width:380px){.post-reward>.post-unlock{gap:10px}.post-unlock-art{width:48px;height:48px}.post-unlock-art>.braini-built-avatar{width:46px;height:46px}.post-unlock-copy>strong{font-size:16px}}
+
+/* One reward card; extra unlocks stay folded until the player asks. */
+.post-reward-shell{background:#f3f6eb;border:1px solid #d8e1ca;border-radius:16px;text-align:left;min-width:0}
+.post-reward-shell.is-level-up{background:#fff7d6;border-color:#e8cf64}
+.post-reward-shell>.post-reward{border:0;background:transparent}
+.post-unlock-art>.braini-cosmetic-preview{width:48px;height:48px}
+.post-unlock-more{padding:0 16px 12px;margin:-6px 0 0}
+.post-unlock-more>summary{display:flex;align-items:center;gap:8px;min-height:44px;width:fit-content;max-width:100%;padding:0 8px;color:var(--navy,#2d296e);font-size:12px;font-weight:700;cursor:pointer;list-style:none;border-radius:8px}
+.post-unlock-more>summary::-webkit-details-marker{display:none}
+.post-unlock-more>summary::before{content:'+';font-size:18px;font-weight:500}
+.post-unlock-more[open]>summary::before{content:'−'}
+.post-unlock-more>summary:hover{background:#ffffff80}
+.post-unlock-more ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.post-unlock-more li{min-width:0}
+.post-unlock-more li>a{display:grid;grid-template-columns:40px minmax(0,1fr) 12px;gap:12px;align-items:center;padding:8px;border-radius:10px;color:var(--navy,#2d296e);text-decoration:none;min-height:56px;box-sizing:border-box}
+.post-unlock-more li>a:hover{background:#ffffff90}
+.post-unlock-more strong{display:block;font-size:14px;line-height:1.4;overflow-wrap:anywhere}
+.post-unlock-more small{display:block;font-size:12px;line-height:1.5;color:var(--muted,#636173);margin-top:2px}
+.post-unlock-mini{display:grid;place-items:center;width:40px;height:40px;background:#fffdfa;border:1px solid #e3dcc6;border-radius:10px;box-sizing:border-box;overflow:hidden}
+.post-unlock-mini>svg{width:34px;height:34px}.post-unlock-mini>.rank-avatar{width:30px;height:30px}.post-unlock-mini>img{width:34px;height:30px;object-fit:contain}.post-unlock-mini>.profile-goal-letter{font-size:20px;font-weight:800}
+.post-unlock-more :is(summary,a):focus-visible{outline:3px solid var(--navy,#2d296e);outline-offset:3px}
+@media(max-width:380px){.post-unlock-art>.braini-cosmetic-preview{width:40px;height:40px}.post-unlock-more{padding-inline:12px}}

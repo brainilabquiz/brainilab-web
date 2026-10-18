@@ -191,7 +191,8 @@ window.BrainiPostGame=(()=>{
   const renderReward=()=>{
    if(!current())return;
    reward.dataset.resultReward=practice?'':result.clientResultId||'';
-   reward.innerHTML=window.BrainiContinuity?.rewardMarkup?.({...result,gameId:options.gameId,practice})||'';
+   const html=window.BrainiContinuity?.rewardMarkup?.({...result,gameId:options.gameId,practice})||'';
+   if(window.BrainiContinuity?.updateReward)BrainiContinuity.updateReward(reward,html);else reward.innerHTML=html;
    window.BrainiContinuity?.animateReward?.(reward);
   };
   if(!practice)reward.textContent='Saving your result…';
