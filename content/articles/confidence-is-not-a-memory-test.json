@@ -40,31 +40,31 @@
   "sections": [
     {
       "id": "before-you-peek",
-      "html": "<p><strong>Seeing a logo often does not guarantee that you can draw its details from memory.</strong> Familiarity and accurate recall are different things.</p><p>If you fancy trying a small example, choose a simple logo and keep it out of sight. Note how sure you are that you could draw it: <strong>not sure, fairly sure or very sure</strong>.</p><p>Sketch its main parts, or describe them in words. Then compare with the real logo. Ignore neatness; look for missing parts, extra parts and details facing the wrong way. Did it feel as easy as you expected?</p>",
+      "html": "<p><strong>A logo can feel familiar without every detail being easy to recall.</strong> Before looking, sketch a simple logo you know, or describe it in words. First note how sure you feel.</p><p>Then check the real design. Did a leaf turn the wrong way, or a small part disappear?</p>",
       "title": "Familiar does not mean every detail is stored"
     },
     {
       "id": "a-logo-study",
-      "html": "<p>In a <a href=\"https://pubmed.ncbi.nlm.nih.gov/25721103/\" target=\"_blank\" rel=\"noopener noreferrer\">2015 study by Adam Blake, Meenely Nazarian and Alan Castel</a>, participants tried to draw the Apple logo from memory and choose the correct design from similar versions.</p><p>Only <strong>one of 85 participants</strong> reproduced it correctly. Fewer than half picked the correct logo from the alternatives. Participants were more confident than their performance justified; overconfidence was lower when they judged their ability after drawing it.</p><p><a href=\"https://newsroom.ucla.edu/releases/85-college-students-tried-to-draw-the-apple-logo-from-memory-84-failed\" target=\"_blank\" rel=\"noopener noreferrer\">UCLA’s report</a> identifies the participants as undergraduates. This is a finding about that sample and task, not a percentage that describes everyone’s memory.</p>",
+      "html": "<p>In a <a href=\"https://pubmed.ncbi.nlm.nih.gov/25721103/\">2015 Apple-logo study</a>, only <strong>one of 85 participants</strong> drew it correctly. Fewer than half recognised the correct design among similar versions.</p><p><a href=\"https://newsroom.ucla.edu/releases/85-college-students-tried-to-draw-the-apple-logo-from-memory-84-failed\">UCLA identifies the sample as undergraduates</a>. Participants overestimated their performance; overconfidence was lower when they judged their ability after drawing.</p><p>Those results describe this sample and task, not everyone’s memory.</p>",
       "title": "A familiar apple surprised the researchers"
     },
     {
       "id": "familiar-is-not-detailed",
-      "html": "<p><strong>Familiarity</strong> is the feeling that you have seen something before. <strong>Recall</strong> means bringing it to mind without the thing in front of you. <strong>Recognition</strong> means identifying something when it is shown to you.</p><p>Drawing a logo asks you to recall its parts and their positions. Choosing it from near-matches asks you to tell small differences apart. In the study, both tasks proved difficult.</p><p>The researchers suggested that people may not attend to details they do not need. Seeing a symbol often does not necessarily mean studying its exact shape. That is a possible explanation, rather than proof of one single cause.</p>",
+      "html": "<p><strong>Recall</strong> means bringing something to mind without seeing it. <strong>Recognition</strong> means identifying it when shown. Familiarity is the feeling of having seen it before.</p><p>The researchers suggested people may overlook details they do not need. Frequent exposure need not mean close attention; that is a possible explanation, not proof of one cause.</p>",
       "title": "Knowing the look is not knowing every detail"
     },
     {
       "id": "compare-your-details",
-      "html": "<p>Use your own sketch for this little comparison. You can describe the parts in words if drawing is awkward.</p><div class=\"table-scroll\"><table><caption>Three things to compare with the real logo</caption><thead><tr><th scope=\"col\">Look for</th><th scope=\"col\">Ask yourself</th></tr></thead><tbody><tr><td>Parts</td><td>Did I leave anything out or add something?</td></tr><tr><td>Position</td><td>Did I put each part in the right place?</td></tr><tr><td>Direction</td><td>Does anything face the other way?</td></tr></tbody></table></div><p>Circle one detail that surprised you. Then compare your first confidence judgement with what you actually drew. You do not need to turn the result into a score.</p><p>This is a small observation exercise, not a copy of the research test or a measure of intelligence. One sketch cannot tell you how good your memory is overall.</p>",
+      "html": "<p>Compare three things: <strong>parts, positions and directions</strong>. Ignore drawing neatness. Did you add anything, omit anything or flip a detail?</p><p>This small observation is not an intelligence test or a measure of your memory overall.</p>",
       "title": "Check one detail at a time"
     },
     {
       "id": "take-it-to-your-next-question",
-      "html": "<p>Before revealing a quiz answer, pause and name the detail you are relying on. “I remember the stripe order” is more specific than “that flag looks right”. Then check it.</p><p>If you want to practise a fact after checking it, follow our <a href=\"/learn/remember-quiz-answers-tomorrow/\">short routine for remembering quiz answers</a>. If your first answer was wrong, <a href=\"/learn/can-a-wrong-guess-help-you-learn/\">see why the next explanation matters</a>.</p><details class=\"practice-answer\"><summary>Does feeling very sure prove that every detail is right?</summary><p>No. Confidence describes how sure you feel. Comparing your answer with a reliable reference checks whether its details are correct.</p></details>",
+      "html": "<p>Before choosing a quiz answer, name one detail you are relying on: “the stripe order” is more specific than “it looks right”. Then check it.</p><p>Try <a href=\"/learn/remember-quiz-answers-tomorrow/\">recalling the answer later</a>, or <a href=\"/learn/can-a-wrong-guess-help-you-learn/\">explore what happens after a wrong first guess</a>.</p><details class=\"practice-answer\"><summary>Does feeling certain prove the details are right?</summary><p>No. Confidence is how sure you feel; checking a reliable reference tests the details.</p></details>",
       "title": "Try the same pause with your next answer"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-18T15:42:59Z",
   "description": "A logo can feel familiar while its details stay fuzzy. Try a quick drawing challenge, then discover what an Apple-logo study found about confidence and memory.",
   "publishedAt": "2026-10-01T08:13:15.641866+00:00"
 }
