@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-an-earworm",
+  "title": "What is an earworm? Why a song gets stuck in your head",
+  "description": "An earworm is a tune that replays in your mind. Discover why familiar songs can return uninvited, and what a study of 3,000 listeners found.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 160,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-an-earworm.webp",
+    "small": "/assets/images/learn/what-is-an-earworm-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-an-earworm-thumb.webp",
+    "alt": "Navy headphones and a yellow record on a cream desk, with a conceptual loop of musical notes above them",
+    "credit": "AI-generated editorial illustration created for BrainiLab; an imagined scene, not a photograph.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "Fancy a few more surprising facts? Try General Knowledge.",
+  "related": [
+    "does-reading-aloud-help-memory",
+    "confidence-is-not-a-memory-test"
+  ],
+  "sources": [
+    {
+      "url": "https://www.apa.org/pubs/journals/releases/aca-aca0000090.pdf",
+      "name": "Jakubowski and colleagues — Dissecting an Earworm: original research, online 2016 (PDF)"
+    },
+    {
+      "url": "https://www.apa.org/news/press/releases/2016/11/earworms",
+      "name": "American Psychological Association — Psychologists identify key characteristics of earworms (2016)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-song-without-a-speaker",
+      "title": "The song has stopped. The chorus has not.",
+      "html": "<p><strong>An earworm is a tune that comes to mind and repeats without you deliberately recalling it.</strong> Researchers call it <em>involuntary musical imagery</em>.</p><p>You have finished the washing-up. The kitchen is quiet. Your mind, apparently, has booked the chorus for an encore.</p>"
+    },
+    {
+      "id": "why-that-tune",
+      "title": "Why that tune?",
+      "html": "<p>Recent listening and familiar associations can bring music back to mind. A phrase, place or situation may remind you of a song without any speaker being switched on.</p><p>That helps explain the uninvited replay, but not why one particular tune keeps winning. Researchers have also looked at the music itself.</p>"
+    },
+    {
+      "id": "what-the-study-found",
+      "title": "Familiar shape, surprising little twist",
+      "html": "<p>In <a href=\"https://www.apa.org/pubs/journals/releases/aca-aca0000090.pdf\">research published online in 2016</a>, Kelly Jakubowski and colleagues used songs named by 3,000 survey respondents. They compared 100 frequently reported earworm tunes with 100 songs matched for popularity and style.</p><p>The earworm group tended to have faster tempos, familiar overall melodic shapes and less usual patterns between changes in melodic direction. Recent chart success also mattered. <a href=\"https://www.apa.org/news/press/releases/2016/11/earworms\">The APA’s explanation</a> describes that mix of familiarity and surprise.</p>"
+    },
+    {
+      "id": "memory-has-more-than-one-trick",
+      "title": "Catchy is not a magic formula",
+      "html": "<p>These are patterns across songs and listeners, not a recipe that guarantees a hit. Personal associations and what you have heard lately still matter.</p><p>Memory can keep a tune handy without an invitation. For a different way sound meets memory, discover <a href=\"/learn/does-reading-aloud-help-memory/\">what happens when you read words aloud</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T10:42:56Z",
+  "updatedAt": "2026-10-18T10:42:56Z",
+  "minutes": 2
+}
