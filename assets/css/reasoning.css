@@ -9,3 +9,6 @@
 .reason-intro .reason-facts{margin:22px 0}.reason-intro .reason-note{margin-top:16px}
 body>.skip-link{position:absolute;left:12px;top:0;z-index:1000;transform:translateY(-110%);padding:10px 16px;background:#fffdf8;color:#302970;border:2px solid #302970;border-radius:8px}
 body>.skip-link:focus{transform:none}
+
+/* The custom challenge keeps the same quiet, optional account invitation. */
+.reason-result .post-account-invite{text-align:left;margin-top:20px}.reason-result .post-account-invite p{margin:0 0 8px}.reason-result .post-account-invite h3{margin:0 0 6px}.reason-result [data-reading-title]{white-space:normal;line-height:1.45}
