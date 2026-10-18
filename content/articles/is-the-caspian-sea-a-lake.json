@@ -1,0 +1,65 @@
+{
+  "slug": "is-the-caspian-sea-a-lake",
+  "title": "Is the Caspian Sea a sea or a lake?",
+  "description": "It is salty, enormous and called a sea. But the Caspian has no natural outlet to the ocean. Follow the water to discover why it is also a lake.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 166,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/is-the-caspian-sea-a-lake.webp",
+    "small": "/assets/images/learn/is-the-caspian-sea-a-lake-small.webp",
+    "thumbnail": "/assets/images/learn/is-the-caspian-sea-a-lake-thumb.webp",
+    "alt": "A conceptual blue lake enclosed by sandy terrain and green hills, with a tiny white sailboat",
+    "credit": "AI-generated conceptual landscape created for BrainiLab; not an accurate map or a photograph of the Caspian Sea.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals"
+  },
+  "practice": "Explore another corner of the map in World Capitals.",
+  "related": [
+    "what-is-a-fjord",
+    "why-is-the-dead-sea-so-salty"
+  ],
+  "sources": [
+    {
+      "url": "https://science.nasa.gov/earth/earth-observatory/caspian-sea-44253/",
+      "name": "NASA Earth Observatory — Caspian Sea: inland water, rivers, salinity and geological history"
+    },
+    {
+      "url": "https://science.nasa.gov/earth/earth-observatory/textures-around-the-north-caspian-147722/",
+      "name": "NASA Earth Observatory — Textures Around the North Caspian: five countries and contrasting waters"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-name-that-tricks-you",
+      "title": "The name is a small trap",
+      "html": "<p><strong>In geographical terms, the Caspian Sea is a lake: it is surrounded by land and has no natural outlet to the ocean.</strong> It is also salty and enormous. The name does a very convincing job of sending you in the wrong direction.</p><p><a href=\"https://science.nasa.gov/earth/earth-observatory/caspian-sea-44253/\">NASA describes it as the world’s largest inland water body by surface area</a>. That is quite a lake to overlook.</p>"
+    },
+    {
+      "id": "follow-the-water",
+      "title": "Follow the water, not the label",
+      "html": "<p>Rivers flow into the Caspian, including the <strong>Volga</strong>. But there is no natural river carrying its water onwards to the ocean.</p><p>Water escapes through evaporation, leaving salts behind. So “lake” does not automatically mean fresh water. The <a href=\"/learn/why-is-the-dead-sea-so-salty/\">Dead Sea has a similar naming surprise</a>.</p>"
+    },
+    {
+      "id": "five-countries",
+      "title": "Five countries share the shore",
+      "html": "<p>The Caspian borders <strong>Russia, Kazakhstan, Turkmenistan, Iran and Azerbaijan</strong>, as <a href=\"https://science.nasa.gov/earth/earth-observatory/textures-around-the-north-caspian-147722/\">NASA’s view of the surrounding landscapes shows</a>.</p><p>Its northern waters are shallower and fresher than those in the south. It is one continuous body of water, but a journey along it passes through very different conditions.</p>"
+    },
+    {
+      "id": "an-old-sea",
+      "title": "An old sea left a lake behind",
+      "html": "<p>The name is not the only link with the sea. NASA explains that the Caspian once belonged to a much larger prehistoric sea. Changes in the land and sea level eventually left it isolated.</p><p>For the opposite sort of coastal surprise, meet <a href=\"/learn/what-is-a-fjord/\">a fjord: a glacier-carved valley filled by the sea</a>. A blue shape on a map can hide quite a story.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T19:59:29Z",
+  "updatedAt": "2026-10-18T19:59:29Z",
+  "minutes": 2
+}
