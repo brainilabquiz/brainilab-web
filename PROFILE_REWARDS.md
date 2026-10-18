@@ -280,3 +280,20 @@ still follow the real level; the portrait artwork and skin colors are unchanged.
 These default decorations do not equip a reward, imply a cosmetic unlock, write
 profile metadata or change scores, XP, public visibility or ranking order. Chosen
 photos, created avatars and equipped frames retain their existing appearance.
+
+
+## Frames and titles presentation — 18 October 2026
+
+Frame options show the current draft portrait, using the same level ring and
+custom-frame styles as the main preview. A picture remains a picture; previewing
+a frame or title never switches to illustrated mode. The automatic level option
+uses the XP-derived current level rather than a generic letter or fixed starter
+ring. Repeated identical updates preserve the portrait DOM and keyboard focus.
+
+Title options show the current display name above each title, with the compact
+label style used by existing player identities. Names remain escaped text and
+wrap without truncating. A collection line reports availability and the next
+frame/title threshold; loading and read failures remain explicitly unknown.
+Every option stays visible, including locked choices. Save/Cancel, all IDs and
+thresholds, account isolation, social visibility and earning rules are unchanged.
+No new reward, database field, permission, XP award or scoring change is added.
