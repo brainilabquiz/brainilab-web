@@ -1,0 +1,71 @@
+{
+  "slug": "how-everyday-things-work",
+  "title": "How everyday things work: 10 small surprises",
+  "description": "Why does a pen need a tiny ball? How does a zip close? Explore ten short, surprising reads about the everyday inventions hiding in plain sight.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 172,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-everyday-things-work.webp",
+    "small": "/assets/images/learn/how-everyday-things-work-small.webp",
+    "thumbnail": "/assets/images/learn/how-everyday-things-work-thumb.webp",
+    "alt": "A green insulated flask, indigo ballpoint pen, yellow sticky notes and an orange zipped pencil case on an ivory table",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual still life, not branded products or a technical diagram.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Fancy another small discovery? Try the Science Quiz.",
+  "related": [
+    "why-ballpoint-pens-have-a-tiny-ball",
+    "what-is-a-vacuum-flask",
+    "how-post-it-notes-were-invented"
+  ],
+  "sources": [
+    {
+      "url": "https://www.invent.org/inductees/laszlo-josef-biro",
+      "name": "National Inventors Hall of Fame — Laszlo Josef Biro: the rolling ball and ink"
+    },
+    {
+      "url": "https://www.rigb.org/explore-science/explore/collection/james-dewars-vacuum-flask",
+      "name": "Royal Institution — James Dewar’s vacuum flask: two walls and a partial vacuum"
+    }
+  ],
+  "sections": [
+    {
+      "id": "small-things-big-ideas",
+      "title": "Ordinary objects, surprisingly good questions",
+      "html": "<p><strong>These ten short reads explain how familiar objects work, or how they found their purpose.</strong> Pick something you use every day and look a little closer.</p><p>A pen has a moving part small enough to miss. A flask has a useful gap. Your desk is already a cabinet of curiosities; it just lacks the little museum labels. Start anywhere.</p>"
+    },
+    {
+      "id": "at-your-desk",
+      "title": "At your desk",
+      "html": "<ul><li><a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\">Why is there a tiny ball in your pen?</a> Follow the ink from pen to paper.</li><li><a href=\"/learn/why-keyboard-qwerty-layout/\">Why is your keyboard not in ABC order?</a> Meet QWERTY, the layout your fingers know.</li><li><a href=\"/learn/how-post-it-notes-were-invented/\">How did Post-it notes begin?</a> A bookmark problem takes a colourful turn.</li></ul>"
+    },
+    {
+      "id": "hold-it-together",
+      "title": "Clever ways to hold things together",
+      "html": "<ul><li><a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">Was bubble wrap really meant to be wallpaper?</a> An unlikely beginning for a familiar parcel protector.</li><li><a href=\"/learn/how-hook-and-loop-fasteners-work/\">How do hook-and-loop fasteners grip?</a> Take a closer look at that satisfying rip.</li><li><a href=\"/learn/why-zippers-have-interlocking-teeth/\">How does a zip join its teeth?</a> A tiny slider has a lot to organise.</li></ul>"
+    },
+    {
+      "id": "home-and-away",
+      "title": "At home and on the move",
+      "html": "<ul><li><a href=\"/learn/how-does-a-toilet-flush/\">How does a toilet flush?</a> Follow what happens after you press the button.</li><li><a href=\"/learn/why-microwaves-have-a-turntable/\">Why does a microwave spin your dinner?</a> Find out what the moving plate is for.</li><li><a href=\"/learn/what-is-a-vacuum-flask/\">How does a flask keep a drink hot?</a> The gap between its walls does useful work.</li><li><a href=\"/learn/how-does-noise-cancelling-work/\">How do noise-cancelling headphones work?</a> More sound can sometimes mean less noise.</li></ul>"
+    },
+    {
+      "id": "look-a-little-closer",
+      "title": "One tiny detail to notice",
+      "html": "<p>The <a href=\"https://www.invent.org/inductees/laszlo-josef-biro\">National Inventors Hall of Fame describes the rolling ball</a> that carries a pen’s ink onto paper. The <a href=\"https://www.rigb.org/explore-science/explore/collection/james-dewars-vacuum-flask\">Royal Institution’s early vacuum flask</a> shows a different solution: insulation between two walls.</p><p>Next time you pick up an ordinary object, ask which little detail makes it useful. You may never look at your pencil case quite the same way.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T21:17:30Z",
+  "updatedAt": "2026-10-18T21:17:30Z",
+  "minutes": 2
+}

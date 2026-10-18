@@ -1,19 +1,4 @@
 {
-  "slug": "why-keyboard-qwerty-layout",
-  "title": "Why is the keyboard QWERTY, not ABC?",
-  "description": "QWERTY began on typewriters, and habit helped it stick. Discover the 1878 paper trail and why the familiar story about slowing typists is disputed.",
-  "topic": "Everyday inventions",
-  "status": "published",
-  "order": 147,
-  "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/why-keyboard-qwerty-layout.webp",
-    "small": "/assets/images/learn/why-keyboard-qwerty-layout-small.webp",
-    "thumbnail": "/assets/images/learn/why-keyboard-qwerty-layout-thumb.webp",
-    "alt": "Six ivory typewriter keys labelled Q, W, E, R, T and Y sit in front of a blank sheet of paper",
-    "credit": "AI-generated cover illustration created for BrainiLab; an illustrative scene, not an archival photograph or a reconstruction of a specific typewriter.",
-    "position": 50
-  },
   "hub": {
     "url": "/general-knowledge/",
     "name": "General Knowledge"
@@ -22,7 +7,20 @@
     "url": "/general-knowledge/general-knowledge-quiz/",
     "name": "General Knowledge"
   },
-  "practice": "Try a mixed General Knowledge quiz for more surprises hiding in familiar things.",
+  "slug": "why-keyboard-qwerty-layout",
+  "cover": {
+    "alt": "Six ivory typewriter keys labelled Q, W, E, R, T and Y sit in front of a blank sheet of paper",
+    "src": "/assets/images/learn/why-keyboard-qwerty-layout.webp",
+    "small": "/assets/images/learn/why-keyboard-qwerty-layout-small.webp",
+    "credit": "AI-generated cover illustration created for BrainiLab; an illustrative scene, not an archival photograph or a reconstruction of a specific typewriter.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-keyboard-qwerty-layout-thumb.webp"
+  },
+  "order": 147,
+  "title": "Why is the keyboard QWERTY, not ABC?",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "minutes": 2,
   "related": [
     "why-ballpoint-pens-have-a-tiny-ball",
     "how-post-it-notes-were-invented"
@@ -37,29 +35,31 @@
       "name": "C. Latham Sholes — US patent 207,559, granted 27 August 1878; keyboard in Figure 3"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Try a mixed General Knowledge quiz for more surprises hiding in familiar things.",
   "sections": [
     {
       "id": "what-qwerty-means",
-      "title": "Your keyboard has a typewriter past",
-      "html": "<p><strong>QWERTY is named after the first six letters on its top letter row. The layout came from 1870s typewriters and remained familiar as computers took over.</strong> The exact reason for its original arrangement is still disputed.</p><p>So that odd little word on your laptop is a souvenir from a machine that printed letters by hitting paper.</p>"
+      "html": "<p><strong>QWERTY is named after the first six letters on its top letter row. The layout came from 1870s typewriters and remained familiar as computers took over.</strong> The exact reason for its original arrangement is still disputed.</p><p>So that odd little word on your laptop is a souvenir from a machine that printed letters by hitting paper.</p>",
+      "title": "Your keyboard has a typewriter past"
     },
     {
       "id": "the-patent-paper-trail",
-      "title": "The 1878 paper trail",
-      "html": "<p>Inventor <strong>Christopher Latham Sholes</strong> left a useful clue: <a href=\"https://patents.google.com/patent/US207559A/en\">Figure 3 of his 1878 patent</a> shows a keyboard whose top letter row begins QWERTY.</p><p>Pressing a key moved a metal type towards the paper, making an inked impression. The paper then shifted along by one character. It was typing with moving metal, not software.</p>"
+      "html": "<p>Inventor <strong>Christopher Latham Sholes</strong> left a useful clue: <a href=\"https://patents.google.com/patent/US207559A/en\">Figure 3 of his 1878 patent</a> shows a keyboard whose top letter row begins QWERTY.</p><p>Pressing a key moved a metal type towards the paper, making an inked impression. The paper then shifted along by one character. It was typing with moving metal, not software.</p>",
+      "title": "The 1878 paper trail"
     },
     {
       "id": "was-qwerty-meant-to-slow-typing",
-      "title": "Was it meant to slow typists down?",
-      "html": "<p>That familiar explanation is <strong>not a settled fact</strong>. In <a href=\"https://askdruniverse.wsu.edu/2026/08/27/keyboard-keys-not-abc-order/\">Washington State University’s interview with historian Erin Hvizdak</a>, the story about preventing jams by slowing typists is questioned.</p><p>Another explanation connects the layout to telegraph operators transcribing Morse code. The evidence leaves room for debate; a tidy origin story is not always the whole story.</p>"
+      "html": "<p>That familiar explanation is <strong>not a settled fact</strong>. In <a href=\"https://askdruniverse.wsu.edu/2026/08/27/keyboard-keys-not-abc-order/\">Washington State University’s interview with historian Erin Hvizdak</a>, the story about preventing jams by slowing typists is questioned.</p><p>Another explanation connects the layout to telegraph operators transcribing Morse code. The evidence leaves room for debate; a tidy origin story is not always the whole story.</p>",
+      "title": "Was it meant to slow typists down?"
     },
     {
       "id": "why-the-layout-stayed",
-      "title": "Old layout, new screen",
-      "html": "<p>As typewriters spread through offices and schools, people learnt QWERTY. As the WSU account explains, familiarity helped it survive the move from typewriters to computers.</p><p>Your fingers may know where a letter lives before you consciously look for it. Familiar objects can carry surprisingly long histories—just ask <a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\">the tiny moving ball inside your pen</a>.</p>"
+      "html": "<p>As typewriters spread through offices and schools, people learnt QWERTY. As the WSU account explains, familiarity helped it survive the move from typewriters to computers.</p><p>Your fingers may know where a letter lives before you consciously look for it. Familiar objects can carry surprisingly long histories—just ask <a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\">the tiny moving ball inside your pen</a>.</p><p>For more familiar objects worth a second look, explore <a href=\"/learn/how-everyday-things-work/\">how everyday things work</a>.</p>",
+      "title": "Old layout, new screen"
     }
   ],
-  "publishedAt": "2026-10-17T07:43:38Z",
-  "updatedAt": "2026-10-17T07:43:38Z",
-  "minutes": 2
+  "updatedAt": "2026-10-18T21:17:30Z",
+  "description": "QWERTY began on typewriters, and habit helped it stick. Discover the 1878 paper trail and why the familiar story about slowing typists is disputed.",
+  "publishedAt": "2026-10-17T07:43:38Z"
 }

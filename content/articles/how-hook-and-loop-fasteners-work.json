@@ -40,26 +40,26 @@
   "sections": [
     {
       "id": "two-surfaces",
-      "title": "Tiny hooks meet a soft tangle",
-      "html": "<p><strong>A hook-and-loop fastener grips because tiny hooks on one strip catch loops on the other.</strong> Press the faces together and many little connections form. Peel them apart and the hooks release.</p><p>The two fastening faces hold mechanically, rather than with sticky glue between them. A product may still have an adhesive backing to attach the strip to something else.</p>"
+      "html": "<p><strong>A hook-and-loop fastener grips because tiny hooks on one strip catch loops on the other.</strong> Press the faces together and many little connections form. Peel them apart and the hooks release.</p><p>The two fastening faces hold mechanically, rather than with sticky glue between them. A product may still have an adhesive backing to attach the strip to something else.</p>",
+      "title": "Tiny hooks meet a soft tangle"
     },
     {
       "id": "a-stubborn-passenger",
-      "title": "What does a plant burr have to do with it?",
-      "html": "<p>Swiss engineer <strong>George de Mestral</strong> noticed how burrs’ small hooks clung to clothing. That suggested a reusable fabric fastener.</p><p>The <a href=\"https://www.invent.org/inductees/george-de-mestral\">National Inventors Hall of Fame records his 1955 patent</a> and the challenge of making hundreds of tiny hooks on cloth tape. A nuisance after a walk had become an engineering idea.</p>"
+      "html": "<p>Swiss engineer <strong>George de Mestral</strong> noticed how burrs’ small hooks clung to clothing. That suggested a reusable fabric fastener.</p><p>The <a href=\"https://www.invent.org/inductees/george-de-mestral\">National Inventors Hall of Fame records his 1955 patent</a> and the challenge of making hundreds of tiny hooks on cloth tape. A nuisance after a walk had become an engineering idea.</p>",
+      "title": "What does a plant burr have to do with it?"
     },
     {
       "id": "making-it-work",
-      "title": "Is every hook-and-loop fastener called Velcro?",
-      "html": "<p><strong>VELCRO is a brand name; hook-and-loop is the general type of fastener.</strong> The familiar version needs two different surfaces doing different jobs.</p><p>Look closely at a strap: one side is a softer tangle, the other has firmer little hooks. Pressing against a smooth sheet cannot supply the missing loops.</p>"
+      "html": "<p><strong>VELCRO is a brand name; hook-and-loop is the general type of fastener.</strong> The familiar version needs two different surfaces doing different jobs.</p><p>Look closely at a strap: one side is a softer tangle, the other has firmer little hooks. Pressing against a smooth sheet cannot supply the missing loops.</p>",
+      "title": "Is every hook-and-loop fastener called Velcro?"
     },
     {
       "id": "look-closely",
-      "title": "A different way to make something removable",
-      "html": "<p>Compare it with <a href=\"/learn/how-post-it-notes-were-invented/\">a Post-it note’s removable adhesive</a>. Both let you attach and remove something, but the grip works differently. Same everyday job, two rather different solutions. Or follow <a href=\"/learn/why-zippers-have-interlocking-teeth/\">a zipper’s slider</a> to see how it joins two rows of teeth.</p>"
+      "html": "<p>Compare it with <a href=\"/learn/how-post-it-notes-were-invented/\">a Post-it note’s removable adhesive</a>. Both let you attach and remove something, but the grip works differently. Same everyday job, two rather different solutions. Or follow <a href=\"/learn/why-zippers-have-interlocking-teeth/\">a zipper’s slider</a> to see how it joins two rows of teeth.</p><p>Look at more clever little details in <a href=\"/learn/how-everyday-things-work/\">how everyday things work</a>.</p>",
+      "title": "A different way to make something removable"
     }
   ],
-  "updatedAt": "2026-10-18T09:50:34Z",
+  "updatedAt": "2026-10-18T21:17:30Z",
   "description": "Tiny hooks catch tiny loops: that is what holds a hook-and-loop fastener together. Discover the plant burr that inspired the idea behind the familiar strap.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }

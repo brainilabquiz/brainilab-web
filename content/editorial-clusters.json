@@ -4,49 +4,49 @@
     {
       "id": "everyday-object-origins-1",
       "topic": "Everyday inventions",
-      "readerQuestion": "What everyday problems led to familiar objects, and how did their designs solve them?",
-      "hubSlug": "everyday-inventions-and-the-problems-they-solved",
-      "hubTitle": "10 everyday inventions and the problems they solved",
+      "readerQuestion": "How do familiar everyday objects work, and what surprising ideas lie behind them?",
+      "hubSlug": "how-everyday-things-work",
+      "hubTitle": "How everyday things work: 10 small surprises",
       "members": [
         {
-          "slug": "was-bubble-wrap-invented-as-wallpaper",
-          "angle": "A textured wall covering finds a role in protective packaging."
+          "slug": "why-ballpoint-pens-have-a-tiny-ball",
+          "angle": "How does a ballpoint pen work?"
+        },
+        {
+          "slug": "why-keyboard-qwerty-layout",
+          "angle": "Why is the keyboard QWERTY, not ABC?"
         },
         {
           "slug": "how-post-it-notes-were-invented",
-          "angle": "A removable adhesive keeps a bookmark in place and becomes a note."
+          "angle": "How were Post-it Notes invented? The glue that lets go"
+        },
+        {
+          "slug": "was-bubble-wrap-invented-as-wallpaper",
+          "angle": "Was bubble wrap invented as wallpaper? Yes, really"
         },
         {
           "slug": "how-hook-and-loop-fasteners-work",
-          "angle": "Investigate how burrs inspired a reusable fastening system."
+          "angle": "How do hook-and-loop fasteners work?"
         },
         {
           "slug": "why-zippers-have-interlocking-teeth",
-          "angle": "Explain how rows of teeth make a closure that can reopen."
+          "angle": "How does a zipper work?"
         },
         {
-          "slug": "how-safety-pins-got-their-clasp",
-          "angle": "Investigate how a clasp covers a sharp point while holding fabric."
+          "slug": "how-does-a-toilet-flush",
+          "angle": "How does a toilet flush without electricity?"
         },
         {
-          "slug": "why-ballpoint-pens-have-a-tiny-ball",
-          "angle": "Explain the rolling ball that transfers ink to paper."
+          "slug": "why-microwaves-have-a-turntable",
+          "angle": "Why does a microwave have a turntable?"
         },
         {
-          "slug": "why-pencils-have-erasers",
-          "angle": "Investigate the combination of writing and correcting in one tool."
+          "slug": "what-is-a-vacuum-flask",
+          "angle": "What is a vacuum flask? The gap that keeps tea hot"
         },
         {
-          "slug": "how-corrugated-cardboard-protects-parcels",
-          "angle": "Explain how a fluted layer gives a lightweight sheet structure."
-        },
-        {
-          "slug": "why-can-openers-came-after-cans",
-          "angle": "Investigate the gap between a storage container and a convenient opening tool."
-        },
-        {
-          "slug": "how-drinking-straws-got-their-bend",
-          "angle": "Investigate how a flexible section changed the use of a drinking straw."
+          "slug": "how-does-noise-cancelling-work",
+          "angle": "How does noise cancelling work? Making quiet with sound"
         }
       ]
     },
