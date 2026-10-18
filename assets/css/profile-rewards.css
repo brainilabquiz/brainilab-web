@@ -1,4 +1,10 @@
 .profile-rewards{margin:0 0 1.5rem;background:var(--card);border:1px solid var(--line);border-radius:1.25rem;color:var(--ink);overflow:clip}
+/* Keep the footer below the first viewport while the avatar creator mounts.
+   The reservation disappears with the empty state; saved styles keep their
+   natural height. Browsers with scripting disabled keep the existing layout. */
+@media (scripting:enabled){
+  .profile-rewards:empty{min-block-size:40rem}
+}
 .avatar-studio-heading{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.5rem 2rem;border-bottom:1px solid var(--line)}
 .avatar-studio-heading h2{font-size:1.75rem;color:var(--navy);margin:.25rem 0 .5rem}
 .avatar-studio-heading p{font-size:.875rem;color:var(--muted);margin:0;line-height:1.6}
