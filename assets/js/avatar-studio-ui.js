@@ -8,7 +8,16 @@ window.BrainiAvatarStudioUI=(function(){
   let active='look';
   const number=n=>n.toLocaleString('en-GB');
   function group(kind,name){
-    return `<fieldset class="avatar-option-group"><legend>${name}</legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
+    const summary=['frame','title'].includes(kind)?`<p class="avatar-collection-summary" data-style-collection="${kind}"></p>`:'';
+    return `<fieldset class="avatar-option-group"><legend>${name}</legend>${summary}<div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
+  }
+  const escapeCopy=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  function collectionSummary(root,total,options){
+    for(const kind of ['frame','title']){
+      const summary=root.querySelector(`[data-style-collection="${kind}"]`);if(!summary)continue;
+      const items=C.groups[kind],available=items.filter(item=>item.xp<=total).length,next=items.find(item=>item.xp>total),label=kind==='frame'?'frames':'titles';
+      summary.textContent=options.loading?`Checking your ${label}…`:options.error?`Your ${label} could not be checked. Try again above.`:next?`${available} of ${items.length} available · Next: ${next.name} in ${number(next.xp-total)} XP`:`All ${items.length} ${label} available`;
+    }
   }
   function mount(root){
     root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>Try a new look. Add a little extra. Make it you.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
@@ -42,15 +51,20 @@ window.BrainiAvatarStudioUI=(function(){
     }
     root.dispatchEvent(new CustomEvent('brainilab:avatarpanechange',{detail:{pane:active}}));
   }
-  function sample(kind,item,draft){
+  function sample(kind,item,draft,total){
     if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
-    if(kind==='title')return '';
+    if(kind==='title')return `<span class="reward-title-name">${escapeCopy(BrainiData.player().displayName||'Your name')}</span>`;
     if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
     if(kind==='mode'&&item.id==='picture')return BrainiProgressUI.avatarImageMarkup({...BrainiData.player(),avatarDesign:null});
-    if(kind==='frame')return `<span class="reward-frame-sample" data-profile-frame="${item.id}">B</span>`;
+    if(kind==='frame'){
+      const player=BrainiData.player(),level=BrainiProgressUI.xpProgress?.(player.level,total)?.level||player.level||1;
+      const portrait=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+      return `<span class="rank-avatar reward-frame-sample ${BrainiProgressUI.avatarClass(level)}"${item.id==='level'?'':` data-profile-frame="${item.id}"`}>${portrait}</span>`;
+    }
     return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
   }
   function choices(root,draft,total,busy,academy=[],discovery=[],equipped=draft,options={}){
+    collectionSummary(root,total,options);
     for(const [kind,items] of Object.entries(C.groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       for(const item of items){
@@ -60,8 +74,8 @@ window.BrainiAvatarStudioUI=(function(){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
           button.innerHTML='<span class="reward-choice-art" aria-hidden="true"></span><strong></strong><small></small>';grid.append(button);
         }
-        const art=sample(kind,item,draft),artRoot=button.querySelector('.reward-choice-art');
-        if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+        const art=sample(kind,item,draft,total),artRoot=button.querySelector('.reward-choice-art');
+        if(kind==='frame')BrainiProgressUI.setAvatarMarkup(artRoot,art);else if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
         artRoot.hidden=!art;
         const selected=draft[kind]===item.id,locked=item.xp>total;
         button.disabled=busy||locked;button.setAttribute('aria-pressed',String(selected));
@@ -84,7 +98,7 @@ window.BrainiAvatarStudioUI=(function(){
         const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
       }
       const button=card.querySelector('button'),selected=draft[item.kind]===item.id,earned=C.unlocked(item,total,academy);
-      const artRoot=button.querySelector('.reward-choice-art'),art=sample(item.kind,item,draft);
+      const artRoot=button.querySelector('.reward-choice-art'),art=sample(item.kind,item,draft,total);
       if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
       button.disabled=busy||!earned;button.setAttribute('aria-pressed',String(selected));
       button.querySelector('strong').textContent=item.name;
@@ -95,7 +109,7 @@ window.BrainiAvatarStudioUI=(function(){
     const count=C.academyIds(academy).length;
     root.querySelector('[data-academy-count]').textContent=options.loading?'Checking your course rewards…':options.error?'Course rewards could not be checked.':`${count} of ${C.academyRewards.length} extras unlocked · no XP needed`;
     challengeChoices(root,draft,total,busy,discovery);
-    dayChoices(root,draft,busy,options.activeDays);
+    dayChoices(root,draft,total,busy,options.activeDays);
     window.BrainiWardrobeUI?.render(root,{draft,equipped,total,busy,academy,discovery,...options});
   }
   function challengeChoices(root,draft,total,busy,discovery){
@@ -108,7 +122,7 @@ window.BrainiAvatarStudioUI=(function(){
         const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
       }
       const proof=C.discoveryProgress(item,discovery),selected=draft[item.kind]===item.id,button=card.querySelector('button');
-      const art=sample(item.kind,item,draft),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+      const art=sample(item.kind,item,draft,total),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
       button.disabled=busy||!proof.earned;button.setAttribute('aria-pressed',String(selected));
       button.querySelector('strong').textContent=item.name;button.querySelector('small').textContent=selected?'Selected':proof.earned?'Unlocked':'Finish the challenge';
       button.setAttribute('aria-label',`${item.name}, ${selected?'selected':proof.earned?'unlocked':'finish '+item.challenge+' to unlock'}. ${item.description}`);button.title=item.description;
@@ -121,7 +135,7 @@ window.BrainiAvatarStudioUI=(function(){
       link.href=proof.earned||item.target?'/games/':next?.path||'/games/';link.textContent=proof.earned?'Explore more games →':item.target?'Find a different game →':`Play ${next?.name||'a game'} →`;
     }
   }
-  function dayChoices(root,draft,busy,activeDays){
+  function dayChoices(root,draft,total,busy,activeDays){
     const grid=root.querySelector('[data-day-rewards]');if(!grid)return;
     const days=C.dayCount(activeDays);
     root.querySelector('[data-active-days-count]').textContent=busy?'Checking saved days…':`${number(days)} ${days===1?'day':'days'} played · no streak needed`;
@@ -133,7 +147,7 @@ window.BrainiAvatarStudioUI=(function(){
         const button=card.querySelector('button');button.dataset.rewardKind=item.kind;button.dataset.rewardId=item.id;grid.append(card);
       }
       const earned=days>=item.days,selected=draft[item.kind]===item.id,button=card.querySelector('button');
-      const art=sample(item.kind,item,draft),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
+      const art=sample(item.kind,item,draft,total),artRoot=button.querySelector('.reward-choice-art');if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
       button.disabled=busy||!earned;button.setAttribute('aria-pressed',String(selected));
       button.querySelector('strong').textContent=item.name;button.querySelector('small').textContent=selected?'Selected':earned?'Unlocked':`${number(item.days)} days to unlock`;
       button.setAttribute('aria-label',`${item.name}, ${selected?'selected':earned?'unlocked':'play on '+item.days+' different days to unlock'}. ${item.description}`);button.title=item.description;
