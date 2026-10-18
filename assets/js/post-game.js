@@ -8,7 +8,9 @@ window.BrainiPostGame=(()=>{
  async function returnToReading(container,options){
   const match=/^#learn-([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(location.hash),slug=match?.[1];
   if(!slug||slug.length>100)return;
-  const link=container.querySelector('[data-post-action="guide"]');if(!link)return;
+  const link=container.querySelector('[data-post-action="guide"]');
+  const title=link?.querySelector('strong,[data-reading-title]');if(!title)return;
+  const readingOwner=owner();
   if(!readingDirectory)readingDirectory=(async()=>{
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4000);
    try{
@@ -18,13 +20,14 @@ window.BrainiPostGame=(()=>{
    }catch{return [];}finally{clearTimeout(timer);}
   })();
   const directory=await readingDirectory;
-  if(!container.isConnected||mounted.get(container)!==options||options.owner!==owner())return;
+  if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner())return;
   const gamePath=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
   const article=directory.find(a=>a&&a.slug===slug&&a.gameId===options.gameId&&a.gamePath===gamePath&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
   if(!article)return;
   link.setAttribute('href','/learn/'+slug+'/');
-  link.querySelector('span').textContent='Back to your reading';
-  link.querySelector('strong').textContent=article.title+' →';
+  const kind=link.querySelector('[data-reading-kind],:scope>span:not([data-reading-title])');
+  if(kind)kind.textContent='Back to your reading';
+  title.textContent=article.title+' →';
  }
  const invitations=new Map(),dismissed=new WeakSet();
  function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
@@ -151,7 +154,7 @@ window.BrainiPostGame=(()=>{
   const scoring=scorePresentation(gameId,result);
   const message=summary||(timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Ready for another go?'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. A few new discoveries, too.':'There’s always something new to learn.');
   const art=window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
-  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
+  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/remember-quiz-answers-tomorrow/',title:'Make a quiz answer stick'},higherlower:{href:'/learn/why-greenland-looks-so-big/',title:'Why maps can fool your eyes'},orderup:{href:'/learn/which-century-is-that-year/',title:'The century dates that trip us up'},topicrush:{href:'/learn/chunking-memory-familiar-groups/',title:'Give your memory a useful starting point'},survival:{href:'/learn/confidence-is-not-a-memory-test/',title:'How well do you really know an answer?'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${scoring.points.toLocaleString('en-GB')}</strong> <span data-points-label>${scoring.label}</span>${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p><p class="post-score-context" data-score-context ${scoring.context?'':'hidden'}>${esc(scoring.context)}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);resolveStatus(container,liveOptions);
@@ -217,5 +220,5 @@ window.BrainiPostGame=(()=>{
   refresh();
   return result;
  }
- return {mount,complete,review,nextDaily,localStatus,refresh,inviteAccount};
+ return {mount,complete,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
 })();
