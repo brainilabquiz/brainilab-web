@@ -41,6 +41,17 @@ window.BrainiProgressUI=(function(){
       startXp:start,earnedInLevel:value-start,neededInLevel:end-start,remainingXp:end-value,
       label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
+  function xpRules(summary=window.BrainiProgression?.getCached?.()){
+    const raw=summary?.reward_rules||{},valid=(value,min=0)=>Number.isSafeInteger(value)&&value>=min&&value<=10000;
+    return {base:valid(raw.base_xp)?raw.base_xp:50,correct:valid(raw.correct_xp)?raw.correct_xp:5,
+      limit:valid(raw.per_game_daily_limit,1)?raw.per_game_daily_limit:3,bonus:valid(raw.full_daily_xp)?raw.full_daily_xp:250,
+      confirmed:valid(raw.base_xp)&&valid(raw.correct_xp)&&valid(raw.per_game_daily_limit,1)};
+  }
+  function xpReceipt(earned,summary){
+    const rules=xpRules(summary),answers=earned-rules.base;
+    if(!rules.confirmed||!Number.isSafeInteger(earned)||earned<=0||answers<0||answers>rules.correct*50||(rules.correct?answers%rules.correct!==0:answers!==0))return null;
+    return {finish:rules.base,answers};
+  }
 
   function avatarClass(level){
     const t=tier(level),n=Math.max(t.min,Math.min(t.max,Number(level)||1));
@@ -240,7 +251,7 @@ window.BrainiProgressUI=(function(){
     return currentOwner()===owner?resultChanges.get(id)||null:null;
   }
   return {
-    resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,
+    resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,xpRules,xpReceipt,
     avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();

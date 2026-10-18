@@ -42,7 +42,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;
-    U.next(root,total);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error,activeDays:state.activeDays});
+    U.next(root,total,state);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error,activeDays:state.activeDays});
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
     root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save look';});
@@ -54,6 +54,8 @@ window.BrainiProfileRewards=(function(){
   function bind(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
+      const goal=event.target.closest('[data-collection-goal]');
+      if(goal){event.preventDefault();U.openGoal(root,goal);return;}
       const surprise=event.target.closest('[data-avatar-surprise]');
       if(surprise&&!surprise.disabled){
         draft=C.surprise(draft,BrainiData.player().xp,Math.random,S.snapshot().academy,S.snapshot().discovery,S.snapshot().activeDays);

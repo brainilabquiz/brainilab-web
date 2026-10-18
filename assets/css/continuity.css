@@ -25,6 +25,7 @@
 .post-unlock-art{display:grid;place-items:center;width:56px;height:56px;flex:none;background:#fffdf9;border:1px solid #dedbcb;border-radius:12px;overflow:hidden}
 .post-unlock-art>.braini-built-avatar{width:54px;height:54px}
 .post-unlock-art .rank-avatar{width:42px;height:42px}
+.post-reward>.post-xp-detail{display:block;font-size:12px;line-height:1.5;color:#59634b;margin:-7px 0 13px}
 .post-unlock-art .profile-scene-sample{display:block;width:48px;height:44px;border-radius:8px;object-fit:cover}
 .post-unlock-art .profile-goal-letter{font-size:26px;font-weight:800}
 .post-unlock-copy{display:grid;gap:3px;flex:1;min-width:0}
