@@ -1,4 +1,5 @@
 import {newTabLinks} from '../lib/link-policy.js';
+import {brandPage} from '../lib/brand-identity.js';
 import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
@@ -10,6 +11,7 @@ import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
 import './test-sitemap-dates.mjs';
 import './validate-game-batches.mjs';
+import './test-brand-identity.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -67,7 +69,7 @@ for(const file of ['assets/js/shell.bundle.js','assets/js/perf-loader.js']){
   assetVersions.set(file,assetVersion(bytes));compressed+=featureManifest.length;
 }
 for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
-  const html=newTabLinks(await readFile(path.join(root,file),'utf8'));
+  const html=newTabLinks(brandPage(await readFile(path.join(root,file),'utf8')));
   await writeFile(path.join(output,file),versionAssets(html,file,assetVersions));
 }
 for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
