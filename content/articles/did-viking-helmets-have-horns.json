@@ -1,0 +1,65 @@
+{
+  "slug": "did-viking-helmets-have-horns",
+  "title": "Did Viking helmets really have horns?",
+  "description": "Viking helmets with horns are a familiar image. But what do the finds show? Meet a hornless helmet and a pair of real horns from a much earlier age.",
+  "topic": "History",
+  "status": "published",
+  "order": 164,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/did-viking-helmets-have-horns.webp",
+    "small": "/assets/images/learn/did-viking-helmets-have-horns-small.webp",
+    "thumbnail": "/assets/images/learn/did-viking-helmets-have-horns-thumb.webp",
+    "alt": "An illustrative hornless iron helmet with a rounded crown and eye guard on a stone plinth against a terracotta wall",
+    "credit": "AI-generated illustrative reconstruction created for BrainiLab; not a photograph of an archaeological object.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Fancy another surprise from the past? Try the History Quiz.",
+  "related": [
+    "cleopatra-pyramids-moon-landing",
+    "which-century-is-that-year"
+  ],
+  "sources": [
+    {
+      "url": "https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-viking-age/weapons/helmets/",
+      "name": "National Museum of Denmark — Viking helmets"
+    },
+    {
+      "url": "https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-bronze-age/the-viksoe-helmets/",
+      "name": "National Museum of Denmark — The Viksø helmets"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-familiar-picture",
+      "title": "Picture a Viking. Now check the helmet.",
+      "html": "<p><strong>There is no good evidence that Viking warriors normally wore horned helmets in battle.</strong> The familiar horns are a much shakier historical detail than the cartoons suggest.</p><p>It is an awkward discovery if you have just drawn a very impressive pair. But the objects archaeologists find tell a more interesting story.</p>"
+    },
+    {
+      "id": "a-helmet-without-horns",
+      "title": "Start with an actual find",
+      "html": "<p>The helmet found at <strong>Gjermundbu in Norway</strong> has no horns. The <a href=\"https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-viking-age/weapons/helmets/\">National Museum of Denmark describes this find</a>, along with fragments of other helmets.</p><p>Surviving examples are scarce. That makes them valuable evidence, but it also means we should be careful about claiming exactly what every Viking wore.</p>"
+    },
+    {
+      "id": "real-horns-wrong-age",
+      "title": "Real horns, wrong age",
+      "html": "<p>There really are spectacular ancient horned helmets: the <a href=\"https://en.natmus.dk/historical-knowledge/denmark/prehistoric-period-until-1050-ad/the-bronze-age/the-viksoe-helmets/\">two bronze helmets from Viksø in Denmark</a>.</p><p>Here is the catch: they belong to the <strong>Bronze Age, long before the Viking Age</strong>. The museum suggests they were probably used in religious ceremonies. An impressive object can be real and still belong to the wrong chapter of history.</p>"
+    },
+    {
+      "id": "what-the-pictures-prove",
+      "title": "A picture is another clue",
+      "html": "<p>The museum also notes horned figures on a tapestry from the Viking-age Oseberg burial. Such images leave room for ceremonial or display headgear; they do not establish the everyday battle outfit of Viking warriors.</p><p>So ask two questions when a helmet looks familiar: <strong>when is it from, and what was it used for?</strong> For another surprising mix-up in time, compare <a href=\"/learn/cleopatra-pyramids-moon-landing/\">Cleopatra, the pyramids and the Moon landing</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T19:38:53Z",
+  "updatedAt": "2026-10-18T19:38:53Z",
+  "minutes": 2
+}
