@@ -10,6 +10,7 @@ const paths=(await Promise.all((await readdir('content/paths')).filter(f=>f.ends
 if(readyPaths(paths,articles).length!==paths.length)throw Error('Every published path must have distinct published lessons with valid quizzes.');
 const template=await readFile('learn/index.html','utf8');
 await writeFile('learn/index.html',renderPage(template,articles,null,paths));
+await mkdir('learn/topics',{recursive:true});await writeFile('learn/topics/index.html',renderPage(template,articles,null,paths,{view:'topics'}));
 await writeFile('learn/feed.xml',learnFeed(articles));
 for(const a of articles)await writeFile(`learn/${a.slug}/index.html`,renderPage(template,articles,a,paths));
 await mkdir('learn/paths',{recursive:true});await writeFile('learn/paths/index.html',renderLearningPage(template,{articles,paths,authors}));
@@ -19,5 +20,5 @@ profile=profile.replace(/<!-- academy-resume:start -->[\s\S]*?<!-- academy-resum
 profile=profile.replace(/<link rel="stylesheet" href="\/assets\/css\/learning-paths\.css[^"]*"\/>/g,'').replace(/<script defer src="\/assets\/js\/learning-paths\.bundle\.js[^"]*"><\/script>/g,'').replace('</head>',learningAssets+'</head>');
 await writeFile('profile/index.html',profile);
 let about=await readFile('about/index.html','utf8');about=about.replace(/<!-- team:start -->[\s\S]*?<!-- team:end -->/,()=>`<!-- team:start -->${teamSection(authors)}<!-- team:end -->`);await writeFile('about/index.html',about);
-let sitemap=await readFile('sitemap.xml','utf8');sitemap=sitemap.replace(/<url>\s*<loc>https:\/\/brainilabgames\.com\/learn\/paths\/(?:[^<]*)<\/loc>\s*<\/url>/g,'');sitemap=sitemap.replace('</urlset>',['/learn/paths/',...paths.map(p=>'/learn/paths/'+p.slug+'/')].map(p=>`<url><loc>https://brainilabgames.com${p}</loc></url>`).join('')+'</urlset>');await writeFile('sitemap.xml',sitemap);
+let sitemap=await readFile('sitemap.xml','utf8');sitemap=sitemap.replace(/<url>\s*<loc>https:\/\/brainilabgames\.com\/learn\/paths\/(?:[^<]*)<\/loc>\s*<\/url>/g,'');sitemap=sitemap.replace('</urlset>',['/learn/paths/',...paths.map(p=>'/learn/paths/'+p.slug+'/')].map(p=>`<url><loc>https://brainilabgames.com${p}</loc></url>`).join('')+'</urlset>');if(!sitemap.includes('<loc>https://brainilabgames.com/learn/topics/</loc>'))sitemap=sitemap.replace('</urlset>','<url><loc>https://brainilabgames.com/learn/topics/</loc></url></urlset>');await writeFile('sitemap.xml',sitemap);
 console.log(`Rendered ${paths.length} learning paths and ${authors.length} author profiles using shared production templates.`);
