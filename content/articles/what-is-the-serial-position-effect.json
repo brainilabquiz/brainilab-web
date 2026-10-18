@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-the-serial-position-effect",
+  "title": "What is the serial position effect? Mind the middle",
+  "description": "Remember the first thing and the last, but lose the bit in between? Meet primacy, recency and a familiar quirk of remembering a list.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 168,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-the-serial-position-effect.webp",
+    "small": "/assets/images/learn/what-is-the-serial-position-effect-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-the-serial-position-effect-thumb.webp",
+    "alt": "An illustrated shopping list with a vivid apple and lemon at its ends, fainter groceries in the middle and an indigo pencil beside it",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a visual metaphor, not a scientific diagram.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Find a link between a small set of clues in Connections.",
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "chunking-memory-familiar-groups"
+  ],
+  "sources": [
+    {
+      "url": "https://dictionary.apa.org/serial-position-curve",
+      "name": "American Psychological Association — Serial position curve"
+    },
+    {
+      "url": "https://dictionary.apa.org/primacy-effect",
+      "name": "American Psychological Association — Primacy effect"
+    },
+    {
+      "url": "https://dictionary.apa.org/recency-effect",
+      "name": "American Psychological Association — Recency effect"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-middle",
+      "title": "The middle has a harder time",
+      "html": "<p><strong>The serial position effect is the tendency to remember the beginning and end of a list better than its middle.</strong> Where something appears can matter as well as what it says.</p><p>Imagine hearing a shopping list. Apples come first, lemons last, and somewhere between them are the carrots you forget to buy. It is a familiar way to picture the pattern, rather than a rule for every shopping trip.</p>"
+    },
+    {
+      "id": "two-ends",
+      "title": "Two ends, two names",
+      "html": "<p>The <a href=\"https://dictionary.apa.org/primacy-effect\">primacy effect</a> is better recall of early items. The <a href=\"https://dictionary.apa.org/recency-effect\">recency effect</a> is better recall of recent ones. Both names describe which part gets an advantage.</p><p>On a graph, this often makes a U shape: stronger recall at either end, weaker recall in between. The <a href=\"https://dictionary.apa.org/serial-position-curve\">American Psychological Association calls this a serial position curve</a>.</p>"
+    },
+    {
+      "id": "not-a-memory-verdict",
+      "title": "It is a pattern, not a verdict",
+      "html": "<p>“Usually remembered best” does not mean “always remembered”. Forgetting one item in the middle does not prove the effect caused it, or tell you whether your memory is good or bad.</p><p>Nor does remembering the last answer in a quiz mean you will still know it tomorrow. <a href=\"/learn/remember-quiz-answers-tomorrow/\">Trying to recall it later</a> asks a different question.</p>"
+    },
+    {
+      "id": "give-the-middle-a-look",
+      "title": "Give the middle another look",
+      "html": "<p>When checking a list, you could give its middle a second glance. That is a practical precaution, not a promise of perfect recall.</p><p>There is another way to make a list feel less crowded: <a href=\"/learn/chunking-memory-familiar-groups/\">chunking turns familiar pieces into groups</a>. The carrots may still appreciate being written down.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T20:22:07Z",
+  "updatedAt": "2026-10-18T20:22:07Z",
+  "minutes": 2
+}

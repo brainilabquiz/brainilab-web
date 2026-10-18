@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-petrichor-smell-of-rain",
+  "title": "What is petrichor? Why rain smells earthy",
+  "description": "That earthy smell after rain has a name: petrichor. Meet the soil bacteria, plant oils and tiny bursting bubbles behind a familiar rainy-day pleasure.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 169,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-petrichor-smell-of-rain.webp",
+    "small": "/assets/images/learn/what-is-petrichor-smell-of-rain-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-petrichor-smell-of-rain-thumb.webp",
+    "alt": "Raindrops and a small splash on earthy soil beside a green seedling and two smooth stones",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a visual metaphor, not a scientific diagram.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try the Science Quiz for more everyday surprises.",
+  "related": [
+    "why-are-soap-bubbles-round",
+    "why-does-ice-float"
+  ],
+  "sources": [
+    {
+      "url": "https://news.mit.edu/2015/rainfall-can-release-aerosols-0114",
+      "name": "MIT News — Rainfall can release aerosols, study finds (2015)"
+    },
+    {
+      "url": "https://www.csiro.au/en/news/all/articles/2015/march/the-smell-of-rain-how-our-scientists-invented-a-new-word",
+      "name": "CSIRO — The smell of rain: how our scientists invented a new word (2015)"
+    },
+    {
+      "url": "https://jic.ac.uk/press-release/research-unearths-the-science-behind-the-smell-of-spring/",
+      "name": "John Innes Centre — Research unearths the science behind the smell of spring (2020)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-ground",
+      "title": "Rain borrows a scent from the ground",
+      "html": "<p><strong>Petrichor is the earthy smell associated with rain falling on dry ground.</strong> Plant oils and compounds made by soil microbes help create it. The water falling from the sky is not bringing a bottle of perfume.</p><p>A familiar smell has a surprisingly busy cast of contributors.</p>"
+    },
+    {
+      "id": "geosmin",
+      "title": "Meet the microscopic perfumers",
+      "html": "<p>One earthy-smelling ingredient is <strong>geosmin</strong>, made by soil bacteria including <em>Streptomyces</em>. The <a href=\"https://jic.ac.uk/press-release/research-unearths-the-science-behind-the-smell-of-spring/\">John Innes Centre describes how these bacteria produce it</a>.</p><p>So petrichor is not simply another name for geosmin. Think of the rainy-day scent as a mixture, with geosmin playing a part.</p>"
+    },
+    {
+      "id": "tiny-bubbles",
+      "title": "The tiny bubbles that help it travel",
+      "html": "<p>In 2015, <a href=\"https://news.mit.edu/2015/rainfall-can-release-aerosols-0114\">MIT researchers filmed raindrops hitting porous surfaces</a>. Drops trapped little air bubbles, which rose and burst, releasing much smaller droplets called aerosols.</p><p>The researchers proposed that these droplets could carry aromatic material from the ground into the air. A breeze could then move it along. This helps explain how a scent can reach your nose without your nose reaching the soil.</p>"
+    },
+    {
+      "id": "a-name",
+      "title": "A grand name for an ordinary pleasure",
+      "html": "<p><a href=\"https://www.csiro.au/en/news/all/articles/2015/march/the-smell-of-rain-how-our-scientists-invented-a-new-word\">CSIRO scientists Isabel Bear and Richard Thomas named petrichor in 1964</a>. Its Greek roots refer to stone and <em>ichor</em>, the fluid of the gods in mythology.</p><p>Quite a dramatic name for a damp path. If everyday things keep surprising you, discover <a href=\"/learn/why-are-soap-bubbles-round/\">why soap bubbles become spheres</a> or <a href=\"/learn/why-does-ice-float/\">why ice floats</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T20:22:07Z",
+  "updatedAt": "2026-10-18T20:22:07Z",
+  "minutes": 2
+}
