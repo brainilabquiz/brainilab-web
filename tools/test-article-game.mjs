@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync,readdirSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {prepareArticle,articleBody,safeLink,cleanHtml} from '../lib/learn-content.js';
-import {articleGame} from '../lib/article-game.js';
+import {articleGame,articleJourney} from '../lib/article-game.js';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 
 const flags='/geography/world-flags-quiz/?difficulty=easy&set=1';
@@ -19,7 +19,10 @@ for(const raw of articles){
  assert.deepEqual(a.quiz,raw.quiz,`${a.slug}: quiz must not change`);
  assert.ok(existsSync(a.game.url.split(/[?#]/)[0].slice(1)+'index.html'),a.slug);
  const dom=new JSDOM(articleBody(a,[a])),link=dom.window.document.querySelector('[data-article-game]');
- assert.equal(link.getAttribute('href'),raw.game.url,a.slug);
+ const destination=new URL(link.getAttribute('href'),'https://brainilabgames.com'),original=new URL(raw.game.url,'https://brainilabgames.com');
+ assert.equal(destination.pathname,original.pathname,a.slug);
+ assert.equal(destination.hash,articleJourney(a)&&!original.hash?'#learn-'+a.slug:original.hash,a.slug);
+ assert.equal(destination.search,original.search,a.slug);
  assert.equal(dom.window.document.querySelectorAll('[data-article-game]').length,1,a.slug);
  assert.ok(link.textContent.includes('Play '),a.slug);
  const image=link.querySelector('img');assert.equal(image.alt,'');

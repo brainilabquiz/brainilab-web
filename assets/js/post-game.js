@@ -4,6 +4,28 @@ window.BrainiPostGame=(()=>{
  const number=value=>Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
  const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
  const mounted=new Map();
+ let readingDirectory;
+ async function returnToReading(container,options){
+  const match=/^#learn-([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(location.hash),slug=match?.[1];
+  if(!slug||slug.length>100)return;
+  const link=container.querySelector('[data-post-action="guide"]');if(!link)return;
+  if(!readingDirectory)readingDirectory=(async()=>{
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4000);
+   try{
+    const response=await fetch('/assets/data/learn-game-links.json',{credentials:'omit',cache:'no-cache',signal:controller.signal});
+    if(!response.ok)return [];
+    const data=await response.json();return data?.version===1&&Array.isArray(data.articles)&&data.articles.length<=1000?data.articles:[];
+   }catch{return [];}finally{clearTimeout(timer);}
+  })();
+  const directory=await readingDirectory;
+  if(!container.isConnected||mounted.get(container)!==options||options.owner!==owner())return;
+  const gamePath=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
+  const article=directory.find(a=>a&&a.slug===slug&&a.gameId===options.gameId&&a.gamePath===gamePath&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
+  if(!article)return;
+  link.setAttribute('href','/learn/'+slug+'/');
+  link.querySelector('span').textContent='Back to your reading';
+  link.querySelector('strong').textContent=article.title+' →';
+ }
  const invitations=new Map(),dismissed=new WeakSet();
  function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
   if(!container)return;
@@ -13,17 +35,17 @@ window.BrainiPostGame=(()=>{
   if(signedIn||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
   if(container.querySelector('[data-join-account]'))return;
   container.hidden=false;
-  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>Keep your scores across devices and pick up your Academy lessons where you left off.</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
+  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>${practice?'Save your next scores across devices.':'Save your scores and Daily streak across devices.'}</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
   container.querySelector('[data-dismiss-account]').onclick=()=>{dismissed.add(container);container.hidden=true;const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');fallback?.focus();};
   container.querySelector('[data-join-account]').onclick=async event=>{
    const button=event.currentTarget,error=container.querySelector('[data-account-error]');
    button.disabled=true;error.hidden=true;
-   window.BrainiSiteAnalytics?.accountPrompt?.('click',practice?'practice_result':'game_result',gameId);
+   try{window.BrainiSiteAnalytics?.accountPrompt?.('click',practice?'practice_result':'game_result',gameId);}catch{}
    try{
     if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
     if(!window.BrainiAuth?.open)throw Error('Sign-in unavailable');
-    window.BrainiAuth.open({source:practice?'practice_result':'game_result',mode:'signup'});
-    window.BrainiSiteAnalytics?.accountPrompt?.('open',practice?'practice_result':'game_result',gameId);
+    await window.BrainiAuth.open({source:practice?'practice_result':'game_result',mode:'signup'});
+    try{window.BrainiSiteAnalytics?.accountPrompt?.('open',practice?'practice_result':'game_result',gameId);}catch{}
    }catch{error.hidden=false;error.textContent='We couldn’t open sign-in. Please try again. Your result is still here.';}
    finally{button.disabled=false;}
   };
@@ -134,6 +156,7 @@ window.BrainiPostGame=(()=>{
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${scoring.points.toLocaleString('en-GB')}</strong> <span data-points-label>${scoring.label}</span>${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p><p class="post-score-context" data-score-context ${scoring.context?'':'hidden'}>${esc(scoring.context)}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);resolveStatus(container,liveOptions);
   const invitation=document.createElement('div');invitation.dataset.accountInvite='';container.querySelector('.post-actions').after(invitation);inviteAccount(invitation,{practice:!!practice,gameId});
+  void returnToReading(container,liveOptions);
   const videoSlot=document.createElement('div');videoSlot.hidden=true;videoSlot.dataset.resultVideo='';
   container.querySelector('.post-footer').before(videoSlot);
   window.BrainiRelatedVideo?.mount(videoSlot,{gameId});

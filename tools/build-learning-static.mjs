@@ -4,10 +4,15 @@ import {prepareArticle,renderPage} from '../lib/learn-content.js';
 import {enrichAuthors,renderLearningPage,teamSection,resumeSection,learningAssets} from '../lib/learning-render.js';
 import {readyPaths} from '../lib/learning-model.js';
 import {learnFeed} from '../lib/learn-seo.js';
+import {articleJourney} from '../lib/article-game.js';
+import {refreshGameReadings,readingPages} from '../lib/game-readings.js';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const authors=await read('content/authors.json'),raw=await Promise.all((await readdir('content/articles')).filter(f=>f.endsWith('.json')).map(f=>read('content/articles/'+f)));
 const articles=enrichAuthors(raw.filter(a=>a.status==='published').map(prepareArticle),authors);
 const paths=(await Promise.all((await readdir('content/paths')).filter(f=>f.endsWith('.json')).map(f=>read('content/paths/'+f)))).filter(p=>p.status==='published');
+await mkdir('assets/data',{recursive:true});
+await writeFile('assets/data/learn-game-links.json',JSON.stringify({version:1,articles:articles.map(articleJourney).filter(Boolean)}));
+for(const file of readingPages){const html=await readFile(file,'utf8');await writeFile(file,refreshGameReadings(html,articles,file));}
 if(readyPaths(paths,articles).length!==paths.length)throw Error('Every published path must have distinct published lessons with valid quizzes.');
 const template=await readFile('learn/index.html','utf8');
 await writeFile('learn/index.html',renderPage(template,articles,null,paths));
