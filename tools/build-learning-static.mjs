@@ -1,3 +1,4 @@
+import {sitemapLastmod} from '../lib/sitemap-date.js';
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import {prepareArticle,renderPage} from '../lib/learn-content.js';
 import {enrichAuthors,renderLearningPage,teamSection,resumeSection,learningAssets} from '../lib/learning-render.js';
@@ -20,5 +21,5 @@ profile=profile.replace(/<!-- academy-resume:start -->[\s\S]*?<!-- academy-resum
 profile=profile.replace(/<link rel="stylesheet" href="\/assets\/css\/learning-paths\.css[^"]*"\/>/g,'').replace(/<script defer src="\/assets\/js\/learning-paths\.bundle\.js[^"]*"><\/script>/g,'').replace('</head>',learningAssets+'</head>');
 await writeFile('profile/index.html',profile);
 let about=await readFile('about/index.html','utf8');about=about.replace(/<!-- team:start -->[\s\S]*?<!-- team:end -->/,()=>`<!-- team:start -->${teamSection(authors)}<!-- team:end -->`);await writeFile('about/index.html',about);
-let sitemap=await readFile('sitemap.xml','utf8');sitemap=sitemap.replace(/<url>\s*<loc>https:\/\/brainilabgames\.com\/learn\/paths\/(?:[^<]*)<\/loc>\s*<\/url>/g,'');sitemap=sitemap.replace('</urlset>',['/learn/paths/',...paths.map(p=>'/learn/paths/'+p.slug+'/')].map(p=>`<url><loc>https://brainilabgames.com${p}</loc></url>`).join('')+'</urlset>');if(!sitemap.includes('<loc>https://brainilabgames.com/learn/topics/</loc>'))sitemap=sitemap.replace('</urlset>','<url><loc>https://brainilabgames.com/learn/topics/</loc></url></urlset>');await writeFile('sitemap.xml',sitemap);
+let sitemap=await readFile('sitemap.xml','utf8');sitemap=sitemap.replace(/<url>\s*<loc>https:\/\/brainilabgames\.com\/learn\/paths\/(?:[^<]*)<\/loc>\s*<\/url>/g,'');sitemap=sitemap.replace('</urlset>',['/learn/paths/',...paths.map(p=>'/learn/paths/'+p.slug+'/')].map(p=>`<url><loc>https://brainilabgames.com${p}</loc></url>`).join('')+'</urlset>');if(!sitemap.includes('<loc>https://brainilabgames.com/learn/topics/</loc>'))sitemap=sitemap.replace('</urlset>','<url><loc>https://brainilabgames.com/learn/topics/</loc></url></urlset>');sitemap=sitemap.replace(/<lastmod>([\s\S]*?)<\/lastmod>/g,(_,value)=>sitemapLastmod(value));await writeFile('sitemap.xml',sitemap);
 console.log(`Rendered ${paths.length} learning paths and ${authors.length} author profiles using shared production templates.`);
