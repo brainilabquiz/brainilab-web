@@ -1,0 +1,69 @@
+{
+  "slug": "snooker-vs-pool",
+  "title": "Snooker vs pool: same cue, different game",
+  "description": "Snooker starts with 22 balls; eight-ball pool uses 16. Discover why the black ball has a different job, and why the table can look so much bigger.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 167,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/snooker-vs-pool.webp",
+    "small": "/assets/images/learn/snooker-vs-pool-small.webp",
+    "thumbnail": "/assets/images/learn/snooker-vs-pool-thumb.webp",
+    "alt": "Selected unnumbered red and blue snooker balls beside numbered 1, 8 and 9 pool balls in green-lined wooden trays",
+    "credit": "AI-generated editorial illustration created for BrainiLab; sample balls, not complete starting layouts.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Know your games? Try the Sports Quiz.",
+  "related": [
+    "how-to-read-a-tennis-score",
+    "why-golf-balls-have-dimples"
+  ],
+  "sources": [
+    {
+      "url": "https://www.wpbsa.com/wp-content/uploads/2198_WPBSA-Rulebook-2024-25.pdf",
+      "name": "WPBSA Official Rules 2024–25 — Snooker equipment and rules of play"
+    },
+    {
+      "url": "https://www.wpapool.com/wp-content/uploads/2026/01/2026.01.02-WPA-Rules.pdf",
+      "name": "World Pool-Billiards Association — Rules of Play, effective 15 September 2025, Section 4: 8-Ball"
+    },
+    {
+      "url": "https://wpapool.com/wp-content/uploads/2024/01/RECOMMENDED-EQUIPMENT-SPECIFICATIONS.pdf",
+      "name": "World Pool-Billiard Association — Recommended Equipment Specifications: playing surfaces"
+    }
+  ],
+  "sections": [
+    {
+      "id": "two-different-goals",
+      "title": "The black ball changes its job",
+      "html": "<p><strong>Snooker is about scoring points with reds and colours. In eight-ball pool, you clear your group, then legally pot the 8-ball to win.</strong></p><p>Both use a cue and pockets, but the same-looking shot can mean something quite different. Pool is a family of games; here we are comparing standard snooker with WPA eight-ball.</p>"
+    },
+    {
+      "id": "count-the-balls",
+      "title": "Count before the break",
+      "html": "<p>Standard snooker starts with <strong>22 balls</strong>: 15 reds, six colours and the white cue ball. The <a href=\"https://www.wpbsa.com/wp-content/uploads/2198_WPBSA-Rulebook-2024-25.pdf\">WPBSA rulebook</a> lists the set.</p><p>WPA eight-ball uses <strong>16 balls</strong>: 15 numbered balls plus the cue ball. Your group is numbers 1–7 or 9–15. The black 8-ball waits until your group is cleared, under the <a href=\"https://www.wpapool.com/wp-content/uploads/2026/01/2026.01.02-WPA-Rules.pdf\">WPA rules</a>.</p>"
+    },
+    {
+      "id": "one-black-two-jobs",
+      "title": "Seven points or the winning shot?",
+      "html": "<p>In snooker, a red is worth <strong>one point</strong> and the black is worth <strong>seven</strong>. Pot a red followed by a black legally and you score eight points.</p><p>While reds remain, a potted colour goes back on its spot. The black can therefore help you score repeatedly. In eight-ball, its number identifies the ball you must finish with; it is not worth eight points.</p>"
+    },
+    {
+      "id": "the-table",
+      "title": "The table gives you another clue",
+      "html": "<p>A full-size snooker playing surface is about <strong>3.57 metres long</strong>. The <a href=\"https://wpapool.com/wp-content/uploads/2024/01/RECOMMENDED-EQUIPMENT-SPECIFICATIONS.pdf\">WPA’s nine-foot pool specification</a> has a playing surface <strong>2.54 metres long</strong>. Those are playing areas, not outside measurements; home tables can vary.</p><p>Another sport with its own scoring language? Try <a href=\"/learn/how-to-read-a-tennis-score/\">love, deuce and advantage in tennis</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T19:59:29Z",
+  "updatedAt": "2026-10-18T19:59:29Z",
+  "minutes": 2
+}
