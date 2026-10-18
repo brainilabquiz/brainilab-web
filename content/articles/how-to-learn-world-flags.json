@@ -42,31 +42,31 @@
   "sections": [
     {
       "id": "start-small",
-      "html": "<p><strong>To learn world flags, start with a small set, describe one distinctive detail on each and then hide the country names.</strong> A page full of stripes and stars is much harder to tackle all at once.</p><p>Try five flags from a region you like, or five you confused in a quiz. Five is a manageable starting point, not a magic memory number.</p>",
+      "html": "<p><strong>To learn world flags, pick a small set, spot one distinctive detail on each and hide the country names.</strong> Five is a friendly starting point, not a magic memory number.</p>",
       "title": "Start with five flags"
     },
     {
       "id": "describe",
-      "html": "<p>Before naming the country, look for three things:</p><ul><li><strong>Layout:</strong> horizontal stripes, vertical stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones appear, and in what order?</li><li><strong>Symbols:</strong> is there a star, emblem or other detail, and where is it?</li></ul><p>The edge attached to the pole is the <em>hoist</em>. Standard illustrations usually place it on the left. A photograph taken from behind the flag can reverse the apparent order.</p>",
+      "html": "<ul><li><strong>Layout:</strong> stripes, a cross or a plain background?</li><li><strong>Colours:</strong> which ones, and in what order?</li><li><strong>Symbols:</strong> what is there, and where?</li></ul><p>The <em>hoist</em> is the edge attached to the pole, usually shown on the left. A photograph taken from behind can reverse the apparent order.</p>",
       "title": "Look at the design in three steps"
     },
     {
       "id": "worked-example",
-      "html": "<div class=\"flag-example\"><div class=\"italy-flag\" role=\"img\" aria-label=\"Italy’s flag: equal vertical bands of green, white and red\"></div><p>Italy’s flag has three equal vertical bands: <strong>green, white and red</strong>, starting at the hoist. Article 12 of the Italian Constitution specifies that design.</p></div><p>“Green by the pole, white in the middle, red at the end” gives you a more useful clue than simply remembering red and green.</p><details class=\"practice-answer\"><summary>Which colour is next to the flagpole?</summary><p><strong>Green.</strong> The order from the hoist is green, white, red.</p></details>",
+      "html": "<div class=\"flag-example\"><div class=\"italy-flag\" role=\"img\" aria-label=\"Italy’s flag: equal vertical bands of green, white and red\"></div><p>Italy has equal vertical bands of <strong>green, white and red</strong>, starting at the hoist. Article 12 of its Constitution specifies the design.</p></div><details class=\"practice-answer\"><summary>Which colour is next to the flagpole?</summary><p><strong>Green.</strong> Think “green by the pole”, rather than just “red and green”.</p></details>",
       "title": "Try it with Italy"
     },
     {
       "id": "compare",
-      "html": "<p>“Red, white and blue” is a description, but it is not much of an answer. These two flags share those colours:</p><ul><li><strong>France:</strong> vertical bands, blue–white–red from the hoist.</li><li><strong>The Netherlands:</strong> horizontal bands, red–white–blue from top to bottom.</li></ul><p>The stripe direction separates them before you worry about colour shades. The <a href=\"https://www.elysee.fr/la-presidence/le-drapeau-francais\">French Presidency’s flag history</a> explains this distinction; the <a href=\"https://www.royal-house.nl/topics/monarchy/flags/flag-of-the-netherlands\">Dutch Royal House</a> confirms the Dutch colours.</p><p>For harder pairs, use an authoritative labelled reference. Subtle shades can change with screens and lighting, so two tiny thumbnails are not always enough.</p>",
+      "html": "<p>Same colours, different directions:</p><ul><li><strong>France:</strong> vertical, blue–white–red from the hoist.</li><li><strong>The Netherlands:</strong> horizontal, red–white–blue from top to bottom.</li></ul><p>The <a href=\"https://www.elysee.fr/la-presidence/le-drapeau-francais\">French Presidency</a> explains the vertical distinction; the <a href=\"https://www.royal-house.nl/topics/monarchy/flags/flag-of-the-netherlands\">Dutch Royal House</a> confirms the Dutch colours. Check an authoritative reference for trickier pairs: screens and lighting can alter subtle shades.</p>",
       "title": "France or the Netherlands? Same colours, different clue"
     },
     {
       "id": "review",
-      "html": "<p>After a round, note two or three flags you were unsure about, including lucky guesses. Write the clue you missed: “vertical, blue by the pole” is more useful than “remember France”.</p><p>Before your next round, cover the labels and name those flags again. Add a few more once you can explain how you recognise the first set. <a href=\"/learn/confidence-is-not-a-memory-test/\">Recognising an answer and recalling it</a> are different challenges.</p><p>For a design that breaks the rectangle pattern, take a look at <a href=\"/learn/nepal-flag-shape/\">Nepal’s double-pennant flag</a>.</p>",
+      "html": "<p>After a round, note two flags you confused and the clue you missed. “Vertical, blue by the pole” beats “remember France”. Cover the labels and name them again before adding more.</p><p><a href=\"/learn/confidence-is-not-a-memory-test/\">Recognition and recall</a> can feel surprisingly different. Ready for a shape change? Meet <a href=\"/learn/nepal-flag-shape/\">Nepal’s double-pennant flag</a>.</p>",
       "title": "Keep a short list for next time"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-18T16:40:02Z",
   "description": "Learn world flags by spotting layout, colour order and symbols. Compare France with the Netherlands, then test a small set without the labels.",
   "publishedAt": "2026-09-23T15:00:00Z"
 }

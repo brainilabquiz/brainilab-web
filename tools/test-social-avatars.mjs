@@ -122,8 +122,10 @@ try{
  await actor(null);
  for(const name of rpcNames.slice(1))await assert.rejects(()=>scalar('select '+name+'()'),'authentication remains required');
  await actor(me);
- // Real server unlock thresholds must match every current client option.
+ // These historical migrations cover XP-based choices. Course, discovery and
+ // active-day rewards use later migrations and their dedicated entitlement suites.
  for(const [kind,list] of Object.entries({...A.options,frame:C.frames,title:C.titles}))for(const item of list){
+  if(item.course||item.challenge||item.days)continue;
   const meta={brainilab_avatar_mode_v1:'built',[C.metadataKeys[kind]]:item.id};
   await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify(meta),peer]);
   for(const xp of new Set([Math.max(0,item.xp-1),item.xp])){
