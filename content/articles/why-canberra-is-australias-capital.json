@@ -9,10 +9,12 @@
   },
   "slug": "why-canberra-is-australias-capital",
   "cover": {
-    "alt": "A globe, travel notebook and compass on a sunlit desk",
-    "src": "https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/b994711f-6bb8-41ab-91e9-b5d525aab2f9.webp",
-    "credit": "AI-generated cover illustration created for BrainiLab.",
-    "position": 50
+    "src": "/assets/images/learn/why-canberra-is-australias-capital-cover-v2.webp",
+    "small": "/assets/images/learn/why-canberra-is-australias-capital-cover-v2-small.webp",
+    "thumbnail": "/assets/images/learn/why-canberra-is-australias-capital-cover-v2-thumb.webp",
+    "alt": "A paper-model illustration of Parliament House in Canberra, with a steel flagmast above its grass-covered roof",
+    "credit": "AI-generated paper-model illustration created for BrainiLab; not a historical photograph.",
+    "position": 40
   },
   "order": 15,
   "title": "Why is Canberra the capital of Australia, not Sydney?",
@@ -56,7 +58,7 @@
       "title": "Was Sydney ever Australia’s national capital?"
     }
   ],
-  "updatedAt": "2026-10-16T18:58:04Z",
+  "updatedAt": "2026-10-18T16:02:08Z",
   "description": "Canberra was the compromise between Sydney and Melbourne. Discover the 100-mile rule, who hosted Parliament first and why three dates tell the story.",
   "publishedAt": "2026-09-28T18:46:01.246533+00:00"
 }
