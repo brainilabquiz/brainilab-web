@@ -221,6 +221,8 @@
 .reward-title-name{display:block;font-size:.8125rem;line-height:1.4;font-weight:750;color:var(--navy);overflow-wrap:anywhere}
 .avatar-studio-controls .reward-grid-title .reward-choice strong{display:inline-block;max-width:100%;font-size:.75rem;line-height:1.4;font-weight:650;padding:4px 8px;background:var(--soft-navy);border-radius:6px}
 .avatar-studio-controls .reward-grid-title [data-reward-id=none] strong{background:transparent;color:var(--muted);font-weight:500}
-.avatar-studio-controls :is(.reward-grid-frame,.reward-grid-title) .reward-choice small{font-size:.6875rem}
-.avatar-studio-controls :is(.reward-grid-frame,.reward-grid-title) .reward-choice:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.avatar-studio-controls :is(.reward-grid-frame,.reward-grid-title) .reward-choice small{font-size:.75rem;line-height:1.5}
+.avatar-studio-controls :is(.reward-grid-frame,.reward-grid-title) .reward-choice:focus-visible{outline:3px solid var(--focus-ring,#a74600);outline-offset:4px;box-shadow:0 0 0 3px #fff}
+.profile-page .avatar-studio-tabs button{font-weight:700;line-height:1.4}
+.profile-page .avatar-apply-bar .profile-style-actions button{font-weight:700}
 @media(max-width:700px){.avatar-studio-controls .reward-grid-frame .reward-choice{min-height:132px}.avatar-collection-summary{font-size:.75rem}}
