@@ -76,36 +76,36 @@
   "sections": [
     {
       "id": "simple-idea",
-      "html": "<p><strong>We have time zones because different places face the Sun at different moments as Earth turns.</strong> A time zone is an area that follows the same rules for its clocks.</p><p>You might have just finished lunch while a friend far away is eating breakfast. If every clock showed the same local time, “nine in the morning” could happen in darkness in some places.</p>",
+      "html": "<p><strong>Time zones let different places use clock times suited to their part of the day.</strong> As <a href=\"/learn/why-day-turns-into-night/\">Earth turns</a>, your afternoon can be a distant friend’s morning. Someone gets breakfast while you are washing the lunch dishes.</p>",
       "title": "Your afternoon can be someone else’s morning"
     },
     {
       "id": "borders",
-      "html": "<p>You might expect neat stripes around the globe. Real life is less tidy.</p><p>People often want towns in the same region or country to share a clock time. Governments choose the rules, so the boundaries bend around borders and places where people live.</p><p>Where a place sits on the globe helps explain its daylight. It does not, by itself, tell you the exact time on its clocks.</p>",
+      "html": "<p><strong>Time-zone boundaries bend because governments choose clock rules.</strong> Towns or regions may share a time for convenience rather than follow a neat stripe of longitude.</p><p><a href=\"https://www.iana.org/time-zones/tz-link\">IANA records these decisions</a>. A place’s position helps explain its daylight, but does not determine its clock on its own.</p>",
       "title": "Why aren’t time zones straight stripes?"
     },
     {
       "id": "offset-is-not-zone",
-      "html": "<p><strong>UTC</strong> is the common time reference used to compare clocks around the world. Think of it as our starting clock.</p><p><strong>UTC+2</strong> means a local clock is two hours ahead of that starting clock. When UTC shows 12 noon, the local clock shows 2 in the afternoon.</p><p><strong>UTC−3</strong> means three hours behind. When UTC shows 12 noon, that local clock shows 9 in the morning.</p><p>That difference is called an <strong>offset</strong>. The plus sign means ahead; the minus sign means behind.</p>",
+      "html": "<p><strong>UTC</strong> is a common reference for comparing clocks. An <strong>offset</strong> is the difference from that reference.</p><p>At 12 noon UTC, <strong>UTC+2</strong> shows 14:00: two hours ahead. <strong>UTC−3</strong> shows 09:00: three hours behind.</p>",
       "title": "UTC is a shared starting clock"
     },
     {
       "id": "clock-arithmetic",
-      "html": "<p>For this made-up example, City A uses UTC+2 and City B uses UTC−3. It is <strong>2 in the afternoon in City A</strong>, also written as 14:00.</p><ol><li><strong>Find the starting clock.</strong> City A is two hours ahead of UTC. Go back two hours: from 2 in the afternoon to 12 noon.</li><li><strong>Find City B.</strong> Its clock is three hours behind UTC. Go back from noon to 11, then 10, then 9.</li><li><strong>It is 9 in the morning in City B.</strong> That is written as 09:00.</li></ol>",
+      "html": "<p>In our made-up example, City A uses UTC+2 and City B uses UTC−3. From 14:00 in City A, go back two hours to noon UTC, then three more to 09:00 in City B.</p>",
       "title": "Follow one call, step by step"
     },
     {
       "id": "at-a-glance",
-      "html": "<div class=\"table-scroll\"><table><caption>Using the fixed differences in our example</caption><thead><tr><th scope=\"col\">Clock</th><th scope=\"col\">Time</th></tr></thead><tbody><tr><td>City A: two hours ahead of UTC</td><td>2 in the afternoon (14:00)</td></tr><tr><td>UTC: our starting clock</td><td>12 noon (12:00)</td></tr><tr><td>City B: three hours behind UTC</td><td>9 in the morning (09:00)</td></tr></tbody></table></div>",
+      "html": "<div class=\"table-scroll\"><table><caption>One moment, three clocks in our example</caption><thead><tr><th scope=\"col\">Clock</th><th scope=\"col\">Time</th></tr></thead><tbody><tr><td>City A: UTC+2</td><td>14:00</td></tr><tr><td>UTC</td><td>12:00</td></tr><tr><td>City B: UTC−3</td><td>09:00</td></tr></tbody></table></div>",
       "title": "Three clocks at the same moment"
     },
     {
       "id": "quiz-clue",
-      "html": "<p>Some places move their clocks forward or back during the year. Others do not. This is often called <strong>daylight saving time</strong>.</p><p>So a place can use a different offset at different times of year. A time zone includes those rules, not just today’s difference from UTC.</p><p>For a real call or journey, use a calendar or world-clock tool with <strong>both the city and the date</strong>. IANA keeps a database of these clock rules as they change.</p>",
+      "html": "<p>Some places change clocks for <strong>daylight saving time</strong>; others do not. A time zone includes those rules, not just today’s offset.</p><p>For a real call or journey, check <strong>the city and the date</strong> in a calendar or world-clock tool. Yesterday’s difference may not apply all year.</p>",
       "title": "For a real call, check the city and date"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-18T15:42:59Z",
   "description": "Your afternoon might be someone else’s morning. Start with a turning Earth, then see why the lines on a time-zone map bend around countries.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }

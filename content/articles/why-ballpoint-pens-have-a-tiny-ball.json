@@ -39,26 +39,26 @@
   "sections": [
     {
       "id": "rolling-tip",
-      "html": "<p><strong>The tiny ball rolls ink onto the paper as you write.</strong> A ballpoint pen’s tip looks like a fixed metal point, but the ball turns as it travels across the page.</p><p>The ball sits in a small holder called a <strong>socket</strong>. Behind it is the ink supply, called the <strong>reservoir</strong>. As the ball turns, its surface picks up ink and carries it onto the page. That small moving part gives the pen its name.</p>",
+      "html": "<p><strong>A ballpoint pen writes by rolling ink onto the paper.</strong> Its tiny metal ball turns inside a holder called a <strong>socket</strong>. Behind it, the <strong>reservoir</strong> stores the ink.</p><p>As the ball rolls, its surface picks up ink and transfers it to the page. Your apparently fixed pen tip has a moving part.</p>",
       "title": "The point is a moving part"
     },
     {
       "id": "ink-problem",
-      "html": "<p>The National Inventors Hall of Fame credits <strong>László Bíró</strong> with the modern ballpoint pen. As a journalist, he noticed that newspaper printing ink dried faster than fountain-pen ink.</p><p>But putting printing ink into a fountain pen did not solve the problem: it was too thick to flow through the tip. Bíró developed a rotating-ball design that could carry ink onto the paper instead.</p><p>Changing the ink alone was not enough. The ink and the way it reached the page had to work together.</p>",
+      "html": "<p>Journalist László Bíró noticed that newspaper ink dried quickly, but it was too thick for a fountain-pen tip. The <a href=\"https://www.invent.org/inductees/laszlo-josef-biro\">National Inventors Hall of Fame</a> credits him with developing the modern ballpoint design.</p><p>The solution needed both suitable ink and a different way to deliver it.</p>",
       "title": "Better ink needed a different way out"
     },
     {
       "id": "small-and-tough",
-      "html": "<p>The ball needs to keep its shape while rubbing against paper. BIC’s <a href=\"https://mediabic.bic.com/image/upload/v1758021347/Press_kit_BIC_Cristal_75_ans_EN_6d77fc7443.pdf\">75th-anniversary Cristal press kit</a> describes a <strong>tungsten carbide ball one millimetre in diameter</strong>, checked for roundness and resistance.</p><p>Diameter means the distance across the ball. That describes the moving part, rather than the line it draws. These are details of the Cristal described in the press kit; other ballpoints can use different materials or sizes.</p>",
+      "html": "<p>BIC’s <a href=\"https://mediabic.bic.com/image/upload/v1758021347/Press_kit_BIC_Cristal_75_ans_EN_6d77fc7443.pdf\">Cristal anniversary press kit</a> describes a <strong>one-millimetre tungsten carbide ball</strong>, checked for roundness and resistance.</p><p>That measurement is the distance across the ball, not the width of its ink line. Other pens can use different sizes or materials.</p>",
       "title": "A tiny component has a demanding job"
     },
     {
       "id": "draw-the-journey",
-      "html": "<p>On a scrap of paper, draw three things: a tube of ink, a ball partly held in a socket, and a line underneath. Add an arrow showing the ball turning.</p><p>Which part of the sketch must touch both the ink supply and the paper as it moves?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p><strong>The ball’s surface.</strong> The reservoir stores the ink; the rotating ball carries it to the page. The socket keeps the ball in position while allowing it to turn.</p></details><p>Try explaining your drawing without using the word “pen”. If someone can follow how the ink gets onto the paper, you have described the mechanism rather than simply named the object.</p><p>For another design hidden in a familiar object, look at <a href=\"/learn/how-hook-and-loop-fasteners-work/\" target=\"_blank\" rel=\"noopener noreferrer\">the hooks and loops in a reusable fastener</a>.</p><p>Your bag has another small moving part doing a big job: <a href=\"/learn/why-zippers-have-interlocking-teeth/\" target=\"_blank\" rel=\"noopener noreferrer\">the slider that joins a zipper’s teeth</a>.</p>",
+      "html": "<p>Picture ink, a turning ball and a line on paper. Which part must carry the ink between the other two?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p>The ball’s surface. The reservoir stores ink; the socket holds the turning ball in place.</p></details><p>Next, peek inside <a href=\"/learn/why-zippers-have-interlocking-teeth/\">a zipper</a> or <a href=\"/learn/how-hook-and-loop-fasteners-work/\">a hook-and-loop fastener</a>.</p>",
       "title": "Can you sketch the ink’s journey?"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-18T15:42:59Z",
   "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }
