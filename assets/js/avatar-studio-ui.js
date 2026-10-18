@@ -52,6 +52,7 @@ window.BrainiAvatarStudioUI=(function(){
     root.dispatchEvent(new CustomEvent('brainilab:avatarpanechange',{detail:{pane:active}}));
   }
   function sample(kind,item,draft,total){
+    if(['glasses','hat','prop'].includes(kind))return A.preview(kind,item.id,draft);
     if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     if(kind==='title')return `<span class="reward-title-name">${escapeCopy(BrainiData.player().displayName||'Your name')}</span>`;
     if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
