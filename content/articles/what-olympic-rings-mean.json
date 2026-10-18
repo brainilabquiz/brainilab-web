@@ -10,8 +10,8 @@
   "slug": "what-olympic-rings-mean",
   "cover": {
     "src": "/assets/images/learn/what-olympic-rings-mean-colours-v2.webp",
-    "small": "/assets/images/learn/what-olympic-rings-mean-colours-v2-small.webp",
-    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-colours-v2-thumb.webp",
+    "small": "/assets/images/learn/what-olympic-rings-mean-colours-card-v3-small.webp",
+    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-colours-card-v3-thumb.webp",
     "alt": "Five wooden spools of blue, yellow, black, green and red thread on white linen, with a loose white thread",
     "credit": "AI-generated conceptual editorial image created for BrainiLab.",
     "position": 50
@@ -49,7 +49,7 @@
       "html": "<p>If someone asks which continent the blue ring represents, there is no official individual assignment to give. Think of the linked design as a whole.</p><p>For another sporting detail that looks decorative, discover <a href=\"/learn/why-golf-balls-have-dimples/\">what the dimples on a golf ball actually do</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-18T16:02:08Z",
+  "updatedAt": "2026-10-18T16:19:12Z",
   "description": "The Olympic rings stand for unity, but blue is not officially assigned to one continent. Discover the five colours and the easy-to-miss white background.",
   "publishedAt": "2026-09-29T06:03:00Z"
 }
