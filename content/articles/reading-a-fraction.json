@@ -73,7 +73,7 @@
   "sections": [
     {
       "id": "read-the-picture-first",
-      "html": "<p>Draw a strip and divide it into five equal pieces. Colour three pieces.</p><p>We write that coloured share as <strong>3/5</strong>, said “three fifths”. Each number tells us something:</p><ul><li><strong>5, on the bottom:</strong> the whole strip has five equal pieces.</li><li><strong>3, on the top:</strong> we are counting three of those pieces.</li></ul><p>The top number is called the <strong>numerator</strong>. The bottom number is the <strong>denominator</strong>. Learn what each number does first; the names can come after.</p>",
+      "html": "<p>Draw a strip and divide it into <a href=\"/learn/fractions-equal-parts/\">five equal pieces</a>. Colour three pieces.</p><p>We write that coloured share as <strong>3/5</strong>, said “three fifths”. Each number tells us something:</p><ul><li><strong>5, on the bottom:</strong> the whole strip has five equal pieces.</li><li><strong>3, on the top:</strong> we are counting three of those pieces.</li></ul><p>The top number is called the <strong>numerator</strong>. The bottom number is the <strong>denominator</strong>. Learn what each number does first; the names can come after.</p>",
       "title": "What does each number tell us?"
     },
     {
@@ -92,7 +92,7 @@
       "title": "Avoid a tempting shortcut"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-18T09:50:34Z",
   "description": "The bottom number names the pieces. The top number counts how many of them you have.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

@@ -82,7 +82,7 @@
     },
     {
       "id": "match-sizes-before-adding",
-      "html": "<p>What about <strong>1/2 + 1/4</strong>? A half and a quarter are different-sized pieces of the same whole. We need matching pieces before we count them together.</p><ol><li>Draw a strip and colour half of it.</li><li>Split the whole strip into four equal pieces. Your coloured half now covers two quarters.</li><li>Colour one more quarter. Three of the four pieces are now coloured.</li></ol><p>That gives us <strong>1/2 + 1/4 = 3/4</strong>.</p><p>The same idea works with thirds and sixths. Split each third into two equal pieces: one third becomes two sixths. Add one more sixth and you have three sixths, which cover half the strip.</p>",
+      "html": "<p>What about <strong>1/2 + 1/4</strong>? A half and a quarter are different-sized pieces of the same whole. We need <a href=\"/learn/equivalent-fractions-same-amount/\">matching pieces</a> before we count them together.</p><ol><li>Draw a strip and colour half of it.</li><li>Split the whole strip into four equal pieces. Your coloured half now covers two quarters.</li><li>Colour one more quarter. Three of the four pieces are now coloured.</li></ol><p>That gives us <strong>1/2 + 1/4 = 3/4</strong>.</p><p>The same idea works with thirds and sixths. Split each third into two equal pieces: one third becomes two sixths. Add one more sixth and you have three sixths, which cover half the strip.</p>",
       "title": "Make the pieces the same size"
     },
     {
@@ -91,7 +91,7 @@
       "title": "Does your answer fit the picture?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-18T09:50:34Z",
   "description": "Colour a few equal pieces, add some more, and count them together. Then try adding halves and quarters with a paper strip.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
