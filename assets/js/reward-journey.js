@@ -20,7 +20,7 @@ window.BrainiRewardJourney=(()=>{
       const level=item.level||BrainiProgressUI.xpProgress(1,person.xp).level;
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;
     }
-    if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.markup({...person.avatarDesign,mode:'built',[item.kind]:item.id},Math.max(item.xp,Number(person.xp)||0));
+    if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.preview(item.kind,item.id,person.avatarDesign);
     return '<span class="profile-goal-letter">Aa</span>';
   }
   function nextGoal(person,earned){
@@ -32,18 +32,29 @@ window.BrainiRewardJourney=(()=>{
   function fromLink(value){
     return typeof value==='string'?milestones().find(item=>item.kind!== 'rank'&&value===item.kind+':'+item.id)||null:null;
   }
-  function markup(person,xp,change){
-    if(!valid(xp))return '';
+  function resultGoal(xp,change){
+    if(!valid(xp))return {item:null,earned:[]};
     const earned=change?.after===xp?crossed(change.before,change.after):[];
-    const item=earned.find(goal=>goal.kind!=='rank')||earned[0]||next(xp);
+    const cosmetics=earned.filter(item=>item.kind!=='rank'),rewards=cosmetics.length?cosmetics:earned;
+    // The level bar already shows the next level. Give the reward slot to an
+    // actual avatar extra when one remains; earned diplomas still get a turn.
+    const item=rewards[0]||milestones().find(goal=>goal.kind!=='rank'&&goal.xp>xp)||next(xp);
+    return {item,earned:rewards};
+  }
+  function markup(person,xp,change){
+    const {item,earned}=resultGoal(xp,change);
     if(!item)return '';
     const unlocked=earned.length>0,remaining=item.xp-xp;
-    const detail=unlocked?`${item.detail}${earned.length>1?' · +'+(earned.length-1)+' more':''}`:`${remaining.toLocaleString('en-GB')} XP to go`;
-    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${unlocked?'Unlocked!':'Next unlock'}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+    const detail=unlocked?`${item.detail} · ${item.kind==='rank'?'View progress':'Try it on'}`:`${remaining.toLocaleString('en-GB')} XP to go`;
+    const heading=unlocked?item.kind==='rank'?'New diploma':'Unlocked!':item.kind==='rank'?'Next diploma':'Next avatar extra';
+    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+  }
+  function moreMarkup(person,xp,change){
+    const {earned}=resultGoal(xp,change),more=earned.slice(1);if(!more.length)return '';
+    return `<details class="post-unlock-more"><summary>${more.length} more unlocked</summary><ul>${more.map(item=>`<li><a href="${esc(href(item))}" data-unlocked-reward="${esc(item.kind+':'+item.id)}"><span class="post-unlock-mini" aria-hidden="true">${art(item,person)}</span><span><strong>${esc(item.name)}</strong><small>${esc(item.detail)} · Try it on</small></span><span aria-hidden="true">→</span></a></li>`).join('')}</ul></details>`;
   }
   function resultHref(xp,change){
-    const earned=change?.after===xp?crossed(change.before,change.after):[];
-    return href(earned.find(goal=>goal.kind!=='rank')||earned[0]||next(xp));
+    return href(resultGoal(xp,change).item);
   }
-  return Object.freeze({next,crossed,art,nextGoal,href,fromLink,markup,resultHref});
+  return Object.freeze({next,crossed,art,nextGoal,href,fromLink,resultGoal,markup,moreMarkup,resultHref});
 })();

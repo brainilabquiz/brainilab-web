@@ -27,7 +27,7 @@ assert.deepEqual(Array.from(J.crossed(90,140),r=>r.name),['Blue sky']);
 assert.equal(J.fromLink('frame:blue').name,'Blue sky');assert.equal(J.fromLink('frame:blue<script>'),null);
 assert.equal(J.fromLink('hat:academy_calendar'),null,'a game never claims a course completion reward from XP');
 assert.equal(J.next(10000).name,'PhD');
-assert.match(J.markup({},1600,{before:1450,after:1600}),/Unlocked!/);assert.match(J.markup({},1600,{before:1450,after:1600}),/Copper glow/);assert.match(J.markup({},1600,{before:1450,after:1600}),/\+2 more/);
+assert.match(J.markup({},1600,{before:1450,after:1600}),/Unlocked!/);assert.match(J.markup({},1600,{before:1450,after:1600}),/Copper glow/);assert.match(J.moreMarkup({},1600,{before:1450,after:1600}),/2 more unlocked/);
 assert.match(J.art({kind:'scene',id:'library'},{}),/src="\/assets\/profile-scenes\/library.svg"/);
 assert.match(J.art({kind:'frame',id:'gold'},{}),/data-social-frame="gold"/);
 h.emit(90);h.play('new');h.emit(140,[h.receipt('new')]);
@@ -36,7 +36,7 @@ assert.match(h.card('new').querySelector('.post-reward').getAttribute('href'),/r
 assert.ok(Object.isFrozen(w.BrainiProgressUI.resultProgress('new')));
 const stable=h.card('new').textContent;h.emit(140,[h.receipt('new')]);assert.equal(h.card('new').textContent,stable);
 h.play('new');h.emit(150,[h.receipt('new')]);assert.doesNotMatch(h.card('new').textContent,/Unlocked!/,'repeated receipt cannot be claimed for new XP');
-assert.match(h.card('new').textContent,/Next unlock/);
+assert.match(h.card('new').textContent,/Next avatar extra/);
 assert.deepEqual(h.errors,[]);h.d.window.close();
 
 for(const variant of ['initial','passive','practice','tryFirst','dailyReplayBlocked','wrong-owner','unverified','unchanged-xp','hidden','batch','lesson']){
