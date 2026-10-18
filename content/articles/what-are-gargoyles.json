@@ -1,0 +1,69 @@
+{
+  "slug": "what-are-gargoyles",
+  "title": "What are gargoyles? Monsters with a rainy-day job",
+  "description": "A gargoyle does more than pull a face: it sends rainwater away from a building. Discover the difference between a gargoyle and a grotesque.",
+  "topic": "History",
+  "status": "published",
+  "order": 171,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-are-gargoyles.webp",
+    "small": "/assets/images/learn/what-are-gargoyles-small.webp",
+    "thumbnail": "/assets/images/learn/what-are-gargoyles-thumb.webp",
+    "alt": "An imaginary stone creature on a Gothic ledge pours rainwater from its open mouth away from the wall",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a photograph or reconstruction of a named cathedral or sculpture.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Try the History Quiz for more stories behind familiar sights.",
+  "related": [
+    "why-roman-concrete-lasts",
+    "did-viking-helmets-have-horns"
+  ],
+  "sources": [
+    {
+      "url": "https://artsandculture.google.com/story/gargoyles-and-grotesques-historic-england/4wUxM3GPNKfqLA?hl=en-GB",
+      "name": "Historic England — Gargoyles and Grotesques: archive exhibition on Google Arts & Culture"
+    },
+    {
+      "url": "https://cathedral.org/discover/art-architecture/gothic-architecture-101/",
+      "name": "Washington National Cathedral — Gothic Architecture 101: gargoyles and grotesques"
+    },
+    {
+      "url": "https://artsandculture.google.com/asset/darth-vader-grotesque-washington-national-cathedral/WQFnsoxsdFiq5A?hl=en",
+      "name": "Washington National Cathedral — Darth Vader Grotesque: its own collection record on Google Arts & Culture"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-watery-job",
+      "title": "A monster with a practical job",
+      "html": "<p><strong>A gargoyle is a carved waterspout that carries rainwater away from a building’s walls.</strong> Its startling face may get your attention, but its plumbing gives it the job title.</p><p><a href=\"https://artsandculture.google.com/story/gargoyles-and-grotesques-historic-england/4wUxM3GPNKfqLA?hl=en-GB\">Historic England’s archive exhibition</a> shows creatures and human figures doing this work. The name comes from the Old French <em>gargouille</em>, meaning throat.</p>"
+    },
+    {
+      "id": "away-from-the-wall",
+      "title": "Why stick your neck out?",
+      "html": "<p>A projecting spout sends water out into the air instead of letting it run down the masonry. <a href=\"https://cathedral.org/discover/art-architecture/gothic-architecture-101/\">Washington National Cathedral explains how its gargoyles protect the stone</a>.</p><p>The long mouth makes more sense once you imagine a rainy day. Another building detail worth a closer look is the <a href=\"/learn/why-roman-concrete-lasts/\">little lumps in Roman concrete</a>.</p>"
+    },
+    {
+      "id": "gargoyle-or-grotesque",
+      "title": "Gargoyle or grotesque? Follow the water",
+      "html": "<p>A carved creature without a working waterspout is generally called a <strong>grotesque</strong>. Looking alarming is not enough to make it a gargoyle.</p><p>That is the useful distinction when two figures seem equally monstrous: one channels roof water through a spout; the other does not. You need to inspect the function as well as the face.</p>"
+    },
+    {
+      "id": "a-modern-villain",
+      "title": "Even Darth Vader has a place",
+      "html": "<p>Washington National Cathedral has a <a href=\"https://artsandculture.google.com/asset/darth-vader-grotesque-washington-national-cathedral/WQFnsoxsdFiq5A?hl=en\">Darth Vader grotesque on its northwest tower</a>. Its own account traces the design to a children’s competition in the 1980s. Gothic style does not automatically mean medieval age.</p><p>Appearances can tell a misleading story. <a href=\"/learn/did-viking-helmets-have-horns/\">Those familiar horned Viking helmets</a> offer another good reason to look twice.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T20:42:35Z",
+  "updatedAt": "2026-10-18T20:42:35Z",
+  "minutes": 2
+}
