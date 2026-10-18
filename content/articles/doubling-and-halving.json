@@ -55,7 +55,7 @@
     "thumbnail": "/assets/images/learn/doubling-and-halving-thumb.webp"
   },
   "order": 44,
-  "title": "Double one number, halve the other",
+  "title": "Doubling and halving: an easier multiplication trick",
   "topic": "Numbers & logic",
   "status": "published",
   "related": [
@@ -73,26 +73,26 @@
   "sections": [
     {
       "id": "repack-the-same-objects",
-      "html": "<p>Four small bags each hold six counters. We want to make them easier to count without changing how many counters we have.</p><ol><li>Empty the first two bags into one larger bag. Six counters and six more make twelve.</li><li>Do the same with the other two bags. That gives you another bag of twelve.</li><li>You now have two bags of twelve: twenty-four counters altogether.</li></ol><p>So <strong>4 × 6</strong> and <strong>2 × 12</strong> have the same answer: 24.</p><p>There are half as many bags, with twice as much in each bag. No counters have been added or taken away.</p>",
-      "title": "Repack the same objects"
+      "html": "<p><strong>Double one factor and halve the other to keep the same product.</strong> For example, <strong>4 × 6 = 2 × 12 = 24</strong>. A factor is one of the numbers you multiply; the product is the answer.</p><p>Picture four bags with six counters each. Pour two bags into one larger bag, then do the same with the other two. You now have two bags of twelve. No counter has escaped.</p>",
+      "title": "Same counters, fewer bags"
     },
     {
       "id": "explore",
-      "html": "<p>Draw six groups of five dots. Pair the groups, circling each pair together. You now have three groups of ten without adding or removing a dot.</p><p>For 6 × 5, pair the six groups into three groups of ten. Three tens are thirty, so 6 × 5 is also thirty. The second arrangement may be easier to count even though both show the same objects.</p>",
-      "title": "Try it yourself"
+      "html": "<p>Draw six groups of five dots. Circle each pair of groups together: you now have three groups of ten.</p><p>So <strong>6 × 5 = 3 × 10 = 30</strong>. You changed the arrangement, not the number of dots. It is still the <a href=\"/learn/multiplication-equal-groups/\">same idea of counting equal groups</a>.</p>",
+      "title": "Try six groups of five"
     },
     {
       "id": "change-both-factors-together",
-      "html": "<p>The two numbers you multiply are called <strong>factors</strong>. In 4 × 6, the factors are 4 and 6.</p><p>Here, one number counts the bags and the other counts the counters in each bag. To keep the same total, both must change together: half as many bags, twice as much in each.</p><p>If you doubled the counters in each bag but kept all four bags, you would double the total instead.</p><p>For now, use an even number of bags so that you can pair them without one being left over.</p>",
+      "html": "<p>Doubling only one factor doubles the answer. To keep the total, change both: half as many bags, twice as many counters in each.</p><p>For these examples, start with an even number of bags so every bag has a partner. The regrouping follows the <a href=\"https://openstax.org/books/prealgebra-2e/pages/7-2-commutative-and-associative-properties\">multiplication properties explained by OpenStax</a>.</p>",
       "title": "Why both numbers must change"
     },
     {
       "id": "choose-a-friendlier-calculation",
-      "html": "<p>Try <strong>16 × 5</strong>: sixteen bags with five counters in each.</p><ol><li>Pair the bags. Sixteen small bags become eight larger bags.</li><li>Each larger bag holds ten counters: five from each small bag.</li><li>Eight groups of ten make eighty.</li></ol><p>So <strong>16 × 5 = 80</strong>. Counting tens made the job easier.</p><p>Use this method when the new groups feel easier to count. You do not have to use it for every multiplication.</p>",
-      "title": "Try it with groups of five"
+      "html": "<p>Sixteen bags with five counters each become eight bags with ten each. <strong>16 × 5 = 8 × 10 = 80</strong>.</p><p>Counting tens is handy here. Use the trick when the new calculation feels easier; you do not need it for every multiplication.</p>",
+      "title": "Turn 16 × 5 into 8 × 10"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
-  "description": "See why four groups of six can become two groups of twelve without changing the total.",
+  "updatedAt": "2026-10-18T12:41:32Z",
+  "description": "Why does 16 × 5 equal 8 × 10? Pair a few bags of counters to see how doubling and halving makes multiplication easier without changing the total.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
