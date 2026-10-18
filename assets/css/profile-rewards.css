@@ -104,12 +104,7 @@
 .reward-grid-frame .reward-choice-art{display:grid;place-items:center;width:2.75rem;height:2.75rem}
 .reward-grid-title .reward-choice{min-height:4rem;padding:.75rem .5rem}
 .reward-frame-sample{flex-shrink:0}
-.profile-page [data-profile-frame]{--frame-color:var(--line);--frame-outline:var(--card)}
-.profile-page [data-profile-frame=blue]{--frame-color:#2478ab}.profile-page [data-profile-frame=green]{--frame-color:#3b832f}.profile-page [data-profile-frame=copper]{--frame-color:#af622f}.profile-page [data-profile-frame=gold]{--frame-color:#b38a0a;--frame-outline:#f4d86c}.profile-page [data-profile-frame=orbit]{--frame-color:var(--navy);--frame-outline:#ad9ce1}
-.profile-page .rank-avatar[data-profile-frame],.profile-page .nav-right .avatar[data-profile-frame]{border:3px solid var(--frame-color)!important;box-shadow:0 0 0 2px var(--frame-outline),0 0 0 3px var(--frame-color)!important;background:var(--card)}
-.profile-page .rank-avatar[data-profile-frame]::after,.profile-page .nav-right .avatar[data-profile-frame]::after{display:none}
-.profile-page .nav-right .avatar[data-profile-frame]{color:var(--navy)}
-.reward-frame-sample[data-profile-frame]{border-color:var(--frame-color);box-shadow:0 0 0 2px var(--frame-outline)}
+/* Equipped frames use the same transparent SVGs as rankings and the header. */
 .profile-page .profile-rank-main [data-equipped-title]{display:inline-block;background:var(--soft-navy);color:var(--navy);border-radius:.5rem;padding:.25rem .5rem;font-size:.8125rem;font-weight:700;margin:0 0 .5rem}
 .profile-page .profile-rank-main [data-equipped-title][hidden]{display:none}
 .profile-quick-links{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;padding:.5rem 0 1.5rem}
