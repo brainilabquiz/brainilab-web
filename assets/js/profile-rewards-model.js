@@ -49,6 +49,25 @@ window.BrainiRewardCatalog=(function(){
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
       .filter(r=>!r.course&&!r.challenge&&!r.days&&r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
   }
+  function xpStep(earned){
+    const total=xp(earned),item=next(total);if(!item)return null;
+    const thresholds=Object.values(groups).flat().filter(r=>!r.course&&!r.challenge&&!r.days&&r.xp>0&&r.xp<=total).map(r=>r.xp);
+    const start=Math.max(0,...thresholds),max=item.xp-start,value=total-start;
+    return {type:'xp',item,start,value,max,remaining:item.xp-total};
+  }
+  // One useful target, using the collection already checked for this account.
+  // Days played are cumulative: they are never a claim about an unbroken streak.
+  function collectionGoal(earned,state={}){
+    const step=xpStep(earned),known=state.cloud&&state.owner&&!state.loading&&!state.error&&Number.isSafeInteger(state.activeDays)&&state.activeDays>=0;
+    if(!known)return step;
+    const days=dayCount(state.activeDays),day=dayRewards.find(r=>r.days>days);
+    if(day&&(!step||day.days-days===1))return {type:'days',item:day,value:days,max:day.days,remaining:day.days-days};
+    if(step)return step;
+    const challenges=discoveryRewards.map(item=>({item,...discoveryProgress(item,state.discovery)})).filter(r=>!r.earned).sort((a,b)=>(a.target-a.completed)-(b.target-b.completed));
+    if(challenges.length){const r=challenges[0];return {type:'discovery',item:r.item,value:r.completed,max:r.target,remaining:r.target-r.completed};}
+    const courses=academyIds(state.academy),course=academyRewards.find(r=>!courses.includes(r.id));
+    return course?{type:'academy',item:course,value:0,max:1,remaining:1}:null;
+  }
   function surprise(style,earned,random=Math.random,academy=[],discovery=[],activeDays=0){
     const total=xp(earned),current=available(style,total,academy,discovery,activeDays),result={...current,mode:'built'};
     const kinds=['hair','hairColor','shirt','background','glasses','hat','prop'];
@@ -64,5 +83,5 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
 })();

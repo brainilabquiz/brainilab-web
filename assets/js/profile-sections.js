@@ -93,9 +93,10 @@ window.BrainiProfileSections=(function(){
     return BrainiRewardJourney.nextGoal(person,progress.currentXp);
   }
   function earningGuide(){
+    const r=BrainiProgressUI.xpRules(),limit=r.limit===3?'three':String(r.limit),format=n=>n.toLocaleString('en-GB');
     return `<details class="profile-xp-guide"><summary data-xp-guide-toggle>How to earn XP <span aria-hidden="true">+</span></summary>
-      <dl><div><dt><a href="/games/" data-progress-focus="guide-games">Finish a game</a><b>50 XP + answers</b></dt><dd>Add 5 XP per correct answer, up to 300 XP per round. Your first three completed rounds of each game earn XP each day.</dd></div>
-      <div><dt><a href="/daily-quiz/" data-progress-focus="guide-daily">Main Daily</a><b>+250 XP bonus</b></dt><dd>Once a day, on top of your game XP. The extra game is optional.</dd></div>
+      <dl><div><dt><a href="/games/" data-progress-focus="guide-games">Finish a game</a><b>${format(r.base)} XP + answers</b></dt><dd>Each correct answer adds ${format(r.correct)} XP, up to ${format(r.base+r.correct*50)} XP per round. Your first ${limit} completed rounds of each game can earn XP each day, once their answers are checked.</dd></div>
+      <div><dt><a href="/daily-quiz/" data-progress-focus="guide-daily">Main Daily</a><b>+${format(r.bonus)} XP bonus</b></dt><dd>Once a day, on top of your game XP. The extra game is optional.</dd></div>
       <div><dt><a href="/learn/paths/" data-progress-focus="guide-academy">Academy lessons</a><b>+40 XP</b></dt><dd>Sign in and finish a new lesson’s quiz. Each lesson earns XP once.</dd></div></dl>
       <p>XP builds your level and is never spent. Game scores decide your ranking. Practice rounds earn no XP. New XP rounds are available at 00:00 UTC.</p></details>`;
   }

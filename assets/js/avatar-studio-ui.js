@@ -157,15 +157,24 @@ window.BrainiAvatarStudioUI=(function(){
       const progress=card.querySelector('progress');progress.max=item.days;progress.value=Math.min(days,item.days);progress.setAttribute('aria-label',`${item.name}: ${number(Math.min(days,item.days))} of ${number(item.days)} days played`);
     }
   }
-  function next(root,total){
-    const reward=C.next(total),target=root.querySelector('[data-next-reward]');
+  function next(root,total,state={}){
+    const goal=C.collectionGoal(total,state),reward=goal?.item,target=root.querySelector('[data-next-reward]');
     const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra',scene:'profile background'};
-    target.innerHTML='<span class="reward-kicker"></span><strong></strong><p></p><progress></progress>';
-    target.querySelector('span').textContent=reward?'UP NEXT':'YOUR COLLECTION';
-    target.querySelector('strong').textContent=reward?reward.name:'Every XP reward is unlocked';
-    target.querySelector('p').textContent=reward?`${number(reward.xp-total)} XP to go · ${labels[reward.kind]}`:'Pick your favourites and make them yours.';
-    const progress=target.querySelector('progress');progress.hidden=!reward;
-    if(reward){progress.max=reward.xp;progress.value=total;progress.setAttribute('aria-label',`${reward.name}: ${number(total)} of ${number(reward.xp)} XP`);}
+    const focus=target.contains(document.activeElement),player=BrainiData.player();
+    const art=reward?['glasses','hat','prop'].includes(reward.kind)?A.preview(reward.kind,reward.id,player.avatarDesign):window.BrainiRewardJourney?.art(reward,player)||'':'';
+    const heading=goal?.type==='days'?'Days played':goal?.type==='discovery'?'Try something new':goal?.type==='academy'?'Learn something new':'Next avatar extra';
+    const detail=!goal?'':goal.type==='xp'?`${number(goal.remaining)} XP to go · ${labels[reward.kind]}`:goal.type==='days'?`${number(goal.value)} of ${number(goal.max)} days played`:goal.type==='discovery'?`${number(goal.value)} of ${number(goal.max)} games tried`:'Finish '+reward.courseTitle;
+    const markup=goal?`<a class="avatar-goal-link" href="#avatar-panel-${['days','discovery'].includes(goal.type)?'challenges':goal.type==='academy'?'academy':['glasses','hat','prop'].includes(reward.kind)?'extras':'rewards'}" data-collection-goal="${goal.type}" data-goal-kind="${reward.kind}" data-goal-id="${reward.id}"><span class="avatar-goal-art" aria-hidden="true">${art}</span><span><span class="reward-kicker">${heading}</span><strong>${escapeCopy(reward.name)}</strong><small>${escapeCopy(detail)}</small></span><span class="avatar-goal-arrow" aria-hidden="true">→</span></a><progress></progress>${goal.type==='days'?'<small class="avatar-goal-note">Days add up, even with breaks.</small>':''}`:'<span class="reward-kicker">YOUR COLLECTION</span><strong>Every XP reward is unlocked</strong><p>Pick your favourites and make them yours.</p>';
+    if(target.dataset.goalMarkup!==markup){target.innerHTML=markup;target.dataset.goalMarkup=markup;if(focus)target.querySelector('a')?.focus({preventScroll:true});}
+    const progress=target.querySelector('progress');
+    if(progress){progress.max=goal.max;progress.value=goal.value;progress.setAttribute('aria-label',`${reward.name}: ${number(goal.value)} of ${number(goal.max)} ${goal.type==='xp'?'XP since your last avatar extra':goal.type==='days'?'days played':goal.type==='discovery'?'games tried':'course completed'}`);}
   }
-  return {mount,showPane,choices,next,activePane:()=>active};
+  function openGoal(root,link){
+    const type=link.dataset.collectionGoal,kind=link.dataset.goalKind,id=link.dataset.goalId;
+    const pane=['days','discovery'].includes(type)?'challenges':type==='academy'?'academy':['glasses','hat','prop'].includes(kind)?'extras':'rewards';
+    showPane(root,pane);
+    const card=type==='days'?root.querySelector(`[data-day-card="${id}"]`):type==='discovery'?root.querySelector(`[data-discovery-card="${id}"]`):root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`)?.closest('.avatar-option-group,.avatar-academy-card');
+    const target=card||root.querySelector(`[data-avatar-pane="${pane}"]`);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView?.({block:'nearest'});}
+  }
+  return {mount,showPane,choices,next,openGoal,activePane:()=>active};
 })();
