@@ -82,7 +82,7 @@
     },
     {
       "id": "a-month-is-not-four-weeks",
-      "html": "<p>Four weeks contain <strong>28 days</strong>. A month can have 28, 29, 30 or 31 days. So a 30-day month lasts four weeks and two more days.</p><p>The calendar widely used today is called the <strong>Gregorian calendar</strong>. An ordinary year has 365 days. A leap year has 366, with the extra day added in February.</p><p>These extra days help keep calendar dates in step with the seasons.</p>",
+      "html": "<p>Four weeks contain <strong>28 days</strong>. A month can have 28, 29, 30 or 31 days. So a 30-day month lasts four weeks and two more days.</p><p>The calendar widely used today is called the <strong>Gregorian calendar</strong>. An ordinary year has 365 days. A <a href=\"/learn/why-2100-is-not-a-leap-year/\">leap year</a> has 366, with the extra day added in February.</p><p>These extra days help keep calendar dates in step with the seasons.</p>",
       "title": "A month is not four weeks"
     },
     {
@@ -91,7 +91,7 @@
       "title": "Need an exact count? Check the dates"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-18T12:17:02Z",
   "description": "Count days from Monday, see why a month is longer than four weeks, and find out when a year gets an extra day.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }

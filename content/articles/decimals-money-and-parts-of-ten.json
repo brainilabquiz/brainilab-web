@@ -83,7 +83,7 @@
     },
     {
       "id": "smaller-pieces",
-      "html": "<div class=\"table-scroll\"><table><caption>Tenths and hundredths in decimals</caption><thead><tr><th scope=\"col\">Decimal</th><th scope=\"col\">Meaning</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths</td></tr><tr><td>1.3</td><td>One whole and three tenths</td></tr></tbody></table></div><p>In 1.3 metres, the 1 counts complete metres and the 3 counts tenth-metre pieces. The position tells you the size.</p>",
+      "html": "<div class=\"table-scroll\"><table><caption>Tenths and hundredths in decimals</caption><thead><tr><th scope=\"col\">Decimal</th><th scope=\"col\">Meaning</th></tr></thead><tbody><tr><td>0.1</td><td>One tenth</td></tr><tr><td>0.01</td><td>One hundredth</td></tr><tr><td>0.25</td><td>Two tenths and five hundredths: 25 hundredths</td></tr><tr><td>1.3</td><td>One whole and three tenths</td></tr></tbody></table></div><p>In 1.3 metres, the 1 counts complete metres and the 3 counts tenth-metre pieces. That is <a href=\"/learn/tens-and-ones/\">place value</a>: the position tells you the size.</p>",
       "title": "Read one place at a time"
     },
     {
@@ -92,7 +92,7 @@
       "title": "Why does 0.5 equal 0.50, but not 0.05?"
     }
   ],
-  "updatedAt": "2026-10-16T18:58:04Z",
+  "updatedAt": "2026-10-18T12:17:02Z",
   "description": "One tenth is 0.1; one hundredth is 0.01. A ribbon makes decimal places easy to picture—and shows why 0.5 equals 0.50, but not 0.05.",
   "publishedAt": "2026-10-01T15:18:01.509497+00:00"
 }
