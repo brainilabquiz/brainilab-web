@@ -5815,16 +5815,16 @@ main > section.section,
 .rank-avatar.rank-ring::before,.avatar.rank-header-avatar::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--ring) var(--rank-step,0deg),#e9e5dc 0);pointer-events:none;z-index:0}
 .rank-avatar>img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .avatar.rank-header-avatar>img{background:#fffefa}
-.rank-rookie{--player-frame:url("../icons/rank-frames/rookie.svg")}
-.rank-elementary{--player-frame:url("../icons/rank-frames/elementary.svg")}
-.rank-highschool{--player-frame:url("../icons/rank-frames/highschool.svg")}
-.rank-college{--player-frame:url("../icons/rank-frames/college.svg")}
-.rank-graduate{--player-frame:url("../icons/rank-frames/graduate.svg")}
-.rank-phd{--player-frame:url("../icons/rank-frames/phd.svg")}
-.rank-researcher{--player-frame:url("../icons/rank-frames/researcher.svg")}
-.rank-professor{--player-frame:url("../icons/rank-frames/professor.svg")}
-.rank-dean{--player-frame:url("../icons/rank-frames/dean.svg")}
-.rank-nobel{--player-frame:url("../icons/rank-frames/nobel.svg")}
+.rank-rookie{--player-frame:url("../icons/avatar-frames-v2/level-rookie.svg")}
+.rank-elementary{--player-frame:url("../icons/avatar-frames-v2/level-elementary.svg")}
+.rank-highschool{--player-frame:url("../icons/avatar-frames-v2/level-highschool.svg")}
+.rank-college{--player-frame:url("../icons/avatar-frames-v2/level-college.svg")}
+.rank-graduate{--player-frame:url("../icons/avatar-frames-v2/level-graduate.svg")}
+.rank-phd{--player-frame:url("../icons/avatar-frames-v2/level-phd.svg")}
+.rank-researcher{--player-frame:url("../icons/avatar-frames-v2/level-researcher.svg")}
+.rank-professor{--player-frame:url("../icons/avatar-frames-v2/level-professor.svg")}
+.rank-dean{--player-frame:url("../icons/avatar-frames-v2/level-dean.svg")}
+.rank-nobel{--player-frame:url("../icons/avatar-frames-v2/level-nobel.svg")}
 .rank-step-0{--rank-step:36deg}
 .rank-step-1{--rank-step:72deg}
 .rank-step-2{--rank-step:108deg}
@@ -5915,14 +5915,7 @@ main > section.section,
 /* Original composed avatars fit existing header and profile containers. */
 .braini-built-avatar{display:block;width:100%;height:100%;max-width:100%;border-radius:inherit;position:relative;z-index:1;flex-shrink:0}
 
-/* Earned cosmetic frames accompany the same saved avatar on social surfaces. */
-[data-social-frame]{--social-frame:#2478ab;--social-frame-outline:var(--card)}
-[data-social-frame=green]{--social-frame:#3b832f}
-[data-social-frame=copper]{--social-frame:#af622f}
-[data-social-frame=gold]{--social-frame:#b38a0a;--social-frame-outline:#f4d86c}
-[data-social-frame=orbit]{--social-frame:var(--navy);--social-frame-outline:#ad9ce1}
-.rank-avatar[data-social-frame],.social-avatar[data-social-frame],.group-player-avatar[data-social-frame]{border:2px solid var(--social-frame)!important;box-shadow:0 0 0 1px var(--social-frame-outline),0 0 0 2px var(--social-frame)!important}
-.rank-avatar[data-social-frame]::after{display:none}
+
 
 /* Stable automatic portrait colors; the existing level frame keeps its shape. */
 [data-default-palette="0"]{--default-accent:#2478ab}
@@ -5992,3 +5985,14 @@ main > section.section,
 .achievement-details-dialog li p{font-size:.8125rem;margin:0 0 .375rem;font-weight:700}
 .achievement-details-dialog small{display:block;color:var(--muted);font-size:.75rem;line-height:1.6}
 @media(max-width:420px){.achievement-details-dialog{padding:1rem}.achievement-details-dialog li{gap:.75rem}}
+
+/* One original frame drawing follows the saved look across every surface. */
+[data-profile-frame=blue],[data-social-frame=blue]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-blue.svg");--ring:#2478ab}
+[data-profile-frame=green],[data-social-frame=green]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-green.svg");--ring:#3b832f}
+[data-profile-frame=copper],[data-social-frame=copper]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-copper.svg");--ring:#9c572f}
+[data-profile-frame=gold],[data-social-frame=gold]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-gold.svg");--ring:#a67b16}
+[data-profile-frame=orbit],[data-social-frame=orbit]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-orbit.svg");--ring:#2d296e}
+.rank-avatar,.avatar.rank-header-avatar{isolation:isolate}
+.rank-avatar:is([data-profile-frame],[data-social-frame]),.avatar[data-profile-frame],.social-avatar[data-social-frame],.group-player-avatar[data-social-frame]{position:relative;isolation:isolate;overflow:visible!important;border:0!important;box-shadow:none!important;padding:4px;background:#fffefa;box-sizing:border-box}
+.rank-avatar:is([data-profile-frame],[data-social-frame])::after,.avatar[data-profile-frame]::after,.social-avatar[data-social-frame]::after,.group-player-avatar[data-social-frame]::after{content:"";display:block;position:absolute;inset:-6px;z-index:2;background:var(--player-frame) center/contain no-repeat;-webkit-mask:none;mask:none;transform:none;filter:none;pointer-events:none}
+:is(.social-avatar,.group-player-avatar)[data-social-frame]>:is(img,svg,span){position:relative;z-index:1;border-radius:50%}
