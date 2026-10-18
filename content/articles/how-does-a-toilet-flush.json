@@ -1,68 +1,68 @@
 {
-  "slug": "how-does-a-toilet-flush",
-  "title": "How does a toilet flush without electricity?",
-  "description": "A lever, a rush of water and a tiny float do a surprisingly clever job. Follow what happens inside an ordinary gravity-flush toilet.",
-  "topic": "Everyday inventions",
-  "status": "published",
-  "authorId": "biel-sarda",
-  "order": 129,
-  "publishedAt": "2026-10-14T17:22:33.922720Z",
-  "updatedAt": "2026-10-14T17:22:33.922720Z",
-  "cover": {
-    "src": "/assets/images/learn/curiosity-daily-20261014.webp",
-    "small": "/assets/images/learn/curiosity-daily-20261014-small.webp",
-    "thumbnail": "/assets/images/learn/curiosity-daily-20261014-thumb.webp",
-    "alt": "A clean white toilet with a chrome flush lever beside a yellow towel and lavender flowers",
-    "credit": "AI-generated photorealistic cover created for BrainiLab; an illustrative scene, not a photograph of an observed event.",
-    "position": 50
-  },
   "hub": {
-    "name": "Science",
-    "url": "/science/"
+    "url": "/science/",
+    "name": "Science"
   },
   "game": {
-    "name": "Science Quiz",
-    "url": "/science/science-quiz/"
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
   },
-  "practice": "Enjoy another small mystery? Try the Science Quiz.",
+  "slug": "how-does-a-toilet-flush",
+  "cover": {
+    "alt": "A clean white toilet with a chrome flush lever beside a yellow towel and lavender flowers",
+    "src": "/assets/images/learn/curiosity-daily-20261014.webp",
+    "small": "/assets/images/learn/curiosity-daily-20261014-small.webp",
+    "credit": "AI-generated photorealistic cover created for BrainiLab; an illustrative scene, not a photograph of an observed event.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/curiosity-daily-20261014-thumb.webp"
+  },
+  "order": 129,
+  "title": "How does a toilet flush without electricity?",
+  "topic": "Everyday inventions",
+  "status": "published",
   "related": [
     "why-ballpoint-pens-have-a-tiny-ball",
     "why-zippers-have-interlocking-teeth"
   ],
   "sources": [
     {
-      "name": "Kohler — How a toilet flushes",
-      "url": "https://assist.kohler.com/en/toilets-and-seats/How-a-Toilet-Flushes"
+      "url": "https://assist.kohler.com/en/toilets-and-seats/How-a-Toilet-Flushes",
+      "name": "Kohler — How a toilet flushes"
     },
     {
-      "name": "US EPA — Gravity and pressure-assisted flushing",
-      "url": "https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html"
+      "url": "https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html",
+      "name": "US EPA — Gravity and pressure-assisted flushing"
     },
     {
-      "name": "US EPA — Residential toilets",
-      "url": "https://www.epa.gov/watersense/residential-toilets"
+      "url": "https://www.epa.gov/watersense/residential-toilets",
+      "name": "US EPA — Residential toilets"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Enjoy another small mystery? Try the Science Quiz.",
   "sections": [
     {
       "id": "water-waiting-above-you",
-      "title": "The water is already waiting",
-      "html": "<p><strong>A gravity-flush toilet uses water stored above the bowl. Open a valve, and gravity sends that water down in a rush. The flush itself needs no electric motor.</strong></p><p>You tap a lever, hear a swoosh, and the bowl empties. The quiet hero is the cistern: the tank behind the seat. It holds water until you ask for it.</p><p><a href=\"https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html\" target=\"_blank\" rel=\"noopener noreferrer\">The US Environmental Protection Agency describes gravity flushing as the work of stored water and its weight</a>. Think of tipping a jug: raising the water first gives it somewhere to fall.</p>"
+      "html": "<p><strong>A gravity-flush toilet uses water stored above the bowl. Open a valve, and gravity sends that water down in a rush. The flush itself needs no electric motor.</strong></p><p>You tap a lever, hear a swoosh, and the bowl empties. The quiet hero is the cistern: the tank behind the seat. It holds water until you ask for it.</p><p><a href=\"https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html\" target=\"_blank\" rel=\"noopener noreferrer\">The US Environmental Protection Agency describes gravity flushing as the work of stored water and its weight</a>. Think of tipping a jug: raising the water first gives it somewhere to fall.</p>",
+      "title": "The water is already waiting"
     },
     {
       "id": "the-hidden-bend",
-      "title": "A hidden bend does the next job",
-      "html": "<p>In a siphonic toilet, the rushing water fills a curved passage behind the bowl. A siphon is a flow that carries water through a filled pipe and down to a lower outlet.</p><p>Once that flow starts, it draws water and waste out of the bowl. Air eventually enters the passage and breaks the siphon, ending the rush. <a href=\"https://assist.kohler.com/en/toilets-and-seats/How-a-Toilet-Flushes\" target=\"_blank\" rel=\"noopener noreferrer\">Kohler follows this sequence in its explanation of a toilet flush</a>.</p><p>That explains the sudden change in sound: a strong flow, then a gulp as the water and air change places.</p>"
+      "html": "<p>In a siphonic toilet, the rushing water fills a curved passage behind the bowl. A siphon is a flow that carries water through a filled pipe and down to a lower outlet.</p><p>Once that flow starts, it draws water and waste out of the bowl. Air eventually enters the passage and breaks the siphon, ending the rush. <a href=\"https://assist.kohler.com/en/toilets-and-seats/How-a-Toilet-Flushes\" target=\"_blank\" rel=\"noopener noreferrer\">Kohler follows this sequence in its explanation of a toilet flush</a>.</p><p>That explains the sudden change in sound: a strong flow, then a gulp as the water and air change places.</p>",
+      "title": "A hidden bend does the next job"
     },
     {
       "id": "a-float-resets-it",
-      "title": "A little float gets it ready again",
-      "html": "<p>The falling water level lowers a float inside the cistern. This floating part controls the fill valve, which lets fresh water in.</p><p>As the tank fills, the float rises. At the set level, it shuts the valve. The bowl also gets fresh water. These simple movements prepare the next flush without a timer or a computer.</p>"
+      "html": "<p>The falling water level lowers a float inside the cistern. This floating part controls the fill valve, which lets fresh water in.</p><p>As the tank fills, the float rises. At the set level, it shuts the valve. The bowl also gets fresh water. These simple movements prepare the next flush without a timer or a computer.</p>",
+      "title": "A little float gets it ready again"
     },
     {
       "id": "different-toilets-same-question",
-      "title": "Does every toilet work this way?",
-      "html": "<p>This is one common design. <a href=\"https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html\" target=\"_blank\" rel=\"noopener noreferrer\">EPA distinguishes gravity flushing from pressure-assisted flushing</a>, which uses water held under pressure. Some toilets use electric pumps, so the answer depends on the model.</p><p>Even a gravity toilet needs its water supply to refill. A motor-free flush is only one part of the whole plumbing system.</p><p>Good design can also use less water: <a href=\"https://www.epa.gov/watersense/residential-toilets\" target=\"_blank\" rel=\"noopener noreferrer\">EPA explains how efficient toilets are tested for both flushing performance and water use</a>. The clever bit is making a carefully timed rush do a useful job.</p>"
+      "html": "<p>This is one common design. <a href=\"https://lookforwatersense.epa.gov/products/Product-Search-Results-Toilets.html\" target=\"_blank\" rel=\"noopener noreferrer\">EPA distinguishes gravity flushing from pressure-assisted flushing</a>, which uses water held under pressure. Some toilets use electric pumps, so the answer depends on the model.</p><p>Even a gravity toilet needs its water supply to refill. A motor-free flush is only one part of the whole plumbing system.</p><p>Good design can also use less water: <a href=\"https://www.epa.gov/watersense/residential-toilets\" target=\"_blank\" rel=\"noopener noreferrer\">EPA explains how efficient toilets are tested for both flushing performance and water use</a>. The clever bit is making a carefully timed rush do a useful job.</p><p>For another familiar object with a clever job, explore <a href=\"/learn/how-everyday-things-work/\">how everyday things work</a>.</p>",
+      "title": "Does every toilet work this way?"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-18T21:17:30Z",
+  "description": "A lever, a rush of water and a tiny float do a surprisingly clever job. Follow what happens inside an ordinary gravity-flush toilet.",
+  "publishedAt": "2026-10-14T17:38:15.435974Z"
 }

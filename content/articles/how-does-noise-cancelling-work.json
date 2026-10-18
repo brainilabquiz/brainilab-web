@@ -1,19 +1,4 @@
 {
-  "slug": "how-does-noise-cancelling-work",
-  "title": "How does noise cancelling work? Making quiet with sound",
-  "description": "Noise cancelling headphones add an opposing sound to reduce background noise. Discover why the trick suits an engine hum better than a changing conversation.",
-  "topic": "Everyday inventions",
-  "status": "published",
-  "order": 163,
-  "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/how-does-noise-cancelling-work.webp",
-    "small": "/assets/images/learn/how-does-noise-cancelling-work-small.webp",
-    "thumbnail": "/assets/images/learn/how-does-noise-cancelling-work-thumb.webp",
-    "alt": "Terracotta headphones with cream cushions on a green train seat beside a countryside window",
-    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual scene, not a scientific diagram.",
-    "position": 50
-  },
   "hub": {
     "url": "/learn/",
     "name": "Learn"
@@ -22,7 +7,20 @@
     "url": "/general-knowledge/general-knowledge-quiz/",
     "name": "General Knowledge"
   },
-  "practice": "Curious about more everyday surprises? Try General Knowledge.",
+  "slug": "how-does-noise-cancelling-work",
+  "cover": {
+    "alt": "Terracotta headphones with cream cushions on a green train seat beside a countryside window",
+    "src": "/assets/images/learn/how-does-noise-cancelling-work.webp",
+    "small": "/assets/images/learn/how-does-noise-cancelling-work-small.webp",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual scene, not a scientific diagram.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/how-does-noise-cancelling-work-thumb.webp"
+  },
+  "order": 163,
+  "title": "How does noise cancelling work? Making quiet with sound",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "minutes": 2,
   "related": [
     "what-is-an-earworm",
     "why-zippers-have-interlocking-teeth"
@@ -41,29 +39,31 @@
       "name": "Bose — Do noise cancelling headphones work without music?"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Curious about more everyday surprises? Try General Knowledge.",
   "sections": [
     {
       "id": "quiet-made-with-sound",
-      "title": "A quieter journey, made with more sound",
-      "html": "<p><strong>Active noise cancellation uses microphones and electronics to produce opposing sound waves, reducing some background noise at your ears.</strong></p><p>It sounds backwards: adding sound can make things quieter. The trick is to make the added wave counteract the unwanted one, rather than simply playing louder music.</p>"
+      "html": "<p><strong>Active noise cancellation uses microphones and electronics to produce opposing sound waves, reducing some background noise at your ears.</strong></p><p>It sounds backwards: adding sound can make things quieter. The trick is to make the added wave counteract the unwanted one, rather than simply playing louder music.</p>",
+      "title": "A quieter journey, made with more sound"
     },
     {
       "id": "what-the-headphones-do",
-      "title": "The headphones have two jobs",
-      "html": "<p>First, ear cushions and a good seal physically block some outside sound. That is <strong>passive isolation</strong>.</p><p>Then the powered system listens through microphones, processes the incoming noise and generates an opposing signal. <a href=\"https://www.bose.com/stories/how-do-noise-cancelling-headphones-work\">Bose explains how the physical barrier and active cancellation work together</a>. The padding and the electronics are doing different jobs.</p>"
+      "html": "<p>First, ear cushions and a good seal physically block some outside sound. That is <strong>passive isolation</strong>.</p><p>Then the powered system listens through microphones, processes the incoming noise and generates an opposing signal. <a href=\"https://www.bose.com/stories/how-do-noise-cancelling-headphones-work\">Bose explains how the physical barrier and active cancellation work together</a>. The padding and the electronics are doing different jobs.</p>",
+      "title": "The headphones have two jobs"
     },
     {
       "id": "why-voices-get-through",
-      "title": "Why the engine fades but a voice gets through",
-      "html": "<p>A steady engine drone is easier to counteract than speech that keeps changing. <a href=\"https://www.sony.co.uk/electronics/support/articles/00203389\">Sony’s explanation</a> describes why cancellation is especially effective with constant, lower-pitched noise, and why other sounds remain audible.</p><p>Picture a train’s background rumble alongside someone asking which stop comes next. Reducing the first does not guarantee erasing the second. Noise cancelling is not a force field of silence.</p>"
+      "html": "<p>A steady engine drone is easier to counteract than speech that keeps changing. <a href=\"https://www.sony.co.uk/electronics/support/articles/00203389\">Sony’s explanation</a> describes why cancellation is especially effective with constant, lower-pitched noise, and why other sounds remain audible.</p><p>Picture a train’s background rumble alongside someone asking which stop comes next. Reducing the first does not guarantee erasing the second. Noise cancelling is not a force field of silence.</p>",
+      "title": "Why the engine fades but a voice gets through"
     },
     {
       "id": "without-a-playlist",
-      "title": "Does it work without music?",
-      "html": "<p><strong>Yes, active cancellation can work without music playing.</strong> The electronics still need power. <a href=\"https://www.bose.com/stories/do-noise-cancelling-headphones-work-without-music\">Bose describes this separate job</a>: your playlist can pause while the cancellation keeps working.</p><p>Of course, headphones cannot switch off a tune playing in your memory. That is a different mystery: <a href=\"/learn/what-is-an-earworm/\">why a song gets stuck in your head</a>.</p>"
+      "html": "<p><strong>Yes, active cancellation can work without music playing.</strong> The electronics still need power. <a href=\"https://www.bose.com/stories/do-noise-cancelling-headphones-work-without-music\">Bose describes this separate job</a>: your playlist can pause while the cancellation keeps working.</p><p>Of course, headphones cannot switch off a tune playing in your memory. That is a different mystery: <a href=\"/learn/what-is-an-earworm/\">why a song gets stuck in your head</a>.</p><p>For more clever ideas in familiar objects, browse <a href=\"/learn/how-everyday-things-work/\">how everyday things work</a>.</p>",
+      "title": "Does it work without music?"
     }
   ],
-  "publishedAt": "2026-10-18T11:07:09Z",
-  "updatedAt": "2026-10-18T11:07:09Z",
-  "minutes": 2
+  "updatedAt": "2026-10-18T21:17:30Z",
+  "description": "Noise cancelling headphones add an opposing sound to reduce background noise. Discover why the trick suits an engine hum better than a changing conversation.",
+  "publishedAt": "2026-10-18T11:07:09Z"
 }

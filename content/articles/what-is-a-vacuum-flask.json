@@ -1,19 +1,4 @@
 {
-  "slug": "what-is-a-vacuum-flask",
-  "title": "What is a vacuum flask? The gap that keeps tea hot",
-  "description": "A vacuum flask keeps hot drinks hot and cold drinks cold by slowing heat transfer. Discover why the gap between its walls matters more than it looks.",
-  "topic": "Everyday inventions",
-  "status": "published",
-  "order": 170,
-  "authorId": "biel-sarda",
-  "cover": {
-    "src": "/assets/images/learn/what-is-a-vacuum-flask.webp",
-    "small": "/assets/images/learn/what-is-a-vacuum-flask-small.webp",
-    "thumbnail": "/assets/images/learn/what-is-a-vacuum-flask-thumb.webp",
-    "alt": "A green insulated flask with an indigo cap beside a cream cup of tea and a glass of water with ice",
-    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual scene, not a branded product or a scientific diagram.",
-    "position": 50
-  },
   "hub": {
     "url": "/learn/",
     "name": "Learn"
@@ -22,7 +7,20 @@
     "url": "/science/science-quiz/",
     "name": "Science Quiz"
   },
-  "practice": "Try the Science Quiz for more clever details hiding in everyday things.",
+  "slug": "what-is-a-vacuum-flask",
+  "cover": {
+    "alt": "A green insulated flask with an indigo cap beside a cream cup of tea and a glass of water with ice",
+    "src": "/assets/images/learn/what-is-a-vacuum-flask.webp",
+    "small": "/assets/images/learn/what-is-a-vacuum-flask-small.webp",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual scene, not a branded product or a scientific diagram.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/what-is-a-vacuum-flask-thumb.webp"
+  },
+  "order": 170,
+  "title": "What is a vacuum flask? The gap that keeps tea hot",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "minutes": 2,
   "related": [
     "why-microwaves-have-a-turntable",
     "was-bubble-wrap-invented-as-wallpaper"
@@ -41,29 +39,31 @@
       "name": "Thermos Australia — Vacuum insulation technology: hot and cold drinks"
     }
   ],
+  "authorId": "biel-sarda",
+  "practice": "Try the Science Quiz for more clever details hiding in everyday things.",
   "sections": [
     {
       "id": "a-bottle-with-a-gap",
-      "title": "A bottle with a useful gap",
-      "html": "<p><strong>A vacuum flask is a container with two walls and much of the air removed from the gap between them.</strong> This greatly slows heat transfer, helping hot drinks stay hot and cold drinks stay cold.</p><p>The clever part is something you cannot see from the outside: a space with very little in it. Your tea has acquired a rather unusual coat.</p>"
+      "html": "<p><strong>A vacuum flask is a container with two walls and much of the air removed from the gap between them.</strong> This greatly slows heat transfer, helping hot drinks stay hot and cold drinks stay cold.</p><p>The clever part is something you cannot see from the outside: a space with very little in it. Your tea has acquired a rather unusual coat.</p>",
+      "title": "A bottle with a useful gap"
     },
     {
       "id": "less-air",
-      "title": "Less air, less heat on the move",
-      "html": "<p><a href=\"https://openstax.org/books/university-physics-volume-2/pages/1-6-mechanisms-of-heat-transfer\">OpenStax explains three ways heat travels</a>: conduction through matter, convection through moving fluids, and radiation.</p><p>With very few particles in the gap, much less heat travels across it by conduction or convection. Radiation can still cross a vacuum, so reflective surfaces can help reduce that route too. The flask slows heat transfer; it does not stop it completely.</p>"
+      "html": "<p><a href=\"https://openstax.org/books/university-physics-volume-2/pages/1-6-mechanisms-of-heat-transfer\">OpenStax explains three ways heat travels</a>: conduction through matter, convection through moving fluids, and radiation.</p><p>With very few particles in the gap, much less heat travels across it by conduction or convection. Radiation can still cross a vacuum, so reflective surfaces can help reduce that route too. The flask slows heat transfer; it does not stop it completely.</p>",
+      "title": "Less air, less heat on the move"
     },
     {
       "id": "hot-and-cold",
-      "title": "How does it know which drink is inside?",
-      "html": "<p>It does not need to. The same insulation slows heat escaping from a hot drink and entering a cold one. <a href=\"https://www.thermos.com.au/about-us/technology/\">Thermos describes this two-way job</a> for its vacuum-insulated products.</p><p>It is a different trick from <a href=\"/learn/why-microwaves-have-a-turntable/\">heating food in a microwave</a>: an ordinary vacuum flask is preserving a temperature, not supplying energy to create one.</p>"
+      "html": "<p>It does not need to. The same insulation slows heat escaping from a hot drink and entering a cold one. <a href=\"https://www.thermos.com.au/about-us/technology/\">Thermos describes this two-way job</a> for its vacuum-insulated products.</p><p>It is a different trick from <a href=\"/learn/why-microwaves-have-a-turntable/\">heating food in a microwave</a>: an ordinary vacuum flask is preserving a temperature, not supplying energy to create one.</p>",
+      "title": "How does it know which drink is inside?"
     },
     {
       "id": "a-laboratory-start",
-      "title": "A laboratory idea went on a picnic",
-      "html": "<p>The <a href=\"https://www.rigb.org/explore-science/explore/collection/james-dewars-vacuum-flask\">Royal Institution’s flask from 1892</a> was made for James Dewar’s low-temperature research. It helped keep liquefied gases cold enough to study.</p><p>The flask was first exhibited there on Christmas Day that year. A laboratory problem eventually gave lunch bags a useful companion. For another ordinary object with an unexpected past, meet <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">bubble wrap’s wallpaper ambitions</a>.</p>"
+      "html": "<p>The <a href=\"https://www.rigb.org/explore-science/explore/collection/james-dewars-vacuum-flask\">Royal Institution’s flask from 1892</a> was made for James Dewar’s low-temperature research. It helped keep liquefied gases cold enough to study.</p><p>The flask was first exhibited there on Christmas Day that year. A laboratory problem eventually gave lunch bags a useful companion. For another ordinary object with an unexpected past, meet <a href=\"/learn/was-bubble-wrap-invented-as-wallpaper/\">bubble wrap’s wallpaper ambitions</a>.</p><p>From flasks to headphones, explore <a href=\"/learn/how-everyday-things-work/\">ten small surprises in everyday inventions</a>.</p>",
+      "title": "A laboratory idea went on a picnic"
     }
   ],
-  "publishedAt": "2026-10-18T20:42:35Z",
-  "updatedAt": "2026-10-18T20:42:35Z",
-  "minutes": 2
+  "updatedAt": "2026-10-18T21:17:30Z",
+  "description": "A vacuum flask keeps hot drinks hot and cold drinks cold by slowing heat transfer. Discover why the gap between its walls matters more than it looks.",
+  "publishedAt": "2026-10-18T20:42:35Z"
 }

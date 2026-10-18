@@ -54,11 +54,11 @@
     },
     {
       "id": "draw-the-journey",
-      "html": "<p>Picture ink, a turning ball and a line on paper. Which part must carry the ink between the other two?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p>The ball’s surface. The reservoir stores ink; the socket holds the turning ball in place.</p></details><p>Next, peek inside <a href=\"/learn/why-zippers-have-interlocking-teeth/\">a zipper</a> or <a href=\"/learn/how-hook-and-loop-fasteners-work/\">a hook-and-loop fastener</a>.</p>",
+      "html": "<p>Picture ink, a turning ball and a line on paper. Which part must carry the ink between the other two?</p><details class=\"practice-answer\"><summary>Show the moving part</summary><p>The ball’s surface. The reservoir stores ink; the socket holds the turning ball in place.</p></details><p>Next, peek inside <a href=\"/learn/why-zippers-have-interlocking-teeth/\">a zipper</a> or <a href=\"/learn/how-hook-and-loop-fasteners-work/\">a hook-and-loop fastener</a>.</p><p>From pens to parcels, explore <a href=\"/learn/how-everyday-things-work/\">ten small surprises in everyday inventions</a>.</p>",
       "title": "Can you sketch the ink’s journey?"
     }
   ],
-  "updatedAt": "2026-10-18T15:42:59Z",
+  "updatedAt": "2026-10-18T21:17:30Z",
   "description": "A ballpoint pen does more than let ink out of a tube. Its rolling tip transfers ink to the page—and helped solve a problem with thicker ink.",
   "publishedAt": "2026-09-30T17:19:01.76865+00:00"
 }
