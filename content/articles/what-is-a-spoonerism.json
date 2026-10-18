@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-spoonerism",
+  "title": "What is a spoonerism? When jelly beans become belly jeans",
+  "description": "A spoonerism swaps sounds between words. Try jelly beans and belly jeans, then discover why this funny slip of the tongue plays by a different rule from anagrams.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "order": 165,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-spoonerism.webp",
+    "small": "/assets/images/learn/what-is-a-spoonerism-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-spoonerism-thumb.webp",
+    "alt": "An imaginary pair of small blue jeans filled with colourful jelly beans beside a bowl of sweets",
+    "credit": "AI-generated editorial illustration created for BrainiLab; an imaginary scene illustrating a play on sounds.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Enjoy finding a hidden link between words? Try Connections.",
+  "related": [
+    "anagrams-rearrange-the-same-letters",
+    "homophones-same-sound-different-meaning"
+  ],
+  "sources": [
+    {
+      "url": "https://dictionary.cambridge.org/dictionary/english/spoonerism",
+      "name": "Cambridge Dictionary — Spoonerism"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/spoonerism",
+      "name": "Merriam-Webster — Spoonerism: definition and word history"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-small-sound-swap",
+      "title": "A tiny swap, a very different snack",
+      "html": "<p><strong>A spoonerism swaps sounds between words, usually their opening sounds.</strong> It can turn an ordinary phrase into something delightfully silly.</p><p>Take <strong>jelly beans</strong>. Exchange the first sounds and you get <strong>belly jeans</strong>. Your snack has apparently developed a wardrobe.</p>"
+    },
+    {
+      "id": "listen-to-the-start",
+      "title": "Follow the sounds",
+      "html": "<p>Keep the rest of each word in place. Move the <strong>j sound</strong> from jelly to beans, and the <strong>b sound</strong> back the other way: jelly becomes belly; beans becomes jeans.</p><p><a href=\"https://dictionary.cambridge.org/dictionary/english/spoonerism\">Cambridge Dictionary describes the accidental version</a>: the first sounds get exchanged while someone is speaking, producing an unintended, often funny meaning.</p>"
+    },
+    {
+      "id": "rain-changes-lanes",
+      "title": "From weather to the road",
+      "html": "<p>Here is another pair: <strong>light rain → right lane</strong>. Swap the opening l and r sounds. A weather report suddenly sounds like driving directions.</p><p>Notice that rain becomes lane, with a different spelling. We are following pronunciation; the spelling can change too. You can also make these swaps on purpose as a word game.</p>"
+    },
+    {
+      "id": "a-name-and-a-rule",
+      "title": "A name, and a different kind of puzzle",
+      "html": "<p>The term comes from <strong>William Archibald Spooner</strong>, a British clergyman and educator, as <a href=\"https://www.merriam-webster.com/dictionary/spoonerism\">Merriam-Webster explains</a>.</p><p>Unlike <a href=\"/learn/anagrams-rearrange-the-same-letters/\">anagrams, which rearrange letters</a>, this joke works through sound. Say both versions aloud and listen for the moment a sensible phrase takes a wrong turn.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T19:38:53Z",
+  "updatedAt": "2026-10-18T19:38:53Z",
+  "minutes": 2
+}
