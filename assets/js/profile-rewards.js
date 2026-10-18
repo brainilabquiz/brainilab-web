@@ -34,7 +34,8 @@ window.BrainiProfileRewards=(function(){
     mini.className='rank-avatar avatar-mobile-portrait '+BrainiProgressUI.avatarClass(level);frame(mini,draft.frame);
     BrainiProgressUI.setAvatarMarkup(mini,preview.innerHTML);
     const changeCount=Object.keys(C.groups).filter(key=>draft[key]!==baseline[key]).length;
-    root.querySelector('[data-avatar-mini-label]').textContent=dirty?`Preview · ${changeCount} ${changeCount===1?'change':'changes'}`:'Your saved look';
+    const confirmed=!dirty&&!state.loading&&!state.saving&&!state.error&&!!state.notice;
+    root.querySelector('[data-avatar-mini-label]').textContent=dirty?`Preview · ${changeCount} ${changeCount===1?'change':'changes'}`:confirmed?'Look saved':'Your saved look';
     root.querySelector('[data-style-preview-label]').textContent=dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     const title=C.titles.find(t=>t.id===draft.title),titleRoot=root.querySelector('[data-style-preview-title]');
@@ -45,11 +46,11 @@ window.BrainiProfileRewards=(function(){
     U.next(root,total,state);U.choices(root,draft,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error,activeDays:state.activeDays});
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
-    root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':'Save look';});
+    root.querySelectorAll('[data-style-save]').forEach(button=>{button.disabled=!dirty||state.loading||state.saving||!!state.error;button.textContent=state.saving?'Saving…':confirmed?'Saved':'Save look';button.dataset.saveState=state.saving?'saving':confirmed?'saved':dirty?'preview':'idle';});
     root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
-    root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||state.notice||(dirty?'Preview only. Save when you’re happy with it.':'');
+    root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||(dirty?'Preview only. Save when you’re happy with it.':state.notice||'');
   }
   function bind(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);

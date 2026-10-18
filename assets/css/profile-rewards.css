@@ -240,3 +240,21 @@
 .avatar-studio-controls .reward-choice-art>.braini-cosmetic-preview{width:100%;height:100%;border-radius:0;overflow:hidden}
 .avatar-studio-controls .reward-choice:disabled .braini-cosmetic-preview{opacity:.85}
 @media(max-width:700px){.avatar-studio-controls :is(.reward-grid-glasses,.reward-grid-hat,.reward-grid-prop) .reward-choice-art,.avatar-studio-controls :is(.avatar-academy-card,.avatar-challenge-card) .reward-choice-art{width:4.5rem;height:4.5rem}.avatar-apply-bar .profile-style-actions{grid-column:auto}}
+
+/* Keep the complete collection readable, with one small status per item. */
+.avatar-studio-controls .avatar-option-group legend{width:100%}
+.avatar-option-heading{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;line-height:1.5}
+.avatar-option-heading>.avatar-collection-summary{font-size:12px;font-weight:500;line-height:1.5;margin:0;min-height:0;white-space:nowrap}
+.avatar-studio-controls .reward-choice .wardrobe-choice-status{display:flex;align-items:center;justify-content:center;gap:4px;min-height:18px;font-size:12px;line-height:1.5}
+.wardrobe-status-icon{display:block;width:14px;height:14px;flex:0 0 14px}
+.wardrobe-status-icon[data-availability=unlocked],.wardrobe-status-icon[data-availability=equipped]{color:#34752c}
+.wardrobe-status-icon[data-availability=preview]{color:#795b0e}
+.avatar-studio-controls .reward-choice[data-wardrobe-state=equipped][aria-pressed=true]{background:#f1f8ec;outline-color:#34752c}
+.avatar-studio-controls .reward-choice[data-wardrobe-state=equipped]::after{color:#34752c}
+.avatar-studio-controls .reward-choice[data-wardrobe-state=preview]{background:#fff7d6;outline-color:#9c7819}
+.avatar-studio-controls .reward-choice[data-wardrobe-state=preview] small{color:#795b0e}
+.avatar-studio-controls .reward-choice[data-wardrobe-unlocked=false] strong{color:var(--navy)}
+.avatar-studio-controls .reward-choice[data-wardrobe-unlocked=false] .reward-choice-art{opacity:.75}
+.avatar-studio-controls .reward-choice[data-wardrobe-unlocked=false] .braini-cosmetic-preview{opacity:1}
+.avatar-studio-controls .reward-choice[data-wardrobe-unlocked=unknown] .reward-choice-art{opacity:.6}
+.avatar-apply-bar .profile-style-actions [data-save-state=saved]{background:#edf6e7;border:1px solid #b6cfac;color:#34752c;opacity:1}

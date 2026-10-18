@@ -20,8 +20,8 @@ const root=w.document.querySelector('[data-profile-rewards]'),S=w.BrainiRewardSt
 const item=(kind,id)=>root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`);
 const summary=kind=>root.querySelector(`[data-style-collection="${kind}"]`).textContent;
 root.querySelector('[data-avatar-tab=rewards]').click();
-assert.equal(summary('frame'),'5 of 6 available · Next: Orbit in 2,570 XP');
-assert.equal(summary('title'),'4 of 6 available · Next: Deep Thinker in 1,070 XP');
+assert.equal(summary('frame'),'5 of 6 unlocked');
+assert.equal(summary('title'),'4 of 6 unlocked');
 for(const reward of C.frames){
  const portrait=item('frame',reward.id).querySelector('.reward-frame-sample');
  assert.ok(portrait.querySelector('svg'),'each frame shows the actual illustrated look');
@@ -56,9 +56,9 @@ for(const xp of levels){
  await D.api.syncCloudProgression({progression:{xp,level:99,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
  for(const kind of ['frame','title'])for(const reward of C.groups[kind])assert.equal(item(kind,reward.id).disabled,reward.xp>xp,`${kind}/${reward.id} obeys unchanged XP threshold ${reward.xp}`);
 }
-assert.equal(summary('frame'),'All 6 frames available');assert.equal(summary('title'),'All 6 titles available');
-readError=true;await S.load();assert.match(summary('frame'),/could not be checked/);assert.match(summary('title'),/could not be checked/);assert.equal(root.querySelector('[data-style-retry]').hidden,false);
-readError=false;root.querySelector('[data-style-retry]').click();await settle();assert.equal(summary('frame'),'All 6 frames available');assert.equal(writes.length,1);
+assert.equal(summary('frame'),'6 of 6 unlocked');assert.equal(summary('title'),'6 of 6 unlocked');
+readError=true;await S.load();assert.equal(summary('frame'),'Unavailable');assert.equal(summary('title'),'Unavailable');assert.equal(root.querySelector('[data-style-retry]').hidden,false);
+readError=false;root.querySelector('[data-style-retry]').click();await settle();assert.equal(summary('frame'),'6 of 6 unlocked');assert.equal(writes.length,1);
 for(const key of Object.keys(metadata))if(key.startsWith('brainilab_'))delete metadata[key];
 owner='frames-other';await D.api.syncExternalAuthUser({id:owner,user_metadata:{}});await settle();
 assert.equal(S.snapshot().style.frame,'level');assert.equal(S.snapshot().style.title,'none');
