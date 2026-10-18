@@ -88,11 +88,11 @@
     },
     {
       "id": "use-a-halfway-check",
-      "html": "<p>Halfway is a useful place to start. Draw a strip with eight equal pieces. Four pieces cover half of it.</p><ul><li>Three pieces do not reach halfway, so <strong>3/8 is less than 1/2</strong>.</li><li>Five pieces go past halfway, so <strong>5/8 is more than 1/2</strong>.</li></ul><p>You do not need a new calculation each time. First ask where the coloured amount sits on the strip.</p>",
+      "html": "<p>Halfway is a useful place to start. Draw a strip with eight equal pieces. Four pieces cover half of it.</p><ul><li>Three pieces do not reach halfway, so <strong>3/8 is less than 1/2</strong>.</li><li>Five pieces go past halfway, so <strong>5/8 is more than 1/2</strong>.</li></ul><p>You do not need a new calculation each time. First ask where the coloured amount sits on the strip. Next, try <a href=\"/learn/adding-fractions-same-pieces/\">adding fractions with matching pieces</a>.</p>",
       "title": "Is it more or less than half?"
     }
   ],
-  "updatedAt": "2026-10-09T15:53:35Z",
+  "updatedAt": "2026-10-18T09:50:34Z",
   "description": "Compare equal-size strips before relying on the written numbers, and learn two useful shortcuts.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
