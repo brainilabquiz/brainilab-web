@@ -44,7 +44,7 @@
     },
     {
       "id": "later",
-      "html": "<p>Put the card aside and try answering it on a later day before turning it over. You might remember the number but forget the explanation, or recall the idea without finding the right word. Check the part you missed.</p><p>Once the answer comes easily, try a follow-up: explain why it is true or give an example. You can adjust the gap between attempts to suit what you are learning.</p><details class=\"practice-answer\"><summary>What is the difference between recognising and recalling an answer?</summary><p>Recognition happens when you see the answer and know it looks familiar. Recall means bringing it to mind without having the answer in front of you.</p></details>",
+      "html": "<p>Put the card aside and try answering it on a later day before turning it over. You might remember the number but forget the explanation, or recall the idea without finding the right word. Check the part you missed.</p><p>Once the answer comes easily, try a follow-up: <a href=\"/learn/explain-an-answer-in-your-own-words/\">explain why it is true</a> or give an example. You can adjust the gap between attempts to suit what you are learning.</p><details class=\"practice-answer\"><summary>What is the difference between recognising and recalling an answer?</summary><p>Recognition happens when you see the answer and know it looks familiar. Recall means bringing it to mind without having the answer in front of you.</p></details>",
       "title": "Come back to it another day"
     },
     {
@@ -53,7 +53,7 @@
       "title": "Keep it manageable"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-18T09:18:17Z",
   "description": "An answer can feel obvious as soon as you see it. Try recalling it later, without the clues, to see what has stuck.",
   "publishedAt": "2026-09-23T19:51:37Z"
 }
