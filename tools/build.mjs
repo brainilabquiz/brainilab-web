@@ -8,6 +8,7 @@ import path from 'node:path';
 import './check-site-integrity.mjs';
 import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
+import './test-sitemap-dates.mjs';
 import './validate-game-batches.mjs';
 
 const root=path.resolve('.');
