@@ -1,0 +1,65 @@
+{
+  "slug": "how-long-is-a-soccer-game",
+  "title": "How long is a soccer game? Why the clock keeps going",
+  "description": "A soccer match has two 45-minute halves, but it rarely ends at 90 on the clock. Here is how added time differs from extra time, with one simple example.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 161,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-long-is-a-soccer-game.webp",
+    "small": "/assets/images/learn/how-long-is-a-soccer-game-small.webp",
+    "thumbnail": "/assets/images/learn/how-long-is-a-soccer-game-thumb.webp",
+    "alt": "An analogue stopwatch, football and brass-coloured whistle beside the touchline of a sunlit pitch",
+    "credit": "AI-generated editorial illustration created for BrainiLab; an imagined scene, not a photograph.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Know your match-day details? Try the Sports Quiz.",
+  "related": [
+    "offside-rule-football-explained",
+    "why-football-cards-red-yellow"
+  ],
+  "sources": [
+    {
+      "url": "https://www.theifab.com/laws/latest/the-duration-of-the-match/",
+      "name": "IFAB — Law 7: The duration of the match (2026/27)"
+    },
+    {
+      "url": "https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match/",
+      "name": "IFAB — Law 10: Determining the outcome of a match (2026/27)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "ninety-minutes",
+      "title": "Ninety minutes, with a little more to come",
+      "html": "<p><strong>A standard adult football (soccer) match has two 45-minute halves: 90 minutes of regulation time, plus added time for stoppages.</strong> The half-time break is separate and must not exceed 15 minutes. Shorter playing periods can be agreed beforehand where competition rules allow.</p><p>So “90 minutes” is not a promise that you will be back in the kitchen exactly an hour and a half after kick-off.</p>"
+    },
+    {
+      "id": "why-the-clock-keeps-going",
+      "title": "The clock keeps going; lost time is allowed for",
+      "html": "<p>The referee allows time in each half for delays such as injuries, substitutions, goal celebrations and video reviews. <a href=\"https://www.theifab.com/laws/latest/the-duration-of-the-match/\">IFAB Law 7</a> sets out the rule.</p><p>That allowance is often called <strong>stoppage time</strong> or <strong>added time</strong>. It accounts for time lost during the half.</p>"
+    },
+    {
+      "id": "what-plus-five-means",
+      "title": "What does +5 actually mean?",
+      "html": "<p>The board shows the <strong>minimum</strong> additional time. The referee can increase it, but cannot reduce it.</p><p>Imagine the board shows +5 at 90 minutes. You can expect at least five more minutes. If another delay follows, the whistle need not arrive at exactly 95:00. The board is not a countdown alarm.</p>"
+    },
+    {
+      "id": "added-time-or-extra-time",
+      "title": "Added time is not extra time",
+      "html": "<p><strong>Extra time</strong> is a separate way to settle a drawn match when competition rules require a winner. <a href=\"https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match/\">IFAB Law 10</a> permits two equal periods of up to 15 minutes each. A competition may instead use a penalty shoot-out; that happens after the match has ended.</p><p>Not every draw gets extra time. Check the competition’s format. For another match-day mystery, read our <a href=\"/learn/offside-rule-football-explained/\">simple guide to offside</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-18T10:42:56Z",
+  "updatedAt": "2026-10-18T10:42:56Z",
+  "minutes": 2
+}
