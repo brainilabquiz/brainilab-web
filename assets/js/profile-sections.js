@@ -234,6 +234,7 @@ window.BrainiProfileSections=(function(){
     if(choice){choice.classList.add('is-reward-target');choice.setAttribute('aria-describedby','linked-reward-note');
       let note=studio.querySelector('#linked-reward-note');
       if(!note){note=document.createElement('p');note.id='linked-reward-note';note.className='linked-reward-note';studio.querySelector('[data-avatar-pane="'+pane+'"]')?.prepend(note);}
+      const state=window.BrainiRewardStore?.snapshot?.();note.hidden=!!(state?.loading||state?.error);
       note.textContent=BrainiRewardCatalog.unlocked(item,BrainiData.player().xp)?'Ready to try on. Choose it to preview your new look.':`${Math.max(0,item.xp-BrainiData.player().xp).toLocaleString('en-GB')} XP to unlock ${item.name}.`;
     }
   }
