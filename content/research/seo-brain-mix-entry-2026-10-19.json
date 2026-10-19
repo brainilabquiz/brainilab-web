@@ -1,0 +1,50 @@
+{
+  "id": "seo-brain-mix-entry-20261019",
+  "mainReviewed": "ea864bd6d43bfbe39685f2a3ff1b186cc76d5f38",
+  "reviewedAt": "2026-10-19T20:04:31.064197+00:00",
+  "principle": "Keep the actual game identity visible when a changing question or Daily eligibility message replaces the game stage.",
+  "observedGap": "Brain Mix metadata names the game, but its only source h1 is loading/question text. Actual public Daily eligibility guard replacement on October19 removes the primary heading.",
+  "change": "One permanent Brain Mix heading, short introduction and existing decorative brain-mix.svg above leafQuiz; changing data-q node becomes h2.",
+  "video": {
+    "url": "https://www.youtube.com/watch?v=P-vPlQ7GmTw",
+    "coverage": "Visible description/chapter outline reused; transcript unavailable, no full-course viewing claim."
+  },
+  "demand": {
+    "source": "Existing first-party Search Console",
+    "observedAt": "2026-10-19T07:28:27.627078+00:00",
+    "period": {
+      "start": "2026-09-19",
+      "end": "2026-10-16"
+    },
+    "timezone": "America/Los_Angeles",
+    "geography": "All captured markets, no language filter. Quoted query examples are English; full snapshot includes other-language queries.",
+    "brainMixQueryRows": [],
+    "limits": "No visible Brain Mix query rows in this snapshot, not evidence of zero visits. Article queries do not establish game demand. Historical averages are not current ranks, monthly volume and traffic impact unknown."
+  },
+  "reviewed": {
+    "publicPages": 9,
+    "allStatus200": true,
+    "internalDestinations": 15,
+    "brokenInternalDestinations": 0,
+    "articlesPreserved": [
+      "stalactites-vs-stalagmites",
+      "why-are-flamingos-pink",
+      "how-post-it-notes-were-invented"
+    ]
+  },
+  "primarySourcesOpened": [
+    "https://www.nps.gov/subjects/caves/speleothems.htm",
+    "https://www.nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts",
+    "https://www.invent.org/blog/inventors/art-fry-post-it-notes"
+  ],
+  "preserved": [
+    "all question text, question sets, answer keys and inline scripts",
+    "Daily eligibility and extra-selection guard",
+    "existing archive/practice rules",
+    "XP, quiz points, ranking score and streak calculations",
+    "articles, courses, quizzes, dates, covers and citations",
+    "previous PR262/263/265 outcomes and original baselines"
+  ],
+  "outcome": "Clearer game identity is observable; no measured visits, plays, accounts, rankings or AI-citation gain. Remaining measurement needs complete post-change periods. PR263 click-coverage comparison limit retained.",
+  "noPaidResearch": true
+}
