@@ -11,6 +11,7 @@ async function setup(game='trick-or-think',options={}){
  const calls={owner:'guest:result-test',saved:[],owned:options.before||[],loading:!!options.loading,error:'',release:null};
  w.fetch=()=>{throw Error('Unexpected network');};
  w.BrainiData={api:{submitGameResult(){throw Error('Daily must not be called');}}};
+ if(options.scrollFails)w.HTMLElement.prototype.scrollIntoView=()=>{throw TypeError('Unsupported scroll option');};
  w.eval(source('halloween-game-model.js'));w.eval(source('avatar-design.js'));
  const model=w.BrainiHalloweenGameModel,preview=options.preview!==false;
  const response=payload=>{
@@ -86,5 +87,6 @@ const replay=await setup('trick-or-think',{before:['pumpkin-thinker'],replayed:t
 const duplicate=await setup('trick-or-think',{before:['pumpkin-thinker']});await play(duplicate);receipt(duplicate,['pumpkin-thinker'],false);duplicate.dom.window.close();
 const unknown=await setup('trick-or-think',{cloud:true,unknown:true});await play(unknown);assert.equal(unknown.root.querySelector('[data-hg-rewards]').hidden,true);unknown.dom.window.close();
 const badClaim=await setup('trick-or-think',{after:['pumpkin-thinker'],unlocks:['little-bat']});await play(badClaim);receipt(badClaim,['pumpkin-thinker'],false);badClaim.dom.window.close();
+const scrollFallback=await setup('trick-or-think',{scrollFails:true});await play(scrollFallback);receipt(scrollFallback,['pumpkin-thinker'],true);assert.equal(scrollFallback.calls.saved.length,1,'A scroll failure must never prevent result saving');scrollFallback.dom.window.close();
 const switched=await setup('trick-or-think',{stored,before:['pumpkin-thinker']});switched.calls.owner='account:another-person';switched.w.dispatchEvent(new switched.w.Event('brainilab:authchange'));assert.match(switched.root.textContent,/account has changed/);assert.equal(switched.root.querySelector('[data-hg-treat]'),null);assert.equal(switched.calls.saved.length,0);switched.dom.window.close();checked++;
 console.log(`PASS Halloween result rewards: ${checked} scenarios; both games, zero-score completions, three existing artworks, two simultaneous treats, confirmation/retry, owner scoping, honest reload/practice, delayed state, exact profile links, focus stability and collapsed secondary actions. No external requests.`);

@@ -254,7 +254,11 @@
         }
       } finally { saving = false; const replay = root.querySelector('[data-hg-replay]'); if (replay) replay.disabled = !saved; }
     }
-    function finish() { screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result(); root.querySelector('.halloween-game-result')?.scrollIntoView?.({block:'start',behavior:'instant'}); focus('[data-hg-heading]', true); if (!saved) void save(); }
+    function finish() {
+      screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result();
+      try { root.querySelector('.halloween-game-result')?.scrollIntoView?.({block:'start',behavior:'auto'}); } catch {}
+      focus('[data-hg-heading]', true); if (!saved) void save();
+    }
     function render() { screen === 'result' ? (result(), !saved && !terminalFailure && void save()) : gameId === 'trick-or-think' ? quiz() : connections(); }
     restore();
     if (state.completed && screen === 'result') render(); else intro(session ? 'Your unfinished game is ready to continue.' : '');
