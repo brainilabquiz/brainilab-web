@@ -1,0 +1,69 @@
+{
+  "slug": "why-does-the-leaning-tower-of-pisa-lean",
+  "title": "Why does the Leaning Tower of Pisa lean? Blame the ground",
+  "description": "Pisa’s famous tower was never meant to lean. Discover the soft ground beneath it, the builders’ curved correction and the surprising way engineers saved it.",
+  "topic": "History",
+  "status": "published",
+  "order": 180,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-does-the-leaning-tower-of-pisa-lean.webp",
+    "small": "/assets/images/learn/why-does-the-leaning-tower-of-pisa-lean-small.webp",
+    "thumbnail": "/assets/images/learn/why-does-the-leaning-tower-of-pisa-lean-thumb.webp",
+    "alt": "A realistic view of the leaning white marble Tower of Pisa beside its cathedral, with grass and blue sky",
+    "credit": "AI-generated realistic illustration created for BrainiLab; not an actual site photograph.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Try the History Quiz for more stories behind familiar names.",
+  "related": [
+    "what-are-gargoyles",
+    "why-roman-concrete-lasts"
+  ],
+  "sources": [
+    {
+      "url": "https://www.ice.org.uk/what-is-civil-engineering/infrastructure-projects/stabilising-the-leaning-tower-of-pisa",
+      "name": "Institution of Civil Engineers — Stabilising the leaning Tower of Pisa"
+    },
+    {
+      "url": "https://www.turismo.pisa.it/en/place/tower-of-pisa",
+      "name": "Comune di Pisa — Tower of Pisa: history and conservation"
+    },
+    {
+      "url": "https://www.ingenia.org.uk/articles/the-stabilisation-of-the-leaning-tower-of-pisa",
+      "name": "John Burland (2001), Royal Academy of Engineering Ingenia — The stabilisation of the Leaning Tower of Pisa"
+    }
+  ],
+  "sections": [
+    {
+      "id": "an-accidental-lean",
+      "title": "An accidental lean",
+      "html": "<p><strong>The Leaning Tower of Pisa tilts because the weak ground beneath its foundations compressed unevenly under its weight.</strong> The lean was not part of the design.</p><p>The <a href=\"https://www.ice.org.uk/what-is-civil-engineering/infrastructure-projects/stabilising-the-leaning-tower-of-pisa\">Institution of Civil Engineers explains the ground problem</a>. The tourists pretending to hold the tower up have excellent timing, but the real support story is under their feet.</p>"
+    },
+    {
+      "id": "a-bell-tower-with-a-bend",
+      "title": "A bell tower with a bend",
+      "html": "<p>It is the cathedral’s bell tower, rather than a tower built simply to be looked at. <a href=\"https://www.turismo.pisa.it/en/place/tower-of-pisa\">Pisa’s own history guide</a> dates the start of construction to <strong>1173</strong>.</p><p>Building continued in stages over nearly two centuries. Later builders tried to compensate for the lean by making the upper levels uneven. The result is a tower with a curved axis, not just a straight cylinder tipped sideways.</p>"
+    },
+    {
+      "id": "less-soil-more-stability",
+      "title": "Less soil, more stability",
+      "html": "<p>During the conservation project completed in 2001, engineers carefully removed small amounts of soil beneath the higher, northern side of the foundations.</p><p>This allowed that side to settle gently, reducing the lean. <a href=\"https://www.ingenia.org.uk/articles/the-stabilisation-of-the-leaning-tower-of-pisa\">Project engineer John Burland describes the delicate work</a>: testing, measurements and very controlled adjustments mattered more than one enormous shove.</p>"
+    },
+    {
+      "id": "keep-a-little-character",
+      "title": "Keep a little character",
+      "html": "<p>The aim was to stabilise the tower while preserving its historic character, rather than turn it into a perfectly vertical building. Its lean is part of its story.</p><p>For more buildings with surprises, meet <a href=\"/learn/what-are-gargoyles/\">the monsters that carry rainwater away</a> and discover <a href=\"/learn/why-roman-concrete-lasts/\">the little lumps in Roman concrete</a>. Architecture has plenty of hidden jobs.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:59:54Z",
+  "updatedAt": "2026-10-19T15:59:54Z",
+  "minutes": 2
+}
