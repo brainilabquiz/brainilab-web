@@ -1,0 +1,65 @@
+{
+  "slug": "why-do-bananas-turn-brown",
+  "title": "Why do bananas turn brown? The fruit-bowl mystery",
+  "description": "Why do yellow bananas develop brown spots, and why can the fridge darken the peel? Meet the chemistry behind a familiar fruit-bowl transformation.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 177,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-bananas-turn-brown.webp",
+    "small": "/assets/images/learn/why-do-bananas-turn-brown-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-bananas-turn-brown-thumb.webp",
+    "alt": "Two yellow bananas on an indigo plate, one plain and one with scattered brown speckles",
+    "credit": "AI-generated editorial illustration created for BrainiLab.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try the Science Quiz for more surprises hiding in everyday things.",
+  "related": [
+    "why-does-popcorn-pop",
+    "curiosity-daily-2026-10-09"
+  ],
+  "sources": [
+    {
+      "url": "https://academic.oup.com/ijfst/article/59/5/3350/7807997",
+      "name": "Ren and colleagues (2024) — Low oxygen concentration alleviates banana peel browning: original research"
+    },
+    {
+      "url": "https://postharvest.ucdavis.edu/produce-facts-sheets/banana",
+      "name": "UC Davis Postharvest Research and Extension Center — Banana (Cavendish): ripening, bruising and chilling injury"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-freckles-are-chemistry",
+      "title": "Those freckles are chemistry",
+      "html": "<p><strong>Bananas turn brown as dark pigments form in their tissues.</strong> One important process is enzymatic browning: an enzyme called polyphenol oxidase helps plant compounds react with oxygen.</p><p><a href=\"https://academic.oup.com/ijfst/article/59/5/3350/7807997\">Research on banana peel browning</a> examines this chemistry. The fruit bowl has a little more going on than a collection of slowly changing colours.</p>"
+    },
+    {
+      "id": "a-bruised-banana",
+      "title": "A bruise can hurry things along",
+      "html": "<p>Damage to cells lets substances that were kept apart meet and react. That helps explain why browning can appear around a bruise.</p><p>A bump can also brown the flesh without an obvious mark on the outside, as <a href=\"https://postharvest.ucdavis.edu/produce-facts-sheets/banana\">UC Davis’s banana fact sheet notes</a>. A banana’s jacket does not tell its entire story.</p>"
+    },
+    {
+      "id": "the-fridge-surprise",
+      "title": "Why does the fridge darken the peel?",
+      "html": "<p>Bananas are sensitive to cold. Low temperatures can cause <strong>chilling injury</strong>, which includes discolouration of the peel and, in more severe cases, browning of the flesh.</p><p>The effect depends on the banana’s variety, ripeness, temperature and time in the cold. A dark peel is not simply a timer counting the days since you bought it.</p>"
+    },
+    {
+      "id": "sweetness-has-a-story",
+      "title": "Sweetness has its own story",
+      "html": "<p>As bananas ripen, starch turns into sugars. Sweetness and peel colour reflect changes in the fruit, but they are not the same measurement.</p><p>Next time you spot a freckled banana, there is a chemistry story beside your cereal. For two more kitchen surprises, discover <a href=\"/learn/why-does-popcorn-pop/\">what makes popcorn jump</a> and <a href=\"/learn/curiosity-daily-2026-10-09/\">how an egg becomes a cloud of meringue</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:10:12Z",
+  "updatedAt": "2026-10-19T15:10:12Z",
+  "minutes": 2
+}

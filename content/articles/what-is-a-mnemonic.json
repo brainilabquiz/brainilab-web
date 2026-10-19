@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-mnemonic",
+  "title": "What is a mnemonic? A silly sentence with a useful job",
+  "description": "A mnemonic is a memory aid that gives a fact a memorable cue. Discover how five lakes become HOMES, and why a silly sentence can earn its keep.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 176,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-mnemonic.webp",
+    "small": "/assets/images/learn/what-is-a-mnemonic-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-mnemonic-thumb.webp",
+    "alt": "An indigo paper otter holds a basket containing a bread roll, an orange and green grapes",
+    "credit": "AI-generated conceptual illustration created for BrainiLab, showing the article’s imaginary shopping-list cue.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Try General Knowledge and choose one surprising answer to remember.",
+  "related": [
+    "chunking-memory-familiar-groups",
+    "remember-quiz-answers-tomorrow"
+  ],
+  "sources": [
+    {
+      "url": "https://ctl.stanford.edu/memory-strategy-mnemonics",
+      "name": "Stanford Center for Teaching and Learning — Memory Strategy: Mnemonics"
+    },
+    {
+      "url": "https://coe.jmu.edu/learningtoolbox/break.html",
+      "name": "James Madison University — The Learning Toolbox: mnemonics and the HOMES example"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-cue-to-remember",
+      "title": "Give a fact a memorable disguise",
+      "html": "<p><strong>A mnemonic is a memory aid: a word, sentence, rhyme or image that helps you recall information.</strong> It links what you need to remember with something easier to bring to mind.</p><p><a href=\"https://ctl.stanford.edu/memory-strategy-mnemonics\">Stanford’s guide to mnemonics</a> explains the idea through associations. The cue might be wonderfully sensible. It might also involve an otter doing the shopping.</p>"
+    },
+    {
+      "id": "five-lakes-one-word",
+      "title": "Five lakes move into HOMES",
+      "html": "<p><strong>HOMES</strong> can remind you of <strong>Huron, Ontario, Michigan, Erie and Superior</strong>, the five Great Lakes of North America. Each letter stands for one name.</p><p><a href=\"https://coe.jmu.edu/learningtoolbox/break.html\">James Madison University uses this example</a> in its learning toolbox. It helps you recall the names, rather than their positions on a map. A short cue still has a specific job.</p>"
+    },
+    {
+      "id": "an-otter-at-the-shops",
+      "title": "An otter does the shopping",
+      "html": "<p>Suppose your list is <strong>bread, oranges and grapes</strong>. Our invented sentence is <em>“Brave otters gather.”</em> Its first letters, B, O and G, match the groceries.</p><p>Imagine an otter collecting all three. The picture is ridiculous; the link is deliberate. You still need to learn which item each letter represents. Otherwise, you may remember the otter and forget dinner.</p>"
+    },
+    {
+      "id": "keep-the-cue-useful",
+      "title": "Keep the cue useful",
+      "html": "<p>A good mnemonic is easier to remember than the information it supports. Start small, practise the cue alongside its meaning, and check that it brings back the right answer.</p><p>For another way to organise information, try <a href=\"/learn/chunking-memory-familiar-groups/\">chunking familiar groups</a>. Then explore <a href=\"/learn/remember-quiz-answers-tomorrow/\">how to revisit an interesting quiz answer</a>. The cue is a starting point, not the whole lesson.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:10:12Z",
+  "updatedAt": "2026-10-19T15:10:12Z",
+  "minutes": 2
+}
