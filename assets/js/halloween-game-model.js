@@ -96,7 +96,13 @@
     invariant(result && Number.isInteger(result.score) && result.score >= 0 && result.score <= 100, 'Invalid result.');
     const title = game(gameId).title;
     const url = `https://brainilabgames.com/halloween/${gameId}/`;
-    return { title: `${title} · BrainiLab`, text: `I got ${result.score}/100 in ${title} 🎃 Think you can beat me? Have a go!`, url };
+    const emoji = gameId === 'trick-or-think' ? '🎃' : '🦇';
+    const hook = gameId === 'trick-or-think' ? 'Ten Halloween questions' : 'Four hidden groups';
+    const challenge = result.score === 100 ? 'Can you match me?' : 'Think you can beat me?';
+    const text = result.score === 0
+      ? `Halloween won this round! I got 0/100 in ${title} ${emoji} Think you can do better? Your turn!`
+      : `I got ${result.score}/100 in ${title} ${emoji} ${challenge} ${hook} — your turn!`;
+    return { title: `${title} · BrainiLab`, text, url };
   }
   freeze(CATALOG);
   return Object.freeze({ catalog: CATALOG, game, shuffle, initialQuiz, answerQuiz, quizFromSubmission,

@@ -177,6 +177,73 @@
       }).join('')}</ul>`;
       node.hidden = false;
     }
+    function bindSharing(graded) {
+      const trigger = root.querySelector('[data-hg-share]'), statusNode = root.querySelector('[data-hg-share-status]');
+      const options = trigger.closest('.halloween-result-options'), panel = document.createElement('div');
+      const base = model.share(gameId, graded);
+      let busy = false, prepared = false;
+      panel.id = 'halloween-invitation-' + gameId; panel.className = 'halloween-invitation'; panel.hidden = true;
+      trigger.closest('.halloween-game-controls').after(panel);
+      trigger.setAttribute('aria-controls', panel.id); trigger.setAttribute('aria-expanded', 'false'); trigger.disabled = !saved;
+      const allowed = () => {
+        if (!ensureOwner() || !saved) return false;
+        if (access.preview) { statusNode.textContent = 'Preview only. Sending is available on the live site.'; return false; }
+        if (!api.availability()?.allowed) { statusNode.textContent = 'The Halloween games have finished. Try another BrainiLab game with your friend.'; return false; }
+        return true;
+      };
+      function prepare() {
+        if (prepared) return; prepared = true;
+        const native = typeof navigator.share === 'function';
+        panel.innerHTML = `<label for="${panel.id}-message">Your message</label><textarea id="${panel.id}-message" data-hg-invite-message rows="4" maxlength="600">${esc(base.text)}</textarea><p class="halloween-invitation-note">Edit it if you like. The game link is included.</p><div class="halloween-invitation-actions">${native ? '<button type="button" class="halloween-invitation-primary" data-hg-invite-send>Share invitation</button>' : ''}<button type="button" class="${native ? 'halloween-quiet-button' : 'halloween-invitation-primary'}" data-hg-invite-copy>Copy invitation</button><a class="halloween-quiet-link" data-hg-invite-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a></div><div data-hg-manual-copy></div>`;
+        const field = panel.querySelector('[data-hg-invite-message]'), copy = panel.querySelector('[data-hg-invite-copy]'), send = panel.querySelector('[data-hg-invite-send]'), whatsapp = panel.querySelector('[data-hg-invite-whatsapp]'), manual = panel.querySelector('[data-hg-manual-copy]');
+        const payload = () => ({ title: base.title, text: field.value.trim(), url: base.url });
+        const fullText = () => `${payload().text}\n${base.url}`;
+        function refresh() {
+          const enabled = !access.preview && !!field.value.trim() && !busy;
+          panel.setAttribute('aria-busy', String(busy));
+          copy.disabled = !enabled; if (send) send.disabled = !enabled;
+          if (enabled) whatsapp.href = 'https://wa.me/?text=' + encodeURIComponent(fullText()); else whatsapp.removeAttribute('href');
+          whatsapp.setAttribute('aria-disabled', String(!enabled)); whatsapp.tabIndex = enabled ? 0 : -1;
+        }
+        function manualCopy() {
+          const text = document.createElement('textarea'); text.readOnly = true; text.rows = 4; text.value = fullText(); text.setAttribute('aria-label', 'Invitation to copy');
+          manual.replaceChildren(text); statusNode.textContent = 'Copy the invitation below and send it to your friend.';
+          text.focus(); text.select();
+        }
+        field.addEventListener('input', () => { manual.replaceChildren(); statusNode.textContent = field.value.trim() ? '' : 'Write a short message to go with your link.'; refresh(); });
+        copy.addEventListener('click', async () => {
+          if (busy || !allowed() || !field.value.trim()) return;
+          busy = true; refresh(); statusNode.textContent = '';
+          try {
+            if (!navigator.clipboard?.writeText) throw Error('Clipboard unavailable');
+            await navigator.clipboard.writeText(fullText());
+            if (ensureOwner() && panel.isConnected) statusNode.textContent = 'Invitation copied. Pick your friend and paste it into your chat.';
+          } catch { if (ensureOwner() && panel.isConnected) manualCopy(); }
+          finally { busy = false; if (panel.isConnected) { refresh(); if (!panel.hidden && !manual.firstChild) copy.focus(); } }
+        });
+        send?.addEventListener('click', async () => {
+          if (busy || !allowed() || !field.value.trim()) return;
+          const data = payload(); let offerCopy = false; busy = true; refresh(); statusNode.textContent = '';
+          try {
+            if (navigator.canShare && !navigator.canShare(data)) throw Error('Sharing unavailable');
+            await navigator.share(data);
+          } catch (error) {
+            if (error?.name !== 'AbortError' && ensureOwner() && panel.isConnected) { statusNode.textContent = 'Sharing is not available here. You can copy the invitation instead.'; offerCopy = true; }
+          } finally { busy = false; if (panel.isConnected) { refresh(); if (!panel.hidden) (offerCopy ? copy : send).focus(); } }
+        });
+        whatsapp.addEventListener('click', event => { if (busy || !allowed() || !field.value.trim()) event.preventDefault(); });
+        refresh();
+      }
+      trigger.addEventListener('click', () => {
+        if (!ensureOwner() || !saved) return;
+        prepare(); panel.hidden = !panel.hidden; options.classList.toggle('is-sharing', !panel.hidden);
+        trigger.setAttribute('aria-expanded', String(!panel.hidden)); trigger.textContent = panel.hidden ? 'Challenge a friend' : 'Close invitation';
+        if (!panel.hidden) {
+          if (access.preview) statusNode.textContent = 'Preview only. Sending is available on the live site.';
+          panel.querySelector('[data-hg-invite-message]').focus();
+        } else { statusNode.textContent = ''; trigger.focus(); }
+      });
+    }
     function result() {
       const graded = model.summary(gameId, submission());
       const title = graded.score === 100 ? 'A frightfully good result!' : graded.score >= 60 ? 'A few good surprises!' : 'A little wiser. Still a little spooky.';
@@ -199,19 +266,7 @@
         if (saving || !saved || !ensureOwner()) return;
         reset(); intro(); focus('[data-hg-heading]');
       });
-      root.querySelector('[data-hg-share]').addEventListener('click', async () => {
-        if (!ensureOwner()) return;
-        const node = root.querySelector('[data-hg-share-status]');
-        if (access.preview) { node.textContent = 'Sharing opens with the Halloween special.'; return; }
-        const payload = model.share(gameId, graded);
-        try {
-          if (navigator.share) await navigator.share(payload);
-          else if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(`${payload.text}\n${payload.url}`); node.textContent = 'Invitation copied. Send it to a friend!'; }
-          else {
-            const field = document.createElement('textarea'); field.value = `${payload.text}\n${payload.url}`; field.readOnly = true; field.setAttribute('aria-label', 'Invitation to copy'); node.replaceChildren(field); field.focus(); field.select();
-          }
-        } catch (error) { if (error?.name !== 'AbortError') node.textContent = 'Your invitation could not be shared. Please try again.'; }
-      });
+      bindSharing(graded);
       if (saved && !session?.practice) root.dispatchEvent(new CustomEvent('brainilab:halloween-game-saved', { bubbles: true, detail: { gameId, preview: !!access.preview } }));
     }
     function reset() {
@@ -252,7 +307,7 @@
           status(storageAvailable ? 'Your result is not saved yet. Your answers are kept on this browser.' : 'Your result is not saved yet. Keep this page open and try again.', true);
           if (retry) { retry.hidden = false; retry.disabled = false; }
         }
-      } finally { saving = false; const replay = root.querySelector('[data-hg-replay]'); if (replay) replay.disabled = !saved; }
+      } finally { saving = false; for (const action of root.querySelectorAll('[data-hg-replay],[data-hg-share]')) action.disabled = !saved; }
     }
     function finish() {
       screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result();
