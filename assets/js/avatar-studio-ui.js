@@ -68,6 +68,8 @@ window.BrainiAvatarStudioUI=(function(){
     collectionSummary(root,total,options);
     for(const [kind,items] of Object.entries(C.groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
+      const visible=new Set(items.filter(item=>!item.course&&!item.challenge&&!item.days).map(item=>item.id));
+      for(const button of grid.querySelectorAll('[data-reward-id]'))if(!visible.has(button.dataset.rewardId))button.remove();
       for(const item of items){
         if(item.course||item.challenge||item.days)continue;
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);

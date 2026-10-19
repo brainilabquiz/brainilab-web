@@ -58,6 +58,12 @@ for(const [kind,id,requirement] of items){
  assert.equal(locked.root.querySelector('#linked-reward-note').textContent,requirement+'.');b.click();assert.equal(locked.writes.length,0,'Neither a URL nor abundant XP grants Halloween ownership');assert.equal(locked.root.querySelector('[data-style-save]').disabled,true);checks++;locked.close();
 }
 const invalid=await profile({reward:'hat:pumpkin-thinker"><script>alert(1)</script>'});assert.equal(invalid.root.querySelector('.is-reward-target'),null);assert.equal(invalid.w.BrainiRewardJourney.fromLink('frame:admin'),null);assert.equal(invalid.writes.length,0);checks++;invalid.close();
+const ended=await profile({earned:items.map(x=>x[1])});
+ended.w.BrainiLabHalloween={availability:()=>({allowed:false})};ended.w.BrainiHalloweenEntitlements={snapshot:()=>({visible:false,entitlements:items.map(x=>x[1])})};ended.w.BrainiProfileRewards.render();
+for(const [,id]of items)assert.ok(ended.root.querySelector(`[data-reward-id="${id}"]`),'Earned items remain available after closure');
+ended.w.BrainiHalloweenEntitlements={snapshot:()=>({visible:false,entitlements:[]})};ended.w.BrainiProfileRewards.render();
+for(const [,id]of items)assert.equal(ended.root.querySelector(`[data-reward-id="${id}"]`),null,'An expired event never leaves the previous owner’s controls in the wardrobe');
+assert.ok(ended.root.querySelector('[data-reward-id="corn"]'),'Ordinary locked XP items stay visible');assert.equal(ended.writes.length,0);checks++;ended.close();
 for(const owned of [[],items.map(x=>x[1])]){
  const dom=new JSDOM(halloweenBody(),{url:'https://brainilabgames.com/halloween/',runScripts:'outside-only'}),w=dom.window;
  let state={cloud:true,entitlements:owned,progress:{games_completed:3,distinct_games:2,days_played:3}};
