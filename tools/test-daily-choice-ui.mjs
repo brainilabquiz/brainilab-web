@@ -27,4 +27,20 @@ dom=page();w=dom.window;let answer=true,fail=false;w.BrainiBackendAuth={isConfig
 const content={source:'local',fallbackAnswer:'APPLE'};let r=await w.BrainiDailyGames.checkBrainiWordGuess(content,'APPLE',1);assert.equal(r.validWord,true);assert.equal(r.won,true);
 answer=false;r=await w.BrainiDailyGames.checkBrainiWordGuess(content,'ZZZZZ',1);assert.equal(r.validWord,false);assert.equal(r.finished,false);assert.equal(r.states.length,0);
 fail=true;await assert.rejects(()=>w.BrainiDailyGames.checkBrainiWordGuess(content,'APPLE',1));fail=false;answer={states:['absent'],won:false};r=await w.BrainiDailyGames.checkBrainiWordGuess({source:'supabase',dailyChallengeId:'fixture'},'APPLE',1);assert.equal(r.validWord,false);w.close();
-console.log('PASS Daily UI: main/locked/choice/completed states, friend main-only score, choice conflicts, version mismatch, offline and dictionary validation.');
+// A guarded Daily may replace its game root; the page identity must survive.
+for(const mode of ['not-in-lineup','offline','archive']){
+ const html=fs.readFileSync('games/brain-mix/index.html','utf8');
+ dom=new JSDOM(html,{url:'https://brainilabgames.com/games/brain-mix/'+(mode==='archive'?'?archive=2026-10-18':''),runScripts:'outside-only'});w=dom.window;
+ const heading=w.document.querySelector('main h1'),root=w.document.getElementById('leafQuiz');
+ assert.equal(w.document.querySelectorAll('h1').length,1);assert.equal(heading.textContent,'Brain Mix');
+ assert.equal(heading.closest('#leafQuiz'),null);assert.equal(root.querySelector('[data-q]').tagName,'H2');
+ w.BrainiDailyRules={active:()=>true,lineup:()=>mode==='not-in-lineup'?['mathrush','brainiword','connections']:['brainmix','brainiword','connections']};
+ w.BrainiBackendAuth={getClient:()=>null};let writes=0;
+ w.BrainiData={api:{submitGameResult:()=>writes++}};
+ w.eval(src('daily-choice-guard.js'));
+ assert.equal(await w.BrainiDailyChoiceGuard.check(root),mode!=='archive');
+ assert.equal(w.document.querySelector('main h1'),heading,'guard replacement retains the permanent topic heading');
+ assert.equal(heading.closest('[hidden]'),null);
+ assert.equal(writes,0,'eligibility messages cannot submit a player result');w.close();
+}
+console.log('PASS Daily UI: main/locked/choice/completed states, friend main-only score, choice conflicts, version mismatch, offline, dictionary validation and permanent Brain Mix title through guard/archive states.');
