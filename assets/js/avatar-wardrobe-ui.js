@@ -20,10 +20,10 @@ window.BrainiWardrobeUI=(()=>{
       button.dataset.wardrobeState=unknown?'unknown':preview?'preview':inUse?'equipped':saved?'saved':'available';
       button.dataset.wardrobeUnlocked=unknown?'unknown':String(unlocked);
       const daysLeft=item.days?Math.max(0,item.days-C.dayCount(activeDays)):0;
-      const status=loading?'Checking…':error?'Unavailable':!unlocked?item.course?'Finish course':item.challenge?'Finish challenge':item.days?`${daysLeft.toLocaleString('en-GB')} ${daysLeft===1?'day':'days'} to go`:`${Math.max(0,item.xp-total).toLocaleString('en-GB')} XP to go`:preview?'Preview':inUse?'In use':saved?'Saved choice':kind==='mode'?'Choose':'Try on';
+      const status=loading?'Checking…':error?'Unavailable':!unlocked?item.event?item.requirement:item.course?'Finish course':item.challenge?'Finish challenge':item.days?`${daysLeft.toLocaleString('en-GB')} ${daysLeft===1?'day':'days'} to go`:`${Math.max(0,item.xp-total).toLocaleString('en-GB')} XP to go`:preview?'Preview':inUse?'In use':saved?'Saved choice':kind==='mode'?'Choose':'Try on';
       const marker=cosmeticKinds.has(kind)&&!unknown?!unlocked?'locked':preview?'preview':inUse?'equipped':saved?'saved':'unlocked':'';
       label(button,status,marker);
-      const requirement=item.days?'play on '+item.days+' different days to unlock':item.challenge?'finish '+item.challenge+' to unlock':item.course?'complete '+item.courseTitle+' to unlock':'unlocks at '+item.xp.toLocaleString('en-GB')+' XP';
+      const requirement=item.event?item.requirement:item.days?'play on '+item.days+' different days to unlock':item.challenge?'finish '+item.challenge+' to unlock':item.course?'complete '+item.courseTitle+' to unlock':'unlocks at '+item.xp.toLocaleString('en-GB')+' XP';
       button.setAttribute('aria-label',`${item.name}, ${picked?'selected, ':''}${unknown?status:unlocked?(marker==='unlocked'?'unlocked, ':'')+status:'locked, '+requirement}${item.description?'. '+item.description:''}`);
     }
   }

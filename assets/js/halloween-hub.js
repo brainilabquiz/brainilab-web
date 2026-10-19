@@ -45,6 +45,14 @@
    const id=card.dataset.halloweenReward,max=id==='pumpkin-thinker'?1:id==='midnight'?2:3,value=Math.min(max,id==='pumpkin-thinker'?(progress.games_completed||0):id==='midnight'?(progress.distinct_games||0):(progress.days_played||0));
    card.classList.toggle('is-earned',earned.includes(id));card.querySelector('progress').value=earned.includes(id)?max:value;
    card.querySelector('[data-halloween-unlock]').textContent=earned.includes(id)?'✓ In your collection':value+' of '+max;
+   let link=card.querySelector('[data-halloween-try]');
+   const canTry=earned.includes(id)&&!state.loading&&!state.error;
+   if(canTry&&!link){link=document.createElement('a');link.dataset.halloweenTry='';link.className='halloween-reward-action';link.textContent='Try it on →';card.append(link);}
+   if(link){
+    const kind=id==='midnight'?'frame':id==='pumpkin-thinker'?'hat':'prop';
+    link.href='/profile/?section=progress&reward='+encodeURIComponent(kind+':'+id)+'#my-avatar';
+    link.setAttribute('aria-label','Try on '+card.querySelector('h3').textContent);link.hidden=!canTry;
+   }
   }
   const title=root.querySelector('[data-halloween-collection-title]'),status=root.querySelector('[data-halloween-collection-status]');
   if(title)title.textContent=earned.length?`${earned.length} of 3 treats in your collection.`:'Every treat starts with a little curiosity.';

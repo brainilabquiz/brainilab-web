@@ -38,3 +38,5 @@
 .halloween-page a:focus-visible,.halloween-page button:focus-visible,.halloween-page summary:focus-visible,.halloween-page h2:focus-visible{outline:3px solid var(--halloween-orange);outline-offset:4px}.halloween-reading-card a{display:block}.halloween-reading-card a:focus-visible{outline-offset:-4px}.halloween-page h2[tabindex="-1"]{scroll-margin-top:90px}
 @media(max-width:767px){.halloween-reading-card a{display:grid}.halloween-next-treat{align-items:flex-start;flex-direction:column;gap:4px;padding:12px 0}.halloween-next-treat a{align-self:flex-start}}
 @media(prefers-reduced-motion:reduce){.halloween-page *{scroll-behavior:auto;transition:none;animation:none}}
+.halloween-reward-action{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:8px;color:var(--navy);font-size:13px;font-weight:750;text-decoration:underline;text-underline-offset:4px}.halloween-reward-action[hidden]{display:none}
+@media(max-width:420px){.halloween-reward-action{grid-column:2;justify-self:start;justify-content:flex-start;margin-top:4px}}
