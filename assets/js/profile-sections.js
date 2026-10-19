@@ -243,8 +243,18 @@ window.BrainiProfileSections=(function(){
       if(reveal){
         linkedRewardOpened=key;
         const focusTarget=choice.disabled?choice.closest('fieldset'):choice;
-        if(focusTarget){if(choice.disabled)focusTarget.tabIndex=-1;focusTarget.focus({preventScroll:true});}
-        choice.scrollIntoView?.({block:'center',behavior:'instant'});
+        const revealChoice=()=>{
+          if(!choice.isConnected||selected()!=='progress'||new URLSearchParams(location.search).get('reward')!==key)return;
+          const active=document.activeElement;
+          if(active!==focusTarget&&active!==document.body&&active?.id!=='my-avatar')return;
+          if(focusTarget){if(choice.disabled)focusTarget.tabIndex=-1;focusTarget.focus({preventScroll:true});}
+          choice.scrollIntoView?.({block:'center',behavior:'instant'});
+        };
+        revealChoice();
+        // The browser can apply #my-avatar after DOMContentLoaded. Reveal the
+        // choice after that initial fragment jump, without stealing later focus.
+        const afterLoad=()=>requestAnimationFrame(()=>requestAnimationFrame(revealChoice));
+        if(document.readyState==='complete')afterLoad();else window.addEventListener('load',afterLoad,{once:true});
       }
     }
   }

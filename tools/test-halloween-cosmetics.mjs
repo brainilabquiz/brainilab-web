@@ -44,6 +44,8 @@ for(const [kind,id,requirement] of items){
  const button=f.root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`);
  assert.equal(f.w.BrainiAvatarStudioUI.activePane(),kind==='frame'?'rewards':'extras');
  assert.equal(f.w.document.activeElement,button,'A reward link waits for ownership and then focuses its actual choice');
+ button.blur();await new Promise(resolve=>f.w.requestAnimationFrame(()=>f.w.requestAnimationFrame(resolve)));
+ assert.equal(f.w.document.activeElement,button,'The initial browser fragment jump cannot hide the requested item');
  assert.match(f.root.querySelector('#linked-reward-note').textContent,/Ready to try on/);
  assert.equal(button.getAttribute('aria-pressed'),'false');assert.equal(f.writes.length,0,'Opening a link never equips or writes preferences');
  button.click();assert.equal(button.getAttribute('aria-pressed'),'true');assert.equal(f.writes.length,0,'Trying is still an unsaved preview');
