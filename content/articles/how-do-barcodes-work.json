@@ -1,0 +1,65 @@
+{
+  "slug": "how-do-barcodes-work",
+  "title": "How do barcodes work? The stripes are a shortcut",
+  "description": "A supermarket barcode usually identifies the product, not its price. Discover how the bars and spaces become a number, and why two bottles can share a code.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 183,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-do-barcodes-work.webp",
+    "small": "/assets/images/learn/how-do-barcodes-work-small.webp",
+    "thumbnail": "/assets/images/learn/how-do-barcodes-work-thumb.webp",
+    "alt": "A black linear barcode on a cream cardboard carton, with a green apple softly blurred behind it",
+    "credit": "AI-generated realistic illustration created for BrainiLab; the decorative barcode is not a working product identifier.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge"
+  },
+  "practice": "In the mood for more everyday surprises? Try General Knowledge.",
+  "related": [
+    "why-zippers-have-interlocking-teeth",
+    "why-ballpoint-pens-have-a-tiny-ball"
+  ],
+  "sources": [
+    {
+      "url": "https://support.gs1.org/support/solutions/articles/43000734095-how-do-gs1-gtins-and-barcodes-work-",
+      "name": "GS1 — How do GS1 GTINs and barcodes work?"
+    },
+    {
+      "url": "https://support.gs1.org/support/solutions/articles/43000734158-are-the-description-and-price-of-the-item-included-in-the-barcode-",
+      "name": "GS1 — Are the description and price of the item included in the barcode?"
+    }
+  ],
+  "sections": [
+    {
+      "id": "stripes-into-numbers",
+      "title": "From stripes to a number",
+      "html": "<p><strong>A barcode works by turning a pattern of bars and spaces into information a scanner can read.</strong> On ordinary supermarket packaging, that information is usually a product identification number.</p><p>It is a shortcut for the till: recognise the pattern, read the number, find the product. The checkout beep makes a very quick introduction.</p>"
+    },
+    {
+      "id": "the-spaces-count-too",
+      "title": "The spaces count too",
+      "html": "<p>Both the bars and the gaps matter. Their pattern gives the scanner something to decode. <a href=\"https://support.gs1.org/support/solutions/articles/43000734095-how-do-gs1-gtins-and-barcodes-work-\">GS1 explains how the familiar retail barcode represents a GTIN</a>, short for Global Trade Item Number.</p><p>The digits printed underneath are a human-readable version of that identifier. The stripes are there for the scanner; the number gives people another way to read it.</p>"
+    },
+    {
+      "id": "where-the-price-lives",
+      "title": "So where is the price?",
+      "html": "<p><a href=\"https://support.gs1.org/support/solutions/articles/43000734158-are-the-description-and-price-of-the-item-included-in-the-barcode-\">GS1 says the description and price are generally retrieved from a database</a>. The barcode usually points to that information rather than carrying a tiny price list.</p><p>There are exceptions, including specialist codes for goods sold by variable weight and some coupons. So “barcodes never contain prices” would take the idea too far.</p>"
+    },
+    {
+      "id": "two-bottles-one-code",
+      "title": "Two bottles can share a code",
+      "html": "<p>Two identical bottles of the same drink and size can carry the same GTIN. It identifies the product type, not a unique personal name for every bottle.</p><p>For more clever things hiding in plain sight, discover <a href=\"/learn/why-zippers-have-interlocking-teeth/\">how a zip joins its teeth</a> and <a href=\"/learn/why-ballpoint-pens-have-a-tiny-ball/\">why a pen needs a tiny ball</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T16:27:08Z",
+  "updatedAt": "2026-10-19T16:27:08Z",
+  "minutes": 2
+}

@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-an-atoll",
+  "title": "What is an atoll? A reef with a lagoon inside",
+  "description": "An atoll is a ring-shaped coral reef around a lagoon. Discover why its islands can look like a broken necklace, and why the water inside has a different name.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 182,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-an-atoll.webp",
+    "small": "/assets/images/learn/what-is-an-atoll-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-an-atoll-thumb.webp",
+    "alt": "A realistic aerial view of an irregular coral reef enclosing a turquoise lagoon, with sandy islets and gaps to the blue ocean",
+    "credit": "AI-generated realistic landscape created for BrainiLab; not a photograph of a named atoll.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals"
+  },
+  "practice": "Fancy another geography discovery? Try World Capitals.",
+  "related": [
+    "what-is-a-fjord",
+    "why-is-the-ocean-salty"
+  ],
+  "sources": [
+    {
+      "url": "https://oceanservice.noaa.gov/education/tutorial_corals/coral04_reefs.html",
+      "name": "NOAA — How do coral reefs form?"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/lagoon.html",
+      "name": "NOAA — What is a lagoon?"
+    },
+    {
+      "url": "https://www.usgs.gov/publications/cenozoic-sea-level-and-rise-modern-rimmed-atolls",
+      "name": "Toomey et al. (2016), USGS — Cenozoic sea level and the rise of modern rimmed atolls"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-ring-in-the-ocean",
+      "title": "A ring in the ocean",
+      "html": "<p><strong>An atoll is a ring-shaped coral reef that surrounds, or nearly surrounds, a lagoon.</strong> The lagoon is the water inside; the reef forms its boundary.</p><p>From above, an atoll can look like a necklace dropped into the sea. Some beads are sandy islands. Others are sections of reef beneath the water.</p>"
+    },
+    {
+      "id": "not-a-solid-hoop",
+      "title": "Not a solid hoop of land",
+      "html": "<p><a href=\"https://oceanservice.noaa.gov/education/tutorial_corals/coral04_reefs.html\">NOAA describes atolls with islands and gaps in the reef</a>. You do not need one continuous strip of dry land to make the ring.</p><p>The classic explanation starts with coral growing around a volcanic island. As the island slowly sinks and the reef grows upwards, a lagoon separates the reef from the land. Eventually, the island can disappear below sea level.</p>"
+    },
+    {
+      "id": "more-than-a-sinking-island",
+      "title": "The full story has more moving parts",
+      "html": "<p>That is a useful starting picture, rather than a complete recipe for every atoll. Changing sea levels, reef growth, sediment and the dissolving of carbonate rock also shape the result.</p><p><a href=\"https://www.usgs.gov/publications/cenozoic-sea-level-and-rise-modern-rimmed-atolls\">USGS research using Enewetak Atoll and computer models</a> explores how those processes help create the raised reef rim. Nature rarely sticks to one neat sketch.</p>"
+    },
+    {
+      "id": "reef-or-water",
+      "title": "Atoll or lagoon? Look at what you mean",
+      "html": "<p><a href=\"https://oceanservice.noaa.gov/facts/lagoon.html\">A lagoon is a body of water partly separated from a larger one by a natural barrier</a>. Coastal lagoons exist too, so a lagoon does not automatically mean an atoll.</p><p>For two other landscapes worth a closer look, meet <a href=\"/learn/what-is-a-fjord/\">a valley with the sea inside</a> and discover <a href=\"/learn/why-is-the-ocean-salty/\">where the ocean gets its salt</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T16:27:08Z",
+  "updatedAt": "2026-10-19T16:27:08Z",
+  "minutes": 2
+}
