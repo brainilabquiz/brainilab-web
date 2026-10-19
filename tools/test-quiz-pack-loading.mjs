@@ -10,6 +10,11 @@ const pages=[['science/science-quiz/','science'],['history/history-quiz/','histo
 const results=[];
 for(const [page,topic] of pages){
  const dom=new JSDOM(source(page+'index.html'),{url:'https://brainilabgames.com/'+page+'?difficulty=medium&set=1&try=1',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
+ const heading=d.querySelector('main h1');
+ assert.equal(d.querySelectorAll('h1').length,1,'one permanent page title: '+page);
+ assert.ok(heading?.closest('.game-entry-heading'),'topic heading remains outside the loading game');
+ const title=heading.textContent;
+ assert.equal(d.querySelector('[data-q]').tagName,'H2','a changing question is subordinate to the quiz title');
  const rpcNames=[];let writes=0,packRequests=0,recovered=false,releaseRetry;
  w.BrainiBackendAuth={isConfigured:()=>true,getClient:()=>({rpc:async name=>{rpcNames.push(name);return {data:null,error:Error('Test cloud connection unavailable')};}})};
  w.BrainiData={anytimePlayedIds:()=>[],api:{submitGameResult:()=>{writes++;throw Error('No game may be submitted during loading');}}};
@@ -39,6 +44,7 @@ for(const [page,topic] of pages){
  assert.equal(status.hidden,false);assert.equal(status.getAttribute('role'),'status');
  assert.match(status.textContent,/questions couldn’t load/);assert.equal(retry.hidden,false);assert.equal(retry.disabled,false);
  assert.equal(root.querySelectorAll('[data-answers] button').length,0,'no answer controls mount after failed loading');
+ assert.equal(heading.hidden,false);assert.equal(heading.closest('[hidden]'),null,'the title remains available during a pack error');
  recovered=true;retry.focus();retry.click();retry.click();
  await tick();
  assert.equal(root.getAttribute('aria-busy'),'true');assert.equal(retry.disabled,true);
@@ -53,6 +59,7 @@ for(const [page,topic] of pages){
  assert.ok(root.querySelector('[data-q]').textContent.replace(/\s+/g,' ').includes(expected.replace(/[\u{1F1E6}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim()),'selected topic and difficulty are preserved');
  assert.ok(rpcNames.every(name=>['get_brainilab_anytime_quiz','get_brainilab_quiz_pack'].includes(name)));
  assert.equal(writes,0,'loading/recovery cannot submit a result or alter player progress');
+ assert.equal(d.querySelector('main h1'),heading);assert.equal(heading.textContent,title,'recovering a question never replaces the page identity');
  results.push({page,packRequests,cloudReads:rpcNames.length,answers:4,writes});
  w.close();
 }
