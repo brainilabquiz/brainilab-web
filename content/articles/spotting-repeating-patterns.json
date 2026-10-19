@@ -72,7 +72,7 @@
   "sections": [
     {
       "id": "a-rhythm-you-can-point-to",
-      "html": "<p><strong>The minimum period is the length of the smallest block that repeats to make a repeating pattern.</strong> In ABABAB, that block is AB, so the minimum period is <strong>2</strong>.</p><p>The block is also called the <strong>unit of repeat</strong>. Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the whole scarf.</p>",
+      "html": "<p><strong>The minimum period is the length of the smallest block that repeats to make a repeating pattern.</strong> In ABABAB, that block is AB, so the minimum period is <strong>2</strong>.</p><p>Ready for a puzzle? <a href=\"/reasoning/#learn-spotting-repeating-patterns\">Try the Reasoning Challenge</a>, with patterns, numbers, shapes and logic.</p><p>The block is also called the <strong>unit of repeat</strong>. Think of a striped scarf: you want the little sequence the knitter keeps using, not a description of the whole scarf.</p>",
       "title": "What is the minimum period of a pattern?"
     },
     {
@@ -91,7 +91,7 @@
       "title": "What comes after ABBABBAB?"
     }
   ],
-  "updatedAt": "2026-10-16T18:58:04Z",
+  "updatedAt": "2026-10-19T19:13:04Z",
   "description": "Find the smallest block in a repeating pattern. AB, AAB and ABB examples explain the minimum period, incomplete repeats and what comes next.",
   "publishedAt": "2026-10-01T14:46:03.187485+00:00"
 }
