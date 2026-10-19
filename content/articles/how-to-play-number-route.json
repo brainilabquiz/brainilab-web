@@ -39,7 +39,7 @@
   "sections": [
     {
       "id": "the-rule",
-      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose a maths sign between each pair. Work from left to right, carrying your answer into the next step, until you reach the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Your <strong>running total</strong> is the answer you have reached so far. Here, each button changes it immediately. That small difference is where many first attempts go wrong.</p>",
+      "html": "<p><strong>In Number Route, keep all four numbers in their original order and choose a maths sign between each pair. Work from left to right, carrying your answer into the next step, until you reach the target.</strong> You can use +, −, × and ÷, including the same sign more than once.</p><p>Want to try it? <a href=\"/games/number-route/#learn-how-to-play-number-route\">Play Number Route</a>, or follow the worked example below.</p><p>This is a game rule, not a replacement for the usual order of operations. In ordinary arithmetic, multiplication and division have priority over addition and subtraction. Your <strong>running total</strong> is the answer you have reached so far. Here, each button changes it immediately. That small difference is where many first attempts go wrong.</p>",
       "title": "One rule makes this puzzle different"
     },
     {
@@ -63,7 +63,7 @@
       "title": "Your turn: reach 21"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-19T18:26:43Z",
   "description": "Four numbers, three missing signs and one target. Learn the left-to-right rule with a complete example, then try a route yourself.",
   "publishedAt": "2026-09-29T20:12:34.329468Z"
 }
