@@ -1,0 +1,121 @@
+{
+  "id": "seo-quiz-entrances-20261019",
+  "reviewedAt": "2026-10-19T19:49:36.884165+00:00",
+  "mainReviewed": "e67f6fbb88fc52c150c319edfd4dc7afd773a305",
+  "sourceVideo": {
+    "url": "https://www.youtube.com/watch?v=P-vPlQ7GmTw",
+    "coverage": "Visible description and chapter outline reused. Transcript unavailable; no full-course viewing claim."
+  },
+  "principle": "Clear descriptive main headings and a consistent entrance for visitors reaching an existing quiz from an article or search.",
+  "observedGap": "Four live quiz pages use the changing question as their sole h1. It is hidden during loading/error, leaving no visible primary heading. Existing World Flags and General Knowledge already have a stable heading and question h2.",
+  "changes": [
+    {
+      "file": "geography/world-capitals-quiz/index.html",
+      "title": "World Capitals Quiz",
+      "copy": "A country, four cities. Choose a level and try 20 capital questions.",
+      "art": "world-capitals"
+    },
+    {
+      "file": "science/science-quiz/index.html",
+      "title": "Science Quiz",
+      "copy": "Life, matter and space. Choose a level and try 20 science questions.",
+      "art": "science"
+    },
+    {
+      "file": "history/history-quiz/index.html",
+      "title": "History Quiz",
+      "copy": "People, places and turning points. Choose a level for 20 history questions.",
+      "art": "history"
+    },
+    {
+      "file": "sports/sports-quiz/index.html",
+      "title": "Sports Quiz",
+      "copy": "Rules, teams and sporting moments. Choose a level and try 20 questions.",
+      "art": "sports"
+    }
+  ],
+  "scope": "Static heading plus one short introductory sentence and existing decorative art. Reuse existing CSS. Preserve question text in its data-q node, now an h2. No new start gate or widget.",
+  "gsc": {
+    "source": "Existing first-party Search Console",
+    "sourceSha256": "dab021b4a21118aec15f0ff2a321dd741aa3efad3099ab42f3ddea9b039a57c4",
+    "observedAt": "2026-10-19T07:28:27.627078+00:00",
+    "period": {
+      "start": "2026-09-19",
+      "end": "2026-10-16"
+    },
+    "timezone": "America/Los_Angeles",
+    "markets": "All captured markets; English query text, not a separate language segment",
+    "articleQueryExamples": [
+      {
+        "query": "how does tennis scoring work",
+        "path": "/learn/how-to-read-a-tennis-score/",
+        "brand": "non-brand",
+        "intent": "learn",
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0.0,
+        "position": 18.5
+      },
+      {
+        "query": "why 2100 is not a leap year",
+        "path": "/learn/why-2100-is-not-a-leap-year/",
+        "brand": "non-brand",
+        "intent": "learn",
+        "clicks": 0,
+        "impressions": 32,
+        "ctr": 0.0,
+        "position": 8.53125
+      },
+      {
+        "query": "why is canberra the capital of australia and not sydney or melbourne",
+        "path": "/learn/why-canberra-is-australias-capital/",
+        "brand": "non-brand",
+        "intent": "learn",
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0.0,
+        "position": 10.5
+      },
+      {
+        "query": "why is sydney not the capital of australia",
+        "path": "/learn/why-canberra-is-australias-capital/",
+        "brand": "non-brand",
+        "intent": "learn",
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0.0,
+        "position": 18.8
+      },
+      {
+        "query": "will 2100 be a leap year",
+        "path": "/learn/why-2100-is-not-a-leap-year/",
+        "brand": "non-brand",
+        "intent": "unreviewed",
+        "clicks": 0,
+        "impressions": 27,
+        "ctr": 0.0,
+        "position": 8.518518518518519
+      }
+    ],
+    "limit": "Article queries establish existing reader subjects, not demand for a named quiz or traffic reaching it. No visible query rows for these four quiz URLs in this snapshot; missing rows are unknown, not zero. Historical averages are not current ranks; monthly volumes and traffic impact unknown."
+  },
+  "liveReview": "Twelve public game/article URLs read; game headings additionally compared against flags and general-knowledge entrances. No article rewrite justified: leap-year, Canberra, bubble-wrap and repeated-letter answers already clear and sourced.",
+  "sources": [
+    "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "https://brainilabgames.com/geography/world-capitals-quiz/",
+    "https://brainilabgames.com/science/science-quiz/",
+    "https://brainilabgames.com/history/history-quiz/",
+    "https://brainilabgames.com/sports/sports-quiz/"
+  ],
+  "preserved": [
+    "all question sets and answer keys",
+    "XP and scores",
+    "progress and account data",
+    "reading-card choices and existing article links",
+    "article documents, cover art and dates",
+    "same game URLs, canonical declarations and metadata",
+    "existing Halloween result changes from PR264"
+  ],
+  "measurement": "Keep original GSC baselines. Prior article_game_click coverage change from PR263 remains a break in comparability. No new measurement change and no ranking, visit, account or AI-citation gain claimed.",
+  "noPaidResearch": true
+}
