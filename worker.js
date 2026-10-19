@@ -71,6 +71,15 @@ export default {
     request=productionRequest(request);
     const url=new URL(request.url);
     const holiday=halloweenState();
+    // The seasonal HTML differs from the underlying asset. An old document's
+    // conditional validator must not turn its new navigation into a 304.
+    if(holiday.active&&['GET','HEAD'].includes(request.method)
+       &&!url.pathname.startsWith('/assets/')&&!url.pathname.startsWith('/api/')
+       &&(!/\.[^/]+$/.test(url.pathname)||url.pathname.endsWith('.html'))){
+      const headers=new Headers(request.headers);
+      headers.delete('If-None-Match');headers.delete('If-Modified-Since');
+      request=new Request(request,{headers});
+    }
     if(url.pathname==='/api/halloween/config'){
       if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{Allow:'GET, HEAD'}});
       return new Response(request.method==='HEAD'?null:JSON.stringify(halloweenPublicConfig(holiday)),{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
@@ -92,7 +101,7 @@ export default {
       const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/',url),request));
       if(request.method==='HEAD')return response;
       const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
-      const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
+      const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');
       const news=renderNews(edition);
       headers.set('Cache-Control',news?'public,max-age=60':'no-store');
       return new Response(decorateHalloween(html.replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),holiday,url.pathname),{status:response.status,headers});
@@ -119,9 +128,9 @@ export default {
       secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
       secured.headers.set('X-Frame-Options','DENY');
       secured.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=()');
-      if(holiday.active&&request.method==='GET'&&secured.headers.get('Content-Type')?.includes('text/html')){
-        const headers=new Headers(secured.headers);headers.delete('Content-Length');headers.delete('ETag');headers.set('Cache-Control','no-store');
-        return new Response(decorateHalloween(await secured.text(),holiday,url.pathname),{status:secured.status,headers});
+      if(holiday.active&&['GET','HEAD'].includes(request.method)&&secured.headers.get('Content-Type')?.includes('text/html')){
+        const headers=new Headers(secured.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');headers.set('Cache-Control','no-store');
+        return new Response(request.method==='HEAD'?null:decorateHalloween(await secured.text(),holiday,url.pathname),{status:secured.status,headers});
       }
       return secured;
     }
@@ -164,9 +173,9 @@ export default {
       return json({error:'Not found'},404);
     }
     const response=await env.ASSETS.fetch(request);
-    if(holiday.active&&request.method==='GET'&&response.headers.get('Content-Type')?.includes('text/html')){
-      const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.set('Cache-Control','no-store');
-      return new Response(decorateHalloween(await response.text(),holiday,url.pathname),{status:response.status,headers});
+    if(holiday.active&&['GET','HEAD'].includes(request.method)&&response.headers.get('Content-Type')?.includes('text/html')){
+      const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');headers.set('Cache-Control','no-store');
+      return new Response(request.method==='HEAD'?null:decorateHalloween(await response.text(),holiday,url.pathname),{status:response.status,headers});
     }
     return response;
   }

@@ -201,7 +201,7 @@ try{
   Date.now=()=>time;
   for(const route of staticRoutes){
    const response=await enabledWorker.fetch(new Request('https://brainilabgames.com'+route),{
-    ASSETS:{fetch:async()=>new Response(fixture,{headers:{'Content-Type':'text/html; charset=utf-8','Content-Length':String(Buffer.byteLength(fixture)),ETag:'original','Cache-Control':'public,max-age=300'}})}
+    ASSETS:{fetch:async()=>new Response(fixture,{headers:{'Content-Type':'text/html; charset=utf-8','Content-Length':String(Buffer.byteLength(fixture)),ETag:'original','Last-Modified':'Mon, 19 Oct 2026 00:00:00 GMT','Cache-Control':'public,max-age=300'}})}
    },ctx);
    const result=await response.text();
    assert.equal(response.status,200);
@@ -209,11 +209,20 @@ try{
    if(decorate){
     assert.equal(response.headers.get('Cache-Control'),'no-store');
     assert.equal(response.headers.has('ETag'),false);
+    assert.equal(response.headers.has('Last-Modified'),false,'A static timestamp cannot validate transformed seasonal HTML.');
     assert.equal(response.headers.has('Content-Length'),false);
    }else assert.equal(result,fixture,'Outside the event, real fallback dispatch preserves original HTML.');
   }
  }
  Date.now=()=>eventStart;
+ for(const method of ['GET','HEAD']){
+  let conditionals=null;
+  const response=await enabledWorker.fetch(new Request('https://brainilabgames.com/rankings/',{method,headers:{'If-None-Match':'old-page','If-Modified-Since':'Wed, 21 Oct 2026 00:00:00 GMT'}}),{
+   ASSETS:{fetch:async req=>{conditionals=[req.headers.get('If-None-Match'),req.headers.get('If-Modified-Since')];return conditionals.some(Boolean)?new Response(null,{status:304}):new Response(method==='HEAD'?null:fixture,{headers:{'Content-Type':'text/html','Last-Modified':'Mon, 19 Oct 2026 00:00:00 GMT'}});}}
+  },ctx);
+  assert.deepEqual(conditionals,[null,null],'Old document validators must not bypass the seasonal menu.');assert.equal(response.status,200);assert.equal(response.headers.has('Last-Modified'),false);
+  assert.equal(response.headers.get('Cache-Control'),'no-store');const html=await response.text();assert.equal(method==='HEAD'?html==='':html.includes('halloween-nav-link'),true);
+ }
  const bytes='plain static asset';
  const nonHtml=await enabledWorker.fetch(new Request('https://brainilabgames.com/assets/readme.txt'),{
   ASSETS:{fetch:async()=>new Response(bytes,{headers:{'Content-Type':'text/plain','Cache-Control':'public,max-age=300'}})}
