@@ -1,0 +1,70 @@
+{
+  "slug": "wordplay-examples",
+  "title": "Wordplay examples: 8 ways English can surprise you",
+  "description": "How does LISTEN become SILENT? Can silence be deafening? Explore eight short reads about wordplay, from sound swaps to words with opposite meanings.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "order": 173,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/wordplay-examples.webp",
+    "small": "/assets/images/learn/wordplay-examples-small.webp",
+    "thumbnail": "/assets/images/learn/wordplay-examples-thumb.webp",
+    "alt": "Two cream cards spelling LISTEN and SILENT beside a yellow pencil and a green paperclip",
+    "credit": "AI-generated editorial illustration created for BrainiLab; the two cards show the same six letters in a different order.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Fancy looking for another kind of link? Try Connections.",
+  "related": [],
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/wordplay",
+      "name": "Merriam-Webster — Wordplay: the playful use of words"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/anagram",
+      "name": "Merriam-Webster — Anagram: rearranging a word’s letters"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/palindrome",
+      "name": "Merriam-Webster — Palindrome: reading forwards and backwards"
+    },
+    {
+      "url": "https://www.merriam-webster.com/dictionary/portmanteau",
+      "name": "Merriam-Webster — Portmanteau: word blends, including brunch"
+    }
+  ],
+  "sections": [
+    {
+      "id": "what-is-wordplay",
+      "title": "What is wordplay?",
+      "html": "<p><strong>Wordplay is having fun with the sounds, letters or meanings of words.</strong> <a href=\"https://www.merriam-webster.com/dictionary/wordplay\">Merriam-Webster describes its playful side</a>; the fun can be as small as noticing a word backwards.</p><p>These eight short reads each reveal a different trick. Pick the question that catches your eye. There is no order to follow and no test at the end.</p>"
+    },
+    {
+      "id": "listen-for-the-twist",
+      "title": "Listen for the twist",
+      "html": "<ul><li><a href=\"/learn/homophones-same-sound-different-meaning/\">Flour or flower?</a> Same sound, very different shopping lists. Homophones make the sentence matter more than your ears.</li><li><a href=\"/learn/what-is-a-spoonerism/\">Jelly beans or belly jeans?</a> Swap the first sounds and your snack acquires a wardrobe. Meet the spoonerism.</li></ul>"
+    },
+    {
+      "id": "look-at-the-letters",
+      "title": "Look at the letters",
+      "html": "<ul><li><a href=\"/learn/anagrams-rearrange-the-same-letters/\">How does LISTEN become SILENT?</a> Anagrams rearrange the same letters. Check the budget: nothing new sneaks in.</li><li><a href=\"/learn/palindromes-words-that-read-both-ways/\">What is LEVEL hiding?</a> Read it backwards. Palindromes keep the same spelling when you reverse the letter order.</li><li><a href=\"/learn/what-is-a-pangram-quick-brown-fox/\">Why does the quick brown fox keep turning up?</a> A pangram packs the whole English alphabet into one sentence. This fox has a job.</li></ul>"
+    },
+    {
+      "id": "play-with-the-meaning",
+      "title": "Play with the meaning",
+      "html": "<ul><li><a href=\"/learn/words-that-mean-their-own-opposite/\">Can dust mean two opposite jobs?</a> Contronyms can point both ways. Your shelf and your dough would prefer clear instructions.</li><li><a href=\"/learn/oxymoron-examples-deafening-silence/\">How can silence be deafening?</a> An oxymoron brings clashing ideas together. Imagine the pause after a joke nobody laughs at.</li><li><a href=\"/learn/portmanteau-words-brunch-smog-spork/\">Which two meals are hiding in brunch?</a> Portmanteaus blend pieces of words and their meanings. Breakfast and lunch squeeze into one name.</li></ul>"
+    }
+  ],
+  "publishedAt": "2026-10-19T05:40:17Z",
+  "updatedAt": "2026-10-19T05:40:17Z",
+  "minutes": 2
+}

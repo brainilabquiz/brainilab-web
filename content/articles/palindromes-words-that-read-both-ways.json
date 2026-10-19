@@ -88,11 +88,11 @@
     },
     {
       "id": "two-rules",
-      "html": "<p><a href=\"/learn/anagrams-rearrange-the-same-letters/\">Anagrams</a> ask, “Can I rearrange these letters?” Palindromes ask, “Does reversing their order change anything?”</p><p><strong>CAT → ACT</strong> passes the first test. <strong>RADAR</strong> passes the second. Sharing letters is not enough to make a palindrome.</p><p>Finish with a small hunt: which of <strong>LEVEL, LEVER and LEMON</strong> survives being read backwards? Then find a shorter example you might call a family member.</p><details class=\"practice-answer\"><summary>One possible answer</summary><p><strong>LEVEL</strong> survives. <strong>MUM</strong> and <strong>DAD</strong> are short palindromes too. The other two words change when reversed.</p></details>",
+      "html": "<p><a href=\"/learn/anagrams-rearrange-the-same-letters/\">Anagrams</a> ask, “Can I rearrange these letters?” Palindromes ask, “Does reversing their order change anything?”</p><p><strong>CAT → ACT</strong> passes the first test. <strong>RADAR</strong> passes the second. Sharing letters is not enough to make a palindrome.</p><p>Finish with a small hunt: which of <strong>LEVEL, LEVER and LEMON</strong> survives being read backwards? Then find a shorter example you might call a family member.</p><details class=\"practice-answer\"><summary>One possible answer</summary><p><strong>LEVEL</strong> survives. <strong>MUM</strong> and <strong>DAD</strong> are short palindromes too. The other two words change when reversed.</p></details><p>For more letter tricks and meaning twists, explore <a href=\"/learn/wordplay-examples/\">our English wordplay guide</a>.</p>",
       "title": "Two puzzles, two questions"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-19T05:40:17Z",
   "description": "Read LEVEL backwards and it refuses to change. Meet words that work in both directions, then try a sentence with the same little trick.",
   "publishedAt": "2026-10-11T17:08:31.614Z"
 }

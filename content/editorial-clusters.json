@@ -102,51 +102,44 @@
     {
       "id": "word-meanings-and-connections-1",
       "topic": "Words & puzzles",
-      "readerQuestion": "How can I recognise different relationships between words and use them to solve a connection?",
-      "hubSlug": "word-meanings-and-connections-guide",
-      "hubTitle": "Words with a twist: 10 ways to understand a connection",
+      "readerQuestion": "What is wordplay, and which short readings explain its sound, letter and meaning tricks?",
+      "hubSlug": "wordplay-examples",
+      "hubTitle": "Wordplay examples: 8 ways English can surprise you",
       "members": [
         {
-          "slug": "connections-puzzles-find-the-hidden-link",
-          "angle": "Test one shared relationship against every clue."
+          "slug": "homophones-same-sound-different-meaning",
+          "angle": "Flour or flower? Homophones in everyday sentences"
+        },
+        {
+          "slug": "what-is-a-spoonerism",
+          "angle": "What is a spoonerism? When jelly beans become belly jeans"
+        },
+        {
+          "slug": "anagrams-rearrange-the-same-letters",
+          "angle": "Anagrams: how did LISTEN become SILENT?"
+        },
+        {
+          "slug": "palindromes-words-that-read-both-ways",
+          "angle": "Palindromes: LEVEL has a neat little secret"
+        },
+        {
+          "slug": "what-is-a-pangram-quick-brown-fox",
+          "angle": "What is a pangram? The quick brown fox has a job"
         },
         {
           "slug": "words-that-mean-their-own-opposite",
-          "angle": "Use context to distinguish opposing meanings of a contronym."
+          "angle": "Contronyms: when a word means its own opposite"
         },
         {
-          "slug": "homophones-same-sound-different-meaning",
-          "angle": "Separate sound from spelling with original paired clues."
+          "slug": "oxymoron-examples-deafening-silence",
+          "angle": "Oxymoron examples: how can silence be deafening?"
         },
         {
-          "slug": "homographs-same-spelling-different-meaning",
-          "angle": "Recognise identical spellings with distinct meanings and pronunciations."
-        },
-        {
-          "slug": "polysemy-one-word-related-meanings",
-          "angle": "Trace related senses without treating every ambiguity as a contronym."
-        },
-        {
-          "slug": "compound-word-connections",
-          "angle": "Find a missing word that can complete several compounds."
-        },
-        {
-          "slug": "words-hidden-inside-other-words",
-          "angle": "Recognise a shared substring while distinguishing letters from meaning."
-        },
-        {
-          "slug": "anagrams-change-the-order",
-          "angle": "Check letter counts when rearranging words."
-        },
-        {
-          "slug": "category-or-association-word-puzzles",
-          "angle": "Distinguish belonging to a category from merely suggesting it."
-        },
-        {
-          "slug": "figurative-language-in-word-clues",
-          "angle": "Recognise literal and figurative readings of the same clue."
+          "slug": "portmanteau-words-brunch-smog-spork",
+          "angle": "Portmanteau examples: the two words hiding in brunch"
         }
-      ]
+      ],
+      "supportingArticlesPerHub": 8
     },
     {
       "id": "remembering-what-you-learn-1",
