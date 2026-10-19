@@ -1,0 +1,65 @@
+{
+  "slug": "how-long-is-a-rugby-match",
+  "title": "How long is a rugby match? Why 80 minutes can run over",
+  "description": "A standard adult rugby union match has two 40-minute halves. Discover why play can continue after 80:00 and how sevens changes the clock.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 175,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-long-is-a-rugby-match.webp",
+    "small": "/assets/images/learn/how-long-is-a-rugby-match-small.webp",
+    "thumbnail": "/assets/images/learn/how-long-is-a-rugby-match-thumb.webp",
+    "alt": "An oval cream-and-indigo rugby ball, a yellow clock showing 80:00 and a brass whistle on a small green pitch",
+    "credit": "AI-generated editorial illustration created for BrainiLab; a conceptual still life, not a real match or branded equipment.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Try the Sports Quiz for more small details behind the big games.",
+  "related": [
+    "how-long-is-a-soccer-game",
+    "why-tennis-players-change-ends"
+  ],
+  "sources": [
+    {
+      "url": "https://passport.world.rugby/laws-of-the-game/laws-by-number/5-time/",
+      "name": "World Rugby Passport — Law 5: Time, including half-time and when a half ends"
+    },
+    {
+      "url": "https://www.world.rugby/the-game/beginners-guide/sevens",
+      "name": "World Rugby — A beginner’s guide to rugby sevens: seven-minute halves"
+    }
+  ],
+  "sections": [
+    {
+      "id": "forty-plus-forty",
+      "title": "Forty minutes, then do it again",
+      "html": "<p><strong>A standard adult, 15-a-side rugby union match has two 40-minute halves: 80 minutes of playing time.</strong> That is the usual format under <a href=\"https://passport.world.rugby/laws-of-the-game/laws-by-number/5-time/\">World Rugby’s time laws</a>.</p><p>It sounds like a reliable plan for your evening. Then the clock reaches 80:00, the ball is still moving, and nobody seems ready to leave.</p>"
+    },
+    {
+      "id": "the-evening-runs-longer",
+      "title": "The evening lasts longer than the clock",
+      "html": "<p>Half-time and stoppages make the time from kick-off to the final whistle longer than 80 minutes. Under the usual law, half-time can last up to 15 minutes; the organiser sets its length.</p><p>The referee keeps time and allows for lost time. There is no single guaranteed finishing time for every match.</p>"
+    },
+    {
+      "id": "eighty-isnt-a-buzzer",
+      "title": "80:00 is not a stop button",
+      "html": "<p>Normally, a half ends when the ball next becomes dead after time expires. There are exceptions, including certain penalties, restarts and a conversion after a try.</p><p>Picture a team still passing the ball at 80:00: play can continue. Even a stoppage does not always end it immediately. The referee decides when the half is over.</p>"
+    },
+    {
+      "id": "sevens-is-shorter",
+      "title": "Sevens is a much shorter appointment",
+      "html": "<p><a href=\"https://www.world.rugby/the-game/beginners-guide/sevens\">Rugby sevens normally has two seven-minute halves</a>: 14 minutes of play. That is a different format, not an unusually speedy 15-a-side match. Other rugby codes have their own rules too.</p><p>Sports clocks have personalities. Compare <a href=\"/learn/how-long-is-a-soccer-game/\">football’s 90 minutes and added time</a>, or discover <a href=\"/learn/why-tennis-players-change-ends/\">when tennis players swap ends</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T06:05:34Z",
+  "updatedAt": "2026-10-19T06:05:34Z",
+  "minutes": 2
+}

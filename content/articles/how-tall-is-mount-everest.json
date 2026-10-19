@@ -1,0 +1,65 @@
+{
+  "slug": "how-tall-is-mount-everest",
+  "title": "How tall is Mount Everest? A measuring twist",
+  "description": "Mount Everest is 8,848.86 metres above sea level. So how can Mauna Kea and Chimborazo claim a different kind of mountain record?",
+  "topic": "Geography",
+  "status": "published",
+  "order": 174,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-tall-is-mount-everest.webp",
+    "small": "/assets/images/learn/how-tall-is-mount-everest-small.webp",
+    "thumbnail": "/assets/images/learn/how-tall-is-mount-everest-thumb.webp",
+    "alt": "An indigo paper mountain and a green volcanic island beside a wooden measuring stick on an ivory desk",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; the paper models are not named mountain profiles or a scale diagram.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals Quiz"
+  },
+  "practice": "Keep exploring with the World Capitals Quiz.",
+  "related": [
+    "why-greenland-looks-so-big",
+    "is-the-caspian-sea-a-lake"
+  ],
+  "sources": [
+    {
+      "url": "https://geodesy.science/2021/new-height-of-mount-everest/",
+      "name": "International Association of Geodesy — New Height of Mount Everest: the joint 2020 measurement"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/highestpoint.html",
+      "name": "NOAA Ocean Service — What is the highest point on Earth? Mauna Kea and Chimborazo comparisons"
+    }
+  ],
+  "sections": [
+    {
+      "id": "everest-height",
+      "title": "Everest starts at sea level",
+      "html": "<p><strong>Mount Everest is 8,848.86 metres above sea level</strong>, according to the height jointly announced by China and Nepal in 2020. The <a href=\"https://geodesy.science/2021/new-height-of-mount-everest/\">International Association of Geodesy explains that measurement</a>.</p><p>That makes Everest Earth’s highest mountain above sea level. But ask which mountain is tallest, and someone may nominate a volcano in Hawaii. Nobody needs a new ruler. They need to agree where it starts.</p>"
+    },
+    {
+      "id": "hidden-mountain",
+      "title": "Mauna Kea has a hidden head start",
+      "html": "<p>Much of Mauna Kea is underwater. Measure from its base on the ocean floor to its summit and the mountain rises <strong>more than 10,210 metres</strong>, according to <a href=\"https://oceanservice.noaa.gov/facts/highestpoint.html\">NOAA’s comparison of mountain heights</a>.</p><p>Everest wins the sea-level comparison; Mauna Kea is taller from base to summit. Imagine two people on different staircases: head height and distance climbed are different questions.</p>"
+    },
+    {
+      "id": "earths-centre",
+      "title": "Chimborazo takes a different route",
+      "html": "<p>Earth bulges around the Equator. Ecuador’s Mount Chimborazo sits close to that bulge, so its summit is <strong>farther from Earth’s centre</strong> than Everest’s.</p><p>It is not higher above sea level. Its starting point is simply farther out. The shape of Earth quietly changes the contest.</p>"
+    },
+    {
+      "id": "pick-a-starting-line",
+      "title": "Pick a starting line",
+      "html": "<p>For a quick quiz, “highest above sea level” means Everest. Base to summit points to Mauna Kea; distance from Earth’s centre points to Chimborazo.</p><p>Geography loves a hidden definition. It also explains <a href=\"/learn/why-greenland-looks-so-big/\">why Greenland looks enormous on some maps</a> and why the <a href=\"/learn/is-the-caspian-sea-a-lake/\">Caspian Sea can be called a lake</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T06:05:34Z",
+  "updatedAt": "2026-10-19T06:05:34Z",
+  "minutes": 2
+}
