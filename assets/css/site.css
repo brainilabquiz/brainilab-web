@@ -5996,3 +5996,6 @@ main > section.section,
 .rank-avatar:is([data-profile-frame],[data-social-frame]),.avatar[data-profile-frame],.social-avatar[data-social-frame],.group-player-avatar[data-social-frame]{position:relative;isolation:isolate;overflow:visible!important;border:0!important;box-shadow:none!important;padding:4px;background:#fffefa;box-sizing:border-box}
 .rank-avatar:is([data-profile-frame],[data-social-frame])::after,.avatar[data-profile-frame]::after,.social-avatar[data-social-frame]::after,.group-player-avatar[data-social-frame]::after{content:"";display:block;position:absolute;inset:-6px;z-index:2;background:var(--player-frame) center/contain no-repeat;-webkit-mask:none;mask:none;transform:none;filter:none;pointer-events:none}
 :is(.social-avatar,.group-player-avatar)[data-social-frame]>:is(img,svg,span){position:relative;z-index:1;border-radius:50%}
+
+/* Permanent earned seasonal frame, using the current frame rendering system. */
+[data-profile-frame=midnight],[data-social-frame=midnight]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-orbit.svg");--ring:#2d296e;outline:2px solid #db8b35;outline-offset:5px}

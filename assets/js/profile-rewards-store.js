@@ -13,6 +13,7 @@ window.BrainiRewardStore=(function(){
       : {id:'guest:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
   }
   const total=()=>catalog.xp(BrainiData.player().xp);
+  const entitlements=()=>window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[];
   const emit=()=>window.dispatchEvent(new CustomEvent('brainilab:stylechange'));
   const applyDesign=()=>BrainiData.api?.setAvatarDesign?.(saved);
   function bounded(request){
@@ -29,7 +30,7 @@ window.BrainiRewardStore=(function(){
   function cache(id,value){
     try{localStorage.setItem(prefix+id,JSON.stringify(value));return true;}catch{return false;}
   }
-  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy,discovery,activeDays),academy:academy.slice(),discovery:discovery.slice(),activeDays,loading,saving,error,notice,cloud:!!owner?.cloud};}
+  function snapshot(){return {owner:owner?.id,style:catalog.available(saved,total(),academy,discovery,activeDays),academy:academy.slice(),discovery:discovery.slice(),activeDays,entitlements:entitlements(),loading,saving,error,notice,cloud:!!owner?.cloud};}
   async function readDiscovery(sb,uid){
     const result=await bounded(sb.rpc('get_my_brainilab_discoveries'));
     if(result.error||result.data?.owner!==uid||!Array.isArray(result.data?.games)||!Number.isSafeInteger(result.data?.activeDays)||result.data.activeDays<0)throw Error('Discovery progress unavailable');
@@ -48,7 +49,7 @@ window.BrainiRewardStore=(function(){
     const same=owner?.id===current.id;
     const run=++generation;owner=current;if(!same){academy=[];discovery=[];activeDays=0;}saved=cached(current.id);error='';notice='';
     loading=current.cloud;emit();
-    if(!current.cloud){applyDesign();return;}
+    if(!current.cloud){await window.BrainiHalloweenEntitlements?.load?.();if(run!==generation||identity().id!==current.id)return;applyDesign();return;}
     try{
       const sb=window.BrainiBackendAuth?.getClient?.();
       if(!sb)throw Error('Profile connection unavailable');
@@ -56,7 +57,7 @@ window.BrainiRewardStore=(function(){
       if(readError)throw readError;
       if(run!==generation||identity().id!==current.id)return;
       if(data?.user?.id!==current.uid)throw Error('Account changed');
-      const [collection,played]=await Promise.all([readAcademy(sb,current.uid),readDiscovery(sb,current.uid)]);
+      const [collection,played]=await Promise.all([readAcademy(sb,current.uid),readDiscovery(sb,current.uid),window.BrainiHalloweenEntitlements?.load?.()]);
       if(run!==generation||identity().id!==current.id)return;
       academy=collection;
       discovery=played.games;activeDays=played.activeDays;
@@ -100,6 +101,8 @@ window.BrainiRewardStore=(function(){
           if(run!==generation||identity().id!==current.id)return false;
           discovery=played.games;activeDays=played.activeDays;
         }
+        if(changed.some(key=>['pumpkin-thinker','midnight','little-bat'].includes(allowed[key])))await window.BrainiHalloweenEntitlements?.load?.();
+        if(run!==generation||identity().id!==current.id)return false;
         const currentAllowed=catalog.available(allowed,total(),academy,discovery,activeDays);
         if(Object.keys(keys).some(key=>currentAllowed[key]!==allowed[key]))throw Error('Reward eligibility changed');
         const patch=Object.fromEntries(changed.map(key=>[keys[key],allowed[key]]));
@@ -129,6 +132,7 @@ window.BrainiRewardStore=(function(){
     generation++;loading=false;saving=false;owner=null;load();
   }
   window.addEventListener('brainilab:authchange',changedOwner);
+  window.addEventListener('brainilab:halloween-entitlements',()=>{if(identity().id===owner?.id){applyDesign();emit();}});
   window.addEventListener('storage',event=>{
     if(owner&&!owner.cloud&&event.key===prefix+owner.id){saved=cached(owner.id);applyDesign();emit();}
   });

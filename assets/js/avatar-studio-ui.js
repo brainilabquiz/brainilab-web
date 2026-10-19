@@ -78,12 +78,12 @@ window.BrainiAvatarStudioUI=(function(){
         const art=sample(kind,item,draft,total),artRoot=button.querySelector('.reward-choice-art');
         if(kind==='frame')BrainiProgressUI.setAvatarMarkup(artRoot,art);else if(artRoot.innerHTML!==art)artRoot.innerHTML=art;
         artRoot.hidden=!art;
-        const selected=draft[kind]===item.id,locked=item.xp>total;
+        const selected=draft[kind]===item.id,locked=item.event?!C.isUnlocked(item,total):item.xp>total;
         button.disabled=busy||locked;button.setAttribute('aria-pressed',String(selected));
         button.querySelector('strong').textContent=item.name;
-        initialStatus(button,locked?`Locked · ${number(item.xp)} XP`:selected?'Selected':item.xp?'Unlocked':kind==='mode'?'Choose':'Free');
+        initialStatus(button,locked?item.event?item.requirement:`Locked · ${number(item.xp)} XP`:selected?'Selected':item.xp?'Unlocked':kind==='mode'?'Choose':'Free');
         button.title=item.description||item.name;
-        button.setAttribute('aria-label',`${item.name}, ${locked?'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
+        button.setAttribute('aria-label',`${item.name}, ${locked?item.event?item.requirement:'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
       }
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
       if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}

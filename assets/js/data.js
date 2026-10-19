@@ -345,6 +345,19 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   let state=loadState();
+  // A cosmetic preference only. Kept outside progression/game state and gated
+  // on every read; authoritative Auth refreshes replace any browser preference.
+  let avatarFramePreference=null,avatarFrameOwner=null;
+  const avatarStyleOwner=()=>state.auth?.status==='authenticated'&&state.auth.user?.id?'account:'+state.auth.user.id:'guest:'+(state.auth?.guestUserId||state.auth?.anonymousPlayerId||'browser');
+  const cleanAvatarFrame=value=>['level','blue','green','copper','gold','orbit','midnight'].includes(value)?value:'level';
+  function cachedAvatarStyle(){
+    try{const value=JSON.parse(localStorage.getItem('brainilab-profile-style-v1:'+avatarStyleOwner())||'null');return value&&typeof value==='object'&&!Array.isArray(value)?value:null;}catch{return null;}
+  }
+  function preferredAvatarFrame(){
+    const owner=avatarStyleOwner();
+    if(avatarFrameOwner===owner)return avatarFramePreference;
+    return cleanAvatarFrame(cachedAvatarStyle()?.frame);
+  }
   // Persist the browser identity before the first navigation or game.
   save();
 
@@ -355,6 +368,21 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   function game(gameId){ return clone(GAME_DEFS[gameId]||null); }
   function player(){
     const p=clone(state.player),today=todayKey();
+    // The confirmed, owner-isolated guest style is the browser source of truth.
+    // Reading it also restores the look on pages that never load ProfileRewards.
+    // Seasonal art is still gated by the separate event ledger at render time.
+    if(state.auth?.status!=='authenticated'){
+      const style=cachedAvatarStyle();
+      if(style&&window.BrainiAvatarDesign)p.avatarDesign=BrainiAvatarDesign.clean(style);
+    }
+    // Runtime-only earned cosmetics; never cached as a claim or read from
+    // editable Auth metadata. Public peer styles use their own sanitized IDs.
+    const eventItems=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements;
+    if(eventItems?.length)p.avatarEntitlements=[...eventItems];
+    const frame=preferredAvatarFrame(),xp=Number.isFinite(Number(p.xp))?Math.max(0,Number(p.xp)):0;
+    const cost=window.BrainiAvatarDesign?.frameXp?.[frame];
+    const frameAllowed=frame==='midnight'?eventItems?.includes('midnight'):Number.isFinite(cost)&&xp>=cost;
+    if(frameAllowed&&frame!=='level')p.avatarFrame=frame;else delete p.avatarFrame;
     const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
     const last=p.lastStreakDate;
     p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
@@ -1288,6 +1316,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const meta=user.user_metadata||{};
     // Cosmetic preferences only; never used to calculate XP, scores or access.
     state.player.avatarDesign=window.BrainiAvatarDesign?.fromMetadata?.(meta)||null;
+    avatarFrameOwner='account:'+user.id;avatarFramePreference=cleanAvatarFrame(meta.brainilab_avatar_frame_v1);
     const suggestedName=(
       meta.full_name ||
       meta.name ||
@@ -1330,7 +1359,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function setAvatarDesign(value){
     const design=window.BrainiAvatarDesign?.clean?.(value)||null;
-    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design))return;
+    const nextFrame=value&&Object.hasOwn(value,'frame')?cleanAvatarFrame(value.frame):null;
+    const frameChanged=nextFrame!==null&&(avatarFrameOwner!==avatarStyleOwner()||avatarFramePreference!==nextFrame);
+    if(nextFrame!==null){avatarFrameOwner=avatarStyleOwner();avatarFramePreference=nextFrame;}
+    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design)){
+      if(frameChanged)window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
+      return;
+    }
     state.player.avatarDesign=design;
     save();
     window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
@@ -1338,6 +1373,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function resetPlayerIdentity(){
     state=clone(defaultState);
+    avatarFramePreference=null;avatarFrameOwner=null;
     state.daily.key=todayKey();
     state.daily.number=dailyNumber();
     state.auth.anonymousPlayerId=makeAnonId();

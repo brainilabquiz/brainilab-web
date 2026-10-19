@@ -57,7 +57,7 @@ window.BrainiAccountMenu=(function(){
           <span class="rank-avatar ${window.BrainiProgressUI
             ? BrainiProgressUI.avatarClass(progress.level)
             : ""
-          } account-menu-avatar">
+          } account-menu-avatar" ${BrainiProgressUI.avatarFrameAttribute(p)}>
             ${BrainiProgressUI.avatarImageMarkup(p)}
           </span>
 
@@ -301,6 +301,7 @@ window.BrainiAccountMenu=(function(){
       }
 
       BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+      if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
     });
   }
 
@@ -339,6 +340,16 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("brainilab:progressionchange",hydrate);
   window.addEventListener("brainilab:daychange",close);
   window.addEventListener("brainilab:datachange",hydrate);
+  window.addEventListener('brainilab:halloween-entitlements',()=>{
+    hydrate();
+    // Replace only artwork: an open menu keeps its links, focus and handlers.
+    const portrait=openMenu?.querySelector('.account-menu-avatar');
+    if(portrait){
+      const player=BrainiData.player();portrait.innerHTML=BrainiProgressUI.avatarImageMarkup(player);
+      if(BrainiProgressUI.avatarFrameAttribute(player))portrait.dataset.socialFrame=player.avatarFrame;
+      else delete portrait.dataset.socialFrame;
+    }
+  });
 
   return {
     hydrate,

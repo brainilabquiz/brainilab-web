@@ -22,7 +22,10 @@ window.BrainiRewardCatalog=(function(){
     {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
     {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
   ].map(Object.freeze));
-  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options,scene:scenes});
+  const eventFrame=Object.freeze({id:'midnight',name:'Midnight',xp:0,event:'halloween-2026',description:'A quiet midnight frame, with a little Halloween sparkle.',requirement:'Complete both Halloween games'});
+  const groups=Object.freeze({frame:Object.freeze([...frames,eventFrame]),title:titles,...Object.fromEntries(Object.entries(BrainiAvatarDesign.options).map(([key,list])=>[key,Object.freeze([...list,...(BrainiAvatarDesign.eventOptions[key]||[])])])),scene:scenes});
+  const eventOwned=()=>BrainiAvatarDesign.earnedIds(window.BrainiHalloweenEntitlements?.snapshot?.().entitlements);
+  function visibleGroups(){const state=window.BrainiHalloweenEntitlements?.snapshot?.(),active=window.BrainiLabHalloween?.availability?.().allowed===true;return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.filter(item=>!item.event||state?.visible||active||eventOwned().includes(item.id))]));}
   const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys,scene:'brainilab_profile_scene_v1'});
   const xp=value=>Number.isFinite(Number(value))?Math.max(0,Math.floor(Number(value))):0;
   function clean(value={}){
@@ -38,7 +41,7 @@ window.BrainiRewardCatalog=(function(){
     const completed=Math.min(target,required.filter(id=>played.includes(id)).length);
     return {completed,target,earned:completed===target,missing:required.filter(id=>!played.includes(id))};
   }
-  const unlocked=(item,earned,academy=[],discovery=[],activeDays=0)=>item.course?academyIds(academy).includes(item.id):item.challenge?discoveryProgress(item,discovery).earned:item.days?dayCount(activeDays)>=item.days:item.xp<=xp(earned);
+  const unlocked=(item,earned,academy=[],discovery=[],activeDays=0)=>item.event?eventOwned().includes(item.id):item.course?academyIds(academy).includes(item.id):item.challenge?discoveryProgress(item,discovery).earned:item.days?dayCount(activeDays)>=item.days:item.xp<=xp(earned);
   function available(value,earned,academy=[],discovery=[],activeDays=0){
     const result=clean(value),total=xp(earned);
     for(const [key,list] of Object.entries(groups))if(!unlocked(list.find(item=>item.id===result[key]),total,academy,discovery,activeDays))result[key]=list[0].id;
@@ -83,5 +86,5 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,get groups(){return visibleGroups();},isUnlocked:unlocked,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
 })();

@@ -8,8 +8,9 @@ function page(auth={status:'guest'},path='/'){
  const dom=new JSDOM('<header class="topbar"><div class="nav"><nav class="links"><a href="/learn/">Learn</a></nav><div class="nav-right"><a class="avatar" href="/profile/">B</a></div></div></header>',{url:'https://brainilabgames.com'+path,runScripts:'outside-only'}),w=dom.window;
  w.currentAuth=auth;w.opened=[];w.loaded=0;
  const player={displayName:'Player',avatarUrl:null,level:1,xp:0,currentStreak:0,totalGames:0,totalQuestions:0};
+ w.fixturePlayer=player;
  w.BrainiData={authState:()=>w.currentAuth,player:()=>player,api:{getAuthState:async()=>w.currentAuth,getPlayer:async()=>player,track(){}}};
- w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarImageMarkup:()=>'<svg aria-hidden="true"></svg>',defaultAvatarMarkup:()=>'<svg aria-hidden="true"></svg>',tier:()=>({name:'Rookie'}),avatarClass:()=> 'rank-fixture',xpProgress:()=>({level:1,percent:0,nextLevel:2,label:'Start with a game'})};
+ for(const name of ['player-personalities','avatar-design','progression-ui'])w.eval(readFileSync('assets/js/'+name+'.js','utf8'));
  w.BrainiPerf={ensureCloud:async()=>{w.loaded++;w.BrainiAuth={open:opts=>w.opened.push(opts)};return true;}};
  w.eval(source);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  return w;
@@ -29,6 +30,21 @@ w.currentAuth={status:'guest'};w.dispatchEvent(new w.Event('brainilab:authchange
 for(const auth of [{status:'guest',guestUserId:'anonymous-fixture'},{status:'authenticated',user:{is_anonymous:true}}]){w=page(auth);assert.equal(w.document.querySelector('.header-account-invite').hidden,false);w.close();}
 for(const auth of [{status:'authenticated',user:{is_anonymous:false}},{status:'loading'},{status:'unknown'}]){w=page(auth);assert.equal(w.document.querySelector('.header-account-invite').hidden,true);w.close();}
 for(const path of ['/admin/','/auth/']){w=page({status:'guest'},path);assert.equal(w.document.querySelector('[data-header-signup]'),null);w.close();}
+
+// A seasonal frame must carry its explicit earned ID; a metadata-like preference
+// alone cannot decorate either the header or an already open account menu.
+w=page({status:'authenticated',user:{id:'frame-owner'}});d=w.document;
+w.fixturePlayer.avatarFrame='midnight';w.dispatchEvent(new w.Event('brainilab:halloween-entitlements'));
+assert.equal(d.querySelector('.nav-right .avatar').dataset.socialFrame,undefined);
+w.fixturePlayer.avatarEntitlements=['midnight'];w.dispatchEvent(new w.Event('brainilab:halloween-entitlements'));
+assert.equal(d.querySelector('.nav-right .avatar').dataset.socialFrame,'midnight');
+w.BrainiAccountMenu.openFor(d.querySelector('.nav-right .avatar'));
+const frameMenu=d.querySelector('.account-popover'),frameLink=frameMenu.querySelector('[role=menuitem]');frameLink.focus();
+assert.equal(frameMenu.querySelector('.account-menu-avatar').dataset.socialFrame,'midnight');
+w.fixturePlayer.avatarEntitlements=[];w.dispatchEvent(new w.Event('brainilab:halloween-entitlements'));
+assert.equal(d.querySelector('.nav-right .avatar').dataset.socialFrame,undefined);
+assert.equal(frameMenu.querySelector('.account-menu-avatar').dataset.socialFrame,undefined);
+assert.equal(d.activeElement,frameLink);assert.equal(d.querySelector('.account-popover'),frameMenu,'appearance checks preserve open menu links and focus');w.close();
 
 w=page();d=w.document;button=d.querySelector('[data-header-signup]');let finish;
 w.BrainiPerf.ensureCloud=()=>{w.loaded++;return new Promise(resolve=>{finish=()=>{w.BrainiAuth={open:opts=>w.opened.push(opts)};resolve(true);};});};
@@ -55,4 +71,4 @@ assert.ok(d.querySelector('.auth-modal.show'));assert.ok(d.querySelector('[data-
 assert.equal(d.querySelectorAll('input[type=email]').length,1);assert.equal(d.querySelector('.auth-close'),d.activeElement);
 assert.equal(d.querySelectorAll('input[type=checkbox]').length,0,'opening signup does not subscribe to a newsletter');
 d.querySelector('.auth-close').click();assert.equal(d.activeElement,button,'focus returns to the header action');w.close();
-console.log('PASS desktop account invitation: visible guests/anonymous players, hidden signed-in/loading states, explicit signup, deduplication, pending guard, offline retry, account switch, real modal and focus return.');
+console.log('PASS desktop account invitation: visible guests/anonymous players, hidden signed-in/loading states, explicit signup, deduplication, pending guard, offline retry, account switch, real appearance API/Midnight ownership, real modal and focus return.');
