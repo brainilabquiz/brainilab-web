@@ -88,11 +88,11 @@
     },
     {
       "id": "different-tricks",
-      "html": "<p>Anagrams shuffle letters. <a href=\"/learn/palindromes-words-that-read-both-ways/\">Palindromes</a> keep the order and read the same backwards. That distinction is handy: <strong>CAT and ACT</strong> are an anagram pair, but neither word is a palindrome.</p><p>For a little challenge, rearrange <strong>TEA</strong> into a word meaning “consume food”. Then see if there is another real word hiding in the same three letters.</p><details class=\"practice-answer\"><summary>Check your words</summary><p><strong>EAT</strong> fits the clue. <strong>ATE</strong> uses the same letters too, with the action moved into the past.</p></details>",
+      "html": "<p>Anagrams shuffle letters. <a href=\"/learn/palindromes-words-that-read-both-ways/\">Palindromes</a> keep the order and read the same backwards. That distinction is handy: <strong>CAT and ACT</strong> are an anagram pair, but neither word is a palindrome.</p><p>For a little challenge, rearrange <strong>TEA</strong> into a word meaning “consume food”. Then see if there is another real word hiding in the same three letters.</p><details class=\"practice-answer\"><summary>Check your words</summary><p><strong>EAT</strong> fits the clue. <strong>ATE</strong> uses the same letters too, with the action moved into the past.</p></details><p>For more sound, letter and meaning tricks, explore <a href=\"/learn/wordplay-examples/\">eight ways to play with English words</a>.</p>",
       "title": "Same letters, different trick"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-19T05:40:17Z",
   "description": "A small shuffle can turn a cat into an act. Discover the trick behind anagrams, the repeated-letter trap and a few words to try yourself.",
   "publishedAt": "2026-10-11T17:08:31.614Z"
 }

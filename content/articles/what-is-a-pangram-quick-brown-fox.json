@@ -1,70 +1,17 @@
 {
-  "slug": "what-is-a-pangram-quick-brown-fox",
-  "title": "What is a pangram? The quick brown fox has a job",
-  "description": "A sleepy dog, a jumping fox and all 26 English letters. Discover the trick inside this familiar sentence—and the tiny edit that breaks it.",
-  "topic": "Words & puzzles",
-  "status": "published",
-  "authorId": "biel-sarda",
-  "order": 117,
-  "publishedAt": "2026-10-11T18:45:29Z",
-  "updatedAt": "2026-10-11T18:45:29Z",
-  "game": {
-    "name": "Connections",
-    "url": "/games/connections/"
-  },
   "hub": {
-    "name": "Word detective: follow the clues",
-    "url": "/learn/paths/word-detective/"
+    "url": "/learn/paths/word-detective/",
+    "name": "Word detective: follow the clues"
   },
-  "cover": {
-    "src": "/assets/images/learn/what-is-a-pangram-quick-brown-fox.webp",
-    "small": "/assets/images/learn/what-is-a-pangram-quick-brown-fox-small.webp",
-    "thumbnail": "/assets/images/learn/what-is-a-pangram-quick-brown-fox-thumb.webp",
-    "alt": "Handmade brown fox jumping over a sleeping cream dog, with Q, X and Z letter tiles",
-    "position": 50,
-    "credit": "AI-generated cover image created for BrainiLab."
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
   },
-  "sources": [
-    {
-      "name": "Merriam-Webster — Pangram",
-      "url": "https://www.merriam-webster.com/dictionary/pangram"
-    },
-    {
-      "name": "Wordsmith — Practical Uses of Pangrams",
-      "url": "https://wordsmith.org/pangram/use.html"
-    }
-  ],
-  "related": [
-    "anagrams-rearrange-the-same-letters",
-    "palindromes-words-that-read-both-ways"
-  ],
-  "practice": "Keep looking for hidden patterns in words with Connections.",
-  "sections": [
-    {
-      "id": "what-is-a-pangram",
-      "title": "A fox with a surprisingly useful job",
-      "html": "<p><strong>A pangram is a sentence or phrase that uses every letter of an alphabet at least once.</strong> For the English alphabet, that means all 26 letters. <a href=\"https://www.merriam-webster.com/dictionary/pangram\">Merriam-Webster gives this definition</a>.</p><p>Meet the famous example: <strong>“The quick brown fox jumps over the lazy dog.”</strong> It sounds like a wildlife report from someone with very little happening that afternoon. Yet the fox is doing more than annoying a dog.</p>"
-    },
-    {
-      "id": "all-26-letters",
-      "title": "Where are the awkward letters?",
-      "html": "<p>Look for the letters you might otherwise leave out. There is a <strong>q</strong> in quick, an <strong>x</strong> in fox and a <strong>z</strong> in lazy. The less conspicuous letters are there too.</p><p>Ignore spaces and the full stop: the sentence has <strong>35 letters, but 26 different letters</strong>. That is allowed. A pangram needs to include the alphabet; it does not have to use each letter only once.</p>"
-    },
-    {
-      "id": "why-use-pangrams",
-      "title": "Why does it keep turning up on screens?",
-      "html": "<p>A pangram gives you a compact sample of the whole alphabet. That makes it handy for trying a typeface: you can see how its letters look inside words rather than in an A-to-Z parade.</p><p><a href=\"https://wordsmith.org/pangram/use.html\">Wordsmith also describes using pangrams for typing practice</a>. One short sentence makes you reach for every alphabetic key. The fox has found steady work.</p>"
-    },
-    {
-      "id": "one-missing-letter",
-      "title": "One tiny edit breaks the trick",
-      "html": "<p>Change <strong>jumps</strong> to <strong>jump</strong>. Which letter disappears from the sentence?</p><p><strong>S.</strong> There is no other s to cover for it, so the edited sentence is no longer a pangram. Keeping the story almost unchanged is not enough; the letter rule decides.</p><p>This is a different challenge from an <a href=\"/learn/anagrams-rearrange-the-same-letters/\">anagram</a>, which rearranges an existing set of letters. Try writing your own pangram: start with a sensible sentence, then hunt for the letters still missing. The rare ones tend to demand the strangest guests.</p>"
-    }
-  ],
   "quiz": {
     "version": "word-pangram-v1",
     "questions": [
       {
+        "answer": 1,
         "prompt": "What must an English pangram include?",
         "options": [
           "Every vowel twice",
@@ -72,10 +19,10 @@
           "Exactly 26 words",
           "The same letters forwards and backwards"
         ],
-        "answer": 1,
         "explanation": "It must contain every letter of the English alphabet. Repeated letters are allowed."
       },
       {
+        "answer": 0,
         "prompt": "Can a pangram repeat a letter?",
         "options": [
           "Yes, if every alphabet letter is still included",
@@ -83,10 +30,10 @@
           "Only the letter e",
           "Only in the last word"
         ],
-        "answer": 0,
         "explanation": "At least once means repeats are fine. The famous fox sentence has 35 letters but 26 different letters."
       },
       {
+        "answer": 3,
         "prompt": "Change jumps to jump in the famous fox sentence. Which alphabet letter is now missing?",
         "options": [
           "J",
@@ -94,9 +41,62 @@
           "Z",
           "S"
         ],
-        "answer": 3,
         "explanation": "The only s was in jumps. Removing it leaves the sentence without an s."
       }
     ]
-  }
+  },
+  "slug": "what-is-a-pangram-quick-brown-fox",
+  "cover": {
+    "alt": "Handmade brown fox jumping over a sleeping cream dog, with Q, X and Z letter tiles",
+    "src": "/assets/images/learn/what-is-a-pangram-quick-brown-fox.webp",
+    "small": "/assets/images/learn/what-is-a-pangram-quick-brown-fox-small.webp",
+    "credit": "AI-generated cover image created for BrainiLab.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/what-is-a-pangram-quick-brown-fox-thumb.webp"
+  },
+  "order": 117,
+  "title": "What is a pangram? The quick brown fox has a job",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "related": [
+    "anagrams-rearrange-the-same-letters",
+    "palindromes-words-that-read-both-ways"
+  ],
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/pangram",
+      "name": "Merriam-Webster — Pangram"
+    },
+    {
+      "url": "https://wordsmith.org/pangram/use.html",
+      "name": "Wordsmith — Practical Uses of Pangrams"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Keep looking for hidden patterns in words with Connections.",
+  "sections": [
+    {
+      "id": "what-is-a-pangram",
+      "html": "<p><strong>A pangram is a sentence or phrase that uses every letter of an alphabet at least once.</strong> For the English alphabet, that means all 26 letters. <a href=\"https://www.merriam-webster.com/dictionary/pangram\">Merriam-Webster gives this definition</a>.</p><p>Meet the famous example: <strong>“The quick brown fox jumps over the lazy dog.”</strong> It sounds like a wildlife report from someone with very little happening that afternoon. Yet the fox is doing more than annoying a dog.</p>",
+      "title": "A fox with a surprisingly useful job"
+    },
+    {
+      "id": "all-26-letters",
+      "html": "<p>Look for the letters you might otherwise leave out. There is a <strong>q</strong> in quick, an <strong>x</strong> in fox and a <strong>z</strong> in lazy. The less conspicuous letters are there too.</p><p>Ignore spaces and the full stop: the sentence has <strong>35 letters, but 26 different letters</strong>. That is allowed. A pangram needs to include the alphabet; it does not have to use each letter only once.</p>",
+      "title": "Where are the awkward letters?"
+    },
+    {
+      "id": "why-use-pangrams",
+      "html": "<p>A pangram gives you a compact sample of the whole alphabet. That makes it handy for trying a typeface: you can see how its letters look inside words rather than in an A-to-Z parade.</p><p><a href=\"https://wordsmith.org/pangram/use.html\">Wordsmith also describes using pangrams for typing practice</a>. One short sentence makes you reach for every alphabetic key. The fox has found steady work.</p>",
+      "title": "Why does it keep turning up on screens?"
+    },
+    {
+      "id": "one-missing-letter",
+      "html": "<p>Change <strong>jumps</strong> to <strong>jump</strong>. Which letter disappears from the sentence?</p><p><strong>S.</strong> There is no other s to cover for it, so the edited sentence is no longer a pangram. Keeping the story almost unchanged is not enough; the letter rule decides.</p><p>This is a different challenge from an <a href=\"/learn/anagrams-rearrange-the-same-letters/\">anagram</a>, which rearranges an existing set of letters. Try writing your own pangram: start with a sensible sentence, then hunt for the letters still missing. The rare ones tend to demand the strangest guests.</p><p>For more playful things to notice in words, explore <a href=\"/learn/wordplay-examples/\">our guide to English wordplay</a>.</p>",
+      "title": "One tiny edit breaks the trick"
+    }
+  ],
+  "updatedAt": "2026-10-19T05:40:17Z",
+  "description": "A sleepy dog, a jumping fox and all 26 English letters. Discover the trick inside this familiar sentence—and the tiny edit that breaks it.",
+  "publishedAt": "2026-10-11T18:45:29Z"
 }
