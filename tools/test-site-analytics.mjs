@@ -101,6 +101,28 @@ for(const [pagePath,target] of [['/learn/','/games/math-rush/'],['/learn/moon/',
 }
 console.log('PASS article game measurement: current layout, child clicks, explicit consent, withdrawal, path-only data and unrelated link exclusion.');
 
+// Early editorial links are ordinary anchors inside the article, not widgets.
+// Count an intentional game click once, with the same consent and data limits.
+for(const [slug,destination] of [['spotting-repeating-patterns','/reasoning/'],['how-to-play-number-route','/games/number-route/']]){
+ const w=page('https://brainilabgames.com/learn/'+slug+'/');
+ w.document.body.innerHTML=`<article class="article-body"><p><a href="${destination}?private=do-not-send#learn-${slug}"><span>Try the game</span></a></p></article>`;
+ w.document.addEventListener('click',e=>e.preventDefault());
+ const click=()=>w.document.querySelector('span').dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+ click();assert.equal(w.dataLayer,undefined);
+ w.BrainiSiteAnalytics.setConsent(true);click();
+ const measured=w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click');
+ assert.equal(measured.length,1);assert.equal(measured[0][2].article_slug,slug);assert.equal(measured[0][2].game_path,destination);
+ assert.ok(!JSON.stringify(measured).includes('do-not-send'));assert.ok(!JSON.stringify(measured).includes('#learn-'));
+ w.BrainiSiteAnalytics.setConsent(false);click();assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click').length,0);w.close();
+}
+for(const target of ['/profile/','/learn/paths/patterns-and-reasoning/','https://example.com/reasoning/']){
+ const w=page('https://brainilabgames.com/learn/spotting-repeating-patterns/',{allowed:true,at:Date.now()});
+ w.document.body.innerHTML=`<article class="article-body"><a href="${target}">Other destination</a></article>`;
+ w.document.addEventListener('click',e=>e.preventDefault());w.document.querySelector('a').dispatchEvent(new w.MouseEvent('click',{bubbles:true,cancelable:true}));
+ assert.equal(w.dataLayer.filter(x=>x[0]==='event'&&x[1]==='article_game_click').length,0);w.close();
+}
+console.log('PASS inline article game links: one intentional click, consent/withdrawal, path-only fields and unrelated destinations excluded.');
+
 // Joining is an explicit action, not a page view or a confirmed new account.
 for(const [pagePath,placement] of [['/learn/','learn_library'],['/learn/why-2100-is-not-a-leap-year/','academy_result']]){
  const w=page('https://brainilabgames.com'+pagePath+'?private=do-not-send');

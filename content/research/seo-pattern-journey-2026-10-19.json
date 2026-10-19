@@ -1,0 +1,74 @@
+{
+  "id": "seo-pattern-journey-20261019",
+  "reviewedAt": "2026-10-19T19:13:04Z",
+  "sourceVideo": {
+    "url": "https://www.youtube.com/watch?v=P-vPlQ7GmTw",
+    "coverage": "Visible description and chapter outline reused from earlier review; transcript unavailable. No full-course viewing claim."
+  },
+  "principle": "Contextual internal links between the existing game and the existing answer-first lesson.",
+  "changes": [
+    "Choose the repeating-pattern lesson as the first of the existing two Reasoning reading cards; retain the rotation/reflection card.",
+    "Add one quiet link to the mixed Reasoning Challenge after the opening definition and AB example.",
+    "Count ordinary inline article-to-game clicks with the existing opt-in article_game_click event and existing path-only fields; no new event or identifier."
+  ],
+  "demand": {
+    "source": "Existing first-party Search Console",
+    "observedAt": "2026-10-19T07:28:27.627078+00:00",
+    "period": {
+      "start": "2026-09-19",
+      "end": "2026-10-16"
+    },
+    "timezone": "America/Los_Angeles",
+    "geography": "All captured markets; English query text, no separate language segmentation",
+    "rows": [
+      {
+        "query": "minimum period before its pattern repeats puzzle",
+        "path": "/learn/spotting-repeating-patterns/",
+        "brand": "non-brand",
+        "clicks": 0,
+        "impressions": 32,
+        "ctr": 0.0,
+        "position": 7.59375,
+        "sourceIntentClassification": "play",
+        "reviewedIntent": "Mixed explanation or puzzle-solving intent; not evidence of an exclusively play-intent audience"
+      },
+      {
+        "query": "reasoning challenge",
+        "path": "/reasoning/",
+        "brand": "non-brand",
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0.0,
+        "position": 10.6,
+        "sourceIntentClassification": "unreviewed",
+        "reviewedIntent": "Reasoning puzzle or challenge intent; not evidence of IQ-test demand"
+      }
+    ],
+    "sourceSha256": "dab021b4a21118aec15f0ff2a321dd741aa3efad3099ab42f3ddea9b039a57c4",
+    "limits": "Historical average positions, not live ranks. Small sample; no CTR diagnosis, unique audience total, conversion or ranking forecast. Monthly volume and difficulty unknown."
+  },
+  "liveReview": {
+    "file": "private review of ten public game/article URLs on 19 October 2026",
+    "selectedGap": "Reasoning had two useful reading cards but no link to the repeating-pattern lesson. The lesson already had an accurate direct answer and game links near its end.",
+    "alternatives": "Connections and Math Rush already have concrete examples and suitable reading links. Golf and tennis already answer observed questions. Do not repeat title/answer rewrites or add padding for crawler word counts.",
+    "currentGame": "12 puzzles across Patterns, Numbers, Space and Logic, including the repeating-unit first question. No IQ promise.",
+    "primarySources": [
+      "https://brainilabgames.com/reasoning/",
+      "https://brainilabgames.com/learn/spotting-repeating-patterns/",
+      "https://www.ncetm.org.uk/classroom-resources/ey-pattern/"
+    ]
+  },
+  "preserved": [
+    "existing lesson URL, title, description, cover, author, sources and publication date",
+    "academy-oct-v1 quiz exactly",
+    "all course order and membership",
+    "Reasoning question set, answer keys, challengeVersion and scoring engine",
+    "start button and active-game flow",
+    "one existing two-card reading row, with no extra widget",
+    "original Growth baseline"
+  ],
+  "measurement": "Keep the original opportunity baseline unchanged; any later comparison must use equal complete non-overlapping periods with the same filters. Gains in visits, plays, accounts or AI citations are not established.",
+  "analyticsSteering": "User chose browser-only exclusion, then said to leave it and continue. No statistics preference, GA4 filter, IP rule or historical data was changed.",
+  "measurementScope": "Same existing consent, withdrawal, page/game allowlists and path-only parameters. No preference, GA4 filter, IP rule or historical data changed. Existing cards and inline anchors each emit only once.",
+  "measurementCoverageChange": "On deployment, article_game_click starts including ordinary inline article links that were previously uncounted across articles. One event means one click, not a unique visitor or confirmed game start. Do not compare aggregate event totals across this deployment as improvement or reconstruct past clicks. Preserve original GSC baseline and assess equal complete non-overlapping GSC periods separately."
+}
