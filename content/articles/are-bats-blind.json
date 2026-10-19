@@ -1,0 +1,68 @@
+{
+  "hub": {
+    "url": "/science/",
+    "name": "Science"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "slug": "are-bats-blind",
+  "cover": {
+    "alt": "A brown bat with two visible eyes hangs upside down from a leafy branch at twilight",
+    "src": "/assets/images/learn/are-bats-blind.webp",
+    "small": "/assets/images/learn/are-bats-blind-small.webp",
+    "credit": "AI-generated wildlife illustration created for BrainiLab; a generic bat, not a species-identification photograph.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/are-bats-blind-thumb.webp"
+  },
+  "order": 184,
+  "title": "Are bats blind? Their eyes deserve more credit",
+  "topic": "Science & nature",
+  "status": "published",
+  "related": [
+    "why-are-flamingos-pink",
+    "counting-seconds-after-lightning"
+  ],
+  "sources": [
+    {
+      "url": "https://www.usgs.gov/faqs/are-bats-blind",
+      "name": "U.S. Geological Survey — Are bats blind?"
+    },
+    {
+      "url": "https://www.batcon.org/blind-as-a-bat-no-such-thing/",
+      "name": "Bat Conservation International (2024) — Blind as a bat? No such thing"
+    },
+    {
+      "url": "https://www.bats.org.uk/about-bats/flight-food-and-echolocation-2",
+      "name": "Bat Conservation Trust — Flight, food and echolocation"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "See which other animal facts surprise you in the Science Quiz.",
+  "sections": [
+    {
+      "id": "the-short-answer",
+      "html": "<p><strong>No, bats are not blind. They have working eyes, and many species use sight alongside echolocation.</strong> “Blind as a bat” is a memorable phrase with a faulty animal fact inside it.</p><p>The <a href=\"https://www.usgs.gov/faqs/are-bats-blind\">U.S. Geological Survey explains</a> that bat eyes can be sensitive to low light. Small eyes do not mean useless eyes.</p>",
+      "title": "Those little eyes work"
+    },
+    {
+      "id": "ears-add-a-second-view",
+      "html": "<p>Imagine trying to follow a tiny flying insect after sunset. Many bats send out calls and listen to the returning echoes.</p><p>The <a href=\"https://www.bats.org.uk/about-bats/flight-food-and-echolocation-2\">Bat Conservation Trust describes how these echoes</a> reveal information about what is ahead, including an insect’s size, shape and direction. That is <strong>echolocation</strong>: finding things through reflected sound.</p>",
+      "title": "Their ears add another view"
+    },
+    {
+      "id": "not-one-kind-of-vision",
+      "html": "<p>According to <a href=\"https://www.batcon.org/blind-as-a-bat-no-such-thing/\">Bat Conservation International</a>, eyesight varies between species. Some fruit bats rely strongly on vision, while many insect-hunting bats make extensive use of echoes.</p><p>So “bats can see” does not mean “all bats see exactly like humans”. Different eyes suit different lives. Sight and sound can provide different clues about the same surroundings.</p>",
+      "title": "Not every bat sees the same way"
+    },
+    {
+      "id": "the-better-halloween-fact",
+      "html": "<p>A bat flying through the evening is not simply blundering around without sight. Its senses are doing work that is easy to miss from the ground.</p><p>For another animal surprise, find out <a href=\"/learn/why-are-flamingos-pink/\">why flamingos are pink</a>. Or compare a different sound-and-light puzzle: <a href=\"/learn/counting-seconds-after-lightning/\">why thunder arrives after lightning</a>.</p>",
+      "title": "Keep the bat. Lose the myth."
+    }
+  ],
+  "updatedAt": "2026-10-19T17:12:25.342Z",
+  "description": "Bats can see, and many also hunt with echoes. Discover how eyesight and echolocation work together, and why “blind as a bat” gets the animal wrong.",
+  "publishedAt": "2026-10-19T17:12:25.342Z"
+}

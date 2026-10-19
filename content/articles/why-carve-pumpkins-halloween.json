@@ -1,0 +1,64 @@
+{
+  "hub": {
+    "url": "/history/",
+    "name": "History"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "slug": "why-carve-pumpkins-halloween",
+  "cover": {
+    "alt": "A glowing carved pumpkin and a smaller turnip lantern sit on an autumn garden table",
+    "src": "/assets/images/learn/why-carve-pumpkins-halloween.webp",
+    "small": "/assets/images/learn/why-carve-pumpkins-halloween-small.webp",
+    "credit": "AI-generated illustrative still life created for BrainiLab; modern lanterns, not historical artefacts.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/why-carve-pumpkins-halloween-thumb.webp"
+  },
+  "order": 186,
+  "title": "Why do we carve pumpkins at Halloween? It began with a turnip",
+  "topic": "History",
+  "status": "published",
+  "related": [
+    "trick-or-treat-meaning-origin",
+    "why-roman-concrete-lasts"
+  ],
+  "sources": [
+    {
+      "url": "https://source.museum.ie/en-IE/Collections-Research/Collection/Top-things-to-see-in-the-Irish-Folklife-Collection/Artefact/Ghost-turnip/b202e8ea-0728-4b3d-b0f1-82660fe45ce9",
+      "name": "National Museum of Ireland — Ghost turnip, collection F1943.350"
+    },
+    {
+      "url": "https://hgic.clemson.edu/the-origins-of-the-jack-olantern/",
+      "name": "Clemson Cooperative Extension (2023) — The origins of the jack-o’-lantern"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Try another small surprise from the past in the History Quiz.",
+  "sections": [
+    {
+      "id": "before-the-pumpkin",
+      "html": "<p><strong>Halloween pumpkin carving developed from an Irish tradition of making lanterns from turnips.</strong> The pumpkin version took shape in North America, where pumpkins were available and became the familiar orange face of Halloween.</p><p>So the pumpkin got the starring role. A rather alarming root vegetable did some of the earlier work.</p>",
+      "title": "Before the pumpkin"
+    },
+    {
+      "id": "the-museum-clue",
+      "html": "<p>The <a href=\"https://source.museum.ie/en-IE/Collections-Research/Collection/Top-things-to-see-in-the-Irish-Folklife-Collection/Artefact/Ghost-turnip/b202e8ea-0728-4b3d-b0f1-82660fe45ce9\">National Museum of Ireland’s ghost turnip</a> records the older custom. In 1943, a teacher sent the museum a turnip lantern from County Donegal, explaining that people there had made that type around 1900.</p><p>The display object is a painted plaster model made by museum artist Eileen Barnes. It is not a vegetable that somehow stayed fresh for a century.</p>",
+      "title": "A clue in a museum"
+    },
+    {
+      "id": "jack-is-a-story",
+      "html": "<p>One <a href=\"https://hgic.clemson.edu/the-origins-of-the-jack-olantern/\">Irish tale retold by Clemson Extension</a> follows Stingy Jack, a trickster refused entry to both Heaven and Hell. He wanders with a glowing ember inside a hollow turnip.</p><p>That is folklore, not the biography of a proven lantern inventor. It explains the name <em>jack-o’-lantern</em> through a story with an excellent spooky prop.</p>",
+      "title": "Who was Jack?"
+    },
+    {
+      "id": "an-orange-change",
+      "html": "<p>Irish immigrants carried their traditions to North America, where pumpkins offered another way to make the lantern. The custom changed materials as it travelled.</p><p>That makes the smiling pumpkin a small story about migration as well as Halloween. Next, discover why another familiar Halloween ritual begins with the words <a href=\"/learn/trick-or-treat-meaning-origin/\">“trick or treat”</a>.</p>",
+      "title": "An orange change of cast"
+    }
+  ],
+  "updatedAt": "2026-10-19T17:12:25.342Z",
+  "description": "Before Halloween pumpkins, there were turnip lanterns. Meet the Irish ghost story and the much less cheerful vegetable behind the jack-o’-lantern.",
+  "publishedAt": "2026-10-19T17:12:25.342Z"
+}
