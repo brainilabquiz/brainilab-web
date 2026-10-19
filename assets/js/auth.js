@@ -353,10 +353,15 @@ window.BrainiAuth = (function(){
       const avatar=nav.querySelector(".avatar");
       if(avatar){
         BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+      if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
         avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
       }
     });
   }
+
+  // Event ownership arrives independently of profile/XP sync. Repaint the saved
+  // header once its earned cosmetic IDs are checked, including after Halloween.
+  window.addEventListener('brainilab:halloween-entitlements',()=>{hydrateHeader();});
 
   function savePromptMarkup(){
     const p=BrainiData.player();

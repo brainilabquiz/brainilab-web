@@ -75,7 +75,7 @@ window.BrainiProgressUI=(function(){
   function avatarImageMarkup(person){
     person=person||window.BrainiData?.player?.()||{};
     if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
-      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
+      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp,person.avatarEntitlements??window.BrainiHalloweenEntitlements?.snapshot?.().entitlements??[]).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
     }
     const identity=BrainiPeople.resolve(person);
     try{
@@ -103,7 +103,7 @@ window.BrainiProgressUI=(function(){
 
   function avatarFrameAttribute(person){
     const frame=person?.avatarFrame;
-    if(['blue','green','copper','gold','orbit'].includes(frame))return `data-social-frame="${frame}"`;
+    if(['blue','green','copper','gold','orbit'].includes(frame)||frame==='midnight'&&person.avatarEntitlements?.includes('midnight'))return `data-social-frame="${frame}"`;
     // Automatic nicknames keep one recognizable palette everywhere. This is
     // default portrait decoration, never an equipped reward or a profile write.
     const raw=String(person?.identityName||person?.name||person?.displayName||'').trim();

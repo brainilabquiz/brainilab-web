@@ -41,7 +41,7 @@ let meta={brainilab_avatar_mode_v1:'built',brainilab_avatar_prop_v1:'icepop',bra
 await D.api.syncExternalAuthUser({id:'sample-owner',email:'sample@example.test',user_metadata:meta});
 await D.api.syncCloudProfile({user_id:'sample-owner',display_name:'Local sample',avatar_url:'https://example.test/photo.webp'});
 await D.api.syncCloudProgression({progression:{xp:2700,level:12,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
-w.BrainiBackendAuth={isConfigured:()=>true,init:()=>new Promise(()=>{}),getClient:()=>({auth:{
+w.BrainiBackendAuth={isConfigured:()=>true,init:()=>new Promise(()=>{}),getClient:()=>({from:()=>({select:()=>({eq:async()=>({data:[]})})}),rpc:async()=>({data:{owner:'sample-owner',games:[],activeDays:0}}),auth:{
  getUser:async()=>({data:{user:{id:'sample-owner',user_metadata:meta}}}),
  updateUser:async({data})=>{writes.push(data);meta={...meta,...data};return {data:{user:{id:'sample-owner',user_metadata:meta}}};}
 }})};

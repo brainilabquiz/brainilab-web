@@ -1,5 +1,7 @@
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
 import {productionRequest} from './lib/production-origin.js';
+import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
+import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews} from './lib/breaking-news.js';
 import {newsEdition} from './lib/news-refresh.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
@@ -68,6 +70,23 @@ export default {
   async fetch(request,env,ctx){
     request=productionRequest(request);
     const url=new URL(request.url);
+    const holiday=halloweenState();
+    if(url.pathname==='/api/halloween/config'){
+      if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{Allow:'GET, HEAD'}});
+      return new Response(request.method==='HEAD'?null:JSON.stringify(halloweenPublicConfig(holiday)),{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
+    }
+    if(hiddenHalloweenArticle(url.pathname)&&(!HALLOWEEN.enabled||Date.now()<Date.parse(HALLOWEEN.start))||isHalloweenPath(url.pathname)&&(!HALLOWEEN.enabled||Date.now()<Date.parse(HALLOWEEN.start))){
+      return new Response('Not found',{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','Content-Type':'text/plain; charset=utf-8'}});
+    }
+    if(isHalloweenPath(url.pathname)){
+      if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{Allow:'GET, HEAD'}});
+      const normal=url.pathname.replace(/\/index\.html$/,'/').replace(/\/?$/,'/');
+      const match=normal.match(/^\/halloween\/(?:(trick-or-think|spooky-connections)\/)?$/);
+      if(!match)return new Response('Not found',{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
+      if(normal!==url.pathname){const canonical=new URL(url);canonical.pathname=normal;return Response.redirect(canonical,308);}
+      const template=await (await env.ASSETS.fetch(new Request(new URL('/learn/index.html',url)))).text();
+      return new Response(request.method==='HEAD'?null:renderHalloweenPage(template,holiday,holiday.status==='closed'?null:match[1]),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'strict-origin-when-cross-origin'}});
+    }
     if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
       if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
       const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/',url),request));
@@ -76,7 +95,7 @@ export default {
       const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
       const news=renderNews(edition);
       headers.set('Cache-Control',news?'public,max-age=60':'no-store');
-      return new Response(html.replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),{status:response.status,headers});
+      return new Response(decorateHalloween(html.replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),holiday,url.pathname),{status:response.status,headers});
     }
     // Consolidate production entry points before rendering or caching HTML.
     // Keep previews and local development on their own origin.
@@ -100,6 +119,10 @@ export default {
       secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
       secured.headers.set('X-Frame-Options','DENY');
       secured.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=()');
+      if(holiday.active&&request.method==='GET'&&secured.headers.get('Content-Type')?.includes('text/html')){
+        const headers=new Headers(secured.headers);headers.delete('Content-Length');headers.delete('ETag');headers.set('Cache-Control','no-store');
+        return new Response(decorateHalloween(await secured.text(),holiday,url.pathname),{status:secured.status,headers});
+      }
       return secured;
     }
     if(url.pathname.startsWith('/api/')){
@@ -140,6 +163,11 @@ export default {
       }
       return json({error:'Not found'},404);
     }
-    return env.ASSETS.fetch(request);
+    const response=await env.ASSETS.fetch(request);
+    if(holiday.active&&request.method==='GET'&&response.headers.get('Content-Type')?.includes('text/html')){
+      const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.set('Cache-Control','no-store');
+      return new Response(decorateHalloween(await response.text(),holiday,url.pathname),{status:response.status,headers});
+    }
+    return response;
   }
 };
