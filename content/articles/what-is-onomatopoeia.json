@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-onomatopoeia",
+  "title": "What is onomatopoeia? Words with their own sound effects",
+  "description": "Buzz, hiss, pop: some words bring a little noise to the page. Discover onomatopoeia through everyday examples and a kettle with something to say.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "order": 181,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-onomatopoeia.webp",
+    "small": "/assets/images/learn/what-is-onomatopoeia-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-onomatopoeia-thumb.webp",
+    "alt": "A green enamel kettle releasing a wisp of steam in a sunlit cream kitchen",
+    "credit": "AI-generated realistic illustration created for BrainiLab.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "In the mood for more wordplay? Try Connections.",
+  "related": [
+    "homophones-same-sound-different-meaning",
+    "what-is-a-spoonerism"
+  ],
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/onomatopoeia",
+      "name": "Merriam-Webster — Onomatopoeia: definition, examples and word history"
+    },
+    {
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/onomatopoeia",
+      "name": "Oxford Advanced Learner’s Dictionary — Onomatopoeia: meaning and Greek word origin"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-big-word-for-small-noises",
+      "title": "A big word for small noises",
+      "html": "<p><strong>Onomatopoeia is the use or creation of words that imitate the sounds they describe.</strong> Think of <em>buzz</em>, <em>hiss</em> or <em>pop</em>: a small sound effect tucked into a word.</p><p><a href=\"https://www.merriam-webster.com/dictionary/onomatopoeia\">Merriam-Webster uses buzz and hiss as examples</a>. The term looks rather grand for something you might hear while making a cup of tea.</p>"
+    },
+    {
+      "id": "give-the-kettle-a-line",
+      "title": "Give the kettle a line",
+      "html": "<p>Compare our two invented sentences: <em>“The kettle made a noise.”</em> <em>“The kettle hissed.”</em></p><p>The second gives your imagination something to listen to. Try the same idea with <em>“The balloon popped”</em> or <em>“The pan sizzled.”</em> Each verb suggests a different noise. You can almost hear the kitchen getting busy, even on a quiet page.</p>"
+    },
+    {
+      "id": "a-word-is-not-a-recording",
+      "title": "A word is not a recording",
+      "html": "<p>These words suggest a sound; they do not reproduce every detail of it. Saying <em>pop</em> is not quite the same as bursting a balloon beside someone’s ear.</p><p>That is part of their charm in a story. A little <em>hiss</em> can make an otherwise ordinary sentence feel more immediate, without a paragraph explaining the noise.</p>"
+    },
+    {
+      "id": "the-name-means-making",
+      "title": "The name has its own story",
+      "html": "<p><a href=\"https://www.oxfordlearnersdictionaries.com/definition/english/onomatopoeia\">Oxford traces the term to Greek roots</a> meaning name and making. A long name for a wonderfully direct idea.</p><p>If you enjoy what sound does to words, discover <a href=\"/learn/homophones-same-sound-different-meaning/\">why flour and flower sound alike</a>, then meet <a href=\"/learn/what-is-a-spoonerism/\">the spoonerism that turns jelly beans into belly jeans</a>. English can be quite a noisy playground.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:59:54Z",
+  "updatedAt": "2026-10-19T15:59:54Z",
+  "minutes": 2
+}
