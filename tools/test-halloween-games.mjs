@@ -126,7 +126,8 @@ assert.equal(wrongUI.calls.save.length, 1); assert.equal(wrongUI.calls.save[0].l
 assert.equal(wrongUI.root.querySelector('[data-hg-save]').hidden, false);
 wrongUI.root.querySelector('[data-hg-save]').click(); wrongUI.root.querySelector('[data-hg-save]').click(); await tick();
 assert.equal(wrongUI.calls.save.length, 2); assert.deepEqual(wrongUI.calls.save[1], wrongUI.calls.save[0]);
-wrongUI.root.querySelector('[data-hg-share]').click(); await tick(); assert.equal(wrongUI.calls.share.length, 1);
+wrongUI.root.querySelector('[data-hg-share]').click(); await tick(); assert.equal(wrongUI.calls.share.length, 0,'Opening the invitation never sends or copies it');
+wrongUI.root.querySelector('[data-hg-invite-copy]').click(); await tick(); assert.equal(wrongUI.calls.share.length, 1);
 assert.ok(!/q01|w00|Turnips/.test(wrongUI.calls.share[0]));
 wrongUI.root.querySelector('[data-hg-replay]').click(); await start(wrongUI); assert.equal(wrongUI.calls.start.length, 2); assert.equal(wrongUI.calls.save.length, 2); wrongUI.dom.window.close();
 const interrupted = await ui(quiz.id); await start(interrupted); interrupted.root.querySelector('[data-hg-answer="b"]').click();
