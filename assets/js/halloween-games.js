@@ -4,6 +4,19 @@
   const model = window.BrainiHalloweenGameModel;
   const pendingPrefix = 'brainilab_halloween_game_v1:';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+  const treats = [
+    { id: 'pumpkin-thinker', kind: 'hat', name: 'Pumpkin thinker', label: 'Hat' },
+    { id: 'midnight', kind: 'frame', name: 'Midnight frame', label: 'Frame' },
+    { id: 'little-bat', kind: 'prop', name: 'Little bat', label: 'Companion' }
+  ];
+  const cleanTreats = ids => treats.filter(item => Array.isArray(ids) && ids.includes(item.id)).map(item => item.id);
+  function treatArt(item) {
+    try {
+      const design = window.BrainiAvatarDesign;
+      if (!design) return '';
+      return item.kind === 'frame' ? design.markup({ mode: 'built', skin: 'sand', hair: 'curls', hairColor: 'brown', shirt: 'green', background: 'lilac' }, 0, []) : design.preview(item.kind, item.id);
+    } catch { return ''; }
+  }
   const storage = {
     get(key) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; } },
     set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; } },
@@ -29,6 +42,7 @@
     let state = gameId === 'trick-or-think' ? model.initialQuiz() : model.initialConnections();
     let session = null, screen = 'intro', chosen = [], wordOrder = model.shuffle(pack.words || []), optionOrders = new Map();
     let answered = false, saving = false, saved = false, disposed = false, storageAvailable = true, lastMessage = '', terminalFailure = null;
+    let rewardIds = [], freshRewards = false;
     const previous = storage.get(key);
     function ensureOwner() {
       if (disposed) return false;
@@ -39,9 +53,9 @@
     }
     function submission() { return gameId === 'trick-or-think' ? { answers: state.answers } : { attempts: state.attempts }; }
     function persist() {
-      storageAvailable = storage.set(key, { version: pack.version, preview: !!access.preview, session, submission: submission(), screen, answered, saved, terminalFailure });
+      storageAvailable = storage.set(key, { version: pack.version, preview: !!access.preview, session, submission: submission(), screen, answered, saved, terminalFailure, rewardIds });
     }
-    function focus(selector) { const node = root.querySelector(selector); if (node) { try { node.focus({ preventScroll: false }); } catch { node.focus(); } } }
+    function focus(selector, preventScroll = false) { const node = root.querySelector(selector); if (node) { try { node.focus({ preventScroll }); } catch { node.focus(); } } }
     function shell(body) {
       root.innerHTML = `<div class="halloween-game-card">${access.preview ? '<p class="halloween-preview-note" role="note">Private preview · progress here is only for testing.</p>' : ''}${session?.practice ? `<p class="halloween-practice-note" role="note">Practice round · your saved result stays at ${session.savedResultScore}/100.</p>` : ''}${body}</div>`;
     }
@@ -67,6 +81,7 @@
         if (previous.saved && typeof access.day === 'string' && previous.session.day !== access.day) return;
         state = restored; session = previous.session; screen = previous.screen === 'result' || state.completed ? 'result' : 'play';
         answered = gameId === 'trick-or-think' && !!previous.answered; saved = !!previous.saved;
+        rewardIds = cleanTreats(previous.rewardIds);
         terminalFailure = ['HALLOWEEN_DAY_CHANGED', 'HALLOWEEN_CLOSED'].includes(previous.terminalFailure) ? previous.terminalFailure : null;
       } catch { storage.remove(key); }
     }
@@ -140,11 +155,34 @@
         }
       });
     }
+    function showTreats() {
+      const node = root.querySelector('[data-hg-rewards]');
+      if (!node || !ensureOwner()) return;
+      let collection;
+      try { collection = api.snapshot?.(); } catch {}
+      const ready = saved && !terminalFailure && collection && !collection.loading && !collection.error && (!collection.cloud || collection.status && collection.status !== 'unavailable');
+      const owned = ready ? cleanTreats(collection.entitlements) : [];
+      let shown = session?.practice ? [] : rewardIds.filter(id => owned.includes(id));
+      // Old saved rounds and practice may show an owned treat, never a new award.
+      if (!shown.length && owned.length) shown = owned.slice(-1);
+      if (!shown.length) { node.hidden = true; node.replaceChildren(); delete node.dataset.receipt; return; }
+      const isNew = freshRewards && !session?.practice && shown.every(id => rewardIds.includes(id));
+      const receipt = JSON.stringify([shown, isNew]);
+      if (node.dataset.receipt === receipt) return;
+      node.dataset.receipt = receipt;
+      node.innerHTML = `<p class="halloween-treat-heading">${isNew ? shown.length > 1 ? 'You unlocked two treats' : 'You unlocked a treat' : 'In your collection'}</p><ul class="halloween-result-treats">${shown.map(id => {
+        const item = treats.find(treat => treat.id === id);
+        const href = '/profile/?section=progress&reward=' + encodeURIComponent(item.kind + ':' + id) + '#my-avatar';
+        return `<li data-hg-treat="${id}"><span class="halloween-result-treat-art${item.kind === 'frame' ? ' is-midnight' : ''}" aria-hidden="true">${treatArt(item)}</span><span class="halloween-result-treat-name"><small>${item.label}</small><strong>${item.name}</strong></span><a href="${href}" aria-label="Try on ${item.name}">Try it on <span aria-hidden="true">→</span></a></li>`;
+      }).join('')}</ul>`;
+      node.hidden = false;
+    }
     function result() {
       const graded = model.summary(gameId, submission());
       const title = graded.score === 100 ? 'A frightfully good result!' : graded.score >= 60 ? 'A few good surprises!' : 'A little wiser. Still a little spooky.';
       const detail = gameId === 'trick-or-think' ? `${graded.correct} of 10 correct answers` : `${graded.correct} of 4 groups found · ${graded.mistakes} ${graded.mistakes === 1 ? 'mistake' : 'mistakes'}`;
-      shell(`<div class="halloween-game-result"><p class="halloween-eyebrow">${esc(pack.title)} · ${session?.practice ? 'practice complete' : 'complete'}</p><h2 data-hg-heading tabindex="-1">${title}</h2><p class="halloween-game-score"><strong>${graded.score}</strong><span>/100</span></p><p>${detail}</p><p class="halloween-game-status" data-hg-status role="status">${saved ? (session?.practice ? 'Practice complete. Your saved Halloween progress is unchanged.' : access.preview ? 'Preview complete. Your live collection is unchanged.' : 'Your Halloween progress is saved.') : 'Saving your Halloween progress…'}</p><button type="button" class="halloween-quiet-button" data-hg-save hidden>Try saving again</button><div class="halloween-game-controls"><a class="btn btn-primary halloween-button" href="/halloween/">Back to Halloween <span aria-hidden="true">→</span></a><button type="button" class="halloween-quiet-button" data-hg-share>Challenge a friend</button><button type="button" class="halloween-quiet-button" data-hg-replay${saved ? '' : ' disabled'}>Play again</button></div><p class="halloween-game-status" data-hg-share-status role="status"></p>${gameId === 'spooky-connections' ? `<details class="halloween-result-answers"><summary>See the four connections</summary>${pack.groups.map(group => `<div class="halloween-solved-group"><strong>${esc(group.label)}</strong><span>${esc(group.wordIds.map(id => pack.words.find(word => word.id === id).label).join(' · '))}</span><p>${esc(group.explanation)}</p></div>`).join('')}</details>` : ''}<p class="halloween-game-small">Halloween games have their own scores. Your Daily and XP stay as they are.</p></div>`);
+      shell(`<div class="halloween-game-result"><p class="halloween-eyebrow">${esc(pack.title)} · ${session?.practice ? 'practice complete' : 'complete'}</p><h2 data-hg-heading tabindex="-1">${title}</h2><p class="halloween-game-score"><strong>${graded.score}</strong><span>/100</span></p><p class="halloween-result-detail">${detail}</p><p class="halloween-game-status" data-hg-status role="status">${saved ? (session?.practice ? 'Practice complete. Your saved Halloween progress is unchanged.' : access.preview ? 'Preview complete. Your live collection is unchanged.' : 'Your Halloween progress is saved.') : 'Saving your Halloween progress…'}</p><button type="button" class="halloween-quiet-button" data-hg-save hidden>Try saving again</button><div data-hg-rewards class="halloween-result-rewards" role="status" aria-live="polite" hidden></div><div class="halloween-result-actions"><a class="halloween-quiet-link" href="/halloween/">Back to Halloween <span aria-hidden="true">→</span></a><details class="halloween-result-options"><summary>Play again or share</summary><div class="halloween-game-controls"><button type="button" class="halloween-quiet-button" data-hg-share>Challenge a friend</button><button type="button" class="halloween-quiet-button" data-hg-replay${saved ? '' : ' disabled'}>Play again</button></div><p class="halloween-game-status" data-hg-share-status role="status"></p></details></div>${gameId === 'spooky-connections' ? `<details class="halloween-result-answers"><summary>See the four connections</summary>${pack.groups.map(group => `<div class="halloween-solved-group"><strong>${esc(group.label)}</strong><span>${esc(group.wordIds.map(id => pack.words.find(word => word.id === id).label).join(' · '))}</span><p>${esc(group.explanation)}</p></div>`).join('')}</details>` : ''}</div>`);
+      showTreats();
       root.querySelector('[data-hg-save]').addEventListener('click', save);
       if (terminalFailure) {
         const closed = terminalFailure === 'HALLOWEEN_CLOSED';
@@ -179,7 +217,7 @@
     function reset() {
       state = gameId === 'trick-or-think' ? model.initialQuiz() : model.initialConnections();
       session = null; answered = false; chosen = []; saved = false; terminalFailure = null;
-      wordOrder = model.shuffle(pack.words || []); optionOrders = new Map(); storage.remove(key);
+      wordOrder = model.shuffle(pack.words || []); optionOrders = new Map(); rewardIds = []; freshRewards = false; storage.remove(key);
     }
     async function save() {
       if (saving || saved || terminalFailure || !state.completed || !session || !ensureOwner()) return;
@@ -189,6 +227,8 @@
       if (retry) { retry.disabled = true; retry.hidden = true; }
       status('Saving your Halloween progress…');
       const frozenSubmission = JSON.parse(JSON.stringify(submission()));
+      let before;
+      try { before = api.snapshot?.(); } catch {}
       try {
         const response = await api.completeGame({ gameId, version: pack.version, submission: frozenSubmission, localSummary: model.summary(gameId, frozenSubmission), sessionId: session });
         if (!ensureOwner()) return;
@@ -197,7 +237,11 @@
           session.practice = true; session.savedResultScore = response.result.score; saved = true; persist(); result(); return;
         }
         if (response?.verifiedSummary && response.verifiedSummary.score !== model.summary(gameId, frozenSubmission).score) throw new Error('This result needs another check. Your answers are kept.');
-        saved = true; persist();
+        const beforeKnown = before && !before.loading && !before.error && Array.isArray(before.entitlements) && (!before.cloud || before.status && before.status !== 'unavailable');
+        rewardIds = cleanTreats(response.unlocks);
+        freshRewards = !!beforeKnown;
+        if (beforeKnown) rewardIds = rewardIds.filter(id => !before.entitlements.includes(id));
+        saved = true; persist(); showTreats();
         status(access.preview ? 'Preview complete. Your live collection is unchanged.' : session.guest ? 'Your Halloween progress is saved on this browser.' : 'Your Halloween progress is saved.');
         root.dispatchEvent(new CustomEvent('brainilab:halloween-game-saved', { bubbles: true, detail: { gameId, preview: !!access.preview } }));
       } catch (error) {
@@ -210,7 +254,11 @@
         }
       } finally { saving = false; const replay = root.querySelector('[data-hg-replay]'); if (replay) replay.disabled = !saved; }
     }
-    function finish() { screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result(); focus('[data-hg-heading]'); if (!saved) void save(); }
+    function finish() {
+      screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result();
+      try { root.querySelector('.halloween-game-result')?.scrollIntoView?.({block:'start',behavior:'auto'}); } catch {}
+      focus('[data-hg-heading]', true); if (!saved) void save();
+    }
     function render() { screen === 'result' ? (result(), !saved && !terminalFailure && void save()) : gameId === 'trick-or-think' ? quiz() : connections(); }
     restore();
     if (state.completed && screen === 'result') render(); else intro(session ? 'Your unfinished game is ready to continue.' : '');
@@ -219,6 +267,8 @@
     window.addEventListener('brainilab:auth-changed', ensureOwner);
     window.addEventListener('brainilab:authchange', ensureOwner);
     window.addEventListener('brainilab:backend-auth', ensureOwner);
+    window.addEventListener('brainilab:halloween-progress', showTreats);
+    window.addEventListener('brainilab:halloween-entitlements', showTreats);
   }
   function ready() { document.querySelectorAll('[data-halloween-game]').forEach(mount); }
   window.BrainiHalloweenGames = Object.freeze({ mount });
