@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-the-doorway-effect",
+  "title": "The doorway effect: why did I come in here?",
+  "description": "Walk into a room and forget what you wanted? Discover the doorway effect, why a change of scene may matter, and why the science is not so simple.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 178,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-the-doorway-effect.webp",
+    "small": "/assets/images/learn/what-is-the-doorway-effect-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-the-doorway-effect-thumb.webp",
+    "alt": "An open indigo door between cream alcoves, with a green chair and a yellow key on a wooden table",
+    "credit": "AI-generated conceptual illustration created for BrainiLab; not a reconstruction of a research experiment.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Fancy a quick quiz? Try General Knowledge.",
+  "related": [
+    "what-is-the-serial-position-effect",
+    "chunking-memory-familiar-groups"
+  ],
+  "sources": [
+    {
+      "url": "https://news.nd.edu/news/walking-through-doorways-causes-forgetting-new-research-shows/",
+      "name": "University of Notre Dame — Walking through doorways causes forgetting: research summary"
+    },
+    {
+      "url": "https://link.springer.com/article/10.1186/s40359-021-00536-3",
+      "name": "McFadyen and colleagues (2021) — Doorways do not always cause forgetting: a multimodal investigation"
+    },
+    {
+      "url": "https://link.springer.com/article/10.3758/s13421-025-01832-8",
+      "name": "Crockett and colleagues (2026) — Walking through doorways helps remembering, but not for long"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-room-and-a-blank",
+      "title": "A room, a mission, a blank",
+      "html": "<p>You head into another room for your keys. At the doorway, the mission goes missing. The keys, annoyingly, have not volunteered their location.</p><p><strong>The doorway effect describes a pattern found in some experiments: crossing into another room can make recently encountered information harder to recall.</strong> <a href=\"https://news.nd.edu/news/walking-through-doorways-causes-forgetting-new-research-shows/\">Notre Dame researchers reported it</a> in virtual and real rooms.</p>"
+    },
+    {
+      "id": "a-change-of-scene",
+      "title": "A change of scene may matter",
+      "html": "<p>One explanation involves <strong>event boundaries</strong>. We organise experience into episodes; a new room can mark the start of another one. Information from the previous episode may become less accessible.</p><p>Think of a scene change in a film. That is a helpful comparison, not evidence that your brain presses a delete button whenever a door opens.</p>"
+    },
+    {
+      "id": "not-every-door",
+      "title": "Not every door does it",
+      "html": "<p>A <a href=\"https://link.springer.com/article/10.1186/s40359-021-00536-3\">2021 study with four experiments</a> found no overall increase in forgetting after doorways. When people also had a demanding counting task, researchers did find more confusion between remembered items.</p><p>A <a href=\"https://link.springer.com/article/10.3758/s13421-025-01832-8\">2026 word-list study</a> tested a different question: could learning across two rooms help? It found little overall benefit, with a brief advantage near the doorway in one experiment. The task and timing matter.</p>"
+    },
+    {
+      "id": "keep-the-curiosity",
+      "title": "Keep the curiosity",
+      "html": "<p>It is a memorable name for an interesting research question, rather than a complete explanation for every lost thought.</p><p>For more memory surprises, explore <a href=\"/learn/what-is-the-serial-position-effect/\">why the start and end of a list stand out</a>, or see <a href=\"/learn/chunking-memory-familiar-groups/\">how familiar groups make information easier to handle</a>. Your keys can have another moment in the spotlight afterwards.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:36:20Z",
+  "updatedAt": "2026-10-19T15:36:20Z",
+  "minutes": 2
+}
