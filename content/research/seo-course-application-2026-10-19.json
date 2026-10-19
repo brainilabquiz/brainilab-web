@@ -1,0 +1,99 @@
+{
+  "id": "seo-course-application-2026-10-19",
+  "reviewedAt": "2026-10-19T18:26:43Z",
+  "type": "bounded-existing-article-revision",
+  "page": "https://brainilabgames.com/learn/how-to-play-number-route/",
+  "question": "Can a reader who wants to play reach the existing Number Route game earlier, while the guide keeps its answer first?",
+  "change": "Add one plain contextual game link after the first rules paragraph. Preserve the existing article return fragment.",
+  "sourceVideo": {
+    "url": "https://www.youtube.com/watch?v=P-vPlQ7GmTw",
+    "title": "Complete AI SEO Course 2026 (Rank #1 on Google Using Claude & ChatGPT)",
+    "author": "Nico | AI Ranking",
+    "published": "2026-08-07",
+    "coverage": "Visible description and chapter outline only. Transcript did not load; no claim to have watched or transcribed the full course.",
+    "relevantChapters": [
+      "7:13 Keyword research",
+      "59:24 On-page optimisation",
+      "1:03:17 Internal linking",
+      "1:05:07 AI visibility"
+    ]
+  },
+  "searchEvidence": {
+    "source": "Existing first-party Search Console observation, reused without a paid query",
+    "capturedAt": "2026-10-19T07:28:27.627078+00:00",
+    "period": {
+      "start": "2026-09-19",
+      "end": "2026-10-16",
+      "timezone": "America/Los_Angeles"
+    },
+    "geography": "All markets returned by the saved property query; not a US-only ranking",
+    "language": "English query text; no independent language segmentation",
+    "query": "number route game",
+    "rows": [
+      {
+        "page": "/games/number-route/",
+        "impressions": 61,
+        "clicks": 0,
+        "averagePosition": 3.77049
+      },
+      {
+        "page": "/learn/how-to-play-number-route/",
+        "impressions": 20,
+        "clicks": 0,
+        "averagePosition": 5.5
+      }
+    ],
+    "sourceSha256": "dab021b4a21118aec15f0ff2a321dd741aa3efad3099ab42f3ddea9b039a57c4",
+    "limits": [
+      "Historical averages, not current ranks.",
+      "Do not sum URL rows as unique searchers.",
+      "Zero clicks do not prove cannibalisation or explain why people did not click.",
+      "Current monthly volume, keyword difficulty and conversion effect are unknown."
+    ]
+  },
+  "liveIntentCheck": {
+    "capturedDate": "2026-10-19",
+    "query": "number route game",
+    "method": "One web search and direct public page reads",
+    "conclusion": "The playable BrainiLab page is present in the observed results; the guide serves rules intent. Keep these distinct existing URLs.",
+    "rankingClaim": null
+  },
+  "livePageReview": {
+    "checkedDate": "2026-10-19",
+    "facts": [
+      "Game and guide return HTTP 200.",
+      "Guide already explains the left-to-right rule, contains a worked example and links to the game at the end.",
+      "The target game exists and is reachable without signing up.",
+      "The existing end-of-guide game link already carries the same learn return fragment."
+    ],
+    "primarySources": [
+      "https://brainilabgames.com/games/number-route/",
+      "https://openstax.org/books/prealgebra-2e/pages/2-1-use-the-language-of-algebra",
+      "https://developers.google.com/search/docs/appearance/ai-features"
+    ]
+  },
+  "auditReuse": {
+    "auditId": "2cef06e2-cbf8-45a8-95b0-7e00cd226af6",
+    "completedDate": "2026-10-17",
+    "pages": 50,
+    "newPaidResearch": false,
+    "notes": "Reused current issues; short JavaScript game text and title-length notices do not justify padding, noindex or broad retitling."
+  },
+  "preserved": [
+    "URL",
+    "title and description",
+    "publishedAt",
+    "author",
+    "cover and AI credit",
+    "source citations",
+    "all existing rules and worked examples",
+    "related readings",
+    "Academy content and quiz versions",
+    "XP, scores and account data"
+  ],
+  "measurement": {
+    "baseline": "Keep the existing opportunity baseline unchanged. This report also records Sep 19-Oct 16 historical observations.",
+    "followUp": "Compare an equal complete non-overlapping 28-day post-change period (Oct 20-Nov 16) when available. Use the same URL/query filters and note other changes.",
+    "claim": "An easier path to play is a plausible benefit; visits, play starts, accounts, ranking gains and AI citations have not been demonstrated."
+  }
+}
