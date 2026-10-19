@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-face-pareidolia",
+  "title": "Face pareidolia: why does that house look surprised?",
+  "description": "Two windows and a doorway can suddenly look like a face. Discover face pareidolia, the everyday illusion that gives ordinary objects a personality.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 179,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-face-pareidolia.webp",
+    "small": "/assets/images/learn/what-is-face-pareidolia-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-face-pareidolia-thumb.webp",
+    "alt": "A cream miniature house with two square windows above an arched doorway, suggesting a surprised face",
+    "credit": "AI-generated conceptual illustration created for BrainiLab, using ordinary windows and a doorway to suggest a face.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/odd-one-out/",
+    "name": "Odd One Out"
+  },
+  "practice": "Keep spotting patterns with a round of Odd One Out.",
+  "related": [
+    "what-is-the-stroop-effect",
+    "why-are-flamingos-pink"
+  ],
+  "sources": [
+    {
+      "url": "https://www.unsw.edu.au/news/2020/08/why-the-brain-is-programmed-to-see-faces-in-everyday-objects",
+      "name": "UNSW Sydney (2020) — Why the brain is programmed to see faces in everyday objects"
+    },
+    {
+      "url": "https://www.sydney.edu.au/news-opinion/news/2021/07/07/man-in-moon-why-our-brains-see-human-faces-everywhere-face-pareidolia.html",
+      "name": "University of Sydney (2021) — Why our brains see human faces everywhere"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-house-is-looking",
+      "title": "Is that house looking at you?",
+      "html": "<p>Two upstairs windows. An open doorway below. Suddenly, the house looks surprised to see you.</p><p><strong>Face pareidolia is seeing a face in something that is not one, such as a building, a tree trunk or a cloud.</strong> It is one kind of pareidolia: finding a recognisable pattern in something ambiguous. The face is your interpretation of the object’s features.</p>"
+    },
+    {
+      "id": "a-familiar-arrangement",
+      "title": "A familiar arrangement",
+      "html": "<p>Human faces vary, but their features follow a familiar arrangement. Two eye-like shapes above a mouth-like shape can be enough to suggest a face.</p><p><a href=\"https://www.unsw.edu.au/news/2020/08/why-the-brain-is-programmed-to-see-faces-in-everyday-objects\">UNSW researchers tested face-like objects</a> and found evidence that they recruit some of the same visual mechanisms used to read where human faces are looking. A pair of windows can make quite an impression.</p>"
+    },
+    {
+      "id": "a-grumpy-tree",
+      "title": "Why does the tree look grumpy?",
+      "html": "<p>We can read an expression into the pattern, too. A <a href=\"https://www.sydney.edu.au/news-opinion/news/2021/07/07/man-in-moon-why-our-brains-see-human-faces-everywhere-face-pareidolia.html\">University of Sydney study</a> mixed real faces with face-like objects and asked people to judge their expressions. Similar biases appeared in both kinds of judgment.</p><p>Knowing it is a tree does not necessarily make the apparent face disappear. You can recognise the object and still see the scowl. The tree has not developed an opinion about your shoes.</p>"
+    },
+    {
+      "id": "a-second-look",
+      "title": "Give the ordinary a second look",
+      "html": "<p>A building’s windows remain windows. The extra character comes from how we see them.</p><p>If perception has caught your curiosity, try <a href=\"/learn/what-is-the-stroop-effect/\">the colour-word mix-up called the Stroop effect</a>. Or explore another everyday surprise: <a href=\"/learn/why-are-flamingos-pink/\">where flamingos get their pink colour</a>. Familiar things have plenty left to tell us.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-19T15:36:20Z",
+  "updatedAt": "2026-10-19T15:36:20Z",
+  "minutes": 2
+}
