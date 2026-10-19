@@ -1,0 +1,68 @@
+{
+  "hub": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "slug": "trick-or-treat-meaning-origin",
+  "cover": {
+    "alt": "A child holds a paper treat bag with an orange pumpkin shape at a warmly lit doorway",
+    "src": "/assets/images/learn/trick-or-treat-meaning-origin.webp",
+    "small": "/assets/images/learn/trick-or-treat-meaning-origin-small.webp",
+    "credit": "AI-generated illustrative scene created for BrainiLab; a modern tradition, not a historical reconstruction.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/trick-or-treat-meaning-origin-thumb.webp"
+  },
+  "order": 185,
+  "title": "What does “trick or treat” mean? A tiny Halloween bargain",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "related": [
+    "why-carve-pumpkins-halloween",
+    "words-that-mean-their-own-opposite"
+  ],
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/trick%20or%20treat",
+      "name": "Merriam-Webster — Trick or treat: definition and usage"
+    },
+    {
+      "url": "https://blogs.loc.gov/folklife/2020/11/masking-and-mumming-for-the-holidays-thanksgiving-style/",
+      "name": "Library of Congress, Stephen Winick (2020) — Masking and mumming for the holidays"
+    },
+    {
+      "url": "https://www.dictionary.com/articles/why-do-we-say-trick-or-treat",
+      "name": "Dictionary.com (2025) — Why do we say “trick or treat”?"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Look for more surprising links between familiar words in Connections.",
+  "sections": [
+    {
+      "id": "a-tiny-bargain",
+      "html": "<p><strong>“Trick or treat” asks for a treat with the playful suggestion that refusing could bring a prank.</strong> That is the bargain built into the phrase, as <a href=\"https://www.merriam-webster.com/dictionary/trick%20or%20treat\">Merriam-Webster’s definition</a> explains.</p><p>Three short words do the work of a much longer speech. The costume and hopeful bag provide the rest of the message.</p>",
+      "title": "A tiny bargain on the doorstep"
+    },
+    {
+      "id": "costumes-before-the-catchphrase",
+      "html": "<p><a href=\"https://www.dictionary.com/articles/why-do-we-say-trick-or-treat\">Dictionary.com links modern trick-or-treating</a> with older customs such as <strong>guising</strong> and <strong>mumming</strong> in Britain and Ireland. Visitors in costume might offer a rhyme, story or little performance in exchange for food.</p><p>That is a different sort of exchange from simply holding out a sweet bag: the visitor brings a bit of entertainment.</p>",
+      "title": "Costumes came with other customs"
+    },
+    {
+      "id": "a-thanksgiving-twist",
+      "html": "<p>The <a href=\"https://blogs.loc.gov/folklife/2020/11/masking-and-mumming-for-the-holidays-thanksgiving-style/\">Library of Congress documents Thanksgiving masking</a>, an older American custom in which costumed visitors went door to door asking for handouts.</p><p>Folklorists have suggested that it helped shape Halloween trick-or-treating. The Library also warns against giving this changing tradition one simple ancient origin. Similar customs are not proof of one uninterrupted family tree.</p>",
+      "title": "The surprising Thanksgiving connection"
+    },
+    {
+      "id": "why-the-words-stick",
+      "html": "<p>The neat bit is the word <em>or</em>. It turns a request into two possibilities, making the phrase sound like a miniature negotiation. The fun is in the familiar ritual.</p><p>Halloween has other well-travelled stories, including <a href=\"/learn/why-carve-pumpkins-halloween/\">why pumpkin lanterns began with turnips</a>. The words and the decorations both picked up changes along the way.</p>",
+      "title": "A phrase you can carry in a pocket"
+    }
+  ],
+  "updatedAt": "2026-10-19T17:12:25.342Z",
+  "description": "Why do children say “trick or treat”? Unpack the playful bargain, meet older costume customs and discover why the tradition has no single neat origin.",
+  "publishedAt": "2026-10-19T17:12:25.342Z"
+}
