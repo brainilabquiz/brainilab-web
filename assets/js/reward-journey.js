@@ -1,4 +1,4 @@
-/* Read-only cosmetic previews. All awards still come from canonical XP. */
+/* Read-only cosmetic previews. Award eligibility stays with its canonical source. */
 window.BrainiRewardJourney=(()=>{
   const labels={frame:'Avatar frame',title:'Profile title',glasses:'Glasses',hat:'Hat',prop:'Little extra',scene:'Profile background'};
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,7 +30,11 @@ window.BrainiRewardJourney=(()=>{
     return '/profile/?section=progress'+(item?.kind&&item.kind!=='rank'?'&reward='+encodeURIComponent(item.kind+':'+item.id)+'#my-avatar':'');
   }
   function fromLink(value){
-    return typeof value==='string'?milestones().find(item=>item.kind!== 'rank'&&value===item.kind+':'+item.id)||null:null;
+    if(typeof value!=='string')return null;
+    const ordinary=milestones().find(item=>item.kind!=='rank'&&value===item.kind+':'+item.id);
+    if(ordinary)return ordinary;
+    // Seasonal items have no XP price. Linking to one never grants or equips it.
+    return Object.entries(window.BrainiRewardCatalog?.groups||{}).flatMap(([kind,items])=>items.filter(item=>item.event&&value===kind+':'+item.id).map(item=>({...item,kind,detail:labels[kind]||'Avatar extra'})))[0]||null;
   }
   function resultGoal(xp,change){
     if(!valid(xp))return {item:null,earned:[]};

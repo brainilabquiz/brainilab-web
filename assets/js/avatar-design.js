@@ -51,7 +51,7 @@ window.BrainiAvatarDesign=(function(){
   // can grant them; callers must supply the server's sanitized entitlement IDs.
   const eventOptions=Object.freeze({
     hat:Object.freeze([Object.freeze({id:'pumpkin-thinker',name:'Pumpkin thinker',xp:0,event:'halloween-2026',description:'A little pumpkin for a bright idea.',requirement:'Complete one Halloween game'})]),
-    prop:Object.freeze([Object.freeze({id:'little-bat',name:'Little bat',xp:0,event:'halloween-2026',description:'A tiny bat to keep your ideas company.',requirement:'Play Halloween games on three days'})])
+    prop:Object.freeze([Object.freeze({id:'little-bat',name:'Little bat',xp:0,event:'halloween-2026',description:'A tiny bat to keep your ideas company.',requirement:'Play on three different days'})])
   });
   const eventIds=Object.freeze(['pumpkin-thinker','midnight','little-bat']);
   const earnedIds=value=>Array.isArray(value)?value.filter(id=>typeof id==='string'&&eventIds.includes(id)):[];

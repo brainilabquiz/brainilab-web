@@ -223,19 +223,39 @@ window.BrainiProfileSections=(function(){
     );
   }
 
+  let linkedRewardOpened=null;
   function openLinkedReward({open=false}={}){
     const item=window.BrainiRewardJourney?.fromLink(new URLSearchParams(location.search).get('reward'));
     const studio=document.querySelector('[data-profile-rewards]');
     if(!item||!studio||!window.BrainiAvatarStudioUI||selected()!=='progress')return;
     const pane=['glasses','hat','prop'].includes(item.kind)?'extras':'rewards';
-    if(open)BrainiAvatarStudioUI.showPane(studio,pane);
+    const key=item.kind+':'+item.id,state=window.BrainiRewardStore?.snapshot?.();
+    const ready=!!state&&!state.loading&&!state.error;
+    const reveal=ready&&(open||linkedRewardOpened!==key);
+    if(reveal)BrainiAvatarStudioUI.showPane(studio,pane);
     // Highlight a real catalogue item without changing the saved avatar.
     const choice=studio.querySelector(`[data-reward-kind="${item.kind}"][data-reward-id="${item.id}"]`);
     if(choice){choice.classList.add('is-reward-target');choice.setAttribute('aria-describedby','linked-reward-note');
       let note=studio.querySelector('#linked-reward-note');
       if(!note){note=document.createElement('p');note.id='linked-reward-note';note.className='linked-reward-note';studio.querySelector('[data-avatar-pane="'+pane+'"]')?.prepend(note);}
-      const state=window.BrainiRewardStore?.snapshot?.();note.hidden=!!(state?.loading||state?.error);
-      note.textContent=BrainiRewardCatalog.unlocked(item,BrainiData.player().xp)?'Ready to try on. Choose it to preview your new look.':`${Math.max(0,item.xp-BrainiData.player().xp).toLocaleString('en-GB')} XP to unlock ${item.name}.`;
+      note.hidden=!ready;
+      note.textContent=BrainiRewardCatalog.unlocked(item,BrainiData.player().xp)?'Ready to try on. Choose it to preview your new look.':item.event?item.requirement+'.':`${Math.max(0,item.xp-BrainiData.player().xp).toLocaleString('en-GB')} XP to unlock ${item.name}.`;
+      if(reveal){
+        linkedRewardOpened=key;
+        const focusTarget=choice.disabled?choice.closest('fieldset'):choice;
+        const revealChoice=()=>{
+          if(!choice.isConnected||selected()!=='progress'||new URLSearchParams(location.search).get('reward')!==key)return;
+          const active=document.activeElement;
+          if(active!==focusTarget&&active!==document.body&&active?.id!=='my-avatar')return;
+          if(focusTarget){if(choice.disabled)focusTarget.tabIndex=-1;focusTarget.focus({preventScroll:true});}
+          choice.scrollIntoView?.({block:'center',behavior:'instant'});
+        };
+        revealChoice();
+        // The browser can apply #my-avatar after DOMContentLoaded. Reveal the
+        // choice after that initial fragment jump, without stealing later focus.
+        const afterLoad=()=>requestAnimationFrame(()=>requestAnimationFrame(revealChoice));
+        if(document.readyState==='complete')afterLoad();else window.addEventListener('load',afterLoad,{once:true});
+      }
     }
   }
   function bind(){
