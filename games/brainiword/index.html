@@ -150,7 +150,7 @@
   if(meta) meta.textContent=archiveMode?"Play anytime · 5 letters · 5 tries":`Daily #${content.dailyNumber} · 5 letters · 5 tries`;
   if(subtitle) subtitle.textContent=archiveMode?"Five-letter word puzzle":`Daily word puzzle · #${content.dailyNumber}`;
 
-  const stateKey=`brainilab-brainiword-${content.challengeDate}`;
+  const stateKey=`brainilab-brainiword-${content.challengeDate}${window.BrainiReplay?.storageSuffix()||""}`;
   let row=0;
   let col=0;
   const analyticsRound={};

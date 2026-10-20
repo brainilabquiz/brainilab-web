@@ -36,7 +36,7 @@ window.BrainiContent = (function(){
   }
 
   function client(){
-    return window.BrainiBackendAuth?.getClient?.() || null;
+    const sb=window.BrainiBackendAuth?.getClient?.() || null;return window.BrainiReplay?.client(sb)||sb;
   }
 
   function slugFor(topicKey){
@@ -165,6 +165,9 @@ window.BrainiContent = (function(){
   }
 
   async function loadQuizPack(topicKey,difficulty="easy",setNumber=1){
+    const base=()=>loadQuizPackBase(topicKey,difficulty,setNumber);return window.BrainiReplay?BrainiReplay.run(topicKey,base):base();
+  }
+  async function loadQuizPackBase(topicKey,difficulty="easy",setNumber=1){
     difficulty=normalizeDifficulty(difficulty);
     setNumber=Math.max(1,parseInt(setNumber,10)||1);
 

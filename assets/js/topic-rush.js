@@ -5,7 +5,7 @@
 window.BrainiTopicRush=(function(){
   const TRY_FIRST_MODE=new URLSearchParams(location.search).get("try")==="1";
   function stateKey(date){
-    return `brainilab-topicrush-${date}`;
+    return `brainilab-topicrush-${date}${window.BrainiReplay?.storageSuffix()||""}`;
   }
 
   function read(key){

@@ -23,7 +23,7 @@ window.BrainiHigherLower=(function(){
   };
 
   function typeOf(r){return TYPES[r.comparisonType]||TYPES.higher_lower}
-  function client(){return window.BrainiBackendAuth?.getClient?.()||null}
+  function client(){const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb}
   function configured(){return !!window.BrainiBackendAuth?.isConfigured?.()}
   function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}function seedHash(value){let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
@@ -35,7 +35,8 @@ window.BrainiHigherLower=(function(){
   function mapRows(data){return (data?.pairs||[]).map(x=>({id:x.pair_id,category:x.category,metric:x.metric,comparisonType:x.comparison_type||"higher_lower",left:x.left_label,leftValue:Number(x.left_value),right:x.right_label,unit:x.unit,cloud:true}))}
   function localDaily(){const key=String(dailyDate||"");return (BrainiHigherLowerPairs?.all?.()||[]).slice().sort((a,b)=>(seedHash(`${key}:${a.id}`)-seedHash(`${key}:${b.id}`))||String(a.id).localeCompare(String(b.id))).slice(0,ROUNDS).map(x=>({...x,cloud:false}))}
 
-  async function load(){
+  async function load(){return window.BrainiReplay?BrainiReplay.run("higherlower",loadBase):loadBase();}
+  async function loadBase(){
     if(configured())try{
       const {data,error}=dailyMode
         ? await client().rpc("get_brainilab_daily_higher_lower",{p_challenge_date:dailyDate})

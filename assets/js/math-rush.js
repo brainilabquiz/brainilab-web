@@ -6,7 +6,7 @@ window.BrainiMathRush=(function(){
   const archiveMode=!!PARAMS.get("archive");
   const dailyMode=!!dailyDate;
   const scoringDaily=dailyMode&&!archiveMode;
-  function client(){return window.BrainiBackendAuth?.getClient?.()||null}
+  function client(){const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb}
   function configured(){return !!window.BrainiBackendAuth?.isConfigured?.()}
   function uid(){return globalThis.crypto?.randomUUID?.()||`${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`}
   function hash(s){let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
@@ -39,7 +39,8 @@ window.BrainiMathRush=(function(){
     }
     return ops;
   }
-  async function load(){
+  async function load(){return window.BrainiReplay?BrainiReplay.run("mathrush",loadBase):loadBase();}
+  async function loadBase(){
     const seed=dailyMode?`v2:daily:${dailyDate}:mathrush`:`v2:anytime:${uid()}`;
     if(configured()){
       try{

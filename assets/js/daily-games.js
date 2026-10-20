@@ -16,7 +16,7 @@ window.BrainiDailyGames=(function(){
   }
 
   function client(){
-    return window.BrainiBackendAuth?.getClient?.()||null;
+    const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb;
   }
 
   function utcDate(){
@@ -140,6 +140,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadOrderUp(options={}){
+    const base=()=>loadOrderUpBase(options);return window.BrainiReplay?BrainiReplay.run("orderup",base):base();
+  }
+  async function loadOrderUpBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){
@@ -255,6 +258,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadTopicRush(options={}){
+    const base=()=>loadTopicRushBase(options);return window.BrainiReplay?BrainiReplay.run("topicrush",base):base();
+  }
+  async function loadTopicRushBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){
@@ -324,6 +330,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadBrainiWord(options={}){
+    const base=()=>loadBrainiWordBase(options);return window.BrainiReplay?BrainiReplay.run("brainiword",base):base();
+  }
+  async function loadBrainiWordBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){

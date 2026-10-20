@@ -32,7 +32,7 @@ window.BrainiDaily = (function(){
   }
 
   function client(){
-    return window.BrainiBackendAuth?.getClient?.() || null;
+    const sb=window.BrainiBackendAuth?.getClient?.() || null;return window.BrainiReplay?.client(sb)||sb;
   }
 
   function validQuestions(questions){
@@ -249,6 +249,9 @@ window.BrainiDaily = (function(){
   }
 
   async function loadDate(date,options={}){
+    const base=()=>loadDateBase(date,options);return window.BrainiReplay?BrainiReplay.run("brainmix",base):base();
+  }
+  async function loadDateBase(date,options={}){
     const archiveDate=BrainiData.pastDailyDate?.(date);
     if(!archiveDate){
       throw new Error("Past Daily date is invalid or is not before today.");
@@ -279,6 +282,9 @@ window.BrainiDaily = (function(){
   }
 
   async function loadToday(options={}){
+    const base=()=>loadTodayBase(options);return window.BrainiReplay?BrainiReplay.run("brainmix",base):base();
+  }
+  async function loadTodayBase(options={}){
     const force=!!options.force;
 
     if(!force && cachedToday && validDaily(cachedToday)){

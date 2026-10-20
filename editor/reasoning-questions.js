@@ -14,8 +14,8 @@ export const questions=[
  {id:'turn-flip',topic:'Space',prompt:'An arrow points right. Turn it a quarter-turn clockwise, then reflect it across a horizontal mirror line. Where does it finish?',visual:['→','↻','↕','?'],options:['Right','Down','Up','Left'],answer:2,explanation:'The clockwise turn changes right to down. Reflecting across a horizontal line changes down to up. Apply the operations in the given order.',lesson:'rotation-or-reflection'},
  {id:'two-rules',topic:'Logic',prompt:'A two-digit code has digits that add to 9. The second digit is larger than the first. Which code fits BOTH clues?',options:['63','27','28','44'],answer:1,explanation:'2 + 7 = 9 and 7 is larger than 2. In 63 the sum works but the order fails. The digits in 28 and 44 do not add to nine.',lesson:'sorting-with-two-rules'}
 ];
-export function scoreAnswers(answers){
+export function scoreAnswers(answers,items=questions){
  const byTopic={};let correct=0;
- questions.forEach((q,i)=>{const row=byTopic[q.topic]??={correct:0,total:0};row.total++;if(answers[i]===q.answer){correct++;row.correct++;}});
- return {correct,total:questions.length,byTopic};
+ items.forEach((q,i)=>{const row=byTopic[q.topic]??={correct:0,total:0};row.total++;if(answers[i]===q.answer){correct++;row.correct++;}});
+ return {correct,total:items.length,byTopic};
 }

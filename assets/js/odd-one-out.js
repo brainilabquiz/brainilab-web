@@ -7,7 +7,7 @@ window.BrainiOddOneOut=(function(){
   const dailyMode=!!dailyDate;
   const scoringDaily=dailyMode&&!archiveMode;
 
-  function client(){return window.BrainiBackendAuth?.getClient?.()||null}
+  function client(){const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb}
   function configured(){return !!window.BrainiBackendAuth?.isConfigured?.()}
   function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
   function localHistory(){try{return BrainiData.anytimeHistory?.("oddoneout")||{}}catch{return{}}}
@@ -17,7 +17,8 @@ window.BrainiOddOneOut=(function(){
     const key=String(dailyDate||"");
     return (BrainiOddOneOutPuzzles?.all?.()||[]).slice().sort((a,b)=>(seedHash(`${key}:${a.id}`)-seedHash(`${key}:${b.id}`))||String(a.id).localeCompare(String(b.id))).slice(0,ROUNDS).map(x=>({...x,cloud:false}));
   }
-  async function load(){
+  async function load(){return window.BrainiReplay?BrainiReplay.run("oddoneout",loadBase):loadBase();}
+  async function loadBase(){
     if(configured()){
       try{
         const {data,error}=dailyMode
