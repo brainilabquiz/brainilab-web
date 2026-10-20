@@ -17,11 +17,13 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlsplit
 from urllib.robotparser import RobotFileParser
 import gsc_sync as api
+import seo_keywords
+import seo_reputation
 
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
 VERSION = 1
-PRODUCER_VERSION = 2
+PRODUCER_VERSION = 3
 MAX_BYTES = 2_000_000
 CHECKS = {'https': 10, 'available': 20, 'title': 10, 'description': 10,
           'heading': 10, 'canonical': 15, 'indexable': 15, 'structuredData': 10}
@@ -31,8 +33,10 @@ LIMITATIONS = [
     'Missing HTML links may be rendered with JavaScript. Failed requests do not prove lost links.',
     'BrainiLab Trust v1 is a technical publishing checklist, not Google authority, Ahrefs DR, Majestic Trust Flow, or a reputation verdict.',
     'Domain Trust is the mean of successful page checks in this crawl; it changes with coverage.',
-    'External reputation, spam risk and total global backlinks remain unmeasured.',
+    'Dated Google Links, manual-action and security reports are separate reputation evidence, not an authority score.',
+    'Editorial independence, spam risk and total global backlinks remain unmeasured.',
 ]
+DISCOVERY = {'published_listing', 'owner_submitted_listing', 'reviewed_public_candidate', 'google_links_report'}
 
 
 def stamp(value):
@@ -66,7 +70,10 @@ def public_url(value, own=False):
             return None
         if own and re.match(r'^/(admin|auth|account|profile)(/|$)', u.path):
             return None
-        return 'https://' + (DOMAIN if own else host) + (u.path or '/')
+        # A numeric page is a public document locator (e.g. a Google Links source),
+        # not a tracking/auth query. Never preserve arbitrary parameters.
+        pagination = '?' + u.query if not own and re.fullmatch(r'page=[1-9][0-9]{0,4}', u.query) else ''
+        return 'https://' + (DOMAIN if own else host) + (u.path or '/') + pagination
     except ValueError:
         return None
 
@@ -106,10 +113,11 @@ class PinnedHTTPS(http.client.HTTPSConnection):
 def fetch(url):
     for redirect in range(6):
         clean, addresses = public_addresses(url)
-        u = urlsplit(url)
+        url = clean
+        u = urlsplit(clean)
         connection = PinnedHTTPS(u.hostname, addresses[0])
         try:
-            connection.request('GET',u.path or '/',headers={'User-Agent': AGENT+'/1.0 (authorised site review)','Accept-Encoding':'identity'})
+            connection.request('GET',(u.path or '/') + ('?' + u.query if u.query else ''),headers={'User-Agent': AGENT+'/1.0 (authorised site review)','Accept-Encoding':'identity'})
             response = connection.getresponse()
             if response.status in (301,302,303,307,308):
                 location = response.getheader('Location')
@@ -266,7 +274,9 @@ def validate(value):
         if s.get('lastVerifiedAt') is not None and not stamp(s['lastVerifiedAt']): raise ValueError('Invalid source history date')
         if s.get('status') is not None and (type(s['status']) is not int or not 100<=s['status']<=599): raise ValueError('Invalid source response')
         if s.get('finalUrl') is not None and public_url(s['finalUrl'])!=s['finalUrl']: raise ValueError('Invalid source redirect')
-        sources.append({k:s.get(k) for k in ('url','finalUrl','checkedAt','state','status','lastVerifiedAt')})
+        provenance = s.get('discovery', 'reviewed_public_candidate')
+        if provenance not in DISCOVERY: raise ValueError('Invalid source provenance')
+        sources.append({k:s.get(k) for k in ('url','finalUrl','checkedAt','state','status','lastVerifiedAt')} | {'discovery': provenance})
     for b in value['backlinks']:
         if public_url(b['sourceUrl']) != b['sourceUrl'] or public_url(b['targetUrl'],own=True) != b['targetUrl'] or not stamp(b['verifiedAt']) or not stamp(b['firstVerifiedAt']):
             raise ValueError('Invalid backlink')
@@ -290,13 +300,16 @@ def validate(value):
         known[key]=item
     if len(known)>6000:raise ValueError('Backlink history exceeds bounds')
     for b in links:b['firstVerifiedAt']=known[(b['sourceUrl'],b['targetUrl'],tuple(b['rel']))]['firstVerifiedAt']
-    return {'schemaVersion': VERSION, 'domain': DOMAIN, 'observedAt': value['observedAt'],
+    result = {'schemaVersion': VERSION, 'domain': DOMAIN, 'observedAt': value['observedAt'],
             'pages': pages, 'sources': sources, 'backlinks': links, 'knownLinks':list(known.values()),'domainTrust': trust_summary(pages),
             'limitations': LIMITATIONS, 'scoreWeights': CHECKS,
-            'scope': 'Published catalogue and explicitly recorded public listing URLs; anonymous HTML fetches only.'}
+            'scope': 'Published catalogue, recorded public game listings and reviewed candidate URLs; anonymous HTML fetches only.'}
+    if value.get('keywords') is not None: result['keywords'] = seo_keywords.validate(value['keywords'])
+    if value.get('reputation') is not None: result['reputation'] = seo_reputation.validate(value['reputation'])
+    return result
 
 
-def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch):
+def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch, source_kinds=None):
     observed = (now or datetime.now(timezone.utc)).isoformat()
     previous = previous or {}
     pages, sources, links = [], [], []
@@ -340,6 +353,7 @@ def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch):
         final=public_url(result['url']) if result else None
         record_url=final if final and not own_host(final) else url
         sources.append({'url':record_url,'finalUrl':final,'checkedAt':observed,'state':state,'status':result['status'] if result else None,
+                        'discovery':(source_kinds or {}).get(url,'reviewed_public_candidate'),
                         'lastVerifiedAt':observed if found else prior.get('lastVerifiedAt')})
         for b in found:
             old = old_links.get((b['sourceUrl'],b['targetUrl'],tuple(b['rel'])),{})
@@ -351,24 +365,51 @@ def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch):
     return validate({'schemaVersion':VERSION,'domain':DOMAIN,'observedAt':observed,'pages':pages,'sources':sources,'backlinks':links,'knownLinks':previous.get('knownLinks',previous.get('backlinks',[]))})
 
 
-def refresh(private, distribution_path=None, force=False, now=None, sources_path=None):
+def ledger_sources(value):
+    """Only explicit public listing fields from verified publication records.
+
+    Never walk free text, email bodies, receipts, account URLs or unverified forms.
+    A candidate must still pass this crawl before becoming a verified backlink.
+    """
+    found = set()
+    for row in value.get('forms', []):
+        if not any(row.get(k) is True for k in ('placementVerified', 'publicationVerified', 'listingVerified')):
+            continue
+        for key in ('listingUrl', 'publicUrl'):
+            raw = row.get(key)
+            clean = public_url(raw)
+            if clean and clean == raw and not own_host(clean): found.add(clean)
+    return sorted(found)
+
+
+def refresh(private, distribution_path=None, force=False, now=None, sources_path=None, ledger_path=None):
     private = Path(private); now = now or datetime.now(timezone.utc)
     source = Path(distribution_path or private/'distribution-latest.json')
     data_bytes = source.read_bytes(); data = json.loads(data_bytes)
     page_urls = sorted({u for r in data['resources'] if (u:=public_url('https://'+DOMAIN+r['path'],own=True))} | {'https://'+DOMAIN+'/'})
-    source_urls = sorted({u for r in data['directories'] if r.get('state')=='published' and (u:=public_url(r.get('listingUrl')))})
+    provenance = {u: 'published_listing' for r in data['directories'] if r.get('state')=='published' and (u:=public_url(r.get('listingUrl')))}
+    ledger_path = Path(ledger_path) if ledger_path else None
+    ledger_bytes = ledger_path.read_bytes() if ledger_path else None
+    if ledger_bytes:
+        provenance.update({u: 'owner_submitted_listing' for u in ledger_sources(json.loads(ledger_bytes))})
     extra_path = Path(sources_path or private/'seo-explorer-sources.json')
     extra_bytes = extra_path.read_bytes() if extra_path.exists() else None
     if extra_bytes:
         extra = json.loads(extra_bytes)
-        if not isinstance(extra,list) or any(not isinstance(u,str) or public_url(u)!=u or own_host(u) for u in extra):
+        if not isinstance(extra,list):
             raise ValueError('Additional sources must be explicit public external page URLs')
-        source_urls = sorted(set(source_urls+extra))
+        for entry in extra:
+            u = entry if isinstance(entry,str) else entry.get('url') if isinstance(entry,dict) else None
+            kind = 'reviewed_public_candidate' if isinstance(entry,str) else entry.get('discovery') if isinstance(entry,dict) else None
+            if public_url(u)!=u or not u or own_host(u) or kind not in DISCOVERY:
+                raise ValueError('Additional sources must be explicit public external page URLs')
+            provenance.setdefault(u, kind)
+    source_urls = sorted(provenance)
     if len(page_urls)>250 or len(source_urls)>500: raise ValueError('Crawl exceeds explicit index limits')
     path = private/'seo-explorer-latest.json'; prior = path.read_bytes() if path.exists() else None
     previous = validate(json.loads(prior)) if prior else None
     # Reuse a matching successful daily snapshot; no minimum crawl volume.
-    frontier = hashlib.sha256(json.dumps([PRODUCER_VERSION,page_urls,source_urls],sort_keys=True).encode()).hexdigest()
+    frontier = hashlib.sha256(json.dumps([PRODUCER_VERSION,page_urls,provenance],sort_keys=True).encode()).hexdigest()
     state_path = private/'seo-explorer-state.json'
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
     if not force and previous and state.get('frontier')==frontier and state.get('day')==now.date().isoformat() and state.get('sha256')==hashlib.sha256(prior).hexdigest():
@@ -378,8 +419,9 @@ def refresh(private, distribution_path=None, force=False, now=None, sources_path
     fd = os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     try:
         os.close(fd)
-        clean = crawl(page_urls, source_urls, previous, now)
-        if (path.read_bytes() if path.exists() else None)!=prior or source.read_bytes()!=data_bytes or (extra_path.read_bytes() if extra_path.exists() else None)!=extra_bytes:
+        clean = crawl(page_urls, source_urls, previous, now, source_kinds=provenance)
+        clean = validate(clean)
+        if (path.read_bytes() if path.exists() else None)!=prior or source.read_bytes()!=data_bytes or (extra_path.read_bytes() if extra_path.exists() else None)!=extra_bytes or (ledger_path.read_bytes() if ledger_path else None)!=ledger_bytes:
             raise RuntimeError('SEO inputs changed concurrently; reread before retrying')
         if prior: api.private_write(private/'seo-explorer-history'/(hashlib.sha256(prior).hexdigest()+'.json'),json.loads(prior))
         api.private_write(path,clean)
@@ -391,11 +433,37 @@ def refresh(private, distribution_path=None, force=False, now=None, sources_path
 
 def attach_seo(report, private):
     path = private/'seo-explorer-latest.json'
-    if not path.exists(): return report
-    try: clean = validate(json.loads(path.read_text(encoding='utf-8')))
-    except (ValueError,KeyError,TypeError): return report
-    previous = report.get('seoExplorer')
-    if previous and stamp(previous.get('observedAt')) and datetime.fromisoformat(stamp(previous['observedAt'])) > datetime.fromisoformat(stamp(clean['observedAt'])): return report
+    candidates = [report.get('seoExplorer')]
+    if path.exists():
+        try: candidates.append(json.loads(path.read_text(encoding='utf-8')))
+        except (OSError,ValueError): pass
+    bases = []
+    for candidate in candidates:
+        if not isinstance(candidate,dict): continue
+        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation')}))
+        except (ValueError,KeyError,TypeError): continue
+    if not bases: return report
+    clean = max(bases,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
+    for key, file, validator in [('keywords','seo-keywords-latest.json',seo_keywords.validate),('reputation','seo-reputation-latest.json',seo_reputation.validate)]:
+        item = Path(private)/file
+        choices = [c.get(key) for c in candidates if isinstance(c,dict)]
+        if item.exists():
+            try: choices.append(json.loads(item.read_text(encoding='utf-8')))
+            except (OSError,ValueError): pass
+        valid = []
+        for choice in choices:
+            try: valid.append(validator(choice))
+            except (ValueError,KeyError,TypeError,AttributeError): continue
+        if not valid: continue
+        if key=='keywords':
+            clean[key]=max(valid,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
+        else:
+            # The three UI reports may be read on different days. Preserve the
+            # newest successful observation of each, independently of crawl age.
+            merged={'schemaVersion':1,'domain':DOMAIN}
+            for section in ('manualActions','securityIssues','links'):
+                merged[section]=max(valid,key=lambda s:datetime.fromisoformat(stamp(s[section]['observedAt'])))[section]
+            clean[key]=validator(merged)
     return {**report,'seoExplorer':clean}
 
 
@@ -404,8 +472,17 @@ if __name__ == '__main__':
     parser.add_argument('--private',type=Path,default=api.PRIVATE)
     parser.add_argument('--force',action='store_true')
     parser.add_argument('--sources',type=Path,help='Private JSON array of additional public source page URLs, e.g. reviewed Search Console link exports')
+    parser.add_argument('--ledger',type=Path,help='Private campaign ledger: allowlisted published listing URLs only')
+    parser.add_argument('--keywords',action='store_true',help='Refresh two query-only final Search Console windows using the existing readonly authorization')
+    parser.add_argument('--reputation-input',type=Path,help='Record dated observed Search Console UI evidence; never a synthetic authority score')
+    parser.add_argument('--expected-reputation-sha256',help='Exact prior private reputation hash, or missing')
     args=parser.parse_args();api.PRIVATE=args.private.resolve()
-    try: print(json.dumps(refresh(api.PRIVATE,force=args.force,sources_path=args.sources)))
+    try:
+        if args.reputation_input:
+            if not args.expected_reputation_sha256: raise ValueError('Expected reputation hash is required')
+            print(json.dumps(seo_reputation.record(api.PRIVATE,json.loads(args.reputation_input.read_text(encoding='utf-8')),args.expected_reputation_sha256)))
+        elif args.keywords: print(json.dumps(seo_keywords.refresh(api.PRIVATE)))
+        else: print(json.dumps(refresh(api.PRIVATE,force=args.force,sources_path=args.sources,ledger_path=args.ledger)))
     except (OSError,ValueError,RuntimeError,KeyError,TypeError):
         print('SEO crawl failed. Preserve the last dated snapshot; do not infer lost backlinks or zero trust.')
         raise SystemExit(1)

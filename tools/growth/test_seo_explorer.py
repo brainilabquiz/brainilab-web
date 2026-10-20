@@ -105,7 +105,7 @@ class SEOTest(unittest.TestCase):
             with patch.object(seo,'crawl',return_value=snapshot) as collect:
                 self.assertFalse(seo.refresh(private,now=AT)['reused']);self.assertTrue(seo.refresh(private,now=AT)['reused']);self.assertEqual(collect.call_count,1)
             original=(private/'seo-explorer-latest.json').read_bytes()
-            def concurrent(*args):distribution.write_text(distribution.read_text()+' ');return snapshot
+            def concurrent(*args,**kwargs):distribution.write_text(distribution.read_text()+' ');return snapshot
             with patch.object(seo,'crawl',side_effect=concurrent):
                 with self.assertRaises(RuntimeError):seo.refresh(private,now=AT,force=True)
             self.assertEqual((private/'seo-explorer-latest.json').read_bytes(),original)
@@ -117,5 +117,36 @@ class SEOTest(unittest.TestCase):
             self.assertEqual(enriched['opportunities'],[{'state':'published','baseline':'keep'}])
             (private/'seo-explorer-latest.json').write_text('{broken')
             self.assertEqual(seo.attach_seo(enriched,private),enriched)
+
+    def test_only_explicit_published_ledger_urls_expand_the_frontier(self):
+        ledger={'forms':[
+            {'publicationVerified':True,'publicUrl':SOURCE,'body':'https://private.example/secret/'},
+            {'publicationVerified':False,'publicUrl':'https://pending.example/'},
+            {'placementVerified':True,'listingUrl':'https://mail.google.com/mail/u/0/'},
+            {'placementVerified':True,'listingUrl':SOURCE+'?token=private'},
+            {'publicationVerified':True,'publicUrl':SOURCE},
+        ],'emails':[{'publicUrl':'https://mail-body.example/'}]}
+        self.assertEqual(seo.ledger_sources(ledger),[SOURCE])
+
+    def test_numeric_public_pagination_is_preserved_without_private_queries(self):
+        source='https://directory.example/discover?page=8'
+        self.assertEqual(seo.public_url(source),source)
+        self.assertEqual(seo.public_url(source+'&token=secret'),'https://directory.example/discover')
+        class Reply:
+            status=200
+            headers=type('Headers',(),{'get_content_type':lambda self:'text/html','get':lambda self,k,d:d})()
+            def getheader(self,k,d=None):return d
+            def read(self,n):return b'<html></html>'
+        with patch('seo_explorer.public_addresses',return_value=(source,['8.8.8.8'])),patch('seo_explorer.PinnedHTTPS') as connection:
+            connection.return_value.getresponse.return_value=Reply()
+            self.assertEqual(seo.fetch(source)['url'],source)
+            self.assertEqual(connection.return_value.request.call_args.args[1],'/discover?page=8')
+
+    def test_redirected_sources_keep_their_discovery_origin(self):
+        alias='https://directory.example/old/'
+        def redirects(u):return fake(SOURCE) if u==alias else fake(u)
+        result=seo.crawl([URL],[alias],now=AT,fetcher=redirects,source_kinds={alias:'owner_submitted_listing'})
+        self.assertEqual(result['sources'][0]['url'],SOURCE)
+        self.assertEqual(result['sources'][0]['discovery'],'owner_submitted_listing')
 
 if __name__=='__main__':unittest.main()
