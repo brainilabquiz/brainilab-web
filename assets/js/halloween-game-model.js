@@ -96,19 +96,34 @@
     const match = typeof hash === 'string' && /^#challenge=(0|[1-9]\d?|100)$/.exec(hash);
     return match ? Number(match[1]) : null;
   }
-  function share(gameId, result) {
+  function challengeResult(score, opponent) {
+    invariant([score, opponent].every(value => Number.isInteger(value) && value >= 0 && value <= 100), 'Invalid challenge score.');
+    const delta = score - opponent, gap = Math.abs(delta);
+    return { outcome: delta > 0 ? 'win' : delta === 0 ? 'tie' : 'loss',
+      title: delta > 0 ? 'You beat your friend!' : delta === 0 ? 'It’s a tie!' : 'Your friend wins this round.',
+      detail: delta > 0 ? `${gap} ${gap === 1 ? 'point' : 'points'} ahead.` : delta === 0 ? `${score}/100 each. Nicely matched.` : `${gap} ${gap === 1 ? 'point' : 'points'} behind. Fancy a rematch?` };
+  }
+  function share(gameId, result, opponent = null) {
     invariant(result && Number.isInteger(result.score) && result.score >= 0 && result.score <= 100, 'Invalid result.');
     const title = game(gameId).title;
     const url = `https://brainilabgames.com/halloween/${gameId}/#challenge=${result.score}`;
     const emoji = gameId === 'trick-or-think' ? '🎃' : '🦇';
     const hook = gameId === 'trick-or-think' ? 'Ten Halloween questions' : 'Four hidden groups';
     const challenge = result.score === 100 ? 'Can you match me?' : 'Think you can beat me?';
-    const text = result.score === 0
+    let text = result.score === 0
       ? `Halloween won this round! I got 0/100 in ${title} ${emoji} Think you can do better? Your turn!`
       : `I got ${result.score}/100 in ${title} ${emoji} ${challenge} ${hook} — your turn!`;
+    if (opponent !== null) {
+      const duel = challengeResult(result.score, opponent);
+      text = duel.outcome === 'win'
+        ? `I got ${result.score}/100 in ${title} ${emoji} — I beat your ${opponent}/100! ${result.score === 100 ? 'Can you match me?' : 'Your move!'}`
+        : duel.outcome === 'tie'
+          ? `We both got ${result.score}/100 in ${title} ${emoji} It’s a tie! Fancy another round?`
+          : `You got me this time! I got ${result.score}/100 in ${title} ${emoji} to your ${opponent}/100. Fancy a rematch?`;
+    }
     return { title: `${title} · BrainiLab`, text, url };
   }
   freeze(CATALOG);
   return Object.freeze({ catalog: CATALOG, game, shuffle, initialQuiz, answerQuiz, quizFromSubmission,
-    initialConnections, submitConnections, connectionsFromSubmission, summary, publicPack, acceptsPack, challengeScore, share });
+    initialConnections, submitConnections, connectionsFromSubmission, summary, publicPack, acceptsPack, challengeScore, challengeResult, share });
 });

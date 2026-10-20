@@ -46,11 +46,11 @@ for(const game of ['trick-or-think','spooky-connections']){
  const ordinary=await setup(game,{hash:''});assert.match(ordinary.root.querySelector('[data-hg-start]').textContent,/Let’s play/);assert.doesNotMatch(ordinary.root.textContent,/A challenge from your friend/);cases++;ordinary.close();
  const closed=await setup(game,{allowed:false});assert.equal(closed.root.querySelector('[data-hg-start]'),null);assert.equal(closed.calls.starts,0);cases++;closed.close();
  const old=await setup(game,{finished:true,hash:'#challenge=100'});assert.equal(old.calls.starts,0);assert.equal(old.w.localStorage.getItem(old.key),old.before,'Opening keeps an already saved result untouched');
- assert.match(old.root.querySelector('[data-hg-challenge-outcome]').textContent,/friend’s score: 100\/100/);
+ assert.equal(old.root.querySelector('[data-hg-heading]').textContent,'Your friend wins this round.');assert.equal(old.root.querySelector('[data-hg-friend-score]').textContent,'100');
  const replay=old.root.querySelector('[data-hg-replay]');assert.match(replay.textContent,/Play this challenge again/);assert.equal(replay.closest('details'),null);
  replay.click();await tick();assert.equal(old.calls.starts,1);assert.ok(old.root.querySelector(game==='trick-or-think'?'[data-hg-answer]':'[data-hg-word]'));assert.match(old.root.textContent,/Practice round/);assert.equal(old.calls.saves.length,0);cases++;old.close();
- const matched=await setup(game,{finished:true,hash:'#challenge='+(game==='trick-or-think'?70:90)});assert.match(matched.root.querySelector('[data-hg-challenge-outcome]').textContent,/You matched/);cases++;matched.close();
- const won=await setup(game,{finished:true,hash:'#challenge=0'});assert.match(won.root.querySelector('[data-hg-challenge-outcome]').textContent,/You beat/);cases++;won.close();
+ const matched=await setup(game,{finished:true,hash:'#challenge='+(game==='trick-or-think'?70:90)});assert.equal(matched.root.querySelector('[data-hg-heading]').textContent,'It’s a tie!');cases++;matched.close();
+ const won=await setup(game,{finished:true,hash:'#challenge=0'});assert.equal(won.root.querySelector('[data-hg-heading]').textContent,'You beat your friend!');cases++;won.close();
  const rendered=new JSDOM(renderHalloweenPage(template,privatePreviewState(),game)).window.document;
  assert.equal(rendered.querySelectorAll('h1').length,1);assert.equal(rendered.querySelectorAll('template[data-hg-intro-art]').length,1);
  assert.equal(new URL(rendered.querySelector('link[rel="canonical"]').href).hash,'');assert.match(rendered.querySelector('meta[name="description"]').content,/Ten Halloween questions|Sixteen words/);assert.equal(rendered.querySelector('meta[property="og:description"]').content,rendered.querySelector('meta[name="description"]').content);cases++;

@@ -26,7 +26,7 @@
     if (!model || root.dataset.halloweenMounted) return;
     root.dataset.halloweenMounted = 'true';
     const gameId = root.dataset.halloweenGame;
-    const challenge = model.challengeScore(location.hash);
+    let challenge = model.challengeScore(location.hash), challengeRefreshPending = false;
     const introArt = root.querySelector('template[data-hg-intro-art]')?.innerHTML || '';
     let arrivedAtSavedResult = false;
     let pack;
@@ -187,7 +187,8 @@
     function bindSharing(graded) {
       const trigger = root.querySelector('[data-hg-share]'), statusNode = root.querySelector('[data-hg-share-status]');
       const options = trigger.closest('.halloween-result-options'), panel = document.createElement('div');
-      const base = model.share(gameId, graded);
+      const base = model.share(gameId, graded, challenge);
+      const triggerLabel = challenge === null ? 'Challenge a friend' : 'Send a rematch';
       let busy = false, prepared = false;
       panel.id = 'halloween-invitation-' + gameId; panel.className = 'halloween-invitation'; panel.hidden = true;
       trigger.closest('.halloween-game-controls').after(panel);
@@ -243,8 +244,8 @@
       }
       trigger.addEventListener('click', () => {
         if (!ensureOwner() || !saved) return;
-        prepare(); panel.hidden = !panel.hidden; options.classList.toggle('is-sharing', !panel.hidden);
-        trigger.setAttribute('aria-expanded', String(!panel.hidden)); trigger.textContent = panel.hidden ? 'Challenge a friend' : 'Close invitation';
+        prepare(); panel.hidden = !panel.hidden; options?.classList.toggle('is-sharing', !panel.hidden);
+        trigger.setAttribute('aria-expanded', String(!panel.hidden)); trigger.textContent = panel.hidden ? triggerLabel : 'Close invitation';
         if (!panel.hidden) {
           if (access.preview) statusNode.textContent = 'Preview only. Sending is available on the live site.';
           panel.querySelector('[data-hg-invite-message]').focus();
@@ -253,17 +254,18 @@
     }
     function result() {
       const graded = model.summary(gameId, submission());
-      const title = graded.score === 100 ? 'A frightfully good result!' : graded.score >= 60 ? 'A few good surprises!' : 'A little wiser. Still a little spooky.';
+      const duel = challenge === null ? null : model.challengeResult(graded.score, challenge);
+      const title = duel ? duel.title : graded.score === 100 ? 'A frightfully good result!' : graded.score >= 60 ? 'A few good surprises!' : 'A little wiser. Still a little spooky.';
       const detail = gameId === 'trick-or-think' ? `${graded.correct} of 10 correct answers` : `${graded.correct} of 4 groups found · ${graded.mistakes} ${graded.mistakes === 1 ? 'mistake' : 'mistakes'}`;
-      shell(`<div class="halloween-game-result"><p class="halloween-eyebrow">${esc(pack.title)} · ${session?.practice ? 'practice complete' : 'complete'}</p><h2 data-hg-heading tabindex="-1">${title}</h2><p class="halloween-game-score"><strong>${graded.score}</strong><span>/100</span></p><p class="halloween-result-detail">${detail}</p><p class="halloween-game-status" data-hg-status role="status">${saved ? (session?.practice ? 'Practice complete. Your saved Halloween progress is unchanged.' : access.preview ? 'Preview complete. Your live collection is unchanged.' : 'Your Halloween progress is saved.') : 'Saving your Halloween progress…'}</p><button type="button" class="halloween-quiet-button" data-hg-save hidden>Try saving again</button><div data-hg-rewards class="halloween-result-rewards" role="status" aria-live="polite" hidden></div><div class="halloween-result-actions"><a class="halloween-quiet-link" href="/halloween/">Back to Halloween <span aria-hidden="true">→</span></a><details class="halloween-result-options"><summary>Play again or share</summary><div class="halloween-game-controls"><button type="button" class="halloween-quiet-button" data-hg-share>Challenge a friend</button><button type="button" class="halloween-quiet-button" data-hg-replay${saved ? '' : ' disabled'}>Play again</button></div><p class="halloween-game-status" data-hg-share-status role="status"></p></details></div>${gameId === 'spooky-connections' ? `<details class="halloween-result-answers"><summary>See the four connections</summary>${pack.groups.map(group => `<div class="halloween-solved-group"><strong>${esc(group.label)}</strong><span>${esc(group.wordIds.map(id => pack.words.find(word => word.id === id).label).join(' · '))}</span><p>${esc(group.explanation)}</p></div>`).join('')}</details>` : ''}</div>`);
-      if (challenge !== null) {
-        const note = document.createElement('p'); note.className = 'halloween-challenge-outcome'; note.dataset.hgChallengeOutcome = '';
-        note.textContent = graded.score > challenge ? `You beat your friend’s ${challenge}/100!` : graded.score === challenge ? `You matched your friend’s ${challenge}/100!` : `Your friend’s score: ${challenge}/100. Another go?`;
-        root.querySelector('.halloween-result-detail').after(note);
-        if (arrivedAtSavedResult && saved && !terminalFailure) {
-          const replay = root.querySelector('[data-hg-replay]'); replay.className = 'btn btn-primary halloween-button halloween-invited-replay'; replay.textContent = 'Play this challenge again';
-          root.querySelector('.halloween-result-actions').before(replay);
-        }
+      const myScore = `<p class="halloween-game-score"><strong>${graded.score}</strong><span>/100</span></p>`;
+      const scores = duel ? `<div class="halloween-duel-scoreboard" role="group" aria-label="Challenge scores"><div class="halloween-duel-player${duel.outcome === 'win' ? ' is-ahead' : ''}"><span>You</span>${myScore}</div><div class="halloween-duel-player${duel.outcome === 'loss' ? ' is-ahead' : ''}"><span>Your friend</span><p class="halloween-friend-score"><strong data-hg-friend-score>${challenge}</strong><span>/100</span></p></div></div><p class="halloween-challenge-outcome is-${duel.outcome}" data-hg-challenge-outcome>${duel.detail}</p>` : myScore;
+      const shareButton = `<button type="button" class="${duel ? 'btn btn-primary halloween-button' : 'halloween-quiet-button'}" data-hg-share>${duel ? 'Send a rematch' : 'Challenge a friend'}</button>`;
+      const shareStatus = '<p class="halloween-game-status" data-hg-share-status role="status"></p>';
+      const rematch = duel ? `<div class="halloween-rematch-host"><div class="halloween-game-controls halloween-rematch-actions">${shareButton}</div>${shareStatus}</div>` : '';
+      shell(`<div class="halloween-game-result"><p class="halloween-eyebrow">${esc(pack.title)} · ${session?.practice ? 'practice complete' : 'complete'}</p><h2 data-hg-heading tabindex="-1">${title}</h2>${scores}<p class="halloween-result-detail">${detail}</p><p class="halloween-game-status" data-hg-status role="status">${saved ? (session?.practice ? 'Practice complete. Your saved Halloween progress is unchanged.' : access.preview ? 'Preview complete. Your live collection is unchanged.' : 'Your Halloween progress is saved.') : 'Saving your Halloween progress…'}</p><button type="button" class="halloween-quiet-button" data-hg-save hidden>Try saving again</button>${rematch}<div data-hg-rewards class="halloween-result-rewards" role="status" aria-live="polite" hidden></div><div class="halloween-result-actions"><a class="halloween-quiet-link" href="/halloween/">Back to Halloween <span aria-hidden="true">→</span></a><details class="halloween-result-options"><summary>${duel ? 'More options' : 'Play again or share'}</summary><div class="halloween-game-controls">${duel ? '' : shareButton}<button type="button" class="halloween-quiet-button" data-hg-replay${saved ? '' : ' disabled'}>Play again</button></div>${duel ? '' : shareStatus}</details></div>${gameId === 'spooky-connections' ? `<details class="halloween-result-answers"><summary>See the four connections</summary>${pack.groups.map(group => `<div class="halloween-solved-group"><strong>${esc(group.label)}</strong><span>${esc(group.wordIds.map(id => pack.words.find(word => word.id === id).label).join(' · '))}</span><p>${esc(group.explanation)}</p></div>`).join('')}</details>` : ''}</div>`);
+      if (duel && arrivedAtSavedResult && saved && !terminalFailure) {
+        const replay = root.querySelector('[data-hg-replay]'); replay.className = 'halloween-quiet-button'; replay.textContent = 'Play this challenge again';
+        root.querySelector('.halloween-rematch-actions').append(replay);
       }
       showTreats();
       root.querySelector('[data-hg-save]').addEventListener('click', save);
@@ -324,7 +326,10 @@
           status(storageAvailable ? 'Your result is not saved yet. Your answers are kept on this browser.' : 'Your result is not saved yet. Keep this page open and try again.', true);
           if (retry) { retry.hidden = false; retry.disabled = false; }
         }
-      } finally { saving = false; for (const action of root.querySelectorAll('[data-hg-replay],[data-hg-share]')) action.disabled = !saved; }
+      } finally {
+        saving = false; for (const action of root.querySelectorAll('[data-hg-replay],[data-hg-share]')) action.disabled = !saved;
+        if (challengeRefreshPending && ensureOwner()) { challengeRefreshPending = false; arrivedAtSavedResult = challenge !== null && saved; result(); }
+      }
     }
     function finish() {
       screen = 'result'; answered = false; if (session?.practice) saved = true; persist(); result();
@@ -335,6 +340,16 @@
     restore();
     arrivedAtSavedResult = challenge !== null && state.completed && screen === 'result' && saved;
     if (state.completed && screen === 'result') render(); else intro(session ? 'Your unfinished game is ready to continue.' : '');
+    window.addEventListener('hashchange', () => {
+      const next = model.challengeScore(location.hash);
+      if (next === challenge || next === null && location.hash !== '' || !ensureOwner()) return;
+      challenge = next;
+      if (screen === 'intro' && !root.querySelector('[data-hg-start]')?.disabled) intro(session ? 'Your unfinished game is ready to continue.' : '');
+      else if (screen === 'result') {
+        if (saving) challengeRefreshPending = true;
+        else { arrivedAtSavedResult = challenge !== null && saved; result(); focus('[data-hg-heading]'); }
+      }
+    });
     window.addEventListener('pagehide', () => { disposed = true; }, { once: true });
     window.addEventListener('pageshow', event => { if (event.persisted && identity() === ownerKey) disposed = false; });
     window.addEventListener('brainilab:auth-changed', ensureOwner);
