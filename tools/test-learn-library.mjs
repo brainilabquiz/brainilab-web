@@ -44,8 +44,13 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  }
 
  select.value='Sports';select.dispatchEvent(new w.Event('change'));
- assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);
+ const sportsCount=articles.filter(a=>a.topic==='Sports').length;
+ assert.equal(visible().length,Math.min(12,sportsCount));
  assert.ok(visible().every(e=>e.dataset.topic==='Sports'));
+ const sportsMore=d.querySelector('[data-show-more]');
+ assert.equal(sportsMore.parentElement.hidden,sportsCount<=12);
+ while(!sportsMore.parentElement.hidden){sportsMore.click();assert.ok(visible().every(e=>e.dataset.topic==='Sports'));}
+ assert.equal(visible().length,sportsCount,'The next page keeps the selected category and reveals its remaining articles');
  assert.equal(d.querySelector('.topic-nav'),null);
  assert.equal(select.closest('label').hidden,false);
  input.value='zzzzzz';input.dispatchEvent(new w.Event('input'));
@@ -60,7 +65,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  assert.ok(reached.size>topics.size,'Older articles outside the latest-topic view are eligible');
  d.querySelector('.learn-search-clear').click();
  assert.equal(select.value,'Sports');assert.equal(d.activeElement,input);
- assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);assert.ok(d.querySelector('.learn-search-clear').hidden);
+ assert.equal(visible().length,Math.min(12,sportsCount));assert.ok(d.querySelector('.learn-search-clear').hidden);
  select.value='__latest';select.dispatchEvent(new w.Event('change'));
  input.value='bubble wrap';input.dispatchEvent(new w.Event('input'));
  assert.equal(visible().length,1,'Latest search also finds older articles');
@@ -75,7 +80,7 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  select.value='__latest';select.dispatchEvent(new w.Event('change'));
  const browse=d.querySelector('[data-browse-topic="Sports"]');browse.click();
  assert.equal(select.value,'Sports');assert.equal(d.activeElement,select);
- assert.equal(visible().length,articles.filter(a=>a.topic==='Sports').length);
+ assert.equal(visible().length,Math.min(12,sportsCount));
  assert.ok([...d.querySelectorAll('[data-browse-topic]')].every(b=>b.hidden));
  dom.window.close();
 }

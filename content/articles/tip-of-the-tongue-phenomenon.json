@@ -1,0 +1,65 @@
+{
+  "slug": "tip-of-the-tongue-phenomenon",
+  "title": "Tip-of-the-tongue phenomenon: where did that word go?",
+  "description": "Why does a familiar word feel so close? Discover the tip-of-the-tongue phenomenon, partial clues and why confidence can get ahead of recall.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 189,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/tip-of-the-tongue-phenomenon.webp",
+    "small": "/assets/images/learn/tip-of-the-tongue-phenomenon-small.webp",
+    "thumbnail": "/assets/images/learn/tip-of-the-tongue-phenomenon-thumb.webp",
+    "alt": "A thoughtful woman in a navy jumper rests her chin on one hand beside an open book and yellow cup in a sunlit café",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a fictional scene, not a research participant.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Fancy seeing which answers come to mind? Try General Knowledge.",
+  "related": [
+    "confidence-is-not-a-memory-test",
+    "what-is-the-doorway-effect"
+  ],
+  "sources": [
+    {
+      "url": "https://garfield.library.upenn.edu/classics1983/A1983QE69200001.pdf",
+      "name": "Roger Brown — Retrospective on Brown and McNeill’s 1966 experiment (Citation Classic, 1983; PDF)"
+    },
+    {
+      "url": "https://psycnet.apa.org/record/2022-95631-001",
+      "name": "Huebert, McNeely-White and Cleary (2023) — Tip-of-the-tongue states and partial recollective experience; APA abstract"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-word-wont-arrive",
+      "title": "You can picture it. You cannot name it.",
+      "html": "<p><strong>The tip-of-the-tongue phenomenon is the feeling that you know a word but cannot quite bring it to mind.</strong> It feels frustratingly close.</p><p>You can picture a brass instrument and mime its sliding tube. You are convinced you know its name. “That musical thing” is doing a lot of work until <em>trombone</em> finally arrives.</p>"
+    },
+    {
+      "id": "pieces-of-a-word",
+      "title": "Some pieces can turn up first",
+      "html": "<p>In their 1966 experiment, Roger Brown and David McNeill read definitions of uncommon words to people. During some tip-of-the-tongue moments, participants could recall details such as letters or the number of syllables.</p><p><a href=\"https://garfield.library.upenn.edu/classics1983/A1983QE69200001.pdf\">Brown later described the experiment himself</a>. The whole word could be missing while parts of its shape were available. A clue, however, is not a guarantee.</p>"
+    },
+    {
+      "id": "a-confident-clue",
+      "title": "A confident clue can be wrong",
+      "html": "<p>A <a href=\"https://psycnet.apa.org/record/2022-95631-001\">2023 study by Huebert and colleagues</a> adds a twist. When participants could freely report clues, they offered more partial information during tip-of-the-tongue states, without being more accurate among the responses they supplied.</p><p>In a first-letter guessing task, people could also feel sure they knew the letter while guessing incorrectly. That almost-knowing feeling deserves a little caution.</p>"
+    },
+    {
+      "id": "the-almost-answer",
+      "title": "The almost-answer is interesting too",
+      "html": "<p>A quiz answer can feel close long before you can say it. That gap between confidence and recall is part of what makes this ordinary mental pause so intriguing.</p><p>For another surprise, try <a href=\"/learn/confidence-is-not-a-memory-test/\">picturing a familiar logo from memory</a>, or explore <a href=\"/learn/what-is-the-doorway-effect/\">why a doorway can interrupt a thought</a>. Even everyday remembering has its plot twists.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-20T19:57:01Z",
+  "updatedAt": "2026-10-20T19:57:01Z",
+  "minutes": 2
+}
