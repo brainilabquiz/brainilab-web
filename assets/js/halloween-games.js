@@ -328,7 +328,11 @@
         }
       } finally {
         saving = false; for (const action of root.querySelectorAll('[data-hg-replay],[data-hg-share]')) action.disabled = !saved;
-        if (challengeRefreshPending && ensureOwner()) { challengeRefreshPending = false; arrivedAtSavedResult = challenge !== null && saved; result(); }
+        if (challengeRefreshPending && ensureOwner()) {
+          const retryMessage = !saved && !terminalFailure ? root.querySelector('[data-hg-status]')?.textContent : null;
+          challengeRefreshPending = false; arrivedAtSavedResult = challenge !== null && saved; result();
+          if (retryMessage) { status(retryMessage, true); const retry = root.querySelector('[data-hg-save]'); retry.hidden = false; retry.disabled = false; }
+        }
       }
     }
     function finish() {
