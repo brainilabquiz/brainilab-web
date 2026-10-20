@@ -1,0 +1,65 @@
+{
+  "slug": "how-does-a-compass-work",
+  "title": "How does a compass work? A tiny magnet with a big job",
+  "description": "A compass needle is a tiny magnet that lines up with Earth’s magnetic field. Discover why magnetic north differs from true north and what can distract it.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 188,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-does-a-compass-work.webp",
+    "small": "/assets/images/learn/how-does-a-compass-work-small.webp",
+    "thumbnail": "/assets/images/learn/how-does-a-compass-work-thumb.webp",
+    "alt": "A silver pocket compass with a red and white needle on a folded topographic map beside a navy cloth",
+    "credit": "AI-generated realistic illustration created for BrainiLab.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Fancy another small discovery? Try General Knowledge.",
+  "related": [
+    "how-do-barcodes-work",
+    "how-everyday-things-work"
+  ],
+  "sources": [
+    {
+      "url": "https://www.usgs.gov/media/audio/how-does-compass-work",
+      "name": "US Geological Survey — How does a compass work? CoreFacts transcript"
+    },
+    {
+      "url": "https://www.usgs.gov/faqs/what-declination",
+      "name": "US Geological Survey — What is declination?"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-needle",
+      "title": "The needle is a magnet",
+      "html": "<p><strong>A magnetic compass works because its needle is a small magnet, free to turn and align with Earth’s magnetic field.</strong> It does not need to know where you are going.</p><p>Open a pocket compass and the needle settles while the case stays in your hand. A very small object is responding to a very large field. Quite a job for something that fits in a coat pocket.</p>"
+    },
+    {
+      "id": "free-to-turn",
+      "title": "Why does it turn back?",
+      "html": "<p>The needle can pivot. Turn the case, and the needle can turn relative to it, tending to line up with the local magnetic field again.</p><p>That is the mechanism described in <a href=\"https://www.usgs.gov/media/audio/how-does-compass-work\">the US Geological Survey’s compass explanation</a>. The compass is responding to a field, rather than recognising a destination. It has no idea which way your hotel is.</p>"
+    },
+    {
+      "id": "two-norths",
+      "title": "There is more than one north",
+      "html": "<p>True north means the direction of the geographic North Pole. A compass usually points in a slightly different direction.</p><p>The angle between those directions is <a href=\"https://www.usgs.gov/faqs/what-declination\">magnetic declination</a>. It varies with location and changes over time. So “the needle always points straight at the North Pole” is a tempting shortcut that misses an important detail.</p>"
+    },
+    {
+      "id": "a-distraction",
+      "title": "Even a needle can get distracted",
+      "html": "<p>A nearby magnet or electrical system can affect the direction a compass shows. It responds to the field around it, including local interference.</p><p>Enjoy everyday objects with hidden tricks? Explore <a href=\"/learn/how-do-barcodes-work/\">what a barcode actually tells a scanner</a>, or browse <a href=\"/learn/how-everyday-things-work/\">more clever things hiding in plain sight</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-20T19:38:25Z",
+  "updatedAt": "2026-10-20T19:38:25Z",
+  "minutes": 2
+}
