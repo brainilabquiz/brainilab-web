@@ -1,7 +1,7 @@
 /* BrainiLab Survival — V41.8.0 */
 window.BrainiSurvival=(function(){
   const MAX_QUESTIONS=30, START_LIVES=3;
-  function client(){return window.BrainiBackendAuth?.getClient?.()||null}
+  function client(){const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb}
   function configured(){return !!window.BrainiBackendAuth?.isConfigured?.()}
   function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
   function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
@@ -35,12 +35,13 @@ window.BrainiSurvival=(function(){
   function localPool(){
     const topics=["generalknowledge","worldflags","worldcapitals","science","history","sports"], out=[];
     for(const difficulty of ["easy","medium","hard"]){
-      let bucket=[]; for(const topic of topics){for(const q of (BrainiQuizPacks?.get?.(topic,difficulty,"1")||[])){bucket.push({...q,id:`local-${hash(topic+"|"+difficulty+"|"+q.q)}`,difficulty,topic,cloud:false})}}
+      let bucket=[]; for(const topic of topics){for(const q of (BrainiQuizPacks?.get?.(topic,difficulty,"1")||[])){bucket.push({...q,id:`local-${hash(topic+"|"+difficulty+"|"+q.q+"|"+JSON.stringify(q.a))}`,difficulty,topic,cloud:false})}}
       out.push(...shuffled(bucket).slice(0,10));
     }
     return out;
   }
-  async function load(){
+  async function load(){return window.BrainiReplay?BrainiReplay.run("survival",loadBase):loadBase();}
+  async function loadBase(){
     if(configured()) try{const {data,error}=await client().rpc("get_brainilab_survival_game",{p_exclude_question_ids:localExclude()});if(error)throw error;const q=mapCloud(data);if(q.length>=15)return {source:"supabase",questions:q}}catch(e){console.warn("Survival cloud fallback:",e.message||e)}
     return {source:"local",questions:localPool()};
   }

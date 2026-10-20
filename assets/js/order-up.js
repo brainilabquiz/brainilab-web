@@ -12,7 +12,7 @@
 window.BrainiOrderUp=(function(){
   const TRY_FIRST_MODE=new URLSearchParams(location.search).get("try")==="1";
   function stateKey(date){
-    return `brainilab-orderup-v35-${date}`;
+    return `brainilab-orderup-v35-${date}${window.BrainiReplay?.storageSuffix()||""}`;
   }
 
   function read(key){

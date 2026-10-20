@@ -8,6 +8,7 @@ const tick=()=>new Promise(r=>setTimeout(r,0));
 function fixture(url='https://brainilabgames.com/games/sequence/',html='<main><div class="labgame-shell"></div><div id="result"></div></main>'){
  const dom=new JSDOM(html,{url,runScripts:'outside-only'}),w=dom.window;w.HTMLElement.prototype.scrollIntoView=()=>{};
  let user='one';w.BrainiData={authState:()=>({status:'authenticated',user:{id:user}}),dateForDailyNumber:n=>n===53?day:previous};
+ w.BrainiReplay={packId:()=> '11111111-1111-4111-8111-111111111111',publish:async()=> '11111111-1111-4111-8111-111111111111',storageSuffix:()=>'',run:(_g,base)=>base()};
  for(const n of ['game-challenge-model','game-challenge','post-game'])w.eval(source(n));
  return {dom,w,M:w.BrainiGameChallengeModel,root:w.document.querySelector('#result'),user:v=>{user=v;w.dispatchEvent(new w.Event('brainilab:authchange'));}};
 }
@@ -37,10 +38,10 @@ for(const score of [0,250,1000,1500,2500]){
  const invite=M.invitation(own,target);assert.equal(M.parse(new URL(invite.url).hash).s,score,'reply carries own score');
 }
 for(const bad of ['#friend=x','#friend='+btoa('{"v":1}'),'#friend='+btoa('<script>'),link.split('#')[1]+'junk'])assert.equal(M.parse(bad),null);
-for(const change of [{s:-1},{s:1.5},{s:2501},{g:'maphunt'},{n:3},{d:'2026-02-31'},{d:'9999-99-99'},{l:'<img>'},{k:'<svg>'},{v:2}])assert.equal(M.parse('#friend='+btoa(JSON.stringify({...target,...change}))),null);
+for(const change of [{s:-1},{s:1.5},{s:2501},{g:'maphunt'},{n:3},{d:'2026-02-31'},{d:'9999-99-99'},{l:'<img>'},{k:'<svg>'},{v:3}])assert.equal(M.parse('#friend='+btoa(JSON.stringify({...target,...change}))),null);
 assert.equal(M.describe('sequence',{score:100,total:9}),null);
 assert.equal(M.compare({...target,d:previous},target),null);
-assert.equal(M.compare({...target,k:'11111111'},target),null);
+assert.equal(M.compare({...target,p:'22222222-2222-4222-8222-222222222222'},target),null);
 const order={score:1250,total:20,challengeDate:day,contentSource:'supabase',orderUpRounds:[{round_id:'round-a'},{round_id:'round-b'}]};
 assert.equal(M.describe('orderup',order).k,M.describe('orderup',{...order,answerDetails:[]}).k,'canonical empty quiz details do not mask the Order Up set');
 assert.notEqual(M.describe('orderup',order).k,M.describe('orderup',{...order,orderUpRounds:[{round_id:'other'}]}).k,'changed dated sets never declare a winner');

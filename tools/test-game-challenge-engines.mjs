@@ -7,6 +7,7 @@ function setup(path,query='?try=1'){
  const w=new JSDOM(readFileSync(path+'index.html','utf8'),{url:'https://brainilabgames.com/'+path+query,runScripts:'outside-only'}).window;
  w.HTMLElement.prototype.scrollIntoView=()=>{};w.BrainiBackendAuth={isConfigured:()=>false};let saves=0;
  w.BrainiData={authState:()=>({status:'authenticated'}),daily:()=>({number:53}),dailyNumberForDate:()=>53,dateForDailyNumber:()=>new Date().toISOString().slice(0,10),pastDailyDate:()=>null,recentResults:()=>[],api:{submitGameResult:async(id,p)=>{saves++;return {...p,gameId:id,practice:true,tryFirst:true};}}};
+ w.BrainiReplay={packId:()=> '11111111-1111-4111-8111-111111111111',publish:async()=> '11111111-1111-4111-8111-111111111111',storageSuffix:()=>'',run:(_g,base)=>base()};
  for(const n of ['game-challenge-model','game-challenge','post-game'])load(w,n);
  return {w,saves:()=>saves};
 }
@@ -40,7 +41,7 @@ for(const [id,path]of [['worldflags','geography/world-flags-quiz/'],['worldcapit
 let daily=readFileSync('tools/test-daily-result-delivery.mjs','utf8');
 daily=daily.replace("from 'node:assert/strict'","from 'node:assert/strict'")
  .replace("for(const mode of ['verified','failed','empty','practice','archive','reload'])","for(const mode of ['practice'])")
- .replace("load('post-game');","load('game-challenge-model');load('game-challenge');load('post-game');")
+ .replace("load('post-game');","w.BrainiReplay={packId:()=> '11111111-1111-4111-8111-111111111111',publish:async()=> '11111111-1111-4111-8111-111111111111',storageSuffix:()=>'',run:(_g,base)=>base()};load('game-challenge-model');load('game-challenge');load('post-game');")
  .replace("assert.equal(saves,1);w.close();","assert.equal(saves,1);const share=q('.post-share');assert.ok(share,slug+' challenge button');assert.equal(share.disabled,false);share.click();assert.ok(q('.game-friend-composer textarea'));w.close();");
 await import('data:text/javascript;base64,'+Buffer.from(daily).toString('base64'));
 completed.push('orderup','topicrush','brainiword');
@@ -51,7 +52,7 @@ completed.push('orderup','topicrush','brainiword');
  for(let i=0;i<10;i++){w.document.querySelector('[data-skip]').click();await tick();w.document.querySelector('[data-next]').click();await tick();}assert.equal(t.saves(),1);check(w,'brainmix');w.close();
 }
 {
- const t=setup('reasoning/'),{w}=t;w.eval(readFileSync('assets/js/reasoning.bundle.js','utf8'));w.document.querySelector('[data-start]').click();
+ const t=setup('reasoning/'),{w}=t;w.eval(readFileSync('assets/js/reasoning.bundle.js','utf8'));await tick();w.document.querySelector('[data-start]').click();
  for(let i=0;i<12;i++){const input=w.document.querySelector('input[value="0"]');input.checked=true;input.dispatchEvent(new w.Event('change',{bubbles:true}));w.document.querySelector('[data-check]').click();w.document.querySelector('[data-next]').click();}check(w,'reasoning');assert.equal(t.saves(),0);w.close();
 }
 assert.equal(new Set(completed).size,18);console.log('PASS: all 18 active non-seasonal games complete through their real engines and offer an editable friend invitation; retired routes are not reactivated.');

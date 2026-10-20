@@ -1,7 +1,8 @@
-import {questions,scoreAnswers,challengeVersion} from './reasoning-questions.js';
+import {questions as originalQuestions,scoreAnswers,challengeVersion} from './reasoning-questions.js';
 const root=document.querySelector('[data-reasoning]');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const storageKey='brainilab-reasoning:'+challengeVersion;
+let questions=originalQuestions;
+const storageKey='brainilab-reasoning:'+challengeVersion+(window.BrainiReplay?.storageSuffix()||'');
 let answers=[],index=0,selected=null,checked=false;
 function readSaved(){try{const a=JSON.parse(sessionStorage.getItem(storageKey));if(Array.isArray(a)&&a.length<=questions.length&&a.every(n=>Number.isInteger(n)&&n>=0&&n<4))return a;}catch{}return [];}
 function save(){try{sessionStorage.setItem(storageKey,JSON.stringify(answers));}catch{}}
@@ -30,7 +31,7 @@ function question(){
  root.querySelector('[data-next]').onclick=()=>{if(!checked)return;index++;selected=null;checked=false;index===questions.length?result():question();focus();};
 }
 function result(){
- const score=scoreAnswers(answers);
+ const score=scoreAnswers(answers,questions);
  root.innerHTML=`<div class="reason-result"><p class="eyebrow">Challenge complete</p><h2 tabindex="-1">You worked through all twelve.</h2><div class="reason-score"><strong>${score.correct}</strong><span>/ ${score.total}<small>puzzles solved</small></span></div><p>${score.correct===12?'Every answer matched. Try explaining one of the trickier ones in your own words.':'Take another look at the explanations. A missed puzzle is a useful place to start.'}</p><div class="reason-breakdown">${Object.entries(score.byTopic).map(([topic,s])=>`<div><strong>${s.correct}<small> / ${s.total}</small></strong><span>${topic}</span></div>`).join('')}</div><p class="reason-note">This result describes these twelve puzzles only. It is not an IQ score or a measure of your overall ability.</p><a class="btn post-primary" data-post-action="guide" href="/learn/paths/patterns-and-reasoning/"><span data-reading-title>Explore patterns and reasoning →</span></a><button class="reason-text-button" data-review>Review my answers</button><button class="reason-text-button" data-replay>Try the same puzzles again</button><div data-friend-result></div><div data-account-invite></div><div data-review-list hidden>${questions.map((q,i)=>`<details><summary><span>${answers[i]===q.answer?'✓':'↺'}</span> ${i+1}. ${esc(q.prompt)}</summary><p>Your answer: <strong>${esc(q.options[answers[i]])}</strong></p><p>Correct answer: <strong>${esc(q.options[q.answer])}</strong></p><p>${esc(q.explanation)}</p><a href="/learn/${q.lesson}/">Explore this idea →</a></details>`).join('')}</div></div>`;
  window.BrainiGameChallenge?.mountCustom(root.querySelector('[data-friend-result]'),{gameId:'reasoning',result:{score:score.correct,total:score.total,challengeVersion}});
  window.BrainiPostGame?.returnToReading(root,{gameId:'reasoning'});
@@ -38,4 +39,7 @@ function result(){
  root.querySelector('[data-review]').onclick=()=>{const list=root.querySelector('[data-review-list]');list.hidden=!list.hidden;root.querySelector('[data-review]').setAttribute('aria-expanded',String(!list.hidden));};
  root.querySelector('[data-replay]').onclick=()=>{answers=[];index=0;selected=null;checked=false;save();question();focus();};
 }
-if(root)intro();
+if(root){
+ const begin=async()=>{const pack=window.BrainiReplay?await BrainiReplay.run('reasoning',()=>Promise.resolve({source:'local',questions:originalQuestions})):{questions:originalQuestions};questions=pack.questions;intro();};
+ void begin();
+}

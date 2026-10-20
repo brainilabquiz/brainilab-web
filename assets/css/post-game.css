@@ -99,6 +99,9 @@
 .game-friend-composer [data-challenge-status]{font-size:12px;line-height:1.5;color:#655d70;margin:10px 0 0}
 .game-friend-composer [data-challenge-status]:empty{display:none}
 .game-friend-composer :is(button,a,textarea):focus-visible{outline:3px solid #40ab34;outline-offset:3px}
+.game-friend-entry button,[data-challenge-status] button{min-height:44px;padding:8px 16px;border:1px solid #30286b;border-radius:10px;background:#fffdf8;color:#30286b;font:inherit;font-weight:700;cursor:pointer}
+.game-friend-entry button:focus-visible,[data-challenge-status] button:focus-visible{outline:3px solid #40ab34;outline-offset:3px}
+.game-friend-composer textarea:disabled{opacity:.65}
 @media(max-width:600px){.game-friend-entry{margin:12px;padding:12px}.game-friend-entry strong{font-size:17px}.game-friend-comparison,.game-friend-composer{padding:12px}.game-friend-send{flex-direction:column}.game-friend-send :is(button,a){flex:auto;width:100%}}
 @media(max-width:600px){
  .friend-game-active .labgame-shell{padding:20px 16px}

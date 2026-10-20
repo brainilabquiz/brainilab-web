@@ -28,7 +28,7 @@ window.BrainiGameChallengeModel=(()=>{
  function hash(value){let h=2166136261;for(const c of value){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');}
  function valid(c){
   const g=games[c?.g];
-  if(!g||c.v!==1||!integer(c.s,g.max)||!integer(c.n,60))return false;
+  if(!g||![1,2].includes(c.v)||!integer(c.s,g.max)||!integer(c.n,60))return false;
   if(c.d!==null&&!date(c.d))return false;
   if(g.daily&&!c.d)return false;
   if(g.quiz?!['easy','medium','hard'].includes(c.l):c.l!==null)return false;
@@ -36,7 +36,7 @@ window.BrainiGameChallengeModel=(()=>{
   if(n&&c.n!==n)return false;
   if(c.g==='topicrush'&&!(c.n>=1&&c.n<=60))return false;
   if(c.g==='connections'&&c.d&&c.s>3000)return false;
-  return c.k===null||typeof c.k==='string'&&/^[0-9a-f]{8}$/.test(c.k);
+  return (c.k===null||typeof c.k==='string'&&/^[0-9a-f]{8}$/.test(c.k))&&(c.v===1||c.p===null||typeof c.p==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(c.p));
  }
  function describe(gameId,result={},options={}){
   const g=games[gameId];if(!g)return null;
@@ -52,14 +52,14 @@ window.BrainiGameChallengeModel=(()=>{
   const ids=gameId==='mathrush'?[result.seed]:(rows||[]).map(r=>r.puzzleId||r.pairId||r.questionVersionId||r.questionId||r.round_id);
   const source=result.contentSource||result.dailyContentSource||'';
   const k=d?hash(JSON.stringify([source,ids.filter(Boolean),result.topicId||null,result.contentRef||null])):gameId==='reasoning'?hash(String(result.challengeVersion||'')):null;
-  const c={v:1,g:gameId,s,d,l,n,k};return valid(c)?c:null;
+  const c={v:2,g:gameId,s,d,l,n,k,p:window.BrainiReplay?.packId(gameId)||null};return valid(c)?c:null;
  }
  function parse(fragment=location.hash){
   const m=/^#friend=([A-Za-z0-9_-]{40,500})$/.exec(fragment);if(!m)return null;
-  try{const c=JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')));return valid(c)?{v:1,g:c.g,s:c.s,d:c.d,l:c.l,n:c.n,k:c.k}:null;}catch{return null;}
+  try{const c=JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')));return valid(c)?{v:c.v,g:c.g,s:c.s,d:c.d,l:c.l,n:c.n,k:c.k,...(c.v===2?{p:c.p}:{})}:null;}catch{return null;}
  }
  function url(c){
-  if(!valid(c))return null;
+  if(!valid(c)||c.v!==2||!c.p)return null;
   const u=new URL(games[c.g].path,'https://brainilabgames.com');u.searchParams.set('try','1');
   if(c.d)u.searchParams.set('archive',c.d);
   if(c.l)u.searchParams.set('difficulty',c.l);
@@ -67,7 +67,7 @@ window.BrainiGameChallengeModel=(()=>{
  }
  function incoming(){
   const c=parse(),p=new URLSearchParams(location.search);
-  if(!c||gameAt(location.pathname)!==c.g||p.get('try')!=='1')return null;
+  if(!c||c.v===2&&!c.p||gameAt(location.pathname)!==c.g||p.get('try')!=='1')return null;
   if(c.d&&(p.get('archive')!==c.d||p.has('daily')))return null;
   if(!c.d&&(p.has('archive')||p.has('daily')))return null;
   if(c.l&&(p.get('difficulty')||'easy')!==c.l)return null;
@@ -75,14 +75,14 @@ window.BrainiGameChallengeModel=(()=>{
  }
  const points=s=>s.toLocaleString('en-GB')+' '+(s===1?'point':'points');
  const max=c=>c.g==='connections'&&c.d?3000:games[c.g].max;
- const rule=c=>c.d?'Same dated challenge. Just for fun.':c.g==='reasoning'?'The same twelve puzzles. Just for fun.':c.l?`${c.l[0].toUpperCase()+c.l.slice(1)} · Fresh questions, same rules.`:'Fresh puzzles, same rules.';
+ const rule=c=>c.v===1?'Ask your friend for a new invitation.':(c.l?c.l[0].toUpperCase()+c.l.slice(1)+' · ':'')+'Same questions. Same rules. Just for fun.';
  function compare(own,target){
-  if(!valid(own)||!valid(target)||own.g!==target.g||own.d!==target.d||own.l!==target.l||own.n!==target.n||own.k!==target.k)return null;
+  if(!valid(own)||!valid(target)||own.v!==2||target.v!==2||!own.p||own.p!==target.p||own.g!==target.g||own.d!==target.d||own.l!==target.l||own.n!==target.n)return null;
   const difference=own.s-target.s;
   return {kind:difference>0?'win':difference<0?'loss':'tie',title:difference>0?'You beat your friend!':difference<0?'Your friend wins this round.':'It’s a tie!',detail:difference?points(Math.abs(difference))+(difference>0?' ahead.':' behind. Fancy a rematch?'):points(own.s)+' each. Nicely matched.'};
  }
  function invitation(own,target=null){
-  if(!valid(own))return null;
+  if(!valid(own)||!url(own))return null;
   const name=games[own.g].name,comparison=target&&compare(own,target);
   const opener=comparison?.kind==='win'?`I got ${points(own.s)} in ${name} — I beat your ${points(target.s)}! 😄 Your move!`:comparison?.kind==='tie'?`We both got ${points(own.s)} in ${name}! 😄 Fancy a rematch?`:comparison?.kind==='loss'?`You got me this time! I got ${points(own.s)} in ${name}, to your ${points(target.s)}. 😄 Fancy a rematch?`:`I got ${points(own.s)} in ${name}! 😄 ${own.s===max(own)?'Can you match that?':own.s?'Think you can beat me? Your turn!':'Fancy giving it a go? Your turn!'}`;
   return {url:url(own),title:'Your turn! '+name,text:opener+'\n'+rule(own)+'\n\n'+url(own)};

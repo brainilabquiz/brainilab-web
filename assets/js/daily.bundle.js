@@ -34,7 +34,7 @@ window.BrainiDaily = (function(){
   }
 
   function client(){
-    return window.BrainiBackendAuth?.getClient?.() || null;
+    const sb=window.BrainiBackendAuth?.getClient?.() || null;return window.BrainiReplay?.client(sb)||sb;
   }
 
   function validQuestions(questions){
@@ -251,6 +251,9 @@ window.BrainiDaily = (function(){
   }
 
   async function loadDate(date,options={}){
+    const base=()=>loadDateBase(date,options);return window.BrainiReplay?BrainiReplay.run("brainmix",base):base();
+  }
+  async function loadDateBase(date,options={}){
     const archiveDate=BrainiData.pastDailyDate?.(date);
     if(!archiveDate){
       throw new Error("Past Daily date is invalid or is not before today.");
@@ -281,6 +284,9 @@ window.BrainiDaily = (function(){
   }
 
   async function loadToday(options={}){
+    const base=()=>loadTodayBase(options);return window.BrainiReplay?BrainiReplay.run("brainmix",base):base();
+  }
+  async function loadTodayBase(options={}){
     const force=!!options.force;
 
     if(!force && cachedToday && validDaily(cachedToday)){
@@ -963,7 +969,7 @@ window.BrainiDailyGames=(function(){
   }
 
   function client(){
-    return window.BrainiBackendAuth?.getClient?.()||null;
+    const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb;
   }
 
   function utcDate(){
@@ -1087,6 +1093,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadOrderUp(options={}){
+    const base=()=>loadOrderUpBase(options);return window.BrainiReplay?BrainiReplay.run("orderup",base):base();
+  }
+  async function loadOrderUpBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){
@@ -1202,6 +1211,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadTopicRush(options={}){
+    const base=()=>loadTopicRushBase(options);return window.BrainiReplay?BrainiReplay.run("topicrush",base):base();
+  }
+  async function loadTopicRushBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){
@@ -1271,6 +1283,9 @@ window.BrainiDailyGames=(function(){
   }
 
   async function loadBrainiWord(options={}){
+    const base=()=>loadBrainiWordBase(options);return window.BrainiReplay?BrainiReplay.run("brainiword",base):base();
+  }
+  async function loadBrainiWordBase(options={}){
     const date=resolveDate(options);
     const archive=date<utcDate();
     if(configured()){

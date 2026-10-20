@@ -2963,6 +2963,43 @@ window.BrainiFriendChallenge=(()=>{
  return {buildInvite,invitationState,renderInvitation,open,mount};
 })();
 
+/* ===== friend-replay-contract.js ===== */
+
+/* Public content only: a stable contract for the exact questions and their displayed order. */
+window.BrainiReplayContract=(()=>{
+ const quizzes=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports']);
+ const quizLike=g=>quizzes.has(g)||g==='survival';
+ const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return(h>>>0).toString(16).padStart(8,'0');};
+ const quizKey=q=>'q:'+hash(q.q+'\0'+q.a.join('\0'));
+ const family=g=>quizzes.has(g)?'quiz':g;
+ const clean=v=>JSON.parse(JSON.stringify(v));
+ function project(g,p){
+  if(quizLike(g))return (p.questions||[]).map(q=>({id:String(q.questionVersionId||q.id||quizKey(q)),q:q.q,a:q.a,options:q.optionIds||null,...(p.source==='local'?{answer:q.c}:{}),...(g==='survival'?{difficulty:q.difficulty,topic:q.topic}: {})}));
+  if(g==='connections')return p.rounds.map(q=>({id:String(q.id),prompt:q.prompt||'What connects these?',clues:q.clues,choices:q.choices.map(c=>({id:String(c.id),text:c.text})),...(p.source==='local'?{answer:q.correct}: {})}));
+  if(g==='sequence')return p.rounds.map(q=>({id:String(q.id),sequence:q.sequence,options:q.options,...(p.source==='local'?{answer:q.answer}: {})}));
+  if(g==='oddoneout')return p.rounds.map(q=>({id:String(q.id),prompt:q.prompt||'Which one does not belong?',items:q.items,...(p.source==='local'?{answer:q.odd}: {})}));
+  if(g==='higherlower')return p.rounds.map(q=>({id:String(q.id),type:q.type||q.comparisonType||'higher_lower',metric:q.metric,left:q.left,leftValue:q.leftValue,right:q.right,unit:q.unit||'',...(p.source==='local'?{answer:q.rightValue}: {})}));
+  if(g==='numberroute')return p.rounds.map(q=>({id:String(q.id),numbers:q.numbers,target:q.target,...(p.source==='local'?{answer:q.solution}: {})}));
+  if(g==='mathrush')return {seed:p.seed,operations:p.operations.map(q=>({position:q.position,a:q.a,b:q.b,op:q.op,display:q.display}))};
+  if(g==='orderup')return p.rounds.map(q=>({id:String(q.roundId),title:q.title,prompt:q.prompt,directionLabel:q.directionLabel,items:q.items,...(p.source==='local'?{answer:q.canonicalItems}: {})}));
+  if(g==='topicrush')return {id:String(p.topicId),title:p.title,prompt:p.prompt,targetCount:p.targetCount,durationSeconds:p.durationSeconds,...(p.source==='local'?{answer:p.localAnswers}: {})};
+  if(g==='brainiword')return {id:String(p.contentRef||'word:'+hash(p.fallbackAnswer)),letters:p.letters,attempts:p.attempts,...(p.source==='local'?{answer:p.fallbackAnswer}: {})};
+  if(g==='reasoning')return p.questions;
+  throw Error('Unsupported game');
+ }
+ const canonical=value=>JSON.stringify((function sort(v){return Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;})(value));
+ function spec(g,p,settings=null){
+  const source=p.source==='supabase'?'supabase':'local',rows=quizLike(g)?p.questions:g==='orderup'?p.rounds:g==='reasoning'?p.questions:p.rounds||[];
+  const ids=rows.map(q=>String(quizLike(g)?q.questionVersionId||q.id||quizKey(q):g==='orderup'?q.roundId:q.id));
+  const choices=rows.map(q=>quizLike(g)?q.optionIds||[]:g==='connections'?q.choices.map(c=>c.id):g==='sequence'?q.options:g==='orderup'?q.items.map(c=>c.itemId):[]);
+  const keys=['dailyChallengeId','challengeDate','dailyNumber','generationVersion','totalQuestions','topicKey','topicSlug','topicId','difficulty','setNumber','version','selectionMode','totalRounds','itemsPerRound'];
+  const meta=Object.fromEntries(keys.filter(k=>p[k]!==undefined).map(k=>[k,p[k]]));
+  settings=settings||p.friendSettings||{date:p.challengeDate||null,difficulty:quizzes.has(g)&&g!=='brainmix'?p.difficulty||'easy':null,rounds:({brainmix:10,brainiword:1,orderup:20,topicrush:p.targetCount,mathrush:60,survival:30,reasoning:12,connections:20}[g]|| (quizzes.has(g)?20:10))};
+  return {source,ids,choices,seed:p.seed||null,topicId:p.topicId||null,wordId:p.contentRef||p.fallbackAnswer&&'word:'+hash(p.fallbackAnswer)||null,meta,settings};
+ }
+ return {quizzes,family,hash,quizKey,project,canonical,spec,clean};
+})();
+
 /* ===== game-challenge-model.js ===== */
 
 /* A shared score target, never a saved result. No identities, answers or contacts in links. */
@@ -2995,7 +3032,7 @@ window.BrainiGameChallengeModel=(()=>{
  function hash(value){let h=2166136261;for(const c of value){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');}
  function valid(c){
   const g=games[c?.g];
-  if(!g||c.v!==1||!integer(c.s,g.max)||!integer(c.n,60))return false;
+  if(!g||![1,2].includes(c.v)||!integer(c.s,g.max)||!integer(c.n,60))return false;
   if(c.d!==null&&!date(c.d))return false;
   if(g.daily&&!c.d)return false;
   if(g.quiz?!['easy','medium','hard'].includes(c.l):c.l!==null)return false;
@@ -3003,7 +3040,7 @@ window.BrainiGameChallengeModel=(()=>{
   if(n&&c.n!==n)return false;
   if(c.g==='topicrush'&&!(c.n>=1&&c.n<=60))return false;
   if(c.g==='connections'&&c.d&&c.s>3000)return false;
-  return c.k===null||typeof c.k==='string'&&/^[0-9a-f]{8}$/.test(c.k);
+  return (c.k===null||typeof c.k==='string'&&/^[0-9a-f]{8}$/.test(c.k))&&(c.v===1||c.p===null||typeof c.p==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(c.p));
  }
  function describe(gameId,result={},options={}){
   const g=games[gameId];if(!g)return null;
@@ -3019,14 +3056,14 @@ window.BrainiGameChallengeModel=(()=>{
   const ids=gameId==='mathrush'?[result.seed]:(rows||[]).map(r=>r.puzzleId||r.pairId||r.questionVersionId||r.questionId||r.round_id);
   const source=result.contentSource||result.dailyContentSource||'';
   const k=d?hash(JSON.stringify([source,ids.filter(Boolean),result.topicId||null,result.contentRef||null])):gameId==='reasoning'?hash(String(result.challengeVersion||'')):null;
-  const c={v:1,g:gameId,s,d,l,n,k};return valid(c)?c:null;
+  const c={v:2,g:gameId,s,d,l,n,k,p:window.BrainiReplay?.packId(gameId)||null};return valid(c)?c:null;
  }
  function parse(fragment=location.hash){
   const m=/^#friend=([A-Za-z0-9_-]{40,500})$/.exec(fragment);if(!m)return null;
-  try{const c=JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')));return valid(c)?{v:1,g:c.g,s:c.s,d:c.d,l:c.l,n:c.n,k:c.k}:null;}catch{return null;}
+  try{const c=JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')));return valid(c)?{v:c.v,g:c.g,s:c.s,d:c.d,l:c.l,n:c.n,k:c.k,...(c.v===2?{p:c.p}:{})}:null;}catch{return null;}
  }
  function url(c){
-  if(!valid(c))return null;
+  if(!valid(c)||c.v!==2||!c.p)return null;
   const u=new URL(games[c.g].path,'https://brainilabgames.com');u.searchParams.set('try','1');
   if(c.d)u.searchParams.set('archive',c.d);
   if(c.l)u.searchParams.set('difficulty',c.l);
@@ -3034,7 +3071,7 @@ window.BrainiGameChallengeModel=(()=>{
  }
  function incoming(){
   const c=parse(),p=new URLSearchParams(location.search);
-  if(!c||gameAt(location.pathname)!==c.g||p.get('try')!=='1')return null;
+  if(!c||c.v===2&&!c.p||gameAt(location.pathname)!==c.g||p.get('try')!=='1')return null;
   if(c.d&&(p.get('archive')!==c.d||p.has('daily')))return null;
   if(!c.d&&(p.has('archive')||p.has('daily')))return null;
   if(c.l&&(p.get('difficulty')||'easy')!==c.l)return null;
@@ -3042,19 +3079,79 @@ window.BrainiGameChallengeModel=(()=>{
  }
  const points=s=>s.toLocaleString('en-GB')+' '+(s===1?'point':'points');
  const max=c=>c.g==='connections'&&c.d?3000:games[c.g].max;
- const rule=c=>c.d?'Same dated challenge. Just for fun.':c.g==='reasoning'?'The same twelve puzzles. Just for fun.':c.l?`${c.l[0].toUpperCase()+c.l.slice(1)} · Fresh questions, same rules.`:'Fresh puzzles, same rules.';
+ const rule=c=>c.v===1?'Ask your friend for a new invitation.':(c.l?c.l[0].toUpperCase()+c.l.slice(1)+' · ':'')+'Same questions. Same rules. Just for fun.';
  function compare(own,target){
-  if(!valid(own)||!valid(target)||own.g!==target.g||own.d!==target.d||own.l!==target.l||own.n!==target.n||own.k!==target.k)return null;
+  if(!valid(own)||!valid(target)||own.v!==2||target.v!==2||!own.p||own.p!==target.p||own.g!==target.g||own.d!==target.d||own.l!==target.l||own.n!==target.n)return null;
   const difference=own.s-target.s;
   return {kind:difference>0?'win':difference<0?'loss':'tie',title:difference>0?'You beat your friend!':difference<0?'Your friend wins this round.':'It’s a tie!',detail:difference?points(Math.abs(difference))+(difference>0?' ahead.':' behind. Fancy a rematch?'):points(own.s)+' each. Nicely matched.'};
  }
  function invitation(own,target=null){
-  if(!valid(own))return null;
+  if(!valid(own)||!url(own))return null;
   const name=games[own.g].name,comparison=target&&compare(own,target);
   const opener=comparison?.kind==='win'?`I got ${points(own.s)} in ${name} — I beat your ${points(target.s)}! 😄 Your move!`:comparison?.kind==='tie'?`We both got ${points(own.s)} in ${name}! 😄 Fancy a rematch?`:comparison?.kind==='loss'?`You got me this time! I got ${points(own.s)} in ${name}, to your ${points(target.s)}. 😄 Fancy a rematch?`:`I got ${points(own.s)} in ${name}! 😄 ${own.s===max(own)?'Can you match that?':own.s?'Think you can beat me? Your turn!':'Fancy giving it a go? Your turn!'}`;
   return {url:url(own),title:'Your turn! '+name,text:opener+'\n'+rule(own)+'\n\n'+url(own)};
  }
  return {games,gameAt,describe,parse,url,incoming,points,rule,compare,invitation};
+})();
+
+/* ===== friend-replay.js ===== */
+
+/* Freeze the loaded set, not the selector that happened to choose it. */
+window.BrainiReplay=(()=>{
+ const C=window.BrainiReplayContract,M=window.BrainiGameChallengeModel,incoming=M.incoming(),captured=new Map(),packs=new Map(),publishing=new Map();
+ const checkers=new Set(['check_brainilab_quiz_answer','check_brainilab_connections_guess','check_brainilab_sequence_answer','check_brainilab_odd_one_out_answer','check_brainilab_higher_lower_answer','check_brainilab_number_route_answer','reveal_brainilab_number_route_solution','check_brainilab_order_up_round','check_brainilab_topic_rush_answer','check_brainilab_brainiword_guess']);
+ let pending=null,resolvePending=null,fetching=false,loaded=null,errorText='';
+ const emit=()=>window.dispatchEvent(new Event('brainilab:friendpack'));
+ const timeout=promise=>{let timer;return Promise.race([promise,new Promise((_,reject)=>timer=setTimeout(()=>reject(Error('Connection timed out. Please try again.')),10000))]).finally(()=>clearTimeout(timer));};
+ async function rpc(name,args){
+  const auth=window.BrainiBackendAuth;if(!auth?.isConfigured?.())throw Error('Couldn’t connect. Please try again.');
+  await timeout(auth.ensurePlayerSession());
+  const {data,error}=await timeout(auth.getClient().rpc(name,args));if(error)throw Error(error.message||'Couldn’t open this invitation.');return data;
+ }
+ function status(){return {legacy:incoming?.v===1,loading:!!pending&&!loaded&&!errorText,error:errorText,ready:!!loaded};}
+ async function retry(){
+  if(fetching||loaded||!incoming||incoming.v!==2)return;fetching=true;errorText='';emit();
+  try{
+   const result=await rpc('get_brainilab_friend_pack',{p_pack_id:incoming.p,p_game_id:incoming.g});
+   if(result?.id!==incoming.p||result.gameId!==incoming.g||result.payload?.replayRules!=='friend-replay-v1'||C.canonical(result.payload?.friendSettings)!==C.canonical({date:incoming.d,difficulty:incoming.l,rounds:incoming.n})||!validPack(incoming.g,result.payload))throw Error('This invitation is unavailable. Ask your friend for a new one.');
+   loaded=result;packs.set(incoming.g,result.id);captured.set(incoming.g,C.clean(result.payload));resolvePending?.(C.clean(result.payload));
+  }catch(error){errorText=/expired|unavailable/i.test(error.message)?'This invitation is unavailable. Ask your friend for a new one.':'Couldn’t load your friend’s questions. Please try again.';}
+  finally{fetching=false;emit();}
+ }
+ function validPack(g,p){
+  try{const value=C.project(g,p);return !!value&&(Array.isArray(value)?value.length>0:true)&&['local','supabase'].includes(p.source);}catch{return false;}
+ }
+ async function run(g,base){
+  if(incoming?.g===g){
+   if(incoming.v===1){emit();return new Promise(()=>{});}
+   if(loaded)return C.clean(loaded.payload);
+   if(!pending){pending=new Promise(resolve=>resolvePending=resolve);void retry();}
+   return pending.then(C.clean);
+  }
+  const result=await base();if(validPack(g,result)){captured.set(g,C.clean(result));packs.delete(g);}return result;
+ }
+ async function publish(g){
+  if(packs.has(g))return packs.get(g);
+  if(publishing.has(g))return publishing.get(g);
+  const original=captured.get(g);if(!original)throw Error('Play a new round to create an invitation.');
+  const task=(async()=>{
+   const params=new URLSearchParams(location.search),config=M.games[g],date=config.daily?original.challengeDate:params.get('daily')||params.get('archive')||null;
+   const settings={date,difficulty:config.quiz?original.difficulty||params.get('difficulty')||'easy':null,rounds:date&&['connections','numberroute'].includes(g)?3:config.n||original.targetCount};
+   const result=await rpc('create_brainilab_friend_pack',{p_game_id:g,p_spec:C.spec(g,original,settings)});
+   if(result?.gameId!==g||!/^[0-9a-f-]{36}$/i.test(result?.id||'')||C.canonical(C.project(g,result.payload))!==C.canonical(C.project(g,original)))throw Error('The questions changed while you were playing. Play a new round to invite your friend.');
+   if(captured.get(g)!==original)throw Error('A new round has started. Finish it before sharing.');
+   packs.set(g,result.id);return result.id;
+  })();publishing.set(g,task);try{return await task;}finally{publishing.delete(g);}
+ }
+ function client(sb){
+  if(!sb||!incoming||incoming.v!==2)return sb;
+  return {rpc(name,args){
+   if(!checkers.has(name))return sb.rpc(name,args);
+   if(!loaded)return Promise.resolve({data:null,error:{message:'Your friend’s questions are not ready yet.'}});
+   return rpc('check_brainilab_friend_pack',{p_pack_id:incoming.p,p_method:name,p_args:args}).then(data=>({data,error:null}),error=>({data:null,error}));
+  }};
+ }
+ return {run,publish,client,status,retry,packId:g=>packs.get(g)||null,storageSuffix:()=>incoming?.p?':friend:'+incoming.p:''};
 })();
 
 /* ===== game-challenge.js ===== */
@@ -3063,7 +3160,7 @@ window.BrainiGameChallengeModel=(()=>{
 window.BrainiGameChallenge=(()=>{
  const M=window.BrainiGameChallengeModel,views=new Map();
  let target=M.incoming();
- const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||auth?.anonymousPlayerId||'guest';};
+ const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.anonymousPlayerId||auth?.guestUserId||'guest';};
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function offer(gameId,result,options={}){
   const own=M.describe(gameId,result,options);if(!own)return null;
@@ -3082,11 +3179,20 @@ window.BrainiGameChallenge=(()=>{
   box.innerHTML='<span class="game-friend-mark" aria-hidden="true">↗</span><div><span class="game-friend-kicker">A challenge from your friend</span><strong></strong><p></p></div>';
   box.querySelector('strong').textContent=c.s?'Can you '+(c.s===(c.g==='connections'&&c.d?3000:M.games[c.g].max)?'match ':'beat ')+M.points(c.s)+'?':'Your turn. Give it a go!';
   box.querySelector('p').textContent=M.rule(c)+' No account needed.';
+  const state=window.BrainiReplay?.status?.();
+  if(state?.legacy){
+   box.querySelector('strong').textContent='This invitation needs an update.';
+   box.querySelector('p').textContent='Ask your friend to share a new link so you both get the same questions.';
+   const link=document.createElement('a');link.href=location.pathname+'?try=1'+(c.l?'&difficulty='+c.l:'');link.textContent='Play for fun →';box.querySelector('div').append(link);
+  }else if(state?.error){
+   box.querySelector('p').textContent=state.error;
+   const retry=document.createElement('button');retry.type='button';retry.textContent='Try again';retry.onclick=()=>window.BrainiReplay.retry();box.querySelector('div').append(retry);
+  }
   box.hidden=Array.from(views.values()).some(v=>v.root.isConnected&&v.options.gameId===c.g);
  }
  function status(v,text){v.slot.querySelector('[data-challenge-status]').textContent=text;}
  function controls(v){
-  const enabled=ready(v)&&!v.busy&&!!v.slot.querySelector('textarea').value.trim();
+  const enabled=ready(v)&&v.prepared&&!v.busy&&!!v.slot.querySelector('textarea').value.trim();
   v.slot.querySelectorAll('[data-challenge-copy],[data-challenge-native]').forEach(b=>b.disabled=!enabled);
   const wa=v.slot.querySelector('[data-challenge-whatsapp]');
   wa.setAttribute('aria-disabled',String(!enabled));wa.tabIndex=enabled?0:-1;
@@ -3106,12 +3212,14 @@ window.BrainiGameChallenge=(()=>{
    const comparison=offered.target&&M.compare(offered.own,offered.target);
    const comparisonHtml=offered.target?`<section class="game-friend-comparison" aria-label="Your result against your friend"><strong>${esc(comparison?.title||'Two rounds, two scores.')}</strong><dl><div class="${comparison?.kind==='win'?'is-winner':''}"><dt>You</dt><dd>${offered.own.s.toLocaleString('en-GB')}</dd></div><div class="${comparison?.kind==='loss'?'is-winner':''}"><dt>Your friend</dt><dd>${offered.target.s.toLocaleString('en-GB')}</dd></div></dl><p>${esc(comparison?.detail||'The challenge or question set changed, so these scores are not compared.')}</p></section>`:'';
    v.slot.innerHTML=comparisonHtml+'<section class="game-friend-composer" data-challenge-composer hidden aria-label="Your invitation"><div class="game-friend-composer-head"><strong>Your invitation</strong><button type="button" data-challenge-close aria-label="Close invitation">×</button></div><label>Your message<textarea rows="5" maxlength="3000"></textarea></label><div class="game-friend-send"><button type="button" data-challenge-copy>Copy invitation</button><button type="button" data-challenge-native hidden>Share…</button><a data-challenge-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div><p role="status" aria-live="polite" data-challenge-status></p></section>';
-   v.slot.querySelector('textarea').value=M.invitation(offered.own,offered.target).text;
+   const invitation=M.invitation(offered.own,offered.target);v.prepared=!!invitation;
+   v.slot.querySelector('textarea').value=invitation?.text||'';
+   v.slot.querySelector('textarea').disabled=!v.prepared;
    v.slot.querySelector('textarea').addEventListener('input',()=>controls(v));
    v.slot.querySelector('[data-challenge-close]').onclick=()=>{v.slot.querySelector('[data-challenge-composer]').hidden=true;root.querySelector('[data-post-action="challenge"],.post-share')?.focus();};
    v.slot.querySelector('[data-challenge-copy]').onclick=()=>send(v,'copy');
    v.slot.querySelector('[data-challenge-native]').onclick=()=>send(v,'native');
-   v.slot.querySelector('[data-challenge-whatsapp]').onclick=e=>{controls(v);if(!ready(v)||v.busy||!v.slot.querySelector('textarea').value.trim())e.preventDefault();};
+   v.slot.querySelector('[data-challenge-whatsapp]').onclick=e=>{controls(v);if(!ready(v)||!v.prepared||v.busy||!v.slot.querySelector('textarea').value.trim())e.preventDefault();};
    v.key=key;
   }
   v.slot.querySelector('[data-challenge-native]').hidden=typeof navigator.share!=='function';
@@ -3122,10 +3230,28 @@ window.BrainiGameChallenge=(()=>{
   render(root,options);const v=views.get(root);if(!v||!ready(v))return false;
   v.trigger=trigger;v.slot.querySelector('[data-challenge-composer]').hidden=false;
   v.slot.querySelector('[data-challenge-composer]').scrollIntoView?.({block:'nearest',behavior:'instant'});
-  v.slot.querySelector('textarea').focus({preventScroll:true});return true;
+  if(v.prepared)v.slot.querySelector('textarea').focus({preventScroll:true});
+  else void prepare(v);
+  return true;
+ }
+ async function prepare(v){
+  if(v.busy||!ready(v))return;
+  const key=v.key;v.busy=true;controls(v);status(v,'Preparing your friend’s questions…');
+  try{
+   await window.BrainiReplay.publish(v.options.gameId);
+   if(v.key!==key||!ready(v))return;
+   const offered=offer(v.options.gameId,v.options.result,v.options),invitation=M.invitation(offered.own,offered.target);
+   if(!invitation)throw Error('Couldn’t prepare this invitation. Please try again.');
+   const field=v.slot.querySelector('textarea');field.value=invitation.text;field.disabled=false;v.prepared=true;status(v,'Ready. Make the message your own.');field.focus({preventScroll:true});
+  }catch(error){
+   if(v.key===key&&ready(v)){
+    status(v,error.message||'Couldn’t prepare this invitation. Please try again.');
+    const retry=document.createElement('button');retry.type='button';retry.textContent='Try again';retry.onclick=()=>prepare(v);v.slot.querySelector('[data-challenge-status]').append(' ',retry);
+   }
+  }finally{v.busy=false;controls(v);}
  }
  async function send(v,method){
-  if(v.busy||!ready(v))return;
+  if(v.busy||!v.prepared||!ready(v))return;
   const field=v.slot.querySelector('textarea'),message=field.value.trim();if(!message)return;
   const key=v.key,current=()=>v.key===key&&ready(v);
   v.busy=true;controls(v);status(v,'');
@@ -3140,9 +3266,11 @@ window.BrainiGameChallenge=(()=>{
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',entry);else entry();
  window.addEventListener('hashchange',()=>{
   if(location.hash&&!location.hash.startsWith('#friend='))return;
+  if(M.incoming()?.p!==target?.p){location.reload();return;}
   target=M.incoming();entry();window.BrainiPostGame?.refresh();for(const v of views.values())if(v.custom)render(v.root,v.options);
  });
  window.addEventListener('brainilab:authchange',()=>{for(const v of views.values())controls(v);});
+ window.addEventListener('brainilab:friendpack',entry);
  function mountCustom(root,options){
   if(!root||!offer(options.gameId,options.result,options))return;
   root.innerHTML='<div class="post-actions"><button class="post-share" type="button" data-gamechallenge-button>Challenge a friend</button></div>';
@@ -3967,7 +4095,7 @@ window.BrainiPostGame=(()=>{
   const items=list=>list.map(a=>`<article class="post-answer"><h4>${number(a.position)}. ${esc(a.questionText)}</h4><p class="post-answer-choice">${a.isCorrect?'Correct':a.skipped?'Skipped':'Your answer: '+esc(a.selectedAnswer??'No answer')}</p><p><strong>${esc(a.correctAnswer||'Answer unavailable')}</strong></p>${a.explanation?`<p>${esc(a.explanation)}</p>`:''}</article>`).join('');
   return `<div class="post-review">${missed.length?`<details data-post-missed><summary>Review ${missed.length} ${missed.length===1?'answer':'answers'} to revisit</summary>${items(missed)}</details>`:''}${correct.length?`<details><summary>${missed.length?'Your correct answers':'Review your answers'} · ${correct.length}</summary>${items(correct)}</details>`:''}</div>`;
  }
- const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||auth?.anonymousPlayerId||'guest';};
+ const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.anonymousPlayerId||auth?.guestUserId||'guest';};
  const verified=r=>r?.answersVerified===true||r?.answerVerificationStatus==='verified'||r?.dailyGameVerificationStatus==='verified'||r?.dailyAnswerVerificationStatus==='verified';
  function localStatus(result){
   if(!result.dailyNumber||result.practice||result.tryFirst)return null;

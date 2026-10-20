@@ -12,7 +12,7 @@ window.BrainiConnections=(function(){
   const ROUND_COUNT=dailyMode?DAILY_ROUNDS:ANYTIME_ROUNDS;
   const MAX_SCORE=ROUND_COUNT*1000;
 
-  function client(){ return window.BrainiBackendAuth?.getClient?.()||null; }
+  function client(){ const sb=window.BrainiBackendAuth?.getClient?.()||null;return window.BrainiReplay?.client(sb)||sb; }
   function configured(){ return !!window.BrainiBackendAuth?.isConfigured?.(); }
   function deepClone(v){ return JSON.parse(JSON.stringify(v)); }
 
@@ -83,7 +83,8 @@ window.BrainiConnections=(function(){
     }));
   }
 
-  async function loadGame(){
+  async function loadGame(){return window.BrainiReplay?BrainiReplay.run("connections",loadGameBase):loadGameBase();}
+  async function loadGameBase(){
     if(configured()){
       try{
         const sb=client();
