@@ -92,10 +92,14 @@
       : pack.words?.map(word => [word.id, word.label]);
     return JSON.stringify(pick(expected)) === JSON.stringify(pick(supplied));
   }
+  function challengeScore(hash) {
+    const match = typeof hash === 'string' && /^#challenge=(0|[1-9]\d?|100)$/.exec(hash);
+    return match ? Number(match[1]) : null;
+  }
   function share(gameId, result) {
     invariant(result && Number.isInteger(result.score) && result.score >= 0 && result.score <= 100, 'Invalid result.');
     const title = game(gameId).title;
-    const url = `https://brainilabgames.com/halloween/${gameId}/`;
+    const url = `https://brainilabgames.com/halloween/${gameId}/#challenge=${result.score}`;
     const emoji = gameId === 'trick-or-think' ? '🎃' : '🦇';
     const hook = gameId === 'trick-or-think' ? 'Ten Halloween questions' : 'Four hidden groups';
     const challenge = result.score === 100 ? 'Can you match me?' : 'Think you can beat me?';
@@ -106,5 +110,5 @@
   }
   freeze(CATALOG);
   return Object.freeze({ catalog: CATALOG, game, shuffle, initialQuiz, answerQuiz, quizFromSubmission,
-    initialConnections, submitConnections, connectionsFromSubmission, summary, publicPack, acceptsPack, share });
+    initialConnections, submitConnections, connectionsFromSubmission, summary, publicPack, acceptsPack, challengeScore, share });
 });

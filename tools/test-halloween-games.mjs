@@ -62,7 +62,7 @@ for (const gameId of [quiz.id, words.id]) {
   assert.equal(m.acceptsPack(gameId, reordered), true);
   assert.ok(!JSON.stringify(pack).includes('"answer":')); assert.ok(!Object.hasOwn(pack, 'groups'));
   const invite = m.share(gameId, { score: 70 });
-  assert.equal(new URL(invite.url).search, ''); assert.equal(new URL(invite.url).hash, '');
+  assert.equal(new URL(invite.url).search, ''); assert.equal(new URL(invite.url).hash, '#challenge=70');
   assert.match(invite.text, /Think you can beat me/); assert.ok(!/w00|q01|Turnips|FEMUR/.test(JSON.stringify(invite)));
 }
 assert.deepEqual(plain(m.shuffle([1, 2, 3], () => 0)), [2, 3, 1]);
