@@ -27,10 +27,10 @@ async function setup(game='trick-or-think',options={}){
 }
 function open(u){u.root.querySelector('[data-hg-share]').click();return u.root.querySelector('[data-hg-share-panel]')||u.root.querySelector('.halloween-invitation');}
 function edit(u,text){const field=u.root.querySelector('[data-hg-invite-message]');field.value=text;field.dispatchEvent(new u.w.Event('input',{bubbles:true}));}
-function data(u){const text=u.root.querySelector('[data-hg-invite-message]').value.trim(),url='https://brainilabgames.com/halloween/'+u.game+'/';return {text,url,full:text+'\n'+url};}
+function data(u){const text=u.root.querySelector('[data-hg-invite-message]').value.trim(),url='https://brainilabgames.com/halloween/'+u.game+'/#challenge='+u.result.score;return {text,url,full:text+'\n'+url};}
 for(const game of ['trick-or-think','spooky-connections']){
  const u=await setup(game);
- for(const score of [0,70,100]){const invite=u.m.share(game,{score,answers:['secret-answer'],userId:'private-id'});assert.ok(invite.text.includes(score+'/100'));assert.match(invite.text,score===100?/Can you match me/:score===0?/Think you can do better/:/Think you can beat me/);assert.match(invite.text,/I got/);assert.ok(!/secret-answer|private-id|q01|w00|Turnips|FEMUR/.test(JSON.stringify(invite)));assert.equal(new URL(invite.url).search,'');assert.equal(new URL(invite.url).hash,'');}
+ for(const score of [0,70,100]){const invite=u.m.share(game,{score,answers:['secret-answer'],userId:'private-id'});assert.ok(invite.text.includes(score+'/100'));assert.match(invite.text,score===100?/Can you match me/:score===0?/Think you can do better/:/Think you can beat me/);assert.match(invite.text,/I got/);assert.ok(!/secret-answer|private-id|q01|w00|Turnips|FEMUR/.test(JSON.stringify(invite)));assert.equal(new URL(invite.url).search,'');assert.equal(new URL(invite.url).hash,'#challenge='+score);}
  assert.match(u.m.share(game,{score:70}).text,game==='trick-or-think'?/Ten Halloween questions/:/Four hidden groups/);
  for(const score of [-1,101,NaN,Infinity,'70',70.5])assert.throws(()=>u.m.share(game,{score}));
  const panel=open(u);assert.equal(panel.hidden,false);assert.equal(u.calls.clipboard.length,0);assert.equal(u.calls.native.length,0);assert.equal(u.w.document.activeElement,u.root.querySelector('[data-hg-invite-message]'));

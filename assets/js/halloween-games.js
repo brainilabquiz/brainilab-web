@@ -26,6 +26,9 @@
     if (!model || root.dataset.halloweenMounted) return;
     root.dataset.halloweenMounted = 'true';
     const gameId = root.dataset.halloweenGame;
+    const challenge = model.challengeScore(location.hash);
+    const introArt = root.querySelector('template[data-hg-intro-art]')?.innerHTML || '';
+    let arrivedAtSavedResult = false;
     let pack;
     try { pack = model.game(gameId); } catch { root.textContent = 'This Halloween game could not be found.'; return; }
     const api = window.BrainiLabHalloween;
@@ -68,7 +71,9 @@
       const rules = gameId === 'trick-or-think'
         ? 'Ten questions, one answer each. See the explanation after every choice. No timer.'
         : 'Find four groups of four words. Each mistake lowers your score; four mistakes end the puzzle. No timer.';
-      shell(`<div class="halloween-game-intro"><p class="halloween-eyebrow">Halloween special</p><h2 tabindex="-1" data-hg-heading>${esc(pack.title)}</h2><p>${esc(pack.description)}</p><p class="halloween-game-rules">${rules}</p><button type="button" class="btn btn-primary halloween-button" data-hg-start>${session ? 'Continue game' : 'Let’s play'}</button><p class="halloween-game-status" data-hg-status role="status">${esc(message)}</p><a class="halloween-quiet-link" href="/halloween/">Back to Halloween</a></div>`);
+      const heading = challenge === 100 ? 'Can you match 100/100?' : challenge === 0 ? 'A spooky little challenge.' : challenge !== null ? `Can you beat ${challenge}/100?` : gameId === 'trick-or-think' ? 'Ten little surprises.' : 'Four hidden connections.';
+      const copy = gameId === 'trick-or-think' ? 'Pick an answer. Find out something curious along the way.' : 'Choose four words that belong together. Find all four groups.';
+      shell(`<div class="halloween-game-intro"><div class="halloween-intro-lead">${introArt ? `<div class="halloween-intro-art" aria-hidden="true">${introArt}</div>` : ''}<div><p class="halloween-eyebrow">${challenge !== null ? 'A challenge from your friend' : 'Halloween special'}</p><h2 tabindex="-1" data-hg-heading>${heading}</h2></div></div><p class="halloween-intro-description">${copy}</p><ul class="halloween-intro-facts" aria-label="At a glance"><li>${gameId === 'trick-or-think' ? '10 questions' : '4 groups · 4 mistakes'}</li><li>No timer</li></ul><button type="button" class="btn btn-primary halloween-button" data-hg-start>${session ? 'Continue game' : challenge !== null ? 'Take the challenge' : 'Let’s play'} <span aria-hidden="true">→</span></button><p class="halloween-intro-ready">Free to play. No sign-up needed.</p><details class="halloween-intro-rules"><summary>How to play</summary><p class="halloween-game-rules">${rules}</p></details><p class="halloween-game-status" data-hg-status role="status">${esc(message)}</p><a class="halloween-quiet-link" href="/halloween/">Back to Halloween</a></div>`);
       root.querySelector('[data-hg-start]').addEventListener('click', begin);
     }
     function restore() {
@@ -102,6 +107,8 @@
         }
         if (disposed) return;
         screen = state.completed ? 'result' : 'play'; persist(); render();
+        try { root.querySelector('.halloween-game-card')?.scrollIntoView?.({ block: 'start', behavior: 'auto' }); } catch {}
+        focus('[data-hg-heading]', true);
       } catch (error) {
         if (disposed) return;
         if (error?.code === 'HALLOWEEN_CLOSED') {
@@ -249,6 +256,15 @@
       const title = graded.score === 100 ? 'A frightfully good result!' : graded.score >= 60 ? 'A few good surprises!' : 'A little wiser. Still a little spooky.';
       const detail = gameId === 'trick-or-think' ? `${graded.correct} of 10 correct answers` : `${graded.correct} of 4 groups found · ${graded.mistakes} ${graded.mistakes === 1 ? 'mistake' : 'mistakes'}`;
       shell(`<div class="halloween-game-result"><p class="halloween-eyebrow">${esc(pack.title)} · ${session?.practice ? 'practice complete' : 'complete'}</p><h2 data-hg-heading tabindex="-1">${title}</h2><p class="halloween-game-score"><strong>${graded.score}</strong><span>/100</span></p><p class="halloween-result-detail">${detail}</p><p class="halloween-game-status" data-hg-status role="status">${saved ? (session?.practice ? 'Practice complete. Your saved Halloween progress is unchanged.' : access.preview ? 'Preview complete. Your live collection is unchanged.' : 'Your Halloween progress is saved.') : 'Saving your Halloween progress…'}</p><button type="button" class="halloween-quiet-button" data-hg-save hidden>Try saving again</button><div data-hg-rewards class="halloween-result-rewards" role="status" aria-live="polite" hidden></div><div class="halloween-result-actions"><a class="halloween-quiet-link" href="/halloween/">Back to Halloween <span aria-hidden="true">→</span></a><details class="halloween-result-options"><summary>Play again or share</summary><div class="halloween-game-controls"><button type="button" class="halloween-quiet-button" data-hg-share>Challenge a friend</button><button type="button" class="halloween-quiet-button" data-hg-replay${saved ? '' : ' disabled'}>Play again</button></div><p class="halloween-game-status" data-hg-share-status role="status"></p></details></div>${gameId === 'spooky-connections' ? `<details class="halloween-result-answers"><summary>See the four connections</summary>${pack.groups.map(group => `<div class="halloween-solved-group"><strong>${esc(group.label)}</strong><span>${esc(group.wordIds.map(id => pack.words.find(word => word.id === id).label).join(' · '))}</span><p>${esc(group.explanation)}</p></div>`).join('')}</details>` : ''}</div>`);
+      if (challenge !== null) {
+        const note = document.createElement('p'); note.className = 'halloween-challenge-outcome'; note.dataset.hgChallengeOutcome = '';
+        note.textContent = graded.score > challenge ? `You beat your friend’s ${challenge}/100!` : graded.score === challenge ? `You matched your friend’s ${challenge}/100!` : `Your friend’s score: ${challenge}/100. Another go?`;
+        root.querySelector('.halloween-result-detail').after(note);
+        if (arrivedAtSavedResult && saved && !terminalFailure) {
+          const replay = root.querySelector('[data-hg-replay]'); replay.className = 'btn btn-primary halloween-button halloween-invited-replay'; replay.textContent = 'Play this challenge again';
+          root.querySelector('.halloween-result-actions').before(replay);
+        }
+      }
       showTreats();
       root.querySelector('[data-hg-save]').addEventListener('click', save);
       if (terminalFailure) {
@@ -264,14 +280,15 @@
       }
       root.querySelector('[data-hg-replay]').addEventListener('click', () => {
         if (saving || !saved || !ensureOwner()) return;
-        reset(); intro(); focus('[data-hg-heading]');
+        const quickStart = arrivedAtSavedResult;
+        reset(); intro(); if (quickStart) void begin(); else focus('[data-hg-heading]');
       });
       bindSharing(graded);
       if (saved && !session?.practice) root.dispatchEvent(new CustomEvent('brainilab:halloween-game-saved', { bubbles: true, detail: { gameId, preview: !!access.preview } }));
     }
     function reset() {
       state = gameId === 'trick-or-think' ? model.initialQuiz() : model.initialConnections();
-      session = null; answered = false; chosen = []; saved = false; terminalFailure = null;
+      session = null; answered = false; chosen = []; saved = false; terminalFailure = null; arrivedAtSavedResult = false;
       wordOrder = model.shuffle(pack.words || []); optionOrders = new Map(); rewardIds = []; freshRewards = false; storage.remove(key);
     }
     async function save() {
@@ -316,6 +333,7 @@
     }
     function render() { screen === 'result' ? (result(), !saved && !terminalFailure && void save()) : gameId === 'trick-or-think' ? quiz() : connections(); }
     restore();
+    arrivedAtSavedResult = challenge !== null && state.completed && screen === 'result' && saved;
     if (state.completed && screen === 'result') render(); else intro(session ? 'Your unfinished game is ready to continue.' : '');
     window.addEventListener('pagehide', () => { disposed = true; }, { once: true });
     window.addEventListener('pageshow', event => { if (event.persisted && identity() === ownerKey) disposed = false; });
