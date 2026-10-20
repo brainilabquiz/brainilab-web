@@ -1,0 +1,65 @@
+{
+  "slug": "why-do-cats-purr",
+  "title": "Why do cats purr? A rumble with more than one meaning",
+  "description": "Cats purr when relaxed, but the sound can mean other things too. Discover the kitten connection and the surprising science behind that tiny rumble.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 191,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-cats-purr.webp",
+    "small": "/assets/images/learn/why-do-cats-purr-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-cats-purr-thumb.webp",
+    "alt": "A grey-and-white cat rests with half-closed eyes and folded paws on a cream blanket beside a navy cushion",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a fictional pet scene.",
+    "position": 35
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Fancy another small surprise? Try General Knowledge.",
+  "related": [
+    "why-do-cats-love-boxes",
+    "are-bats-blind"
+  ],
+  "sources": [
+    {
+      "url": "https://www.cats.org.uk/cats-blog/why-does-my-cat-purr",
+      "name": "Cats Protection — Why does my cat purr? Behaviour and context"
+    },
+    {
+      "url": "https://vcm2015.univie.ac.at/en/media/recent-press-releases/detailansicht-en/artikel/cats-purr-differently-than-previously-thought/",
+      "name": "University of Vienna (2023) — Cats purr differently than previously thought; author-institution research summary"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-small-motor",
+      "title": "A small motor, several meanings",
+      "html": "<p><strong>Cats purr in several situations, including relaxed social contact, feeding as kittens and stress. Purring does not always mean a cat is happy.</strong></p><p>A cat curled beside you may sound as though someone has left a tiny motor running. It is a familiar part of life with cats, but the noise is not a complete translation of how they feel.</p>"
+    },
+    {
+      "id": "the-kitten-connection",
+      "title": "The kitten connection",
+      "html": "<p><a href=\"https://www.cats.org.uk/cats-blog/why-does-my-cat-purr\">Cats Protection describes purring as part of the bond between kittens and their mother</a>. It can help kittens signal where they are and that it may be feeding time.</p><p>In adult cats, it can accompany contentment or a request for attention. Cats can also purr when stressed or in pain. The situation and the rest of their behaviour matter alongside the sound.</p>"
+    },
+    {
+      "id": "a-throat-mystery",
+      "title": "There is a throat mystery too",
+      "html": "<p>In a <a href=\"https://vcm2015.univie.ac.at/en/media/recent-press-releases/detailansicht-en/artikel/cats-purr-differently-than-previously-thought/\">2023 laboratory study reported by the University of Vienna</a>, cat voice boxes produced sounds at purring frequencies without repeated nerve signals driving muscle contractions.</p><p>Soft pads in the vocal folds may help explain those surprisingly low sounds. The researchers also said our understanding remains incomplete. Producing a purr-like sound in the laboratory does not explain every purr from a living cat.</p>"
+    },
+    {
+      "id": "more-to-notice",
+      "title": "A familiar animal, more to notice",
+      "html": "<p>The same cosy rumble can appear in different situations. It is an intriguing sound, rather than a built-in happiness meter.</p><p>For another feline puzzle, discover <a href=\"/learn/why-do-cats-love-boxes/\">why cats are so fond of boxes</a>. Or meet another misunderstood animal: <a href=\"/learn/are-bats-blind/\">bats can see as well as use echoes</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-20T20:21:23Z",
+  "updatedAt": "2026-10-20T20:21:23Z",
+  "minutes": 2
+}

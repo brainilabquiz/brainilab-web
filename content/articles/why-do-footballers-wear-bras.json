@@ -1,0 +1,69 @@
+{
+  "slug": "why-do-footballers-wear-bras",
+  "title": "Why do footballers wear “bras”? Meet the GPS vest",
+  "description": "That short black top on a footballer usually holds a tracking device. Discover what GPS vests measure and why the fabric is only part of the story.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 192,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-footballers-wear-bras.webp",
+    "small": "/assets/images/learn/why-do-footballers-wear-bras-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-footballers-wear-bras-thumb.webp",
+    "alt": "A footballer seen from behind wears a black tracking vest over a grey shirt, with a small pod in an upper-back pocket beside a green pitch",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a fictional player and unbranded tracking vest.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Put your sporting knowledge to the test with the Sports Quiz.",
+  "related": [
+    "offside-rule-football-explained",
+    "why-football-cards-red-yellow"
+  ],
+  "sources": [
+    {
+      "url": "https://statsports.com/the-locker/how-statsports-is-revolutionising-player-performance-across-field-sports",
+      "name": "STATSports — How performance-tracking vests are used across field sports"
+    },
+    {
+      "url": "https://uk.shop.statsports.com/products/statsports-vest-2-0",
+      "name": "STATSports — Vest description, tracker pocket and product images"
+    },
+    {
+      "url": "https://inside.fifa.com/en/innovation/news/new-global-standard-for-epts",
+      "name": "FIFA (2019) — Tracking technologies and distance/speed metrics; New Global Standard for EPTS"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-top-under-the-shirt",
+      "title": "The top under the shirt",
+      "html": "<p><strong>The short black top often mistaken for a bra on male footballers is usually a GPS tracking vest. It holds a small electronic device used to measure the player’s movement.</strong></p><p>You may spot one when a player swaps shirts. <a href=\"https://statsports.com/the-locker/how-statsports-is-revolutionising-player-performance-across-field-sports\">Tracking-equipment maker STATSports explains the vest’s purpose</a>. For soccer fans wondering about the unfamiliar outfit, the answer is wearable technology.</p>"
+    },
+    {
+      "id": "vest-and-tracker",
+      "title": "The cloth is not the tracker",
+      "html": "<p>The garment keeps the monitoring pod in place while the player runs and turns. <a href=\"https://uk.shop.statsports.com/products/statsports-vest-2-0\">STATSports’ vest description</a> separates the fabric vest from the tracker and shows the pocket on the upper back.</p><p>The vest can be worn over or under a training top. It is a practical holder for the hardware, rather than a shirt that somehow knows the score.</p>"
+    },
+    {
+      "id": "running-into-numbers",
+      "title": "Turning running into numbers",
+      "html": "<p><a href=\"https://inside.fifa.com/en/innovation/news/new-global-standard-for-epts\">FIFA’s tracking-system overview</a> describes measures such as distance covered and running speed. Those numbers help staff examine the physical work behind a performance.</p><p>A long sprint and a gentle jog tell different stories. Movement data adds detail to what coaches see; it does not turn effort into an automatic goal, tackle or match-winning pass.</p>"
+    },
+    {
+      "id": "more-than-gps",
+      "title": "GPS is one way to track play",
+      "html": "<p>FIFA also describes local-positioning wearables and camera-based tracking. A running statistic does not necessarily come from a GPS vest, and equipment varies between systems.</p><p>For more football details hiding in plain sight, untangle <a href=\"/learn/offside-rule-football-explained/\">the offside rule</a>, or discover <a href=\"/learn/why-football-cards-red-yellow/\">why cards are red and yellow</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-20T20:21:23Z",
+  "updatedAt": "2026-10-20T20:21:23Z",
+  "minutes": 2
+}
