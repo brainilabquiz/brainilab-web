@@ -1,7 +1,7 @@
 /* Show the completed puzzle before any network work; only confirmed saves earn progress. */
 window.BrainiPuzzleResults = (() => {
   function show(container, {gameId, name, result, next, metrics, guide, summary}) {
-    window.BrainiPostGame.mount(container, {gameId, name, result, next, metrics, guide});
+    window.BrainiPostGame.mount(container, {gameId, name, result, next, metrics, guide,challengeReady:false});
     container.querySelector('.post-score-label').textContent = 'rounds solved';
     container.querySelector('.post-message').textContent = summary;
     const reward = container.querySelector('[data-result-reward]');
@@ -22,6 +22,7 @@ window.BrainiPuzzleResults = (() => {
         if (!confirmed) throw new Error('Result unavailable');
         saved = true;
         Object.assign(result, confirmed);
+        window.BrainiPostGame.confirm?.(container,result);
         reward.dataset.resultReward = practice ? '' : confirmed.clientResultId || '';
         reward.innerHTML = window.BrainiContinuity?.rewardMarkup({...confirmed,gameId,practice}) || '';
         window.BrainiContinuity?.animateReward?.(reward);

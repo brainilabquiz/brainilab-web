@@ -437,13 +437,25 @@ window.BrainiAvatarDesign=(function(){
   const earnedExtras=[...academyRewards,...discoveryRewards,...dayRewards];
   for(const reward of earnedExtras)choices[reward.kind].push([reward.id,reward.name,null,0,reward.description]);
   const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description=''])=>Object.freeze({id,name,color,xp,description,...(earnedExtras.find(r=>r.id===id)||{})})))])));
+  // Seasonal items are earned separately. No amount of XP or editable metadata
+  // can grant them; callers must supply the server's sanitized entitlement IDs.
+  const eventOptions=Object.freeze({
+    hat:Object.freeze([Object.freeze({id:'pumpkin-thinker',name:'Pumpkin thinker',xp:0,event:'halloween-2026',description:'A little pumpkin for a bright idea.',requirement:'Complete one Halloween game'})]),
+    prop:Object.freeze([Object.freeze({id:'little-bat',name:'Little bat',xp:0,event:'halloween-2026',description:'A tiny bat to keep your ideas company.',requirement:'Play on three different days'})])
+  });
+  const eventIds=Object.freeze(['pumpkin-thinker','midnight','little-bat']);
+  const earnedIds=value=>Array.isArray(value)?value.filter(id=>typeof id==='string'&&eventIds.includes(id)):[];
+  const allOptions=Object.fromEntries(Object.entries(options).map(([key,list])=>[key,[...list,...(eventOptions[key]||[])]]));
   const metadataKeys=Object.freeze(Object.fromEntries(Object.keys(options).map(key=>[key,'brainilab_avatar_'+key.replace(/[A-Z]/g,c=>'_'+c.toLowerCase())+'_v1'])));
   function clean(value={}){
-    return Object.fromEntries(Object.entries(options).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
+    return Object.fromEntries(Object.entries(allOptions).map(([key,list])=>[key,list.some(item=>item.id===value?.[key])?value[key]:list[0].id]));
   }
-  function available(value,xp=0){
-    const result=clean(value),total=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0;
-    for(const [key,list] of Object.entries(options))if(list.find(item=>item.id===result[key]).xp>total)result[key]=list[0].id;
+  function available(value,xp=0,entitlements=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]){
+    const result=clean(value),total=Number.isFinite(Number(xp))?Math.max(0,Number(xp)):0,owned=earnedIds(entitlements);
+    for(const [key,list] of Object.entries(allOptions)){
+      const item=list.find(item=>item.id===result[key]);
+      if(item.event?!owned.includes(item.id):item.xp>total)result[key]=list[0].id;
+    }
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
@@ -454,8 +466,10 @@ window.BrainiAvatarDesign=(function(){
   function fromPublicStyle(style){
     if(!style||typeof style!=='object'||Array.isArray(style))return {};
     const value=Number(style.render_xp),renderXp=Number.isFinite(value)?Math.max(0,Math.min(9000,value)):0;
-    const frame=Object.hasOwn(frameXp,style.frame)&&renderXp>=frameXp[style.frame]?style.frame:'level';
-    return {avatarDesign:style.design?.mode==='built'?available(style.design,renderXp):null,
+    const entitlements=earnedIds(style.earned_items);
+    const frame=style.frame==='midnight'&&entitlements.includes('midnight')?'midnight':Object.hasOwn(frameXp,style.frame)&&renderXp>=frameXp[style.frame]?style.frame:'level';
+    return {avatarDesign:style.design?.mode==='built'?available(style.design,renderXp,entitlements):null,
+      ...(entitlements.length?{avatarEntitlements:entitlements}:{}),
       avatarRenderXp:renderXp,avatarFrame:frame,
       profileTitle:typeof style.title==='string'&&Object.hasOwn(profileTitles,style.title)?style.title:'none',
       profileAchievements:window.BrainiAchievementDisplay?.publicChoices(style.achievements)||[]};
@@ -470,10 +484,10 @@ window.BrainiAvatarDesign=(function(){
       if(id==='discovery_gameface')return '<g fill="#3c375f" stroke="#252342" stroke-width="2.5" stroke-linejoin="round"><path d="M64 87Q80 81 94 88L97 108Q93 117 85 107H73Q62 118 61 108Z M106 88Q121 81 136 87L139 108Q137 118 127 107H115Q107 117 103 108Z"/><path d="M96 94Q100 91 104 94M62 90 52 85M138 90 148 85" fill="none" stroke-width="4"/></g><path d="M72 91V101M67 96H77" stroke="#f0cf76" stroke-width="2.5" stroke-linecap="round"/><circle cx="125" cy="92" r="2.5" fill="#8cbe9b"/><circle cx="131" cy="99" r="2.5" fill="#d58a91"/><path d="M79 104H86M112 104H119" stroke="#8e84b0" stroke-width="2" stroke-linecap="round"/>';
       if(id==='academy_mathspecs')return '<g fill="#fff" fill-opacity=".3" stroke="#376b6a" stroke-width="4" stroke-linejoin="round"><rect x="62" y="82" width="33" height="29" rx="8"/><rect x="105" y="82" width="33" height="29" rx="8"/><path d="M95 94Q100 90 105 94M62 90 53 86M138 90 147 86" fill="none"/></g><path d="M72 88V104M64 96H80M119 96H131" fill="none" stroke="#e3ad38" stroke-width="3" stroke-linecap="round"/>';
       const arms='<path d="M65 94 53 89M135 94 147 89" fill="none" stroke="#302c46" stroke-width="4" stroke-linecap="round"/>';
-      if(id==='round')return `${arms}<g fill="#fff" fill-opacity=".17" stroke="#302c46" stroke-width="4"><circle cx="80" cy="96" r="14"/><circle cx="120" cy="96" r="14"/><path d="M94 95Q100 91 106 95" fill="none"/></g>`;
-      if(id==='square')return `${arms}<g fill="#fff" fill-opacity=".18" stroke="#286756" stroke-width="4"><rect x="65" y="84" width="29" height="25" rx="5"/><rect x="106" y="84" width="29" height="25" rx="5"/><path d="M94 94Q100 90 106 94" fill="none"/></g><path d="M139 87 143 91 148 79H156" fill="none" stroke="#286756" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
-      if(id==='sun')return `${arms}<g stroke="#302c46" stroke-width="4" stroke-linejoin="round"><path d="M63 88H95L92 105Q80 115 67 104ZM105 88H137L133 104Q120 115 108 105Z" fill="#302c46"/><path d="M95 94Q100 91 105 94" fill="none"/></g><path d="M69 93H82M111 93H122" stroke="#fff" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>`;
-      if(id==='star')return `${arms}<g fill="#f6cc4a" fill-opacity=".65" stroke="#7b6022" stroke-width="3" stroke-linejoin="round"><polygon points="${star(80,96)}"/><polygon points="${star(120,96)}"/><path d="M94 96H106"/></g>`;
+      if(id==='round')return `${arms}<g fill="#eff7fa" fill-opacity=".18" stroke="#39334f" stroke-width="3.5"><circle cx="80" cy="96" r="15"/><circle cx="120" cy="96" r="15"/><path d="M95 94Q100 89 105 94" fill="none"/></g><g fill="none" stroke="#fff7e4" stroke-width="2" stroke-linecap="round" opacity=".8"><path d="M70 92Q73 85 80 85M110 92Q113 85 120 85"/></g><path d="M66 98Q69 110 81 111M106 98Q109 110 121 111" fill="none" stroke="#776347" stroke-width="1.5"/><g fill="#d5ad64"><circle cx="64" cy="93" r="2"/><circle cx="136" cy="93" r="2"/></g>`;
+      if(id==='square')return `${arms}<g fill="#edf8ef" fill-opacity=".2" stroke="#286756" stroke-width="3.5" stroke-linejoin="round"><rect x="64" y="83" width="31" height="27" rx="7"/><rect x="105" y="83" width="31" height="27" rx="7"/><path d="M95 94Q100 89 105 94" fill="none"/></g><path d="M69 89Q70 87 75 87H84M110 89Q111 87 116 87H125" fill="none" stroke="#d3ead7" stroke-width="2" stroke-linecap="round"/><path d="M139 87 143 91 148 79H156" fill="none" stroke="#286756" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#d5ad64"><circle cx="65" cy="91" r="1.8"/><circle cx="135" cy="91" r="1.8"/></g>`;
+      if(id==='sun')return `${arms}<g stroke="#302c46" stroke-width="3.5" stroke-linejoin="round"><path d="M62 87Q78 84 96 87L93 105Q81 116 66 104ZM104 87Q122 84 138 87L134 104Q120 116 107 105Z" fill="#302c46"/><path d="M96 93Q100 90 104 93" fill="none"/></g><path d="M68 91 91 90 88 99 72 105Z M110 91 133 90 130 99 114 105Z" fill="#5d628a" opacity=".8"/><path d="M71 92H85M113 92H127" stroke="#e3e7f2" stroke-opacity=".8" stroke-width="2.5" stroke-linecap="round"/><g fill="#d2ac64"><circle cx="65" cy="91" r="1.7"/><circle cx="135" cy="91" r="1.7"/></g>`;
+      if(id==='star')return `${arms}<g fill="#ffe5a1" fill-opacity=".4" stroke="#9c772e" stroke-width="3" stroke-linejoin="round"><polygon points="${star(80,96,15)}"/><polygon points="${star(120,96,15)}"/><path d="M95 96H105"/></g><path d="M73 92 78 88M113 92 118 88" stroke="#fff9df" stroke-width="2.5" stroke-linecap="round"/><path d="M70 104 76 103M110 104 116 103" stroke="#d9ac4d" stroke-width="1.5" stroke-linecap="round"/>`;
       if(id==='visor')return '<path d="M55 89Q100 77 145 89L138 110Q100 119 62 110Z" fill="#347f8a" stroke="#263f60" stroke-width="4" stroke-linejoin="round"/><path d="M65 91Q100 84 135 91L131 104Q100 110 69 104Z" fill="#a7e6de"/><path d="M75 91 82 105M87 89 94 107" stroke="#fff" stroke-opacity=".6" stroke-width="4"/><path d="M52 90H61M139 90H148" stroke="#263f60" stroke-width="4" stroke-linecap="round"/>';
       if(id==='monocle')return '<circle cx="119" cy="97" r="17" fill="#eff9ff" fill-opacity=".14" stroke="#997025" stroke-width="4"/><path d="M109 89 116 85" stroke="#fff7d5" stroke-width="3" stroke-linecap="round"/><path d="M132 109Q151 122 142 140Q137 149 149 155" fill="none" stroke="#997025" stroke-width="2.5" stroke-linecap="round"/><circle cx="149" cy="156" r="3" fill="#e5bf5c"/>';
       if(id==='doughnut')return `${arms}<g fill="#fff" fill-opacity=".12" stroke="#c58c54" stroke-width="10"><circle cx="80" cy="96" r="13"/><circle cx="120" cy="96" r="13"/></g><path d="M63 92Q66 76 80 78Q94 77 97 92M103 92Q106 76 120 78Q134 77 137 92" fill="none" stroke="#e88fa7" stroke-width="6" stroke-linecap="round"/><path d="M71 80 73 84M85 81 88 78M111 80 114 83M125 80 128 77" stroke="#fff0bd" stroke-width="2.5" stroke-linecap="round"/><path d="M97 95H103" stroke="#6b4a39" stroke-width="4"/>`;
@@ -481,24 +495,26 @@ window.BrainiAvatarDesign=(function(){
       if(id==='camera')return `${arms}<g fill="#579588" fill-opacity=".25" stroke="#285d59" stroke-width="3.5" stroke-linejoin="round"><rect x="61" y="83" width="37" height="29" rx="7"/><rect x="102" y="83" width="37" height="29" rx="7"/><path d="M98 95Q100 93 102 95" fill="none"/></g><path d="M67 82V78H77V82M125 82V78H135V82" fill="#d49a55" stroke="#285d59" stroke-width="2.5" stroke-linejoin="round"/><g fill="#fff" fill-opacity=".12" stroke="#285d59" stroke-width="3"><circle cx="80" cy="97" r="10"/><circle cx="120" cy="97" r="10"/></g><path d="M73 91 77 88M113 91 117 88" stroke="#fff4df" stroke-width="2" stroke-linecap="round"/><circle cx="94" cy="87" r="1.5" fill="#f2c969"/><circle cx="135" cy="87" r="1.5" fill="#f2c969"/>`;
     }
     if(kind==='hat'){
+      if(id==='pumpkin-thinker')return '<path d="M96 15Q95 5 105 5L109 18" fill="#679151" stroke="#3f6840" stroke-width="3"/><path d="M51 44Q49 20 75 19Q100 9 125 19Q151 20 149 44Q144 67 101 63Q57 67 51 44Z" fill="#e7893e" stroke="#b8622a" stroke-width="2"/><path d="M79 22Q67 43 80 60M100 20V62M121 23Q135 44 121 60" fill="none" stroke="#c96d2e" stroke-width="3"/><path d="M72 35 84 32 80 42ZM117 32 130 35 121 42Z" fill="#49384e"/><path d="M89 48Q101 56 113 48" fill="none" stroke="#49384e" stroke-width="3" stroke-linecap="round"/>';
       if(id==='days_daydreamer')return '<path d="M59 49Q44 48 48 34Q50 23 62 26Q63 11 79 12Q91 7 101 17Q113 8 124 18Q140 17 141 31Q155 32 153 43Q153 52 140 53H64Z" fill="#fff5e9" stroke="#ab9ec6" stroke-width="2.5"/><path d="M109 24Q99 26 103 36Q108 43 117 37Q109 39 107 32Q105 27 109 24Z" fill="#e9c46a" stroke="#be9b50" stroke-width="1.2"/><path d="m78 23 2 4 4 1-3 3v4l-3-2-4 2 1-4-3-3 4-1Z" fill="#b6a6d5"/><path d="M62 42Q66 46 70 42M84 42Q88 46 92 42" fill="none" stroke="#86749d" stroke-width="2" stroke-linecap="round"/>';
       if(id==='discovery_paperhat')return '<path d="M49 54 99 9 152 54 99 65Z" fill="#eee9db" stroke="#8a8091" stroke-width="2" stroke-linejoin="round"/><path d="M99 9V58L73 35M99 9 124 35" fill="none" stroke="#bbb0ad" stroke-width="2"/><path d="M43 52H157V64H43Z" fill="#f8f3e7" stroke="#8a8091" stroke-width="2"/><path d="M54 57H79M118 57H145M80 37H91M108 35H120M69 44H91M108 43H132" stroke="#aca3ae" stroke-width="2" stroke-linecap="round"/><path d="m96 56 4-5 4 5-4 5Z" fill="#bf9272"/>';
       if(id==='discovery_crunch')return '<path d="M61 29H139L133 53Q100 68 67 53Z" fill="#82b4aa" stroke="#497d78" stroke-width="2.5"/><ellipse cx="100" cy="29" rx="39" ry="10" fill="#fff3d5" stroke="#497d78" stroke-width="2.5"/><g fill="#e3b569" stroke="#b38343" stroke-width="1.5"><circle cx="79" cy="26" r="5"/><circle cx="98" cy="31" r="5"/><circle cx="118" cy="27" r="5"/><circle cx="88" cy="33" r="4"/><circle cx="108" cy="24" r="4"/></g><path d="M135 27 148 7" stroke="#817891" stroke-width="4" stroke-linecap="round"/><ellipse cx="149" cy="7" rx="5" ry="7" fill="#b1abc1" transform="rotate(32 149 7)"/><path d="M77 43 81 40V52M93 42Q103 37 103 44L94 52H104M115 41Q124 39 124 44L119 46Q128 48 120 53H115" fill="none" stroke="#fff4cf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
       if(id==='academy_calendar')return '<g transform="rotate(-8 100 36)"><rect x="66" y="8" width="69" height="53" rx="6" fill="#fff6de" stroke="#926c56" stroke-width="2"/><path d="M67 14Q67 8 73 8H129Q135 8 135 14V24H67Z" fill="#c7655b"/><path d="M81 5V16M120 5V16" stroke="#634968" stroke-width="4" stroke-linecap="round"/><path d="M78 34H85M96 34H103M114 34H121M78 45H85M96 45H103" stroke="#b8a8a4" stroke-width="3" stroke-linecap="round"/><path d="m113 44 4 4 7-9" fill="none" stroke="#438461" stroke-width="3" stroke-linecap="round"/></g>';
       if(id==='academy_detective')return '<path d="M55 51 64 24Q67 17 77 21L97 28 118 19Q128 16 133 26L145 52Z" fill="#b88b60" stroke="#755642" stroke-width="2"/><path d="M71 22 77 49M89 26 91 48M111 23 109 48M127 22 123 48" fill="none" stroke="#e2bf8d" stroke-width="3"/><path d="M51 49Q99 43 149 49L157 58Q142 66 101 59Q61 66 43 58Z" fill="#99724e" stroke="#755642" stroke-width="2"/><path d="m92 49 8-5 8 5-8 5Z" fill="#526c58"/>';
       if(id==='academy_rainbow')return '<path d="M53 58A47 47 0 0 1 147 58" fill="none" stroke="#ce7970" stroke-width="10"/><path d="M63 58A37 37 0 0 1 137 58" fill="none" stroke="#efc76d" stroke-width="10"/><path d="M73 58A27 27 0 0 1 127 58" fill="none" stroke="#79ac91" stroke-width="10"/><path d="M83 58A17 17 0 0 1 117 58" fill="none" stroke="#7e9fce" stroke-width="10"/><path d="M39 60Q33 48 45 46Q49 34 60 43Q75 39 77 52Q88 60 74 65H45Z M127 60Q120 49 133 46Q138 35 149 44Q162 42 164 54Q174 62 159 66H133Z" fill="#fff7ea" stroke="#9baac4" stroke-width="2"/>';
-      if(id==='beanie')return '<path d="M54 48Q53 12 100 12T146 48" fill="#d66c3e"/><path d="M64 42Q67 21 82 19M84 42 87 16M103 42 103 14M123 42 118 17M138 42 132 25" fill="none" stroke="#bc5331" stroke-width="3"/><rect x="49" y="39" width="102" height="21" rx="8" fill="#e8844e"/><rect x="92" y="43" width="18" height="12" rx="3" fill="#ffdc86"/>';
-      if(id==='cap')return '<path d="M55 48Q52 15 99 15Q137 15 145 48Z" fill="#3e856c"/><path d="M100 18Q116 26 116 46M60 46H145" fill="none" stroke="#286a56" stroke-width="3"/><path d="M103 43Q145 37 164 51Q152 62 109 55Z" fill="#286a56"/><circle cx="94" cy="30" r="5" fill="#ffdd75"/>';
-      if(id==='wizard')return `<path d="M56 52 105 5 144 53Z" fill="#4b4288"/><path d="M46 52Q98 39 156 53Q154 67 101 65Q47 65 46 52Z" fill="#342e6b"/><polygon points="${star(105,32,8)}" fill="#ffdb66"/><circle cx="86" cy="45" r="3" fill="#ffdb66"/>`;
+      if(id==='beanie')return `<path d="M53 48Q52 12 100 11Q147 11 147 48Z" fill="#d66c3e" stroke="#9d4f35" stroke-width="2.5"/><path d="M57 45Q59 24 80 18Q68 27 68 45Z" fill="#ef9b61" opacity=".65"/><g fill="none" stroke="#b85434" stroke-width="2" stroke-linecap="round"><path d="M71 40Q72 24 84 17M87 40 91 14M103 40V14M120 40 116 16M135 40 130 23"/></g><rect x="48" y="39" width="104" height="23" rx="8" fill="#e68550" stroke="#9d4f35" stroke-width="2.5"/><path d="M54 44H146M57 57H143" fill="none" stroke="#f5b57c" stroke-width="1.5" stroke-linecap="round"/><path d="M62 45V56M72 45V56M82 45V56M119 45V56M129 45V56M139 45V56" stroke="#bb5a39" stroke-width="1.5"/><rect x="91" y="43" width="19" height="14" rx="3" fill="#ffdf8d" stroke="#b6753e" stroke-width="1.5"/><path d="m96 50 3 3 6-7" fill="none" stroke="#9e683a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      if(id==='cap')return `<path d="M54 48Q52 14 99 14Q138 14 146 48Z" fill="#438c73" stroke="#28634f" stroke-width="2.5"/><path d="M60 42Q65 23 87 19Q73 29 74 45Z" fill="#79ad8a" opacity=".65"/><path d="M100 17Q115 25 117 45M63 46H144" fill="none" stroke="#28634f" stroke-width="2"/><path d="M103 43Q145 37 164 51Q152 63 109 55Z" fill="#286a56" stroke="#245c4b" stroke-width="2"/><path d="M116 47Q143 43 155 50" fill="none" stroke="#78a78a" stroke-width="2" stroke-linecap="round"/><path d="M89 24Q95 21 101 25V35Q95 40 89 35Z" fill="#f7d776" stroke="#bca252" stroke-width="1.2"/><path d="m92 29 3 4 4-6" fill="none" stroke="#37684d" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="99" cy="14" rx="4" ry="2" fill="#28634f"/>`;
+      if(id==='wizard')return `<path d="M56 52Q78 20 105 5Q104 24 120 32L145 53Z" fill="#5b4d96" stroke="#342e6b" stroke-width="2.5" stroke-linejoin="round"/><path d="M65 48Q83 21 101 12Q88 36 90 48Z" fill="#8978b5" opacity=".6"/><path d="M100 17Q105 32 121 37" fill="none" stroke="#3b326b" stroke-width="2" stroke-linecap="round"/><path d="M46 52Q98 39 156 53Q154 67 101 65Q47 65 46 52Z" fill="#342e6b" stroke="#2d2856" stroke-width="2"/><path d="M59 52Q98 45 142 53" stroke="#9380be" stroke-width="2" stroke-linecap="round" fill="none"/><polygon points="${star(107,32,8)}" fill="#ffdb66" stroke="#c5a044" stroke-width="1"/><circle cx="83" cy="44" r="2.5" fill="#ffdb66"/><path d="m126 47 2-3 2 3-2 2Z" fill="#e9c774"/>`;
       if(id==='egg')return '<path d="M49 48Q39 32 58 27Q66 8 83 20Q104 6 117 20Q142 13 146 31Q166 39 148 53Q142 65 123 58Q105 67 89 58Q64 67 55 54Z" fill="#fff7e8" stroke="#dfcbaa" stroke-width="2"/><ellipse cx="102" cy="38" rx="20" ry="16" fill="#f4bf41"/><path d="M91 32Q96 26 104 28" fill="none" stroke="#ffe48a" stroke-width="4" stroke-linecap="round"/>';
       if(id==='cloud')return '<path d="M52 51Q42 28 65 27Q73 9 94 21Q116 7 130 27Q154 25 153 45Q163 62 139 63H62Q45 63 52 51Z" fill="#eff7ff" stroke="#a7b8d0" stroke-width="2"/><path d="M98 50 86 67H99L94 80 114 59H101L110 50Z" fill="#f5c94e" stroke="#b58a28" stroke-width="1.5" stroke-linejoin="round"/><path d="M61 69 57 76M139 69 135 76" stroke="#669fc4" stroke-width="3" stroke-linecap="round"/>';
-      if(id==='graduate')return '<path d="M75 34H129V57Q102 69 75 57Z" fill="#423d70"/><path d="M38 30 101 9 165 30 101 52Z" fill="#302b58" stroke="#6e659d" stroke-width="2" stroke-linejoin="round"/><path d="M101 30 146 39V65" fill="none" stroke="#efc653" stroke-width="3" stroke-linecap="round"/><path d="M142 64H150L153 77H139Z" fill="#efc653"/><circle cx="101" cy="30" r="4" fill="#efc653"/>';
+      if(id==='graduate')return `<path d="M75 34H129V57Q102 70 75 57Z" fill="#504777" stroke="#302b58" stroke-width="2"/><path d="M80 48Q102 57 125 48V54Q103 64 80 55Z" fill="#6e6597"/><path d="M38 30 101 9 165 30 101 52Z" fill="#393260" stroke="#211e46" stroke-width="2.5" stroke-linejoin="round"/><path d="M48 30 101 13 151 29" fill="none" stroke="#8d82ae" stroke-width="2" stroke-linecap="round"/><path d="M101 30 146 39V65" fill="none" stroke="#efc653" stroke-width="3" stroke-linecap="round"/><path d="M143 65H150L153 78H140Z" fill="#efc653" stroke="#b58b35" stroke-width="1.5" stroke-linejoin="round"/><path d="M146 68V75M149 69 150 75" stroke="#ffe7a0" stroke-width="1.2" stroke-linecap="round"/><circle cx="101" cy="30" r="4" fill="#efc653" stroke="#b58b35" stroke-width="1.2"/>`;
       if(id==='corn')return '<ellipse cx="101" cy="30" rx="22" ry="27" fill="#f5c34a" stroke="#c28d2e" stroke-width="2"/><path d="M83 17H119M80 28H122M81 39H121M93 5V52M104 4V54M114 9V48" stroke="#d39a30" stroke-width="2" fill="none"/><path d="M101 61Q68 64 53 31Q82 31 101 61Z" fill="#548b48" stroke="#376b3b" stroke-width="2"/><path d="M100 61Q121 25 150 29Q139 65 100 61Z" fill="#77a956" stroke="#376b3b" stroke-width="2"/><path d="M63 39Q84 43 100 59M138 37Q117 45 101 59" fill="none" stroke="#abc978" stroke-width="2.5" stroke-linecap="round"/>';
       if(id==='wave')return '<path d="M48 58Q63 51 70 31Q78 5 109 9Q141 12 137 34Q133 46 118 42Q132 27 115 25Q96 25 106 43Q118 58 154 53L153 65Q96 72 48 65Z" fill="#5caec1" stroke="#327a98" stroke-width="2" stroke-linejoin="round"/><path d="M64 44Q71 13 100 10Q129 7 137 25Q128 13 112 17Q91 22 99 40Q106 52 128 55" fill="none" stroke="#e7f7f8" stroke-width="6" stroke-linecap="round"/><path d="M57 59Q82 65 103 58M115 63Q133 67 146 60" fill="none" stroke="#b6e1e3" stroke-width="3" stroke-linecap="round"/>';
       if(id==='toast')return '<path d="M71 29Q62 20 71 12Q83 1 100 7Q117 1 129 12Q138 20 129 29V58Q100 65 71 58Z" fill="#bf834d" stroke="#8b5737" stroke-width="2.5" stroke-linejoin="round"/><path d="M77 29Q69 21 77 16Q87 9 100 14Q113 9 123 16Q131 21 123 29V53Q100 58 77 53Z" fill="#ffe0a0"/><path d="M87 27Q94 20 103 23" fill="none" stroke="#fff2c6" stroke-width="3" stroke-linecap="round"/><g fill="#6b4b38"><circle cx="90" cy="36" r="2.5"/><circle cx="111" cy="36" r="2.5"/></g><path d="M94 44Q100 49 107 44" fill="none" stroke="#6b4b38" stroke-width="2" stroke-linecap="round"/><ellipse cx="84" cy="42" rx="4" ry="2" fill="#e3a16d"/><ellipse cx="117" cy="42" rx="4" ry="2" fill="#e3a16d"/>';
       if(id==='coffee')return '<path d="M93 16Q86 11 92 5M108 16Q115 11 109 5" fill="none" stroke="#a7a9b8" stroke-width="2.5" stroke-linecap="round"/><path d="M128 29H135Q148 29 145 41Q143 50 128 48" fill="none" stroke="#a3523a" stroke-width="6" stroke-linecap="round"/><path d="M72 27H130L126 52Q101 64 77 52Z" fill="#e58a62" stroke="#a3523a" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="101" cy="27" rx="29" ry="9" fill="#fff5de" stroke="#a3523a" stroke-width="2.5"/><ellipse cx="101" cy="27" rx="22" ry="5.5" fill="#c38b57"/><path d="M101 30Q88 24 94 22Q98 20 101 24Q105 20 109 22Q115 24 101 30Z" fill="#fff5de"/><path d="M79 35 82 47" stroke="#fbb794" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="101" cy="60" rx="40" ry="4" fill="#f2c796" stroke="#a3523a" stroke-width="2"/>';
     }
     if(kind==='prop'){
+      if(id==='little-bat')return '<g transform="rotate(8 157 132)"><path d="M154 125Q138 107 122 112L127 132 139 128 145 143 156 137M162 125Q178 107 194 112L190 132 178 128 172 143 161 137" fill="#62527f" stroke="#403651" stroke-width="2" stroke-linejoin="round"/><path d="M150 123 149 111 158 118 167 111 166 125Q175 147 158 151Q142 147 150 123Z" fill="#403651"/><g fill="#fff1d3"><ellipse cx="153" cy="129" rx="2.6" ry="3"/><ellipse cx="163" cy="129" rx="2.6" ry="3"/></g><path d="M154 139Q158 143 162 139" fill="none" stroke="#d1a7bc" stroke-width="2" stroke-linecap="round"/></g>';
       if(id==='days_thyme')return '<path d="M141 143H177L173 175H146Z" fill="#cf8d67" stroke="#9d634a" stroke-width="2.5"/><rect x="138" y="139" width="42" height="9" rx="3" fill="#e3a87e" stroke="#9d634a" stroke-width="2"/><g fill="none" stroke="#527f53" stroke-width="2.5" stroke-linecap="round"><path d="M157 139V105M154 139 145 111M162 139l11-29"/></g><g fill="#8db67c" stroke="#527f53" stroke-width="1.5"><ellipse cx="150" cy="111" rx="7" ry="3.5" transform="rotate(35 150 111)"/><ellipse cx="164" cy="118" rx="7" ry="3.5" transform="rotate(-30 164 118)"/><ellipse cx="150" cy="125" rx="7" ry="3.5" transform="rotate(30 150 125)"/><ellipse cx="171" cy="110" rx="6" ry="3" transform="rotate(-45 171 110)"/><ellipse cx="142" cy="119" rx="6" ry="3" transform="rotate(40 142 119)"/></g><circle cx="159" cy="160" r="8" fill="#fff2d8" stroke="#a57552" stroke-width="1.5"/><path d="M159 155V160L163 162" fill="none" stroke="#8d6c51" stroke-width="1.5" stroke-linecap="round"/>';
       if(id==='days_smore')return '<g transform="rotate(10 158 143)"><path d="M134 158H183V173H134Z" fill="#d7aa70" stroke="#a27647" stroke-width="2"/><path d="M131 151H186V161H131Z" fill="#79513f" stroke="#573d33" stroke-width="2"/><path d="M138 120Q133 112 143 110H176Q185 113 180 123L181 147Q186 157 174 156H143Q131 158 137 147Z" fill="#fff2da" stroke="#cda977" stroke-width="2"/><path d="M140 126Q158 132 179 125" fill="none" stroke="#ead0a8" stroke-width="5" stroke-linecap="round"/><path d="M132 107H186V118H132Z" fill="#e6bf86" stroke="#a27647" stroke-width="2"/><path d="M140 111H143M152 111H155M165 111H168M177 111H180M141 167H145M154 167H158M169 167H173" stroke="#bb8d55" stroke-width="2" stroke-linecap="round"/><circle cx="148" cy="138" r="2" fill="#705043"/><circle cx="168" cy="138" r="2" fill="#705043"/><path d="M152 146Q158 151 164 146" fill="none" stroke="#9f6957" stroke-width="2" stroke-linecap="round"/></g>';
       if(id==='discovery_trailmix')return '<g transform="rotate(9 157 142)"><path d="M138 116 144 108H175L182 118 177 171H141Z" fill="#ecd7b2" stroke="#a17c52" stroke-width="2"/><path d="M140 119H181M144 112H175" stroke="#b28b62" stroke-width="3"/><path d="M144 133 160 125 177 134 173 157 149 160Z" fill="#759d7f"/><path d="m148 148 8-13 6 10 5-7 8 15Z" fill="#e7dfb2"/><g fill="#bd8b59"><ellipse cx="149" cy="164" rx="3" ry="2"/><ellipse cx="160" cy="164" rx="3" ry="2"/></g><circle cx="170" cy="164" r="2" fill="#93657c"/></g>';
@@ -508,8 +524,8 @@ window.BrainiAvatarDesign=(function(){
       if(id==='academy_pie')return '<g transform="rotate(8 159 142)"><path d="M134 143 168 115 187 150 153 172Z" fill="#f5e0b0" stroke="#a87953" stroke-width="2"/><path d="M134 143 153 155 187 135 168 115Z" fill="#fff0cd" stroke="#a87953" stroke-width="2"/><path d="M153 155V172L187 150V135Z" fill="#e8bb7d"/><path d="M154 162 184 144" stroke="#c85d78" stroke-width="5"/><path d="M135 144 153 155 187 135" fill="none" stroke="#fff9e9" stroke-width="5" stroke-linejoin="round"/><circle cx="163" cy="131" r="6" fill="#c65c70"/><path d="M163 125Q162 118 169 119" fill="none" stroke="#5a875c" stroke-width="2" stroke-linecap="round"/><path d="M161 143 164 142M172 137 175 135M148 142 150 141" stroke="#b396c4" stroke-width="2" stroke-linecap="round"/></g>';
       if(id==='academy_puzzle')return '<g transform="rotate(9 157 140)"><path d="M133 133H144Q136 119 148 117Q159 116 155 130H166V117Q181 111 182 124Q182 132 172 130V144H181V167H164Q170 154 158 154Q148 155 153 167H133V153Q121 159 121 148Q121 136 133 143Z" fill="#82b6b0" stroke="#477b7e" stroke-width="2.5" stroke-linejoin="round"/><path d="M148 120Q148 108 160 109Q172 110 167 122L181 126 165 131H151Z" fill="#f1ca6d" stroke="#b18a3d" stroke-width="2"/><circle cx="160" cy="117" r="2" fill="#463c54"/><path d="M143 147Q151 143 160 147" stroke="#c3e2cf" stroke-width="3" stroke-linecap="round" fill="none"/></g>';
       if(id==='icepop')return '<g transform="rotate(14 158 151)"><rect x="153" y="148" width="10" height="31" rx="5" fill="#c18d56"/><path d="M139 119Q139 104 158 104T177 119V151Q158 162 139 151Z" fill="#ef7095"/><path d="M139 130H177V144H139Z" fill="#fff4d6"/><path d="M139 144H177V151Q158 162 139 151Z" fill="#6ab9d5"/><path d="M147 116V128" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g><path d="M27 65V79M20 72H34M22 67 32 77M22 77 32 67" stroke="#78b8cb" stroke-width="2" stroke-linecap="round"/>';
-      if(id==='bulb')return '<g transform="rotate(12 160 135)"><path d="M147 137Q146 130 141 124Q129 103 147 94Q164 84 176 102Q183 116 171 128Q168 132 168 137Z" fill="#ffda6d" stroke="#b88b23" stroke-width="3"/><path d="M150 139H166M151 146H165M154 152H162M154 135 150 113 162 116 161 135" fill="none" stroke="#896b2d" stroke-width="3" stroke-linecap="round"/><path d="M135 86 130 80M158 78V70M180 86 185 80" stroke="#d6a72c" stroke-width="3" stroke-linecap="round"/></g>';
-      if(id==='pencil')return '<g transform="rotate(18 158 144)"><path d="M148 119H168V163L158 183 148 163Z" fill="#f5c75c" stroke="#8d6a31" stroke-width="2"/><path d="M149 163H167L158 183Z" fill="#e7bf94"/><path d="M154 175 158 183 162 175Z" fill="#41384c"/><rect x="147" y="106" width="22" height="14" rx="5" fill="#e98c9e"/><path d="M148 124H168M158 128V160" stroke="#b48b32" stroke-width="3"/></g>';
+      if(id==='bulb')return `<g transform="rotate(12 160 135)"><path d="M147 137Q146 130 141 124Q129 103 147 94Q164 84 176 102Q183 116 171 128Q168 132 168 137Z" fill="#ffdc77" stroke="#b88b23" stroke-width="2.5"/><path d="M143 111Q141 102 150 99" fill="none" stroke="#fff3c7" stroke-width="4" stroke-linecap="round"/><path d="M150 136 148 115 154 119 159 114 164 119 166 114 163 136" fill="none" stroke="#b18a36" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M147 137H168V147Q158 154 148 147Z" fill="#b9b5ac" stroke="#746d64" stroke-width="2"/><path d="M150 140H166M150 145H166M155 152H161" fill="none" stroke="#f4ebce" stroke-width="2" stroke-linecap="round"/><path d="M135 86 130 80M158 78V70M180 86 185 80" stroke="#d6a72c" stroke-width="3" stroke-linecap="round"/></g>`;
+      if(id==='pencil')return `<g transform="rotate(18 158 144)"><path d="M148 119H168V163L158 183 148 163Z" fill="#f5c75c" stroke="#8d6a31" stroke-width="2" stroke-linejoin="round"/><path d="M149 120H155V163H149Z" fill="#ffe69a"/><path d="M161 120H167V163H161Z" fill="#d8a33e"/><path d="M149 163H167L158 183Z" fill="#e7bf94" stroke="#8d6a31" stroke-width="1.5" stroke-linejoin="round"/><path d="M154 175 158 183 162 175Z" fill="#41384c"/><rect x="147" y="106" width="22" height="14" rx="5" fill="#e98c9e" stroke="#b96e7e" stroke-width="2"/><path d="M151 109H163" stroke="#ffc1c6" stroke-width="2" stroke-linecap="round"/><path d="M148 120H168V128H148Z" fill="#c9c5bb" stroke="#8f8c86" stroke-width="1.5"/><path d="M151 121V126M156 121V126M161 121V126M166 121V126" stroke="#eee9dd" stroke-width="1.2"/><path d="M158 132V159" stroke="#b48b32" stroke-width="1.5" stroke-linecap="round"/></g>`;
       if(id==='cookie')return '<g transform="rotate(12 158 137)"><path d="M174 115Q179 116 181 122Q171 126 182 133Q184 150 170 158Q150 168 138 150Q126 132 140 118Q155 104 174 115Z" fill="#d7a15f" stroke="#a77342" stroke-width="2"/><g fill="#825133"><circle cx="147" cy="119" r="3"/><circle cx="171" cy="144" r="3"/><circle cx="147" cy="148" r="3"/><circle cx="160" cy="155" r="2.5"/></g><g fill="none" stroke="#45394b" stroke-width="2"><circle cx="148" cy="132" r="6"/><circle cx="165" cy="132" r="6"/><path d="M154 132H159M153 143Q158 147 163 143" stroke-linecap="round"/></g><circle cx="148" cy="132" r="1.5" fill="#45394b"/><circle cx="165" cy="132" r="1.5" fill="#45394b"/></g>';
       if(id==='peas')return '<g transform="rotate(16 158 138)"><path d="M160 102Q185 125 169 159L156 177Q136 151 140 128Q142 110 160 102Z" fill="#568b45" stroke="#366b39" stroke-width="2"/><path d="M158 108Q148 138 158 168" fill="none" stroke="#a5ce70" stroke-width="3"/><g fill="#a5cd72" stroke="#42733b" stroke-width="1.5"><circle cx="158" cy="122" r="9"/><circle cx="158" cy="141" r="9"/><circle cx="159" cy="159" r="8"/></g><path d="M153 121 155 122 157 121M160 121 162 122 164 121M155 140 157 141M161 140 163 141M156 145Q159 148 162 145" fill="none" stroke="#365d36" stroke-width="1.4" stroke-linecap="round"/><path d="M160 103Q157 94 165 94" fill="none" stroke="#366b39" stroke-width="3" stroke-linecap="round"/></g>';
       if(id==='rocket')return '<g transform="rotate(12 159 139)"><path d="M149 153 144 170 154 165M168 153 175 169 164 166" fill="#d87742" stroke="#9d4b30" stroke-width="2" stroke-linejoin="round"/><path d="M153 161Q146 174 159 182Q172 175 165 161Z" fill="#f2bc51"/><path d="M156 164Q152 174 159 177Q166 174 162 164Z" fill="#fff0b0"/><path d="M149 154Q139 122 158 98Q179 120 168 154L166 163H152Z" fill="#f8f0df" stroke="#85879f" stroke-width="2"/><path d="M147 117Q151 104 158 98Q168 108 171 118Z" fill="#d87742"/><circle cx="159" cy="134" r="8" fill="#79bfd1" stroke="#435673" stroke-width="3"/><path d="M153 154H166" stroke="#435673" stroke-width="3"/></g>';
@@ -521,8 +537,22 @@ window.BrainiAvatarDesign=(function(){
     }
     return '';
   }
-  function markup(value,xp=0){
-    const v=available(value,xp),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt),bg=color('background',v.background);
+  // Safe framing measured from the original local SVG geometry; no runtime layout reads.
+  const previewBoxes=Object.freeze({"pumpkin-thinker":"40 -5 120 85","little-bat":"105 95 100 80","round":"40.6 68.6 118.8 54.8","square":"39.7 65.7 129.6 57.6","sun":"40.6 73.1 118.8 49.6","monocle":"91.1 69.1 71.8 100.8","heart":"40.6 69 118.8 55.4","star":"40.6 68.6 118.8 51.9","visor":"39.4 70.4 121.2 56.7","doughnut":"40.6 64.6 118.8 56.8","camera":"40.6 65.6 118.8 58.8","academy_mathspecs":"40.6 69.6 118.8 53.8","discovery_gameface":"39.4 71.6 121.2 53.7","days_sunday":"36.9 57.9 127.2 79.2","beanie":"34.6 -2.4 130.8 77.8","egg":"31.5 -1.1 139.2 77.7","cap":"39.9 -2 138.1 74.2","corn":"40.3 -9.7 122.4 83.8","toast":"56.8 -4.8 86.4 76","cloud":"35.3 1.5 134.4 92.2","coffee":"49.5 -6.5 107.5 81.9","wave":"34.4 -5.1 133.2 87.2","wizard":"32 -9 138 88.3","graduate":"22.3 -6.7 158.4 100.4","academy_calendar":"51.9 -8.1 96.8 84.1","academy_detective":"28.6 3.9 142.8 72.8","academy_rainbow":"20.9 -5.1 163.2 87.2","discovery_paperhat":"28.6 -5.4 142.8 84.8","discovery_crunch":"48.4 -14.2 121.1 87.3","days_daydreamer":"33.5 -3.3 133.3 69.9","cookie":"118.8 96.4 77.5 78.8","icepop":"127.4 89.9 71.3 100.3","peas":"117.9 84.6 78 107.1","bulb":"124.5 53.4 85.2 111.2","train":"118.5 71.5 75.4 114.4","owl":"126.9 99.4 61.7 73.4","pencil":"125.5 93.5 65.7 101.7","nacho":"122.4 95.6 72.4 78","rocket":"126.2 84.4 65.5 110.1","roll":"117.7 106.7 81.2 83.5","book":"124.3 92.3 70.4 98.4","academy_abacus":"119.3 95.5 78.9 92.2","academy_moon":"111.3 86.1 85.6 88.8","academy_pie":"120.7 102.4 79.2 82.6","academy_puzzle":"107.4 98.1 88 82.4","discovery_trailmix":"123.8 95.5 73.1 88.9","discovery_globe":"118.6 91.6 78.8 94.8","days_thyme":"125.3 93.5 64.8 91.6","days_smore":"117.9 92.6 84.3 94.6"});
+  // Catalogue previews isolate the chosen object; equipped portraits keep the full character.
+  function preview(kind,id,draft={}){
+    if(!['glasses','hat','prop'].includes(kind))return '';
+    const item=allOptions[kind].find(option=>option.id===id);
+    if(!item)return '';
+    if(id==='none')return markup({...draft,mode:'built',glasses:'none',hat:'none',prop:'none'},0);
+    const box=previewBoxes[id]||(kind==='glasses'?'40 64 120 104':kind==='hat'?'26 -8 150 100':'112 66 86 124');
+    let drawing=accessory(kind,id);
+    if(id==='icepop')drawing=drawing.slice(0,drawing.lastIndexOf('</g>')+4);
+    const label=item.name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="120" height="120" role="img" aria-label="${label}" class="braini-cosmetic-preview" data-cosmetic-kind="${kind}" data-cosmetic-id="${id}">${drawing}</svg>`;
+  }
+  function markup(value,xp=0,entitlements=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]){
+    const v=available(value,xp,entitlements),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt),bg=color('background',v.background);
     const dark=v.skin==='umber'||v.skin==='ebony',mouth=dark?'#efbdab':'#673d3c',nose=dark?'#f4d0b0':'#302c46';
     const back={bob:`<path d="M53 87Q46 39 101 38Q154 36 148 98L150 139Q99 158 49 138Z" fill="${hair}"/>`,
       ponytail:`<ellipse cx="145" cy="108" rx="22" ry="42" fill="${hair}"/><path d="M131 75Q144 65 157 77" fill="none" stroke="#e9bd5e" stroke-width="5"/>`,
@@ -538,7 +568,7 @@ window.BrainiAvatarDesign=(function(){
     }[v.hair];
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${back}<path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/><path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${hairFront}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g><path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
   }
-  return Object.freeze({options,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup});
+  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview});
 })();
 
 /* ===== profile-rewards-model.js ===== */
@@ -567,7 +597,10 @@ window.BrainiRewardCatalog=(function(){
     {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
     {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
   ].map(Object.freeze));
-  const groups=Object.freeze({frame:frames,title:titles,...BrainiAvatarDesign.options,scene:scenes});
+  const eventFrame=Object.freeze({id:'midnight',name:'Midnight',xp:0,event:'halloween-2026',description:'A quiet midnight frame, with a little Halloween sparkle.',requirement:'Complete both Halloween games'});
+  const groups=Object.freeze({frame:Object.freeze([...frames,eventFrame]),title:titles,...Object.fromEntries(Object.entries(BrainiAvatarDesign.options).map(([key,list])=>[key,Object.freeze([...list,...(BrainiAvatarDesign.eventOptions[key]||[])])])),scene:scenes});
+  const eventOwned=()=>BrainiAvatarDesign.earnedIds(window.BrainiHalloweenEntitlements?.snapshot?.().entitlements);
+  function visibleGroups(){const state=window.BrainiHalloweenEntitlements?.snapshot?.(),active=window.BrainiLabHalloween?.availability?.().allowed===true;return Object.fromEntries(Object.entries(groups).map(([key,list])=>[key,list.filter(item=>!item.event||state?.visible||active||eventOwned().includes(item.id))]));}
   const metadataKeys=Object.freeze({frame:'brainilab_avatar_frame_v1',title:'brainilab_profile_title_v1',...BrainiAvatarDesign.metadataKeys,scene:'brainilab_profile_scene_v1'});
   const xp=value=>Number.isFinite(Number(value))?Math.max(0,Math.floor(Number(value))):0;
   function clean(value={}){
@@ -583,7 +616,7 @@ window.BrainiRewardCatalog=(function(){
     const completed=Math.min(target,required.filter(id=>played.includes(id)).length);
     return {completed,target,earned:completed===target,missing:required.filter(id=>!played.includes(id))};
   }
-  const unlocked=(item,earned,academy=[],discovery=[],activeDays=0)=>item.course?academyIds(academy).includes(item.id):item.challenge?discoveryProgress(item,discovery).earned:item.days?dayCount(activeDays)>=item.days:item.xp<=xp(earned);
+  const unlocked=(item,earned,academy=[],discovery=[],activeDays=0)=>item.event?eventOwned().includes(item.id):item.course?academyIds(academy).includes(item.id):item.challenge?discoveryProgress(item,discovery).earned:item.days?dayCount(activeDays)>=item.days:item.xp<=xp(earned);
   function available(value,earned,academy=[],discovery=[],activeDays=0){
     const result=clean(value),total=xp(earned);
     for(const [key,list] of Object.entries(groups))if(!unlocked(list.find(item=>item.id===result[key]),total,academy,discovery,activeDays))result[key]=list[0].id;
@@ -593,6 +626,25 @@ window.BrainiRewardCatalog=(function(){
     const total=xp(earned);
     return Object.entries(groups).flatMap(([kind,list])=>list.map(item=>({...item,kind})))
       .filter(r=>!r.course&&!r.challenge&&!r.days&&r.xp>total).sort((a,b)=>a.xp-b.xp)[0]||null;
+  }
+  function xpStep(earned){
+    const total=xp(earned),item=next(total);if(!item)return null;
+    const thresholds=Object.values(groups).flat().filter(r=>!r.course&&!r.challenge&&!r.days&&r.xp>0&&r.xp<=total).map(r=>r.xp);
+    const start=Math.max(0,...thresholds),max=item.xp-start,value=total-start;
+    return {type:'xp',item,start,value,max,remaining:item.xp-total};
+  }
+  // One useful target, using the collection already checked for this account.
+  // Days played are cumulative: they are never a claim about an unbroken streak.
+  function collectionGoal(earned,state={}){
+    const step=xpStep(earned),known=state.cloud&&state.owner&&!state.loading&&!state.error&&Number.isSafeInteger(state.activeDays)&&state.activeDays>=0;
+    if(!known)return step;
+    const days=dayCount(state.activeDays),day=dayRewards.find(r=>r.days>days);
+    if(day&&(!step||day.days-days===1))return {type:'days',item:day,value:days,max:day.days,remaining:day.days-days};
+    if(step)return step;
+    const challenges=discoveryRewards.map(item=>({item,...discoveryProgress(item,state.discovery)})).filter(r=>!r.earned).sort((a,b)=>(a.target-a.completed)-(b.target-b.completed));
+    if(challenges.length){const r=challenges[0];return {type:'discovery',item:r.item,value:r.completed,max:r.target,remaining:r.target-r.completed};}
+    const courses=academyIds(state.academy),course=academyRewards.find(r=>!courses.includes(r.id));
+    return course?{type:'academy',item:course,value:0,max:1,remaining:1}:null;
   }
   function surprise(style,earned,random=Math.random,academy=[],discovery=[],activeDays=0){
     const total=xp(earned),current=available(style,total,academy,discovery,activeDays),result={...current,mode:'built'};
@@ -609,7 +661,7 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,groups,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,get groups(){return visibleGroups();},isUnlocked:unlocked,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
 })();
 
 /* ===== data.js ===== */
@@ -961,6 +1013,19 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   }
 
   let state=loadState();
+  // A cosmetic preference only. Kept outside progression/game state and gated
+  // on every read; authoritative Auth refreshes replace any browser preference.
+  let avatarFramePreference=null,avatarFrameOwner=null;
+  const avatarStyleOwner=()=>state.auth?.status==='authenticated'&&state.auth.user?.id?'account:'+state.auth.user.id:'guest:'+(state.auth?.guestUserId||state.auth?.anonymousPlayerId||'browser');
+  const cleanAvatarFrame=value=>['level','blue','green','copper','gold','orbit','midnight'].includes(value)?value:'level';
+  function cachedAvatarStyle(){
+    try{const value=JSON.parse(localStorage.getItem('brainilab-profile-style-v1:'+avatarStyleOwner())||'null');return value&&typeof value==='object'&&!Array.isArray(value)?value:null;}catch{return null;}
+  }
+  function preferredAvatarFrame(){
+    const owner=avatarStyleOwner();
+    if(avatarFrameOwner===owner)return avatarFramePreference;
+    return cleanAvatarFrame(cachedAvatarStyle()?.frame);
+  }
   // Persist the browser identity before the first navigation or game.
   save();
 
@@ -971,6 +1036,21 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   function game(gameId){ return clone(GAME_DEFS[gameId]||null); }
   function player(){
     const p=clone(state.player),today=todayKey();
+    // The confirmed, owner-isolated guest style is the browser source of truth.
+    // Reading it also restores the look on pages that never load ProfileRewards.
+    // Seasonal art is still gated by the separate event ledger at render time.
+    if(state.auth?.status!=='authenticated'){
+      const style=cachedAvatarStyle();
+      if(style&&window.BrainiAvatarDesign)p.avatarDesign=BrainiAvatarDesign.clean(style);
+    }
+    // Runtime-only earned cosmetics; never cached as a claim or read from
+    // editable Auth metadata. Public peer styles use their own sanitized IDs.
+    const eventItems=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements;
+    if(eventItems?.length)p.avatarEntitlements=[...eventItems];
+    const frame=preferredAvatarFrame(),xp=Number.isFinite(Number(p.xp))?Math.max(0,Number(p.xp)):0;
+    const cost=window.BrainiAvatarDesign?.frameXp?.[frame];
+    const frameAllowed=frame==='midnight'?eventItems?.includes('midnight'):Number.isFinite(cost)&&xp>=cost;
+    if(frameAllowed&&frame!=='level')p.avatarFrame=frame;else delete p.avatarFrame;
     const yesterday=new Date(Date.parse(today+'T12:00:00Z')-86400000).toISOString().slice(0,10);
     const last=p.lastStreakDate;
     p.currentStreak=last && last>=yesterday && last<=today?Math.max(0,Number(p.currentStreak)||0):0;
@@ -1350,7 +1430,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   async function submitGameResultHybrid(gameId,payload){
     // Try First runs the full real game engine but is deliberately invisible to results, XP and stats.
     if(new URLSearchParams(location.search).get("try")==="1"){
-      return Object.assign({gameId,practice:true,tryFirst:true,cloudSyncStatus:"disabled",clientResultId:null},clone(payload));
+      return Object.assign(clone(payload),{gameId,practice:true,tryFirst:true,cloudSyncStatus:"disabled",clientResultId:null});
     }
     // Map Hunt is retired. Do not add new local or cloud analytics/results.
     if(gameId==="maphunt"){
@@ -1904,6 +1984,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const meta=user.user_metadata||{};
     // Cosmetic preferences only; never used to calculate XP, scores or access.
     state.player.avatarDesign=window.BrainiAvatarDesign?.fromMetadata?.(meta)||null;
+    avatarFrameOwner='account:'+user.id;avatarFramePreference=cleanAvatarFrame(meta.brainilab_avatar_frame_v1);
     const suggestedName=(
       meta.full_name ||
       meta.name ||
@@ -1946,7 +2027,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function setAvatarDesign(value){
     const design=window.BrainiAvatarDesign?.clean?.(value)||null;
-    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design))return;
+    const nextFrame=value&&Object.hasOwn(value,'frame')?cleanAvatarFrame(value.frame):null;
+    const frameChanged=nextFrame!==null&&(avatarFrameOwner!==avatarStyleOwner()||avatarFramePreference!==nextFrame);
+    if(nextFrame!==null){avatarFrameOwner=avatarStyleOwner();avatarFramePreference=nextFrame;}
+    if(JSON.stringify(state.player.avatarDesign||null)===JSON.stringify(design)){
+      if(frameChanged)window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
+      return;
+    }
     state.player.avatarDesign=design;
     save();
     window.dispatchEvent(new CustomEvent('brainilab:datachange',{detail:{type:'avatar_style'}}));
@@ -1954,6 +2041,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
 
   function resetPlayerIdentity(){
     state=clone(defaultState);
+    avatarFramePreference=null;avatarFrameOwner=null;
     state.daily.key=todayKey();
     state.daily.number=dailyNumber();
     state.auth.anonymousPlayerId=makeAnonId();
@@ -2300,6 +2388,210 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     setDailyBonusChoice(id){state.daily.bonusChoice=id||null;save();},
     DAILY_GAME_IDS:dailyGameIdsForDate(todayKey())
   };
+})();
+
+/* ===== halloween-guest-model.js ===== */
+
+/* Browser-only event collection, isolated from the main player/progression store. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.BrainiHalloweenGuestModel=api;})(typeof window!=='undefined'?window:globalThis,function(){
+ 'use strict';
+ const games=['trick-or-think','spooky-connections'];
+ const validDay=day=>/^2026-(10-(?:19|2\d|3[01])|11-01)$/.test(day);
+ function clean(input){
+  const records=[];
+  for(const r of Array.isArray(input?.records)?input.records:[]){
+   if(!r||!games.includes(r.game)||!validDay(r.day)||typeof r.id!=='string'||r.id.length>100||records.some(x=>x.id===r.id))continue;
+   if(!Number.isInteger(r.score)||r.score<0||r.score>100)continue;
+   records.push({id:r.id,game:r.game,day:r.day,score:r.score});if(records.length>=1000)break;
+  }
+  return {version:1,records};
+ }
+ function state(input){
+  const ledger=clean(input),distinct=new Set(ledger.records.map(r=>r.game)),days=new Set(ledger.records.map(r=>r.day));
+  const entitlements=[];if(ledger.records.length)entitlements.push('pumpkin-thinker');if(distinct.size>=2)entitlements.push('midnight');if(days.size>=3)entitlements.push('little-bat');
+  return {entitlements,progress:{games_completed:ledger.records.length,distinct_games:distinct.size,days_played:days.size}};
+ }
+ function complete(input,record){
+  const ledger=clean(input);
+  if(!record||!games.includes(record.game)||!validDay(record.day)||typeof record.id!=='string'||!record.id||!Number.isInteger(record.score)||record.score<0||record.score>100)throw Error('Invalid Halloween completion');
+  const found=ledger.records.find(r=>r.id===record.id);
+  if(found){if(found.game!==record.game||found.day!==record.day||found.score!==record.score)throw Error('Conflicting completion');return ledger;}
+  if(ledger.records.some(r=>r.game===record.game&&r.day===record.day))return ledger;
+  ledger.records.push({...record});return clean(ledger);
+ }
+ return Object.freeze({clean,state,complete,validDay});
+});
+
+/* ===== halloween-entitlements.js ===== */
+
+/* Halloween account rewards. Server-verified IDs, never editable Auth claims. */
+window.BrainiHalloweenEntitlements=(function(){
+  const ids=['pumpkin-thinker','midnight','little-bat'];
+  let owner=null,generation=0,loading=false,error='',state=null;
+  const clean=value=>Array.isArray(value)?[...new Set(value.filter(id=>typeof id==='string'&&ids.includes(id)))]:[];
+  function identity(){
+    const auth=window.BrainiData?.authState?.()||{};
+    let preview=false;try{preview=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)&&JSON.parse(document.querySelector('script[data-halloween-config]')?.textContent||'{}').preview===true;}catch{}
+    if(preview)return {id:'preview:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
+    return auth.status==='authenticated'&&auth.user?.id?{id:'account:'+auth.user.id,uid:auth.user.id,cloud:true}
+      :{id:'guest:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
+  }
+  const emit=()=>window.dispatchEvent(new CustomEvent('brainilab:halloween-entitlements'));
+  function snapshot(){
+    const who=identity();
+    // Guest ownership is already scoped by the event coordinator's browser
+    // ledger. It must be readable on a fresh Home page without a profile load
+    // or an account RPC; never reuse a previous account's in-memory state.
+    if(!who.cloud){
+      let earned=[];try{earned=window.BrainiLabHalloween?.guestEntitlements?.()||[];}catch{}
+      return {owner:who.id,loading:false,error:'',cloud:false,enabled:false,status:'guest',visible:false,entitlements:clean(earned),progress:{games_completed:0,distinct_games:0,days_played:0}};
+    }
+    if(who.id!==owner?.id)return {owner:who.id,loading:false,error:'',enabled:false,status:'unavailable',visible:false,entitlements:[],progress:{games_completed:0,distinct_games:0,days_played:0}};
+    const value=state||{};
+    const entitlements=clean(value.entitlements);
+    return {owner:who.id,loading,error,cloud:who.cloud,enabled:value.enabled===true,status:value.status||'unavailable',visible:value.enabled===true&&value.status==='active',
+      entitlements,progress:{games_completed:Math.max(0,Number(value.progress?.games_completed)||0),distinct_games:Math.max(0,Number(value.progress?.distinct_games)||0),days_played:Math.max(0,Number(value.progress?.days_played)||0)}};
+  }
+  function clear(){generation++;owner=null;state=null;loading=false;error='';emit();}
+  async function request(name,args={}){
+    const current=identity();
+    if(!current.cloud)throw Error('Sign in to save Halloween rewards to your account.');
+    const sb=window.BrainiBackendAuth?.getClient?.();
+    if(!sb?.rpc)throw Error('Halloween account connection is unavailable.');
+    let timer;
+    const {data,error:rpcError}=await Promise.race([sb.rpc(name,args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Halloween request timed out. Please try again.')),12000);})]).finally(()=>clearTimeout(timer));
+    if(rpcError)throw Error(rpcError.message||'Halloween could not be checked.');
+    if(identity().id!==current.id)throw Error('Account changed. Please try again.');
+    return data;
+  }
+  async function load(){
+    const current=identity(),run=++generation;
+    if(owner?.id!==current.id)state=null;
+    owner=current;error='';loading=current.cloud;emit();
+    if(!current.cloud){loading=false;emit();return snapshot();}
+    try{
+      const data=await request('halloween_event_state');
+      if(run!==generation)return snapshot();
+      state=data;
+    }catch{if(run===generation){state=null;error='Halloween rewards could not be checked. Your saved XP rewards are unchanged.';}}
+    finally{if(run===generation){loading=false;emit();}}
+    return snapshot();
+  }
+  async function startGame(game){
+    if(!['trick-or-think','spooky-connections'].includes(game))throw Error('Unknown Halloween game.');
+    const run=generation,data=await request('halloween_start_game',{p_game:game});
+    if(run!==generation)throw Error('Account changed. Please try again.');
+    return data;
+  }
+  async function completeGame(sessionId,answers){
+    const current=identity(),run=generation;
+    const data=await request('halloween_complete_game',{p_session_id:sessionId,p_answers:answers});
+    if(run===generation&&identity().id===current.id){owner=current;state=data.state;error='';emit();}
+    return data;
+  }
+  window.addEventListener('brainilab:authchange',()=>{if(identity().id!==owner?.id){clear();load();}});
+  window.addEventListener('online',()=>{if(identity().cloud)load();});
+  return Object.freeze({load,snapshot,startGame,completeGame,clear});
+})();
+
+/* ===== halloween-event-client.js ===== */
+
+/* Same-origin event coordinator. Private previews never contact account RPCs. */
+(function(){
+ 'use strict';
+ let config={},baseTick=performance.now();
+ try{config=JSON.parse(document.querySelector('script[data-halloween-config]')?.textContent||'{}');}catch{}
+ const local=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+ if(config.preview&&!local)config={active:false};
+ const preview=config.preview===true&&local;
+ const model=()=>window.BrainiHalloweenGuestModel;
+ const eventStore=()=>window.BrainiHalloweenEntitlements;
+ const emit=()=>window.dispatchEvent(new CustomEvent('brainilab:halloween-progress'));
+ const terminalError=(message,code)=>Object.assign(Error(message),{code});
+ const windowError=()=>terminalError(availability().message,'HALLOWEEN_CLOSED');
+ function accountError(error,session){
+  if(/Halloween (?:session is not open|games are not open)/.test(error?.message||'')){
+   const now=Number(config.serverNow)+(performance.now()-baseTick);
+   const day=Number.isFinite(now)?new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit'}).format(now):config.day;
+   if(session?.day&&session.day!==day&&now<Date.parse(config.end))return terminalError('A new Halloween day has begun. Start a fresh game to save today’s progress.','HALLOWEEN_DAY_CHANGED');
+   return terminalError('This Halloween special is not open. Your last result has not been added to your collection.','HALLOWEEN_CLOSED');
+  }
+  return error;
+ }
+ function who(){
+  const a=window.BrainiData?.authState?.()||{};
+  if(!preview&&a.status==='authenticated'&&a.user?.id)return {key:'account:'+a.user.id,cloud:true};
+  let id=a.guestUserId||a.anonymousPlayerId;
+  if(!id){try{id=localStorage.getItem('brainilab-halloween-guest-id');if(!id){id=crypto.randomUUID();localStorage.setItem('brainilab-halloween-guest-id',id);}}catch{id='this-browser';}}
+  return {key:(preview?'preview:':'guest:')+id,cloud:false};
+ }
+ function availability(){
+  const now=Number(config.serverNow)+(performance.now()-baseTick);
+  const allowed=config.active===true&&config.enabled===true&&(preview||Number.isFinite(now)&&now>=Date.parse(config.start)&&now<Date.parse(config.end));
+  const day=preview?config.day:Number.isFinite(now)?new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit'}).format(now):config.day;
+  return {allowed,preview,day,message:allowed?'':config.status==='closed'||Number.isFinite(now)&&now>=Date.parse(config.end)?'This Halloween special has finished.':'This special is not open yet.'};
+ }
+ async function refresh(){
+  if(preview)return availability();
+  const r=await fetch('/api/halloween/config',{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(8000)});
+  if(!r.ok)throw Error('Halloween could not be checked. Please try again.');
+  config=await r.json();baseTick=performance.now();return availability();
+ }
+ const ledgerKey=()=>`brainilab-halloween-2026:${who().key}`;
+ function read(){try{return model().clean(JSON.parse(localStorage.getItem(ledgerKey())||'null'));}catch{return model().clean();}}
+ function guestState(){return model()?.state(read())||{entitlements:[],progress:{games_completed:0,distinct_games:0,days_played:0}};}
+ function guestEntitlements(){return who().cloud?[]:guestState().entitlements;}
+ function snapshot(){
+  const day=availability().day;
+  if(who().cloud)return {...(eventStore()?.snapshot?.()||{error:'Checking your collection…',entitlements:[],progress:{}}),cloud:true,activity:{day,known:false}};
+  const ledger=read();
+  return {...model().state(ledger),cloud:false,preview,activity:{day,known:true,completedGames:[...new Set(ledger.records.map(r=>r.game))],resultsToday:ledger.records.filter(r=>r.day===day)}};
+ }
+ async function startGame(game){
+  if(!['trick-or-think','spooky-connections'].includes(game))throw Error('Unknown Halloween game.');
+  if(!(await refresh()).allowed)throw windowError();
+  const current=who();
+  if(current.cloud){const r=await eventStore().startGame(game);if(who().key!==current.key)throw Error('Your account changed. Please start again.');return {...r,day:r.day||availability().day,ownerKey:current.key,preview:false,guest:false};}
+  const day=availability().day,prior=read().records.find(r=>r.game===game&&r.day===day);
+  return {session_id:prior?.id||crypto.randomUUID(),game,day,ownerKey:current.key,preview,guest:true,completed:!!prior,result:prior?{score:prior.score,maxScore:100}:null,pack:window.BrainiHalloweenGameModel.publicPack(game)};
+ }
+ async function completeGame(payload){
+  const current=who(),session=payload.sessionId;
+  // The controller passes the complete start response, never an arbitrary score.
+  const s=typeof session==='object'?session:payload.session;
+  if(!s||s.ownerKey!==current.key||s.preview!==preview||s.game!==payload.gameId)throw Error('This game belongs to another session. Please start again.');
+  const verifiedSummary=window.BrainiHalloweenGameModel.summary(payload.gameId,payload.submission,true);
+  if(current.cloud){
+   const before=eventStore().snapshot().entitlements||[];
+   let result;try{result=await eventStore().completeGame(s.session_id,payload.submission);}catch(error){throw accountError(error,s);}
+   if(who().key!==current.key)throw Error('Your account changed. Please check your collection.');emit();
+   return {...result,saved:true,unlocks:result.replayed?[]:(result.state?.entitlements||[]).filter(id=>!before.includes(id)),verifiedSummary:result.result?{...result.result,maxScore:100}:verifiedSummary};
+  }
+  // Already-saved sessions are safe to read back even after the earning window.
+  const key=ledgerKey(),previous=read(),already=previous.records.find(r=>r.id===s.session_id);
+  if(!already&&!(await refresh()).allowed)throw windowError();
+  if(who().key!==current.key)throw Error('Your account changed. Please start again.');
+  if(!already&&s.day!==config.day)throw terminalError('A new Halloween day has begun. Start a fresh game to save today’s progress.','HALLOWEEN_DAY_CHANGED');
+  const commit=()=>{
+   if(who().key!==current.key)throw Error('Your account changed. Please start again.');
+   const latest=read(),prior=latest.records.find(r=>r.id===s.session_id||r.game===payload.gameId&&r.day===s.day);
+   if(prior)return {saved:true,preview,replayed:true,result:{score:prior.score,maxScore:100},unlocks:[],verifiedSummary:{...verifiedSummary,score:prior.score},state:model().state(latest)};
+   const access=availability();
+   if(!access.allowed)throw windowError();
+   if(s.day!==access.day)throw terminalError('A new Halloween day has begun. Start a fresh game to save today’s progress.','HALLOWEEN_DAY_CHANGED');
+   const record={id:s.session_id,game:payload.gameId,day:access.day,score:verifiedSummary.score};
+   const next=model().complete(latest,record),before=model().state(latest),after=model().state(next);
+   try{localStorage.setItem(key,JSON.stringify(next));if(localStorage.getItem(key)!==JSON.stringify(next))throw Error('Unconfirmed save');}
+   catch{throw Error('Your browser could not save this collection. Keep this page open and try again.');}
+   window.dispatchEvent(new CustomEvent('brainilab:halloween-entitlements'));emit();
+   return {saved:true,preview,unlocks:after.entitlements.filter(id=>!before.entitlements.includes(id)),verifiedSummary,state:after};
+  };
+  return navigator.locks?.request?navigator.locks.request(key,{mode:'exclusive',signal:AbortSignal.timeout(8000)},commit):commit();
+ }
+ window.BrainiLabHalloween=Object.freeze({availability,refresh,startGame,completeGame,guestEntitlements,snapshot,identityKey:()=>who().key});
+ window.addEventListener('brainilab:authchange',()=>{if(!preview&&who().cloud)eventStore()?.load?.();emit();});
+ window.addEventListener('storage',event=>{if(event.key===ledgerKey())emit();});
+ if(!preview&&who().cloud)eventStore()?.load?.();
 })();
 
 /* ===== share.js ===== */
@@ -2671,6 +2963,195 @@ window.BrainiFriendChallenge=(()=>{
  return {buildInvite,invitationState,renderInvitation,open,mount};
 })();
 
+/* ===== game-challenge-model.js ===== */
+
+/* A shared score target, never a saved result. No identities, answers or contacts in links. */
+window.BrainiGameChallengeModel=(()=>{
+ const games=Object.freeze({
+  brainmix:{name:'Brain Mix',path:'/games/brain-mix/',max:10000,daily:true,n:10},
+  brainiword:{name:'BrainiWord',path:'/games/brainiword/',max:2500,daily:true,n:1},
+  orderup:{name:'Order Up',path:'/games/order-up/',max:2500,daily:true,n:20},
+  topicrush:{name:'Topic Rush',path:'/games/topic-rush/',max:2500,daily:true,n:0},
+  connections:{name:'Connections',path:'/games/connections/',max:20000,n:20},
+  oddoneout:{name:'Odd One Out',path:'/games/odd-one-out/',max:1000,n:10},
+  higherlower:{name:'Higher or Lower',path:'/games/higher-lower/',max:1700,n:10},
+  mathrush:{name:'Math Rush',path:'/games/math-rush/',max:6000,n:60},
+  numberroute:{name:'Number Route',path:'/games/number-route/',max:2500,n:10},
+  sequence:{name:'Sequence',path:'/games/sequence/',max:2500,n:10},
+  survival:{name:'Survival',path:'/games/survival/',max:12000,n:30},
+  reasoning:{name:'Reasoning Challenge',path:'/reasoning/',max:12,n:12},
+  worldflags:{name:'World Flags',path:'/geography/world-flags-quiz/',max:10000,quiz:true,n:20},
+  worldcapitals:{name:'World Capitals',path:'/geography/world-capitals-quiz/',max:10000,quiz:true,n:20},
+  generalknowledge:{name:'General Knowledge',path:'/general-knowledge/general-knowledge-quiz/',max:10000,quiz:true,n:20},
+  science:{name:'Science',path:'/science/science-quiz/',max:10000,quiz:true,n:20},
+  history:{name:'History',path:'/history/history-quiz/',max:10000,quiz:true,n:20},
+  sports:{name:'Sports',path:'/sports/sports-quiz/',max:10000,quiz:true,n:20}
+ });
+ const today=()=>new Date().toISOString().slice(0,10);
+ const date=v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&v>='2026-08-29'&&v<=today()&&Number.isFinite(Date.parse(v+'T00:00:00Z'))&&new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v;
+ const integer=(v,max)=>Number.isInteger(v)&&v>=0&&v<=max;
+ const cleanPath=p=>p.replace(/index\.html$/,'').replace(/\/?$/,'/');
+ const gameAt=p=>Object.keys(games).find(id=>games[id].path===cleanPath(p))||null;
+ function hash(value){let h=2166136261;for(const c of value){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');}
+ function valid(c){
+  const g=games[c?.g];
+  if(!g||c.v!==1||!integer(c.s,g.max)||!integer(c.n,60))return false;
+  if(c.d!==null&&!date(c.d))return false;
+  if(g.daily&&!c.d)return false;
+  if(g.quiz?!['easy','medium','hard'].includes(c.l):c.l!==null)return false;
+  const n=c.d&&['connections','numberroute'].includes(c.g)?3:g.n;
+  if(n&&c.n!==n)return false;
+  if(c.g==='topicrush'&&!(c.n>=1&&c.n<=60))return false;
+  if(c.g==='connections'&&c.d&&c.s>3000)return false;
+  return c.k===null||typeof c.k==='string'&&/^[0-9a-f]{8}$/.test(c.k);
+ }
+ function describe(gameId,result={},options={}){
+  const g=games[gameId];if(!g)return null;
+  const s=Number(result.score??result.points);if(!integer(s,g.max))return null;
+  const params=new URLSearchParams(location.search);
+  const dailyNumber=result.archiveDailyNumber||result.dailyNumber;
+  const rawDay=result.challengeDate||(dailyNumber&&window.BrainiData?.dateForDailyNumber?.(dailyNumber))||((g.daily||params.has('daily')||params.has('archive'))&&(params.get('archive')||params.get('daily')||today()));
+  const d=rawDay&&date(rawDay)?rawDay:null;if(rawDay&&!d)return null;
+  const n=d&&['connections','numberroute'].includes(gameId)?3:gameId==='topicrush'?Number(result.targetCount||result.total):g.n;
+  if(!['survival','mathrush','topicrush'].includes(gameId)&&Number(result.total)!==n)return null;
+  const l=g.quiz?(options.difficulty||result.difficulty||params.get('difficulty')||'easy'):null;
+  const rows=gameId==='orderup'?result.orderUpRounds:gameId==='brainmix'||g.quiz?result.answerDetails:result.roundDetails;
+  const ids=gameId==='mathrush'?[result.seed]:(rows||[]).map(r=>r.puzzleId||r.pairId||r.questionVersionId||r.questionId||r.round_id);
+  const source=result.contentSource||result.dailyContentSource||'';
+  const k=d?hash(JSON.stringify([source,ids.filter(Boolean),result.topicId||null,result.contentRef||null])):gameId==='reasoning'?hash(String(result.challengeVersion||'')):null;
+  const c={v:1,g:gameId,s,d,l,n,k};return valid(c)?c:null;
+ }
+ function parse(fragment=location.hash){
+  const m=/^#friend=([A-Za-z0-9_-]{40,500})$/.exec(fragment);if(!m)return null;
+  try{const c=JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')));return valid(c)?{v:1,g:c.g,s:c.s,d:c.d,l:c.l,n:c.n,k:c.k}:null;}catch{return null;}
+ }
+ function url(c){
+  if(!valid(c))return null;
+  const u=new URL(games[c.g].path,'https://brainilabgames.com');u.searchParams.set('try','1');
+  if(c.d)u.searchParams.set('archive',c.d);
+  if(c.l)u.searchParams.set('difficulty',c.l);
+  u.hash='friend='+btoa(JSON.stringify(c)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');return u.href;
+ }
+ function incoming(){
+  const c=parse(),p=new URLSearchParams(location.search);
+  if(!c||gameAt(location.pathname)!==c.g||p.get('try')!=='1')return null;
+  if(c.d&&(p.get('archive')!==c.d||p.has('daily')))return null;
+  if(!c.d&&(p.has('archive')||p.has('daily')))return null;
+  if(c.l&&(p.get('difficulty')||'easy')!==c.l)return null;
+  return c;
+ }
+ const points=s=>s.toLocaleString('en-GB')+' '+(s===1?'point':'points');
+ const max=c=>c.g==='connections'&&c.d?3000:games[c.g].max;
+ const rule=c=>c.d?'Same dated challenge. Just for fun.':c.g==='reasoning'?'The same twelve puzzles. Just for fun.':c.l?`${c.l[0].toUpperCase()+c.l.slice(1)} · Fresh questions, same rules.`:'Fresh puzzles, same rules.';
+ function compare(own,target){
+  if(!valid(own)||!valid(target)||own.g!==target.g||own.d!==target.d||own.l!==target.l||own.n!==target.n||own.k!==target.k)return null;
+  const difference=own.s-target.s;
+  return {kind:difference>0?'win':difference<0?'loss':'tie',title:difference>0?'You beat your friend!':difference<0?'Your friend wins this round.':'It’s a tie!',detail:difference?points(Math.abs(difference))+(difference>0?' ahead.':' behind. Fancy a rematch?'):points(own.s)+' each. Nicely matched.'};
+ }
+ function invitation(own,target=null){
+  if(!valid(own))return null;
+  const name=games[own.g].name,comparison=target&&compare(own,target);
+  const opener=comparison?.kind==='win'?`I got ${points(own.s)} in ${name} — I beat your ${points(target.s)}! 😄 Your move!`:comparison?.kind==='tie'?`We both got ${points(own.s)} in ${name}! 😄 Fancy a rematch?`:comparison?.kind==='loss'?`You got me this time! I got ${points(own.s)} in ${name}, to your ${points(target.s)}. 😄 Fancy a rematch?`:`I got ${points(own.s)} in ${name}! 😄 ${own.s===max(own)?'Can you match that?':own.s?'Think you can beat me? Your turn!':'Fancy giving it a go? Your turn!'}`;
+  return {url:url(own),title:'Your turn! '+name,text:opener+'\n'+rule(own)+'\n\n'+url(own)};
+ }
+ return {games,gameAt,describe,parse,url,incoming,points,rule,compare,invitation};
+})();
+
+/* ===== game-challenge.js ===== */
+
+/* One compact invitation and comparison across the regular games. */
+window.BrainiGameChallenge=(()=>{
+ const M=window.BrainiGameChallengeModel,views=new Map();
+ let target=M.incoming();
+ const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||auth?.anonymousPlayerId||'guest';};
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function offer(gameId,result,options={}){
+  const own=M.describe(gameId,result,options);if(!own)return null;
+  return {own,target,rematch:!!target};
+ }
+ function ready(v){return v.options.challengeReady!==false&&v.owner===owner()&&v.root.isConnected;}
+ function entry(){
+  const c=target;let box=document.querySelector('[data-game-friend-entry]');
+  document.documentElement.classList.toggle('friend-game-active',!!c);
+  if(!c){box?.remove();return;}
+  if(!box){
+   const stage=document.querySelector('main .labgame-shell,main .connections-shell,main #leafQuiz,main .brainiword-shell,main [data-reasoning],main [data-order-up],main [data-topic-rush],main .daily-mechanic-shell');
+   if(!stage)return;
+   box=document.createElement('aside');box.className='game-friend-entry';box.dataset.gameFriendEntry='';box.setAttribute('aria-label','Friend challenge');stage.before(box);
+  }
+  box.innerHTML='<span class="game-friend-mark" aria-hidden="true">↗</span><div><span class="game-friend-kicker">A challenge from your friend</span><strong></strong><p></p></div>';
+  box.querySelector('strong').textContent=c.s?'Can you '+(c.s===(c.g==='connections'&&c.d?3000:M.games[c.g].max)?'match ':'beat ')+M.points(c.s)+'?':'Your turn. Give it a go!';
+  box.querySelector('p').textContent=M.rule(c)+' No account needed.';
+  box.hidden=Array.from(views.values()).some(v=>v.root.isConnected&&v.options.gameId===c.g);
+ }
+ function status(v,text){v.slot.querySelector('[data-challenge-status]').textContent=text;}
+ function controls(v){
+  const enabled=ready(v)&&!v.busy&&!!v.slot.querySelector('textarea').value.trim();
+  v.slot.querySelectorAll('[data-challenge-copy],[data-challenge-native]').forEach(b=>b.disabled=!enabled);
+  const wa=v.slot.querySelector('[data-challenge-whatsapp]');
+  wa.setAttribute('aria-disabled',String(!enabled));wa.tabIndex=enabled?0:-1;
+  if(enabled)wa.href='https://wa.me/?text='+encodeURIComponent(v.slot.querySelector('textarea').value.trim());else wa.removeAttribute('href');
+ }
+ function render(root,options){
+  const offered=offer(options.gameId,options.result,options);if(!offered)return;
+  for(const [el]of views)if(!el.isConnected)views.delete(el);
+  let v=views.get(root);
+  if(!v||!root.contains(v.slot)){
+   const slot=document.createElement('div');slot.className='post-friend';root.querySelector('.post-actions').before(slot);
+   v={root,slot,options,owner:options.owner||owner(),busy:false,key:null};views.set(root,v);
+  }
+  v.options=options;
+  const key=JSON.stringify([offered.own,offered.target]);
+  if(v.key!==key){
+   const comparison=offered.target&&M.compare(offered.own,offered.target);
+   const comparisonHtml=offered.target?`<section class="game-friend-comparison" aria-label="Your result against your friend"><strong>${esc(comparison?.title||'Two rounds, two scores.')}</strong><dl><div class="${comparison?.kind==='win'?'is-winner':''}"><dt>You</dt><dd>${offered.own.s.toLocaleString('en-GB')}</dd></div><div class="${comparison?.kind==='loss'?'is-winner':''}"><dt>Your friend</dt><dd>${offered.target.s.toLocaleString('en-GB')}</dd></div></dl><p>${esc(comparison?.detail||'The challenge or question set changed, so these scores are not compared.')}</p></section>`:'';
+   v.slot.innerHTML=comparisonHtml+'<section class="game-friend-composer" data-challenge-composer hidden aria-label="Your invitation"><div class="game-friend-composer-head"><strong>Your invitation</strong><button type="button" data-challenge-close aria-label="Close invitation">×</button></div><label>Your message<textarea rows="5" maxlength="3000"></textarea></label><div class="game-friend-send"><button type="button" data-challenge-copy>Copy invitation</button><button type="button" data-challenge-native hidden>Share…</button><a data-challenge-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div><p role="status" aria-live="polite" data-challenge-status></p></section>';
+   v.slot.querySelector('textarea').value=M.invitation(offered.own,offered.target).text;
+   v.slot.querySelector('textarea').addEventListener('input',()=>controls(v));
+   v.slot.querySelector('[data-challenge-close]').onclick=()=>{v.slot.querySelector('[data-challenge-composer]').hidden=true;root.querySelector('[data-post-action="challenge"],.post-share')?.focus();};
+   v.slot.querySelector('[data-challenge-copy]').onclick=()=>send(v,'copy');
+   v.slot.querySelector('[data-challenge-native]').onclick=()=>send(v,'native');
+   v.slot.querySelector('[data-challenge-whatsapp]').onclick=e=>{controls(v);if(!ready(v)||v.busy||!v.slot.querySelector('textarea').value.trim())e.preventDefault();};
+   v.key=key;
+  }
+  v.slot.querySelector('[data-challenge-native]').hidden=typeof navigator.share!=='function';
+  const custom=root.querySelector('[data-gamechallenge-button]');if(custom){custom.textContent=target?'Send a rematch':'Challenge a friend';custom.disabled=!ready(v);}
+  controls(v);entry();
+ }
+ function open(root,options,trigger){
+  render(root,options);const v=views.get(root);if(!v||!ready(v))return false;
+  v.trigger=trigger;v.slot.querySelector('[data-challenge-composer]').hidden=false;
+  v.slot.querySelector('[data-challenge-composer]').scrollIntoView?.({block:'nearest',behavior:'instant'});
+  v.slot.querySelector('textarea').focus({preventScroll:true});return true;
+ }
+ async function send(v,method){
+  if(v.busy||!ready(v))return;
+  const field=v.slot.querySelector('textarea'),message=field.value.trim();if(!message)return;
+  const key=v.key,current=()=>v.key===key&&ready(v);
+  v.busy=true;controls(v);status(v,'');
+  try{
+   if(method==='native')await navigator.share({title:'Your turn! '+M.games[v.options.gameId].name,text:message});
+   else{if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText(message);}
+   if(current())status(v,method==='copy'?'Copied. Paste it into your chat when you’re ready.':'Invitation ready to share.');
+  }catch(error){
+   if(error?.name!=='AbortError'&&current()){status(v,method==='copy'?'Select and copy your message above.':'Couldn’t open sharing. Try Copy invitation.');if(method==='copy'){field.focus();field.select();}}
+  }finally{v.busy=false;controls(v);}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',entry);else entry();
+ window.addEventListener('hashchange',()=>{
+  if(location.hash&&!location.hash.startsWith('#friend='))return;
+  target=M.incoming();entry();window.BrainiPostGame?.refresh();for(const v of views.values())if(v.custom)render(v.root,v.options);
+ });
+ window.addEventListener('brainilab:authchange',()=>{for(const v of views.values())controls(v);});
+ function mountCustom(root,options){
+  if(!root||!offer(options.gameId,options.result,options))return;
+  root.innerHTML='<div class="post-actions"><button class="post-share" type="button" data-gamechallenge-button>Challenge a friend</button></div>';
+  render(root,options);views.get(root).custom=true;
+  root.querySelector('button').onclick=e=>open(root,options,e.currentTarget);
+ }
+ return {offer,render,open,entry,mountCustom};
+})();
+
 /* ===== try-first-runtime.js ===== */
 
 /* BrainiLab Try First runtime — V41.8.0 */
@@ -2684,6 +3165,7 @@ window.BrainiTryFirstRuntime=(function(){
   function todayHref(){const u=new URL(location.href);u.search="";const id=gameId();if(id&&ROTATING.has(id))u.searchParams.set("daily",today);return u.href}
   function decorate(){
     if(!active) return;
+    if(window.BrainiGameChallengeModel?.incoming())return;
     document.documentElement.classList.add("try-first-active");
     if(!document.querySelector("[data-try-first-banner]")){
       const banner=document.createElement("div");banner.dataset.tryFirstBanner="1";banner.className="try-first-global-banner";
@@ -2716,9 +3198,9 @@ window.BrainiDailyChoiceGuard=(()=>{
  async function rpc(client,name,args){let timer;try{return await Promise.race([client.rpc(name,args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Connection timed out')),8000);})]);}finally{clearTimeout(timer);}}
  async function validate(){
   if(!active)return {allowed:true};
-  if(day!==new Date().toISOString().slice(0,10))return {allowed:false,message:'That Daily has ended. Pick today’s challenge or play for practice.'};
+  if(day!==new Date().toISOString().slice(0,10))return {allowed:false,retryable:false,message:'That link is for a different Daily. Choose today’s Daily or browse all games.'};
   const ids=BrainiDailyRules.lineup(day);
-  if(!ids.includes(game))return {allowed:false,message:'This game is not in today’s Daily. You can still play another round for practice.'};
+  if(!ids.includes(game))return {allowed:false,retryable:false,message:'This game is not in today’s Daily. Choose today’s Daily or browse all games.'};
   try{
    const client=window.BrainiBackendAuth?.getClient?.();
    if(!client)throw new Error('Connection unavailable');
@@ -2747,7 +3229,9 @@ window.BrainiDailyChoiceGuard=(()=>{
   if(target){
    target.innerHTML='<section class="daily-load-error" role="status"><h2>Let’s get you to the right game</h2><p></p><a class="btn" href="/daily-quiz/">Today’s Daily</a> <a class="btn-light" href="/games/">All games</a> <button class="btn-light" type="button">Retry</button></section>';
    target.querySelector('p').textContent=result.message;
-   target.querySelector('button').onclick=()=>location.reload();
+   const retry=target.querySelector('button');
+   if(result.retryable===false)retry.remove();
+   else retry.onclick=()=>location.reload();
   }
   return true;
  }
@@ -3014,6 +3498,17 @@ window.BrainiProgressUI=(function(){
       startXp:start,earnedInLevel:value-start,neededInLevel:end-start,remainingXp:end-value,
       label:`${Math.max(0,end-value).toLocaleString()} XP to level ${n+1}`};
   }
+  function xpRules(summary=window.BrainiProgression?.getCached?.()){
+    const raw=summary?.reward_rules||{},valid=(value,min=0)=>Number.isSafeInteger(value)&&value>=min&&value<=10000;
+    return {base:valid(raw.base_xp)?raw.base_xp:50,correct:valid(raw.correct_xp)?raw.correct_xp:5,
+      limit:valid(raw.per_game_daily_limit,1)?raw.per_game_daily_limit:3,bonus:valid(raw.full_daily_xp)?raw.full_daily_xp:250,
+      confirmed:valid(raw.base_xp)&&valid(raw.correct_xp)&&valid(raw.per_game_daily_limit,1)};
+  }
+  function xpReceipt(earned,summary){
+    const rules=xpRules(summary),answers=earned-rules.base;
+    if(!rules.confirmed||!Number.isSafeInteger(earned)||earned<=0||answers<0||answers>rules.correct*50||(rules.correct?answers%rules.correct!==0:answers!==0))return null;
+    return {finish:rules.base,answers};
+  }
 
   function avatarClass(level){
     const t=tier(level),n=Math.max(t.min,Math.min(t.max,Number(level)||1));
@@ -3037,7 +3532,7 @@ window.BrainiProgressUI=(function(){
   function avatarImageMarkup(person){
     person=person||window.BrainiData?.player?.()||{};
     if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
-      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
+      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp,person.avatarEntitlements??window.BrainiHalloweenEntitlements?.snapshot?.().entitlements??[]).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
     }
     const identity=BrainiPeople.resolve(person);
     try{
@@ -3065,7 +3560,7 @@ window.BrainiProgressUI=(function(){
 
   function avatarFrameAttribute(person){
     const frame=person?.avatarFrame;
-    if(['blue','green','copper','gold','orbit'].includes(frame))return `data-social-frame="${frame}"`;
+    if(['blue','green','copper','gold','orbit'].includes(frame)||frame==='midnight'&&person.avatarEntitlements?.includes('midnight'))return `data-social-frame="${frame}"`;
     // Automatic nicknames keep one recognizable palette everywhere. This is
     // default portrait decoration, never an equipped reward or a profile write.
     const raw=String(person?.identityName||person?.name||person?.displayName||'').trim();
@@ -3213,14 +3708,14 @@ window.BrainiProgressUI=(function(){
     return currentOwner()===owner?resultChanges.get(id)||null:null;
   }
   return {
-    resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,
+    resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,xpRules,xpReceipt,
     avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();
 
 /* ===== reward-journey.js ===== */
 
-/* Read-only cosmetic previews. All awards still come from canonical XP. */
+/* Read-only cosmetic previews. Award eligibility stays with its canonical source. */
 window.BrainiRewardJourney=(()=>{
   const labels={frame:'Avatar frame',title:'Profile title',glasses:'Glasses',hat:'Hat',prop:'Little extra',scene:'Profile background'};
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -3242,7 +3737,7 @@ window.BrainiRewardJourney=(()=>{
       const level=item.level||BrainiProgressUI.xpProgress(1,person.xp).level;
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;
     }
-    if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.markup({...person.avatarDesign,mode:'built',[item.kind]:item.id},Math.max(item.xp,Number(person.xp)||0));
+    if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.preview(item.kind,item.id,person.avatarDesign);
     return '<span class="profile-goal-letter">Aa</span>';
   }
   function nextGoal(person,earned){
@@ -3252,22 +3747,37 @@ window.BrainiRewardJourney=(()=>{
     return '/profile/?section=progress'+(item?.kind&&item.kind!=='rank'?'&reward='+encodeURIComponent(item.kind+':'+item.id)+'#my-avatar':'');
   }
   function fromLink(value){
-    return typeof value==='string'?milestones().find(item=>item.kind!== 'rank'&&value===item.kind+':'+item.id)||null:null;
+    if(typeof value!=='string')return null;
+    const ordinary=milestones().find(item=>item.kind!=='rank'&&value===item.kind+':'+item.id);
+    if(ordinary)return ordinary;
+    // Seasonal items have no XP price. Linking to one never grants or equips it.
+    return Object.entries(window.BrainiRewardCatalog?.groups||{}).flatMap(([kind,items])=>items.filter(item=>item.event&&value===kind+':'+item.id).map(item=>({...item,kind,detail:labels[kind]||'Avatar extra'})))[0]||null;
+  }
+  function resultGoal(xp,change){
+    if(!valid(xp))return {item:null,earned:[]};
+    const earned=change?.after===xp?crossed(change.before,change.after):[];
+    const cosmetics=earned.filter(item=>item.kind!=='rank'),rewards=cosmetics.length?cosmetics:earned;
+    // The level bar already shows the next level. Give the reward slot to an
+    // actual avatar extra when one remains; earned diplomas still get a turn.
+    const item=rewards[0]||milestones().find(goal=>goal.kind!=='rank'&&goal.xp>xp)||next(xp);
+    return {item,earned:rewards};
   }
   function markup(person,xp,change){
-    if(!valid(xp))return '';
-    const earned=change?.after===xp?crossed(change.before,change.after):[];
-    const item=earned.find(goal=>goal.kind!=='rank')||earned[0]||next(xp);
+    const {item,earned}=resultGoal(xp,change);
     if(!item)return '';
     const unlocked=earned.length>0,remaining=item.xp-xp;
-    const detail=unlocked?`${item.detail}${earned.length>1?' · +'+(earned.length-1)+' more':''}`:`${remaining.toLocaleString('en-GB')} XP to go`;
-    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${unlocked?'Unlocked!':'Next unlock'}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+    const detail=unlocked?`${item.detail} · ${item.kind==='rank'?'View progress':'Try it on'}`:`${remaining.toLocaleString('en-GB')} XP to go`;
+    const heading=unlocked?item.kind==='rank'?'New diploma':'Unlocked!':item.kind==='rank'?'Next diploma':'Next avatar extra';
+    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+  }
+  function moreMarkup(person,xp,change){
+    const {earned}=resultGoal(xp,change),more=earned.slice(1);if(!more.length)return '';
+    return `<details class="post-unlock-more"><summary>${more.length} more unlocked</summary><ul>${more.map(item=>`<li><a href="${esc(href(item))}" data-unlocked-reward="${esc(item.kind+':'+item.id)}"><span class="post-unlock-mini" aria-hidden="true">${art(item,person)}</span><span><strong>${esc(item.name)}</strong><small>${esc(item.detail)} · Try it on</small></span><span aria-hidden="true">→</span></a></li>`).join('')}</ul></details>`;
   }
   function resultHref(xp,change){
-    const earned=change?.after===xp?crossed(change.before,change.after):[];
-    return href(earned.find(goal=>goal.kind!=='rank')||earned[0]||next(xp));
+    return href(resultGoal(xp,change).item);
   }
-  return Object.freeze({next,crossed,art,nextGoal,href,fromLink,markup,resultHref});
+  return Object.freeze({next,crossed,art,nextGoal,href,fromLink,resultGoal,markup,moreMarkup,resultHref});
 })();
 
 /* ===== continuity.js ===== */
@@ -3327,7 +3837,9 @@ window.BrainiContinuity=(()=>{
     }
     const p=summary.progression,progress=BrainiProgressUI.xpProgress(p.level,p.xp),change=resultChange(result.clientResultId),before=change&&BrainiProgressUI.xpProgress(1,change.before),up=before&&progress.level>before.level;
     const player=window.BrainiData?.player?.()||{};
-    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(player)}</span>`;
+    const avatar=`<span class="rank-avatar ${BrainiProgressUI.avatarClass(progress.level)}" ${BrainiProgressUI.avatarFrameAttribute?.(player)||''} aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(player)}</span>`;
+    const receipt=BrainiProgressUI.xpReceipt?.(reward.xp,summary);
+    const xpDetail=receipt?`<span class="post-xp-detail">${count(receipt.finish)} for finishing · ${count(receipt.answers)} for correct answers</span>`:'';
     const today=new Date().toISOString().slice(0,10),model=window.BrainiDailyRules?.model(today);
     const main=Number(result.dailyNumber)>0&&window.BrainiData?.dateForDailyNumber?.(Number(result.dailyNumber))===today&&model?.primary===result.gameId;
     const secured=main&&summary.continuity?.today===today&&summary.continuity.completed_today;
@@ -3337,8 +3849,9 @@ window.BrainiContinuity=(()=>{
     const bonusNote=secured&&model?.version==='daily-choice-v1'&&Number.isSafeInteger(bonus)&&bonus>0
       ? `<small class="post-daily-bonus"><b>Today’s Daily bonus: ${bonus.toLocaleString('en-GB')} XP</b>Included in your total XP, once today.</small>`:'';
     const unlock=window.BrainiRewardJourney?.markup(player,p.xp,change)||'';
+    const more=window.BrainiRewardJourney?.moreMarkup(player,p.xp,change)||'';
     const rewardHref=unlock?BrainiRewardJourney.resultHref(p.xp,change):'/profile/?section=progress';
-    return `<a class="post-reward ${up?'is-level-up':''}" href="${esc(rewardHref)}" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned"><span>Game XP</span>+${count(reward.xp)} XP</b></span><span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${count(progress.earnedInLevel)} of ${count(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${bonusNote}${unlock}${reward.daily_limit_reached?'<small>You’ve earned XP for three rounds of this game today. Try a different game for more XP, or return tomorrow.</small>':''}</a>`;
+    return `<div class="post-reward-shell ${up?'is-level-up':''}"><a class="post-reward ${up?'is-level-up':''}" href="${esc(rewardHref)}" data-reward-id="${esc(result.clientResultId)}"><span class="post-reward-identity">${avatar}<span><span class="post-reward-label">${up?'New level!':'Your progress'}</span><strong>Level ${progress.level}</strong><small>${esc(BrainiProgressUI.tier(progress.level).name)}</small></span><b class="post-earned"><span>Game XP</span>+${count(reward.xp)} XP</b></span>${xpDetail}<span class="post-xp-label"><b>${Number(p.xp).toLocaleString()} XP</b><span>${esc(progress.label)}</span></span><i class="post-xp-track" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${count(progress.earnedInLevel)} of ${count(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><i style="width:${progress.percent}%;--xp-from:${before&&before.level===progress.level?before.percent:progress.percent}%"></i></i>${secured?`<span class="post-streak-earned">${BrainiIcons.product('streak','post-streak-flame')}<strong>${count(p.current_streak)} ${count(p.current_streak)===1?'day':'days'}</strong><span>Daily complete</span></span>`:''}${bonusNote}${unlock}${reward.daily_limit_reached?'<small>No more XP from this game today. Try a different game for more XP.</small>':''}</a>${more}</div>`;
   }
   function animateReward(root){
     const card=root?.querySelector('[data-reward-id]');if(!card)return;
@@ -3346,10 +3859,25 @@ window.BrainiContinuity=(()=>{
     if(animated.size>=100)animated.delete(animated.values().next().value);
     animated.add(id);card.classList.add('is-fresh');
   }
+  function updateReward(el,html){
+    if(el.dataset.rewardHtml===html)return;
+    const id=el.querySelector('[data-reward-id]')?.dataset.rewardId,focused=document.activeElement;
+    const disclosure=el.querySelector('.post-unlock-more'),opened=disclosure?.open;
+    const inCard=el.contains(focused),inMore=disclosure?.contains(focused);
+    const reward=inMore?focused.closest('[data-unlocked-reward]')?.dataset.unlockedReward:null;
+    const wasSummary=inMore&&focused===disclosure.querySelector('summary');
+    el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);
+    const sameResult=!!id&&id===el.querySelector('[data-reward-id]')?.dataset.rewardId,newMore=el.querySelector('.post-unlock-more');
+    if(sameResult&&opened&&newMore)newMore.open=true;
+    if(inCard){
+      const target=sameResult&&wasSummary?newMore?.querySelector('summary'):sameResult&&reward?[...el.querySelectorAll('[data-unlocked-reward]')].find(link=>link.dataset.unlockedReward===reward):null;
+      (target||el.querySelector('[data-refresh-progress]')||el.querySelector('a'))?.focus({preventScroll:true});
+    }
+  }
   function render(){
     window.BrainiUI?.hydrate?.();
     document.querySelectorAll('[data-braini-continuity]').forEach(el=>{el.innerHTML=markup({compact:el.dataset.brainiContinuity==='compact'});el.hidden=!el.innerHTML;});
-    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward){const html=rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)});if(el.dataset.rewardHtml!==html){const restoreFocus=el.querySelector('[data-refresh-progress]')===document.activeElement;el.innerHTML=html;el.dataset.rewardHtml=html;animateReward(el);if(restoreFocus)(el.querySelector('[data-refresh-progress]')||el.querySelector('a'))?.focus({preventScroll:true});}}});
+    document.querySelectorAll('[data-result-reward]').forEach(el=>{if(el.dataset.resultReward)updateReward(el,rewardMarkup({clientResultId:el.dataset.resultReward,gameId:el.dataset.resultGame,dailyNumber:Number(el.dataset.resultDaily)}));});
   }
   render(); // Deferred shell runs after HTML parsing, before cloud requests complete.
   document.addEventListener('DOMContentLoaded',render);
@@ -3369,7 +3897,7 @@ window.BrainiContinuity=(()=>{
     setTimeout(()=>{render();window.dispatchEvent(new CustomEvent('brainilab:daychange'));window.BrainiProgression?.sync?.();scheduleReset();},next-now+1000);
   }
   scheduleReset();
-  return {markup,rewardMarkup,render,displaySummary,animateReward};
+  return {markup,rewardMarkup,render,displaySummary,animateReward,updateReward};
 })();
 
 /* ===== post-game.js ===== */
@@ -3380,6 +3908,31 @@ window.BrainiPostGame=(()=>{
  const number=value=>Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
  const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
  const mounted=new Map();
+ let readingDirectory;
+ async function returnToReading(container,options){
+  const match=/^#learn-([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(location.hash),slug=match?.[1];
+  if(!slug||slug.length>100)return;
+  const link=container.querySelector('[data-post-action="guide"]');
+  const title=link?.querySelector('strong,[data-reading-title]');if(!title)return;
+  const readingOwner=owner();
+  if(!readingDirectory)readingDirectory=(async()=>{
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4000);
+   try{
+    const response=await fetch('/assets/data/learn-game-links.json',{credentials:'omit',cache:'no-cache',signal:controller.signal});
+    if(!response.ok)return [];
+    const data=await response.json();return data?.version===1&&Array.isArray(data.articles)&&data.articles.length<=1000?data.articles:[];
+   }catch{return [];}finally{clearTimeout(timer);}
+  })();
+  const directory=await readingDirectory;
+  if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner())return;
+  const gamePath=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
+  const article=directory.find(a=>a&&a.slug===slug&&a.gameId===options.gameId&&a.gamePath===gamePath&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
+  if(!article)return;
+  link.setAttribute('href','/learn/'+slug+'/');
+  const kind=link.querySelector('[data-reading-kind],:scope>span:not([data-reading-title])');
+  if(kind)kind.textContent='Back to your reading';
+  title.textContent=article.title+' →';
+ }
  const invitations=new Map(),dismissed=new WeakSet();
  function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
   if(!container)return;
@@ -3389,17 +3942,17 @@ window.BrainiPostGame=(()=>{
   if(signedIn||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
   if(container.querySelector('[data-join-account]'))return;
   container.hidden=false;
-  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>Keep your scores across devices and pick up your Academy lessons where you left off.</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
+  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>${practice?'Save your next scores across devices.':'Save your scores and Daily streak across devices.'}</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
   container.querySelector('[data-dismiss-account]').onclick=()=>{dismissed.add(container);container.hidden=true;const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');fallback?.focus();};
   container.querySelector('[data-join-account]').onclick=async event=>{
    const button=event.currentTarget,error=container.querySelector('[data-account-error]');
    button.disabled=true;error.hidden=true;
-   window.BrainiSiteAnalytics?.accountPrompt?.('click',practice?'practice_result':'game_result',gameId);
+   try{window.BrainiSiteAnalytics?.accountPrompt?.('click',practice?'practice_result':'game_result',gameId);}catch{}
    try{
     if(!window.BrainiAuth?.open)await window.BrainiPerf?.ensureCloud?.();
     if(!window.BrainiAuth?.open)throw Error('Sign-in unavailable');
-    window.BrainiAuth.open({source:practice?'practice_result':'game_result',mode:'signup'});
-    window.BrainiSiteAnalytics?.accountPrompt?.('open',practice?'practice_result':'game_result',gameId);
+    await window.BrainiAuth.open({source:practice?'practice_result':'game_result',mode:'signup'});
+    try{window.BrainiSiteAnalytics?.accountPrompt?.('open',practice?'practice_result':'game_result',gameId);}catch{}
    }catch{error.hidden=false;error.textContent='We couldn’t open sign-in. Please try again. Your result is still here.';}
    finally{button.disabled=false;}
   };
@@ -3414,7 +3967,7 @@ window.BrainiPostGame=(()=>{
   const items=list=>list.map(a=>`<article class="post-answer"><h4>${number(a.position)}. ${esc(a.questionText)}</h4><p class="post-answer-choice">${a.isCorrect?'Correct':a.skipped?'Skipped':'Your answer: '+esc(a.selectedAnswer??'No answer')}</p><p><strong>${esc(a.correctAnswer||'Answer unavailable')}</strong></p>${a.explanation?`<p>${esc(a.explanation)}</p>`:''}</article>`).join('');
   return `<div class="post-review">${missed.length?`<details data-post-missed><summary>Review ${missed.length} ${missed.length===1?'answer':'answers'} to revisit</summary>${items(missed)}</details>`:''}${correct.length?`<details><summary>${missed.length?'Your correct answers':'Review your answers'} · ${correct.length}</summary>${items(correct)}</details>`:''}</div>`;
  }
- const owner=()=>window.BrainiData?.authState?.()?.user?.id||window.BrainiData?.getState?.()?.auth?.user?.id||'guest';
+ const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||auth?.anonymousPlayerId||'guest';};
  const verified=r=>r?.answersVerified===true||r?.answerVerificationStatus==='verified'||r?.dailyGameVerificationStatus==='verified'||r?.dailyAnswerVerificationStatus==='verified';
  function localStatus(result){
   if(!result.dailyNumber||result.practice||result.tryFirst)return null;
@@ -3452,19 +4005,24 @@ window.BrainiPostGame=(()=>{
    status={...provided,...status,games,bonusChoice:status?.bonusChoice||provided.bonusChoice};
   }
   const pending=!practice&&resultDay===today&&(!sameOwner||!status?.games?.[gameId]?.completed);
-  const invite=!practice&&!pending&&status&&window.BrainiFriendChallenge?.buildInvite(status);
+  const gameChallenge=window.BrainiGameChallenge?.offer(gameId,result,options);
+  const invite=gameChallenge||(!practice&&!pending&&status&&window.BrainiFriendChallenge?.buildInvite(status));
   const primary=pending?{href:'/daily-quiz/',label:'Back to Daily'}:status&&!practice?nextDaily(status):result.dailyNumber&&!practice?{href:'/daily-quiz/',label:'See today’s Daily'}:next||{href:'/games/',label:'Find another game'};
   const missed=(result.answerDetails||[]).filter(a=>!a.isCorrect).length;
-  const reviewFirst=!pending&&!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
-  const challengeFirst=primary.complete&&invite;
-  const label=reviewFirst?'Review your answers':challengeFirst?'Challenge a friend':primary.label;
+  const reviewFirst=!gameChallenge&&!pending&&!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
+  const challengeFirst=gameChallenge?.rematch||primary.complete&&invite;
+  const label=challengeFirst?(gameChallenge?.rematch?'Send a rematch':'Challenge a friend'):reviewFirst?'Review your answers':primary.label;
   const root=container.querySelector('.post-actions');
   const focused=document.activeElement,restoreFocus=root.contains(focused);
   const focusedAction=restoreFocus?focused.dataset.postAction:null;
-  root.innerHTML=`${reviewFirst||challengeFirst?`<button type="button" class="post-primary" data-post-action="${reviewFirst?'review':'challenge'}">${label} <span aria-hidden="true">→</span></button>`:`<a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(label)} <span aria-hidden="true">→</span></a>`}${reviewFirst||challengeFirst?`<a class="post-secondary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)}</a>`:`<button type="button" class="post-share">${invite?'Challenge a friend':'Share result'}</button>`}`;
+  root.innerHTML=`${reviewFirst||challengeFirst?`<button type="button" class="post-primary" data-post-action="${challengeFirst?'challenge':'review'}">${label} <span aria-hidden="true">→</span></button>`:`<a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(label)} <span aria-hidden="true">→</span></a>`}${reviewFirst||challengeFirst?`<a class="post-secondary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)}</a>`:`<button type="button" class="post-share">${gameChallenge?.rematch?'Send a rematch':invite?'Challenge a friend':'Share result'}</button>`}`;
   root.querySelector('[data-post-action="review"]')?.addEventListener('click',()=>{const d=container.querySelector('[data-post-missed]');if(d){d.open=true;d.querySelector('summary').focus();d.scrollIntoView?.({block:'nearest',behavior:'instant'});}});
-  const share=event=>invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
+  const share=event=>gameChallenge?window.BrainiGameChallenge.open(container,options,event.currentTarget):invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
   root.querySelector('.post-share')?.addEventListener('click',share);root.querySelector('[data-post-action="challenge"]')?.addEventListener('click',share);
+  if(gameChallenge){
+   window.BrainiGameChallenge.render(container,options);
+   if(options.challengeReady===false||!sameOwner)root.querySelectorAll('.post-share,[data-post-action="challenge"]').forEach(b=>b.disabled=true);
+  }
   const note=container.querySelector('.post-next-note');
   note.textContent=!pending&&status?.model?.version==='daily-choice-v1'&&status.games?.[status.model.primary]?.completed&&!primary.complete?'Your Daily is done. The extra is up to you.':'';
   note.hidden=!note.textContent;
@@ -3505,11 +4063,12 @@ window.BrainiPostGame=(()=>{
   const scoring=scorePresentation(gameId,result);
   const message=summary||(timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Ready for another go?'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. A few new discoveries, too.':'There’s always something new to learn.');
   const art=window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
-  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/paths/',title:'Find your next small discovery',kind:'Explore BrainiLab Academy'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
+  const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/remember-quiz-answers-tomorrow/',title:'Make a quiz answer stick'},higherlower:{href:'/learn/why-greenland-looks-so-big/',title:'Why maps can fool your eyes'},orderup:{href:'/learn/which-century-is-that-year/',title:'The century dates that trip us up'},topicrush:{href:'/learn/chunking-memory-familiar-groups/',title:'Give your memory a useful starting point'},survival:{href:'/learn/confidence-is-not-a-memory-test/',title:'How well do you really know an answer?'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel"><h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p><p class="post-message">${esc(message)}</p><p class="post-points"><strong>${scoring.points.toLocaleString('en-GB')}</strong> <span data-points-label>${scoring.label}</span>${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p><p class="post-score-context" data-score-context ${scoring.context?'':'hidden'}>${esc(scoring.context)}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
   const liveOptions={...options,owner:owner(),gameId,result};mounted.set(container,liveOptions);actionMarkup(container,liveOptions);resolveStatus(container,liveOptions);
   const invitation=document.createElement('div');invitation.dataset.accountInvite='';container.querySelector('.post-actions').after(invitation);inviteAccount(invitation,{practice:!!practice,gameId});
+  void returnToReading(container,liveOptions);
   const videoSlot=document.createElement('div');videoSlot.hidden=true;videoSlot.dataset.resultVideo='';
   container.querySelector('.post-footer').before(videoSlot);
   window.BrainiRelatedVideo?.mount(videoSlot,{gameId});
@@ -3534,14 +4093,15 @@ window.BrainiPostGame=(()=>{
   const result=options.result;
   const practice=!!(result.practice||result.tryFirst||new URLSearchParams(location.search).get('try')==='1');
   result.practice=practice;
-  mount(container,options);
+  mount(container,{...options,challengeReady:false});
   container.querySelector('.post-game').scrollIntoView?.({block:'start',behavior:'instant'});
   const reward=container.querySelector('[data-result-reward]');
   const current=()=>container.contains(reward);
   const renderReward=()=>{
    if(!current())return;
    reward.dataset.resultReward=practice?'':result.clientResultId||'';
-   reward.innerHTML=window.BrainiContinuity?.rewardMarkup?.({...result,gameId:options.gameId,practice})||'';
+   const html=window.BrainiContinuity?.rewardMarkup?.({...result,gameId:options.gameId,practice})||'';
+   if(window.BrainiContinuity?.updateReward)BrainiContinuity.updateReward(reward,html);else reward.innerHTML=html;
    window.BrainiContinuity?.animateReward?.(reward);
   };
   if(!practice)reward.textContent='Saving your result…';
@@ -3555,6 +4115,7 @@ window.BrainiPostGame=(()=>{
    return null;
   }finally{clearTimeout(timer);}
   Object.assign(result,confirmed,{practice});
+  confirm(container,result);
   renderReward();
   refresh();
   try{
@@ -3570,7 +4131,8 @@ window.BrainiPostGame=(()=>{
   refresh();
   return result;
  }
- return {mount,complete,review,nextDaily,localStatus,refresh,inviteAccount};
+ function confirm(container,result){const options=mounted.get(container);if(!options||options.owner!==owner())return;Object.assign(options.result,result);options.challengeReady=true;updatePresentation(container,options);actionMarkup(container,options);}
+ return {mount,complete,confirm,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
 })();
 
 /* ===== perf-loader.js ===== */
@@ -5381,7 +5943,7 @@ window.BrainiAccountMenu=(function(){
           <span class="rank-avatar ${window.BrainiProgressUI
             ? BrainiProgressUI.avatarClass(progress.level)
             : ""
-          } account-menu-avatar">
+          } account-menu-avatar" ${BrainiProgressUI.avatarFrameAttribute(p)}>
             ${BrainiProgressUI.avatarImageMarkup(p)}
           </span>
 
@@ -5625,6 +6187,7 @@ window.BrainiAccountMenu=(function(){
       }
 
       BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+      if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
     });
   }
 
@@ -5663,6 +6226,16 @@ window.BrainiAccountMenu=(function(){
   window.addEventListener("brainilab:progressionchange",hydrate);
   window.addEventListener("brainilab:daychange",close);
   window.addEventListener("brainilab:datachange",hydrate);
+  window.addEventListener('brainilab:halloween-entitlements',()=>{
+    hydrate();
+    // Replace only artwork: an open menu keeps its links, focus and handlers.
+    const portrait=openMenu?.querySelector('.account-menu-avatar');
+    if(portrait){
+      const player=BrainiData.player();portrait.innerHTML=BrainiProgressUI.avatarImageMarkup(player);
+      if(BrainiProgressUI.avatarFrameAttribute(player))portrait.dataset.socialFrame=player.avatarFrame;
+      else delete portrait.dataset.socialFrame;
+    }
+  });
 
   return {
     hydrate,
