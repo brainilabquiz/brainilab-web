@@ -19,6 +19,7 @@ from urllib.robotparser import RobotFileParser
 import gsc_sync as api
 import seo_keywords
 import seo_reputation
+import seo_discovery
 
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
@@ -306,6 +307,7 @@ def validate(value):
             'scope': 'Published catalogue, recorded public game listings and reviewed candidate URLs; anonymous HTML fetches only.'}
     if value.get('keywords') is not None: result['keywords'] = seo_keywords.validate(value['keywords'])
     if value.get('reputation') is not None: result['reputation'] = seo_reputation.validate(value['reputation'])
+    if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
     return result
 
 
@@ -440,11 +442,11 @@ def attach_seo(report, private):
     bases = []
     for candidate in candidates:
         if not isinstance(candidate,dict): continue
-        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation')}))
+        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources')}))
         except (ValueError,KeyError,TypeError): continue
     if not bases: return report
     clean = max(bases,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
-    for key, file, validator in [('keywords','seo-keywords-latest.json',seo_keywords.validate),('reputation','seo-reputation-latest.json',seo_reputation.validate)]:
+    for key, file, validator in [('keywords','seo-keywords-latest.json',seo_keywords.validate),('searchSources','seo-search-sources-latest.json',seo_discovery.validate),('reputation','seo-reputation-latest.json',seo_reputation.validate)]:
         item = Path(private)/file
         choices = [c.get(key) for c in candidates if isinstance(c,dict)]
         if item.exists():
@@ -455,7 +457,7 @@ def attach_seo(report, private):
             try: valid.append(validator(choice))
             except (ValueError,KeyError,TypeError,AttributeError): continue
         if not valid: continue
-        if key=='keywords':
+        if key in ('keywords','searchSources'):
             clean[key]=max(valid,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
         else:
             # The three UI reports may be read on different days. Preserve the
@@ -474,6 +476,7 @@ if __name__ == '__main__':
     parser.add_argument('--sources',type=Path,help='Private JSON array of additional public source page URLs, e.g. reviewed Search Console link exports')
     parser.add_argument('--ledger',type=Path,help='Private campaign ledger: allowlisted published listing URLs only')
     parser.add_argument('--keywords',action='store_true',help='Refresh two query-only final Search Console windows using the existing readonly authorization')
+    parser.add_argument('--search-sources',action='store_true',help='Refresh separate Google Images queries and 90-day Web query/page evidence')
     parser.add_argument('--reputation-input',type=Path,help='Record dated observed Search Console UI evidence; never a synthetic authority score')
     parser.add_argument('--expected-reputation-sha256',help='Exact prior private reputation hash, or missing')
     args=parser.parse_args();api.PRIVATE=args.private.resolve()
@@ -482,6 +485,7 @@ if __name__ == '__main__':
             if not args.expected_reputation_sha256: raise ValueError('Expected reputation hash is required')
             print(json.dumps(seo_reputation.record(api.PRIVATE,json.loads(args.reputation_input.read_text(encoding='utf-8')),args.expected_reputation_sha256)))
         elif args.keywords: print(json.dumps(seo_keywords.refresh(api.PRIVATE)))
+        elif args.search_sources: print(json.dumps(seo_discovery.refresh(api.PRIVATE)))
         else: print(json.dumps(refresh(api.PRIVATE,force=args.force,sources_path=args.sources,ledger_path=args.ledger)))
     except (OSError,ValueError,RuntimeError,KeyError,TypeError):
         print('SEO crawl failed. Preserve the last dated snapshot; do not infer lost backlinks or zero trust.')

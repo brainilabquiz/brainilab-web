@@ -5,6 +5,38 @@ existing Search intelligence keyword, landing-page and country/device views.
 No Ahrefs account/API, paid data, tracking script, Google OAuth scope or database
 migration is required.
 
+## Use evidence to grow the site
+
+The Keywords source selector separates Web query-only property rows from Google
+Images queries and a 90-day Web query/page view. The last view links each observed
+query to the actual game or article to inspect. No opportunity score, search-volume
+estimate, predicted visitors or automatic content rewrite is generated. Impressions
+sort evidence, not business priorities. Read the page and search intent first;
+protect useful pages already corrected rather than changing them for a quota.
+
+Collect additional sources once per valid day/period with:
+
+```text
+python tools/growth/seo_explorer.py --private PRIVATE --search-sources
+```
+
+Google Images uses type=image and byProperty aggregation; Web query/page uses
+type=web and byPage. Both request final data for 90 complete days ending three
+UTC days ago, reuse the existing readonly token, with bounded pagination and
+private-format filtering. Their counts and overlapping windows must never be
+added. The dated searchSources snapshot has independent CAS, history, daily cache
+and newest-observation attachment, so old/failed local sources cannot erase it.
+
+Visits from links reuses the existing validated GA4 acquisition snapshot, without
+an extra API request or new tracking. One row per source host shows only referral
+medium sessions/engaged sessions and separately inspected HTML destinations.
+Normalise www; combine distinct source labels once, never repeat the same host's
+traffic for each backlink. Show unknown when a host has no observed row. Do not
+attribute these sessions to a particular link, landing page, player or account.
+Direct, social, email and search remain separate, with GA4 dates/timezone/quality
+flags and the separate HTML verification date. This helps choose which actual
+arrival routes to check before spending effort on more distribution.
+
 ## What the numbers mean
 
 - Keywords are actual Search Console query/page rows with real dates, filters and
