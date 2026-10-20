@@ -28,9 +28,10 @@ const content={source:'local',fallbackAnswer:'APPLE'};let r=await w.BrainiDailyG
 answer=false;r=await w.BrainiDailyGames.checkBrainiWordGuess(content,'ZZZZZ',1);assert.equal(r.validWord,false);assert.equal(r.finished,false);assert.equal(r.states.length,0);
 fail=true;await assert.rejects(()=>w.BrainiDailyGames.checkBrainiWordGuess(content,'APPLE',1));fail=false;answer={states:['absent'],won:false};r=await w.BrainiDailyGames.checkBrainiWordGuess({source:'supabase',dailyChallengeId:'fixture'},'APPLE',1);assert.equal(r.validWord,false);w.close();
 // A guarded Daily may replace its game root; the page identity must survive.
-for(const mode of ['not-in-lineup','offline','archive']){
+for(const mode of ['not-in-lineup','expired','future','offline','archive']){
  const html=fs.readFileSync('games/brain-mix/index.html','utf8');
- dom=new JSDOM(html,{url:'https://brainilabgames.com/games/brain-mix/'+(mode==='archive'?'?archive=2026-10-18':''),runScripts:'outside-only'});w=dom.window;
+ dom=new JSDOM(html,{url:'https://brainilabgames.com/games/brain-mix/'+(mode==='archive'?'?archive=2026-10-18':mode==='expired'?'?daily=2026-10-19':mode==='future'?'?daily=2026-10-21':''),runScripts:'outside-only'});w=dom.window;
+ w.Date=class extends Date{constructor(...args){super(...(args.length?args:['2026-10-20T12:00:00Z']));}static now(){return Date.parse('2026-10-20T12:00:00Z');}};
  const heading=w.document.querySelector('main h1'),root=w.document.getElementById('leafQuiz');
  assert.equal(w.document.querySelectorAll('h1').length,1);assert.equal(heading.textContent,'Brain Mix');
  assert.equal(heading.closest('#leafQuiz'),null);assert.equal(root.querySelector('[data-q]').tagName,'H2');
@@ -41,6 +42,15 @@ for(const mode of ['not-in-lineup','offline','archive']){
  assert.equal(await w.BrainiDailyChoiceGuard.check(root),mode!=='archive');
  assert.equal(w.document.querySelector('main h1'),heading,'guard replacement retains the permanent topic heading');
  assert.equal(heading.closest('[hidden]'),null);
+ if(mode==='not-in-lineup'||mode==='expired'||mode==='future'){
+  assert.match(root.textContent,/Choose today’s Daily or browse all games/);
+  assert.doesNotMatch(root.textContent,/practice|Retry/,'unavailable Daily offers only actions that can resolve the state');
+  assert.deepEqual(Array.from(root.querySelectorAll('a'),a=>a.getAttribute('href')),['/daily-quiz/','/games/']);
+  assert.equal(root.querySelector('button'),null,'a reload cannot change a fixed eligibility decision');
+ }else if(mode==='offline'){
+  assert.match(root.textContent,/reconnect and try again/);
+  assert.equal(typeof root.querySelector('button').onclick,'function','transient failures keep the existing retry');
+ }
  assert.equal(writes,0,'eligibility messages cannot submit a player result');w.close();
 }
-console.log('PASS Daily UI: main/locked/choice/completed states, friend main-only score, choice conflicts, version mismatch, offline, dictionary validation and permanent Brain Mix title through guard/archive states.');
+console.log('PASS Daily UI: main/locked/choice/completed states, friend main-only score, choice conflicts, version mismatch, offline retry, fixed eligibility guidance, dictionary validation and permanent Brain Mix title through guard/archive states.');

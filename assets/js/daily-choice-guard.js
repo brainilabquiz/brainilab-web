@@ -10,9 +10,9 @@ window.BrainiDailyChoiceGuard=(()=>{
  async function rpc(client,name,args){let timer;try{return await Promise.race([client.rpc(name,args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Connection timed out')),8000);})]);}finally{clearTimeout(timer);}}
  async function validate(){
   if(!active)return {allowed:true};
-  if(day!==new Date().toISOString().slice(0,10))return {allowed:false,message:'That Daily has ended. Pick today’s challenge or play for practice.'};
+  if(day!==new Date().toISOString().slice(0,10))return {allowed:false,retryable:false,message:'That link is for a different Daily. Choose today’s Daily or browse all games.'};
   const ids=BrainiDailyRules.lineup(day);
-  if(!ids.includes(game))return {allowed:false,message:'This game is not in today’s Daily. You can still play another round for practice.'};
+  if(!ids.includes(game))return {allowed:false,retryable:false,message:'This game is not in today’s Daily. Choose today’s Daily or browse all games.'};
   try{
    const client=window.BrainiBackendAuth?.getClient?.();
    if(!client)throw new Error('Connection unavailable');
@@ -41,7 +41,9 @@ window.BrainiDailyChoiceGuard=(()=>{
   if(target){
    target.innerHTML='<section class="daily-load-error" role="status"><h2>Let’s get you to the right game</h2><p></p><a class="btn" href="/daily-quiz/">Today’s Daily</a> <a class="btn-light" href="/games/">All games</a> <button class="btn-light" type="button">Retry</button></section>';
    target.querySelector('p').textContent=result.message;
-   target.querySelector('button').onclick=()=>location.reload();
+   const retry=target.querySelector('button');
+   if(result.retryable===false)retry.remove();
+   else retry.onclick=()=>location.reload();
   }
   return true;
  }
