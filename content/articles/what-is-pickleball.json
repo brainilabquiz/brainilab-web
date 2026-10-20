@@ -1,0 +1,69 @@
+{
+  "slug": "what-is-pickleball",
+  "title": "What is pickleball? Meet the sport with a kitchen",
+  "description": "Pickleball uses paddles, a plastic ball and a court with a kitchen. Discover the two-bounce rule and why that kitchen is not quite out of bounds.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 187,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-pickleball.webp",
+    "small": "/assets/images/learn/what-is-pickleball-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-pickleball-thumb.webp",
+    "alt": "Two solid-faced navy and green pickleball paddles and a yellow perforated ball on a court, with a net behind them",
+    "credit": "AI-generated realistic illustration created for BrainiLab.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "More sport, fewer sweaty socks? Try the Sports Quiz.",
+  "related": [
+    "how-to-read-a-tennis-score",
+    "snooker-vs-pool"
+  ],
+  "sources": [
+    {
+      "url": "https://usapickleball.org/what-is-pickleball/",
+      "name": "USA Pickleball — What is pickleball?"
+    },
+    {
+      "url": "https://usapickleball.org/rules/summary/",
+      "name": "USA Pickleball — Rules summary: two bounces and the non-volley zone"
+    },
+    {
+      "url": "https://usapickleball.org/pickleball-skills/level-one/how-to-play-pickleball/",
+      "name": "USA Pickleball — How to play pickleball"
+    }
+  ],
+  "sections": [
+    {
+      "id": "paddles-not-pickles",
+      "title": "Paddles, not pickles",
+      "html": "<p><strong>Pickleball is a paddle sport played over a net with a perforated plastic ball.</strong> You can play singles, with one person on each side, or doubles, with two.</p><p><a href=\"https://usapickleball.org/what-is-pickleball/\">USA Pickleball describes a blend of tennis, badminton and table tennis</a>. The court is badminton-sized, and the paddle has a solid face rather than strings. No actual pickles are required.</p>"
+    },
+    {
+      "id": "two-bounces",
+      "title": "The two bounces come first",
+      "html": "<p>A rally starts with a diagonal serve. The receiving side must let it bounce before returning it. Then the serving side must let the return bounce too.</p><p>After those two bounces, players can hit the ball before it lands. That is a <strong>volley</strong>. The <a href=\"https://usapickleball.org/rules/summary/\">two-bounce rule</a> means one bounce on each side, not two bounces before every shot.</p>"
+    },
+    {
+      "id": "the-kitchen",
+      "title": "Why is there a kitchen?",
+      "html": "<p>The kitchen is the non-volley zone: the strip extending seven feet from each side of the net. You cannot volley while touching it, including its line. Your momentum cannot carry you into it after a volley either.</p><p>It is not forbidden territory, though. <a href=\"https://usapickleball.org/pickleball-skills/level-one/how-to-play-pickleball/\">You can enter the kitchen to play a ball that has bounced</a>. Think “no volley”, rather than “never step here”.</p>"
+    },
+    {
+      "id": "a-familiar-sport",
+      "title": "Familiar equipment, different habits",
+      "html": "<p>Those small rule changes give pickleball its own rhythm. Recognising a tennis-like net does not mean you already know the game.</p><p>Fancy another sporting surprise? Find out <a href=\"/learn/how-to-read-a-tennis-score/\">why tennis scores sound unusual</a>, or untangle <a href=\"/learn/snooker-vs-pool/\">the difference between snooker and pool</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-20T19:38:25Z",
+  "updatedAt": "2026-10-20T19:38:25Z",
+  "minutes": 2
+}
