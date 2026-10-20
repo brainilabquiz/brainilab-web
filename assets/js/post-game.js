@@ -63,7 +63,7 @@ window.BrainiPostGame=(()=>{
   const items=list=>list.map(a=>`<article class="post-answer"><h4>${number(a.position)}. ${esc(a.questionText)}</h4><p class="post-answer-choice">${a.isCorrect?'Correct':a.skipped?'Skipped':'Your answer: '+esc(a.selectedAnswer??'No answer')}</p><p><strong>${esc(a.correctAnswer||'Answer unavailable')}</strong></p>${a.explanation?`<p>${esc(a.explanation)}</p>`:''}</article>`).join('');
   return `<div class="post-review">${missed.length?`<details data-post-missed><summary>Review ${missed.length} ${missed.length===1?'answer':'answers'} to revisit</summary>${items(missed)}</details>`:''}${correct.length?`<details><summary>${missed.length?'Your correct answers':'Review your answers'} · ${correct.length}</summary>${items(correct)}</details>`:''}</div>`;
  }
- const owner=()=>window.BrainiData?.authState?.()?.user?.id||window.BrainiData?.getState?.()?.auth?.user?.id||'guest';
+ const owner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||auth?.anonymousPlayerId||'guest';};
  const verified=r=>r?.answersVerified===true||r?.answerVerificationStatus==='verified'||r?.dailyGameVerificationStatus==='verified'||r?.dailyAnswerVerificationStatus==='verified';
  function localStatus(result){
   if(!result.dailyNumber||result.practice||result.tryFirst)return null;
@@ -101,19 +101,24 @@ window.BrainiPostGame=(()=>{
    status={...provided,...status,games,bonusChoice:status?.bonusChoice||provided.bonusChoice};
   }
   const pending=!practice&&resultDay===today&&(!sameOwner||!status?.games?.[gameId]?.completed);
-  const invite=!practice&&!pending&&status&&window.BrainiFriendChallenge?.buildInvite(status);
+  const gameChallenge=window.BrainiGameChallenge?.offer(gameId,result,options);
+  const invite=gameChallenge||(!practice&&!pending&&status&&window.BrainiFriendChallenge?.buildInvite(status));
   const primary=pending?{href:'/daily-quiz/',label:'Back to Daily'}:status&&!practice?nextDaily(status):result.dailyNumber&&!practice?{href:'/daily-quiz/',label:'See today’s Daily'}:next||{href:'/games/',label:'Find another game'};
   const missed=(result.answerDetails||[]).filter(a=>!a.isCorrect).length;
-  const reviewFirst=!pending&&!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
-  const challengeFirst=primary.complete&&invite;
-  const label=reviewFirst?'Review your answers':challengeFirst?'Challenge a friend':primary.label;
+  const reviewFirst=!gameChallenge&&!pending&&!status&&missed>=2&&number(result.correct)<number(result.total)*.6;
+  const challengeFirst=gameChallenge?.rematch||primary.complete&&invite;
+  const label=challengeFirst?(gameChallenge?.rematch?'Send a rematch':'Challenge a friend'):reviewFirst?'Review your answers':primary.label;
   const root=container.querySelector('.post-actions');
   const focused=document.activeElement,restoreFocus=root.contains(focused);
   const focusedAction=restoreFocus?focused.dataset.postAction:null;
-  root.innerHTML=`${reviewFirst||challengeFirst?`<button type="button" class="post-primary" data-post-action="${reviewFirst?'review':'challenge'}">${label} <span aria-hidden="true">→</span></button>`:`<a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(label)} <span aria-hidden="true">→</span></a>`}${reviewFirst||challengeFirst?`<a class="post-secondary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)}</a>`:`<button type="button" class="post-share">${invite?'Challenge a friend':'Share result'}</button>`}`;
+  root.innerHTML=`${reviewFirst||challengeFirst?`<button type="button" class="post-primary" data-post-action="${challengeFirst?'challenge':'review'}">${label} <span aria-hidden="true">→</span></button>`:`<a class="post-primary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(label)} <span aria-hidden="true">→</span></a>`}${reviewFirst||challengeFirst?`<a class="post-secondary" data-post-action="next" href="${esc(localHref(primary.href))}">${esc(primary.label)}</a>`:`<button type="button" class="post-share">${gameChallenge?.rematch?'Send a rematch':invite?'Challenge a friend':'Share result'}</button>`}`;
   root.querySelector('[data-post-action="review"]')?.addEventListener('click',()=>{const d=container.querySelector('[data-post-missed]');if(d){d.open=true;d.querySelector('summary').focus();d.scrollIntoView?.({block:'nearest',behavior:'instant'});}});
-  const share=event=>invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
+  const share=event=>gameChallenge?window.BrainiGameChallenge.open(container,options,event.currentTarget):invite?window.BrainiFriendChallenge.open(status,event.currentTarget):window.BrainiShare?.open(gameId,result);
   root.querySelector('.post-share')?.addEventListener('click',share);root.querySelector('[data-post-action="challenge"]')?.addEventListener('click',share);
+  if(gameChallenge){
+   window.BrainiGameChallenge.render(container,options);
+   if(options.challengeReady===false||!sameOwner)root.querySelectorAll('.post-share,[data-post-action="challenge"]').forEach(b=>b.disabled=true);
+  }
   const note=container.querySelector('.post-next-note');
   note.textContent=!pending&&status?.model?.version==='daily-choice-v1'&&status.games?.[status.model.primary]?.completed&&!primary.complete?'Your Daily is done. The extra is up to you.':'';
   note.hidden=!note.textContent;
@@ -184,7 +189,7 @@ window.BrainiPostGame=(()=>{
   const result=options.result;
   const practice=!!(result.practice||result.tryFirst||new URLSearchParams(location.search).get('try')==='1');
   result.practice=practice;
-  mount(container,options);
+  mount(container,{...options,challengeReady:false});
   container.querySelector('.post-game').scrollIntoView?.({block:'start',behavior:'instant'});
   const reward=container.querySelector('[data-result-reward]');
   const current=()=>container.contains(reward);
@@ -206,6 +211,7 @@ window.BrainiPostGame=(()=>{
    return null;
   }finally{clearTimeout(timer);}
   Object.assign(result,confirmed,{practice});
+  confirm(container,result);
   renderReward();
   refresh();
   try{
@@ -221,5 +227,6 @@ window.BrainiPostGame=(()=>{
   refresh();
   return result;
  }
- return {mount,complete,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
+ function confirm(container,result){const options=mounted.get(container);if(!options||options.owner!==owner())return;Object.assign(options.result,result);options.challengeReady=true;updatePresentation(container,options);actionMarkup(container,options);}
+ return {mount,complete,confirm,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
 })();

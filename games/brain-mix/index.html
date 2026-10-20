@@ -103,6 +103,7 @@
   const guide=postQuiz?.querySelector(".question-guide");
   const archiveDate=BrainiData.pastDailyDate?.(new URLSearchParams(location.search).get("archive"));
   const archiveMode=!!archiveDate;
+  const tryFirstMode=new URLSearchParams(location.search).get('try')==='1';
   if(archiveMode){
     const dailyCrumb=document.querySelector('.breadcrumb a[href="../../daily-quiz/index.html"]');
     if(dailyCrumb){
@@ -166,7 +167,7 @@
     root.dataset.contentSource=daily.source;
     root.dataset.challengeNumber=daily.dailyNumber;
 
-    if(!archiveMode){
+    if(!archiveMode&&!tryFirstMode){
       const previousStatus=await BrainiDailyHub.resolve(daily.dailyNumber,{forceCloud:true});
       if(previousStatus.games.brainmix.completed){
         clearTimeout(watchdog);
@@ -184,7 +185,8 @@
     }
 
     BrainiQuiz.mount(root,questions,{
-      dailyScoreNumber:archiveMode?null:daily.dailyNumber,
+      dailyScoreNumber:archiveMode||tryFirstMode?null:daily.dailyNumber,
+      practice:archiveMode||tryFirstMode,
       checkAnswer:usingCloud
         ? (item,choice,context)=>BrainiContent.checkAnswer(item,choice,context)
         : null,
@@ -206,7 +208,7 @@
           challengeDate:daily.challengeDate
         });
 
-        if(usingCloud && !archiveMode){
+        if(usingCloud && !archiveMode && !tryFirstMode){
           try{
             await BrainiDaily.verifyDailyResult(result,daily,r.answerDetails);
           }catch(err){
@@ -214,7 +216,7 @@
           }
         }
 
-        if(archiveMode){
+        if(archiveMode||tryFirstMode){
           BrainiPostGame.mount(stage,{result:{...result,answerDetails:r.answerDetails},gameId:'brainmix',name:'Brain Mix',next:{href:'/games/#general-knowledge',label:'Choose another quiz'}});
         }else{
           const completedStatus=await BrainiDailyHub.resolve(daily.dailyNumber);
@@ -227,7 +229,7 @@
 
         if(postQuiz) postQuiz.hidden=true;
 
-        if(!archiveMode && window.BrainiAuth && BrainiAuth.addSavePrompt){
+        if(!archiveMode && !tryFirstMode && window.BrainiAuth && BrainiAuth.addSavePrompt){
           BrainiAuth.addSavePrompt(
             stage.querySelector(".post-game, .daily-completed-state"),
             "daily_result"

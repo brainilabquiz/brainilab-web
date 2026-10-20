@@ -67,3 +67,46 @@
 .post-metrics dt{font-size:12px}.post-metrics dd{font-size:18px;margin:0}
 .post-game [data-result-reward]{margin:14px 0}
 .post-actions{margin-top:16px}
+
+/* Friend challenges: a small target, two scores, and an invitation only on request. */
+.game-friend-entry,.game-friend-comparison,.game-friend-composer{box-sizing:border-box;color:#30296f;text-align:left;border:1px solid #ded6c7;border-radius:14px;background:#fffdf8}
+.game-friend-entry{display:flex;align-items:center;gap:12px;max-width:660px;padding:14px 16px;margin:16px auto}
+.game-friend-entry[hidden],.game-friend-composer[hidden]{display:none}
+.game-friend-mark{display:grid;place-items:center;flex:none;width:40px;height:40px;background:#ffdf29;border-radius:12px;font-size:25px;font-weight:750}
+.game-friend-kicker{display:block;color:#655d70;font-size:12px;font-weight:600;line-height:1.4}
+.game-friend-entry strong{display:block;font-size:19px;line-height:1.35;margin:3px 0}
+.game-friend-entry p{margin:0;color:#655d70;font-size:12px;line-height:1.5}
+.post-friend:empty{display:none}
+.game-friend-comparison{padding:14px 16px;margin-top:14px;background:#f5f2e9}
+.game-friend-comparison>strong{display:block;text-align:center;font-size:17px;line-height:1.4}
+.game-friend-comparison dl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 8px}
+.game-friend-comparison dl>div{padding:8px;border:1px solid #e2ddd1;border-radius:10px;text-align:center;background:#fffdf8;min-width:0}
+.game-friend-comparison dl>.is-winner{background:#eef6e9;border-color:#afcda1}
+.game-friend-comparison dt{font-size:12px;color:#655d70}
+.game-friend-comparison dd{font-weight:750;font-size:clamp(23px,5vw,30px);font-variant-numeric:tabular-nums;margin:2px 0 0;overflow-wrap:anywhere}
+.game-friend-comparison p,.post-game .game-friend-comparison p{margin:0;text-align:center;font-size:12px;line-height:1.5;color:#655d70}
+.game-friend-composer{padding:16px;margin-top:16px}
+.game-friend-composer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.game-friend-composer-head>strong{font-size:17px}
+.game-friend-composer-head button{width:44px;min-height:44px;border:0;border-radius:10px;background:#f2eef7;color:#30296f;font-family:inherit;font-size:24px;line-height:1;cursor:pointer}
+.game-friend-composer label{display:block;font-size:12px;font-weight:650}
+.game-friend-composer textarea{display:block;width:100%;box-sizing:border-box;resize:vertical;margin:6px 0 12px;padding:12px;min-height:150px;max-height:440px;border:1px solid #c7bed5;border-radius:10px;color:#30296f;background:#fff;font-size:14px;line-height:1.6;font-family:inherit;overflow-wrap:anywhere}
+.game-friend-send{display:flex;flex-wrap:wrap;gap:8px}
+.game-friend-send :is(button,a){display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;flex:1 1 120px;min-height:48px;padding:10px 12px;border:1px solid #c7bed5;border-radius:10px;color:#30296f;background:#fffdf8;text-decoration:none;font-size:14px;font-weight:700;line-height:1.4;font-family:inherit;cursor:pointer;text-align:center}
+.game-friend-send [hidden]{display:none}
+.game-friend-send [data-challenge-copy]{background:#30296f;color:#fff;border-color:#30296f}
+.game-friend-send button:disabled,.game-friend-send a[aria-disabled=true],.post-actions button:disabled{opacity:.55;cursor:default}
+.game-friend-composer [data-challenge-status]{font-size:12px;line-height:1.5;color:#655d70;margin:10px 0 0}
+.game-friend-composer [data-challenge-status]:empty{display:none}
+.game-friend-composer :is(button,a,textarea):focus-visible{outline:3px solid #40ab34;outline-offset:3px}
+@media(max-width:600px){.game-friend-entry{margin:12px;padding:12px}.game-friend-entry strong{font-size:17px}.game-friend-comparison,.game-friend-composer{padding:12px}.game-friend-send{flex-direction:column}.game-friend-send :is(button,a){flex:auto;width:100%}}
+@media(max-width:600px){
+ .friend-game-active .labgame-shell{padding:20px 16px}
+ .friend-game-active .labgame-top{margin-bottom:12px;gap:8px}
+ .friend-game-active .labgame-top h1{font-size:28px;margin:0 0 8px}
+ .friend-game-active .labgame-top p{font-size:14px;margin:0}
+ .friend-game-active .labgame-top .labgame-eyebrow,.friend-game-active .labgame-back,.friend-game-active .labgame-intro>h2,.friend-game-active .labgame-intro>.labgame-eyebrow{display:none}
+ .friend-game-active .labgame-intro{padding:16px;margin-top:12px}
+ .friend-game-active .labgame-intro>p{font-size:14px;line-height:1.5;margin:0 0 12px}
+ .friend-game-active .labgame-stats{margin:12px 0;gap:6px}
+}
