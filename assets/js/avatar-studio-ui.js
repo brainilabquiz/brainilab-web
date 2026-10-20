@@ -6,6 +6,7 @@ window.BrainiAvatarStudioUI=(function(){
     challenges:{label:'Challenges',groups:{}},academy:{label:'Academy',groups:{}}};
   if(window.BrainiAchievementCatalog)panes.badges={label:'Badges',groups:{}};
   let active='look';
+  const choiceViews=new WeakMap();
   const number=n=>n.toLocaleString('en-GB');
   function initialStatus(button,copy){if(!window.BrainiWardrobeUI)button.querySelector('small').textContent=copy;}
   function group(kind,name){
@@ -20,6 +21,7 @@ window.BrainiAvatarStudioUI=(function(){
     }
   }
   function mount(root){
+    choiceViews.delete(root);
     root.innerHTML=`<div class="avatar-studio-heading"><div><span class="reward-kicker">MY AVATAR</span><h2>Make it yours.</h2><p>Try an unlocked item, then save your look.</p></div><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
       <div class="avatar-studio-layout"><aside class="avatar-studio-stage" aria-label="Avatar preview">
       <div class="avatar-stage-art"><span class="avatar-preview-label" data-style-preview-label>Your avatar</span><span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span></div>
@@ -65,8 +67,17 @@ window.BrainiAvatarStudioUI=(function(){
     return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
   }
   function choices(root,draft,total,busy,academy=[],discovery=[],equipped=draft,options={}){
+    // Cloud/profile events often repeat the same snapshot. Keep the existing
+    // expanded controls and decoded artwork instead of repainting every choice.
+    const player=BrainiData.player(),groups=C.groups;
+    const signature=JSON.stringify([draft,equipped,total,!!busy,academy,discovery,
+      options.loading,options.error,options.activeDays,player.id,player.displayName,
+      player.avatarUrl,player.level,player.identityName,player.name,player.defaultSeed,
+      Object.entries(groups).map(([kind,items])=>[kind,items.map(item=>item.id)]),
+      window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]]);
+    if(choiceViews.get(root)===signature)return;
     collectionSummary(root,total,options);
-    for(const [kind,items] of Object.entries(C.groups)){
+    for(const [kind,items] of Object.entries(groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       const visible=new Set(items.filter(item=>!item.course&&!item.challenge&&!item.days).map(item=>item.id));
       for(const button of grid.querySelectorAll('[data-reward-id]'))if(!visible.has(button.dataset.rewardId))button.remove();
@@ -114,6 +125,7 @@ window.BrainiAvatarStudioUI=(function(){
     challengeChoices(root,draft,total,busy,discovery);
     dayChoices(root,draft,total,busy,options.activeDays);
     window.BrainiWardrobeUI?.render(root,{draft,equipped,total,busy,academy,discovery,...options});
+    choiceViews.set(root,signature);
   }
   function challengeChoices(root,draft,total,busy,discovery){
     const grid=root.querySelector('[data-discovery-rewards]');if(!grid)return;
