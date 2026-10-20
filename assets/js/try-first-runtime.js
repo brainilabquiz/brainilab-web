@@ -9,6 +9,7 @@ window.BrainiTryFirstRuntime=(function(){
   function todayHref(){const u=new URL(location.href);u.search="";const id=gameId();if(id&&ROTATING.has(id))u.searchParams.set("daily",today);return u.href}
   function decorate(){
     if(!active) return;
+    if(window.BrainiGameChallengeModel?.incoming())return;
     document.documentElement.classList.add("try-first-active");
     if(!document.querySelector("[data-try-first-banner]")){
       const banner=document.createElement("div");banner.dataset.tryFirstBanner="1";banner.className="try-first-global-banner";

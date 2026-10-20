@@ -762,7 +762,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
   async function submitGameResultHybrid(gameId,payload){
     // Try First runs the full real game engine but is deliberately invisible to results, XP and stats.
     if(new URLSearchParams(location.search).get("try")==="1"){
-      return Object.assign({gameId,practice:true,tryFirst:true,cloudSyncStatus:"disabled",clientResultId:null},clone(payload));
+      return Object.assign(clone(payload),{gameId,practice:true,tryFirst:true,cloudSyncStatus:"disabled",clientResultId:null});
     }
     // Map Hunt is retired. Do not add new local or cloud analytics/results.
     if(gameId==="maphunt"){
