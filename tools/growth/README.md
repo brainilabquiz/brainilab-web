@@ -1,5 +1,12 @@
 # Private BrainiLab Growth tools
 
+## Our own SEO Explorer
+
+The [SEO Explorer](SEO-EXPLORER.md) adds anonymous public-page checks, deduplicated
+known backlinks and a disclosed technical Page/Domain Trust checklist. It reuses
+existing Search Console keywords. External reputation and global backlink totals
+remain unmeasured. No Ahrefs account, subscription or new analytics is involved.
+
 ## YouTube Studio and draft upload packs
 
 Owner authorization on 13 October 2026: the existing Growth heartbeat reads signed-in YouTube Studio, researches video ideas and prepares upload packs. **No video uploading, scheduling, public metadata edits, Studio experiments or Community posting is authorized.** No media generators are activated. Use the native browser session; the owner explicitly permitted the Codex sidebar on 13 October. This is a native Codex step, not a hidden browser endpoint or YouTube Analytics API connection.
