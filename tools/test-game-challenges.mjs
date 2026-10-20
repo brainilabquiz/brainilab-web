@@ -90,4 +90,14 @@ assert.equal(held.root.querySelectorAll('.game-friend-comparison').length,1);
 held.dom.window.close();
 const failed=fixture(link);await failed.w.BrainiPostGame.complete(failed.root,{...options,result:{...options.result}},{save:async()=>{throw Error('Offline');}});assert.equal(failed.root.querySelector('.post-primary').disabled,true);failed.dom.window.close();
 const guest=fixture(link);let guestId='guest-one';guest.w.BrainiData.authState=()=>({status:'guest',guestUserId:guestId});guest.w.BrainiPostGame.mount(guest.root,options);guestId='guest-two';guest.w.dispatchEvent(new guest.w.Event('brainilab:authchange'));assert.equal(guest.root.querySelector('.post-primary').disabled,true,'different guest identities cannot share each other’s results');guest.dom.window.close();
+// Exercise the actual data boundary, rather than trusting a mocked practice response.
+const safety=new JSDOM('',{url:'https://brainilabgames.com/games/sequence/?try=1',runScripts:'outside-only'}).window;
+for(const n of ['daily-rules','data','game-challenge-model'])safety.eval(source(n));
+const before=JSON.stringify(safety.BrainiData.getState());let cloudWrites=0;
+safety.BrainiCloudGames={saveCompletedResult:async()=>{cloudWrites++;throw Error('Unexpected write');}};
+for(const id of Object.keys(safety.BrainiGameChallengeModel.games).filter(g=>g!=='reasoning')){
+ const result=await safety.BrainiData.api.submitGameResult(id,{score:1000,correct:1,total:10,practice:false,tryFirst:false,clientResultId:'must-not-persist',dailyNumber:safety.BrainiData.daily().number});
+ assert.equal(result.practice,true);assert.equal(result.tryFirst,true);assert.equal(result.clientResultId,null);assert.equal(result.cloudSyncStatus,'disabled');
+}
+assert.equal(cloudWrites,0);assert.equal(JSON.stringify(safety.BrainiData.getState()),before,'friend practice changes no results, XP, streaks or Daily state');safety.close();
 console.log(`PASS: ${scenarios} game/mode links; limits, reply scores, invalid dates/routes, source mismatch, personal edits, copy/WhatsApp/native/cancel/failure, no injection, draft/focus, account isolation and pending/failed saves.`);
