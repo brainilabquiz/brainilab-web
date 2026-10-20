@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-20",
+  "purpose": "Use real search and referral evidence to choose useful game/article work, without authority or opportunity scores.",
+  "sources": [
+    {"source": "Search Console API, final Google Images query-only", "period": "2026-07-20 to 2026-10-17", "timezone": "America/Los_Angeles", "markets": "all captured markets", "languageFilter": null, "rows": 12, "aggregation": "byProperty", "observedAt": "2026-10-20T20:05:48.809319+00:00"},
+    {"source": "Search Console API, final Web query/page", "period": "2026-07-20 to 2026-10-17", "timezone": "America/Los_Angeles", "markets": "all captured markets", "languageFilter": null, "rows": 346, "aggregation": "byPage", "observedAt": "2026-10-20T20:05:48.809319+00:00"},
+    {"source": "Existing GA4 Data API acquisition snapshot", "period": "2026-09-21 to 2026-10-18", "timezone": "Europe/Madrid", "observedAt": "2026-10-20T17:18:08.422595+00:00", "referralMediumExamples": [{"host":"dledex.com","sessions":39,"engagedSessions":30},{"host":"wordleverse.net","sessions":5,"engagedSessions":5},{"host":"qorble.com","sessions":1,"engagedSessions":1}]}
+  ],
+  "decision": "Expose referral-medium sources once per host and inspect their linked arrival routes first. Map actual Web queries to pages before proposing copy. Preserve Number Route and other already-corrected explanations until comparable post-change data exist.",
+  "runnerUp": "Number Route has the strongest exact game intent in this sample: number route game has 61 impressions/0 clicks at the game, and 20/0 at the guide. The period precedes PR262's play-link correction; a second rewrite is not justified yet.",
+  "otherPagesReviewed": ["/daily-quiz/", "/games/connections/", "/learn/nepal-flag-shape/", "/learn/which-century-is-that-year/", "/learn/words-that-mean-their-own-opposite/", "/learn/why-2100-is-not-a-leap-year/", "/learn/spotting-repeating-patterns/"],
+  "backlinks": {"sourcesAttempted":50,"directHTMLLinks":30,"knownNormalisedHosts":10,"observedAt":"2026-10-20T20:09:50.840834+00:00","newlyObservedSources":["https://dleslist.com/games/brainilab-daily","https://www.wordleverse.net/"],"notFoundInFetchedHTML":["https://www.daily-doku.com/games/brainilab-daily","https://www.alldle.net/games-like/brainilab-daily"],"newLinksCreatedClaim":false},
+  "measurement": {"originalBaseline":"2026-10-04 to 2026-10-17","plannedComparison":"2026-10-21 to 2026-11-03","comparisonObserved":false,"keepQualification":"PR263 changed consented article_game_click coverage. Query clicks, GA4 sessions and individual people cannot be joined or given mixed-period conversion rates."},
+  "limits": ["Images and Web counts remain separate; overlapping windows are not added.","Historical average position is not a current rank. US/global search volume and difficulty are unknown.","Image rows have 1–2 impressions each; do not call them strong demand or force new articles.","Referral-medium source labels are not channel-group classification, individual backlink attribution or evidence of registration/revenue.","No XP, scoring, player data, analytics tracking, permissions or content versions changed."],
+  "primaryMethodReference": "https://developers.google.com/webmaster-tools/v1/searchanalytics/query"
+}

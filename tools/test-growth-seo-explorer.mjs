@@ -27,3 +27,22 @@ root.querySelector('[data-seo-view=reputation]').click();assert.match(root.textC
 root.querySelector('[data-seo-view=links]').click();assert.equal(root.querySelector('.growth-search-pagination').hidden,false);
 assert.equal(keywordView({...s,keywords:{...evidence,property:'other'}},'current','').rows.length,0);
 console.log('PASS SEO Explorer: missing data, disclosed technical trust, failed sources, source/target evidence, XSS, safe links, filters, pagination and empty views.');
+
+const {discoveryView,referralView}=await import('../editor/growth-seo-sources.js');
+const sources={schemaVersion:1,property:'sc-domain:brainilabgames.com',source:'google_search_console_api',dataState:'final',observedAt:at,timezone:'America/Los_Angeles',period:{start:'2026-07-20',end:'2026-10-17'},images:{searchType:'image',aggregation:'byProperty',rows:[{query:'nepal flag shape',clicks:0,impressions:2,position:25}],rowsWithheld:0},webPages:{searchType:'web',aggregation:'byPage',rows:[{query:'nepal flag shape',path:'/learn/nepal-flag-shape/',clicks:0,impressions:1,position:9}],rowsWithheld:0}};
+const measured={...extended,seoExplorer:{...extended.seoExplorer,searchSources:sources,backlinks:[...s.backlinks,{...s.backlinks[0],sourceUrl:'https://directory.example/second/'}]},measurement:{schemaVersion:2,property:'555562532',mode:'api_snapshot',source:'GA4 Data API',period:{start:'2026-09-21',end:'2026-10-18'},timezone:'Europe/Madrid',observedAt:at,quality:{thresholded:true},sources:[{label:'directory.example / referral',sessions:39,engagedSessions:30},{label:'www.directory.example / referral',sessions:1,engagedSessions:1},{label:'google / organic',sessions:100,engagedSessions:100},{label:'private@example.org / referral',sessions:100,engagedSessions:100}]}};
+root.innerHTML=seoHTML(measured);bindSEO(root,measured);
+root.querySelector('[data-seo-view=keywords]').click();
+const sourceSelect=root.querySelector('[data-seo-source]');sourceSelect.value='images';sourceSelect.dispatchEvent(new dom.window.Event('change'));
+assert.match(root.textContent,/Google Images query-only/);assert.match(root.querySelector('tbody').textContent,/nepal flag shape/);assert.equal(root.querySelector('[data-seo-window-label]').hidden,true);
+sourceSelect.value='webPages';sourceSelect.dispatchEvent(new dom.window.Event('change'));
+assert.match(root.querySelector('tbody a').href,/\/learn\/nepal-flag-shape\/$/);assert.match(root.textContent,/not an opportunity score/);
+root.querySelector('[data-seo-view=referrals]').click();
+assert.equal(root.querySelectorAll('tbody tr').length,1);assert.match(root.querySelector('tbody').textContent,/40/);assert.match(root.textContent,/cannot be assigned to an individual backlink/);assert.match(root.textContent,/thresholded/);assert.doesNotMatch(root.querySelector('tbody').textContent,/private@|google/);
+assert.equal(sourceSelect.closest('label').hidden,true);
+assert.equal(referralView({...measured,measurement:null},'').rows.length,0);
+assert.equal(discoveryView({...s,searchSources:{...sources,webPages:{...sources.webPages,aggregation:'byProperty'}}},'webPages','').rows.length,0);
+assert.equal(discoveryView({...s,searchSources:{...sources,webPages:{...sources.webPages,rows:[{...sources.webPages.rows[0],path:'/profile/'}]}}},'webPages','').rows.length,0);
+const aliasView=referralView({...measured,seoExplorer:{...measured.seoExplorer,backlinks:Array.from({length:4},(_,i)=>({...s.backlinks[0],targetUrl:`https://brainilabgames.com/games/game-${i}/index.html`}))}},'');
+assert.match(aliasView.rows.join(''),/<details><summary>4 verified destinations/);assert.match(aliasView.rows.join(''),/\/games\/game-0\/index.html/);assert.doesNotMatch(aliasView.rows.join(''),/Not inspected/);
+console.log('PASS additional SEO sources: separate Images/Web/page aggregation, inspected page links, referral host deduplication, absent/private sources, quality flags and honest growth interpretation.');
