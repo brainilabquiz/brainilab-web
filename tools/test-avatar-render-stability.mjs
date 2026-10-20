@@ -20,6 +20,10 @@ w.eval(source('auth.js'));
 await tick();
 const portraits=[d.querySelector('.avatar'),d.querySelector('[data-profile-rank-hero] .rank-avatar'),d.querySelector('[data-profile-account-avatar]'),d.querySelector('[data-style-preview-avatar]'),d.querySelector('[data-avatar-mini]')];
 const initial=portraits.map(el=>el.firstChild),unchangedPlayer=JSON.stringify(player);
+const studio=d.querySelector('[data-profile-rewards]'),choiceChanges=[];
+const choicesObserver=new w.MutationObserver(records=>choiceChanges.push(...records));
+for(const el of studio.querySelectorAll('.reward-grid,.avatar-academy-grid,.avatar-challenge-grid'))choicesObserver.observe(el,{childList:true,attributes:true,subtree:true});
+const originalChoices=studio.querySelectorAll('[data-reward-kind]').length;
 const changes=[];
 const observer=new w.MutationObserver(records=>changes.push(...records.filter(record=>portraits.includes(record.target))));
 for(const el of portraits)observer.observe(el,{childList:true});
@@ -33,6 +37,9 @@ console.log(JSON.stringify({repeatedEvents:12,profileRenders:3,portraitReplaceme
 if(process.argv.includes('--measure-only')){observer.disconnect();w.close();process.exit(0);}
 assert.equal(repeatedReplacements,0,'unchanged startup/cloud events retain all decoded portraits');
 assert.equal(JSON.stringify(player),unchangedPlayer,'rendering cannot mutate XP, level or score');
+assert.equal(choiceChanges.length,0,'identical cloud/profile events do not rebuild or relabel expanded choice grids');
+assert.equal(studio.querySelectorAll('[data-reward-kind]').length,originalChoices,'no catalogue option is hidden or removed to improve performance');
+choicesObserver.disconnect();
 observer.disconnect();
 
 // A failed remote photo must not be retried by every progress/style event.
