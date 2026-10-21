@@ -2498,7 +2498,7 @@ window.BrainiHalloweenLegacy=(function(){
         if((await current())?.id!==uid)throw Error('Account changed.');
         localStorage.setItem(key,JSON.stringify({owner:uid,confirmed:prior?.confirmed||null}));
         let timer;
-        const r=await Promise.race([sb.rpc('halloween_recover_legacy_cosmetics',{p_records:records}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Recovery timed out.')),12000);})]).finally(()=>clearTimeout(timer));
+        const r=await Promise.race([sb.rpc('halloween_recover_legacy_cosmetics',{p_records:records.map(record=>({...record,owner:uid}))}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Recovery timed out.')),12000);})]).finally(()=>clearTimeout(timer));
         if((await current())?.id!==uid)throw Error('Account changed.');
         if(r.error||r.data?.owner!==uid||r.data?.recovered!==true||!Array.isArray(r.data?.accepted_ids)||records.some(x=>!r.data.accepted_ids.includes(x.id)))throw Error('Recovery could not be confirmed.');
         localStorage.setItem(key,JSON.stringify({owner:uid,confirmed:signature}));

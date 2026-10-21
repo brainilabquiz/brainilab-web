@@ -19,6 +19,7 @@ function harness(){
  h.save('other-browser',[record('not-mine')]);h.storage.set('brainilab-halloween-2026:preview:browser-a',JSON.stringify({records:[record('preview')]}));
  check(h.api.capture().length===1,'only current browser identities are collected, not other users or preview ledgers');
  await h.api.recover();check(h.calls.length===1&&h.calls[0].name==='halloween_recover_legacy_cosmetics'&&h.calls[0].args.p_records.length===3,'three legacy days use the cosmetic-only account RPC');
+ check(h.calls[0].args.p_records.every(r=>r.owner==='account-a'),'each imported record is bound to the initiating account before sending');
  check(h.api.snapshot().notice.includes('saved with your account'),'success is shown only after account-bound confirmation');
  await h.api.recover();check(h.calls.length===1,'confirmed recovery is not resent on reload');
  check(h.storage.get('brainilab-halloween-2026:guest:browser-a').includes('old-a'),'original browser ledger is retained after success');
