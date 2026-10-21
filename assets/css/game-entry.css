@@ -19,6 +19,10 @@
 .game-entry-reading a{color:#2d296e;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#aaa4bb}
 .game-entry-reading a:hover{text-decoration-color:currentColor}.game-entry-reading a:focus-visible{outline:3px solid #3fab34;outline-offset:4px;border-radius:2px}
 .game-entry-reading a span{color:inherit;font-size:inherit}
+.labgame-intro .entry-example{margin:12px 0 16px;border:1px solid #ded8ca;border-radius:10px;background:#fffdf8;text-align:left;color:#514b5c}
+.entry-example summary{padding:12px 14px;cursor:pointer;font-size:14px;font-weight:700;color:#2d296e}
+.entry-example summary:focus-visible{outline:3px solid #3fab34;outline-offset:3px;border-radius:8px}
+.labgame-intro .entry-example p{margin:0;padding:0 14px 14px;font-size:14px;line-height:1.6;color:#514b5c;font-weight:400}
 .game-entry-page .quiz-pack-wrap{padding-top:0}.game-entry-page .quiz-pack-info span{font-size:12px}.game-entry-page .challenge-wrap{padding-top:14px}
 .game-entry-page #leafQuiz{position:relative;min-height:440px}.quiz-loading-message{display:none}
 [data-quiz-loading] .quiz-loading-message{display:block;position:absolute;inset:0;padding:90px 24px;text-align:center;color:#fff;line-height:1.7}

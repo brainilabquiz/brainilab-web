@@ -49,8 +49,8 @@
     },
     {
       "id": "scoreboard",
-      "html": "<p>Keep the current game’s points separate from the set’s games. A player can lead <strong>4–3 in games</strong> while trailing <strong>30–40 in the current game</strong>.</p><p>In a usual tie-break set, 6–6 in games triggers a tie-break. That uses ordinary numbers, 1, 2, 3… A standard seven-point tie-break still needs a two-point lead; other formats exist.</p>",
-      "title": "Read the scoreboard in layers"
+      "html": "<p>Keep the current game’s points separate from the set’s games. A player can lead <strong>4–3 in games</strong> while trailing <strong>30–40 in the current game</strong>.</p><p>In a usual tie-break set, win at least <strong>six games with a two-game lead</strong> to take the set: 6–4 works, but 6–5 does not. At 6–6, a tie-break decides the set. That uses ordinary numbers, 1, 2, 3… A standard seven-point tie-break still needs a two-point lead; other formats exist.</p><p>A <strong>best-of-three match</strong> is won by the first player to take two sets; best of five needs three. Check the match format: short sets and match tie-breaks can use different rules. The <a href=\"https://www.lta.org.uk/play/how-to-get-started/rules-scoring/\">LTA scoring guide</a> separates these stages.</p>",
+      "title": "How games become sets and matches"
     },
     {
       "id": "practice",
@@ -58,7 +58,7 @@
       "title": "Try following one game"
     }
   ],
-  "updatedAt": "2026-10-17T09:54:01Z",
+  "updatedAt": "2026-10-21T05:38:05Z",
   "description": "What do love, 30–40 and deuce mean? Follow tennis points, advantage and tie-breaks with one simple example, then read a scoreboard without guessing.",
   "publishedAt": "2026-09-28T18:48:21.926724+00:00"
 }
