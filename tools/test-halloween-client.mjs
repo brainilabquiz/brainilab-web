@@ -28,6 +28,7 @@ async function harness(options = {}) {
   for (const [key, value] of Object.entries(options.storage || {})) w.localStorage.setItem(key, value);
   const noMainWrites = name => () => { calls.xp.push(name); throw Error('Main player data must not be changed'); };
   w.BrainiData = { authState: () => auth, api: { submitGameResult: noMainWrites('submitGameResult'), grantXP: noMainWrites('grantXP'), updateStreak: noMainWrites('updateStreak') } };
+  if(options.serverGuest)w.BrainiBackendAuth={isConfigured:()=>true,hasPlayerSession:()=>!!auth.guestUserId,ensurePlayerSession:async()=>{calls.rpc.push({name:'ensureGuest'});auth={...auth,guestUserId:'fixture-guest'};return {user:{id:'fixture-guest',is_anonymous:true}};}};
   w.fetch = async (url, request) => {
     calls.fetch.push({ url, request: plain(request || {}) });
     assert.equal(url, '/api/halloween/config'); assert.equal(request.cache, 'no-store'); assert.equal(request.credentials, 'same-origin');
@@ -292,5 +293,17 @@ await test('every factual question has its own checked source row and canonical 
   assert.ok(!seed.games['trick-or-think'].questions.some(q => q.source.url.includes('headlinesandheroes'))); u.close();
 });
 
+await test('a public guest game uses an owned server session so cosmetics can follow Google sign-in', async()=>{
+ const u=await harness({serverGuest:true,auth:{status:'guest',anonymousPlayerId:'browser-one'}});
+ assert.equal(u.calls.rpc.length,0,'A visit alone must not enrol a guest');
+ const game=await u.api.startGame('trick-or-think');
+ assert.equal(u.api.identityKey(),'guest:fixture-guest');assert.ok(u.api.snapshot().cloud);
+ assert.equal(u.calls.rpc.filter(x=>x.name==='ensureGuest').length,1);assert.ok(u.calls.rpc.some(x=>x.name==='startGame'));
+ await u.api.completeGame(u.payload(game,u.answers(true)));assert.ok(u.calls.rpc.some(x=>x.name==='completeGame'));u.close();
+});
+await test('a private preview cannot enrol a guest or call event RPCs even with the real auth adapter present', async()=>{
+ const u=await harness({serverGuest:true,url:'http://127.0.0.1:8809/halloween/',config:{preview:true}});
+ const game=await u.api.startGame('trick-or-think');await u.api.completeGame(u.payload(game,u.answers(true)));assert.equal(u.calls.rpc.length,0);u.close();
+});
 console.log(`Halloween coordinator integration: ${passed} passed, ${failures.length} failed.`);
 if (failures.length) { for (const f of failures) console.error(f.name + '\n' + f.error.stack); process.exitCode = 1; }

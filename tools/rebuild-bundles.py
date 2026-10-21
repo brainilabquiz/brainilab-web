@@ -4,7 +4,7 @@ JS=ROOT/'assets/js'
 BUNDLES={
  'consent.bundle.js':['site-analytics.js','meta-pixel.js'],
  'shell.bundle.js':['link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js','profile-achievements-model.js','achievement-display.js','avatar-design.js','profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-entitlements.js','halloween-event-client.js','share.js','friend-challenge.js','friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js','try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js','progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js'],
- 'cloud.bundle.js':['supabase-config.js','supabase-auth.js','growth-conversions.js','supabase-profile.js','supabase-games.js','result-recovery.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
+ 'cloud.bundle.js':['supabase-config.js','supabase-auth.js','guest-style-bridge.js','growth-conversions.js','supabase-profile.js','supabase-games.js','result-recovery.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
  'quiz.bundle.js':['supabase-content.js','quiz.js'],
  'daily.bundle.js':['supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
  'daily-overview.bundle.js':['supabase-daily.js','daily-hub.js','daily-countdown.js','daily-games.js','daily-journey.js','daily-overview.js','anytime-browser.js'],

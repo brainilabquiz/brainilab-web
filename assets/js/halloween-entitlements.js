@@ -7,6 +7,7 @@ window.BrainiHalloweenEntitlements=(function(){
     const auth=window.BrainiData?.authState?.()||{};
     let preview=false;try{preview=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)&&JSON.parse(document.querySelector('script[data-halloween-config]')?.textContent||'{}').preview===true;}catch{}
     if(preview)return {id:'preview:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
+    if(auth.status!=='authenticated'&&auth.guestUserId&&window.BrainiBackendAuth?.hasPlayerSession?.())return {id:'guest:'+auth.guestUserId,uid:auth.guestUserId,cloud:true};
     return auth.status==='authenticated'&&auth.user?.id?{id:'account:'+auth.user.id,uid:auth.user.id,cloud:true}
       :{id:'guest:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
   }
