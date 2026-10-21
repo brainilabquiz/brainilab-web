@@ -1,0 +1,65 @@
+{
+  "slug": "why-do-dogs-tilt-their-heads",
+  "title": "Why do dogs tilt their heads? The toy-name clue",
+  "description": "That sideways look may be linked to paying attention to meaningful sounds. A toy-fetching study offers a clue, with an important limit to what it can tell us.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 199,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-dogs-tilt-their-heads.webp",
+    "small": "/assets/images/learn/why-do-dogs-tilt-their-heads-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-dogs-tilt-their-heads-thumb.webp",
+    "alt": "A relaxed brown-and-white dog sits on a wooden floor with its head gently tilted to one side",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined household dog, not a photograph from the study.",
+    "position": 0
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try another question about the natural world in the Science Quiz.",
+  "related": [
+    "why-do-cats-purr",
+    "why-do-cats-love-boxes"
+  ],
+  "sources": [
+    {
+      "url": "https://link.springer.com/article/10.1007/s10071-021-01571-8",
+      "name": "Sommese and colleagues — An exploratory analysis of head-tilting in dogs"
+    },
+    {
+      "url": "https://ttk.elte.hu/en/talk-to-tilt-head-tilting-in-dogs",
+      "name": "Eötvös Loránd University — Talk-to-tilt: head tilting in dogs"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-sideways-question",
+      "title": "A question mark with ears",
+      "html": "<p><strong>A brief head tilt may be linked to a dog paying attention to a meaningful sound.</strong> Researchers do not yet have one explanation for every tilt, but a toy-fetching study offers an intriguing clue.</p><p>The little sideways look is familiar. The interesting question is what the dog is doing while it happens.</p>"
+    },
+    {
+      "id": "the-toy-name-test",
+      "title": "The toy-name test",
+      "html": "<p>In a <a href=\"https://link.springer.com/article/10.1007/s10071-021-01571-8\">study published online in 2021</a>, researchers observed 40 dogs while their owners asked them to fetch particular toys by name.</p><p>Dogs especially skilled at learning toy names tilted their heads more often during these requests than the other dogs. The researchers suggested a connection with processing meaningful information and increased attention.</p>"
+    },
+    {
+      "id": "a-favourite-side",
+      "title": "A favourite side, too",
+      "html": "<p>Individual dogs also tended to favour the same side across repeated tests. That detail gave the team another part of the behaviour to investigate.</p><p>But these were observations in a particular task. They do not show that every head tilt means a dog has understood a sentence, or that a dog without the tilt is paying no attention.</p>"
+    },
+    {
+      "id": "one-clue-not-the-whole-story",
+      "title": "One clue in a bigger puzzle",
+      "html": "<p><a href=\"https://ttk.elte.hu/en/talk-to-tilt-head-tilting-in-dogs\">The ELTE researchers stress the study’s narrow setting</a>: an owner requesting a named toy. Other situations were not tested, so this cannot explain every dog’s sideways glance.</p><p>There is room for more discovery behind those ears. For two other animal mysteries, explore <a href=\"/learn/why-do-cats-purr/\">why cats purr</a> and <a href=\"/learn/why-do-cats-love-boxes/\">why a cardboard box can be so inviting to a cat</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T06:23:14Z",
+  "updatedAt": "2026-10-21T06:23:14Z",
+  "minutes": 2
+}

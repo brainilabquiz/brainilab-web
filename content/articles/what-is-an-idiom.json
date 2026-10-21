@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-an-idiom",
+  "title": "What is an idiom? When cake means easy",
+  "description": "Know every word in “a piece of cake” and still miss the meaning? Discover how an idiom works, with a slice of English that is not always dessert.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "order": 200,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-an-idiom.webp",
+    "small": "/assets/images/learn/what-is-an-idiom-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-an-idiom-thumb.webp",
+    "alt": "A slice of lemon cake on a cream plate beside an open notebook and a yellow pencil",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged cake-and-notebook scene illustrating the expression.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Look for another kind of link between words in Connections.",
+  "related": [
+    "words-that-mean-their-own-opposite",
+    "wordplay-examples"
+  ],
+  "sources": [
+    {
+      "url": "https://dictionary.cambridge.org/dictionary/english/idiom",
+      "name": "Cambridge Dictionary — Idiom: the phrase and its meaning"
+    },
+    {
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/piece-of-cake",
+      "name": "Cambridge Dictionary — A piece of cake: something very easy to do"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-whole-phrase",
+      "title": "The whole phrase has a job",
+      "html": "<p><strong>An idiom is an expression whose meaning as a whole differs from the meanings of its individual words.</strong> Knowing each word is not always enough to work out what someone means.</p><p><a href=\"https://dictionary.cambridge.org/dictionary/english/idiom\">Cambridge Dictionary describes this phrase-level meaning</a>. The words arrive together with an established use of their own.</p>"
+    },
+    {
+      "id": "where-is-the-cake",
+      "title": "Where is the cake?",
+      "html": "<p>Imagine a friend says, <em>Putting up that tent was a piece of cake.</em> You would not need to look for icing on the campsite.</p><p><a href=\"https://dictionary.cambridge.org/us/dictionary/english/piece-of-cake\">A piece of cake is an informal way to describe something very easy to do</a>. Our friend found the task easy; the tent has not become edible.</p>"
+    },
+    {
+      "id": "same-words-different-setting",
+      "title": "Same words, different setting",
+      "html": "<p>Now imagine someone points at a plate and offers you a piece of cake. This time, reaching for a fork makes perfect sense.</p><p>The words are the same. The situation helps you decide whether the speaker means an actual slice or something easy. Reading only the word <em>cake</em> would miss that difference.</p>"
+    },
+    {
+      "id": "a-little-language-surprise",
+      "title": "A little language surprise",
+      "html": "<p>When a phrase seems odd, try looking it up as a whole expression. A dictionary entry can reveal a meaning that separate word definitions would not explain.</p><p>For another twist in English, meet <a href=\"/learn/words-that-mean-their-own-opposite/\">words that can mean their own opposite</a>. Or explore <a href=\"/learn/wordplay-examples/\">more ways words surprise us</a>. The next puzzle might contain more than one kind of clue.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T06:23:14Z",
+  "updatedAt": "2026-10-21T06:23:14Z",
+  "minutes": 2
+}
