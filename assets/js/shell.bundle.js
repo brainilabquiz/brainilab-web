@@ -1472,6 +1472,13 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const def=GAME_DEFS[gameId];
     if(!def) throw new Error("Unknown game: "+gameId);
 
+    if(gameId==='brainmix' && payload?.contentSource==='local' && !payload.dailyChallengeId){
+      payload={...payload,practice:true};
+    }
+    const legacyFallback=r=>r.gameId==='brainmix' && r.contentSource==='local' && !r.dailyChallengeId
+      && !r.answersVerified && r.dailyAnswerVerificationStatus!=='verified';
+    // Preserve the old attempt as practice; never replace a verified or pending official run.
+    state.recentResults.filter(legacyFallback).forEach(r=>{r.practice=true;});
     const requestedDaily=Number(payload?.dailyNumber);
     if(Number.isInteger(requestedDaily) && requestedDaily>0 && !payload?.practice){
       const existing=state.recentResults.find(r=>r.gameId===gameId && !r.practice && Number(r.dailyNumber)===requestedDaily);
