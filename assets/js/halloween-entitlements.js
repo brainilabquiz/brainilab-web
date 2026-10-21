@@ -45,6 +45,10 @@ window.BrainiHalloweenEntitlements=(function(){
     owner=current;error='';loading=current.cloud;emit();
     if(!current.cloud){loading=false;emit();return snapshot();}
     try{
+      // Recovery has its own retry state; a failed legacy import must not hide
+      // cosmetics already saved on the account.
+      if(current.id.startsWith('account:'))try{await window.BrainiHalloweenLegacy?.recover?.();}catch{}
+      if(run!==generation)return snapshot();
       const data=await request('halloween_event_state');
       if(run!==generation)return snapshot();
       state=data;
