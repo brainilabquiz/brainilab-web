@@ -27,7 +27,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(gameId!=='europeflags'||!allowed()||!round||typeof round!=='object'||!started.has(round)||finishedPractice.has(round))return;
     finishedPractice.add(round);send('practice_complete',{game_id:gameId});
   }
-  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword']);
+  const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword','sequence','survival','oddoneout','higherlower','orderup','topicrush']);
   function gameStart(gameId,round,mode='anytime'){
     if(gameId==='europeflags'&&mode==='practice'){
       if(!allowed()||!round||typeof round!=='object'||started.has(round))return;

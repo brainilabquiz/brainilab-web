@@ -58,6 +58,7 @@ window.BrainiSurvival=(function(){
     try{const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,session.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_survival_result",{p_client_result_id:result.clientResultId,p_answers:rows});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn("Survival verification:",e.message||e)}
   }
   function mount(root){
+    const analyticsRound={};
     const intro=root.querySelector("[data-intro]"),loading=root.querySelector("[data-loading]"),stage=root.querySelector("[data-stage]"),resultEl=root.querySelector("[data-result]"),start=root.querySelector("[data-start]"),qEl=root.querySelector("[data-question]"),meta=root.querySelector("[data-meta]"),answersEl=root.querySelector("[data-answers]"),feedback=root.querySelector("[data-feedback]"),next=root.querySelector("[data-next]"),scoreEl=root.querySelector("[data-score]"),countEl=root.querySelector("[data-count]"),livesEl=root.querySelector("[data-lives]"),progress=root.querySelector("[data-progress]");
     let questions=[],idx=0,lives=START_LIVES,score=0,combo=0,correct=0,locked=false,details=[],started=0,questionStarted=0,source="local",finished=false,healthTracker=null;
     function livesMarkup(){return Array.from({length:START_LIVES},(_,i)=>`<span class="survival-life ${i>=lives?"lost":""}">♥</span>`).join("")}
@@ -81,7 +82,7 @@ window.BrainiSurvival=(function(){
         verify:confirmed=>verify(confirmed,details)
       });
     }
-    start.onclick=async()=>{if(start.disabled)return;start.disabled=true;intro.hidden=true;loading.hidden=false;const loaded=await load();questions=loaded.questions.slice(0,MAX_QUESTIONS);source=loaded.source;loading.hidden=true;if(questions.length!==MAX_QUESTIONS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"survival",contentType:"question",contentIds:questions.map(q=>q.id)}):null;stage.hidden=false;started=performance.now();render()};
+    start.onclick=async()=>{if(start.disabled)return;start.disabled=true;intro.hidden=true;loading.hidden=false;const loaded=await load();questions=loaded.questions.slice(0,MAX_QUESTIONS);source=loaded.source;loading.hidden=true;if(questions.length!==MAX_QUESTIONS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"survival",contentType:"question",contentIds:questions.map(q=>q.id)}):null;if(!new URLSearchParams(location.search).has("archive")&&new URLSearchParams(location.search).get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("survival",analyticsRound,"anytime");stage.hidden=false;started=performance.now();render()};
   }
   return {mount,load};
 })();
