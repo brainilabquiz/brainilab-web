@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-an-archipelago",
+  "title": "What is an archipelago? Islands with company",
+  "description": "Islands can form chains or scattered groups, and they do not all need an ocean. Discover what makes an archipelago and why Hawaii is only one kind.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 197,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-an-archipelago.webp",
+    "small": "/assets/images/learn/what-is-an-archipelago-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-an-archipelago-thumb.webp",
+    "alt": "Several separate granite islands with pine trees sit in blue coastal water, with visible channels between them",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined island group, not a photograph of a named location.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals Quiz"
+  },
+  "practice": "Explore another part of the map with the World Capitals Quiz.",
+  "related": [
+    "what-is-an-atoll",
+    "what-is-a-fjord"
+  ],
+  "sources": [
+    {
+      "url": "https://oceanservice.noaa.gov/facts/archipelago.html",
+      "name": "NOAA National Ocean Service — What is an archipelago?"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/hawaii.html",
+      "name": "NOAA National Ocean Service — How did the Hawaiian Islands form?"
+    }
+  ],
+  "sections": [
+    {
+      "id": "one-island-or-the-group",
+      "title": "One island, or the whole group?",
+      "html": "<p><strong>An archipelago is a group or chain of islands.</strong> The word describes the collection, rather than just the largest island you might notice first.</p><p>Think of looking down at several pieces of land separated by water. One island has company; the whole gathering gets its own geographical name.</p>"
+    },
+    {
+      "id": "not-always-a-string",
+      "title": "Not always a string of dots",
+      "html": "<p>A chain is easy to picture: islands lined up like beads. But an archipelago can also be a scattered group, rather than a neat procession.</p><p>Here is the less obvious part: <a href=\"https://oceanservice.noaa.gov/facts/archipelago.html\">NOAA’s definition includes islands in lakes and rivers as well as the ocean</a>. You do not need a vast tropical sea to qualify.</p>"
+    },
+    {
+      "id": "a-moving-plate",
+      "title": "A moving plate makes a trail",
+      "html": "<p>Hawaii offers one way to build an archipelago. Magma rose at a volcanic hot spot beneath the Pacific Plate, building islands as the plate moved over it.</p><p><a href=\"https://oceanservice.noaa.gov/facts/hawaii.html\">NOAA explains how that movement produced the Hawaiian island chain</a>. Imagine a moving strip of paper passing over a fixed drawing point: the marks appear in a trail. It is a comparison, not the literal machinery underground.</p>"
+    },
+    {
+      "id": "not-a-recipe",
+      "title": "The name is not a recipe",
+      "html": "<p>Other archipelagos have different stories. Erosion, sediment build-up and changing sea levels can also help produce island groups. They do not all follow Hawaii’s volcanic route.</p><p>For two more watery map words, explore <a href=\"/learn/what-is-an-atoll/\">what makes an atoll</a> and <a href=\"/learn/what-is-a-fjord/\">what makes a fjord</a>. Geography has names for some wonderfully different shapes.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:52:22Z",
+  "updatedAt": "2026-10-21T05:52:22Z",
+  "minutes": 2
+}

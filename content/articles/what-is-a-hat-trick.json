@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-hat-trick",
+  "title": "What is a hat-trick? Three goals, one player",
+  "description": "What is a hat-trick in football? Three goals belong to one player in one match. Discover why a brilliant personal score does not always mean victory.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 198,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-hat-trick.webp",
+    "small": "/assets/images/learn/what-is-a-hat-trick-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-hat-trick-thumb.webp",
+    "alt": "Three unbranded footballs sit on grass beside a white goal net, with a pair of black boots behind them",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged scene representing three goals, not a match photograph.",
+    "position": 60
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Try a few more sporting questions in the Sports Quiz.",
+  "related": [
+    "offside-rule-football-explained",
+    "how-long-is-a-soccer-game"
+  ],
+  "sources": [
+    {
+      "url": "https://dictionary.cambridge.org/dictionary/english/hat-trick",
+      "name": "Cambridge Dictionary — Hat trick: three scores in the same game"
+    },
+    {
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/articles/every-hat-trick-history",
+      "name": "FIFA — Kylian Mbappé’s three goals in the 2022 World Cup final"
+    }
+  ],
+  "sections": [
+    {
+      "id": "three-goals-one-player",
+      "title": "Three goals, one player",
+      "html": "<p><strong>In football, also called soccer, a hat-trick means one player scores three goals in the same match.</strong> The team scoring three is not enough: those goals must belong to the same player.</p><p><a href=\"https://dictionary.cambridge.org/dictionary/english/hat-trick\">Cambridge Dictionary defines the term through three scores in one game</a>. It is a personal achievement inside a team sport.</p>"
+    },
+    {
+      "id": "give-three-to-sam",
+      "title": "Give all three to Sam",
+      "html": "<p>Imagine Sam scores twice before half-time and once afterwards. That is a hat-trick. Spread Sam’s goals across three different matches, though, and the label no longer fits.</p><p>Now give Sam, Alex and Robin one goal each. The team still has three goals, but nobody has a hat-trick. Same scoreboard total; a very different story.</p>"
+    },
+    {
+      "id": "a-hat-trick-can-lose",
+      "title": "A hat-trick can still end in defeat",
+      "html": "<p>Kylian Mbappé scored three times for France against Argentina in the 2022 World Cup final. <a href=\"https://www.fifa.com/en/tournaments/mens/worldcup/articles/every-hat-trick-history\">FIFA’s record lists his hat-trick and the 3–3 final score</a>.</p><p>Argentina then won the penalty shoot-out 4–2. Mbappé’s remarkable personal tally did not make France the winners. “Who scored three?” and “Who won?” can have different answers.</p>"
+    },
+    {
+      "id": "read-the-match",
+      "title": "Read the match, not just the total",
+      "html": "<p>Next time a headline announces a hat-trick, look for one player, three goals and one match. There is more information in that little phrase than in a bare team score.</p><p>For another football phrase worth knowing, try <a href=\"/learn/offside-rule-football-explained/\">the offside rule</a>. Or discover <a href=\"/learn/how-long-is-a-soccer-game/\">why a 90-minute game often lasts longer</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:52:22Z",
+  "updatedAt": "2026-10-21T05:52:22Z",
+  "minutes": 2
+}
