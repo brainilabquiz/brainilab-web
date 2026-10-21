@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-memory-palace",
+  "title": "What is a memory palace? A duck at the door",
+  "description": "A memory palace uses familiar places to help you remember a sequence. Try a duck at the door, a lemon on the sofa and one very misplaced umbrella.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 195,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-memory-palace.webp",
+    "small": "/assets/images/learn/what-is-a-memory-palace-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-memory-palace-thumb.webp",
+    "alt": "A yellow rubber duck sits beside a front door, with a lemon on a sofa visible through the living room doorway",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged example of imagined memory cues, not a research photograph.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Try a few more questions in the General Knowledge Quiz.",
+  "related": [
+    "what-is-a-mnemonic",
+    "chunking-memory-familiar-groups"
+  ],
+  "sources": [
+    {
+      "url": "https://ctl.stanford.edu/memory-strategy-memory-palace",
+      "name": "Stanford Center for Teaching and Learning — Memory Strategy: Memory Palace"
+    },
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40457944/",
+      "name": "Ondřej, 2025 — Systematic review and meta-analysis of the method of loci (PubMed abstract)"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-palace-you-already-know",
+      "title": "You already know the floor plan",
+      "html": "<p><strong>A memory palace is a familiar place you imagine walking through, with things you want to remember linked to particular stops.</strong> It is also called the <em>method of loci</em>.</p><p>No chandeliers required. Your flat, a familiar classroom or the route to the kitchen can provide the setting.</p>"
+    },
+    {
+      "id": "the-duck-at-the-door",
+      "title": "Why is there a duck at the door?",
+      "html": "<p>Suppose your list is <em>duck, lemon, umbrella</em>. Picture a rubber duck blocking your front door, a lemon occupying the sofa and an umbrella sitting in the kitchen sink.</p><p>Now mentally follow that route in the same order. Each location gives you a cue for the next item. The scene is imaginary; you can leave the actual sofa alone.</p>"
+    },
+    {
+      "id": "give-each-stop-a-job",
+      "title": "Give each stop a job",
+      "html": "<p><a href=\"https://ctl.stanford.edu/memory-strategy-memory-palace\">Stanford’s learning guide recommends a known location, a planned route and memorable images</a>. Choose distinct stops rather than cramming everything beside the door.</p><p>This is one kind of <a href=\"/learn/what-is-a-mnemonic/\">mnemonic: a cue that helps you remember</a>. If a long list feels unwieldy, <a href=\"/learn/chunking-memory-familiar-groups/\">chunking takes a different approach by grouping information</a>.</p>"
+    },
+    {
+      "id": "helpful-not-perfect",
+      "title": "A useful trick, not perfect recall",
+      "html": "<p>A <a href=\"https://pubmed.ncbi.nlm.nih.gov/40457944/\">2025 review of adult studies</a> found benefits for recalling items in order, but rated the evidence low to very low in quality.</p><p>Treat it as a technique to practise, not a promise of flawless memory. For now, can you retrace your three stops? The umbrella should still be causing trouble in the sink.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:30:21Z",
+  "updatedAt": "2026-10-21T05:30:21Z",
+  "minutes": 2
+}
