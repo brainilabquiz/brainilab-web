@@ -5,12 +5,12 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../assets/js');
-const scripts=await Promise.all(['avatar-design.js','profile-rewards-model.js','data.js','supabase-auth.js','guest-style-bridge.js','supabase-games.js'].map(f=>readFile(path.join(root,f),'utf8')));
+const scripts=await Promise.all(['avatar-design.js','profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-legacy-recovery.js','supabase-auth.js','guest-style-bridge.js','supabase-games.js'].map(f=>readFile(path.join(root,f),'utf8')));
 let checks=0;
 function check(value,name){assert.ok(value,name);checks++;console.log('PASS',name);}
 function harness(){
   const storage=new Map(),events=[],calls=[];
-  let session=null,authCallback=null,anonymousCount=0,failSave=false,failAnonymous=false,failClaim=false,failStyle=false;
+  let session=null,authCallback=null,anonymousCount=0,failSave=false,failAnonymous=false,failClaim=false,failStyle=false,failLegacy=false,legacy=[];
   const guest={id:'20000000-0000-4000-8000-000000000002',is_anonymous:true};
   const account={id:'30000000-0000-4000-8000-000000000003',is_anonymous:false,email:'private@example.test',app_metadata:{provider:'google'},user_metadata:{}};
   const store={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)};
@@ -27,7 +27,11 @@ function harness(){
   },rpc:async(name,args)=>{
     calls.push(name);
     if(name==='get_my_brainilab_progression')return {data:{progression:{user_id:account.id,xp:1200,current_streak:4}}};
-    if(name==='halloween_event_state')return {data:{entitlements:['pumpkin-thinker']}};
+    if(name==='halloween_event_state')return {data:{entitlements:['pumpkin-thinker',...(new Set(legacy.map(r=>r.game)).size>=2?['midnight']:[])]}};
+    if(name==='halloween_recover_legacy_cosmetics'){
+      if(failLegacy)return {error:Error('Offline legacy recovery')};
+      legacy.push(...args.p_records);return {data:{recovered:true,owner:account.id,accepted_ids:args.p_records.map(r=>r.id)}};
+    }
     if(name==='get_my_brainilab_discoveries')return {data:{owner:account.id,games:[],activeDays:0}};
     if(name==='submit_brainilab_game_result'){
       if(failSave)return {error:new Error('Offline')};
@@ -50,7 +54,7 @@ function harness(){
   context.window=context;
   scripts.forEach(s=>vm.runInContext(s,context));
   return {context,storage,calls,events,guest,account,
-    get count(){return anonymousCount;},set failSave(v){failSave=v;},set failAnonymous(v){failAnonymous=v;},set failClaim(v){failClaim=v;},set failStyle(v){failStyle=v;},
+    get count(){return anonymousCount;},set failSave(v){failSave=v;},set failAnonymous(v){failAnonymous=v;},set failClaim(v){failClaim=v;},set failStyle(v){failStyle=v;},set failLegacy(v){failLegacy=v;},
     async googleReturn(){session={user:account};context.BrainiBackendAuth.destroy();return context.BrainiBackendAuth.init();},
     reloadAuth:()=>{context.BrainiBackendAuth.destroy();return context.BrainiBackendAuth.init();}};
 }
@@ -128,5 +132,20 @@ function harness(){
  h.storage.set('brainilab-profile-style-v1:guest:'+h.guest.id,JSON.stringify({frame:'orbit',hat:'pumpkin-thinker',prop:'little-bat'}));
  await c.BrainiBackendAuth.signInWithGoogle();await h.googleReturn();
  check(h.account.user_metadata.brainilab_avatar_frame_v1!=='orbit'&&h.account.user_metadata.brainilab_avatar_prop_v1!=='little-bat','browser metadata cannot unlock an unearned XP frame or event cosmetic');
+}
+{
+ const h=harness(),c=h.context;await c.BrainiBackendAuth.init();
+ const before=c.BrainiData.authState().anonymousPlayerId;
+ h.storage.set('brainilab-halloween-2026:guest:'+before,JSON.stringify({records:[{id:'legacy-1',day:'2026-10-19',game:'trick-or-think',score:20},{id:'legacy-2',day:'2026-10-20',game:'spooky-connections',score:50}]}));
+ h.storage.set('brainilab-profile-style-v1:guest:'+before,JSON.stringify({frame:'midnight',hat:'pumpkin-thinker'}));
+ await c.BrainiBackendAuth.ensurePlayerSession();await c.BrainiBackendAuth.signInWithGoogle();
+ check(JSON.parse(h.storage.get('brainilab_guest_claim_v1')).halloween.length>0,'legacy cosmetic evidence is persisted before the Google redirect');
+ h.failLegacy=true;await h.googleReturn();
+ check(c.BrainiData.isAuthenticated()&&h.storage.has('brainilab_guest_claim_v1'),'failed legacy recovery keeps a retry without blocking the Google account');
+ h.failLegacy=false;await c.BrainiBackendAuth.getSession();
+ check(h.account.user_metadata.brainilab_avatar_frame_v1==='midnight','legacy cosmetics recover before the original equipped appearance is restored');
+ check(!h.storage.has('brainilab_guest_claim_v1'),'Google handoff clears only after cosmetic recovery and appearance confirmation');
+ const imported=h.calls.filter(x=>x==='halloween_recover_legacy_cosmetics').length;await h.reloadAuth();
+ check(h.calls.filter(x=>x==='halloween_recover_legacy_cosmetics').length===imported,'Google reload does not repeat a confirmed legacy recovery');
 }
 console.log(`\n${checks} browser-state checks passed.`);

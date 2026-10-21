@@ -51,10 +51,18 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-cancel]').disabled=!dirty||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
     root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':state.error||(dirty?'Preview only. Save when you’re happy with it.':state.notice||'');
+    const recovery=window.BrainiHalloweenLegacy?.snapshot?.();
+    let recoveryRow=root.querySelector('[data-halloween-recovery]');
+    if(recovery?.error||recovery?.notice){
+      if(!recoveryRow){recoveryRow=document.createElement('p');recoveryRow.dataset.halloweenRecovery='';recoveryRow.className='small';recoveryRow.setAttribute('role','status');root.querySelector('[data-style-status]').after(recoveryRow);}
+      recoveryRow.replaceChildren(document.createTextNode(recovery.error||recovery.notice));
+      if(recovery.error){const retry=document.createElement('button');retry.type='button';retry.className='btn btn-ghost';retry.dataset.halloweenRecover='';retry.disabled=recovery.loading;retry.textContent=recovery.loading?'Saving…':'Save Halloween extras';recoveryRow.append(' ',retry);}
+    }else recoveryRow?.remove();
   }
   function bind(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
+      if(event.target.closest('[data-halloween-recover]')){await window.BrainiHalloweenEntitlements?.load?.();render();return;}
       const goal=event.target.closest('[data-collection-goal]');
       if(goal){event.preventDefault();U.openGoal(root,goal);return;}
       const surprise=event.target.closest('[data-avatar-surprise]');
@@ -74,6 +82,7 @@ window.BrainiProfileRewards=(function(){
       if(event.target.closest('[data-style-save]')){editing=true;const ok=await S.save(draft);editing=false;if(ok)dirty=false;render();}
     });
     window.addEventListener('brainilab:stylechange',render);
+    window.addEventListener('brainilab:halloween-recovery',render);
     window.addEventListener('brainilab:datachange',()=>{if(!editing)render();});
     S.load();render();
   }

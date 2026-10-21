@@ -56,6 +56,8 @@ window.BrainiBackendAuth = (function(){
       claim={guestId:user.id,token:Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")};
     }
     claim.style=window.BrainiGuestStyle?.capture?.()||claim.style||null;
+    const oldHalloween=window.BrainiHalloweenLegacy?.capture?.();
+    if(oldHalloween?.length)claim.halloween=oldHalloween;
     // Persist BEFORE leaving this origin for OAuth/email confirmation.
     localStorage.setItem(guestClaimKey,JSON.stringify(claim));
     const result=await sb.rpc("prepare_brainilab_guest_claim",{p_token:claim.token});
@@ -74,7 +76,10 @@ window.BrainiBackendAuth = (function(){
       if(check.error||check.data?.session?.user?.id!==session.user.id)throw Error('Account changed during guest transfer.');
       await BrainiData.api.completeGuestClaim?.({...data,fromUserId:claim.guestId,toUserId:session.user.id});
       let user=session.user;
-      try{user=await window.BrainiGuestStyle?.restore?.(session.user,claim.style)||user;}
+      try{
+        await window.BrainiHalloweenLegacy?.recover?.(session.user,claim.halloween);
+        user=await window.BrainiGuestStyle?.restore?.(session.user,claim.style)||user;
+      }
       catch(error){console.warn('BrainiLab appearance transfer pending:',error.message||error);return user;}
       localStorage.removeItem(guestClaimKey);
       return user;
