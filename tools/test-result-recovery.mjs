@@ -9,7 +9,7 @@ const rows=(n,extra={})=>Array.from({length:n},()=>({puzzleId:uuid,pairId:uuid,q
 function setup(saved){
   const w=new JSDOM('',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only'}).window;
   if(saved)w.localStorage.setItem('brainilab.mock.v1',saved);
-  w.console.warn=()=>{};const calls=[],server=new Map();let failSave=false,failVerify=false,hold=null,session={user:{id:uuid}};
+  w.console.warn=()=>{};const calls=[],server=new Map();let failSave=false,failVerify=false,missingReceipt=false,alwaysMissing=false,hold=null,session={user:{id:uuid}};
   w.eval(readFileSync('assets/js/data.js','utf8'));
   if(!saved)w.BrainiData.api.syncExternalAuthUser(session.user);
   w.BrainiProfiles={sync:()=>new Promise(()=>{})}; // Profile loading must not hold game delivery.
@@ -22,12 +22,13 @@ function setup(saved){
     }
     if(name.startsWith('verify_')){
       if(failVerify)return {error:new Error('Connection failed')};
+      if(alwaysMissing || (missingReceipt&&!server.has(args.p_client_result_id)))return {error:new Error('Game result not found')};
       return {data:{verified:true,answers_verified:true,correct_answers:2,total_questions:10,accuracy:20,score:200}};
     }
     return {data:{}};
   }})};
   for(const file of ['supabase-games','result-recovery'])w.eval(readFileSync(`assets/js/${file}.js`,'utf8'));
-  return {w,calls,server,set failSave(v){failSave=v;},set failVerify(v){failVerify=v;},set hold(v){hold=v;},change(){session={user:{id:other}};w.BrainiData.api.syncExternalAuthUser(session.user);},snapshot:()=>w.localStorage.getItem('brainilab.mock.v1')};
+  return {w,calls,server,set missingReceipt(v){missingReceipt=v;},set alwaysMissing(v){alwaysMissing=v;},set failSave(v){failSave=v;},set failVerify(v){failVerify=v;},set hold(v){hold=v;},change(){session={user:{id:other}};w.BrainiData.api.syncExternalAuthUser(session.user);},snapshot:()=>w.localStorage.getItem('brainilab.mock.v1')};
 }
 const cases=[
  ['connections',{roundDetails:rows(20)},'connections','p_rounds',20],
@@ -64,6 +65,26 @@ for(const [game,evidence,rpc,arg,count] of cases){
  await h.w.BrainiCloudGames.syncPendingResults();assert.notEqual(h.w.BrainiData.recentResults()[0].answerVerificationStatus,'verified');
  h.failVerify=false;h.w.dispatchEvent(new h.w.Event('online'));await tick();await h.w.BrainiCloudGames.syncPendingResults();
  assert.equal(h.calls.filter(x=>x.name==='submit_brainilab_game_result').length,1);assert.equal(h.w.BrainiData.recentResults()[0].answerVerificationStatus,'verified');h.w.close();
+}
+// A stale acknowledged receipt is repaired with the original ID and evidence, once.
+for(const [game,evidence,rpc] of [['brainmix',{dailyChallengeId:uuid,answerDetails:rows(10)},'daily'],['science',{difficulty:'easy',answerDetails:rows(20)},'anytime_quiz']]){
+ const h=setup();const result=await h.w.BrainiData.api.submitGameResult(game,{dailyNumber:null,contentSource:'supabase',...evidence});
+ h.server.clear();h.calls.length=0;h.missingReceipt=true;
+ await h.w.BrainiCloudGames.syncPendingResults();
+ const saved=h.w.BrainiData.recentResults()[0];
+ assert.ok([saved.answerVerificationStatus,saved.dailyAnswerVerificationStatus].includes('verified'));
+ assert.equal(h.calls.filter(x=>x.name==='submit_brainilab_game_result').length,1);
+ assert.equal(h.calls.filter(x=>x.name===`verify_brainilab_${rpc}_result`).length,2);
+ assert.equal(h.calls.find(x=>x.name==='submit_brainilab_game_result').args.p_client_result_id,result.clientResultId);
+ await h.w.BrainiCloudGames.syncPendingResults();assert.equal(h.calls.length,game==='brainmix'?4:3,'No resave or verification after confirmation');h.w.close();
+}
+// A conflicting canonical run must not cause an unbounded repair or fake verification.
+{
+ const h=setup();await h.w.BrainiData.api.submitGameResult('sequence',{roundDetails:rows(10),dailyNumber:null});h.calls.length=0;h.alwaysMissing=true;
+ const out=await h.w.BrainiCloudGames.syncPendingResults();assert.equal(out.failed,1);
+ assert.equal(h.calls.filter(x=>x.name==='verify_brainilab_sequence_result').length,2);
+ assert.equal(h.calls.filter(x=>x.name==='submit_brainilab_game_result').length,1);
+ assert.notEqual(h.w.BrainiData.recentResults()[0].answerVerificationStatus,'verified');h.w.close();
 }
 // Missing evidence, local fallback and practice must not acquire verified status.
 {

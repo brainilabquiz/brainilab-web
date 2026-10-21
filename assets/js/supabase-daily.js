@@ -373,11 +373,10 @@ window.BrainiDaily = (function(){
     }
 
     const sb=client();
-    const {data,error}=await sb.rpc("verify_brainilab_daily_result",{
-      p_client_result_id:result.clientResultId,
-      p_daily_challenge_id:daily.dailyChallengeId,
-      p_answers:verificationPayload(answerDetails)
-    });
+    const args={p_client_result_id:result.clientResultId,p_daily_challenge_id:daily.dailyChallengeId,p_answers:verificationPayload(answerDetails)};
+    const {data,error}=await (window.BrainiCloudGames?.resultRpc
+      ? BrainiCloudGames.resultRpc("verify_brainilab_daily_result",args,session.user.id)
+      : sb.rpc("verify_brainilab_daily_result",args));
 
     if(error) throw error;
 
