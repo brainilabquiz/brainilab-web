@@ -90,31 +90,44 @@ window.BrainiCloudGames = (function(){
     return !!stored&&localUserId()===userId&&stored.ownerUserId===userId;
   }
 
-  async function resultRpc(name,args,userId){
+  async function resultRpc(name,args,userId,{repairMissing=true}={}){
     if(localUserId()!==userId)throw new Error('Player changed.');
-    const controller=new AbortController();let timer;
+    const controller=new AbortController();let timer,response;
     const changed=()=>{if(localUserId()!==userId)controller.abort();};
     window.addEventListener('brainilab:authchange',changed);
     try{
       let call=client().rpc(name,args);
       if(call.abortSignal)call=call.abortSignal(controller.signal);
-      const response=await Promise.race([call,new Promise((_,reject)=>{
+      response=await Promise.race([call,new Promise((_,reject)=>{
         timer=setTimeout(()=>{controller.abort();reject(new Error('Connection timed out. Your result is still saved.'));},12000);
       })]);
       if(localUserId()!==userId)throw new Error('Player changed.');
-      return response;
     }finally{clearTimeout(timer);window.removeEventListener('brainilab:authchange',changed);}
+    // Old Daily acknowledgements could reference another canonical attempt. A local
+    // "synced" flag alone does not prove that this exact result exists remotely.
+    if(repairMissing && name.startsWith('verify_brainilab_') && response.error?.message==='Game result not found'){
+      const stored=window.BrainiData?.recentResults?.().find(r=>r.clientResultId===args.p_client_result_id);
+      if(stored?.cloudSyncStatus==='synced' && !stored.practice && !stored.tryFirst && ownsResult(stored,userId)){
+        const saved=await saveCompletedResult(stored.gameId,stored,{resend:true});
+        if(saved.saved && ownsResult(stored,userId)){
+          // One bounded repair, with the original proof and the same stable ID.
+          // The existing server verifier still decides correctness and rewards.
+          return resultRpc(name,args,userId,{repairMissing:false});
+        }
+      }
+    }
+    return response;
   }
 
-  async function saveCompletedResult(gameId,result){
+  async function saveCompletedResult(gameId,result,options={}){
     const key=result?.clientResultId;
     if(key && pendingSaves.has(key)) return pendingSaves.get(key);
-    const saving=persistCompletedResult(gameId,result);
+    const saving=persistCompletedResult(gameId,result,options);
     if(key) pendingSaves.set(key,saving);
     try{return await saving;}finally{if(key) pendingSaves.delete(key);}
   }
 
-  async function persistCompletedResult(gameId,result){
+  async function persistCompletedResult(gameId,result,{resend=false}={}){
     lastError=null;
 
     if(!configured()) return {saved:false,reason:"not_configured"};
@@ -129,7 +142,7 @@ window.BrainiCloudGames = (function(){
     const bound=await BrainiData.api.bindResultOwner(result.clientResultId,user.id);
     if(!bound||!ownsResult(bound,user.id))return {saved:false,reason:"player_changed"};
     result=bound;
-    if(result.cloudSyncStatus==='synced')return {saved:true,alreadyExisted:true};
+    if(result.cloudSyncStatus==='synced' && !resend)return {saved:true,alreadyExisted:true};
 
     if(!result?.clientResultId){
       throw new Error("Missing client result ID.");
