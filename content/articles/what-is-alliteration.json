@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-alliteration",
+  "title": "What is alliteration? Badgers borrowing biscuits",
+  "description": "Alliteration repeats nearby starting sounds. Meet some biscuit-borrowing badgers and discover why matching letters alone do not tell the whole story.",
+  "topic": "Words & puzzles",
+  "status": "published",
+  "order": 194,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-alliteration.webp",
+    "small": "/assets/images/learn/what-is-alliteration-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-alliteration-thumb.webp",
+    "alt": "Four handwritten cards reading Bouncing badgers borrow biscuits beside a clay badger figurine and a saucer of biscuits on a wooden desk",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged wordplay still life with a fictional figurine.",
+    "position": 65
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "See which words belong together in a round of Connections.",
+  "related": [
+    "what-is-onomatopoeia",
+    "what-is-a-spoonerism"
+  ],
+  "sources": [
+    {
+      "url": "https://dictionary.cambridge.org/dictionary/english/alliteration",
+      "name": "Cambridge Dictionary — Alliteration: nearby repeated starting sounds"
+    },
+    {
+      "url": "https://poets.org/glossary/alliteration",
+      "name": "Academy of American Poets — Alliteration in speech and poetry"
+    }
+  ],
+  "sections": [
+    {
+      "id": "listen-to-the-badgers",
+      "title": "Listen to the badgers",
+      "html": "<p><strong>Alliteration is the repetition of starting sounds in nearby words, especially consonants.</strong> Think of <em>Bouncing badgers borrow biscuits</em>. Those repeated <em>b</em> sounds give our imaginary snack theft a playful beat.</p><p><a href=\"https://dictionary.cambridge.org/dictionary/english/alliteration\">Cambridge Dictionary defines alliteration through sound</a>. The words do not have to describe anything sensible. Fortunately for our badgers, silliness is welcome.</p>"
+    },
+    {
+      "id": "sounds-before-letters",
+      "title": "Your ears get the deciding vote",
+      "html": "<p>Matching letters are a clue, but pronunciation matters. <em>Photo</em> and <em>fish</em> start with different letters and the same <em>f</em> sound.</p><p>Now compare <em>cat</em> and <em>city</em>. Both begin with <em>c</em> on the page, but their opening sounds differ. Reading the words aloud reveals what the spelling hides.</p>"
+    },
+    {
+      "id": "a-small-pattern",
+      "title": "A small pattern is enough",
+      "html": "<p>You do not need a whole sentence of matching starts. Nearby words can make the pattern, with other words between them. <em>Badgers borrow the biscuits</em> still has its repeated beginning.</p><p>The <a href=\"https://poets.org/glossary/alliteration\">Academy of American Poets describes alliteration in ordinary speech, poetry and nursery rhymes</a>. It is a small sound effect that can fit into a much larger sentence.</p>"
+    },
+    {
+      "id": "change-one-word",
+      "title": "Change one word, hear the difference",
+      "html": "<p>Compare <em>Badgers borrow biscuits</em> with <em>Badgers take biscuits</em>. The snack has not changed; the little run of matching sounds has.</p><p>For another way words play with your ears, meet <a href=\"/learn/what-is-onomatopoeia/\">words that imitate sounds</a>. Or try <a href=\"/learn/what-is-a-spoonerism/\">spoonerisms, where swapped sounds produce a different kind of surprise</a>. English has plenty of ways to make a sentence misbehave.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:10:57Z",
+  "updatedAt": "2026-10-21T05:10:57Z",
+  "minutes": 2
+}
