@@ -146,3 +146,25 @@ daily local runner may collect these data; it still needs the computer/Codex.
 
 Validate: Python unittest test_seo_explorer.py and tools/test-growth-seo-explorer.mjs
 with the existing JSDOM dependency.
+
+## Review a page
+
+The admin Review a page view joins saved evidence for one exact public URL:
+its eight technical checks, validated final Web query/page discovery rows and
+incoming links from successfully inspected sources. Review evidence buttons in
+Page Trust, backlink targets and Web query/page tables open the same view and
+move keyboard focus to its heading. The page selector also includes destinations
+found only in search or link evidence; an absent inspection is unknown, not failed.
+
+Aliases, redirects and index.html variants are not merged. Search period,
+aggregation, timezone and collection dates remain visible. Property-only and
+Images queries are not assigned to a page, and host-level referral sessions are
+not attributed to individual destinations or links. Each table displays up to
+25 matching rows; Download current view includes all matching observations,
+next checks and limitations in CSV. Existing CSV formula escaping applies.
+
+This is a review aid, not an automatic opportunity/authority score or an editor.
+It makes no requests, writes no data, and must not justify changes without
+checking the live page, intent and recent work. Preserve correct/recent pages;
+compare complete equal, non-overlapping periods before asserting an effect.
+Validate with tools/test-growth-seo-page.mjs and the existing Explorer tests.
