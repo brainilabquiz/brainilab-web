@@ -661,7 +661,7 @@ window.BrainiRewardCatalog=(function(){
     return result;
   }
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
-  return Object.freeze({frames,titles,scenes,get groups(){return visibleGroups();},isUnlocked:unlocked,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
+  return Object.freeze({frames,titles,scenes,item:(kind,id)=>groups[kind]?.find(item=>item.id===id),get groups(){return visibleGroups();},isUnlocked:unlocked,academyRewards,academyIds,discoveryGames,discoveryRewards,dayRewards,dayCount,gameIds,discoveryProgress,unlocked,metadataKeys,xp,clean,available,next,xpStep,collectionGoal,surprise,fromMetadata});
 })();
 
 /* ===== data.js ===== */
@@ -2461,6 +2461,7 @@ window.BrainiHalloweenEntitlements=(function(){
     const auth=window.BrainiData?.authState?.()||{};
     let preview=false;try{preview=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)&&JSON.parse(document.querySelector('script[data-halloween-config]')?.textContent||'{}').preview===true;}catch{}
     if(preview)return {id:'preview:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
+    if(auth.status!=='authenticated'&&auth.guestUserId&&window.BrainiBackendAuth?.hasPlayerSession?.())return {id:'guest:'+auth.guestUserId,uid:auth.guestUserId,cloud:true};
     return auth.status==='authenticated'&&auth.user?.id?{id:'account:'+auth.user.id,uid:auth.user.id,cloud:true}
       :{id:'guest:'+(auth.guestUserId||auth.anonymousPlayerId||'browser'),cloud:false};
   }
@@ -2549,6 +2550,7 @@ window.BrainiHalloweenEntitlements=(function(){
  function who(){
   const a=window.BrainiData?.authState?.()||{};
   if(!preview&&a.status==='authenticated'&&a.user?.id)return {key:'account:'+a.user.id,cloud:true};
+  if(!preview&&a.guestUserId&&window.BrainiBackendAuth?.hasPlayerSession?.())return {key:'guest:'+a.guestUserId,cloud:true};
   let id=a.guestUserId||a.anonymousPlayerId;
   if(!id){try{id=localStorage.getItem('brainilab-halloween-guest-id');if(!id){id=crypto.randomUUID();localStorage.setItem('brainilab-halloween-guest-id',id);}}catch{id='this-browser';}}
   return {key:(preview?'preview:':'guest:')+id,cloud:false};
@@ -2578,6 +2580,7 @@ window.BrainiHalloweenEntitlements=(function(){
  async function startGame(game){
   if(!['trick-or-think','spooky-connections'].includes(game))throw Error('Unknown Halloween game.');
   if(!(await refresh()).allowed)throw windowError();
+  if(!preview&&!who().cloud&&window.BrainiBackendAuth?.isConfigured?.()&&BrainiBackendAuth.ensurePlayerSession)await BrainiBackendAuth.ensurePlayerSession();
   const current=who();
   if(current.cloud){const r=await eventStore().startGame(game);if(who().key!==current.key)throw Error('Your account changed. Please start again.');return {...r,day:r.day||availability().day,ownerKey:current.key,preview:false,guest:false};}
   const day=availability().day,prior=read().records.find(r=>r.game===game&&r.day===day);

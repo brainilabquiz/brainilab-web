@@ -37,6 +37,7 @@ window.BrainiBackendAuth = (function(){
   let listenerSubscription=null;
   let playerSessionPromise=null;
   let claimPromise=null;
+  let claimOwner=null;
   const guestClaimKey="brainilab_guest_claim_v1";
 
   function readGuestClaim(){
@@ -54,6 +55,7 @@ window.BrainiBackendAuth = (function(){
       const bytes=crypto.getRandomValues(new Uint8Array(32));
       claim={guestId:user.id,token:Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")};
     }
+    claim.style=window.BrainiGuestStyle?.capture?.()||claim.style||null;
     // Persist BEFORE leaving this origin for OAuth/email confirmation.
     localStorage.setItem(guestClaimKey,JSON.stringify(claim));
     const result=await sb.rpc("prepare_brainilab_guest_claim",{p_token:claim.token});
@@ -62,15 +64,22 @@ window.BrainiBackendAuth = (function(){
 
   async function claimGuestProgress(session){
     if(!session?.user || session.user.is_anonymous || !readGuestClaim()) return;
-    if(claimPromise) return claimPromise;
+    if(claimPromise){if(claimOwner!==session.user.id)throw Error('Account changed during guest transfer.');return claimPromise;}
+    claimOwner=session.user.id;
     claimPromise=(async()=>{
       const claim=readGuestClaim();
       const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
       if(error) throw error;
+      const check=await getClient().auth.getSession();
+      if(check.error||check.data?.session?.user?.id!==session.user.id)throw Error('Account changed during guest transfer.');
       await BrainiData.api.completeGuestClaim?.({...data,fromUserId:claim.guestId,toUserId:session.user.id});
+      let user=session.user;
+      try{user=await window.BrainiGuestStyle?.restore?.(session.user,claim.style)||user;}
+      catch(error){console.warn('BrainiLab appearance transfer pending:',error.message||error);return user;}
       localStorage.removeItem(guestClaimKey);
+      return user;
     })();
-    try{await claimPromise;}finally{claimPromise=null;}
+    try{return await claimPromise;}finally{claimPromise=null;claimOwner=null;}
   }
 
   async function ensurePlayerSession(){
@@ -193,10 +202,11 @@ window.BrainiBackendAuth = (function(){
 
   async function syncSession(session){
     if(session?.user?.is_anonymous){
+      window.BrainiGuestStyle?.bindGuest?.(BrainiData.authState(),session.user.id);
       await BrainiData.api.syncExternalGuestUser(session.user);
     }else if(session?.user){
-      await claimGuestProgress(session);
-      await BrainiData.api.syncExternalAuthUser(session.user,providerFromUser(session.user));
+      const user=await claimGuestProgress(session)||session.user;
+      await BrainiData.api.syncExternalAuthUser(user,providerFromUser(user));
     }else{
       const local=BrainiData.authState();
       if(local?.status==="authenticated" || local?.guestUserId){
@@ -334,6 +344,62 @@ window.BrainiBackendAuth = (function(){
     requestPasswordReset,updatePassword,signOut,
     profileRedirectUrl,passwordResetRedirectUrl,destroy
   };
+})();
+
+/* ===== guest-style-bridge.js ===== */
+
+/* Carry explicit guest appearance choices; unlocks still require server evidence. */
+window.BrainiGuestStyle=(function(){
+  const prefix='brainilab-profile-style-v1:';
+  function capture(){
+    const auth=BrainiData.authState();if(auth.status==='authenticated')return null;
+    for(const id of [auth.guestUserId,auth.anonymousPlayerId].filter(Boolean)){
+      try{const raw=localStorage.getItem(prefix+'guest:'+id);if(raw)return BrainiRewardCatalog.clean(JSON.parse(raw));}catch{}
+    }
+    return null;
+  }
+  function bindGuest(previous,id){
+    if(!previous||previous.status==='authenticated'||!id)return;
+    const old=previous.guestUserId||previous.anonymousPlayerId;
+    if(!old||old===id)return;
+    for(const [before,after] of [[prefix+'guest:'+old,prefix+'guest:'+id],['brainilab-halloween-2026:guest:'+old,'brainilab-halloween-2026:guest:'+id]]){
+      try{const raw=localStorage.getItem(before);if(raw&&!localStorage.getItem(after))localStorage.setItem(after,raw);}catch{}
+    }
+  }
+  async function restore(user,style){
+    if(!style||!window.BrainiRewardCatalog)return user;
+    const sb=BrainiBackendAuth.getClient(),uid=user.id;
+    const bounded=async request=>{let timer;try{return await Promise.race([request,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Appearance transfer timed out.')),12000);})]);}finally{clearTimeout(timer);}};
+    const current=async()=>{const r=await bounded(sb.auth.getSession());if(r.error||r.data?.session?.user?.id!==uid)throw Error('Account changed.');};
+    await current();
+    const response=await bounded(sb.auth.getUser());if(response.error||response.data?.user?.id!==uid)throw Error('Account changed.');
+    const meta=response.data.user.user_metadata||{},catalog=BrainiRewardCatalog,clean=catalog.clean(style),patch={};
+    const progress=await bounded(sb.rpc('get_my_brainilab_progression'));
+    if(progress.error||progress.data?.progression?.user_id!==uid)throw Error('Progress transfer is still pending.');
+    const xp=catalog.xp(progress.data.progression.xp);
+    let events=[],games=[],days=0,academy=[];
+    if(Object.entries(clean).some(([kind,value])=>catalog.item(kind,value)?.event)){
+      const r=await bounded(sb.rpc('halloween_event_state'));if(r.error)throw r.error;events=r.data?.entitlements||[];
+    }
+    if(Object.entries(clean).some(([kind,value])=>{const i=catalog.item(kind,value);return i?.days||i?.challenge;})){
+      const r=await bounded(sb.rpc('get_my_brainilab_discoveries'));if(r.error||r.data?.owner!==uid)throw Error('Collection transfer is still pending.');games=r.data.games||[];days=r.data.activeDays||0;
+    }
+    if(Object.entries(clean).some(([kind,value])=>catalog.item(kind,value)?.course)){
+      const r=await bounded(sb.from('learn_avatar_unlocks').select('reward_id').eq('user_id',uid));if(r.error)throw r.error;academy=(r.data||[]).map(x=>x.reward_id);
+    }
+    for(const [kind,value] of Object.entries(clean)){
+      const key=catalog.metadataKeys[kind],item=catalog.item(kind,value);
+      if(!key||!item||Object.hasOwn(meta,key))continue;
+      const allowed=item.event?events.includes(value):item.course?academy.includes(value):item.challenge?catalog.discoveryProgress(item,games).earned:item.days?days>=item.days:(item.xp||0)<=xp;
+      if(allowed)patch[key]=value;
+    }
+    await current();
+    if(!Object.keys(patch).length)return response.data.user;
+    const saved=await bounded(sb.auth.updateUser({data:patch}));await current();
+    if(saved.error||saved.data?.user?.id!==uid||Object.entries(patch).some(([key,value])=>saved.data.user.user_metadata?.[key]!==value))throw Error('Appearance transfer could not be confirmed.');
+    return saved.data.user;
+  }
+  return {capture,bindGuest,restore};
 })();
 
 /* ===== growth-conversions.js ===== */

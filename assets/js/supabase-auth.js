@@ -17,6 +17,7 @@ window.BrainiBackendAuth = (function(){
   let listenerSubscription=null;
   let playerSessionPromise=null;
   let claimPromise=null;
+  let claimOwner=null;
   const guestClaimKey="brainilab_guest_claim_v1";
 
   function readGuestClaim(){
@@ -34,6 +35,7 @@ window.BrainiBackendAuth = (function(){
       const bytes=crypto.getRandomValues(new Uint8Array(32));
       claim={guestId:user.id,token:Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")};
     }
+    claim.style=window.BrainiGuestStyle?.capture?.()||claim.style||null;
     // Persist BEFORE leaving this origin for OAuth/email confirmation.
     localStorage.setItem(guestClaimKey,JSON.stringify(claim));
     const result=await sb.rpc("prepare_brainilab_guest_claim",{p_token:claim.token});
@@ -42,15 +44,22 @@ window.BrainiBackendAuth = (function(){
 
   async function claimGuestProgress(session){
     if(!session?.user || session.user.is_anonymous || !readGuestClaim()) return;
-    if(claimPromise) return claimPromise;
+    if(claimPromise){if(claimOwner!==session.user.id)throw Error('Account changed during guest transfer.');return claimPromise;}
+    claimOwner=session.user.id;
     claimPromise=(async()=>{
       const claim=readGuestClaim();
       const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
       if(error) throw error;
+      const check=await getClient().auth.getSession();
+      if(check.error||check.data?.session?.user?.id!==session.user.id)throw Error('Account changed during guest transfer.');
       await BrainiData.api.completeGuestClaim?.({...data,fromUserId:claim.guestId,toUserId:session.user.id});
+      let user=session.user;
+      try{user=await window.BrainiGuestStyle?.restore?.(session.user,claim.style)||user;}
+      catch(error){console.warn('BrainiLab appearance transfer pending:',error.message||error);return user;}
       localStorage.removeItem(guestClaimKey);
+      return user;
     })();
-    try{await claimPromise;}finally{claimPromise=null;}
+    try{return await claimPromise;}finally{claimPromise=null;claimOwner=null;}
   }
 
   async function ensurePlayerSession(){
@@ -173,10 +182,11 @@ window.BrainiBackendAuth = (function(){
 
   async function syncSession(session){
     if(session?.user?.is_anonymous){
+      window.BrainiGuestStyle?.bindGuest?.(BrainiData.authState(),session.user.id);
       await BrainiData.api.syncExternalGuestUser(session.user);
     }else if(session?.user){
-      await claimGuestProgress(session);
-      await BrainiData.api.syncExternalAuthUser(session.user,providerFromUser(session.user));
+      const user=await claimGuestProgress(session)||session.user;
+      await BrainiData.api.syncExternalAuthUser(user,providerFromUser(user));
     }else{
       const local=BrainiData.authState();
       if(local?.status==="authenticated" || local?.guestUserId){
