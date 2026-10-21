@@ -1,0 +1,65 @@
+{
+  "slug": "why-was-the-berlin-wall-built",
+  "title": "Why was the Berlin Wall built? The border that kept people in",
+  "description": "Why was the Berlin Wall built in 1961? Follow the escape route through West Berlin, the sudden border closure and the difference between opening and demolition.",
+  "topic": "History",
+  "status": "published",
+  "order": 193,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-was-the-berlin-wall-built.webp",
+    "small": "/assets/images/learn/why-was-the-berlin-wall-built-small.webp",
+    "thumbnail": "/assets/images/learn/why-was-the-berlin-wall-built-thumb.webp",
+    "alt": "Weathered concrete wall panels with rounded tops frame an opening in a quiet autumn memorial-style scene",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined memorial scene, not an archival photograph or a record of a named site.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Explore another moment in history with the History Quiz.",
+  "related": [
+    "which-century-is-that-year",
+    "cleopatra-pyramids-moon-landing"
+  ],
+  "sources": [
+    {
+      "url": "https://www.stiftung-berliner-mauer.de/en/topics/berlin-wall",
+      "name": "Berlin Wall Foundation — Construction, border system, opening and preserved remains"
+    },
+    {
+      "url": "https://www.archives.gov/news/topics/berlin-wall-anniversary",
+      "name": "US National Archives — Records and history of the Berlin Wall"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-border-to-stop-departures",
+      "title": "A border to stop departures",
+      "html": "<p><strong>East Germany’s ruling party built the Berlin Wall to stop people leaving for the West. Border closures began on 13 August 1961.</strong></p><p>The <a href=\"https://www.stiftung-berliner-mauer.de/en/topics/berlin-wall\">Berlin Wall Foundation explains the pressure behind the decision</a>: people had been leaving East Germany for political, economic and personal reasons. Berlin offered a route out.</p>"
+    },
+    {
+      "id": "the-map-twist",
+      "title": "The surprising part of the map",
+      "html": "<p>The Wall did more than separate two halves of a city. It surrounded West Berlin, cutting it off from East Berlin and the surrounding East German territory.</p><p>East Germany had already closed its border with West Germany in 1952. Berlin’s open sector borders had remained a way through. The new barriers closed that opening.</p>"
+    },
+    {
+      "id": "not-one-night-of-concrete",
+      "title": "Not one night of concrete",
+      "html": "<p>The first closure used barbed wire and blocked streets. Walls followed, and the border developed into a much more elaborate system over the years.</p><p>For residents, the change was immediate. The <a href=\"https://www.archives.gov/news/topics/berlin-wall-anniversary\">US National Archives describes neighbours, friends and families separated by the border</a>. Its consequences reached far beyond the line on a map.</p>"
+    },
+    {
+      "id": "opening-and-demolition",
+      "title": "Opening and demolition are different",
+      "html": "<p>The border opened on 9 November 1989. That does not mean every concrete section disappeared that night: dismantling followed, and some remains were preserved.</p><p>Both 1961 and 1989 belong to the twentieth century. If that numbering feels odd, try <a href=\"/learn/which-century-is-that-year/\">the simple century rule</a>. For another surprising timeline, see <a href=\"/learn/cleopatra-pyramids-moon-landing/\">where Cleopatra sits between the pyramids and the Moon landing</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:10:57Z",
+  "updatedAt": "2026-10-21T05:10:57Z",
+  "minutes": 2
+}
