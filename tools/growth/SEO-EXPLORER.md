@@ -168,3 +168,33 @@ It makes no requests, writes no data, and must not justify changes without
 checking the live page, intent and recent work. Preserve correct/recent pages;
 compare complete equal, non-overlapping periods before asserting an effect.
 Validate with tools/test-growth-seo-page.mjs and the existing Explorer tests.
+
+## Choose the next check with current decisions and player evidence
+
+Next checks joins the final 90-day Web query/page sample with decisions from the
+currently loaded Growth workspace. It never promotes the status in an older
+imported proposal. Needs review includes only pending/approved exact-URL decisions
+with an observed query and no published, monitoring or dismissed decision for the
+same URL. All matched decisions exposes protected work separately. Reload Growth
+before acting: later website changes can be absent from the recorded proposal.
+
+Rows are ordered by the strongest single query/page row's observed impressions.
+No query/page or overlapping-window totals, opportunity scores or forecasts are
+computed. Open recorded decision focuses the existing card without changing it,
+and Review evidence opens the same exact-URL review. Missing decisions or source
+data produce an explicit empty state instead of suggesting work.
+
+Page reviews also show the existing GA4 google / organic landing-path sample:
+sessions and game/practice event counts, with its own dates, timezone, collection
+date and quality flags. GA4 paths normalise query and trailing-slash variants;
+index.html aliases and duplicate imported landing rows are not assigned totals.
+Events occurred in sessions that began on that path, possibly on later pages;
+they are not unique players or keyword/backlink conversions. Null is unmeasured;
+an explicitly returned zero remains zero. No conversion rate is calculated.
+
+The review download includes recorded decision and Analytics evidence without
+private notes, user identities or attribution claims. All-row Next checks CSV
+keeps the separate periods and guards. This feature adds no data collection,
+tracking, scoring, database writes, permissions or automatic content changes.
+Validate with tools/test-growth-seo-actions.mjs plus the existing Explorer/page
+tests and production build; check live decision navigation and responsive UI.
