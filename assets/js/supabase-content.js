@@ -283,9 +283,12 @@ window.BrainiContent = (function(){
 
     const sb=client();
     let data;
+    const verifyRpc=(name,args)=>window.BrainiCloudGames?.resultRpc
+      ? BrainiCloudGames.resultRpc(name,args,session.user.id)
+      : sb.rpc(name,args);
 
     if(pack?.selectionMode==="history_aware"){
-      const response=await sb.rpc("verify_brainilab_anytime_quiz_result",{
+      const response=await verifyRpc("verify_brainilab_anytime_quiz_result",{
         p_client_result_id:result.clientResultId,
         p_topic_slug:pack.topicSlug,
         p_difficulty:pack.difficulty,
@@ -295,7 +298,7 @@ window.BrainiContent = (function(){
       data=response.data;
     }else{
       if(!pack?.packId) return {verified:false,reason:"missing_pack_id"};
-      const response=await sb.rpc("verify_brainilab_quiz_result",{
+      const response=await verifyRpc("verify_brainilab_quiz_result",{
         p_client_result_id:result.clientResultId,
         p_quiz_pack_id:pack.packId,
         p_answers:verificationPayload(answerDetails)

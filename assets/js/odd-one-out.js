@@ -55,7 +55,7 @@ window.BrainiOddOneOut=(function(){
     const rows=details.filter(x=>/^[0-9a-f-]{36}$/i.test(x.puzzleId)).map(x=>({puzzle_id:x.puzzleId,selected_index:x.selectedIndex}));
     if(rows.length!==ROUNDS)return;
     try{
-      const {data,error}=await client().rpc("verify_brainilab_odd_one_out_result",{p_client_result_id:result.clientResultId,p_rounds:rows});
+      const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,session.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_odd_one_out_result",{p_client_result_id:result.clientResultId,p_rounds:rows});
       if(error)throw error;
       return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{});
     }catch(e){console.warn(e)}

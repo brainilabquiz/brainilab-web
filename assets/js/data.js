@@ -759,6 +759,26 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     return clone(result);
   }
 
+  // Restore saved proof from another device; only the normal verifier can award it.
+  function restorePendingCloudResult(row){
+    const owner=state.auth?.user?.id||state.auth?.guestUserId||null;
+    const gr=Array.isArray(row?.game_results)?row.game_results[0]:row?.game_results;
+    const payload=gr?.result_payload;
+    if(!owner||row?.user_id!==owner||!row.client_result_id||!GAME_DEFS[row.game_id]||!gr?.id||gr.answers_verified!==false||!payload||payload.practice||payload.tryFirst)return null;
+    if(state.recentResults.some(r=>r.clientResultId===row.client_result_id))return null;
+    const result=Object.assign({},clone(payload),{
+      id:gr.id,clientResultId:row.client_result_id,ownerUserId:owner,gameId:row.game_id,
+      playedAt:row.completed_at,dailyNumber:row.daily_number,dailyChallengeId:row.daily_challenge_id||payload.dailyChallengeId||null,
+      quizPackId:row.quiz_pack_id||payload.quizPackId||null,difficulty:row.difficulty||payload.difficulty,
+      recordedAtStep:3,cloudSyncStatus:'synced',cloudSessionId:row.id,cloudResultId:gr.id,
+      answersVerified:false,answerVerificationStatus:'pending',dailyAnswerVerificationStatus:'pending',dailyGameVerificationStatus:'pending'
+    });
+    state.recentResults.push(result);
+    state.recentResults.sort((a,b)=>String(b.playedAt).localeCompare(String(a.playedAt)));
+    state.recentResults=state.recentResults.slice(0,100);save();
+    return clone(result);
+  }
+
   async function submitGameResultHybrid(gameId,payload){
     // Try First runs the full real game engine but is deliberately invisible to results, XP and stats.
     if(new URLSearchParams(location.search).get("try")==="1"){
@@ -804,7 +824,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     const def=GAME_DEFS[gameId];
     if(!def) throw new Error("Unknown game: "+gameId);
 
-    if(gameId==='brainmix' && payload?.contentSource==='local' && !payload.dailyChallengeId){
+    if(payload?.contentSource==='local'){
       payload={...payload,practice:true};
     }
     const legacyFallback=r=>r.gameId==='brainmix' && r.contentSource==='local' && !r.dailyChallengeId
@@ -1707,6 +1727,7 @@ key:todayKey(),number:dailyNumber(),completedGames:[],brainScore:0,brainScorePer
     syncExternalAuthUser: async (user,provider) => syncExternalAuthUser(user,provider),
     syncCloudProfile: async profile => syncCloudProfile(profile),
     syncCloudProgression: async summary => syncCloudProgression(summary),
+    restorePendingCloudResult: async row => restorePendingCloudResult(row),
     syncCloudFriends: async snapshot => syncCloudFriends(snapshot),
     syncCloudGroups: async snapshot => syncCloudGroups(snapshot),
     clearExternalAuthUser: async () => clearExternalAuthUser()

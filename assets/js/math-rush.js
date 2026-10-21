@@ -55,7 +55,7 @@ window.BrainiMathRush=(function(){
   async function verify(result,seed,answers,source){
     if(source!=="supabase"||!configured()||result?.cloudSyncStatus!=="synced")return;
     const session=await BrainiBackendAuth?.getSession?.();if(!session?.user)return;
-    try{const {data,error}=await client().rpc("verify_brainilab_math_rush_result",{p_client_result_id:result.clientResultId,p_seed:seed,p_answers:answers});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn("Math Rush verification:",e.message||e)}
+    try{const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,session.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_math_rush_result",{p_client_result_id:result.clientResultId,p_seed:seed,p_answers:answers});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn("Math Rush verification:",e.message||e)}
   }
   async function mount(root){
     if(scoringDaily && await window.BrainiDailyCompletionGuard?.check?.()) return;

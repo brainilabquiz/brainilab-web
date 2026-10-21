@@ -12,6 +12,7 @@ import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';
+import './test-result-cross-device.mjs';
 import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
 

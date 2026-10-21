@@ -65,6 +65,15 @@ window.BrainiCloudGames = (function(){
       payload[key]=value;
     });
 
+    // Retain only answer IDs and timing, so another device can finish a pending
+    // quiz verification without storing question text or trusting client scores.
+    if(Array.isArray(result.answerDetails)&&result.answerDetails.length<=100){
+      payload.answerDetails=result.answerDetails.map(answer=>({
+        questionVersionId:answer?.questionVersionId,
+        selectedOptionId:answer?.selectedOptionId||null,
+        responseTimeMs:Number.isFinite(Number(answer?.responseTimeMs))?Math.max(0,Math.round(Number(answer.responseTimeMs))):null
+      }));
+    }
     return payload;
   }
 
@@ -105,7 +114,11 @@ window.BrainiCloudGames = (function(){
     }finally{clearTimeout(timer);window.removeEventListener('brainilab:authchange',changed);}
     // Old Daily acknowledgements could reference another canonical attempt. A local
     // "synced" flag alone does not prove that this exact result exists remotely.
-    if(repairMissing && name.startsWith('verify_brainilab_') && response.error?.message==='Game result not found'){
+    const missingMessages={connections:'Connections',math_rush:'Math Rush',number_route:'Number Route',brainiword:'BrainiWord',higher_lower:'Higher or Lower',odd_one_out:'Odd One Out',order_up:'Order Up',sequence:'Sequence',survival:'Survival',topic_rush:'Topic Rush'};
+    const verifier=name.match(/^verify_brainilab_(.+)_result$/)?.[1];
+    const message=response?.error?.message;
+    const missing=verifier&&(message==='Game result not found'||message===`${missingMessages[verifier]} result not found`);
+    if(repairMissing && missing){
       const stored=window.BrainiData?.recentResults?.().find(r=>r.clientResultId===args.p_client_result_id);
       if(stored?.cloudSyncStatus==='synced' && !stored.practice && !stored.tryFirst && ownsResult(stored,userId)){
         const saved=await saveCompletedResult(stored.gameId,stored,{resend:true});
@@ -115,6 +128,9 @@ window.BrainiCloudGames = (function(){
           return resultRpc(name,args,userId,{repairMissing:false});
         }
       }
+    }
+    if(verifier&&!response?.error&&response?.data?.answers_verified!==true&&response?.data?.verified!==true){
+      return {data:null,error:new Error('Result could not be verified.')};
     }
     return response;
   }
@@ -294,8 +310,47 @@ window.BrainiCloudGames = (function(){
       throw error;
     }
 
+    if(localUserId()!==user.id)return [];
     return data||[];
   }
+
+  async function getPendingVerificationResults(){
+    if(!configured()||navigator.onLine===false||!client()?.from)return [];
+    const user=await currentUser();
+    if(!user||localUserId()!==user.id)return [];
+    const controller=new AbortController();let timer;
+    const changed=()=>{if(localUserId()!==user.id)controller.abort();};
+    window.addEventListener('brainilab:authchange',changed);
+    try{
+      let query=client().from('game_sessions')
+        .select('id,user_id,client_result_id,game_id,daily_number,daily_challenge_id,quiz_pack_id,difficulty,set_number,completed_at,game_results!inner(id,answers_verified,result_payload)')
+        .eq('user_id',user.id).eq('game_results.answers_verified',false)
+        .gte('completed_at',new Date(Date.now()-7*86400000).toISOString())
+        .order('completed_at',{ascending:false}).limit(20);
+      if(query.abortSignal)query=query.abortSignal(controller.signal);
+      const {data,error}=await Promise.race([query,new Promise((_,reject)=>{
+        timer=setTimeout(()=>{controller.abort();reject(new Error('Pending result lookup timed out.'));},12000);
+      })]);
+      if(localUserId()!==user.id)return [];
+      if(error)throw error;
+      return (data||[]).filter(row=>row.user_id===user.id);
+    }finally{clearTimeout(timer);window.removeEventListener('brainilab:authchange',changed);}
+  }
+
+  let resumeJob=null,lastResumeAt=0;
+  function resume(){
+    if(window.document?.visibilityState==='hidden'||navigator.onLine===false||!configured()||!localUserId())return;
+    if(resumeJob||Date.now()-lastResumeAt<5000)return;
+    lastResumeAt=Date.now();const owner=localUserId();
+    const job=(async()=>{
+      await syncPendingResults();
+      if(localUserId()===owner)await window.BrainiProgression?.sync?.({fresh:true});
+    })().catch(error=>{lastError=error;}).finally(()=>{if(resumeJob===job)resumeJob=null;});
+    resumeJob=job;
+  }
+  window.addEventListener('focus',resume);
+  window.addEventListener('pageshow',event=>{if(event.persisted)resume();});
+  window.document?.addEventListener?.('visibilitychange',resume);
 
   function getLastError(){
     return lastError;
@@ -317,6 +372,7 @@ window.BrainiCloudGames = (function(){
     saveCompletedResult,
     syncPendingResults,
     getMyRecentResults,
+    getPendingVerificationResults,
     getLastError,
     isSyncing
   };
