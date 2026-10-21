@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-the-rosetta-stone",
+  "title": "What is the Rosetta Stone? One message, three scripts",
+  "description": "The Rosetta Stone helped unlock Egyptian hieroglyphs. Its secret was a message written three ways, with one version scholars could already read.",
+  "topic": "History",
+  "status": "published",
+  "order": 201,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-the-rosetta-stone.webp",
+    "small": "/assets/images/learn/what-is-the-rosetta-stone-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-the-rosetta-stone-thumb.webp",
+    "alt": "An illustrative dark stone model with a broken upper edge and three bands of engraved writing on a study table",
+    "credit": "AI-generated illustrative model inspired by the Rosetta Stone; not a museum photograph or an accurate transcription.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/history/history-quiz/",
+    "name": "History Quiz"
+  },
+  "practice": "Try another question about the past in the History Quiz.",
+  "related": [
+    "cleopatra-pyramids-moon-landing",
+    "how-to-read-roman-numerals"
+  ],
+  "sources": [
+    {
+      "url": "https://www.britishmuseum.org/blog/everything-you-ever-wanted-know-about-rosetta-stone",
+      "name": "British Museum — Everything you ever wanted to know about the Rosetta Stone"
+    },
+    {
+      "url": "https://www.britishmuseum.org/collection/object/Y_EA24",
+      "name": "British Museum — Rosetta Stone collection record EA24"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-stone-with-a-clue",
+      "title": "A stone with a clue",
+      "html": "<p><strong>The Rosetta Stone is a broken ancient Egyptian slab bearing a decree in three scripts.</strong> Comparing those versions helped scholars learn to read Egyptian hieroglyphs.</p><p>Its importance comes from the repeated message. Imagine finding the same unfamiliar notice beside a version you can understand: suddenly, you have something to work with.</p>"
+    },
+    {
+      "id": "three-scripts-two-languages",
+      "title": "Three scripts, two languages",
+      "html": "<p><a href=\"https://www.britishmuseum.org/collection/object/Y_EA24\">The British Museum dates the inscription to 196 BC</a>. It concerns King Ptolemy V, rather than a secret map or a buried treasure.</p><p>The writing appears in Egyptian hieroglyphs, Egyptian Demotic and Ancient Greek. That means <strong>three scripts, but two languages</strong>: hieroglyphs and Demotic are different ways of writing Egyptian.</p>"
+    },
+    {
+      "id": "the-part-they-could-read",
+      "title": "The part they could read",
+      "html": "<p><a href=\"https://www.britishmuseum.org/blog/everything-you-ever-wanted-know-about-rosetta-stone\">Scholars could already read Ancient Greek</a>. This gave them a route into the corresponding Egyptian text, including clues in royal names.</p><p>Progress still took years. Thomas Young made important advances, and Jean-François Champollion announced a crucial breakthrough in 1822. He worked with the stone and other texts; one glance at the Greek did not solve everything.</p>"
+    },
+    {
+      "id": "a-clue-not-a-magic-key",
+      "title": "A clue, not a magic key",
+      "html": "<p>That is what makes the story satisfying: familiar information helped make unfamiliar information readable. The stone supplied a comparison, and researchers did the difficult work.</p><p>For another shift in historical perspective, compare <a href=\"/learn/cleopatra-pyramids-moon-landing/\">Cleopatra, the pyramids and the Moon landing</a>. Or try reading a different system with <a href=\"/learn/how-to-read-roman-numerals/\">Roman numerals</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T09:40:50Z",
+  "updatedAt": "2026-10-21T09:40:50Z",
+  "minutes": 2
+}
