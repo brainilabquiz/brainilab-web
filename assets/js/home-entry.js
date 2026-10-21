@@ -73,7 +73,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           contentSource:daily.source,
           dailyChallengeId:daily.dailyChallengeId,
           dailyNumber:daily.dailyNumber,
-          challengeDate:daily.challengeDate
+          challengeDate:daily.challengeDate,
+          practice:!usingCloud
         });
 
         if(usingCloud){

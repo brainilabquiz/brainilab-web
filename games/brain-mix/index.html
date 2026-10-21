@@ -126,8 +126,9 @@
     stage.innerHTML=`
       <div class="daily-load-error">
         <strong>${archiveMode?"That Brain Mix didn’t load correctly.":"Today’s challenge didn’t load correctly."}</strong>
-        <span>${archiveMode?"Retry the game or continue with the local fallback.":"Your Daily is safe. Retry the connection or continue with the local fallback."}</span>
+        <span>Check your connection and try again. Your Daily progress hasn’t changed.</span>
         <button class="btn-secondary" type="button" data-daily-retry>${archiveMode?"Retry Brain Mix":"Retry Daily"}</button>
+        <a class="btn-light" href="?try=1">Play a practice quiz</a>
       </div>`;
 
     stage.querySelector("[data-daily-retry]")?.addEventListener("click",()=>{
@@ -156,6 +157,9 @@
 
     const questions=daily.questions;
     const usingCloud=daily.source==="supabase";
+    if(!usingCloud && !archiveMode && !tryFirstMode){
+      throw new Error("Official Daily questions could not connect.");
+    }
 
     const dailyTitle=root.querySelector(".challenge-labels .challenge-pill:first-child");
     if(dailyTitle){
@@ -185,8 +189,8 @@
     }
 
     BrainiQuiz.mount(root,questions,{
-      dailyScoreNumber:archiveMode||tryFirstMode?null:daily.dailyNumber,
-      practice:archiveMode||tryFirstMode,
+      dailyScoreNumber:archiveMode||tryFirstMode||!usingCloud?null:daily.dailyNumber,
+      practice:archiveMode||tryFirstMode||!usingCloud,
       checkAnswer:usingCloud
         ? (item,choice,context)=>BrainiContent.checkAnswer(item,choice,context)
         : null,
@@ -204,7 +208,7 @@
           dailyChallengeId:daily.dailyChallengeId,
           dailyNumber:archiveMode?null:daily.dailyNumber,
           archiveDailyNumber:archiveMode?daily.dailyNumber:null,
-          practice:archiveMode,
+          practice:archiveMode||tryFirstMode||!usingCloud,
           challengeDate:daily.challengeDate
         });
 
