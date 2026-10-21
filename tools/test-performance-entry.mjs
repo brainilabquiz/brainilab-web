@@ -6,6 +6,8 @@ import {coverImage} from '../lib/cover-images.js';
 import {uploadCover} from '../editor/cover-upload.js';
 import {homeArticle,card} from '../lib/learn-content.js';
 const {JSDOM,requestInterceptor}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const home=readFileSync('index.html','utf8');
+assert.match(home,/<script async fetchpriority="high" src="\/assets\/js\/consent\.bundle\.js\?/,'home consent must not wait behind render-blocking CSS or deferred account scripts');
 for(const path of execFileSync('git',['ls-files','*.html'],{encoding:'utf8'}).trim().split('\n')){
  const html=readFileSync(path.trim(),'utf8');if(!html.includes('shell.bundle.js?'))continue;
  assert.equal((html.match(/consent\.bundle\.js\?/g)||[]).length,1,path);
@@ -38,7 +40,7 @@ assert.equal(failures,2);assert.equal(closed,2);
 // consent bundle must still render and accept a choice before that SDK arrives.
 const requested=[];let releaseAccount;
 const resources={interceptors:[requestInterceptor(request=>{const url=request.url;requested.push(url);if(url.endsWith('/consent.js'))return new Response(readFileSync('assets/js/consent.bundle.js'),{headers:{'Content-Type':'application/javascript'}});if(url.endsWith('/slow-account.js'))return new Promise(resolve=>{releaseAccount=resolve;});return new Response('');})]};
-const dom=new JSDOM('<!doctype html><head><script defer src="/consent.js"></script><script defer src="/slow-account.js"></script></head><body><main>Play</main></body>',{url:'https://brainilabgames.com/',runScripts:'dangerously',resources});
+const dom=new JSDOM('<!doctype html><head><script async fetchpriority="high" src="/consent.js"></script><script defer src="/slow-account.js"></script></head><body><main>Play</main></body>',{url:'https://brainilabgames.com/',runScripts:'dangerously',resources});
 let domReady=false;dom.window.document.addEventListener('DOMContentLoaded',()=>domReady=true);
 for(let n=0;n<20&&!dom.window.document.querySelector('.marketing-consent');n++)await new Promise(r=>setTimeout(r,10));
 assert.equal(domReady,false);

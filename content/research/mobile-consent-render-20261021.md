@@ -1,0 +1,7 @@
+# Home mobile render review — 21 October 2026
+
+Baseline: public PageSpeed report https://pagespeed.web.dev/analysis/https-brainilabgames-com/zagm4l7yft?form_factor=mobile, captured 22:31 CEST, Lighthouse 13.5.0, Moto G Power emulation and slow 4G. Performance 90, LCP 3.2s, FCP 1.2s, TBT 0ms, CLS 0. No CrUX field data returned. The LCP breakdown identifies the optional-cookie paragraph with 2,580ms render delay; render-blocking CSS has an estimated 870ms saving. These are lab observations, not real-user percentiles or a ranking outcome.
+
+Load the existing home consent bundle asynchronously with high fetch priority so it can execute independently of render-blocking styles and deferred account scripts. The existing body-ready fallback, choices, text, purposes, no-request-before-consent rule and privacy withdrawal stay unchanged. This is a homepage-only scheduling change; article reading timers and other routes retain their existing ordering. No game controller, score, XP, player state, auth, permissions, advertisements or tracking coverage changes.
+
+Validation: the existing performance-entry test now exercises the async scheduling while the account SDK is held open, including prompt presence, rejecting optional cookies before DOMContentLoaded and no Google/Meta request. Existing analytics consent and home lifecycle suites pass; full production build passes. A fresh native preview and public PageSpeed check are required before declaring an improvement. Preserve the baseline even if the hypothesis does not improve measured performance.
