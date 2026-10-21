@@ -1,0 +1,73 @@
+{
+  "slug": "how-does-an-air-fryer-work",
+  "title": "How does an air fryer work? Dinner on a hot breeze",
+  "description": "An air fryer cooks with heat and fast-moving air. Discover what happens around the basket, why the name is a little misleading and what makes the outside crisp.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 202,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-does-an-air-fryer-work.webp",
+    "small": "/assets/images/learn/how-does-an-air-fryer-work-small.webp",
+    "thumbnail": "/assets/images/learn/how-does-an-air-fryer-work-thumb.webp",
+    "alt": "A cream air fryer with its drawer open, showing golden potato wedges in a dark perforated basket",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged unbranded appliance, not a product test or cooking instruction.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try another everyday science question in the Science Quiz.",
+  "related": [
+    "why-microwaves-have-a-turntable",
+    "what-is-a-vacuum-flask"
+  ],
+  "sources": [
+    {
+      "url": "https://spendsmart.extension.iastate.edu/spendsmart/2025/09/08/air-fryer-adventures-part-1/",
+      "name": "Iowa State University Extension — Air Fryer Adventures, Part 1"
+    },
+    {
+      "url": "https://www.usa.philips.com/c-p/HD9641_26/avance-collection-airfryer",
+      "name": "Philips — Hot-air circulation and direct heat in an Airfryer"
+    },
+    {
+      "url": "https://assets.breville.com/BOV680/BOV680_USC_IB_A25.pdf",
+      "name": "Breville — Smart Oven Air Fryer Compact instruction book"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/1-6-mechanisms-of-heat-transfer",
+      "name": "OpenStax — Mechanisms of heat transfer"
+    }
+  ],
+  "sections": [
+    {
+      "id": "heat-with-some-movement",
+      "title": "Heat with some movement",
+      "html": "<p><strong>An air fryer cooks by moving hot air around food.</strong> A heating element supplies heat, while a fan keeps the air circulating. Think of it as a compact fan oven.</p><p>The useful idea is <a href=\"https://openstax.org/books/university-physics-volume-2/pages/1-6-mechanisms-of-heat-transfer\">convection: heat carried by moving air or another fluid</a>. The air is doing a delivery job.</p>"
+    },
+    {
+      "id": "the-basket-is-the-stage",
+      "title": "The basket is the stage",
+      "html": "<p>In a basket-style model, the food sits inside the cooking chamber while heated air circulates around it. <a href=\"https://www.usa.philips.com/c-p/HD9641_26/avance-collection-airfryer\">Philips describes this airflow and direct heat from above</a> as part of how its model cooks and crisps food.</p><p>The result can be a crisp outside and a softer middle. Golden potato wedges are a familiar example; they do not need to be submerged in a deep pan of oil.</p>"
+    },
+    {
+      "id": "why-call-it-frying",
+      "title": "Why call it frying?",
+      "html": "<p><a href=\"https://spendsmart.extension.iastate.edu/spendsmart/2025/09/08/air-fryer-adventures-part-1/\">Iowa State University explains</a> that circulating hot air can produce a taste and texture similar to frying while using much less oil. The name describes the effect rather than an oil-filled cooking chamber.</p><p>Air fryers come in different shapes, including <a href=\"https://assets.breville.com/BOV680/BOV680_USC_IB_A25.pdf\">oven-style models with an air-fry function</a>. The controls and settings vary, even when the basic moving-air idea is shared.</p>"
+    },
+    {
+      "id": "same-kitchen-different-tricks",
+      "title": "Same kitchen, different tricks",
+      "html": "<p>The appliance supplies heat; moving air helps carry it to the food. That small distinction makes an ordinary kitchen gadget more interesting.</p><p>For two other kitchen ideas, explore <a href=\"/learn/why-microwaves-have-a-turntable/\">why microwaves turn the plate</a> and <a href=\"/learn/what-is-a-vacuum-flask/\">how a vacuum flask keeps tea hot</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T09:40:50Z",
+  "updatedAt": "2026-10-21T09:40:50Z",
+  "minutes": 2
+}
