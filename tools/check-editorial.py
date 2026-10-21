@@ -18,6 +18,16 @@ class Page(HTMLParser):
                 if key in a:
                     if key=='srcset':self.refs.extend(part.strip().split()[0] for part in a[key].split(',') if part.strip())
                     else:self.refs.append(a[key])
+# A learn-* fragment is return-to-reading context consumed by post-game.js,
+# rather than an element to scroll to. Accept only a published directory entry
+# for this exact game; unrelated or misspelt anchors must still fail.
+journeys=json.loads((ROOT/'assets/data/learn-game-links.json').read_text(encoding='utf-8'))
+assert journeys['version']==1
+reading_contexts={
+    ((ROOT/entry['gamePath'].lstrip('/')/'index.html').resolve(), 'learn-'+entry['slug'])
+    for entry in journeys['articles']
+}
+assert all((ROOT/'learn'/entry['slug']/'index.html').is_file() for entry in journeys['articles'])
 pages=[ROOT/'index.html',*sorted((ROOT/'learn').rglob('index.html'))]
 for path in pages:
     text=path.read_text(encoding='utf-8');p=Page(text)
@@ -33,7 +43,7 @@ for path in pages:
         elif dest.is_dir():dest=dest/'index.html'
         assert dest.is_file(),(path,ref,'Missing destination')
         if url.fragment and dest.suffix=='.html':
-            assert url.fragment in Page(dest.read_text(encoding='utf-8')).ids,(path,ref,'Missing anchor')
+            assert url.fragment in Page(dest.read_text(encoding='utf-8')).ids or (dest.resolve(),url.fragment) in reading_contexts,(path,ref,'Missing anchor or reading context')
 assert 'content/' in (ROOT/'.assetsignore').read_text(),'Draft sources must not be served'
 assert 'pnpm-lock.yaml' in (ROOT/'.assetsignore').read_text()
 nf=Page((ROOT/'404.html').read_text(encoding='utf-8'))
@@ -47,17 +57,17 @@ with tempfile.TemporaryDirectory(prefix='brainilab-editorial-', dir=ROOT.parent)
     # pinned package in this isolated fixture instead of copying dependencies.
     renderer=temp/'lib/learn-content.js'
     renderer.write_text(renderer.read_text(encoding='utf-8').replace("from 'sanitize-html'", "from '"+(ROOT/'node_modules/sanitize-html/index.js').resolve().as_uri()+"'"),encoding='utf-8')
-    src=temp/'content/articles/how-to-learn-world-flags.json'
+    src=temp/'content/articles/how-to-play-number-route.json'
     a=json.loads(src.read_text(encoding='utf-8'));a['status']='draft';src.write_text(json.dumps(a),encoding='utf-8')
     subprocess.run([sys.executable,str(temp/'tools/build-editorial.py')],check=True,capture_output=True)
     generated=Page((temp/'learn/index.html').read_text(encoding='utf-8'))
     for ref in generated.refs:
         if 'brainilab-logo' in ref:
             assert ref.startswith('/') and (temp/ref.lstrip('/')).is_file(),('Generated responsive logo',ref)
-    assert not (temp/'learn/how-to-learn-world-flags/index.html').exists()
+    assert not (temp/'learn/how-to-play-number-route/index.html').exists()
     for file in ('sitemap.xml','learn/index.html','learn/daily-or-anytime/index.html','index.html'):
-        assert '/learn/how-to-learn-world-flags/' not in (temp/file).read_text(encoding='utf-8'),file
+        assert '/learn/how-to-play-number-route/' not in (temp/file).read_text(encoding='utf-8'),file
     a['status']='published';src.write_text(json.dumps(a),encoding='utf-8')
     subprocess.run([sys.executable,str(temp/'tools/build-editorial.py')],check=True,capture_output=True)
-    assert (temp/'learn/how-to-learn-world-flags/index.html').is_file()
+    assert (temp/'learn/how-to-play-number-route/index.html').is_file()
 print(f'Checked {len(pages)} pages: links, assets, anchors, metadata, schema, draft exclusion and republishing passed.')

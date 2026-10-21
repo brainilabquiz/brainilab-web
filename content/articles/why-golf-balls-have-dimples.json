@@ -47,14 +47,14 @@
       "html": "<p><strong>Golf balls have dimples because they change the airflow around the ball, reducing drag and helping it travel farther.</strong> A perfectly smooth surface sounds faster. Here, the air disagrees.</p><p>The little dents are part of the engineering, rather than decoration or damage from a particularly enthusiastic round.</p>"
     },
     {
+      "id": "dimple-count",
+      "title": "How many dimples are on a golf ball?",
+      "html": "<p><strong>The number depends on the model.</strong> For example, <a href=\"https://www.titleist.com.sg/teamtitleist/b/tourblog/posts/titleist-introduces-new-2025-pro-v1-and-pro-v1x-golf-balls\">Titleist’s published 2025 specifications</a> give:</p><ul><li><strong>Pro V1:</strong> 388 dimples.</li><li><strong>Pro V1x:</strong> 348 dimples.</li></ul><p>Those are examples, not a universal answer for every ball. <a href=\"https://www.titleist.com/learning-lab/how-its-made/golf-ball-dimples\">Titleist’s engineers also consider depth, shape and arrangement</a>; a bigger count does not automatically mean better flight.</p><p>More sporting surprises? Try the <a href=\"/sports/sports-quiz/#learn-why-golf-balls-have-dimples\">Sports Quiz</a>, or read on to see how those dimples change the air.</p>"
+    },
+    {
       "id": "airflow",
       "title": "A little turbulence does useful work",
       "html": "<p>Dimples stir up the thin layer of air close to the surface. This helps it stay attached farther around the ball before separating, reducing the pressure drag that slows it down.</p><p><a href=\"https://www.nasa.gov/centers-and-facilities/ames/nasa-turns-the-super-bowl-into-lesson-in-aerodynamics/\">NASA explains why that roughness helps</a>. It is not a general rule that scratching anything makes it faster: shape and speed matter too.</p>"
-    },
-    {
-      "id": "dimple-count",
-      "title": "How many dimples are on a golf ball?",
-      "html": "<p><strong>The number depends on the model.</strong> For example, <a href=\"https://www.titleist.com.sg/teamtitleist/b/tourblog/posts/titleist-introduces-new-2025-pro-v1-and-pro-v1x-golf-balls\">Titleist’s published 2025 specifications</a> give:</p><ul><li><strong>Pro V1:</strong> 388 dimples.</li><li><strong>Pro V1x:</strong> 348 dimples.</li></ul><p>Those are examples, not a universal answer for every ball. <a href=\"https://www.titleist.com/learning-lab/how-its-made/golf-ball-dimples\">Titleist’s engineers also consider depth, shape and arrangement</a>; a bigger count does not automatically mean better flight.</p>"
     },
     {
       "id": "notice-the-details",
@@ -62,7 +62,7 @@
       "html": "<p>If someone asks for an exact dimple count, ask which ball they mean. The model is part of the answer.</p><p>For another sporting detail hiding in plain sight, discover <a href=\"/learn/why-tennis-balls-are-yellow/\">why tennis balls turned yellow</a>.</p>"
     }
   ],
-  "updatedAt": "2026-10-16T19:33:25Z",
+  "updatedAt": "2026-10-21T05:16:51Z",
   "description": "Golf-ball dimples reduce drag, but there is no universal dimple count. See how they affect the air and compare two real ball designs.",
   "publishedAt": "2026-10-07T15:40:00Z"
 }

@@ -15,6 +15,10 @@
 .game-entry-heading h1{font-size:clamp(27px,4vw,40px);line-height:1.15;color:#2d296e;letter-spacing:-.03em;margin:0 0 8px}
 .game-entry-heading p{font-size:15px;line-height:1.5;color:#514b5c;margin:0 0 7px}
 .game-entry-heading span{font-size:12px;color:#625b6b}.game-entry-heading img{width:120px;height:90px;object-fit:contain;flex-shrink:0}
+.game-entry-heading .game-entry-reading{margin:8px 0 0;font-size:13px;line-height:1.5}
+.game-entry-reading a{color:#2d296e;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#aaa4bb}
+.game-entry-reading a:hover{text-decoration-color:currentColor}.game-entry-reading a:focus-visible{outline:3px solid #3fab34;outline-offset:4px;border-radius:2px}
+.game-entry-reading a span{color:inherit;font-size:inherit}
 .game-entry-page .quiz-pack-wrap{padding-top:0}.game-entry-page .quiz-pack-info span{font-size:12px}.game-entry-page .challenge-wrap{padding-top:14px}
 .game-entry-page #leafQuiz{position:relative;min-height:440px}.quiz-loading-message{display:none}
 [data-quiz-loading] .quiz-loading-message{display:block;position:absolute;inset:0;padding:90px 24px;text-align:center;color:#fff;line-height:1.7}
