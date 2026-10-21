@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-birdie-in-golf",
+  "title": "What is a birdie in golf? One shot under par",
+  "description": "A birdie means one stroke under par on a hole. See why three shots can be a birdie on one hole but an ordinary par on another, with a simple example.",
+  "topic": "Sports",
+  "status": "published",
+  "order": 204,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-birdie-in-golf.webp",
+    "small": "/assets/images/learn/what-is-a-birdie-in-golf-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-birdie-in-golf-thumb.webp",
+    "alt": "A golf ball and putter beside a cup and a card reading PAR 4 and SCORE 3 on a putting green",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged scoring example, not a real player’s result.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/sports/sports-quiz/",
+    "name": "Sports Quiz"
+  },
+  "practice": "Try another sporting question in the Sports Quiz.",
+  "related": [
+    "why-golf-balls-have-dimples",
+    "what-is-a-hat-trick"
+  ],
+  "sources": [
+    {
+      "url": "https://www.pga.com/story/golf-dictionary-glossary-and-golf-terms",
+      "name": "PGA of America — Golf dictionary, glossary and golf terms"
+    },
+    {
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/birdie",
+      "name": "Cambridge Dictionary — Birdie, golf meaning"
+    }
+  ],
+  "sections": [
+    {
+      "id": "one-fewer-is-the-good-news",
+      "title": "One fewer is the good news",
+      "html": "<p><strong>A birdie is a score of one stroke under par on a single golf hole.</strong> If the hole is a par four and you finish in three strokes, that is a birdie.</p><p><a href=\"https://www.pga.com/story/golf-dictionary-glossary-and-golf-terms\">The PGA glossary describes par as the score an accomplished player is expected to make</a>. It is the reference number that gives birdie its meaning.</p>"
+    },
+    {
+      "id": "three-is-not-always-a-birdie",
+      "title": "Three is not always a birdie",
+      "html": "<p>Imagine two friends both finish a hole in three strokes. One played a par four; the other played a par three.</p><p>The first has a birdie. The second has made par. Same number of strokes, different result against the hole’s reference score. <a href=\"https://dictionary.cambridge.org/us/dictionary/english/birdie\">Cambridge Dictionary makes that one-below-par relationship explicit</a>.</p>"
+    },
+    {
+      "id": "the-tiny-score-check",
+      "title": "The tiny score check",
+      "html": "<p>For a birdie, subtract one from the hole’s par: two strokes on a par three, three on a par four, or four on a par five.</p><p>Golf gives nearby scores other names, too. In the PGA glossary, a bogey is one over par and an eagle is two under. A birdie sits one stroke below par, without needing a feather in sight.</p>"
+    },
+    {
+      "id": "a-small-number-with-context",
+      "title": "A small number with context",
+      "html": "<p>The useful question is not simply how many strokes someone took. Ask what par was for that hole, then compare the two numbers.</p><p>For another golf surprise, find out <a href=\"/learn/why-golf-balls-have-dimples/\">why the ball has dimples</a>. Or compare another sporting score with <a href=\"/learn/what-is-a-hat-trick/\">a football hat-trick</a>.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T17:28:38Z",
+  "updatedAt": "2026-10-21T17:28:38Z",
+  "minutes": 2
+}

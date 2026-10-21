@@ -1,0 +1,65 @@
+{
+  "slug": "what-is-a-peninsula",
+  "title": "What is a peninsula? Almost an island, still attached",
+  "description": "A peninsula reaches into the water but keeps a land connection. Discover the detail that separates it from an island, from small headlands to whole regions.",
+  "topic": "Geography",
+  "status": "published",
+  "order": 203,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/what-is-a-peninsula.webp",
+    "small": "/assets/images/learn/what-is-a-peninsula-small.webp",
+    "thumbnail": "/assets/images/learn/what-is-a-peninsula-thumb.webp",
+    "alt": "An imagined green rocky peninsula remains connected to a larger coast by a broad grassy neck, with blue sea on both sides",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined coastline, not a named real location.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/geography/world-capitals-quiz/",
+    "name": "World Capitals Quiz"
+  },
+  "practice": "Try another question about the world in the World Capitals Quiz.",
+  "related": [
+    "what-is-a-fjord",
+    "what-is-an-archipelago"
+  ],
+  "sources": [
+    {
+      "url": "https://education.nationalgeographic.org/resource/peninsula/",
+      "name": "National Geographic Society — Peninsula"
+    },
+    {
+      "url": "https://dictionary.cambridge.org/us/dictionary/english/peninsula",
+      "name": "Cambridge Dictionary — Peninsula"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-piece-that-stays-attached",
+      "title": "The piece that stays attached",
+      "html": "<p><strong>A peninsula is land mostly surrounded by water but still joined to a larger land area.</strong> It reaches out into the water without becoming a separate island.</p><p>That remaining connection is the useful clue. A coastline can have plenty of bends, so look at how the land joins up rather than trying to count three perfectly straight sides.</p>"
+    },
+    {
+      "id": "not-just-an-ocean-shape",
+      "title": "Not just an ocean shape",
+      "html": "<p><a href=\"https://dictionary.cambridge.org/us/dictionary/english/peninsula\">Cambridge Dictionary includes peninsulas extending into a sea or a lake</a>. An ocean is not required for the name to fit.</p><p>Imagine drawing a pond with a long grassy tongue reaching into it. If that tongue remains attached to the surrounding land, you have the basic idea. The drawing needs no palm trees or tropical beach.</p>"
+    },
+    {
+      "id": "small-point-big-region",
+      "title": "Small point, big region",
+      "html": "<p><a href=\"https://education.nationalgeographic.org/resource/peninsula/\">National Geographic describes peninsulas at very different scales</a>, from small coastal projections to large regions. Spain and Portugal, for example, are on the Iberian Peninsula.</p><p>So a peninsula is a landform, not a size category. Its name tells you about the relationship between land and water, rather than how many people or countries it contains.</p>"
+    },
+    {
+      "id": "two-ways-to-read-a-coast",
+      "title": "Two ways to read a coast",
+      "html": "<p>A peninsula takes land out into water. For a different coastal shape, explore <a href=\"/learn/what-is-a-fjord/\">a fjord, where the sea fills a deep valley</a>.</p><p>And when the land really is divided into separate islands, the group may be <a href=\"/learn/what-is-an-archipelago/\">an archipelago</a>. One map can hold several different kinds of coastline.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T17:28:38Z",
+  "updatedAt": "2026-10-21T17:28:38Z",
+  "minutes": 2
+}
