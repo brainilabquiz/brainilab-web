@@ -1,0 +1,16 @@
+import vm from'node:vm';
+import{readFileSync}from'node:fs';
+import assert from'node:assert/strict';
+const context={window:{},setTimeout,clearTimeout};vm.runInNewContext(readFileSync(new URL('../assets/js/admin-operations.js',import.meta.url),'utf8'),context);
+const M=context.window.BrainiAdminOperations,calls=[];
+const data={results:{today:{eligible:3,verified:2,practice:999},pending:0,checking:0,practice:2},pending_rows:[],pools:{brainiword:130,connections:126}};
+const value=await M.load(async name=>{calls.push(name);if(name==='admin_get_system_health')throw Error('Unavailable');return name==='admin_get_operations_overview'?data:{};});
+assert.equal(calls.length,4);assert.ok(!calls.some(name=>name.startsWith('admin_list_')));assert.ok(value.errors.system);assert.equal(value.operations,data);
+assert.equal(M.verifiedRate(data),66.7);assert.equal(M.verifiedRate({results:{today:{eligible:0,verified:0}}}),null);assert.equal(M.verifiedRate(null),null);
+assert.equal(M.poolRows(data).find(r=>r.id==='sequence').ready,null);assert.equal(M.poolRows(data).find(r=>r.id==='connections').count,126);
+assert.match(M.resultHTML(data),/Saved ranked games are verified/);assert.match(M.resultHTML(null),/checks unavailable/);
+const html=M.resultHTML({...data,results:{...data.results,pending:1},pending_rows:[{result_id:'<script>',game_id:'<img>',reason:'missing_evidence',created_at:'2026-10-21T12:00:00Z'}]});
+assert.match(html,/1 saved game needs a check/);assert.match(html,/Original answers unavailable/);assert.ok(!html.includes('<script>')&&!html.includes('<img>'));
+await assert.rejects(()=>M.load(async name=>{if(name==='admin_get_dashboard')throw Error('Offline');return{};}),/could not be loaded/);
+const timed=await M.load(name=>name==='admin_get_operations_overview'?new Promise(()=>{}):Promise.resolve({}),{timeoutMs:2});assert.ok(timed.errors.operations);assert.match(M.resultHTML(timed.operations),/checks unavailable/);
+console.log('PASS operations summary gate: four requests, partial failures, ranked-only rate, unknown counts, pending evidence and safe markup.');

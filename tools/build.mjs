@@ -16,6 +16,7 @@ import './test-result-receipts.mjs';
 import './test-result-cross-device.mjs';
 import './test-guest-auth.mjs';
 import './test-halloween-legacy.mjs';
+import './test-admin-operations-model.mjs';
 import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
 

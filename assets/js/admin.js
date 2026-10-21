@@ -478,37 +478,10 @@ window.BrainiAdmin=(function(){
   // ==========================================================
 
   async function renderDashboard(){
-    const [
-      d,
-      system,
-      topicRush,
-      topicRushTopics,
-      orderUpDaily,
-      orderUpRounds,
-      connectionsPuzzles,
-      oddPuzzles,
-      higherPairs,
-      numberRoutes,
-      sequences,
-      rotationHealth
-    ]=await Promise.all([
-      rpc("admin_get_dashboard"),
-      rpc("admin_get_system_health"),
-      rpc("admin_get_topic_rush_daily"),
-      rpc("admin_list_topic_rush_topics"),
-      rpc("admin_get_order_up_daily"),
-      rpc("admin_list_order_up_rounds"),
-      rpc("admin_list_connections_puzzles"),
-      rpc("admin_list_odd_one_out_puzzles"),
-      rpc("admin_list_higher_lower_pairs"),
-      rpc("admin_list_number_route_puzzles"),
-      rpc("admin_list_sequence_puzzles"),
-      rpc("admin_get_daily_health")
-    ]);
-
-    const verifiedPct=Number(d.results_today||0)
-      ? Math.round(Number(d.answers_verified_today||0)/Number(d.results_today)*1000)/10
-      : null;
+    const overview=await BrainiAdminOperations.load(rpc);
+    const d=overview.dashboard||{},system=overview.system||{},rotationHealth=overview.daily||{};
+    const verifiedPct=BrainiAdminOperations.verifiedRate(overview.operations);
+    const poolRows=BrainiAdminOperations.poolRows(overview.operations);
 
     const daily=d.daily||{};
     const dailyHealthy=rotationHealth?.healthy===true;
@@ -520,13 +493,14 @@ window.BrainiAdmin=(function(){
         ${metric("Cloud users",d.cloud_users,"Synced BrainiLab accounts")}
         ${metric("Synced results today",d.synced_results_today,"Authenticated cloud results")}
         ${metric("Daily players today",d.cloud_daily_players_today,"Cloud players with ≥1 Daily")}
-        ${metric("Full Dailies today",d.full_dailies_today,"Main Daily completed (legacy: full set)")}
-        ${metric("Verified answers",verifiedPct,"Of today's synced results","%")}
+        ${metric("Daily completed today",d.full_dailies_today,"Main Daily verified")}
+        ${metric("Ranked results verified",verifiedPct,"Practice and local results excluded","%")}
         ${metric("Public ranking profiles",d.public_ranking_profiles,"Explicit ranking opt-ins")}
         ${metric("Active groups",d.active_groups,`${num(d.eligible_groups)} ranking-eligible`)}
         ${metric("New suggestions",d.new_suggestions,"Feedback inbox")}
       </div>
 
+      ${BrainiAdminOperations.resultHTML(overview.operations,GAME_LABELS)}
       <div class="admin-panels">
         <section class="admin-panel">
           <div class="admin-panel-head">
@@ -534,10 +508,10 @@ window.BrainiAdmin=(function(){
               <h2>Daily health</h2>
               <p>${esc(daily.date||d.date||"Today")} · Daily #${esc(daily.daily_number||"—")}</p>
             </div>
-            ${dailyHealthy?badge("Healthy","ok"):badge("Needs attention","bad")}
+            ${overview.errors.daily?badge("Check unavailable","warn"):dailyHealthy?badge("Healthy","ok"):badge("Needs attention","bad")}
           </div>
 
-          ${dailyHealthExplanation(rotationHealth)}
+          ${overview.errors.daily?'<p class="admin-note">The Daily check could not be loaded. Refresh before changing content.</p>':dailyHealthExplanation(rotationHealth)}
           <div class="admin-daily-score">
             ${(rotationHealth.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected,g.ready)).join('')}
           </div>
@@ -563,17 +537,10 @@ window.BrainiAdmin=(function(){
               cron
                 ? `${esc(cron.schedule||"—")} · ${cron.active?"active":"inactive"}${cron.last_status?` · last ${esc(cron.last_status)}`:""}`
                 : "Not available",
-              !!cron?.active && (!cron?.last_status || cron.last_status==="succeeded")
+              overview.errors.system?null:!!cron?.active && (!cron?.last_status || cron.last_status==="succeeded")
             )}
             ${healthRow("Question Bank",`${num(d.question_bank?.published_versions)} published`,Number(d.question_bank?.published_versions)>0)}
-            ${healthRow("BrainiWord pool",`${num(system.content_pools?.active_brainiword_words)} active`,Number(system.content_pools?.active_brainiword_words)>=61)}
-            ${healthRow("Topic Rush pool",`${num((topicRushTopics||[]).filter(x=>x.active).length)} active topics`,(topicRushTopics||[]).filter(x=>x.active).length>=15)}
-            ${healthRow("Order Up pool",`${num((orderUpRounds||[]).filter(x=>x.active).length)} active rounds`,(orderUpRounds||[]).filter(x=>x.active).length>=30)}
-            ${healthRow("Connections pool",`${num((connectionsPuzzles||[]).filter(x=>x.active).length)} active puzzles`,(connectionsPuzzles||[]).filter(x=>x.active).length>=20)}
-            ${healthRow("Odd One Out pool",`${num((oddPuzzles||[]).filter(x=>x.active).length)} active puzzles`,(oddPuzzles||[]).filter(x=>x.active).length>=20)}
-            ${healthRow("Higher or Lower pool",`${num((higherPairs||[]).filter(x=>x.active).length)} active pairs`,(higherPairs||[]).filter(x=>x.active).length>=20)}
-            ${healthRow("Number Route pool",`${num((numberRoutes||[]).filter(x=>x.active).length)} active routes`,(numberRoutes||[]).filter(x=>x.active).length>=20)}
-            ${healthRow("Sequence pool",`${num((sequences||[]).filter(x=>x.active).length)} active sequences`,(sequences||[]).filter(x=>x.active).length>=20)}
+            ${poolRows.map(pool=>healthRow(pool.name+' pool',pool.count===null?'Could not be checked':`${num(pool.count)} active`,pool.ready)).join('')}
             ${healthRow("Math Rush generator","Generated on demand",true)}
           </div>
 
@@ -595,6 +562,14 @@ window.BrainiAdmin=(function(){
       </section>
     `;
 
+    $("#adminContent").querySelectorAll('[data-result-diagnostic]').forEach(button=>button.onclick=safeAction(async()=>{
+      button.disabled=true;
+      try{
+        const detail=await rpc('admin_get_result_detail',{p_result_id:button.dataset.resultDiagnostic}),result=detail?.result;
+        if(!result)throw Error('The saved result could not be found. Refresh this view.');
+        openDrawer(`<span class="admin-eyebrow">Saved game check</span><h2>${esc(GAME_LABELS[result.game_id]||result.game_id)}</h2><p>${result.answers_verified?'This result is verified.':'This result has been saved, but its original answers have not been verified.'}</p><dl class="admin-kv"><dt>Saved</dt><dd>${when(result.completed_at)}</dd><dt>Answers</dt><dd>${num(result.correct)} / ${num(result.total)}</dd><dt>Verification</dt><dd>${result.answers_verified?'Verified':'Pending'}</dd></dl><p>Opening BrainiLab on the player’s original browser retries saved evidence automatically. If the original answers are missing, keep this result unverified; an admin check cannot invent them.</p>`);
+      }finally{if(button.isConnected)button.disabled=false;}
+    }));
     $("#adminContent [data-open-daily]").onclick=()=>navigate("daily");
     $("#adminContent [data-open-system]").onclick=()=>navigate("system");
     $("#adminContent [data-open-analytics]")?.addEventListener("click",()=>navigate("analytics"));
@@ -606,12 +581,13 @@ window.BrainiAdmin=(function(){
 
     $("#adminContent [data-run-maintenance]")?.addEventListener(
       "click",
-      async()=>{
+      async event=>{
+        const button=event.currentTarget;button.disabled=true;
         try{
           await rpc("admin_run_daily_maintenance");
           toast("Daily maintenance completed");
-          renderDashboard();
-        }catch(err){toast(cleanError(err))}
+          if(state.currentView==='dashboard')await renderDashboard();
+        }catch(err){toast(cleanError(err))}finally{if(button.isConnected)button.disabled=false;}
       }
     );
   }
@@ -659,7 +635,7 @@ window.BrainiAdmin=(function(){
         <strong>${esc(name)}</strong>
         <span>${esc(value)}</span>
       </div>
-      ${ok?badge("OK","ok"):badge("Check","bad")}
+      ${ok===null?badge("Unavailable","warn"):ok?badge("OK","ok"):badge("Check","bad")}
     </div>`;
   }
 
@@ -2494,7 +2470,7 @@ window.BrainiAdmin=(function(){
               <tr class="clickable" data-user="${esc(u.user_id)}">
                 <td><strong>${esc(u.display_name)}</strong><small>${esc(u.friend_code)} · ${esc(u.country||"—")}</small></td>
                 <td>Lv ${num(u.level)} · ${num(u.xp)} XP<small>🔥 ${num(u.current_streak)} · ${num(u.total_games)} games</small></td>
-                <td>${num(u.daily_score)}<small>${num(u.daily_games)} / 4 Daily Games</small></td>
+                <td>${num(u.daily_score)}<small>${num(u.daily_games)} Daily games completed</small></td>
                 <td>${num(u.friend_count)} friends · ${num(u.group_count)} groups</td>
                 <td>
                   ${u.leaderboard_enabled?badge("Public","ok"):badge("Private","info")}
@@ -2530,7 +2506,7 @@ window.BrainiAdmin=(function(){
         <div class="admin-mini-card"><span>Current streak</span><strong>🔥 ${num(prog.current_streak)}</strong></div>
         <div class="admin-mini-card"><span>Total games</span><strong>${num(prog.total_games)}</strong></div>
         <div class="admin-mini-card"><span>Today</span><strong>${num(today.daily_brain_score)}</strong></div>
-        <div class="admin-mini-card"><span>Daily Games</span><strong>${num(today.daily_games_completed)} / 4</strong></div>
+        <div class="admin-mini-card"><span>Daily Games</span><strong>${num(today.daily_games_completed)}</strong></div>
       </div>
 
       <dl class="admin-kv" style="margin-top:14px">
