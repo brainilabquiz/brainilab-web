@@ -60,6 +60,7 @@ window.BrainiHigherLower=(function(){
   async function verify(result,details){if(!configured()||result?.cloudSyncStatus!=="synced")return;const s=await BrainiBackendAuth?.getSession?.();if(!s?.user)return;const rows=details.filter(x=>/^[0-9a-f-]{36}$/i.test(x.pairId)).map(x=>({pair_id:x.pairId,choice:x.choice}));if(rows.length!==ROUNDS)return;try{const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,s.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_higher_lower_result",{p_client_result_id:result.clientResultId,p_rounds:rows});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn(e)}}
 
   async function mount(root){
+    const analyticsRound={};
     if(scoringDaily && await window.BrainiDailyCompletionGuard?.check?.()) return;
     const intro=root.querySelector("[data-intro]"),loading=root.querySelector("[data-loading]"),stage=root.querySelector("[data-stage]"),resultEl=root.querySelector("[data-result]"),start=root.querySelector("[data-start]"),meta=root.querySelector("[data-meta]"),metric=root.querySelector("[data-metric]"),left=root.querySelector("[data-left]"),right=root.querySelector("[data-right]"),firstBtn=root.querySelector("[data-higher]"),secondBtn=root.querySelector("[data-lower]"),feedback=root.querySelector("[data-feedback]"),next=root.querySelector("[data-next]"),scoreEl=root.querySelector("[data-score]"),progress=root.querySelector("[data-progress]");
     let rounds=[],idx=0,correct=0,score=0,combo=0,bestCombo=0,locked=false,details=[],started=0,source="local",finished=false,healthTracker=null;
@@ -95,7 +96,7 @@ window.BrainiHigherLower=(function(){
       start.disabled=true;intro.hidden=true;loading.hidden=false;const x=await load();rounds=x.rounds;source=x.source;loading.hidden=true;
       if(rounds.length!==ROUNDS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}
       healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"higherlower",contentType:"higherlower",contentIds:rounds.map(r=>r.id),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;
-      stage.hidden=false;started=performance.now();render();
+      if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("higherlower",analyticsRound,scoringDaily?"daily":"anytime");stage.hidden=false;started=performance.now();render();
     };
   }
   return {mount,load,TYPES};

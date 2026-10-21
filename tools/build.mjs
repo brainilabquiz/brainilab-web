@@ -2,6 +2,7 @@ import {newTabLinks} from '../lib/link-policy.js';
 import {brandPage} from '../lib/brand-identity.js';
 import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
 import {pageStyles} from '../lib/page-styles.js';
+import {homeConsent} from '../lib/home-consent.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -87,6 +88,7 @@ await import('./test-halloween-asset-cache.mjs');
 const pageStyleBundles=[];
 for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   let html=newTabLinks(brandPage(await readFile(path.join(root,file),'utf8')));
+  if(file==='index.html')html=homeConsent(html,await readFile('assets/js/meta-pixel.js','utf8'));
   const styles=pageStyles(html,file);
   if(styles){
     const contents=(await Promise.all(styles.files.map(css=>readFile(path.join(output,css),'utf8')))).join('\n');
