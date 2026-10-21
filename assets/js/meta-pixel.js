@@ -74,7 +74,8 @@ window.BrainiMarketing = (function(){
 
   function showPreferences(){
     if(panel) return;
-    panel=document.createElement("aside");
+    panel=document.querySelector('[data-static-cookie-prompt]')||document.createElement("aside");
+    panel.hidden=false;
     panel.className="marketing-consent";
     panel.setAttribute("aria-label","Optional cookie choices");
     panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
@@ -114,6 +115,7 @@ window.BrainiMarketing = (function(){
     });
     if(choice===true) activate();
     if((choice===null || window.BrainiSiteAnalytics?.needsConsent()) && safePage()) showPreferences();
+    else document.querySelector('[data-static-cookie-prompt]')?.remove();
   }
   // The early, deferred consent bundle runs once the document is parsed.
   // Do not wait for unrelated deferred account/game scripts or their network.

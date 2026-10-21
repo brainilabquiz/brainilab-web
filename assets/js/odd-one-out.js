@@ -62,6 +62,7 @@ window.BrainiOddOneOut=(function(){
   }
 
   async function mount(root){
+    const analyticsRound={};
     if(scoringDaily && await window.BrainiDailyCompletionGuard?.check?.()) return;
     const intro=root.querySelector("[data-intro]"),loading=root.querySelector("[data-loading]"),stage=root.querySelector("[data-stage]"),resultEl=root.querySelector("[data-result]"),start=root.querySelector("[data-start]"),meta=root.querySelector("[data-meta]"),q=root.querySelector("[data-question]"),items=root.querySelector("[data-items]"),feedback=root.querySelector("[data-feedback]"),next=root.querySelector("[data-next]"),scoreEl=root.querySelector("[data-score]"),progress=root.querySelector("[data-progress]");
     let rounds=[],idx=0,correct=0,score=0,locked=false,details=[],started=0,source="local",finished=false,healthTracker=null;
@@ -105,7 +106,7 @@ window.BrainiOddOneOut=(function(){
       const x=await load();rounds=x.rounds;source=x.source;loading.hidden=true;
       if(rounds.length!==ROUNDS){intro.hidden=false;start.disabled=false;root.querySelector("[data-load-error]").hidden=false;return}
       healthTracker=window.BrainiContentHealth?BrainiContentHealth.create({gameId:"oddoneout",contentType:"oddoneout",contentIds:rounds.map(r=>r.id),dailyNumber:scoringDaily?(BrainiData.dailyNumberForDate?.(dailyDate)||null):null}):null;
-      stage.hidden=false;started=performance.now();render();
+      if(!archiveMode&&PARAMS.get("try")!=="1")window.BrainiSiteAnalytics?.gameStart("oddoneout",analyticsRound,scoringDaily?"daily":"anytime");stage.hidden=false;started=performance.now();render();
     };
   }
   return {mount,load};

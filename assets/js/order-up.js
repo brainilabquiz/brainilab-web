@@ -69,6 +69,7 @@ window.BrainiOrderUp=(function(){
   }
 
   async function mount(root){
+    const analyticsRound={};
     if(await window.BrainiDailyChoiceGuard?.check?.(root))return;
     const loading=root.querySelector("[data-ou-loading]");
     const intro=root.querySelector("[data-ou-intro]");
@@ -547,7 +548,7 @@ window.BrainiOrderUp=(function(){
 
         intro.hidden=true;
         loading.hidden=true;
-        game.hidden=false;
+        if(!archiveMode&&!TRY_FIRST_MODE)window.BrainiSiteAnalytics?.gameStart("orderup",analyticsRound,"daily");game.hidden=false;
 
         renderRound();
 

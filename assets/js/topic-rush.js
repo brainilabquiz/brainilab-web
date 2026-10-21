@@ -43,6 +43,7 @@ window.BrainiTopicRush=(function(){
   }
 
   async function mount(root){
+    const analyticsRound={};
     if(await window.BrainiDailyChoiceGuard?.check?.(root))return;
     const loading=root.querySelector("[data-tr-loading]");
     const intro=root.querySelector("[data-tr-intro]");
@@ -271,7 +272,7 @@ window.BrainiTopicRush=(function(){
           healthTracker?.checkpoint(1,true);
         }
 
-        revealPlay();
+        if(!archiveMode&&!TRY_FIRST_MODE)window.BrainiSiteAnalytics?.gameStart("topicrush",analyticsRound,"daily");revealPlay();
         save();
         renderAccepted();
         beginTimer();
