@@ -161,7 +161,7 @@ window.BrainiConnections=(function(){
     }));
     if(payload.length!==ROUND_COUNT) return;
     try{
-      const {data,error}=await client().rpc("verify_brainilab_connections_result",{
+      const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,session.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_connections_result",{
         p_client_result_id:result.clientResultId,
         p_rounds:payload
       });

@@ -468,7 +468,9 @@ window.BrainiDailyGames=(function(){
       return {verified:false,reason:"unsupported_game"};
     }
 
-    const {data,error}=await client().rpc(rpc,args);
+    const {data,error}=await (window.BrainiCloudGames?.resultRpc
+      ? BrainiCloudGames.resultRpc(rpc,args,session.user.id)
+      : client().rpc(rpc,args));
     if(error) throw error;
 
     await BrainiData.api.markDailyGameVerified(result.clientResultId,data||{});

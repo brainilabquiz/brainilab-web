@@ -55,7 +55,7 @@ window.BrainiSurvival=(function(){
     const session=await BrainiBackendAuth?.getSession?.();if(!session?.user)return;
     const rows=answers.filter(x=>/^[0-9a-f-]{36}$/i.test(x.questionId)).map(x=>({question_version_id:x.questionId,selected_option_id:x.selectedOptionId,response_time_ms:x.responseTimeMs}));
     if(!rows.length)return;
-    try{const {data,error}=await client().rpc("verify_brainilab_survival_result",{p_client_result_id:result.clientResultId,p_answers:rows});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn("Survival verification:",e.message||e)}
+    try{const {data,error}=await (window.BrainiCloudGames?.resultRpc?((name,args)=>BrainiCloudGames.resultRpc(name,args,session.user.id)):((name,args)=>client().rpc(name,args)))("verify_brainilab_survival_result",{p_client_result_id:result.clientResultId,p_answers:rows});if(error)throw error;return await BrainiData.api.markResultAnswerVerified?.(result.clientResultId,data||{})}catch(e){console.warn("Survival verification:",e.message||e)}
   }
   function mount(root){
     const intro=root.querySelector("[data-intro]"),loading=root.querySelector("[data-loading]"),stage=root.querySelector("[data-stage]"),resultEl=root.querySelector("[data-result]"),start=root.querySelector("[data-start]"),qEl=root.querySelector("[data-question]"),meta=root.querySelector("[data-meta]"),answersEl=root.querySelector("[data-answers]"),feedback=root.querySelector("[data-feedback]"),next=root.querySelector("[data-next]"),scoreEl=root.querySelector("[data-score]"),countEl=root.querySelector("[data-count]"),livesEl=root.querySelector("[data-lives]"),progress=root.querySelector("[data-progress]");

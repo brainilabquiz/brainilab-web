@@ -76,6 +76,18 @@ window.BrainiResultRecovery = (function(){
       if(navigator.onLine===false)break;
       try{if(await verify(result))verified++;}catch(error){failed++;console.warn('BrainiLab result verification pending:',error.message||error);}
     }
+    // A phone may close after saving but before verification. Recover its original
+    // proof on the next device, under that same account and normal server checks.
+    if(navigator.onLine!==false&&window.BrainiData?.api?.restorePendingCloudResult&&window.BrainiCloudGames?.getPendingVerificationResults){
+      try{
+        const rows=await BrainiCloudGames.getPendingVerificationResults();
+        for(const row of rows){
+          const result=await BrainiData.api.restorePendingCloudResult(row);
+          if(!result)continue;
+          try{if(await verify(result))verified++;}catch(error){failed++;console.warn('BrainiLab remote result verification pending:',error.message||error);}
+        }
+      }catch(error){failed++;console.warn('BrainiLab pending result lookup:',error.message||error);}
+    }
     return {verified,failed};
   }
   return {sync,verify};
