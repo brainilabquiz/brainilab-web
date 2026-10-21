@@ -1,0 +1,65 @@
+{
+  "slug": "how-does-soap-work",
+  "title": "How does soap work? The trick behind a greasy plate",
+  "description": "How does soap work when water alone leaves grease behind? Meet its water-loving heads, oil-friendly tails and the tiny clusters that help carry dirt away.",
+  "topic": "Everyday inventions",
+  "status": "published",
+  "order": 196,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/how-does-soap-work.webp",
+    "small": "/assets/images/learn/how-does-soap-work-small.webp",
+    "thumbnail": "/assets/images/learn/how-does-soap-work-thumb.webp",
+    "alt": "An unbranded soap bar beside a ceramic plate with a thin oily film, water droplets and a few suds in a kitchen sink",
+    "credit": "AI-generated realistic illustration created for BrainiLab; a staged kitchen scene, not a microscopic image or product recommendation.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Explore another everyday mystery in the Science Quiz.",
+  "related": [
+    "why-are-soap-bubbles-round",
+    "how-everyday-things-work"
+  ],
+  "sources": [
+    {
+      "url": "https://www.acs.org/education/whatischemistry/landmarks/tidedetergent.html",
+      "name": "American Chemical Society — Soap molecules and synthetic detergents"
+    },
+    {
+      "url": "https://www.bellevuecollege.edu/wp-content/uploads/sites/140/2014/06/Exp4_Soap_and_detergents.pdf",
+      "name": "Bellevue College — Chemistry162, Experiment4: Soaps and Detergents, pages2–3"
+    }
+  ],
+  "sections": [
+    {
+      "id": "grease-needs-a-lift",
+      "title": "Grease needs a lift",
+      "html": "<p><strong>Soap helps remove grease because its molecules have one end attracted to water and another that mixes with oils.</strong> That combination helps greasy dirt travel away in the rinse water.</p><p>If plain water has ever skated over an oily plate, you have met the problem soap helps solve.</p>"
+    },
+    {
+      "id": "two-ends-two-jobs",
+      "title": "One molecule, two jobs",
+      "html": "<p>The <a href=\"https://www.acs.org/education/whatischemistry/landmarks/tidedetergent.html\">American Chemical Society describes soap’s water-attracted head and oil-compatible tail</a>. The usual names are <em>hydrophilic</em> and <em>hydrophobic</em>: water-loving and water-avoiding.</p><p>Rather than making oil magically vanish, soap helps water carry it. Think of the two ends as a connection between things that otherwise mix poorly.</p>"
+    },
+    {
+      "id": "tiny-grease-taxis",
+      "title": "Tiny grease taxis",
+      "html": "<p>In water, soap molecules can gather into clusters called <strong>micelles</strong>. Their tails face inwards, away from the water; their heads face outwards. Greasy material can sit inside.</p><p><a href=\"https://www.bellevuecollege.edu/wp-content/uploads/sites/140/2014/06/Exp4_Soap_and_detergents.pdf\">Bellevue College’s chemistry guide explains how these clusters carry oily dirt in water</a>, so rinsing can take it away. Our “taxi” is a comparison, not something you could spot driving across the plate.</p>"
+    },
+    {
+      "id": "soap-is-not-all-the-same",
+      "title": "Is washing-up liquid actually soap?",
+      "html": "<p>Often it uses synthetic detergents rather than traditional soap. These are different substances, but their molecules also combine water-friendly and oil-friendly parts.</p><p>And those big bubbles? They are a different sight from the tiny clusters. Discover <a href=\"/learn/why-are-soap-bubbles-round/\">why soap bubbles are round</a>, or explore <a href=\"/learn/how-everyday-things-work/\">more small surprises hidden in everyday objects</a>. Even the washing-up has a story.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-21T05:30:21Z",
+  "updatedAt": "2026-10-21T05:30:21Z",
+  "minutes": 2
+}
