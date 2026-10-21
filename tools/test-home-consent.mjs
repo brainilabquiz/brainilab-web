@@ -11,12 +11,13 @@ for(const [marketing,statistics,visible] of [[null,null,true],[stored(false),sto
   for(const [key,value] of [['marketing',marketing],['statistics',statistics]])if(value!==null)w.localStorage.setItem('brainilab_'+key+'_consent_v1',value==='bad'?'invalid json':JSON.stringify(value));
  }}),w=dom.window;
  const initial=w.document.querySelector('[data-static-cookie-prompt]');
+ const paragraph=initial.querySelector('p');
  assert.equal(initial.hidden,!visible,'first HTML respects both stored choices and expiry');
  assert.ok([...initial.querySelectorAll('button')].every(b=>b.disabled),'controls wait for the existing controller');
  assert.equal(w.document.querySelectorAll('script[src]').length,0,'initial rendering never sends tracking requests');
  w.eval(stats);w.eval(meta);
  const prompts=w.document.querySelectorAll('.marketing-consent');assert.equal(prompts.length,visible?1:0,'hydrate once or remove the unused placeholder');
- if(visible){assert.equal(prompts[0],initial);assert.equal(initial.hidden,false);assert.ok([...initial.querySelectorAll('button')].every(b=>!b.disabled));
+ if(visible){assert.equal(prompts[0],initial);assert.equal(initial.querySelector('p'),paragraph,'hydration must preserve the first-painted LCP node');assert.equal(initial.hidden,false);assert.ok([...initial.querySelectorAll('button,input')].every(b=>!b.disabled));
   initial.querySelector('[data-marketing-reject]').click();assert.equal(w.document.querySelector('.marketing-consent'),null);assert.equal(w.BrainiSiteAnalytics.isAllowed(),false);}
  assert.equal(w.document.querySelector('main').textContent,'Play unchanged');
  w.close();
