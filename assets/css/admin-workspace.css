@@ -35,3 +35,6 @@
 }
 
 .admin-import-library>summary{cursor:pointer;font-weight:750;color:#2d296e;padding:4px}.admin-import-library[open]>summary{margin-bottom:20px}.admin-pool-tabs button{min-height:42px}.admin-button:disabled,.article-section-head button:disabled{opacity:.4;cursor:default}
+
+.admin-result-status{margin-bottom:1rem}.admin-result-status h2{font-size:1.15rem}.admin-result-scope{font-size:.8rem;color:var(--muted);margin:.5rem 0}.admin-result-indicator{padding:.4rem .65rem;border-radius:.5rem;font-size:.8rem;font-weight:700;background:#eaf5e7;color:#265d22;white-space:nowrap}.admin-result-indicator[data-state=check]{background:#fff2e2;color:#7d3a00}.admin-result-indicator[data-state=pending]{background:#fff6c8;color:#655000}.admin-result-status summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:650}.admin-result-status th[scope=row]{font-weight:650}.admin-result-status .admin-table{min-width:530px}
+@media(max-width:760px){.admin-result-status .admin-panel-head{align-items:flex-start}.admin-result-indicator{white-space:normal}.admin-result-status h2{line-height:1.35}}
