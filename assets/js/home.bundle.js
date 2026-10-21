@@ -673,7 +673,7 @@ window.BrainiDaily = (function(){
   async function loadTodayBase(options={}){
     const force=!!options.force;
 
-    if(!force && cachedToday && validDaily(cachedToday)){
+    if(!force && cachedToday?.source==="supabase" && cachedToday.challengeDate===todayKey() && validDaily(cachedToday)){
       return cachedToday;
     }
 
@@ -701,6 +701,8 @@ window.BrainiDaily = (function(){
         );
       }
 
+      const stored=readCachedDaily(todayKey());
+      if(stored){cachedToday=stored;return stored;}
       try{
         const fallback=await localFallback(todayKey());
         cachedToday=fallback;
@@ -2574,7 +2576,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           contentSource:daily.source,
           dailyChallengeId:daily.dailyChallengeId,
           dailyNumber:daily.dailyNumber,
-          challengeDate:daily.challengeDate
+          challengeDate:daily.challengeDate,
+          practice:!usingCloud
         });
 
         if(usingCloud){
