@@ -3,6 +3,8 @@ import {brandPage} from '../lib/brand-identity.js';
 import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
 import {pageStyles} from '../lib/page-styles.js';
 import {homeConsent} from '../lib/home-consent.js';
+import {homeFirstPaint} from '../lib/home-first-paint.js';
+import {homeLogoAVIF} from '../lib/home-images.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -97,7 +99,9 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
     assetVersions.set(styles.asset,assetVersion(await readFile(target)));
     pageStyleBundles.push({page:file,asset:styles.asset,sheets:styles.files.length});html=styles.html;
   }
-  await writeFile(path.join(output,file),versionAssets(html,file,assetVersions));
+  html=homeLogoAVIF(versionAssets(html,file,assetVersions),file);
+  html=await homeFirstPaint(html,file,css=>readFile(path.join(output,css),'utf8'));
+  await writeFile(path.join(output,file),html);
 }
 console.log('Page CSS bundles: '+pageStyleBundles.map(item=>item.page+' '+item.sheets+' sheets → 1').join('; '));
 for(const required of ['index.html','404.html','learn/index.html','assets/js/home.bundle.js','_headers']){
