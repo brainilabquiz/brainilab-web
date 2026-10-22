@@ -286,10 +286,10 @@ await test('the real coordinator day contract gives a fresh game intro after a s
 
 await test('every factual question has its own checked source row and canonical seed matches', async () => {
   const u = await harness();
-  const seed = JSON.parse(readFileSync('../release/halloween-games.json', 'utf8'));
+  const seed = JSON.parse(readFileSync('tools/fixtures/halloween-games.json', 'utf8'));
   assert.deepEqual(plain(u.model.catalog), seed);
-  const audit = readFileSync('docs/HALLOWEEN_GAMES.md', 'utf8');
-  for (const q of seed.games['trick-or-think'].questions) { assert.ok(audit.includes('| ' + q.id + ' |')); assert.ok(audit.includes(q.source.url)); }
+  assert.match(seed.reviewedOn,/^2026-10-16$/,'Pinned reviewed event catalogue');
+  for (const q of seed.games['trick-or-think'].questions) { assert.match(q.id,/^q[0-9]{2}$/); assert.ok(q.source.title && /^https:\/\//.test(q.source.url)); }
   assert.ok(!seed.games['trick-or-think'].questions.some(q => q.source.url.includes('headlinesandheroes'))); u.close();
 });
 

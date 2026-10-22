@@ -59,6 +59,8 @@ async function linked(value,xp){
  const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
  const d=new JSDOM('<body><div data-profile-rank-hero></div><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/?section=progress&reward='+encodeURIComponent(value)+'#my-avatar',runScripts:'outside-only',virtualConsole:vc}),v=d.window;
  const person={displayName:'Test player',xp,avatarDesign:{mode:'picture'}};
+ v.requestAnimationFrame=fn=>{fn(0);return 1;};
+ v.BrainiRewardStore={snapshot:()=>({loading:false,error:null})};
  v.BrainiData={player:()=>person,authState:()=>({status:'guest',guestUserId:'test'}),recentResults:()=>[]};
  for(const name of ['player-personalities','icon-system','avatar-design','profile-rewards-model','progression-ui','reward-journey','avatar-studio-ui','profile-sections'])v.eval(source(name));
  const root=v.document.querySelector('[data-profile-rewards]');
