@@ -10,6 +10,8 @@ import {VIDEO_GAMES,relatedVideo,cleanVideo} from './lib/video-card.js';
 import {adminVideoInfo} from './lib/video-admin.js';
 import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './lib/youtube-playlist.js';
 // Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
+// Retired public pages and their replacements. The static stubs stay as a fallback.
+export const LEGACY_PAGES=Object.freeze({'/games/flag-dash/':'/geography/world-flags-quiz/','/games/map-hunt/':'/games/topic-rush/','/categories/':'/games/','/leaderboards/':'/rankings/','/profile/plus/':'/plus/'});
 const FRESH_MS=15*60*1000;
 const MAX_STALE_MS=7*86400000;
 const decodeXML=value=>value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi,(_,entity)=>{
@@ -70,6 +72,10 @@ export default {
   async fetch(request,env,ctx){
     request=productionRequest(request);
     const url=new URL(request.url);
+    // Retired pages move permanently, so search engines pass their signals on
+    // instead of indexing a JavaScript redirect that answers 200.
+    const legacy=LEGACY_PAGES[url.pathname.replace(/\/index\.html$/,'/').replace(/\/?$/,'/')];
+    if(legacy&&['GET','HEAD'].includes(request.method)){const target=new URL(legacy,url);target.search=url.search;return Response.redirect(target.href,301);}
     const holiday=halloweenState();
     // The seasonal HTML differs from the underlying asset. An old document's
     // conditional validator must not turn its new navigation into a 304.
