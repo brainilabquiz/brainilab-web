@@ -28,3 +28,13 @@ fallbacks, current/future cover matching, consent states and normal home entry.
 Preview and public checks cover mobile/desktop geometry, keyboard focus, console,
 image decoding, actual compressed bytes and a new PageSpeed run. A 100 score is
 the target, not a guaranteed or inferred result.
+
+The first public run after PR310 scored 100 mobile (07:40 CEST), LCP 1.697 s,
+speed index 1.572 s and CLS 0.023. Lighthouse still attributed a small shift to
+the article/introduction below the asynchronous video card. Reserve two label
+and title lines in both playlist and video states, and remove the image wrapper's
+intrinsic minimum height. A local browser fixture using the actual built styles
+confirmed identical video height, article position and social-link position before
+and after the real fallback/latest text and class transition at 320, 390, 768 and
+1440 px. No delayed style activation or game/account change is involved. The
+final public performance and layout measurement must still be recorded.
