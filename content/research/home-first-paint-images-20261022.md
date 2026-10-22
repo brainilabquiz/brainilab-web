@@ -49,3 +49,21 @@ Nine full parser-time fixtures verify functional controls while readyState is
 still loading, prior rejections, expired/future values, no pre-consent vendor tags
 and the unchanged account loader and game entry. Record the final public samples
 and their limitations rather than promising a permanent score.
+
+The 08:01 run after inline consent scored 94, not a stable 100. The remaining
+critical network tree contained only the seasonal stylesheet. The next build
+also includes that exact version in the homepage response; the event decorator
+skips its link only when the embedded version matches, and other routes retain
+their normal sheet. Calendar/configuration and decorations are unchanged. This
+small stylesheet remains embedded outside the event window, without activating
+the event or loading its scripts; this is an explicit HTML-byte tradeoff.
+
+The homepage copy of shared CSS now omits rules whose every selector has a
+positive, top-level profile/ranking/stats/social/group/friends namespace. It is
+not a general purge. Negated/functional alternatives, mixed shared rules, all
+auth/account/consent/quiz states, shared avatars, frames, achievements and profile
+title/rank helpers are retained in order. The original shared CSS on all other
+routes is untouched. PostCSS, already in the lockfile through sanitize-html, is
+declared explicitly for this build step. Tests cover shared components and the
+seasonal exact-version fallback. Preview must include guest sign-in and the
+signed-in account menu as well as normal mobile/desktop content.

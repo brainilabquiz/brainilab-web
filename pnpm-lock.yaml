@@ -15,6 +15,9 @@ importers:
       esbuild:
         specifier: ^0.25.0
         version: 0.25.12
+      postcss:
+        specifier: 8.5.28
+        version: 8.5.28
 
 packages:
 
