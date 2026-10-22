@@ -1,6 +1,6 @@
 import assert from'node:assert/strict';
 import{readFileSync}from'node:fs';
-import{homeComponentCSS,otherPageSelector}from'../lib/home-component-css.js';
+import{homeComponentCSS,otherPageSelector,homeClassNames}from'../lib/home-component-css.js';
 import{homeSeasonFirstPaint}from'../lib/home-first-paint.js';
 import{decorateHalloween}from'../lib/halloween-render.js';
 import{halloweenAssets}from'../lib/halloween-assets.js';
@@ -11,7 +11,10 @@ const input=':root{--keep:red}.profile-panel{color:red}.avatar,.profile-avatar{c
 const out=homeComponentCSS(input);
 assert.deepEqual(out.removed,['.profile-panel','.ranking-table']);
 assert.equal(out.css,':root{--keep:red}.avatar,.profile-avatar{color:blue}.account-popover{color:green}@media(max-width:600px){.auth-dialog{padding:4px}}@keyframes stay{from{opacity:0}to{opacity:1}}','retained declaration bytes and order are exact');
-const site=readFileSync('assets/css/site.css','utf8'),actual=homeComponentCSS(site);
+const protectedClasses=homeClassNames(readFileSync('index.html','utf8'));
+assert.ok(protectedClasses.has('social-link')&&protectedClasses.has('social-dot'),'actual footer classes must be protected');
+assert.equal(homeComponentCSS('.social-link{color:blue}.social-dot{color:green}',protectedClasses).removed.length,0,'keep footer styling even when names resemble another surface');
+const site=readFileSync('assets/css/site.css','utf8'),actual=homeComponentCSS(site,protectedClasses);
 for(const selector of ['.marketing-consent','.cookie-settings','.auth-dialog','.account-popover','.avatar','.achievement-emblem','.player-profile-title','.profile-title-context','.profile-ranks','.social-avatar','.group-player-avatar'])if(site.includes(selector))assert.ok(actual.css.includes(selector),selector+' must retain its original styling');
 assert.ok(actual.css.length<site.length);assert.ok(actual.removed.length>100);
 for(const selector of actual.removed)assert.ok(/(?:profile|rankings?|stats|social|groups?|friends)-/.test(selector),selector);
