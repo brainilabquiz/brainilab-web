@@ -7,18 +7,20 @@
     "url": "/sports/sports-quiz/",
     "name": "Sports Quiz"
   },
+  "quiz": null,
   "slug": "what-olympic-rings-mean",
   "cover": {
+    "alt": "Five wooden spools of blue, yellow, black, green and red thread on white linen, with a loose white thread",
     "src": "/assets/images/learn/what-olympic-rings-mean-colours-v2.webp",
     "small": "/assets/images/learn/what-olympic-rings-mean-colours-card-v3-small.webp",
-    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-colours-card-v3-thumb.webp",
-    "alt": "Five wooden spools of blue, yellow, black, green and red thread on white linen, with a loose white thread",
     "credit": "AI-generated conceptual editorial image created for BrainiLab.",
-    "position": 50
+    "position": 50,
+    "thumbnail": "/assets/images/learn/what-olympic-rings-mean-colours-card-v3-thumb.webp"
   },
   "order": 20,
   "title": "What do the Olympic ring colours mean?",
   "topic": "Sports",
+  "video": null,
   "status": "published",
   "related": [
     "why-golf-balls-have-dimples",
@@ -35,21 +37,21 @@
   "sections": [
     {
       "id": "the-trap",
-      "title": "Do the colours stand for different continents?",
-      "html": "<p><strong>No individual Olympic ring colour is officially assigned to a continent.</strong> The five linked rings together represent the union of five continents and athletes meeting from around the world.</p><p>The <a href=\"https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings\">International Olympic Committee explicitly rejects the colour-to-continent match</a>. A neat colour-coded map may be memorable, but that does not make it the official explanation.</p>"
+      "html": "<p><strong>The five Olympic rings represent the union of five continents and athletes meeting from around the world.</strong> No individual ring colour is officially assigned to a continent.</p><p>The <a href=\"https://www.olympics.com/ioc/faq/olympic-symbol-and-identity/what-is-the-meaning-of-the-olympic-rings\">International Olympic Committee explains the design as a whole</a>. A neat colour-coded map may be memorable, but that does not make it the official explanation.</p>",
+      "title": "Do the colours stand for different continents?"
     },
     {
       "id": "why-colours",
-      "title": "Why blue, yellow, black, green and red?",
-      "html": "<p>Pierre de Coubertin created the rings in <strong>1913</strong>. The IOC explains that the five colours, together with the <strong>white background</strong>, represented the colours found in national flags at the time.</p><p>White is easy to overlook because it sits behind the rings. Quietly doing the background work still counts.</p>"
+      "html": "<p>Pierre de Coubertin created the rings in <strong>1913</strong>. The IOC explains that the five colours, together with the <strong>white background</strong>, represented the colours found in national flags at the time.</p><p>White is easy to overlook because it sits behind the rings. Quietly doing the background work still counts.</p>",
+      "title": "Why blue, yellow, black, green and red?"
     },
     {
       "id": "whole-symbol",
-      "title": "Remember the whole design",
-      "html": "<p>If someone asks which continent the blue ring represents, there is no official individual assignment to give. Think of the linked design as a whole.</p><p>For another sporting detail that looks decorative, discover <a href=\"/learn/why-golf-balls-have-dimples/\">what the dimples on a golf ball actually do</a>.</p>"
+      "html": "<p>If someone asks which continent the blue ring represents, there is no official individual assignment to give. Think of the linked design as a whole.</p><p>Ready for another sporting question? <a href=\"/sports/sports-quiz/#learn-what-olympic-rings-mean\">Try the Sports Quiz</a>, or discover <a href=\"/learn/why-golf-balls-have-dimples/\">what the dimples on a golf ball actually do</a>.</p>",
+      "title": "Remember the whole design"
     }
   ],
-  "updatedAt": "2026-10-18T16:19:12Z",
-  "description": "The Olympic rings stand for unity, but blue is not officially assigned to one continent. Discover the five colours and the easy-to-miss white background.",
-  "publishedAt": "2026-09-29T06:03:00Z"
+  "updatedAt": "2026-10-22T20:32:14.405491+00:00",
+  "description": "The five Olympic rings stand for unity, not a colour for each continent. Discover what the colours and white background mean, and why the common map is wrong.",
+  "publishedAt": "2026-09-29T06:03:00+00:00"
 }
