@@ -19,7 +19,7 @@ assert.equal(w.document.querySelector('.article-optional').open,false);
 w.document.querySelector('.article-optional').open=true;
 await round(w);
 assert.equal(w.document.querySelector('[data-completion-panel]').hidden,false);
-assert.match(w.document.querySelector('[data-completion-progress]').textContent,/1 of 6.*17%/);
+assert.match(w.document.querySelector('[data-completion-progress]').textContent,new RegExp('1 of '+course.lessons.length+'.*'+Math.round(100/course.lessons.length)+'%'));
 assert.equal(w.document.querySelector('[data-completion-next]').getAttribute('href'),'/learn/fractions-equal-parts/');
 assert.match(w.document.querySelector('[data-completion-xp]').textContent,/Sign in/);
 const review=w.document.querySelector('[data-review-round]');
@@ -31,11 +31,11 @@ assert.equal(review.getAttribute('aria-expanded'),'false');assert.equal(review.t
 assert.equal(w.document.querySelectorAll('fieldset:not([hidden])').length,1);
 guest.window.close();
 // A full course offers its successor; failed sync never claims XP, retries replace the message.
-const signed=dom(),sw=signed.window;const saved={};for(const l of course.lessons.slice(0,-1)){saved[l.slug]={version:articles.find(a=>a.slug===l.slug).quiz.version,score:3,total:3};}
+const signed=dom(),sw=signed.window;const saved={};for(const l of course.lessons.filter(l=>l.slug!==article.slug)){saved[l.slug]={version:articles.find(a=>a.slug===l.slug).quiz.version,score:3,total:3};}
 sw.localStorage.setItem('brainilab_learning_v1:test-account',JSON.stringify(saved));let attempts=0;
 const client={auth:{getSession:async()=>({data:{session:{user:{id:'test-account'}}}})},from:()=>({select:()=>({eq:async()=>({data:[]})})}),rpc:async()=>++attempts===1?{error:{message:'network'}}:{data:{xp_awarded:40}}};
 sw.BrainiBackendAuth={getClient:()=>client};sw.eval(bundle);await tick();await round(sw);
-assert.match(sw.document.querySelector('[data-completion-progress]').textContent,/6 of 6.*100%/);
+assert.match(sw.document.querySelector('[data-completion-progress]').textContent,new RegExp(course.lessons.length+' of '+course.lessons.length+'.*100%'));
 assert.equal(sw.document.querySelector('[data-follow-course]').hidden,false);
 assert.match(sw.document.querySelector('[data-completion-xp]').textContent,/Retry/);
 assert.ok(!sw.document.querySelector('[data-completion-xp]').textContent.includes('+40'));

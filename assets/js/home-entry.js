@@ -5,15 +5,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
   let playing=false;
+  let modernRequest=0,modernContext='',lastMarkup='';
+  const currentOwner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||'guest';};
+  function paintModern(markup){
+    if(lastMarkup===markup)return;
+    const focused=document.activeElement,inside=stage.contains?.(focused),action=inside?focused?.dataset?.homeAction:null;
+    stage.innerHTML=markup;lastMarkup=markup;
+    if(inside)(stage.querySelector(`[data-home-action="${action==='games'?'games':'daily'}"]`))?.focus({preventScroll:true});
+  }
   const dailyDescriptions={brainmix:'Ten questions. A little of everything. What will surprise you?',brainiword:'Five letters, five tries. Follow the clues to the word.',orderup:'Put the clues in order. Which one belongs first?',topicrush:'One topic, a ticking clock. How many answers can you find?',connections:'Different clues, one hidden link. Can you see it?',oddoneout:'Four possibilities. Find the one that does not belong.',higherlower:'Trust your knowledge: is the next answer higher or lower?',mathrush:'A minute of mental maths. How far can you go?',numberroute:'Four numbers, one target. Find a route between them.',sequence:'Look at the gaps. What comes next?'};
   async function modernEntry(){
+    const request=++modernRequest,owner=currentOwner();
     const day=BrainiData.todayKey(),ids=BrainiDailyRules.lineup(day),meta=BrainiDailyJourney.META[ids[0]];
     const href=BrainiDailyJourney.gameHref(ids[0],day);
-    stage.innerHTML=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" href="${href}">Play today’s Daily</a><a class="btn-light" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    const context=day+':'+owner;
+    const start=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="${href}">Play today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    if(context!==modernContext){modernContext=context;paintModern(start);}
     root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
-    try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});if(day===BrainiData.todayKey()&&status.games[ids[0]]?.completed&&stage.isConnected){stage.innerHTML=`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" href="/games/">Explore all games</a></div>`;}}catch(error){console.warn('Daily status unavailable',error);}
+    try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});
+      if(request!==modernRequest||day!==BrainiData.todayKey()||owner!==currentOwner()||!stage.isConnected)return;
+      paintModern(status?.games?.[ids[0]]?.completed?`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`:start);
+    }catch(error){console.warn('Daily status unavailable',error);}
   }
   window.addEventListener('brainilab:daychange',()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
+  for(const event of ['brainilab:authchange','brainilab:progressionchange'])window.addEventListener(event,()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!playing&&window.BrainiDailyRules?.active())modernEntry();});
   if(window.BrainiDailyRules?.active()){
     await modernEntry();
     return;

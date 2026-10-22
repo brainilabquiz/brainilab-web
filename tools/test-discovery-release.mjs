@@ -42,7 +42,7 @@ for(const query of ['?from=number-break','?from=private@example.com']){
  assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.BrainiSiteAnalytics.setConsent(false);link.click();assert.equal(w.dataLayer.filter(x=>x[0]==='event').length,0);w.close();
 }
 const article=prepareArticle(JSON.parse(read('content/articles/five-number-puzzles-printable.json')));
-assert.ok(libraryBody([article]).includes('learn-resource-link'));assert.ok(!libraryBody([]).includes('learn-resource-link'));
+assert.ok(!libraryBody([article]).includes('learn-resource-link'),'No resource promotion in the simplified library');assert.ok(libraryBody([article]).includes('data-random-article'));assert.ok(!libraryBody([]).includes('learn-resource-link'));
 assert.match(article.sections[0].html,/five-number-puzzles.pdf/);assert.equal(article.sections.filter(s=>s.html.includes('practice-answer')).length,5);
 for(const game of ['number-route','connections']){
  const d=new JSDOM(read(`games/${game}/index.html`));assert.equal(d.window.document.querySelectorAll('h1').length,1);
