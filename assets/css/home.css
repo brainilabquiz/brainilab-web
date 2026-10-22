@@ -1,4 +1,10 @@
 /* Home-only presentation; shared game and navigation styles stay in site.css. */
+/* The homepage uses these shared headings, not the full article/Academy sheet. */
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}
+.section-heading h2{font-size:clamp(24px,3vw,32px);line-height:1.2;margin:0}
+.section-heading>a{font-size:14px;color:var(--navy);font-weight:700}
+.home-page [hidden]{display:none!important}
+@media(max-width:600px){.section-heading{align-items:flex-start}}
 .home-start h2{font-size:clamp(26px,4vw,44px);line-height:1.15;margin:18px auto;max-width:700px}
 .home-start p{max-width:650px;margin:12px auto;line-height:1.6;color:#e8e6ff;font-size:16px}
 .home-start-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:24px auto 12px}
