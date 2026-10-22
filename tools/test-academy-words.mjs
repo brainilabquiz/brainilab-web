@@ -34,10 +34,10 @@ for(const [slug,section,answers] of cases){
  assert.equal(gradeQuiz(article.quiz,article.quiz.questions.map(q=>(q.answer+1)%4)).score,0);
 }
 const lessons=path.lessons.map(l=>({slug:l.slug,version:'word-detective-v1'})),saved={};
-for(const [i,l] of lessons.entries()){saved[l.slug]={version:l.version};assert.equal(pathProgress(lessons,saved).percent,[33,67,100][i]);}
+for(const [i,l] of lessons.entries()){saved[l.slug]={version:l.version};assert.equal(pathProgress(lessons,saved).percent,Math.round((i+1)*100/lessons.length));}
 const html=readFileSync('learn/paths/word-detective/index.html','utf8');
 assert.match(html,/Course chapters/);assert.match(html,/biel-sarda/);assert.match(html,/homophones-same-sound-different-meaning-small.webp/);
 for(const l of lessons)assert.ok(html.includes('/learn/'+l.slug+'/'));
 assert.ok(readFileSync('sitemap.xml','utf8').includes('/learn/paths/word-detective/'));
 assert.ok(readFileSync('learn/index.html','utf8').includes(path.title));
-console.log('PASS Word detective: all 9 practice scenes, wrong/right/retry, focus/reset, no XP writes, final quizzes, 33/67/100 progress, discovery and sitemap.');
+console.log('PASS Word detective: all 9 practice scenes, wrong/right/retry, focus/reset, no XP writes, final quizzes, all chapter progress, discovery and sitemap.');

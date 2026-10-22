@@ -18,6 +18,9 @@ admin.state.sb={rpc:async(name,args)=>{
 }};
 async function settle(){for(let i=0;i<40;i++){await new Promise(resolve=>setTimeout(resolve,2));if(!admin.state.rendering)break;}}
 await admin.navigate('content');await settle();
+let checkedLabels=0;
+for(const label of w.document.querySelectorAll('.admin-field label')){const field=label.nextElementSibling;if(field?.matches('input[id],select[id],textarea[id]')){assert.equal(label.control,field,'Visible label names and focuses its actual control');checkedLabels++;}}
+assert.ok(checkedLabels>=2,'Exercise real rendered content-pool labels');
 assert.equal(w.document.querySelector('.admin-import-library').open,false);
 w.document.querySelector('[data-pool=mathrush]').click();assert.ok(w.document.querySelector('#poolHealthSort').closest('.admin-toolbar').hidden);
 w.document.querySelector('[data-pool=brainiword]').click();assert.equal(w.document.querySelector('#poolHealthSort').closest('.admin-toolbar').hidden,false);
@@ -30,6 +33,7 @@ w.document.querySelector('#aRankMetric').value='streak';w.document.querySelector
 assert.equal(w.document.querySelector('#aRankGame').disabled,true);assert.equal(w.document.querySelector('#aRankPeriod').disabled,true);
 assert.ok(!w.document.querySelector('#adminContent').textContent.includes('Could not load'));
 await admin.navigate('daily');await settle();
+assert.equal(w.document.querySelector('label[for="adminDailyDate"]').control,w.document.querySelector('#adminDailyDate'));
 for(const title of ['Brain Mix','BrainiWord','Order Up','Topic Rush']){
  const heading=[...w.document.querySelectorAll('#dailyHealthBody h2')].find(e=>e.textContent===title);
  assert.ok(heading?.closest('[hidden]'),title+' must not be visible outside the selected Daily');

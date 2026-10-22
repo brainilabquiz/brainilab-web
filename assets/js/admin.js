@@ -648,7 +648,7 @@ window.BrainiAdmin=(function(){
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar">
         <div class="admin-field">
-          <label>UTC date</label>
+          <label for="adminDailyDate">UTC date</label>
           <input class="admin-input" type="date" id="adminDailyDate" value="${esc(state.lastDailyDate)}">
         </div>
         <button class="admin-button primary" id="loadDailyHealth">Load Daily</button>
@@ -967,11 +967,11 @@ window.BrainiAdmin=(function(){
       <div class="admin-question-heading"><p>Four-option quizzes for Brain Mix, Anytime and Survival.</p><button class="admin-button" id="qContentPools">Other game content →</button></div>
       <div class="admin-toolbar">
         <div class="admin-field grow">
-          <label>Search</label>
+          <label for="qSearch">Search</label>
           <input class="admin-input" id="qSearch" placeholder="Prompt or external key">
         </div>
         <div class="admin-field">
-          <label>Status</label>
+          <label for="qStatus">Status</label>
           <select class="admin-select" id="qStatus">
             <option value="">All</option>
             <option value="draft">Draft</option>
@@ -981,7 +981,7 @@ window.BrainiAdmin=(function(){
           </select>
         </div>
         <div class="admin-field">
-          <label>Difficulty</label>
+          <label for="qDifficulty">Difficulty</label>
           <select class="admin-select" id="qDifficulty">
             <option value="">All</option>
             <option value="easy">Easy</option>
@@ -990,14 +990,14 @@ window.BrainiAdmin=(function(){
           </select>
         </div>
         <div class="admin-field">
-          <label>Topic</label>
+          <label for="qTopic">Topic</label>
           <select class="admin-select" id="qTopic">
             <option value="">All</option>
             ${state.topics.map(t=>`<option value="${esc(t.slug)}">${esc(t.name)}</option>`).join("")}
           </select>
         </div>
         <div class="admin-field">
-          <label>Order</label>
+          <label for="qHealthSort">Order</label>
           <select class="admin-select" id="qHealthSort">
             <option value="default" ${state.questionHealthSort==="default"?"selected":""}>Default</option>
             <option value="health_asc" ${state.questionHealthSort==="health_asc"?"selected":""}>Health · needs attention</option>
@@ -1374,26 +1374,26 @@ window.BrainiAdmin=(function(){
       <div class="admin-form-grid" style="margin-top:14px">
 
         <div class="admin-field full">
-          <label>Prompt</label>
+          <label for="qePrompt">Prompt</label>
           <textarea class="admin-textarea" id="qePrompt" maxlength="1000" placeholder="Write one clear question…" ${immutable?"disabled":""}>${esc(q?.prompt||"")}</textarea>
         </div>
 
         <div class="admin-field">
-          <label>Topic</label>
+          <label for="qeTopic">Topic</label>
           <select class="admin-select" id="qeTopic" ${immutable?"disabled":""}>
             ${topicOptions(q?.topic_slug||state.topics[0]?.slug)}
           </select>
         </div>
 
         <div class="admin-field">
-          <label>Difficulty</label>
+          <label for="qeDifficulty">Difficulty</label>
           <select class="admin-select" id="qeDifficulty" ${immutable?"disabled":""}>
             ${["easy","medium","hard"].map(x=>`<option value="${x}" ${x===(q?.difficulty||"medium")?"selected":""}>${x}</option>`).join("")}
           </select>
         </div>
 
         <div class="admin-field full">
-          <label>Explanation</label>
+          <label for="qeExplanation">Explanation</label>
           <textarea class="admin-textarea" id="qeExplanation" maxlength="3000" placeholder="Explain why the correct answer is right…" ${immutable?"disabled":""}>${esc(q?.explanation||"")}</textarea>
         </div>
 
@@ -1410,11 +1410,11 @@ window.BrainiAdmin=(function(){
 
 
         <details class="admin-optional full"><summary>Optional details: tags, source &amp; reference</summary><div class="admin-form-grid">        <div class="admin-field full">
-          <label>External key ${q?"":"(optional)"}</label>
+          <label for="qeExternal">External key ${q?"":"(optional)"}</label>
           <input class="admin-input" id="qeExternal" value="${esc(q?.external_key||"")}" ${q||immutable?"disabled":""} placeholder="e.g. geo-rivers-001">
         </div>
         <div class="admin-field full">
-          <label>Subcategory tags</label>
+          <label for="qeTags">Subcategory tags</label>
           <input
             class="admin-input"
             id="qeTags"
@@ -1434,13 +1434,13 @@ window.BrainiAdmin=(function(){
         </div>
 
         <div class="admin-field full">
-          <label>Source URL · optional internal reference</label>
+          <label for="qeSource">Source URL · optional internal reference</label>
           <input class="admin-input" id="qeSource" value="${esc(q?.source_url||"")}" ${immutable?"disabled":""}>
         </div>
 </div></details>
         ${!immutable?`
           <div class="admin-field">
-            <label>Save as</label>
+            <label for="qeStatus">Save as</label>
             <select class="admin-select" id="qeStatus">
               <option value="draft" ${q?.status==="draft"?"selected":""}>Draft</option>
               <option value="review" ${q?.status==="review"?"selected":""}>Review</option>
@@ -1762,7 +1762,7 @@ window.BrainiAdmin=(function(){
       </div>
 
       <div class="admin-field">
-        <label>CSV file</label>
+        <label for="qiFile">CSV file</label>
         <input class="admin-input" type="file" id="qiFile" accept=".csv,text/csv">
       </div>
 
@@ -1888,14 +1888,14 @@ window.BrainiAdmin=(function(){
 
           <div class="admin-form-grid">
             <div class="admin-field">
-              <label>Topic</label>
+              <label for="packTopic">Topic</label>
               <select class="admin-select" id="packTopic">
                 ${state.topics.map(t=>`<option value="${esc(t.slug)}">${esc(t.name)}</option>`).join("")}
               </select>
             </div>
 
             <div class="admin-field">
-              <label>Difficulty</label>
+              <label for="packDifficulty">Difficulty</label>
               <select class="admin-select" id="packDifficulty">
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -1904,12 +1904,12 @@ window.BrainiAdmin=(function(){
             </div>
 
             <div class="admin-field">
-              <label>Set number</label>
+              <label for="packSet">Set number</label>
               <input class="admin-input" id="packSet" type="number" min="1" value="1">
             </div>
 
             <div class="admin-field">
-              <label>Title · optional</label>
+              <label for="packTitle">Title · optional</label>
               <input class="admin-input" id="packTitle" placeholder="Auto-generated if blank">
             </div>
           </div>
@@ -1970,7 +1970,7 @@ window.BrainiAdmin=(function(){
 
       <div class="admin-toolbar">
         <div class="admin-field grow">
-          <label>Search candidate questions</label>
+          <label for="packCandidateSearch">Search candidate questions</label>
           <input class="admin-input" id="packCandidateSearch" placeholder="Search prompt">
         </div>
         <button class="admin-button primary" id="loadPackCandidates">Search</button>
@@ -2226,7 +2226,7 @@ window.BrainiAdmin=(function(){
       <p>Use one row per ${type==="brainiword"?"word":"content item"}. The browser validates the CSV first, then sends only normalized rows through a controlled Admin RPC.</p>
       <div class="admin-note">Maximum 500 rows per import. New valid pool content is activated immediately and becomes eligible automatically when the corresponding game needs new content.</div>
       <div class="admin-toolbar" style="margin-top:12px"><a class="admin-button" href="${esc(cfg.template)}" download>Download ${esc(cfg.label)} CSV template</a></div>
-      <div class="admin-field"><label>CSV file</label><input class="admin-input" type="file" id="poolImportFile" accept=".csv,text/csv"></div>
+      <div class="admin-field"><label for="poolImportFile">CSV file</label><input class="admin-input" type="file" id="poolImportFile" accept=".csv,text/csv"></div>
       <div id="poolImportPreview" style="margin-top:12px"></div>
     `);
 
@@ -2298,7 +2298,7 @@ window.BrainiAdmin=(function(){
         </div>
       </details>
       <section class="admin-panel" style="margin-top:14px">
-        <div class="admin-toolbar" style="justify-content:flex-end"><div class="admin-field"><label>Order content</label><select class="admin-select" id="poolHealthSort" aria-label="Order content by health"><option value="default" ${state.poolHealthSort==="default"?"selected":""}>Default</option><option value="health_asc" ${state.poolHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.poolHealthSort==="health_desc"?"selected":""}>Health · strongest</option></select></div></div>
+        <div class="admin-toolbar" style="justify-content:flex-end"><div class="admin-field"><label for="poolHealthSort">Order content</label><select class="admin-select" id="poolHealthSort" aria-label="Order content by health"><option value="default" ${state.poolHealthSort==="default"?"selected":""}>Default</option><option value="health_asc" ${state.poolHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.poolHealthSort==="health_desc"?"selected":""}>Health · strongest</option></select></div></div>
         <div class="admin-pool-tabs">
           <button data-pool="brainiword" class="${state.poolTab==="brainiword"?"active":""}">BrainiWord</button>
           <button data-pool="topicrush" class="${state.poolTab==="topicrush"?"active":""}">Topic Rush</button>
@@ -2343,37 +2343,37 @@ window.BrainiAdmin=(function(){
     }
     if(state.poolTab==="brainiword"){
       const rows=sortByHealth(pools.brainiword?.rows||[],"brainiword",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${editable?`<div class="admin-field grow"><label>Add 5-letter word</label><input class="admin-input" id="newBrainiWord" maxlength="5" placeholder="CRANE"></div><button class="admin-button primary" id="addBrainiWord">Add word</button>`:""}${poolImportButton("brainiword")}</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Word</th><th>Status</th><th>Last used</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong class="admin-code">${esc(r.word)}</strong></td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${esc(r.last_used||"Never")}</td><td>${editable?`<button class="admin-button" data-word-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${editable?`<div class="admin-field grow"><label for="newBrainiWord">Add 5-letter word</label><input class="admin-input" id="newBrainiWord" maxlength="5" placeholder="CRANE"></div><button class="admin-button primary" id="addBrainiWord">Add word</button>`:""}${poolImportButton("brainiword")}</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Word</th><th>Status</th><th>Last used</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong class="admin-code">${esc(r.word)}</strong></td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${esc(r.last_used||"Never")}</td><td>${editable?`<button class="admin-button" data-word-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
       $("#addBrainiWord")?.addEventListener("click",async()=>{try{await rpc("admin_add_brainiword_word",{p_word:$("#newBrainiWord").value});toast("BrainiWord added");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-word-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_brainiword_word",{p_word_id:btn.dataset.wordToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"brainiword");bindInlineImport(root);return;
     }
     if(state.poolTab==="topicrush"){
       const rows=sortByHealth(topicRushTopics||[],"topicrush",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("topicrush")}</div>${editable?`<div class="admin-note">Manual editor: one canonical answer per line. Aliases go after <code>|</code>. CSV batch imports use <code>;</code> between canonical answers and <code>|</code> for aliases.</div><div class="admin-form-grid" style="margin-top:10px"><div class="admin-field"><label>External key</label><input class="admin-input" id="trExternal"></div><div class="admin-field"><label>Title</label><input class="admin-input" id="trTitle"></div><div class="admin-field full"><label>Player prompt</label><input class="admin-input" id="trPrompt"></div><div class="admin-field"><label>Daily target</label><input class="admin-input" id="trTarget" type="number" min="5" max="30" value="15"></div><div class="admin-field full"><label>Accepted answers</label><textarea class="admin-textarea" id="trAnswers" style="min-height:190px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addTopicRush">Create Topic Rush topic</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Topic</th><th>Target</th><th>Answers</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.prompt)}</small></td><td>${num(r.target_count)}</td><td>${num(r.answer_count)}</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-tr-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("topicrush")}</div>${editable?`<div class="admin-note">Manual editor: one canonical answer per line. Aliases go after <code>|</code>. CSV batch imports use <code>;</code> between canonical answers and <code>|</code> for aliases.</div><div class="admin-form-grid" style="margin-top:10px"><div class="admin-field"><label for="trExternal">External key</label><input class="admin-input" id="trExternal"></div><div class="admin-field"><label for="trTitle">Title</label><input class="admin-input" id="trTitle"></div><div class="admin-field full"><label for="trPrompt">Player prompt</label><input class="admin-input" id="trPrompt"></div><div class="admin-field"><label for="trTarget">Daily target</label><input class="admin-input" id="trTarget" type="number" min="5" max="30" value="15"></div><div class="admin-field full"><label for="trAnswers">Accepted answers</label><textarea class="admin-textarea" id="trAnswers" style="min-height:190px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addTopicRush">Create Topic Rush topic</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Topic</th><th>Target</th><th>Answers</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.prompt)}</small></td><td>${num(r.target_count)}</td><td>${num(r.answer_count)}</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-tr-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
       $("#addTopicRush")?.addEventListener("click",async()=>{const answers=parseTopicRushAnswers($("#trAnswers").value);if(answers.length<20){toast("Add at least 20 canonical answers");return}try{await rpc("admin_create_topic_rush_topic",{p_external_key:$("#trExternal").value,p_title:$("#trTitle").value,p_prompt:$("#trPrompt").value,p_target_count:Number($("#trTarget").value),p_answers:answers});toast("Topic Rush topic created");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-tr-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_topic_rush_topic",{p_topic_id:btn.dataset.trToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"topicrush");bindInlineImport(root);return;
     }
     if(state.poolTab==="orderup"){
       const rows=sortByHealth(orderUpRounds||[],"orderup",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("orderup")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="ouExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="ouCategory" value="general"></div><div class="admin-field"><label>Title</label><input class="admin-input" id="ouTitle"></div><div class="admin-field"><label>Direction</label><input class="admin-input" id="ouDirection" placeholder="Earliest → Latest"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="ouPrompt"></div><div class="admin-field full"><label>Correct order · exactly 10 lines</label><textarea class="admin-textarea" id="ouItems" style="min-height:210px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOrderUpRound">Create Order Up round</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Round</th><th>Category</th><th>Items</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.direction_label)}</small></td><td>${esc(r.category)}</td><td>${num(r.item_count)} / 10</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-ou-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("orderup")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label for="ouExternal">External key</label><input class="admin-input" id="ouExternal"></div><div class="admin-field"><label for="ouCategory">Category</label><input class="admin-input" id="ouCategory" value="general"></div><div class="admin-field"><label for="ouTitle">Title</label><input class="admin-input" id="ouTitle"></div><div class="admin-field"><label for="ouDirection">Direction</label><input class="admin-input" id="ouDirection" placeholder="Earliest → Latest"></div><div class="admin-field full"><label for="ouPrompt">Prompt</label><input class="admin-input" id="ouPrompt"></div><div class="admin-field full"><label for="ouItems">Correct order · exactly 10 lines</label><textarea class="admin-textarea" id="ouItems" style="min-height:210px"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOrderUpRound">Create Order Up round</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Round</th><th>Category</th><th>Items</th><th>Last used</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.title)}</strong><small>${esc(r.external_key)} · ${esc(r.direction_label)}</small></td><td>${esc(r.category)}</td><td>${num(r.item_count)} / 10</td><td>${esc(r.last_used||"Never")}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-ou-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
       $("#addOrderUpRound")?.addEventListener("click",async()=>{const items=$("#ouItems").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(items.length!==10){toast("Order Up needs exactly 10 items");return}try{await rpc("admin_create_order_up_round",{p_external_key:$("#ouExternal").value,p_title:$("#ouTitle").value,p_prompt:$("#ouPrompt").value,p_direction_label:$("#ouDirection").value,p_category:$("#ouCategory").value,p_items:items});toast("Order Up round created");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-ou-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_order_up_round",{p_round_id:btn.dataset.ouToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"orderup");bindInlineImport(root);return;
     }
     if(state.poolTab==="connections"){
       const rows=sortByHealth(connectionsPuzzles||[],"connections",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("connections")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="cnExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="cnCategory" value="general"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="cnPrompt" value="What connects these?"></div><div class="admin-field full"><label>Clues · 4–8 lines</label><textarea class="admin-textarea" id="cnClues"></textarea></div><div class="admin-field full"><label>Correct connection</label><input class="admin-input" id="cnCorrect"></div><div class="admin-field full"><label>Wrong connections · exactly 3 lines</label><textarea class="admin-textarea" id="cnDistractors"></textarea></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="cnExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addConnectionsPuzzle">Create Connections puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Clues</th><th>Correct</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>{const correct=(r.choices||[]).find(x=>x.correct);return `<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${num((r.clues||[]).length)}</td><td>${esc(correct?.text||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-cn-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`}).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("connections")}</div>${editable?`<div class="admin-form-grid"><div class="admin-field"><label for="cnExternal">External key</label><input class="admin-input" id="cnExternal"></div><div class="admin-field"><label for="cnCategory">Category</label><input class="admin-input" id="cnCategory" value="general"></div><div class="admin-field full"><label for="cnPrompt">Prompt</label><input class="admin-input" id="cnPrompt" value="What connects these?"></div><div class="admin-field full"><label for="cnClues">Clues · 4–8 lines</label><textarea class="admin-textarea" id="cnClues"></textarea></div><div class="admin-field full"><label for="cnCorrect">Correct connection</label><input class="admin-input" id="cnCorrect"></div><div class="admin-field full"><label for="cnDistractors">Wrong connections · exactly 3 lines</label><textarea class="admin-textarea" id="cnDistractors"></textarea></div><div class="admin-field full"><label for="cnExplanation">Explanation</label><textarea class="admin-textarea" id="cnExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addConnectionsPuzzle">Create Connections puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Clues</th><th>Correct</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>{const correct=(r.choices||[]).find(x=>x.correct);return `<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${num((r.clues||[]).length)}</td><td>${esc(correct?.text||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-cn-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`}).join("")}</tbody></table></div>`;
       $("#addConnectionsPuzzle")?.addEventListener("click",async()=>{const clues=$("#cnClues").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),distractors=$("#cnDistractors").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(clues.length<4||clues.length>8){toast("Add 4–8 clues");return}if(distractors.length!==3){toast("Add exactly 3 wrong connections");return}try{await rpc("admin_create_connections_puzzle",{p_external_key:$("#cnExternal").value,p_category:$("#cnCategory").value,p_prompt:$("#cnPrompt").value,p_clues:clues,p_correct_connection:$("#cnCorrect").value,p_distractors:distractors,p_explanation:$("#cnExplanation").value});toast("Connections puzzle created");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-cn-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_connections_puzzle",{p_puzzle_id:btn.dataset.cnToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"connections");bindInlineImport(root);return;
     }
     if(state.poolTab==="oddoneout"){
       const rows=sortByHealth(oddPuzzles||[],"oddoneout",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("oddoneout")}</div>${editable?`<div class="admin-note">Exactly four items. <strong>Odd item</strong> is numbered 1–4 in CSV and in this editor.</div><div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="ooExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="ooCategory" value="general"></div><div class="admin-field full"><label>Prompt</label><input class="admin-input" id="ooPrompt" value="Which one does not belong?"></div>${[1,2,3,4].map(i=>`<div class="admin-field"><label>Item ${i}</label><input class="admin-input" id="ooItem${i}"></div>`).join("")}<div class="admin-field"><label>Odd item</label><select class="admin-select" id="ooOdd">${[1,2,3,4].map(i=>`<option value="${i-1}">${i}</option>`).join("")}</select></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="ooExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOdd">Create Odd One Out puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Items</th><th>Odd item</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${(r.items||[]).map(x=>esc(x)).join(" · ")}</td><td>${esc((r.items||[])[Number(r.odd_index)]||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-oo-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("oddoneout")}</div>${editable?`<div class="admin-note">Exactly four items. <strong>Odd item</strong> is numbered 1–4 in CSV and in this editor.</div><div class="admin-form-grid"><div class="admin-field"><label for="ooExternal">External key</label><input class="admin-input" id="ooExternal"></div><div class="admin-field"><label for="ooCategory">Category</label><input class="admin-input" id="ooCategory" value="general"></div><div class="admin-field full"><label for="ooPrompt">Prompt</label><input class="admin-input" id="ooPrompt" value="Which one does not belong?"></div>${[1,2,3,4].map(i=>`<div class="admin-field"><label for="ooItem${i}">Item ${i}</label><input class="admin-input" id="ooItem${i}"></div>`).join("")}<div class="admin-field"><label for="ooOdd">Odd item</label><select class="admin-select" id="ooOdd">${[1,2,3,4].map(i=>`<option value="${i-1}">${i}</option>`).join("")}</select></div><div class="admin-field full"><label for="ooExplanation">Explanation</label><textarea class="admin-textarea" id="ooExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addOdd">Create Odd One Out puzzle</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Puzzle</th><th>Category</th><th>Items</th><th>Odd item</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.prompt)}</small></td><td>${esc(r.category)}</td><td>${(r.items||[]).map(x=>esc(x)).join(" · ")}</td><td>${esc((r.items||[])[Number(r.odd_index)]||"—")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-oo-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
       $("#addOdd")?.addEventListener("click",async()=>{const items=[1,2,3,4].map(i=>$("#ooItem"+i).value.trim());if(items.some(x=>!x)){toast("Add all four items");return}try{await rpc("admin_create_odd_one_out_puzzle",{p_external_key:$("#ooExternal").value,p_category:$("#ooCategory").value,p_prompt:$("#ooPrompt").value,p_items:items,p_odd_index:Number($("#ooOdd").value),p_explanation:$("#ooExplanation").value});toast("Odd One Out puzzle created");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-oo-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_odd_one_out_puzzle",{p_puzzle_id:btn.dataset.ooToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"oddoneout");bindInlineImport(root);return;
     }
     if(state.poolTab==="higherlower"){
       const rows=sortByHealth(higherPairs||[],"higherlower",state.poolHealthSort);
-      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("higherlower")}</div>${editable?`<div class="admin-note"><strong>Choose the comparison language first.</strong> This controls the natural question and the two answer buttons. Examples: <em>Is Mozart older or younger than Beethoven?</em>, <em>Is K2 higher or lower than Everest?</em>, <em>Is a lion faster or slower than a cheetah?</em>. For <strong>Older / Younger</strong>, store birth years (a later year means younger). For <strong>Earlier / Later</strong>, store event years.</div><div class="admin-form-grid"><div class="admin-field"><label>External key</label><input class="admin-input" id="hlExternal"></div><div class="admin-field"><label>Category</label><input class="admin-input" id="hlCategory" value="general"></div><div class="admin-field"><label>Comparison type</label><select class="admin-select" id="hlComparisonType">${higherLowerTypeOptions()}</select></div><div class="admin-field"><label>Metric / stored value</label><input class="admin-input" id="hlMetric" placeholder="Birth year, height, speed…"></div><div class="admin-field"><label>Left label</label><input class="admin-input" id="hlLeftLabel"></div><div class="admin-field"><label>Left value</label><input class="admin-input" id="hlLeftValue" type="number" step="any"></div><div class="admin-field"><label>Right label</label><input class="admin-input" id="hlRightLabel"></div><div class="admin-field"><label>Right value</label><input class="admin-input" id="hlRightValue" type="number" step="any"></div><div class="admin-field"><label>Unit</label><input class="admin-input" id="hlUnit" placeholder="m, km/h, year…"></div><div class="admin-field full"><label>Explanation</label><textarea class="admin-textarea" id="hlExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addHL">Create Higher or Lower pair</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Pair</th><th>Type</th><th>Metric</th><th>Left</th><th>Right</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.category)}</small></td><td>${esc(HIGHER_LOWER_TYPES[r.comparison_type]||r.comparison_type||"Higher / Lower")}</td><td>${esc(r.metric)}</td><td>${esc(r.left_label)} · ${esc(r.left_value)} ${esc(r.unit||"")}</td><td>${esc(r.right_label)} · ${esc(r.right_value)} ${esc(r.unit||"")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-hl-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
+      root.innerHTML=`<div class="admin-toolbar">${poolImportButton("higherlower")}</div>${editable?`<div class="admin-note"><strong>Choose the comparison language first.</strong> This controls the natural question and the two answer buttons. Examples: <em>Is Mozart older or younger than Beethoven?</em>, <em>Is K2 higher or lower than Everest?</em>, <em>Is a lion faster or slower than a cheetah?</em>. For <strong>Older / Younger</strong>, store birth years (a later year means younger). For <strong>Earlier / Later</strong>, store event years.</div><div class="admin-form-grid"><div class="admin-field"><label for="hlExternal">External key</label><input class="admin-input" id="hlExternal"></div><div class="admin-field"><label for="hlCategory">Category</label><input class="admin-input" id="hlCategory" value="general"></div><div class="admin-field"><label for="hlComparisonType">Comparison type</label><select class="admin-select" id="hlComparisonType">${higherLowerTypeOptions()}</select></div><div class="admin-field"><label for="hlMetric">Metric / stored value</label><input class="admin-input" id="hlMetric" placeholder="Birth year, height, speed…"></div><div class="admin-field"><label for="hlLeftLabel">Left label</label><input class="admin-input" id="hlLeftLabel"></div><div class="admin-field"><label for="hlLeftValue">Left value</label><input class="admin-input" id="hlLeftValue" type="number" step="any"></div><div class="admin-field"><label for="hlRightLabel">Right label</label><input class="admin-input" id="hlRightLabel"></div><div class="admin-field"><label for="hlRightValue">Right value</label><input class="admin-input" id="hlRightValue" type="number" step="any"></div><div class="admin-field"><label for="hlUnit">Unit</label><input class="admin-input" id="hlUnit" placeholder="m, km/h, year…"></div><div class="admin-field full"><label for="hlExplanation">Explanation</label><textarea class="admin-textarea" id="hlExplanation"></textarea></div></div><div class="admin-toolbar"><button class="admin-button primary" id="addHL">Create Higher or Lower pair</button></div>`:""}<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Pair</th><th>Type</th><th>Metric</th><th>Left</th><th>Right</th><th>Played</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${esc(r.external_key)}</strong><small>${esc(r.category)}</small></td><td>${esc(HIGHER_LOWER_TYPES[r.comparison_type]||r.comparison_type||"Higher / Lower")}</td><td>${esc(r.metric)}</td><td>${esc(r.left_label)} · ${esc(r.left_value)} ${esc(r.unit||"")}</td><td>${esc(r.right_label)} · ${esc(r.right_value)} ${esc(r.unit||"")}</td><td>${num(r.play_count)}</td><td>${r.active?badge("Active","ok"):badge("Inactive","warn")}</td><td>${editable?`<button class="admin-button" data-hl-toggle="${esc(r.id)}" data-active="${r.active}">${r.active?"Disable":"Enable"}</button>`:"—"}</td></tr>`).join("")}</tbody></table></div>`;
       $("#addHL")?.addEventListener("click",async()=>{try{await rpc("admin_create_higher_lower_pair",{p_external_key:$("#hlExternal").value,p_category:$("#hlCategory").value,p_comparison_type:$("#hlComparisonType").value,p_metric:$("#hlMetric").value,p_left_label:$("#hlLeftLabel").value,p_left_value:Number($("#hlLeftValue").value),p_right_label:$("#hlRightLabel").value,p_right_value:Number($("#hlRightValue").value),p_unit:$("#hlUnit").value,p_explanation:$("#hlExplanation").value});toast("Higher or Lower pair created");await renderContent()}catch(err){toast(cleanError(err))}});
       root.querySelectorAll("[data-hl-toggle]").forEach(btn=>btn.onclick=async()=>{try{await rpc("admin_toggle_higher_lower_pair",{p_pair_id:btn.dataset.hlToggle,p_active:btn.dataset.active!=="true"});await renderContent()}catch(err){toast(cleanError(err))}});addPoolHealthColumn(root,rows,"higherlower");bindInlineImport(root);return;
     }
@@ -2409,7 +2409,7 @@ window.BrainiAdmin=(function(){
     const maxPlays=Math.max(0,...games.map(g=>Number(g.plays||0)));
     const topLabel=GAME_LABELS[summary.top_game]||summary.top_game||"—";
     $("#adminContent").innerHTML=`
-      <div class="admin-toolbar"><div class="admin-field"><label>Period</label><select class="admin-select" id="analyticsDays"><option value="7" ${days===7?"selected":""}>Last 7 days</option><option value="30" ${days===30?"selected":""}>Last 30 days</option><option value="90" ${days===90?"selected":""}>Last 90 days</option></select></div><div class="admin-field"><label>Order games</label><select class="admin-select" id="analyticsHealthSort"><option value="health_asc" ${state.analyticsHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.analyticsHealthSort==="health_desc"?"selected":""}>Health · strongest</option><option value="default" ${state.analyticsHealthSort==="default"?"selected":""}>Usage order</option></select></div><button class="admin-button" id="analyticsRefresh">Refresh</button></div>
+      <div class="admin-toolbar"><div class="admin-field"><label for="analyticsDays">Period</label><select class="admin-select" id="analyticsDays"><option value="7" ${days===7?"selected":""}>Last 7 days</option><option value="30" ${days===30?"selected":""}>Last 30 days</option><option value="90" ${days===90?"selected":""}>Last 90 days</option></select></div><div class="admin-field"><label for="analyticsHealthSort">Order games</label><select class="admin-select" id="analyticsHealthSort"><option value="health_asc" ${state.analyticsHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.analyticsHealthSort==="health_desc"?"selected":""}>Health · strongest</option><option value="default" ${state.analyticsHealthSort==="default"?"selected":""}>Usage order</option></select></div><button class="admin-button" id="analyticsRefresh">Refresh</button></div>
       <div class="admin-grid metrics">
         ${metric("Completed plays",summary.total_plays,`Cloud results · ${days} days`)}
         ${metric("Unique players",summary.unique_players,"Authenticated cloud players")}
@@ -2432,7 +2432,7 @@ window.BrainiAdmin=(function(){
   async function renderUsers(){
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar">
-        <div class="admin-field grow"><label>Search</label><input class="admin-input" id="uSearch" placeholder="Display name, friend code, ranking name or UUID"></div>
+        <div class="admin-field grow"><label for="uSearch">Search</label><input class="admin-input" id="uSearch" placeholder="Display name, friend code, ranking name or UUID"></div>
         <button class="admin-button primary" id="uFilter">Search</button>
       </div>
       <div class="admin-note">
@@ -2588,18 +2588,18 @@ window.BrainiAdmin=(function(){
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar">
         <div class="admin-field">
-          <label>Region</label>
+          <label for="aRankRegion">Region</label>
           <select class="admin-select" id="aRankRegion">
             <option value="global">Global</option>
             <option value="country">Country</option>
           </select>
         </div>
         <div class="admin-field">
-          <label>Country</label>
+          <label for="aRankCountry">Country</label>
           <input class="admin-input" id="aRankCountry" maxlength="2" placeholder="ES">
         </div>
         <div class="admin-field">
-          <label>Period</label>
+          <label for="aRankPeriod">Period</label>
           <select class="admin-select" id="aRankPeriod">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
@@ -2607,14 +2607,14 @@ window.BrainiAdmin=(function(){
           </select>
         </div>
         <div class="admin-field">
-          <label>Game</label>
+          <label for="aRankGame">Game</label>
           <select class="admin-select" id="aRankGame">
             <option value="all">All games</option>
             ${Object.entries(GAME_LABELS).map(([id,label])=>`<option value="${id}">${label}</option>`).join("")}
           </select>
         </div>
         <div class="admin-field">
-          <label>Metric</label>
+          <label for="aRankMetric">Metric</label>
           <select class="admin-select" id="aRankMetric">
             <option value="score">Score</option>
             <option value="streak">Streak</option>
@@ -2726,7 +2726,7 @@ window.BrainiAdmin=(function(){
   async function renderGroups(){
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar">
-        <div class="admin-field grow"><label>Search</label><input class="admin-input" id="gSearch" placeholder="Group name, owner or UUID"></div>
+        <div class="admin-field grow"><label for="gSearch">Search</label><input class="admin-input" id="gSearch" placeholder="Group name, owner or UUID"></div>
         <button class="admin-button primary" id="gFilter">Search</button>
       </div>
       <div id="groupsTable">${loading()}</div>
@@ -2840,7 +2840,7 @@ window.BrainiAdmin=(function(){
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar">
         <div class="admin-field">
-          <label>Status</label>
+          <label for="sStatus">Status</label>
           <select class="admin-select" id="sStatus">
             <option value="">All</option>
             <option value="new">New</option>
@@ -3518,7 +3518,7 @@ window.BrainiAdmin=(function(){
         </div>
 
         <div class="admin-field" style="margin-top:10px">
-          <label>6-digit verification code</label>
+          <label for="mfaCode">6-digit verification code</label>
           <input class="admin-input" id="mfaCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456">
         </div>
 
