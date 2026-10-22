@@ -7,6 +7,7 @@
     "url": "/science/science-quiz/",
     "name": "Science Quiz"
   },
+  "quiz": null,
   "slug": "stalactites-vs-stalagmites",
   "cover": {
     "alt": "A pointed stalactite above a rounded stalagmite in a limestone cave",
@@ -17,8 +18,9 @@
     "thumbnail": "/assets/images/learn/stalactites-vs-stalagmites-thumb.webp"
   },
   "order": 18,
-  "title": "Stalactites vs stalagmites: a trick to tell them apart",
+  "title": "Stalactites vs stalagmites: ceiling or floor?",
   "topic": "Science & nature",
+  "video": null,
   "status": "published",
   "related": [
     "why-octopuses-have-three-hearts",
@@ -43,26 +45,26 @@
   "sections": [
     {
       "id": "look-up",
-      "title": "What is the difference?",
-      "html": "<p><strong>Stalactites hang from a cave ceiling; stalagmites grow upwards from the floor.</strong> When a matching pair joins, it forms a <strong>column</strong>.</p><p>Look at where the formation is attached, rather than guessing from its shape. The <a href=\"https://www.nps.gov/subjects/caves/speleothems.htm\">National Park Service’s cave guide</a> shows all three.</p>"
+      "html": "<p><strong>Stalactites hang from a cave ceiling; stalagmites grow upwards from the floor.</strong> When a matching pair joins, it forms a <strong>column</strong>.</p><p>Look at where the formation is attached, rather than guessing from its shape. The <a href=\"https://www.nps.gov/subjects/caves/speleothems.htm\">National Park Service’s cave guide</a> shows both. For another natural-world puzzle, <a href=\"/science/science-quiz/#learn-stalactites-vs-stalagmites\">try the Science Quiz</a>.</p>",
+      "title": "What is the difference?"
     },
     {
       "id": "remember",
-      "title": "C for ceiling, G for ground",
-      "html": "<p>The <strong>c in stalactite</strong> can remind you of the ceiling. The <strong>g in stalagmite</strong> points you towards the ground.</p><p>That is a spelling trick, not the origin of the words. Picture a cave with one shape hanging down and another reaching up: two similar names, opposite starting points.</p>"
+      "html": "<p>The <strong>c in stalactite</strong> can remind you of the ceiling. The <strong>g in stalagmite</strong> points you towards the ground.</p><p>That is a spelling trick, not the origin of the words. Picture a cave with one shape hanging down and another reaching up: two similar names, opposite starting points.</p>",
+      "title": "C for ceiling, G for ground"
     },
     {
       "id": "one-drip",
-      "title": "How can dripping water build rock?",
-      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. As it loses carbon dioxide, some mineral can come out of the water as solid <strong>calcite</strong>.</p><p>Tiny deposits build up over many drips, on the ceiling or underneath on the floor. A thin, hollow stalactite is called a <strong>soda straw</strong>. Apparently caves have their own drinks accessories.</p>"
+      "html": "<p>In many limestone caves, water carries dissolved calcium carbonate. As it loses carbon dioxide, some mineral can come out of the water as solid <strong>calcite</strong>.</p><p>Tiny deposits build up over many drips, on the ceiling or underneath on the floor. A thin, hollow stalactite is called a <strong>soda straw</strong>. Apparently caves have their own drinks accessories.</p>",
+      "title": "How can dripping water build rock?"
     },
     {
       "id": "not-a-clock",
-      "title": "A longer formation is not a simple clock",
-      "html": "<p>Growth depends on conditions such as water supply and chemistry, so length alone cannot tell you a reliable age.</p><p>On a visit, admire formations from the permitted route. For another small natural-world puzzle, discover <a href=\"/learn/counting-seconds-after-lightning/\">what the delay between lightning and thunder can tell you</a>.</p>"
+      "html": "<p>Growth depends on conditions such as water supply and chemistry, so length alone cannot tell you a reliable age.</p><p>On a visit, admire formations from the permitted route. For another small natural-world puzzle, discover <a href=\"/learn/counting-seconds-after-lightning/\">what the delay between lightning and thunder can tell you</a>.</p>",
+      "title": "A longer formation is not a simple clock"
     }
   ],
-  "updatedAt": "2026-10-16T19:33:25Z",
+  "updatedAt": "2026-10-22T20:31:02.727333+00:00",
   "description": "Stalactites hang from the ceiling; stalagmites rise from the ground. Remember the difference, follow one drip and discover what happens when they meet.",
-  "publishedAt": "2026-09-29T06:01:00Z"
+  "publishedAt": "2026-09-29T06:01:00+00:00"
 }
