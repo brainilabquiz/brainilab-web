@@ -3,7 +3,7 @@ import {brandPage} from '../lib/brand-identity.js';
 import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
 import {pageStyles} from '../lib/page-styles.js';
 import {homeConsent} from '../lib/home-consent.js';
-import {homeFirstPaint,homeConsentFirstResponse} from '../lib/home-first-paint.js';
+import {homeFirstPaint,homeConsentFirstResponse,homeSeasonFirstPaint} from '../lib/home-first-paint.js';
 import {homeLogoAVIF} from '../lib/home-images.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
@@ -103,6 +103,7 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   html=homeLogoAVIF(versionAssets(html,file,assetVersions),file);
   html=await homeFirstPaint(html,file,css=>readFile(path.join(output,css),'utf8'));
   if(file==='index.html')html=homeConsentFirstResponse(html,file,await readFile(path.join(output,'assets/js/consent.bundle.js'),'utf8'));
+  if(file==='index.html')html=homeSeasonFirstPaint(html,file,await readFile(path.join(output,'assets/css/halloween.css'),'utf8'),halloweenAssets['assets/css/halloween.css']);
   await writeFile(path.join(output,file),html);
 }
 console.log('Page CSS bundles: '+pageStyleBundles.map(item=>item.page+' '+item.sheets+' sheets → 1').join('; '));
