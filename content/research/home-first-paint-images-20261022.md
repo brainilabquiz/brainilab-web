@@ -38,3 +38,14 @@ confirmed identical video height, article position and social-link position befo
 and after the real fallback/latest text and class transition at 320, 390, 768 and
 1440 px. No delayed style activation or game/account change is involved. The
 final public performance and layout measurement must still be recorded.
+
+PR311 removed the measured shift (CLS 0 in the 07:48 run), but that run scored
+92 because the consent paragraph was again the LCP at 3.157 s. Do not select only
+the earlier 100 run. To remove the remaining controller-download dependency, the
+homepage now executes the exact existing minified consent controller immediately
+after its initial markup/gate, before main content and unrelated deferred SDKs.
+Other routes keep the original external bundle. No consent logic or text changes.
+Nine full parser-time fixtures verify functional controls while readyState is
+still loading, prior rejections, expired/future values, no pre-consent vendor tags
+and the unchanged account loader and game entry. Record the final public samples
+and their limitations rather than promising a permanent score.
