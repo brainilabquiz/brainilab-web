@@ -22,7 +22,7 @@ assert.deepEqual(measured,[['click','learn_library'],['open','learn_library']]);
 w.dispatchEvent(new w.CustomEvent('brainilab:backend-auth',{detail:{session:{user:{id:'signed-in-reader',is_anonymous:false}}}}));await tick();assert.ok(host.hidden,'signed-in readers do not see a join prompt');
 w.dispatchEvent(new w.CustomEvent('brainilab:backend-auth',{detail:{session:null}}));await tick();assert.ok(!host.hidden);
 w.BrainiAuth=undefined;w.BrainiPerf.ensureCloud=async()=>{throw Error('offline');};
-host.querySelector('[data-learning-join]').click();await tick();assert.ok(!host.querySelector('[data-learning-account-error]').hidden);assert.ok(!host.querySelector('[data-learning-join]').disabled);assert.equal(w.document.querySelector('h1').textContent,'A little more to discover.');
+host.querySelector('[data-learning-join]').click();await tick();assert.ok(!host.querySelector('[data-learning-account-error]').hidden);assert.ok(!host.querySelector('[data-learning-join]').disabled);assert.equal(w.document.querySelector('h1').textContent,'Curious questions, clear answers');
 assert.deepEqual(measured.at(-1),['click','learn_library'],'failed sign-up must not report a successful open');
 w.BrainiSiteAnalytics.learningAccountPrompt=()=>{throw Error('measurement unavailable');};w.BrainiAuth={open:opts=>opened.push(opts)};
 host.querySelector('[data-learning-join]').click();await tick();assert.equal(opened.length,2,'a measurement failure cannot prevent sign-up');
