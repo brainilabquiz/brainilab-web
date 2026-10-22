@@ -23,6 +23,14 @@ const env={ASSETS:{fetch:async r=>new Response(new URL(r.url).pathname.startsWit
 const fetcher=async url=>new Response(JSON.stringify((url.includes('learn_paths?')?paths:url.includes('learn_authors?')?authors:articles).map(document=>({document}))));
 assert.equal((await serveLearn(new Request('https://brainilabgames.com/learn/paths/missing/'),env,ctx,cache,fetcher)).status,404);
 const page=await serveLearn(new Request('https://brainilabgames.com/learn/paths/'+paths[0].slug+'/'),env,ctx,cache,fetcher);assert.equal(page.status,200);const pathHTML=await page.text();assert.ok(pathHTML.includes('data-lesson-number="3"'));assert.ok(pathHTML.includes('academy-sidebar'));assert.ok(!pathHTML.includes('What you will learn'));assert.ok(!pathHTML.includes(paths[0].outcomes[0]));assert.ok(pathHTML.includes('BrainiLab Academy'));assert.ok(html.includes('aria-current="page"'));
+// Academy pages describe courses with Course data that matches the visible lessons.
+const graphOf=h=>JSON.parse(h.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
+const course=graphOf(pathHTML).find(x=>[].concat(x['@type']).includes('Course'));assert.ok(course,'Course schema');assert.equal(course.provider['@id'],'https://brainilabgames.com/#organization');assert.equal(course.offers[0].price,0);assert.equal(course.hasPart.length,paths[0].lessons.length);assert.match(course.image,/^https:\/\/brainilabgames\.com\/assets\//);
+const workload=paths[0].lessons.reduce((n,l)=>n+articles.find(a=>a.slug===l.slug).minutes,0);assert.equal(course.hasCourseInstance[0].courseWorkload,'PT'+workload+'M');
+assert.deepEqual(graphOf(pathHTML).find(x=>x['@type']==='BreadcrumbList').itemListElement.map(c=>c.name),['Home','Learn','BrainiLab Academy',paths[0].title]);assert.ok(pathHTML.includes('<a href="/">Home</a>'));
+const academyHTML=await (await serveLearn(new Request('https://brainilabgames.com/learn/paths/'),env,ctx,cache,fetcher)).text();assert.ok(academyHTML.includes('<title>BrainiLab Academy: free beginner courses</title>'));
+const academyDescription=academyHTML.match(/<meta name="description" content="([^"]*)"/)[1];assert.ok(academyDescription.length>=120&&academyDescription.length<=160,academyDescription);
+const academyPage=graphOf(academyHTML).find(x=>x['@type']==='CollectionPage');assert.equal(academyPage.mainEntity.itemListElement.length,readyPaths(paths,articles).length);assert.ok(academyPage.hasPart.every(c=>c['@type'].includes('Course')&&c.url.startsWith('https://brainilabgames.com/learn/paths/')));
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/'+lesson.slug+'/',runScripts:'outside-only'}),w=dom.window;w.structuredClone=structuredClone;w.eval(readFileSync('assets/js/learning-paths.bundle.js','utf8'));
 async function playRound(win, quiz, wrongFirst=false){
