@@ -1,0 +1,65 @@
+{
+  "slug": "why-orionids-return-in-october",
+  "title": "Why do the Orionids return every October?",
+  "description": "Halley’s Comet leaves the debris, Earth keeps the yearly appointment and Orion supplies the name. Here is why this meteor shower returns each October.",
+  "topic": "Science & nature",
+  "status": "published",
+  "order": 205,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-orionids-return-in-october.webp",
+    "small": "/assets/images/learn/why-orionids-return-in-october-small.webp",
+    "thumbnail": "/assets/images/learn/why-orionids-return-in-october-thumb.webp",
+    "alt": "A single fine meteor streak above a dark ridge and a starry night sky",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined night scene, not a photograph of a recorded meteor event.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try the Science Quiz for another small surprise about the world around you.",
+  "related": [
+    "why-do-stars-twinkle",
+    "why-northern-lights-have-different-colours"
+  ],
+  "sources": [
+    {
+      "url": "https://science.nasa.gov/solar-system/meteors-meteorites/orionids/",
+      "name": "NASA Science — Orionids: Halley’s debris and the annual shower"
+    },
+    {
+      "url": "https://spaceplace.nasa.gov/meteor-shower/en/",
+      "name": "NASA Space Place — What is a meteor shower?"
+    }
+  ],
+  "sections": [
+    {
+      "id": "earth-keeps-the-appointment",
+      "title": "Earth keeps the appointment",
+      "html": "<p><strong>The Orionids return every October because Earth crosses a trail of debris left by Halley’s Comet.</strong> The comet does not have to visit us each year. The material is already waiting along its path.</p><p><a href=\"https://science.nasa.gov/solar-system/meteors-meteorites/orionids/\">NASA identifies Halley as the source of the Orionids</a>. Think of the shower as Earth meeting a traveller’s old trail, rather than a fresh arrival by the traveller.</p>"
+    },
+    {
+      "id": "a-comet-leaves-crumbs",
+      "title": "A comet leaves crumbs",
+      "html": "<p>As a comet approaches the Sun, warming releases dust and rocky particles. This material gradually spreads along its orbit. Earth’s own yearly journey brings us through the Orionid debris stream again.</p><p>Halley also supplies the debris for the Eta Aquariids in May. One comet can leave more than one appointment in Earth’s calendar.</p>"
+    },
+    {
+      "id": "what-makes-the-streak",
+      "title": "What makes the streak?",
+      "html": "<p>A particle entering our atmosphere at high speed heats the air around it. The bright streak is a <strong>meteor</strong>: a brief glow in the atmosphere, not a star falling out of the sky. <a href=\"https://spaceplace.nasa.gov/meteor-shower/en/\">NASA Space Place explains how a meteor shower works</a>.</p><p>The repeating route explains the season, but it does not promise an identical show. Moonlight and viewing conditions affect how many faint streaks people notice.</p>"
+    },
+    {
+      "id": "orion-is-the-signpost",
+      "title": "Orion is the signpost",
+      "html": "<p>The streaks appear to come from the direction of Orion. That apparent starting point gives the shower its name; Orion’s distant stars are not launching the particles.</p><p>It is a perspective effect, rather like parallel railway tracks appearing to meet in the distance. For other tricks of the night sky, explore <a href=\"/learn/why-do-stars-twinkle/\">why stars twinkle</a> and <a href=\"/learn/why-northern-lights-have-different-colours/\">what colours the northern lights</a>.</p><p>Orion supplies the signpost, Halley supplies the debris, and Earth makes the return trip.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-22T08:19:27Z",
+  "updatedAt": "2026-10-22T08:19:27Z",
+  "minutes": 2
+}
