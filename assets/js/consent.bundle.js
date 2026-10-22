@@ -195,12 +195,13 @@ window.BrainiMarketing = (function(){
   function showPreferences(){
     if(panel) return;
     const initial=document.querySelector('[data-static-cookie-prompt]');
+    const reuse=initial&&['[data-statistics-choice]','[data-ad-choice]','[data-save-cookie-choices]','[data-marketing-reject]','[data-marketing-accept]'].every(selector=>initial.querySelector(selector));
     panel=initial||document.createElement("aside");
     panel.hidden=false;
     panel.className="marketing-consent";
     panel.setAttribute("aria-label","Optional cookie choices");
-    if(!initial)panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
-    else panel.querySelectorAll('button,input').forEach(control=>{control.disabled=false;});
+    if(!reuse)panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
+    if(reuse)panel.querySelectorAll('button,input').forEach(control=>{control.disabled=false;});
     panel.querySelector('[data-statistics-choice]').checked=window.BrainiSiteAnalytics?.isAllowed()===true;
     panel.querySelector('[data-ad-choice]').checked=choice===true;
     panel.querySelector('[data-save-cookie-choices]').onclick=()=>choose(panel.querySelector('[data-ad-choice]').checked,panel.querySelector('[data-statistics-choice]').checked);

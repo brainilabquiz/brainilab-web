@@ -1,0 +1,87 @@
+{
+  "reviewedAt": "2026-10-22",
+  "revisions": [
+    {
+      "key": "world-capitals.medium.set1.q09.v1",
+      "prompt": "Which city is Switzerland's federal city and de facto capital?",
+      "explanation": "Bern is Switzerland's federal city and seat of government. Switzerland does not have a formally designated capital in the usual legal sense.",
+      "source": "https://www.aboutswitzerland.eda.admin.ch/en/political-system",
+      "answer": "Bern",
+      "reason": "Distinguish the federal city from a de jure capital.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "general-knowledge.hard.set1.q09.v1",
+      "prompt": "Which country has the most lakes larger than 0.1 square kilometres?",
+      "explanation": "Canada's 2026 climate report describes more than 875,000 lakes above this size, about 62% of the world's total by number. A lake count needs a size threshold.",
+      "source": "https://www.canada.ca/en/environment-climate-change/services/science-technology/changing-climate-report-2026/cccr-chapter-5-en.html",
+      "answer": "Canada",
+      "reason": "Use a defined threshold and a source supporting number, rather than lake area.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "general-knowledge.hard.set1.q10.v1",
+      "prompt": "Which ancient wonder stood by the harbour of Rhodes?",
+      "explanation": "The Colossus of Rhodes was a large bronze statue of the sun god Helios. It stood by the city's harbour and was counted among the Seven Wonders of the ancient world.",
+      "source": "https://www.worldhistory.org/Colossus_of_Rhodes/",
+      "answer": "Colossus of Rhodes",
+      "reason": "Confirm the monument and avoid the unsupported straddling-the-harbour image.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "history.easy.set1.q13.v1",
+      "prompt": "Which disease is associated with the medieval pandemic known as the Black Death?",
+      "explanation": "The Black Death was a plague pandemic. Bubonic plague is its best-known form; the same bacterium can also cause other forms of plague.",
+      "source": "https://www.londonmuseum.org.uk/collections/london-stories/great-pestilence-london/",
+      "answer": "Bubonic plague",
+      "reason": "Clarify that plague has more than one form.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "history.easy.set1.q20.v1",
+      "prompt": "Which charter, sealed in 1215, limited the English king's power?",
+      "explanation": "Magna Carta was agreed under King John in 1215. It was authenticated with a seal rather than a signature, and set limits on royal power.",
+      "source": "https://www.parliament.uk/about/living-heritage/evolutionofparliament/2015-parliament-in-the-making/2015-historic-anniversaries/magna-carta/the-making-of-magna-carta-/",
+      "answer": "Magna Carta",
+      "reason": "Correct signed to sealed; use the opened Parliament account.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "history.medium.set1.q11.v1",
+      "prompt": "Which revolution included the storming of the Bastille in 1789?",
+      "explanation": "The storming of the Bastille in Paris on 14 July 1789 became a symbol of the French Revolution. The revolution had already begun before that day.",
+      "source": "https://www.elysee.fr/en/french-presidency/bastille-day-14-july",
+      "answer": "French Revolution",
+      "reason": "Do not present the Bastille as the revolution's exact starting point.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "sports.hard.set1.q02.v1",
+      "prompt": "What weight does the ITTF specify for a standard table tennis ball?",
+      "explanation": "Law 2.3.2 of the ITTF's 2026 statutes specifies a ball weight of 2.7 grams. This is the stated weight, rather than a question about a maximum manufacturing tolerance.",
+      "source": "https://documents.ittf.sport/sites/default/files/public/2026-02/2026_Statutes_v1_consolidated_tc.pdf",
+      "answer": "2.7 grams",
+      "reason": "Correct maximum legal weight to specified weight; page 39 visually checked.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "sports.hard.set1.q18.v1",
+      "prompt": "Under World Boxing Federation rules, how many rounds are scheduled for a men's world-title bout?",
+      "explanation": "WBF rule 1.2 schedules men's world-title contests for 12 rounds. Its women's world-title contests have a different duration, so the category matters.",
+      "source": "https://www.worldboxingfederation.org/wbfrulesandregulations.htm",
+      "answer": "12",
+      "reason": "Specify federation and men's competition instead of a universal boxing rule.",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "key": "world-capitals.medium.set1.q04.v1",
+      "prompt": "In May 2026, which city was still Indonesia's capital?",
+      "explanation": "Indonesia's parliament reported in May 2026 that Jakarta remained the capital during preparations for Nusantara. The date is part of this question because the capital's relocation is a continuing transition.",
+      "source": "https://www.dpr.go.id/kegiatan-dpr/berita/Putusan-MK-Jakarta-Tetap-Ibu-Kota-Aria-Bima-Tak-Anulir-IKN-Hanya-Cegah-Kekosongan-Hukum-65431",
+      "answer": "Jakarta",
+      "reason": "Use a dated, documented fact rather than an indefinitely current capital claim.",
+      "checkedAt": "2026-10-22"
+    }
+  ],
+  "answerSignature": "c9a37f80fb9f87cd2f4bfa3cbe0373838a02c09c1e70244c3fe7f09e5e64f7f7"
+}
