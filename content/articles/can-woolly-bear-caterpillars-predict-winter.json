@@ -1,0 +1,68 @@
+{
+  "slug": "can-woolly-bear-caterpillars-predict-winter",
+  "title": "Can woolly bear caterpillars predict winter?",
+  "description": "A woolly bear’s black and rusty bands look like a tiny weather chart. Discover what they really reveal, and why sensing weather is different from forecasting winter.",
+  "topic": "Science & nature",
+  "status": "published",
+  "order": 206,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/can-woolly-bear-caterpillars-predict-winter.webp",
+    "small": "/assets/images/learn/can-woolly-bear-caterpillars-predict-winter-small.webp",
+    "thumbnail": "/assets/images/learn/can-woolly-bear-caterpillars-predict-winter-thumb.webp",
+    "alt": "A black-ended, rusty-brown woolly bear caterpillar on an autumn leaf beside a fallen log",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined caterpillar scene, not a documented specimen or weather observation.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Try the Science Quiz for another small surprise about the world around you.",
+  "related": [
+    "what-really-causes-seasons"
+  ],
+  "sources": [
+    {
+      "url": "https://www.weather.gov/arx/woollybear",
+      "name": "US National Weather Service — Woolly bear caterpillar: winter predictor or not?"
+    },
+    {
+      "url": "https://www.hko.gov.hk/en/Whats-New/108248/Cool-Met-Stuff-Can-birds-predict-weather",
+      "name": "Hong Kong Observatory — Can birds predict weather?"
+    },
+    {
+      "url": "https://www.metoffice.gov.uk/research/climate/seasonal-to-decadal/seasonal-forecast/user-guide",
+      "name": "Met Office — How to use long-range predictions"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-tiny-weather-chart",
+      "title": "A tiny weather chart?",
+      "html": "<p><strong>A woolly bear caterpillar’s coloured bands do not reliably predict how harsh the coming winter will be.</strong> The familiar claim is folklore: more black supposedly means a harder winter, while a wider rusty middle promises a milder one.</p><p>It makes an appealing outdoor guessing game. But the <a href=\"https://www.weather.gov/arx/woollybear\">US National Weather Service explains why the bands are not a winter forecast</a>.</p>"
+    },
+    {
+      "id": "a-record-of-growing",
+      "title": "A record of growing",
+      "html": "<p>A caterpillar’s colouring reflects factors such as its age, feeding and species. As woolly bears grow and shed their skins, their colouring changes. Two different-looking caterpillars need not be issuing different predictions.</p><p>The useful twist is about time: the bands tell us about the animal’s growth, rather than weather that has not happened yet.</p>"
+    },
+    {
+      "id": "finding-a-winter-address",
+      "title": "Finding a winter address",
+      "html": "<p>A woolly bear crossing a path in autumn is looking for a sheltered place to spend winter, such as under bark or a fallen log. Its direction is not a secret forecast either.</p><p>For the larger seasonal story, see <a href=\"/learn/what-really-causes-seasons/\">why summer is warmer than winter</a>. Preparing for a season and predicting its severity are different things.</p>"
+    },
+    {
+      "id": "sensing-is-not-a-seasonal-forecast",
+      "title": "Sensing weather is a different skill",
+      "html": "<p>Animals can still notice real changes. The <a href=\"https://www.hko.gov.hk/en/Whats-New/108248/Cool-Met-Stuff-Can-birds-predict-weather\">Hong Kong Observatory describes birds sensing air pressure and infrasound</a>, which can help them respond to approaching weather. That is different from reading a whole winter from a caterpillar’s coat.</p><p>Even scientific seasonal forecasts describe probabilities, not a guaranteed sequence of days, as the <a href=\"https://www.metoffice.gov.uk/research/climate/seasonal-to-decadal/seasonal-forecast/user-guide\">Met Office explains</a>.</p><p>The woolly bear remains worth noticing. Its bands offer a clue to its own life, not a weather chart for yours.</p>"
+    }
+  ],
+  "publishedAt": "2026-10-22T08:19:27Z",
+  "updatedAt": "2026-10-22T08:19:27Z",
+  "minutes": 2
+}
