@@ -1,3 +1,4 @@
+import {knowledgeVideo} from './lib/youtube-knowledge.js';
 import {serveLearn,publishedArticles} from './lib/learn-worker.js';
 import {productionRequest} from './lib/production-origin.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
@@ -33,6 +34,8 @@ export function parseFeed(xml){
 }
 function json(body,status=200,maxAge=60){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':`public, max-age=${maxAge}`,'X-Content-Type-Options':'nosniff'}});}
 export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
+  const url=new URL(request.url),channel=url.pathname==='/api/latest-video'?url.searchParams.get('channel'):null;
+  if(channel!==null)return channel==='knowledge'?knowledgeVideo(request,ctx,cache,fetcher,apiKey):json({error:'Unknown channel'},400,0);
   const source=apiKey?'youtube-api':'youtube-feed';
   const key=new Request(new URL('/api/latest-video?playlist='+PLAYLIST+'&source='+source+'&v=2',request.url));
   const cached=await cache.match(key);
