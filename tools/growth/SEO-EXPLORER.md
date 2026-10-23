@@ -147,6 +147,32 @@ daily local runner may collect these data; it still needs the computer/Codex.
 Validate: Python unittest test_seo_explorer.py and tools/test-growth-seo-explorer.mjs
 with the existing JSDOM dependency.
 
+## Incoming link destinations
+
+The Link destinations view groups currently verified HTML links by their exact
+target URL. It distinguishes observed 404/410 responses, different final URLs,
+noindex and canonical observations, incomplete inspections and responding routes.
+Only links with a matching successful source observation and timestamp enter this
+view. Duplicate target/source/rel combinations do not inflate its counts.
+
+Producer v4 inspects newly found own-site targets after inspecting source pages,
+including index.html aliases. These requests share the existing 250-page total
+budget, robots rules, HTTPS checks and three-worker limit. Published resource URLs
+have priority; uncovered targets remain unknown. Failed historical source links
+do not expand the crawl. Alias checks are never copied from a canonical sibling.
+The changed coverage can change the historical technical average; it is not a
+change in reputation or ranking. Daily cache identity includes the producer version.
+
+Filters, dated source evidence, complete CSV export and Review evidence buttons
+support a concrete check before an edit. An intentional canonical or redirect is
+not automatically an error. HTTP 403, network/robots failures and missing checks
+are unknown, not broken links. Responding does not establish Google indexing,
+ranking value, content quality or inclusion in AI answers. No automated site edits,
+publisher contact or backlink-level visit/player attribution occur.
+
+Validate this workflow with test_seo_explorer.py and
+tools/test-growth-seo-destinations.mjs, in addition to the existing Explorer tests.
+
 ## Review a page
 
 The admin Review a page view joins saved evidence for one exact public URL:

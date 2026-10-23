@@ -24,7 +24,7 @@ import seo_discovery
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
 VERSION = 1
-PRODUCER_VERSION = 3
+PRODUCER_VERSION = 4
 MAX_BYTES = 2_000_000
 CHECKS = {'https': 10, 'available': 20, 'title': 10, 'description': 10,
           'heading': 10, 'canonical': 15, 'indexable': 15, 'structuredData': 10}
@@ -361,6 +361,19 @@ def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch, source
             old = old_links.get((b['sourceUrl'],b['targetUrl'],tuple(b['rel'])),{})
             b['firstVerifiedAt'] = old.get('firstVerifiedAt', observed)
             links.append(b)
+    # Inspect the exact incoming destinations too, including index.html aliases.
+    # Never borrow checks from a canonical sibling or grow beyond the site budget.
+    inspected = {p['url'] for p in pages}
+    targets = sorted({b['targetUrl'] for b in links} - inspected)[:max(0, 250-len(pages))]
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        target_results = list(pool.map(collect, targets))
+    for url, result, failure in target_results:
+        try:
+            if failure: raise ValueError('Destination could not be inspected')
+            pages.append(audit_page(url, result, observed))
+        except (ValueError, UnicodeError):
+            pages.append({'url':url,'finalUrl':None,'status':0,'checkedAt':observed,'trust':None,
+                          'checks':{k:False for k in CHECKS},'authorDeclared':False,'externalSourceLinks':0,'sha256':hashlib.sha256(b'').hexdigest()})
     if not any(p['trust'] is not None for p in pages):
         raise RuntimeError('No public page could be inspected; preserve the last successful index')
     sources=list({s['url']:s for s in sources}.values())
