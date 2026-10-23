@@ -4135,12 +4135,12 @@ window.BrainiPostGame=(()=>{
  const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
  const mounted=new Map();
  let readingDirectory;
- async function returnToReading(container,options){
+ const readingPath=()=>location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
+ function readingContext(){
   const match=/^#learn-([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(location.hash),slug=match?.[1];
-  if(!slug||slug.length>100)return;
-  const link=container.querySelector('[data-post-action="guide"]');
-  const title=link?.querySelector('strong,[data-reading-title]');if(!title)return;
-  const readingOwner=owner();
+  return slug&&slug.length<=100?{slug,hash:location.hash,path:readingPath()}:null;
+ }
+ function getReadingDirectory(){
   if(!readingDirectory)readingDirectory=(async()=>{
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4000);
    try{
@@ -4149,15 +4149,52 @@ window.BrainiPostGame=(()=>{
     const data=await response.json();return data?.version===1&&Array.isArray(data.articles)&&data.articles.length<=1000?data.articles:[];
    }catch{return [];}finally{clearTimeout(timer);}
   })();
-  const directory=await readingDirectory;
-  if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner())return;
-  const gamePath=location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
-  const article=directory.find(a=>a&&a.slug===slug&&a.gameId===options.gameId&&a.gamePath===gamePath&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
+  return readingDirectory;
+ }
+ const findReading=(directory,context,gameId)=>directory.find(a=>a&&a.slug===context.slug&&(!gameId||a.gameId===gameId)&&a.gamePath===context.path&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
+ async function returnToReading(container,options){
+  const context=readingContext();if(!context)return;
+  const link=container.querySelector('[data-post-action="guide"]');
+  const title=link?.querySelector('strong,[data-reading-title]');if(!title)return;
+  const readingOwner=owner(),directory=await getReadingDirectory();
+  if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner()||location.hash!==context.hash||readingPath()!==context.path)return;
+  const article=findReading(directory,context,options.gameId);
   if(!article)return;
-  link.setAttribute('href','/learn/'+slug+'/');
+  link.setAttribute('href','/learn/'+context.slug+'/');
   const kind=link.querySelector('[data-reading-kind],:scope>span:not([data-reading-title])');
   if(kind)kind.textContent='Back to your reading';
   title.textContent=article.title+' →';
+ }
+ let readingNavigation,navigationVersion=0;
+ function resetReadingNavigation(){
+  if(!readingNavigation)return;
+  const {nav,link,children,navChildren,attributes,difficulties}=readingNavigation;
+  if(nav.isConnected&&link.isConnected&&nav.contains(link)){
+   link.replaceChildren(...children);link.classList.remove('reading-return-link');nav.removeAttribute('data-reading-context');
+   for(const [name,value]of attributes){if(value===null)link.removeAttribute(name);else link.setAttribute(name,value);}
+   if(navChildren)nav.replaceChildren(...navChildren);
+  }
+  for(const [tab,href]of difficulties)if(tab.isConnected)tab.setAttribute('href',href);
+  readingNavigation=null;
+ }
+ async function readingNavigationReady(){
+  const version=++navigationVersion;resetReadingNavigation();
+  const context=readingContext();
+  if(!context||!document.querySelector('main [data-game-guides]'))return;
+  const nav=document.querySelector('main .breadcrumb,main .reason-header'),link=nav?.querySelector(':scope>a[href]');
+  if(!link)return;
+  const article=findReading(await getReadingDirectory(),context);
+  if(!article||version!==navigationVersion||location.hash!==context.hash||readingPath()!==context.path||!nav.isConnected||!link.isConnected||!nav.contains(link))return;
+  if(nav.contains(document.activeElement)&&document.activeElement!==link)return;
+  const difficulties=[...document.querySelectorAll('.quiz-difficulty-tabs a[data-difficulty][href]')].map(tab=>[tab,tab.getAttribute('href')]);
+  const navChildren=nav.matches('.breadcrumb')?[...nav.childNodes]:null;
+  readingNavigation={nav,link,children:[...link.childNodes],navChildren,attributes:['href','aria-label','title','class'].map(name=>[name,link.getAttribute(name)]),difficulties};
+  link.setAttribute('href','/learn/'+context.slug+'/');link.setAttribute('aria-label','Back to article: '+article.title);link.setAttribute('title',article.title);
+  link.textContent='← Back to article';link.classList.add('reading-return-link');nav.setAttribute('data-reading-context','');
+  if(navChildren)nav.replaceChildren(link);
+  for(const [tab,href]of difficulties){
+   try{const url=new URL(href,location.href);if(url.origin===location.origin&&url.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/')===context.path&&!href.includes('#'))tab.setAttribute('href',href+context.hash);}catch{}
+  }
  }
  const invitations=new Map(),dismissed=new WeakSet();
  function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
@@ -4358,6 +4395,9 @@ window.BrainiPostGame=(()=>{
   return result;
  }
  function confirm(container,result){const options=mounted.get(container);if(!options||options.owner!==owner())return;Object.assign(options.result,result);options.challengeReady=true;updatePresentation(container,options);actionMarkup(container,options);}
+ document.addEventListener('DOMContentLoaded',readingNavigationReady);
+ window.addEventListener('pageshow',readingNavigationReady);window.addEventListener('hashchange',readingNavigationReady);
+ if(document.readyState!=='loading')readingNavigationReady();
  return {mount,complete,confirm,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
 })();
 
