@@ -134,11 +134,11 @@ body.braini-visual.home-page .home-intro-media{grid-area:videos;min-width:0;disp
 body.braini-visual.home-page .home-video-grid .home-video{flex-direction:column;align-items:stretch;gap:0;margin:0;max-width:none;min-height:0;padding:0;overflow:hidden;border-left-width:1px}
 body.braini-visual.home-page .home-video-grid .home-video-image{flex:0 0 auto;width:100%;aspect-ratio:16/9;border-radius:0}
 body.braini-visual.home-page .home-video-grid .home-video-copy{flex:1;padding:14px;gap:9px}
-body.braini-visual.home-page .home-video-grid .video-label{font-size:10px;min-height:2.7em;color:#8c332a}
+body.braini-visual.home-page .home-video-grid .video-label{font-size:11px;min-height:2.7em;color:#8c332a}
 body.braini-visual.home-page .home-video-grid strong{font-size:14px;line-height:1.4;min-height:4.2em;-webkit-line-clamp:3}
 body.braini-visual.home-page .home-video-grid .video-action{margin-top:auto;font-size:12px}
-body.braini-visual.home-page .home-intro-media .home-social-links{margin:0;min-height:32px;align-items:center}
-body.braini-visual.home-page .home-intro-media .home-social-links a{display:inline-flex;align-items:center;min-height:32px}
+body.braini-visual.home-page .home-intro-media .home-social-links{margin:0;min-height:44px;align-items:center}
+body.braini-visual.home-page .home-intro-media .home-social-links a{display:inline-flex;align-items:center;min-height:44px}
 body.braini-visual.home-page .home-reading{grid-area:reading;min-width:0;display:flex}
 body.braini-visual.home-page .home-reading .home-article{width:100%;max-width:none;margin:0;align-self:stretch}
 body.braini-visual.home-page .home-reading .home-article-empty{display:flex;align-items:center;min-height:64px;margin:0}

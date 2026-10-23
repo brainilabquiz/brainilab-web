@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
   let playing=false;
-  let modernRequest=0,modernContext='',lastMarkup='';
+  let modernRequest=0,modernContext='',modernPaintedContext='',lastMarkup='';
   const currentOwner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||'guest';};
   function paintModern(markup){
     if(lastMarkup===markup)return;
@@ -20,12 +20,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     const href=BrainiDailyJourney.gameHref(ids[0],day);
     const context=day+':'+owner;
     const start=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="${href}">Play today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
-    if(context!==modernContext){modernContext=context;paintModern(start);}
-    root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
+    const current=()=>request===modernRequest&&day===BrainiData.todayKey()&&owner===currentOwner()&&stage.isConnected;
+    const reveal=markup=>{
+      if(!current())return;
+      paintModern(markup);modernPaintedContext=context;
+      root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
+    };
+    if(context!==modernContext){
+      modernContext=context;
+      root.setAttribute('data-home-loading','');root.setAttribute('aria-busy','true');
+    }
+    // An unchecked result is neither a new game nor a completed game. Keep the
+    // neutral first paint until the existing progress service has answered.
+    const fallback=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">Open today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`;
+    const timer=setTimeout(()=>{if(modernPaintedContext!==context)reveal(fallback);},8000);
     try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});
-      if(request!==modernRequest||day!==BrainiData.todayKey()||owner!==currentOwner()||!stage.isConnected)return;
-      paintModern(status?.games?.[ids[0]]?.completed?`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`:start);
-    }catch(error){console.warn('Daily status unavailable',error);}
+      reveal(status?.games?.[ids[0]]?.completed?`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`:start);
+    }catch(error){
+      if(modernPaintedContext!==context)reveal(fallback);
+      console.warn('Daily status unavailable',error);
+    }finally{clearTimeout(timer);}
   }
   window.addEventListener('brainilab:daychange',()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
   for(const event of ['brainilab:authchange','brainilab:progressionchange'])window.addEventListener(event,()=>{if(!playing&&window.BrainiDailyRules?.active())modernEntry();});
