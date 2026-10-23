@@ -1,4 +1,8 @@
 /* One result, one next step, with answer detail available on demand. */
+main .breadcrumb[data-reading-context]{padding-top:0;min-height:44px;flex-wrap:nowrap}
+main .reading-return-link{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;color:var(--navy,#2d296e);text-underline-offset:4px;white-space:nowrap}
+main .reading-return-link:focus-visible{outline:3px solid #3fab34;outline-offset:3px;border-radius:4px}
+.reason-header[data-reading-context] h1{margin-top:0}
 .post-account-invite{margin:24px 0;padding:20px;text-align:left;background:#eef6e9;border:1px solid #cbdcbd;border-left:4px solid #38a832;border-radius:12px;color:#252044;box-sizing:border-box}
 .post-account-invite .post-account-kicker{margin:0 0 6px;font-size:12px;font-weight:750;color:#315a29}
 .post-account-invite h3{margin:0 0 8px;font-size:21px;line-height:1.3;color:#30296f}
