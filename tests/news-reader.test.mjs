@@ -33,7 +33,7 @@ test('calendar dates use UTC rather than the viewer clock',()=>{
 test('empty and expired editions have a useful route without invented dates or operational details',()=>{
  assert.equal(renderNews(edition([item]),now+NEWS_WINDOW_MS),'');
  const d=doc(renderEmptyNews());assert.equal(d.querySelectorAll('h1').length,1);assert.equal(d.querySelectorAll('time').length,0);
- assert.equal(d.querySelector('a').getAttribute('href'),'/learn/');assert.doesNotMatch(d.body.textContent,/API|Codex|key|retry|Updated/i);
+ assert.equal(d.querySelector('.breaking-news__empty a').getAttribute('href'),'/learn/');assert.doesNotMatch(d.body.textContent,/API|Codex|key|retry|Updated/i);
 });
 test('source names are escaped and no headline can create markup or unsafe links',()=>{
  const html=renderNews(edition([item]),now);assert.match(html,/Research &amp; Science/);
