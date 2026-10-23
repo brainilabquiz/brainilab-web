@@ -2,7 +2,7 @@ import {serveLearn,publishedArticles} from './lib/learn-worker.js';
 import {productionRequest} from './lib/production-origin.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
-import {renderNews,renderEmptyNews,freshNews} from './lib/breaking-news.js';
+import {renderNews,renderEmptyNews,freshNews,newsEditionRevision} from './lib/breaking-news.js';
 import {newsEdition} from './lib/news-refresh.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/news-refresh.js';
@@ -145,6 +145,13 @@ export default {
     }
     if(url.pathname.startsWith('/api/')){
       if(request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET'}});
+      if(url.pathname==='/api/breaking-news/status'){
+        const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env,{passive:true})):null;
+        const revision=newsEditionRevision(edition);
+        const response=json({revision,generatedAt:revision?new Date(edition.generatedAt).toISOString():null},200,15);
+        response.headers.set('X-Robots-Tag','noindex');
+        return response;
+      }
       if(url.pathname==='/api/breaking-news'){
         const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
         const stories=freshNews(edition);
