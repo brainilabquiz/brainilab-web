@@ -80,6 +80,44 @@ class SEOTest(unittest.TestCase):
         self.assertNotIn(SOURCE,requests);self.assertEqual(result['sources'][0]['state'],'robots_disallowed')
         with self.assertRaises(RuntimeError):seo.crawl([URL],[],now=AT,fetcher=lambda u:response(u,b'',503))
 
+    def test_incoming_exact_targets_are_inspected_without_borrowing_alias_checks(self):
+        alias=URL+'index.html';missing=URL+'missing/';blocked=URL+'blocked/'
+        requests=[]
+        def targets(u):
+            requests.append(u)
+            if u=='https://brainilabgames.com/robots.txt':return response(u,b'User-agent: *\nDisallow: /games/example/blocked/')
+            if u==SOURCE:return response(u,(''.join('<a href="'+x+'">Play</a>' for x in [URL,alias,missing,blocked])).encode())
+            if u==alias:return response(URL)
+            if u==missing:return response(u,b'',404)
+            return fake(u)
+        result=seo.crawl([URL],[SOURCE],now=AT,fetcher=targets)
+        pages={p['url']:p for p in result['pages']}
+        self.assertEqual(len(pages),4);self.assertEqual(requests.count(URL),1)
+        self.assertEqual(pages[alias]['finalUrl'],URL)
+        self.assertFalse(pages[alias]['checks']['canonical'])
+        self.assertTrue(pages[URL]['checks']['canonical'])
+        self.assertEqual(pages[missing]['status'],404);self.assertIsNone(pages[missing]['trust'])
+        self.assertEqual(pages[blocked]['status'],0);self.assertNotIn(blocked,requests)
+        self.assertEqual(len(result['backlinks']),4)
+
+    def test_target_expansion_respects_total_budget_and_does_not_fetch_failed_source_history(self):
+        pages=[f'https://brainilabgames.com/page-{i}/' for i in range(249)]
+        targets=[URL+'a/',URL+'z/'];requests=[]
+        def bounded(u):
+            requests.append(u)
+            if u==SOURCE:return response(u,(''.join('<a href="'+x+'">Play</a>' for x in reversed(targets))).encode())
+            return fake(u)
+        result=seo.crawl(pages,[SOURCE],now=AT,fetcher=bounded)
+        self.assertEqual(len(result['pages']),250)
+        self.assertIn(targets[0],requests);self.assertNotIn(targets[1],requests)
+        def failed(u):
+            requests.append(u)
+            return response(u,b'',403) if u==SOURCE else fake(u)
+        requests.clear()
+        later=seo.crawl([URL],[SOURCE],previous=result,now=AT,fetcher=failed)
+        self.assertEqual(later['backlinks'],[])
+        self.assertFalse(any(t in requests for t in targets))
+
     def test_public_hosts(self):
         for bad in ['http://example.org/','https://127.0.0.1/','https://user:pass@example.org/','https://localhost/','https://example.org:8443/']:
             self.assertIsNone(seo.public_url(bad))

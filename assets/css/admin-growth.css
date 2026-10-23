@@ -47,3 +47,4 @@
 .growth-page-review h3{scroll-margin-top:6rem}
 
 .growth-seo-explorer [data-seo-decision-label]{grid-column:1/-1}.growth-seo-explorer [data-seo-open-decision]{display:block;margin-top:.5rem;min-height:44px}.growth-proposal[tabindex="-1"]{scroll-margin-top:6rem}.growth-proposal[tabindex="-1"]:focus{outline:3px solid var(--growth-ink);outline-offset:4px}
+.growth-seo-explorer .growth-link-destination td{white-space:normal;overflow-wrap:anywhere;min-width:12rem;max-width:24rem}.growth-link-destination td:last-child{min-width:18rem;line-height:1.6}.growth-link-destination summary{cursor:pointer;min-height:44px;display:flex;align-items:center;text-decoration:underline;text-underline-offset:3px}.growth-link-destination ul{padding-left:1rem}.growth-link-destination li{margin:.5rem 0;line-height:1.5}
