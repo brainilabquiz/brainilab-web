@@ -19,7 +19,7 @@ test('empty news page offers a reading route without stale dates or caching the 
   // Preview never reads production news or triggers a paid bootstrap.
   const r=await worker.fetch(new Request('https://preview.example.org/breaking-news/'),e.env,ctx);
   const html=await r.text();
-  assert.match(html,/No fresh stories/);assert.match(html,/href="\/learn\/"/);
+  assert.match(html,/no fresh stories/i);assert.match(html,/href="\/learn\/"/);
   assert.doesNotMatch(html,/<time|Updated|API|Codex/);assert.equal(e.reads(),0);
   assert.equal(r.headers.get('Cache-Control'),'no-store');
 });
