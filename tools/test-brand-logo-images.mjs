@@ -29,6 +29,8 @@ for(const original of [
  '<style>.a{content:'+JSON.stringify(picture())+'}</style>',
  '<!-- '+picture()+' -->'
 ])assert.equal(brandLogoAVIF(original,'games/number-route/index.html'),original,'Unknown/replacement/code images stay untouched');
+const withBase='<head><base href="https://external.test/"></head>'+picture();
+assert.equal(brandLogoAVIF(withBase,'games/number-route/index.html'),withBase);
 for(const file of ['profile/index.html','admin/index.html','account/index.html','privacy/index.html','preview/index.html'])assert.equal(brandLogoAVIF(picture('../'),file),picture('../'));
 const home=readFileSync('index.html','utf8');assert.equal(brandLogoAVIF(home,'index.html'),homeLogoAVIF(home,'index.html'),'Keep existing homepage behaviour');
 
