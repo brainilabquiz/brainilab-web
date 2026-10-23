@@ -4,7 +4,7 @@ import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versi
 import {pageStyles} from '../lib/page-styles.js';
 import {homeConsent} from '../lib/home-consent.js';
 import {homeFirstPaint,homeConsentFirstResponse,homeSeasonFirstPaint} from '../lib/home-first-paint.js';
-import {homeLogoAVIF} from '../lib/home-images.js';
+import {brandLogoAVIF} from '../lib/brand-logo-images.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -29,6 +29,7 @@ import './test-preferred-source.mjs';
 import './test-content-links.mjs';
 import './test-article-previews.mjs';
 import './test-image-sitemap.mjs';
+import './test-brand-logo-images.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -107,7 +108,7 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
     assetVersions.set(styles.asset,assetVersion(await readFile(target)));
     pageStyleBundles.push({page:file,asset:styles.asset,sheets:styles.files.length});html=styles.html;
   }
-  html=homeLogoAVIF(versionAssets(html,file,assetVersions),file);
+  html=brandLogoAVIF(versionAssets(html,file,assetVersions),file);
   html=await homeFirstPaint(html,file,css=>readFile(path.join(output,css),'utf8'));
   if(file==='index.html')html=homeConsentFirstResponse(html,file,await readFile(path.join(output,'assets/js/consent.bundle.js'),'utf8'));
   if(file==='index.html')html=homeSeasonFirstPaint(html,file,await readFile(path.join(output,'assets/css/halloween.css'),'utf8'),halloweenAssets['assets/css/halloween.css']);
