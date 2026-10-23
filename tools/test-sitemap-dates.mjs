@@ -27,7 +27,8 @@ const fetcher=async input=>new Response(JSON.stringify(input.includes('learn_pub
 const response=await serveLearn(new Request('https://brainilabgames.com/sitemap.xml'),env,{waitUntil(){}},{match:async()=>null,put:async()=>{}},fetcher);
 assert.equal(response.status,200);const xml=await response.text();
 assert.ok(xml.includes('<loc>https://brainilabgames.com/learn/legacy-date-check/</loc><lastmod>2026-10-11T08:49:38Z</lastmod>'));
-assert.ok(xml.includes('<loc>https://brainilabgames.com/learn/invalid-date-check/</loc></url>'));
+const invalidEntry=xml.match(/<url><loc>https:\/\/brainilabgames\.com\/learn\/invalid-date-check\/<\/loc>[\s\S]*?<\/url>/)?.[0];
+assert.ok(invalidEntry&&!invalidEntry.includes('<lastmod>'));
 assert.ok(!xml.includes('464979')&&!xml.includes('2026-02-30'));
 assert.ok(xml.includes('/games/')&&xml.includes('/learn/topics/'));
 console.log('PASS sitemap dates: stored timestamps, SQL/ISO/offset formats, calendar validation, no invented date, current articles and Worker XML.');
