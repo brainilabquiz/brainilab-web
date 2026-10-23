@@ -17,3 +17,7 @@ Collected at about 08:25 UTC with the project's own `collectPublisherSources` (s
 5. NASA — https://www.nasa.gov/news-release/nasa-invites-media-to-2026-von-braun-space-exploration-symposium/ — publication day 22 October, conservatively 2026-10-22T00:00:00Z. Dates, venue and themes from the release.
 
 Fixed preparation time 2026-10-23T08:30:00Z. Stories expire individually 48 hours after publication; the NASA item first, the edition by 25 October. A newer successful automated edition replaces this one.
+
+## Reviewed recovery after the key rotation
+
+The owner replaced the `OPENAI_API_KEY` Cloudflare secret on 23 October 2026 (about 08:45 UTC). `key-rotation-2026-10-23` in `lib/news-refresh.js` allows exactly one recovery attempt when the stored status is `invalid-key` from before 2026-10-23T08:40Z, between that time and 2026-10-30. The first edition read after deployment schedules one alarm; the attempt reserves the usual 14 cents inside the unchanged monthly allowance and records `review-attempt:key-rotation-2026-10-23`. The ledger, previous markers and diagnostics are kept. Success returns to the 00:00/12:00 UTC cron; any new failure (including another 401) stays paused until the next review.
