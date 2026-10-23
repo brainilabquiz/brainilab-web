@@ -18,7 +18,7 @@ assert.equal(pageStyles('<head><link rel="stylesheet" href="/assets/css/editoria
 const digest=assetVersion(Buffer.from('body{color:red}'));
 const versions=new Map([result.asset,'assets/js/consent.bundle.js','assets/css/print.css','assets/css/off.css'].map(file=>[file,digest]));
 assert.ok(versionAssets(result.html,'index.html',versions).includes('home-page.css?v='+digest),'new combined stylesheet has exact byte-based cache invalidation');
-for(const [file,asset] of [['index.html','home-page'],['profile/index.html','profile-page'],['games/number-route/index.html','number-route-page']]){
+for(const [file,asset] of [['index.html','home-page'],['profile/index.html','profile-page'],['games/number-route/index.html','number-route-page'],['games/math-rush/index.html','math-rush-page'],['games/sequence/index.html','sequence-page'],['learn/index.html','learn-page']]){
  const actual=readFileSync(file,'utf8'),plan=pageStyles(actual,file);
  assert.equal(plan.asset,'assets/css/'+asset+'.css');assert.ok(plan.files.length>=2);
  assert.ok(!plan.files.some(css=>/\/(site|mobile|stats)\.css$/.test(css)),'core sheets retain cross-route browser cache reuse');
@@ -32,7 +32,18 @@ const links=html=>Array.from(html.matchAll(/<link\b[^>]*rel=["']stylesheet["'][^
 assert.equal(links(route).length,8);assert.equal(links(routePlan.html).length,3,'eight blocking stylesheet links become two shared core links and one page bundle');
 assert.equal(pageStyles(routePlan.html,routeFile),null,'a second transform must not add a second page bundle');
 assert.deepEqual(Array.from(routePlan.html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),match=>match[0]),Array.from(route.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),match=>match[0]),'consent, analytics, structured data and gameplay scripts retain their exact bytes');
-for(const file of ['geography/world-flags-quiz/index.html','science/science-quiz/index.html','games/math-rush/index.html','learn/index.html'])assert.equal(pageStyles(readFileSync(file,'utf8'),file),null,'do not expand CSS bundling to unmeasured routes');
+for(const file of ['geography/world-flags-quiz/index.html','science/science-quiz/index.html','games/connections/index.html','learn/why-2100-is-not-a-leap-year/index.html'])assert.equal(pageStyles(readFileSync(file,'utf8'),file),null,'do not create additional page bundles outside the measured games and shared Learn template');
 for(const middle of ['<link rel="stylesheet" href="/assets/css/mobile.css">','<style>.nr{display:none}</style>','<link rel="stylesheet" href="/assets/css/print.css" media="print">'])assert.equal(pageStyles('<head><link rel="stylesheet" href="/assets/css/game-entry.css">'+middle+'<link rel="stylesheet" href="/assets/css/post-game.css"></head>',routeFile),null,'Number Route must use the same cascade barriers as other measured routes');
+for(const [file,names,count] of [
+ ['games/math-rush/index.html',['game-entry','post-game','continuity','visual-system'],3],
+ ['games/sequence/index.html',['post-game','continuity','visual-system','game-entry'],3],
+ ['learn/index.html',['discovery-system','editorial','game-entry','visual-system'],4]
+]){
+ const input=readFileSync(file,'utf8'),plan=pageStyles(input,file);
+ assert.deepEqual(plan.files,names.map(n=>'assets/css/'+n+'.css'),'preserve every original sheet and its exact order on '+file);
+ assert.equal(links(plan.html).length,count);assert.equal(pageStyles(plan.html,file),null,'do not duplicate the combined sheet');
+ assert.deepEqual(Array.from(plan.html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),m=>m[0]),Array.from(input.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),m=>m[0]),'preserve game, consent, analytics and Academy scripts');
+}
+assert.equal(pageStyles('<head><link rel="stylesheet" href="/assets/css/editorial.css"><link rel="stylesheet" href="/assets/css/learning-paths.css"><link rel="stylesheet" href="/assets/css/visual-system.css"></head>','learn/index.html'),null,'an intervening Academy sheet remains a cascade barrier');
 console.log('PASS page CSS: cascade order, relative assets, unrelated routes, external/print/disabled sheets, inline-style safety, exact cache versions and unchanged page bodies.');
 
