@@ -30,6 +30,7 @@ import './test-content-links.mjs';
 import './test-article-previews.mjs';
 import './test-image-sitemap.mjs';
 import './test-brand-logo-images.mjs';
+import './test-catalogue-readings.mjs';
 import './test-page-styles.mjs';
 
 const root=path.resolve('.');

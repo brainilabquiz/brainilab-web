@@ -9,7 +9,7 @@ const graph=JSON.parse(doc.querySelector('script[type="application/ld+json"]').t
 const list=graph.find(x=>x['@type']==='ItemList');
 const normalise=value=>new URL(value,'https://brainilabgames.com/games/').pathname.replace(/index\.html$/,'').replace(/\/$/,'');
 const cards=[...doc.querySelectorAll('[data-anytime-game]')];
-const routes=cards.map(card=>normalise(card.querySelector('a').getAttribute('href')));
+const routes=cards.map(card=>normalise(card.querySelector('.difficulty-actions a').getAttribute('href')));
 assert.equal(list.numberOfItems,cards.length);
 assert.equal(new Set(list.itemListElement.map(x=>x.url)).size,cards.length);
 assert.deepEqual(list.itemListElement.map(x=>normalise(x.url)).sort(),routes.sort(),'Every distinct visible game has one structured link');
@@ -33,6 +33,11 @@ for(const fixture of fixtures){
  w.BrainiData={dailyGameIdsForDate:date=>date<'2026-09-01'?['brainmix','brainiword','orderup','topicrush']:[],recentResults:()=>[{practice:true,challengeDate:'2026-08-29'}],personalBest:()=>null,player:()=>({level:1}),saveResult:()=>{writes++;},addXP:()=>{writes++;}};
  w.BrainiIcons={product:()=>''};w.eval(script);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  const links=[...w.document.querySelectorAll('[data-random-past-game]')];
+ const readings=[...w.document.querySelectorAll('.catalogue-reading')];assert.equal(readings.length,18);
+ const readingHrefs=readings.map(a=>a.getAttribute('href'));w.dispatchEvent(new w.Event('brainilab:datachange'));
+ assert.ok(readings.every(a=>a.isConnected),'Score/status hydration preserves each reading action');
+ assert.deepEqual([...w.document.querySelectorAll('.catalogue-reading')].map(a=>a.getAttribute('href')),readingHrefs);
+ assert.ok(w.document.querySelector('[data-anytime-status]').textContent.includes('Played'),'Existing played feedback remains visible beside the reading');
  assert.ok(links.every(a=>a.href.endsWith('?archive=2026-08-30')),'Hydration still chooses unseen practice content');
  assert.ok(links.every(a=>!a.pathname.endsWith('/index.html')),'Hydrated archive links reach the canonical game without a redirect');
  final.push(links.map(a=>({href:a.href,label:a.getAttribute('aria-label'),text:a.textContent})));
