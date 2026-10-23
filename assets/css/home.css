@@ -84,7 +84,7 @@
 @media(max-width:700px){.home-video{margin-top:18px;min-height:118px}.home-video-image{flex-basis:120px}.home-intro h1{font-size:36px}.home-video-copy strong{font-size:14px}.home-social-links{margin-top:10px}}
 @media(max-width:370px){.home-video-image{flex-basis:96px}.home-video{gap:11px;padding:10px}}
 
-/* Latest reading above the playlist, using the same compact visual rhythm. */
+/* Compact reading preview. */
 .home-intro .home-tagline{margin:14px 0 20px;font-size:16px;color:#655d54}
 /* The feed replaces label/title text after first paint. Reserve both lines in
    the fallback too, so a later video cannot move the article or its neighbours. */
@@ -117,3 +117,45 @@
 .home-game-card:nth-child(2)>img{background:#fff5cc}.home-game-card:nth-child(3)>img{background:#fff0e4}.home-game-card:nth-child(4)>img{background:#eeebf8}
 .home-game-card h3{margin:18px 0 10px}.home-game-card p{margin-bottom:18px;line-height:1.55}
 @media(max-width:700px){.home-game-card{padding:16px}.home-game-card>img{width:calc(100% + 32px);margin:-16px -16px 0;height:110px;padding:6px}.home-game-card h3{font-size:19px}}
+
+/* Two channels beside each other, with reading beneath the Daily. Shared grid
+   rows align the bottom edges without fixed heights or empty spacer elements. */
+body.braini-visual.home-page main>.home-hero{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"intro daily" "videos daily" "videos reading";gap:16px 32px;align-items:stretch}
+body.braini-visual.home-page .home-hero>.home-intro{grid-area:intro;justify-content:flex-start;align-self:start;min-width:0}
+body.braini-visual.home-page .home-hero>.challenge-wrap{grid-area:daily;min-width:0}
+body.braini-visual.home-page .home-hero>.challenge-wrap>div{height:100%}
+body.braini-visual.home-page .home-hero .challenge{height:100%;box-sizing:border-box}
+body.braini-visual.home-page .home-hero .home-start{height:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}
+body.braini-visual.home-page .home-hero .home-start>.challenge-pill{align-self:center}
+body.braini-visual.home-page .home-hero .home-start-actions{width:100%;max-width:350px}
+body.braini-visual.home-page .home-intro .home-tagline{margin-bottom:0}
+body.braini-visual.home-page .home-intro-media{grid-area:videos;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
+.home-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.braini-visual.home-page .home-video-grid .home-video{flex-direction:column;align-items:stretch;gap:0;margin:0;max-width:none;min-height:0;padding:0;overflow:hidden;border-left-width:1px}
+body.braini-visual.home-page .home-video-grid .home-video-image{flex:0 0 auto;width:100%;aspect-ratio:16/9;border-radius:0}
+body.braini-visual.home-page .home-video-grid .home-video-copy{flex:1;padding:14px;gap:9px}
+body.braini-visual.home-page .home-video-grid .video-label{font-size:10px;min-height:2.7em;color:#8c332a}
+body.braini-visual.home-page .home-video-grid strong{font-size:14px;line-height:1.4;min-height:4.2em;-webkit-line-clamp:3}
+body.braini-visual.home-page .home-video-grid .video-action{margin-top:auto;font-size:12px}
+body.braini-visual.home-page .home-intro-media .home-social-links{margin:0;min-height:32px;align-items:center}
+body.braini-visual.home-page .home-intro-media .home-social-links a{display:inline-flex;align-items:center;min-height:32px}
+body.braini-visual.home-page .home-reading{grid-area:reading;min-width:0;display:flex}
+body.braini-visual.home-page .home-reading .home-article{width:100%;max-width:none;margin:0;align-self:stretch}
+body.braini-visual.home-page .home-reading .home-article-empty{display:flex;align-items:center;min-height:64px;margin:0}
+@media(max-width:900px){
+ body.braini-visual.home-page main>.home-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"daily" "videos" "reading";gap:16px;padding-top:24px}
+ body.braini-visual.home-page .home-hero>.home-intro{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ body.braini-visual.home-page .home-hero .challenge{min-height:0}
+ body.braini-visual.home-page .home-intro-media{gap:6px}
+ body.braini-visual.home-page .home-video-grid .home-video-copy{padding:12px;gap:7px}
+}
+@media(max-width:420px){
+ .home-video-grid{gap:10px}
+ body.braini-visual.home-page .home-video-grid .home-video-copy{padding:10px}
+ body.braini-visual.home-page .home-video-grid strong{font-size:13px}
+ body.braini-visual.home-page .home-video-grid .video-action{font-size:11px}
+}
+/* The legacy inline quiz keeps the focus on the question during play. */
+body.braini-visual.home-page main>.home-hero:has(:is(.answers .answer,.home-daily-state)){grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "daily"}
+body.braini-visual.home-page .home-hero:has(:is(.answers .answer,.home-daily-state))>.home-intro{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none;white-space:normal}
+body.braini-visual.home-page .home-hero:has(:is(.answers .answer,.home-daily-state))>:is(.home-intro-media,.home-reading){display:none}
