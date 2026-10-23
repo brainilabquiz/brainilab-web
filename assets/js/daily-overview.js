@@ -1,6 +1,7 @@
 /* Daily discovery. Rules and saved results remain in the shared Daily contract. */
 window.BrainiDailyOverview=(function(){
   let revision=0,fragmentHandled=false,renderedMarkup=null,renderedOwner=null;
+  const initialMarkup=document.querySelector('[data-daily-overview]')?.innerHTML||'';
   function ownerKey(){
     const auth=BrainiData.authState?.()||{};
     return JSON.stringify([auth.status,auth.user?.id||auth.guestUserId||auth.anonymousPlayerId||'browser',BrainiData.todayKey()]);
@@ -32,6 +33,19 @@ window.BrainiDailyOverview=(function(){
     const extraHeading=container.querySelector('.daily-choice-extra-heading h3');
     if(extraHeading){const h2=document.createElement('h2');h2.textContent=extraHeading.textContent;extraHeading.replaceWith(h2);}
     if(choice){const heading=document.createElement('h2');heading.className='daily-main-heading';heading.textContent='Your main challenge';container.querySelector('.daily-choice-heading').after(heading);}
+    // Keep both choices available until one is picked. Afterwards, the unused
+    // option remains inspectable without competing with the selected game.
+    if(choice&&status.model.choices.includes(status.bonusChoice)){
+      const extras=container.querySelector('.daily-choice-extras');
+      const all=[...extras.querySelectorAll('.daily-choice-card')];
+      const selected=all.find(card=>card.dataset.dailyGame===status.bonusChoice);
+      const other=all.find(card=>card!==selected);
+      if(selected&&other){
+        const details=document.createElement('details'),summary=document.createElement('summary');
+        details.className='daily-other-extra';summary.textContent='Other option: '+BrainiDailyJourney.META[other.dataset.dailyGame].name;
+        details.append(summary,other);extras.replaceChildren(selected,details);extras.classList.add('has-choice');
+      }
+    }
   }
   function rules(choice){return choice?'<p>The main Daily keeps your streak going and earns up to <strong>2,500 points</strong>.</p><p>Want another round? Choose one extra for up to <strong>1,000 more points</strong>. Opening it locks your choice for today.</p>':'<p>Today has four challenges, worth up to <strong>2,500 points each</strong>. Your Daily Brain Score adds them together, up to 10,000.</p><p>Finish all four for the <strong>250 XP Full Daily bonus</strong>. Your first three verified games of each kind per UTC day earn game XP.</p>';}
   function guide(choice){
@@ -43,7 +57,9 @@ window.BrainiDailyOverview=(function(){
   async function render(){
     const root=document.querySelector('[data-daily-overview]');if(!root)return;
     const request=++revision,owner=ownerKey();
-    if(renderedOwner!==null&&renderedOwner!==owner){root.replaceChildren();renderedMarkup=null;fragmentHandled=false;}
+    const retryFocused=root.querySelector('[data-daily-retry]')===document.activeElement;
+    if(renderedOwner!==null&&renderedOwner!==owner){root.innerHTML=initialMarkup;renderedMarkup=null;fragmentHandled=false;}
+    else if(!renderedMarkup&&root.querySelector('.daily-load-error'))root.innerHTML=initialMarkup;
     renderedOwner=owner;root.setAttribute('aria-busy','true');
     try{
       const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});if(request!==revision||owner!==ownerKey())return;
@@ -52,9 +68,9 @@ window.BrainiDailyOverview=(function(){
       const date=new Date(day+'T12:00:00Z').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',timeZone:'UTC'});
       const progress=choice?(primaryDone?'Daily complete':'Ready when you are'):(Number(status.completedCount)||0)+' of 4 complete';
       const title=done?'That’s today’s Daily done.':'Your daily brain break.';
-      const intro=done?'Your result is saved. Stay for another game, or come back for tomorrow’s challenge.':choice?'One fresh challenge for your streak. An optional extra when you fancy more.':'Four fresh puzzles. Pick one, get curious, and see what you discover.';
+      const intro=done?'Your score is saved. Fancy another round?':choice?'One fresh challenge for your streak. An optional extra when you fancy more.':'Four fresh puzzles. Pick one, get curious, and see what you discover.';
       const journey=await BrainiDailyJourney.markup({status});if(request!==revision||owner!==ownerKey())return;
-      const markup='<header class="daily-discovery-header"><div><p class="daily-date">Daily #'+Number(status.dailyNumber)+' <span>·</span> <time datetime="'+day+'">'+date+'</time></p><h1>'+title+'</h1><p class="daily-intro">'+intro+'</p></div><a class="daily-progress-link" href="/profile/?section=progress">My progress ↗</a></header><div class="daily-dashboard"><div class="daily-play-panel" id="todays-games"><div data-daily-journey-hub>'+journey+'</div></div><aside class="daily-side" aria-label="Your Daily progress"><section class="daily-score-summary"><h2>Your day so far</h2><p class="daily-score-value"><strong>'+points(status.brainScore)+'</strong><span> / '+points(choice?status.model.maxScore:10000)+'</span></p><p>Daily ranking points</p><p class="daily-completion '+(done?'is-complete':'')+'">'+(done?'✓ ':'')+progress+'</p><a href="/rankings/">View rankings →</a></section><div data-braini-continuity>'+(window.BrainiContinuity?.markup?.()||'')+'</div><details class="daily-points-guide"><summary>How points work</summary>'+rules(choice)+'<p>New challenges arrive at 00:00 UTC.</p></details></aside></div>';
+      const markup='<header class="daily-discovery-header"><div><p class="daily-date">Daily #'+Number(status.dailyNumber)+' <span>·</span> <time datetime="'+day+'">'+date+'</time></p><h1>'+title+'</h1><p class="daily-intro">'+intro+'</p></div><a class="daily-progress-link" href="/profile/?section=progress">My progress →</a></header><div class="daily-dashboard"><div class="daily-play-panel" id="todays-games"><div data-daily-journey-hub>'+journey+'</div></div><aside class="daily-side" aria-label="Your Daily progress"><section class="daily-score-summary"><h2>Your day so far</h2><p class="daily-score-value"><strong>'+points(status.brainScore)+'</strong><span> / '+points(choice?status.model.maxScore:10000)+'</span></p><p>Daily ranking points</p><p class="daily-completion '+(done?'is-complete':'')+'">'+(done?'✓ ':'')+progress+'</p><a href="/rankings/">View rankings →</a></section><div data-braini-continuity>'+(window.BrainiContinuity?.markup?.()||'')+'</div><details class="daily-points-guide"><summary>How points work</summary>'+rules(choice)+'<p>New challenges arrive at 00:00 UTC.</p></details></aside></div>';
       root.querySelector('[data-daily-refresh-error]')?.remove();
       if(renderedMarkup!==markup||!root.querySelector('.daily-dashboard')){
         root.innerHTML=markup;decorateJourney(root,status);
@@ -73,12 +89,21 @@ window.BrainiDailyOverview=(function(){
         return;
       }
       renderedMarkup=null;
-      root.innerHTML='<section class="daily-load-error"><h1>Today’s Daily could not load.</h1><p>Check your connection and try again.</p><button type="button" data-daily-retry>Try again</button><a href="/games/">Explore the games</a></section>';
+      root.innerHTML=initialMarkup;
+      const errorPanel=document.createElement('section');errorPanel.className='daily-load-error';errorPanel.setAttribute('role','status');
+      errorPanel.innerHTML='<h2>Today’s Daily could not load.</h2><p>Check your connection and try again.</p><button type="button" data-daily-retry>Try again</button><a href="/games/">Explore games →</a>';
+      const loading=root.querySelector('.daily-loading');if(loading)loading.replaceWith(errorPanel);else root.append(errorPanel);
       root.querySelector('[data-daily-retry]').addEventListener('click',render);
-    }finally{if(request===revision)root.removeAttribute('aria-busy');}
+    }finally{if(request===revision){
+      root.removeAttribute('aria-busy');
+      if(retryFocused&&location.hash!=='#daily-extras'){
+        const target=root.querySelector('[data-daily-retry]')||root.querySelector('h1');
+        if(target){if(target.tagName==='H1')target.tabIndex=-1;target.focus({preventScroll:true});}
+      }
+    }}
   }
   document.addEventListener('DOMContentLoaded',render);
   window.addEventListener('hashchange',()=>{fragmentHandled=false;revealExtra();});
-  for(const event of ['brainilab:datachange','brainilab:progressionchange','brainilab:daychange'])window.addEventListener(event,render);
+  for(const event of ['brainilab:datachange','brainilab:progressionchange','brainilab:daychange','brainilab:authchange'])window.addEventListener(event,render);
   return {render};
 })();
