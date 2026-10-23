@@ -21,7 +21,9 @@ for(const file of readingPages){
  if(start)assert.ok(start.compareDocumentPosition(section)&d.window.Node.DOCUMENT_POSITION_FOLLOWING,file);
  assert.equal(doc.querySelectorAll('h1').length,1,file);
  assert.equal(doc.querySelectorAll('link[href*="game-entry.css"]').length,1,file);
- assert.ok(section.querySelectorAll('a').length<=2,file);
+ assert.ok(section.querySelectorAll('.game-reading-card').length<=2,file);
+ assert.ok(section.querySelectorAll('.game-reading-extra a').length<=1,file);
+ assert.ok(section.querySelectorAll('a').length<=3,file);
  if(file==='games/brainiword/index.html')assert.match(doc.querySelector('.play-guide').textContent,/PLANT.*TRAIN/);
  d.window.close();
 }
