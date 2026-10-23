@@ -162,3 +162,9 @@ body.braini-visual{
   html{scroll-behavior:auto}
   .braini-visual :is(.card,.learn-card,.anytime-game-card,.btn,.answer){transition:none;transform:none}
 }
+
+/* The news destination uses one quiet red treatment, without a second active underline. */
+.braini-visual .topbar .links a.news-nav-link{color:#a8241d!important;border:1px solid transparent!important;border-radius:8px;padding:8px 12px;background:#fff1ef;animation:none!important;box-shadow:none!important}
+.braini-visual .topbar .links a.news-nav-link:hover{background:#fce5e1}
+.braini-visual .topbar .links a.news-nav-link[aria-current=page]{background:#fce5e1;border-color:#ecb4ac!important}
+.braini-visual .topbar .links a.news-nav-link::after{display:none!important}

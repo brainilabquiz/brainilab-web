@@ -33,6 +33,6 @@ test('standalone news uses one main heading and second-level story headings', ()
   const html=renderNews(edition([story]),now);
   assert.equal((html.match(/<h1\b/g)||[]).length,1);
   assert.match(html,/<h1 id="breaking-news-title">Breaking News<\/h1>/);
-  assert.match(html,/<h2><a[^>]+>A test headline<span/);
+  assert.match(html,/<h2 id="news-story-1-title">A test headline<\/h2>/);
   assert.doesNotMatch(html,/<h3\b/);
 });

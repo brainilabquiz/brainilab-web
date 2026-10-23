@@ -58,7 +58,7 @@ test('returning after five minutes checks once, omits credentials and leaves all
  assert.equal(h.label(),'Check latest');assert.equal(h.w.document.querySelector('ol').outerHTML,before);assert.equal(h.status(),'');h.dom.window.close();
 });
 test('new edition is politely announced once, without replacing stories, moving focus or navigating',async()=>{
- const h=harness(undefined,{revision:'1234567890abcdef',generatedAt:'2026-10-23T10:30:00Z'}),link=h.w.document.querySelector('h2 a'),body=h.w.document.querySelector('ol').outerHTML;
+ const h=harness(undefined,{revision:'1234567890abcdef',generatedAt:'2026-10-23T10:30:00Z'}),link=h.w.document.querySelector('.breaking-news__story-link'),body=h.w.document.querySelector('ol').outerHTML;
  link.focus();h.advance(300000);h.event('pageshow');await flush();
  assert.equal(h.label(),'Updated brief ready');assert.match(h.status(),/updated brief/);assert.equal(h.w.document.activeElement,link);assert.equal(h.w.location.href,'https://brainilabgames.com/breaking-news/');assert.equal(h.w.document.querySelector('ol').outerHTML,body);
  assert.ok(h.w.document.querySelector('[data-news-new]'));const status=h.status();h.advance(300000);h.event('focus');await flush();assert.equal(h.status(),status);h.dom.window.close();
