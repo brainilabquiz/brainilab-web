@@ -41,7 +41,8 @@ test('source names are escaped and no headline can create markup or unsafe links
 });
 test('template keeps indexing rules and removes home-only loading and stylesheet work',()=>{
  const html=readFileSync(new URL('../breaking-news/index.html',import.meta.url),'utf8');
- assert.match(html,/content="noindex,follow"/);assert.match(html,/class="editorial-skip" href="#main-content"/);
+ // The Worker switches to noindex,follow when there are no current stories (tools/test-breaking-news-robots.mjs).
+ assert.match(html,/content="index,follow,max-image-preview:large,max-snippet:-1" name="robots"/);assert.match(html,/class="editorial-skip" href="#main-content"/);
  assert.doesNotMatch(html,/home\.css|homeQuiz\[data-home-loading\]/);assert.match(html,/aria-current="page" class="news-nav-link"/);
  const css=readFileSync(new URL('../assets/css/breaking-news.css',import.meta.url),'utf8');
  assert.doesNotMatch(css,/news-aura|@keyframes|animation:/);assert.match(css,/:focus-visible/);
