@@ -54,13 +54,25 @@
 @media(prefers-reduced-motion:reduce){.games-library-page .anytime-game-card{transition:none}}
 
 
-/* Separate format and topic choices; keep every available option visible. */
-.game-topic-filters[hidden],.game-topic-filters button[hidden]{display:none!important}
-.game-format-filters{border-bottom:1px solid #ded9e9;padding-bottom:12px;margin-bottom:12px}
-.game-format-filters button{border-radius:12px;min-width:96px;font-size:16px}
+/* Compact catalogue finder. */
+.game-format-filters{flex-wrap:nowrap;margin:0;gap:6px}
+.game-format-filters button{border-radius:12px;min-width:72px;font-size:14px}
 .game-format-filters button[aria-pressed="true"]{background:#ffe014;border-color:#ffe014;color:#2d296e}
 .game-topic-directory{margin-block:24px}.game-topic-directory a{display:inline-block;padding-block:10px;text-underline-offset:4px}
 
 .games-library-page .game-starters{margin-top:24px}
 .games-library-page .game-starters[hidden]{display:none!important}
 @media(max-width:480px){.game-format-filters button{flex:1;min-width:0;padding-inline:8px}}
+
+.games-library-page .games-skip-link{position:fixed;left:16px;top:-90px;z-index:1000;padding:12px 18px;border-radius:8px;background:#2d296e;color:#fff;font-weight:700}.games-library-page .games-skip-link:focus{top:12px}.games-library-page #games-content{scroll-margin-top:90px}
+.games-library-page .game-finder{display:grid;grid-template-columns:minmax(220px,1fr) minmax(170px,220px) auto;gap:16px;align-items:end;padding:0 0 16px;margin-bottom:12px;border-bottom:1px solid #ded9e9}
+.games-library-page .game-finder[hidden],.games-library-page [data-game-clear][hidden],.games-library-page .game-finder-empty[hidden]{display:none!important}
+.game-finder label{display:block;font-size:13px;font-weight:700;color:#2d296e;margin-bottom:6px}.game-search-field,.game-topic-field{min-width:0}
+.game-search-input{position:relative}.game-search-input>svg{position:absolute;left:14px;top:14px;width:20px;height:20px;pointer-events:none;color:#65617b}
+.game-finder input,.game-finder select{box-sizing:border-box;width:100%;min-height:48px;border:1px solid #cbc7dc;border-radius:12px;background:#fff;color:#2d296e;font:500 15px/1.4 Montserrat,system-ui,sans-serif}
+.game-finder input{padding:11px 48px 11px 42px}.game-finder input::placeholder{color:#716b80;opacity:1}.game-finder input::-webkit-search-cancel-button{appearance:none}.game-finder select{padding:11px 32px 11px 12px;text-overflow:ellipsis}
+.game-search-input button{position:absolute;right:2px;top:2px;width:44px;min-height:44px;border:0;border-radius:10px;background:transparent;color:#65617b;font-size:26px;cursor:pointer}.game-search-input button:hover{background:#f1eff8;color:#2d296e}
+.game-finder input:focus-visible,.game-finder select:focus-visible,.game-finder button:focus-visible,.game-finder-empty button:focus-visible{outline:3px solid #3fab34;outline-offset:3px}
+.game-finder .game-format-filters button{min-height:48px;padding:10px 14px}
+.game-finder-empty{text-align:center;padding:36px 16px;background:#fffdf8;border:1px solid #ded9e9;border-radius:16px}.game-finder-empty h2{font-size:24px;margin:0 0 8px}.game-finder-empty p{font-size:15px;color:#65617b;margin:0 0 16px}.game-finder-empty button{display:inline-flex;align-items:center;gap:20px;min-height:44px;padding:10px 18px;background:#2d296e;color:#fff;border:0;border-radius:12px;font:700 14px/1.4 Montserrat,system-ui,sans-serif;cursor:pointer}
+@media(max-width:760px){.games-library-page .game-finder{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:12px 8px}.game-search-field{grid-column:1/-1}.game-finder .game-format-filters button{flex:1;min-width:0;padding:10px 7px;font-size:13px}.game-finder select{font-size:14px}}

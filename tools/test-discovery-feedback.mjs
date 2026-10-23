@@ -7,17 +7,18 @@ function page(file,path,script){const dom=new JSDOM(read(file),{url:'https://bra
 for(const [query,expected] of [['?type=numbers',3],['?type=words',3],['?type=quizzes',8],['?type=games',10],['?type=quizzes&topic=geography',3],['?type=games&topic=geography',10],['?type=private%40example.com',18],['?type=words&type=numbers',18],['?topic=science&topic=history',18]]){
  const d=page('games/index.html','/games/'+query,'assets/js/game-discovery.js'),w=d.window;
  const shown=()=>[...w.document.querySelectorAll('[data-anytime-game]')].filter(e=>!e.hidden);
- assert.equal(shown().length,expected,query);assert.equal(w.document.querySelectorAll('[aria-pressed="true"]').length,2);
+ const choose=topic=>{const select=w.document.querySelector('[data-game-topics]');select.value=topic;select.dispatchEvent(new w.Event('change',{bubbles:true}));};
+ assert.equal(shown().length,expected,query);assert.equal(w.document.querySelectorAll('[aria-pressed="true"]').length,1);
  w.document.querySelector('[data-game-filter="all"]').click();assert.equal(shown().length,18);assert.equal(new URL(w.location.href).searchParams.has('type'),false);
- w.document.querySelector('button[data-game-topic="words"]').click();assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['brainiword','connections','oddoneout']);assert.equal(new URL(w.location.href).searchParams.get('topic'),'words');
+ choose('words');assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['brainiword','connections','oddoneout']);assert.equal(new URL(w.location.href).searchParams.get('topic'),'words');
  w.document.querySelector('[data-game-filter="quizzes"]').click();assert.equal(shown().length,8);
- w.document.querySelector('button[data-game-topic="geography"]').click();assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['worldflags','europeflags','worldcapitals']);assert.equal(w.document.querySelector('.game-starters').hidden,true);
- w.document.querySelector('[data-game-filter="games"]').click();assert.equal(shown().length,10);assert.equal(w.document.querySelector('button[data-game-topic="geography"]').hidden,true);
- w.document.querySelector('button[data-game-topic="knowledge"]').click();assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['orderup','topicrush','survival','higherlower']);
+ choose('geography');assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['worldflags','europeflags','worldcapitals']);assert.equal(w.document.querySelector('.game-starters').hidden,true);
+ w.document.querySelector('[data-game-filter="games"]').click();assert.equal(shown().length,10);assert.equal(w.document.querySelector('option[value="geography"]').disabled,true);
+ choose('knowledge');assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['orderup','topicrush','survival','higherlower']);
  w.history.replaceState(null,'','?type=quizzes&topic=sports');w.dispatchEvent(new w.PopStateEvent('popstate'));assert.deepEqual(shown().map(e=>e.dataset.anytimeGame),['sports']);
  d.window.close();
 }
-const plain=new JSDOM(read('games/index.html'));assert.equal(plain.window.document.querySelectorAll('[data-anytime-game]').length,18);assert.equal(plain.window.document.querySelectorAll('[data-anytime-game][hidden]').length,0);assert.equal(plain.window.document.querySelector('[data-game-filters]').hidden,true);assert.equal(plain.window.document.querySelectorAll('.game-topic-directory a').length,5);assert.equal(plain.window.document.querySelector('#europe-flags a').getAttribute('href'),'/geography/europe-flags-quiz/');plain.window.close();
+const plain=new JSDOM(read('games/index.html'));assert.equal(plain.window.document.querySelectorAll('[data-anytime-game]').length,18);assert.equal(plain.window.document.querySelectorAll('[data-anytime-game][hidden]').length,0);assert.equal(plain.window.document.querySelector('[data-game-finder]').hidden,true);assert.equal(plain.window.document.querySelectorAll('.game-topic-directory a').length,5);assert.equal(plain.window.document.querySelector('#europe-flags a').getAttribute('href'),'/geography/europe-flags-quiz/');plain.window.close();
 const d=page('suggestions/index.html','/suggestions/?context=post-game&game=worldflags','assets/js/suggestions-ui.js'),w=d.window,doc=w.document;
 assert.equal(doc.querySelector('h1').textContent,'How was your game?');assert.equal(doc.getElementById('feedbackGame').textContent,'About World Flags');
 assert.ok([...doc.querySelectorAll('[data-feedback-return]')].every(link=>link.pathname==='/geography/world-flags-quiz/'));
