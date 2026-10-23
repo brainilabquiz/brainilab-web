@@ -9,9 +9,10 @@ const articles=readdirSync('content/articles').filter(f=>f.endsWith('.json')).ma
 for(const file of readingPages){
  const html=readFileSync(file,'utf8'),result=refreshGameReadings(html,articles,file);
  assert.equal(refreshGameReadings(result,articles,file),result,'reading refresh is idempotent');
- const d=new JSDOM(result).window.document,links=[...d.querySelectorAll('[data-game-guides] a')];
+ const d=new JSDOM(result).window.document,links=[...d.querySelectorAll('[data-game-guides] .game-reading-card')];
  assert.equal(d.querySelectorAll('[data-game-guides]').length,1);assert.ok(links.length>=1&&links.length<=2);
  for(const link of links){const a=articles.find(a=>link.getAttribute('href')==='/learn/'+a.slug+'/');assert.ok(a);assert.equal(link.querySelector('strong').textContent,a.title);const image=link.querySelector('img');assert.equal(image.alt,'');assert.ok(existsSync(image.getAttribute('src').slice(1)));assert.equal(image.getAttribute('loading'),'lazy');}
+ for(const link of d.querySelectorAll('.game-reading-extra a'))assert.ok(articles.some(a=>link.getAttribute('href')==='/learn/'+a.slug+'/'));
  assert.equal(d.querySelectorAll('aside[aria-label="Related reading"]').length,0);
  d.defaultView.close();
 }
