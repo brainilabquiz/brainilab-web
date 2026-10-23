@@ -1,0 +1,53 @@
+{
+  "title": "BrainiLab: first 200 completed recorded games",
+  "checked_on": "2026-10-23",
+  "period_utc": {
+    "from": "2026-08-28T23:17:03.86+00:00",
+    "through": "2026-10-18T10:42:54.91127+00:00"
+  },
+  "selection": "First 200 completed game sessions with a recorded result, ordered by completion time and a stable tie-break. Snapshot checked 23 October 2026.",
+  "recorded_rounds": 200,
+  "excluded_administration_account_rounds": 102,
+  "excluded_other_unverified_rounds": 8,
+  "eligible_verified_rounds": 90,
+  "comparison_minimum_rounds": 10,
+  "comparison": [
+    {
+      "game": "Math Rush",
+      "rounds": 16,
+      "correct_answers": 283,
+      "counted_answers": 308,
+      "answer_accuracy_percent": 91.9
+    },
+    {
+      "game": "World Flags",
+      "rounds": 12,
+      "correct_answers": 199,
+      "counted_answers": 240,
+      "answer_accuracy_percent": 82.9
+    },
+    {
+      "game": "Science Quiz",
+      "rounds": 16,
+      "correct_answers": 216,
+      "counted_answers": 320,
+      "answer_accuracy_percent": 67.5
+    }
+  ],
+  "science_easy": {
+    "rounds": 4,
+    "correct_answers": 74,
+    "counted_answers": 80,
+    "answer_accuracy_percent": 92.5
+  },
+  "method": "Sum of verified correct answers divided by sum of verified counted answers; round to one decimal place. Repeated rounds count separately. The three comparison games account for 44 of the 90 eligible rounds.",
+  "limitations": [
+    "Only completed recorded rounds; not visits or unfinished games.",
+    "Different players, question sets, difficulties and game rules; not matched tests.",
+    "Known administration accounts excluded; other test accounts may remain.",
+    "Math Rush skips excluded from its answer denominator.",
+    "Versions changed during the period; most eligible Math Rush rounds use its newer scoring version.",
+    "Self-selected small sample; not evidence of population abilities, learning gains or intelligence."
+  ],
+  "privacy": "Aggregates only; no player names, identifiers, contact details or individual results."
+}

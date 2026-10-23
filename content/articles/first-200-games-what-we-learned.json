@@ -1,0 +1,61 @@
+{
+  "slug": "first-200-games-what-we-learned",
+  "title": "200 games in: where did BrainiLab players shine?",
+  "description": "Maths, flags or science? We checked BrainiLab’s first 200 recorded games. The early results look clear, until difficulty enters the picture.",
+  "topic": "Learning",
+  "status": "published",
+  "order": 207,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/first-200-games-what-we-learned.webp",
+    "small": "/assets/images/learn/first-200-games-what-we-learned-small.webp",
+    "thumbnail": "/assets/images/learn/first-200-games-what-we-learned-thumb.webp",
+    "alt": "Arithmetic cards, flags of Japan, France and Italy, and a glass flask on a sunny desk",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined scene, not a photograph of players or research data.",
+    "position": 50
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/science/science-quiz/",
+    "name": "Science Quiz"
+  },
+  "practice": "Pick a difficulty and see which science questions surprise you.",
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "can-a-wrong-guess-help-you-learn"
+  ],
+  "sources": [
+    {
+      "url": "https://brainilabgames.com/assets/data/first-200-games-2026-10-23.json",
+      "name": "BrainiLab — first 200 recorded games: aggregate data and method, checked 23 October 2026"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-early-pattern",
+      "title": "Quick sums, familiar flags, tricky science",
+      "html": "<p><strong>Math Rush recorded the highest answer accuracy among the three games with at least ten verified rounds outside our administration accounts. Science Quiz had the lowest.</strong> Then we checked the difficulty settings.</p><p>Our first 200 recorded games offered a small surprise: a percentage can tell a very different story once you look at the questions behind it.</p>"
+    },
+    {
+      "id": "what-we-counted",
+      "title": "Which games did we count?",
+      "html": "<p>We reviewed the first <strong>200 completed rounds</strong>, recorded from <strong>28 August to 18 October 2026, in UTC</strong>. We excluded 102 rounds from administration accounts and eight more without verified answers. That left <strong>90 rounds</strong> for analysis, including repeat players.</p><p>These three games each had at least ten eligible rounds. The percentages count correct answers, rather than ranking points.</p><div class=\"table-scroll\"><table><caption>Answer accuracy in the three games with at least ten eligible rounds</caption><thead><tr><th scope=\"col\">Game</th><th scope=\"col\">Rounds</th><th scope=\"col\">Right answers</th></tr></thead><tbody><tr><th scope=\"row\">Math Rush</th><td>16</td><td>283/308 · 91.9%</td></tr><tr><th scope=\"row\">World Flags</th><td>12</td><td>199/240 · 82.9%</td></tr><tr><th scope=\"row\">Science Quiz</th><td>16</td><td>216/320 · 67.5%</td></tr></tbody></table></div><p>Quick calculations and flag recognition produced more correct answers in these rounds. Science produced more wrong answers. But the games were not matched tests.</p>"
+    },
+    {
+      "id": "the-difficulty-twist",
+      "title": "Science has a twist in the tale",
+      "html": "<p>In the four Science Quiz rounds played on <strong>easy</strong>, 74 of 80 answers were right: <strong>92.5%</strong>. The overall science figure also includes medium and hard rounds.</p><p>Suddenly, the apparent gap looks less straightforward. Different players chose different questions and difficulty levels. This small sample cannot tell us that visitors are better at maths than science.</p>"
+    },
+    {
+      "id": "what-we-take-away",
+      "title": "A score needs its story",
+      "html": "<p><strong>Our takeaway: the challenge you choose matters when reading your result.</strong> A lower percentage on tougher questions is not a verdict on what you know.</p><p>Try <a href=\"/games/math-rush/\">Math Rush</a>, <a href=\"/geography/world-flags-quiz/\">World Flags</a> or the <a href=\"/science/science-quiz/\">Science Quiz</a>. If an answer catches you out, pick one interesting fact to <a href=\"/learn/remember-quiz-answers-tomorrow/\">revisit later</a>.</p><details><summary>About these numbers</summary><p>Accuracy is total correct answers divided by total counted answers, rounded to one decimal place. Math Rush skips are excluded from its answer denominator. These are completed, recorded rounds, not all visits or unfinished games. Administration accounts are excluded, but other test accounts may remain. Game versions changed during this period. Players were not randomly selected, and this analysis does not measure improvement or intelligence.</p><p>The figures are a fixed snapshot checked on 23 October 2026. No names, account details or individual results are included in the published data.</p></details>"
+    }
+  ],
+  "publishedAt": "2026-10-23T08:56:11Z",
+  "updatedAt": "2026-10-23T08:56:11Z",
+  "minutes": 2
+}
