@@ -34,6 +34,7 @@ for(const fixture of fixtures){
  w.BrainiIcons={product:()=>''};w.eval(script);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  const links=[...w.document.querySelectorAll('[data-random-past-game]')];
  assert.ok(links.every(a=>a.href.endsWith('?archive=2026-08-30')),'Hydration still chooses unseen practice content');
+ assert.ok(links.every(a=>!a.pathname.endsWith('/index.html')),'Hydrated archive links reach the canonical game without a redirect');
  final.push(links.map(a=>({href:a.href,label:a.getAttribute('aria-label'),text:a.textContent})));
  assert.equal(writes,0,'Library navigation never awards progress or saves game results');dom.window.close();
 }

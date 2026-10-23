@@ -6,19 +6,19 @@ window.BrainiGamesLibrary=(function(){
   const RANDOM_PAST_META={
     brainmix:{
       name:"Brain Mix",
-      route:"brain-mix/index.html"
+      route:"brain-mix/"
     },
     brainiword:{
       name:"BrainiWord",
-      route:"brainiword/index.html"
+      route:"brainiword/"
     },
     orderup:{
       name:"Order Up",
-      route:"order-up/index.html"
+      route:"order-up/"
     },
     topicrush:{
       name:"Topic Rush",
-      route:"topic-rush/index.html"
+      route:"topic-rush/"
     }
   };
 
