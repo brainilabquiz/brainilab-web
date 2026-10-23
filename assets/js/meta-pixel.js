@@ -82,13 +82,26 @@ window.BrainiMarketing = (function(){
     panel.setAttribute("aria-label","Optional cookie choices");
     if(!reuse)panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
     if(reuse)panel.querySelectorAll('button,input').forEach(control=>{control.disabled=false;});
-    panel.querySelector('[data-statistics-choice]').checked=window.BrainiSiteAnalytics?.isAllowed()===true;
+    updateStatisticsChoice();
     panel.querySelector('[data-ad-choice]').checked=choice===true;
-    panel.querySelector('[data-save-cookie-choices]').onclick=()=>choose(panel.querySelector('[data-ad-choice]').checked,panel.querySelector('[data-statistics-choice]').checked);
+    panel.querySelector('[data-save-cookie-choices]').onclick=()=>{const statistics=panel.querySelector('[data-statistics-choice]');choose(panel.querySelector('[data-ad-choice]').checked,statistics.disabled?window.BrainiSiteAnalytics?.consentChoice?.()===true:statistics.checked);};
     panel.querySelector("[data-marketing-reject]").onclick=()=>choose(false);
     panel.querySelector("[data-marketing-accept]").onclick=()=>choose(true);
     if(!panel.isConnected)document.body.appendChild(panel);
   }
+
+  function updateStatisticsChoice(){
+    if(!panel)return;
+    const control=panel.querySelector('[data-statistics-choice]');
+    const state=window.BrainiSiteAnalytics?.accountStatus?.()||'included';
+    control.disabled=state!=='included';
+    control.checked=window.BrainiSiteAnalytics?.isAllowed()===true;
+    let status=panel.querySelector('[data-account-statistics-status]');
+    if(!status){status=document.createElement('p');status.dataset.accountStatisticsStatus='';status.setAttribute('role','status');control.closest('label').after(status);}
+    status.hidden=state==='included';
+    status.textContent=state==='excluded'?'Google Analytics is off for your signed-in account on every device.':state==='pending'?'Usage statistics are paused while your account privacy preference is checked.':'';
+  }
+  window.addEventListener('brainilab:analytics-account',updateStatisticsChoice);
 
   window.addEventListener("brainilab:datachange",event=>{
     if(!enabled() || event.detail?.type!=="game_result") return;

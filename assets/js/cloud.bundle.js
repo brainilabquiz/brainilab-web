@@ -38,6 +38,7 @@ window.BrainiBackendAuth = (function(){
   let playerSessionPromise=null;
   let claimPromise=null;
   let claimOwner=null;
+  let analyticsAccountRevision=0;
   const guestClaimKey="brainilab_guest_claim_v1";
 
   function readGuestClaim(){
@@ -205,7 +206,28 @@ window.BrainiBackendAuth = (function(){
       || "email";
   }
 
+  async function syncAnalyticsAccount(session){
+    const analytics=window.BrainiSiteAnalytics;
+    if(!analytics?.setAccountState)return;
+    const revision=++analyticsAccountRevision;
+    const user=session?.user;
+    if(!user||user.is_anonymous){analytics.setAccountState('included');return;}
+    analytics.setAccountState('pending');
+    try{
+      // Existing sessions can contain old metadata. A read from Auth also applies
+      // an account exclusion on devices whose token has not refreshed yet.
+      const {data,error}=await getClient().auth.getUser();
+      if(revision!==analyticsAccountRevision)return;
+      if(error||data?.user?.id!==user.id)return;
+      analytics.setAccountState(data.user.app_metadata?.analytics_excluded===true?'excluded':'included');
+    }catch{
+      // Keep statistics paused on lookup failure; account and game sync continue.
+    }
+  }
+
   async function syncSession(session){
+    // Privacy reads must not delay or change player/profile/progress sync.
+    void syncAnalyticsAccount(session);
     if(session?.user?.is_anonymous){
       window.BrainiGuestStyle?.bindGuest?.(BrainiData.authState(),session.user.id);
       await BrainiData.api.syncExternalGuestUser(session.user);
@@ -337,6 +359,7 @@ window.BrainiBackendAuth = (function(){
   }
 
   function destroy(){
+    analyticsAccountRevision++;
     listenerSubscription?.unsubscribe?.();
     listenerSubscription=null;
     client=null;
