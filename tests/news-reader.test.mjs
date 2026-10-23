@@ -11,10 +11,10 @@ const doc=html=>new JSDOM('<main>'+html+'</main>').window.document;
 test('one source action per story, accessible headlines and visible source dates',()=>{
  const d=doc(renderNews(edition([item]),now));
  assert.equal(d.querySelectorAll('h1').length,1);assert.equal(d.querySelectorAll('h2').length,1);
- const article=d.querySelector('li article'),link=article.querySelector('h2 a');
+ const article=d.querySelector('li article'),link=article.querySelector('.breaking-news__story-link');
  assert.equal(article.querySelectorAll('a').length,1);assert.equal(link.href,item.sourceUrl);
  assert.equal(link.target,'_blank');assert.ok(link.rel.split(' ').includes('noopener'));assert.match(link.textContent,/opens in a new tab/);
- assert.equal(article.querySelector('.breaking-news__source>span').textContent,item.sourceName);
+ assert.equal(article.querySelector('.breaking-news__publisher').textContent,item.sourceName);
  assert.equal(article.querySelector('time').dateTime,'2026-10-23T05:00:00.000Z');assert.match(article.querySelector('time').textContent,/23 Oct 2026/);
  assert.match(d.querySelector('.breaking-news__edition').textContent,/1 story from 1 source/);
  assert.match(d.querySelector('.breaking-news__summary').textContent,/attributed summary/);
