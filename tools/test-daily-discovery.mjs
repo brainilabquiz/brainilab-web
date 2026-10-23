@@ -22,6 +22,12 @@ day='2026-10-01';const model=w.BrainiDailyRules.model(day),[first,second]=model.
 await w.BrainiDailyOverview.render();assert.equal(d.querySelectorAll('.daily-choice-card').length,3);assert.equal(d.querySelectorAll('.daily-choice-card a').length,1);assert.equal(d.querySelectorAll('.daily-choice-extras .is-unavailable').length,2);assert.match(d.querySelector('.daily-score-value').textContent,/3,500/);assert.ok(!d.querySelector('[data-daily-guide]').textContent.includes('10,000'));
 status={...status,brainScore:1800,games:{[model.primary]:{completed:true,points:1800}}};await w.BrainiDailyOverview.render();assert.equal(d.querySelectorAll('.daily-choice-card a').length,2);assert.match(d.querySelector('.daily-completion').textContent,/Daily complete/);
 status={...status,bonusChoice:first};await w.BrainiDailyOverview.render();assert.equal(d.querySelectorAll('.daily-choice-card a').length,1);assert.equal(d.querySelector(`[data-daily-game=${second}] a`),null);assert.match(d.querySelector(`[data-daily-game=${first}] a`).textContent,/Continue extra/);
+assert.equal(d.querySelectorAll('.daily-choice-extras>.daily-choice-card').length,1);
+assert.equal(d.querySelector('.daily-choice-extras>.daily-choice-card').dataset.dailyGame,first);
+const otherOption=d.querySelector('.daily-other-extra');assert.ok(otherOption);assert.equal(otherOption.open,false);assert.equal(otherOption.querySelector('.daily-choice-card').dataset.dailyGame,second);assert.equal(otherOption.querySelector('a'),null);
+otherOption.open=true;await w.BrainiDailyOverview.render();assert.equal(d.querySelector('.daily-other-extra'),otherOption);assert.equal(otherOption.open,true,'an unchanged background refresh preserves the opened option');
+status={...status,bonusChoice:second};await w.BrainiDailyOverview.render();assert.equal(d.querySelector('.daily-choice-extras>.daily-choice-card').dataset.dailyGame,second);assert.equal(d.querySelector('.daily-other-extra .daily-choice-card').dataset.dailyGame,first);assert.equal(d.querySelector('.daily-other-extra a'),null);
+status={...status,bonusChoice:first};await w.BrainiDailyOverview.render();
 status={...status,brainScore:2500,games:{...status.games,[first]:{completed:true,points:700}}};await w.BrainiDailyOverview.render();assert.equal(d.querySelectorAll('.daily-choice-card a').length,0);assert.match(d.querySelector('.daily-choice-extra-heading').textContent,/All done/);
 w.eval(read('assets/js/anytime-browser.js'));w.BrainiAnytimeBrowser.render();assert.equal(d.querySelectorAll('.anytime-game-card').length,3);assert.equal(d.querySelector('.single-action a').textContent,'Play');
 const resolve=w.BrainiDailyHub.resolve;w.console.error=()=>{};w.BrainiDailyHub.resolve=async()=>{throw Error('offline')};await w.BrainiDailyOverview.render();assert.ok(d.querySelector('[data-daily-retry]'));assert.equal(d.querySelector('[data-daily-overview]').hasAttribute('aria-busy'),false);w.BrainiDailyHub.resolve=resolve;d.querySelector('[data-daily-retry]').click();await new Promise(r=>setTimeout(r,0));assert.ok(d.querySelector('.daily-dashboard'));
@@ -34,10 +40,20 @@ assert.equal(scrolls,1);assert.equal(d.activeElement.id,'daily-extras');
 await w.BrainiDailyOverview.render();assert.equal(scrolls,1,'background refresh must not keep scrolling the page');
 w.history.replaceState(null,'','/daily-quiz/');w.dispatchEvent(new w.Event('hashchange'));
 w.history.replaceState(null,'','#daily-extras');w.dispatchEvent(new w.Event('hashchange'));assert.equal(scrolls,2);
+// Account changes retain the branded heading, hide old scores immediately, and
+// discard earlier results. Retry remains keyboard usable after an initial error.
+w.history.replaceState(null,'','/daily-quiz/');let owner='qa-a';w.BrainiData.authState=()=>({status:'authenticated',user:{id:owner}});await w.BrainiDailyOverview.render();
+const waiting=[];w.BrainiDailyHub.resolve=()=>new Promise((resolve,reject)=>waiting.push({resolve,reject}));
+owner='qa-b';w.dispatchEvent(new w.Event('brainilab:authchange'));
+assert.ok(d.querySelector('.daily-discovery-header'));assert.ok(d.querySelector('.daily-loading'));assert.equal(d.querySelector('.daily-score-value'),null);assert.equal(d.querySelectorAll('h1').length,1);
+owner='qa-c';w.dispatchEvent(new w.Event('brainilab:authchange'));
+waiting[0].resolve({...status,brainScore:999});await new Promise(r=>setTimeout(r,0));assert.equal(d.querySelector('.daily-score-value'),null);
+waiting[1].reject(Error('offline'));await new Promise(r=>setTimeout(r,0));assert.ok(d.querySelector('.daily-discovery-header'));assert.equal(d.querySelectorAll('h1').length,1);assert.equal(d.querySelector('.daily-load-error h2').textContent,'Today’s Daily could not load.');assert.equal(d.querySelector('[data-daily-overview]').hasAttribute('aria-busy'),false);
+w.BrainiDailyHub.resolve=resolve;const retry=d.querySelector('[data-daily-retry]');retry.focus();retry.click();await new Promise(r=>setTimeout(r,0));assert.ok(d.querySelector('.daily-dashboard'));assert.equal(d.activeElement,d.querySelector('[data-daily-overview] h1'));
 if(process.argv.includes('--fixture')){
  const initial={...status,brainScore:0,games:{},bonusChoice:null};
  const setup=`window.BrainiDailyHub={resolve:async()=>(${JSON.stringify(initial)})};window.BrainiData={dateForDailyNumber:()=>"2026-10-01",todayKey:()=>"2026-10-01",dailyGameIdsForNumber:()=>[],dailyGameIdsForDate:()=>[],recentResults:()=>[],personalBest:()=>null};window.BrainiContinuity={markup:()=>''};`;
  const html=source.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replaceAll('../assets/','/assets/').replace('</body>',`<script>${setup}</script><script src="/assets/js/icon-system.js"></script><script src="/assets/js/daily-rules.js"></script><script src="/assets/js/daily-journey.js"></script><script src="/assets/js/daily-overview.js"></script><script src="/assets/js/anytime-browser.js"></script></body>`);
  writeFileSync('tools/.daily-preview.html',html);
 }
-dom.window.close();console.log('PASS Daily discovery: legacy 0/1/4, main/extra gates and choice lock, scores, practice URLs, 3 suggestions, error/retry and refresh race.');
+dom.window.close();console.log('PASS Daily discovery: legacy 0/1/4, main/extra gates, both choice orders, folded unused option, unchanged refresh, scores/practice URLs, branded loading/error, account isolation, retry focus and deep links.');
