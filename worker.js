@@ -105,9 +105,12 @@ export default {
     if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
       if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
       const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/',url),request));
-      if(request.method==='HEAD')return response;
+      // Short summaries of other publishers' reporting stay available to visitors
+      // but out of search indexes; links are still followed.
+      if(request.method==='HEAD'){const headers=new Headers(response.headers);headers.set('X-Robots-Tag','noindex, follow');return new Response(null,{status:response.status,headers});}
       const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
       const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');
+      headers.set('X-Robots-Tag','noindex, follow');
       const news=renderNews(edition);
       headers.set('Cache-Control',news?'public,max-age=60':'no-store');
       return new Response(decorateHalloween(html.replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),holiday,url.pathname),{status:response.status,headers});
