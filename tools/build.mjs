@@ -27,6 +27,7 @@ import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
 import './test-preferred-source.mjs';
 import './test-content-links.mjs';
+import './test-article-previews.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
