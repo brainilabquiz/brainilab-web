@@ -168,3 +168,40 @@ body.braini-visual{
 .braini-visual .topbar .links a.news-nav-link:hover{background:#fce5e1}
 .braini-visual .topbar .links a.news-nav-link[aria-current=page]{background:#fce5e1;border-color:#ecb4ac!important}
 .braini-visual .topbar .links a.news-nav-link::after{display:none!important}
+
+
+/* Decorative section photographs share the compact Breaking News treatment. */
+body.braini-visual .games-choice-hero .games-choice-panel,
+body.braini-visual .daily-overview-page .daily-discovery-header,
+body.braini-visual.editorial-page .learn-catalog .learn-hero,
+body.braini-visual .rankings-shell .rankings-title-row,
+body.braini-visual .groups-hero .groups-heading{box-sizing:border-box;min-height:156px;padding:24px 28px;border:1px solid var(--line,#dedce9);border-radius:20px;background-color:#faf8f3;background-image:linear-gradient(90deg,rgba(250,248,243,.98),rgba(250,248,243,.91) 45%,rgba(250,248,243,.12) 78%),var(--section-art);background-size:cover;background-position:center;overflow:hidden}
+body.braini-visual .games-choice-hero .games-choice-panel{--section-art:image-set(url("../images/headers/games-960.webp") 1x,url("../images/headers/games-1440.webp") 2x)}
+body.braini-visual .daily-overview-page .daily-discovery-header{--section-art:image-set(url("../images/headers/daily-960.webp") 1x,url("../images/headers/daily-1440.webp") 2x)}
+body.braini-visual.editorial-page .learn-catalog .learn-hero{--section-art:image-set(url("../images/headers/learn-960.webp") 1x,url("../images/headers/learn-1440.webp") 2x)}
+body.braini-visual .rankings-shell .rankings-title-row,body.braini-visual .groups-hero .groups-heading{--section-art:image-set(url("../images/headers/community-960.webp") 1x,url("../images/headers/community-1440.webp") 2x)}
+body.braini-visual .games-choice-panel>div,body.braini-visual .daily-discovery-header>div,body.braini-visual .learn-catalog .learn-hero>div:first-child{max-width:68%}
+body.braini-visual :is(.games-choice-panel,.daily-discovery-header,.rankings-title-row,.groups-heading)>a{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;max-width:100%;padding:10px 14px;border:1px solid #b8b2cd;border-radius:8px;background:#fff;color:var(--navy);text-align:center}
+body.braini-visual .learn-catalog .learn-hero{padding-block:24px;margin-bottom:20px}
+@media(max-width:760px){
+body.braini-visual .games-choice-hero .games-choice-panel,
+body.braini-visual .daily-overview-page .daily-discovery-header,
+body.braini-visual.editorial-page .learn-catalog .learn-hero,
+body.braini-visual .rankings-shell .rankings-title-row,
+body.braini-visual .groups-hero .groups-heading{min-height:148px;padding:20px;background-image:linear-gradient(90deg,rgba(250,248,243,.97),rgba(250,248,243,.92) 55%,rgba(250,248,243,.6)),var(--section-art)}
+body.braini-visual .games-choice-panel>div,body.braini-visual .daily-discovery-header>div,body.braini-visual .learn-catalog .learn-hero>div:first-child{max-width:100%}
+body.braini-visual .learn-catalog .learn-hero{padding-block:20px}
+}
+@media(max-width:600px){
+body.braini-visual .games-choice-hero .games-choice-panel{--section-art:image-set(url("../images/headers/games-480.webp") 1x,url("../images/headers/games-960.webp") 2x)}
+body.braini-visual .daily-overview-page .daily-discovery-header{--section-art:image-set(url("../images/headers/daily-480.webp") 1x,url("../images/headers/daily-960.webp") 2x)}
+body.braini-visual.editorial-page .learn-catalog .learn-hero{--section-art:image-set(url("../images/headers/learn-480.webp") 1x,url("../images/headers/learn-960.webp") 2x)}
+body.braini-visual .rankings-shell .rankings-title-row,body.braini-visual .groups-hero .groups-heading{--section-art:image-set(url("../images/headers/community-480.webp") 1x,url("../images/headers/community-960.webp") 2x)}
+}
+@media(max-width:600px){
+body.braini-visual .games-choice-panel,body.braini-visual .daily-overview-page .daily-discovery-header{padding:18px}
+body.braini-visual .games-choice-panel h1,body.braini-visual .daily-discovery-header h1{font-size:28px;line-height:1.15;margin-bottom:8px}
+body.braini-visual .games-choice-panel p,body.braini-visual .daily-intro{font-size:14px;line-height:1.55}
+body.braini-visual .daily-discovery-header .daily-date{font-size:11px;margin-bottom:8px}
+body.braini-visual .daily-discovery-header .daily-progress-link{margin-top:10px}
+}
