@@ -18,7 +18,7 @@ assert.equal(pageStyles('<head><link rel="stylesheet" href="/assets/css/editoria
 const digest=assetVersion(Buffer.from('body{color:red}'));
 const versions=new Map([result.asset,'assets/js/consent.bundle.js','assets/css/print.css','assets/css/off.css'].map(file=>[file,digest]));
 assert.ok(versionAssets(result.html,'index.html',versions).includes('home-page.css?v='+digest),'new combined stylesheet has exact byte-based cache invalidation');
-for(const [file,asset] of [['index.html','home-page'],['profile/index.html','profile-page']]){
+for(const [file,asset] of [['index.html','home-page'],['profile/index.html','profile-page'],['games/number-route/index.html','number-route-page']]){
  const actual=readFileSync(file,'utf8'),plan=pageStyles(actual,file);
  assert.equal(plan.asset,'assets/css/'+asset+'.css');assert.ok(plan.files.length>=2);
  assert.ok(!plan.files.some(css=>/\/(site|mobile|stats)\.css$/.test(css)),'core sheets retain cross-route browser cache reuse');
@@ -26,5 +26,13 @@ for(const [file,asset] of [['index.html','home-page'],['profile/index.html','pro
  for(const css of plan.files){const body=readFileSync(css,'utf8');assert.doesNotMatch(body,/@import\b|@charset\b/,'concatenation must not change import/charset precedence');}
  assert.equal(plan.html.slice(plan.html.indexOf('</head>')),actual.slice(actual.indexOf('</head>')),'body, scripts and UI content remain unchanged');
 }
+const routeFile='games/number-route/index.html',route=readFileSync(routeFile,'utf8'),routePlan=pageStyles(route,routeFile);
+assert.deepEqual(routePlan.files,['game-entry','post-game','puzzle-results','continuity','visual-system','number-route-demo'].map(name=>'assets/css/'+name+'.css'),'retain all six Number Route sheets, including post-game and result states, in their exact cascade order');
+const links=html=>Array.from(html.matchAll(/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi),match=>match[0]);
+assert.equal(links(route).length,8);assert.equal(links(routePlan.html).length,3,'eight blocking stylesheet links become two shared core links and one page bundle');
+assert.equal(pageStyles(routePlan.html,routeFile),null,'a second transform must not add a second page bundle');
+assert.deepEqual(Array.from(routePlan.html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),match=>match[0]),Array.from(route.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi),match=>match[0]),'consent, analytics, structured data and gameplay scripts retain their exact bytes');
+for(const file of ['geography/world-flags-quiz/index.html','science/science-quiz/index.html','games/math-rush/index.html','learn/index.html'])assert.equal(pageStyles(readFileSync(file,'utf8'),file),null,'do not expand CSS bundling to unmeasured routes');
+for(const middle of ['<link rel="stylesheet" href="/assets/css/mobile.css">','<style>.nr{display:none}</style>','<link rel="stylesheet" href="/assets/css/print.css" media="print">'])assert.equal(pageStyles('<head><link rel="stylesheet" href="/assets/css/game-entry.css">'+middle+'<link rel="stylesheet" href="/assets/css/post-game.css"></head>',routeFile),null,'Number Route must use the same cascade barriers as other measured routes');
 console.log('PASS page CSS: cascade order, relative assets, unrelated routes, external/print/disabled sheets, inline-style safety, exact cache versions and unchanged page bodies.');
 
