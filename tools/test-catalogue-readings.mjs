@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {readFileSync,readdirSync,existsSync} from 'node:fs';
+import {refreshCatalogueReadings} from '../lib/game-readings.js';
+import {prepareArticle} from '../lib/learn-content.js';
+const source=readFileSync('games/index.html','utf8');
+const articles=readdirSync('content/articles').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(readFileSync('content/articles/'+f,'utf8'))).filter(a=>a.status==='published').map(prepareArticle);
+const cards=html=>[...html.matchAll(/<article\b[^>]*data-anytime-game="([^"]+)"[^>]*>([\s\S]*?)<\/article>/g)];
+const strip=html=>html.replace(/<!-- catalogue-reading:start --><div class="game-card-context">([\s\S]*?)<a class="catalogue-reading"[\s\S]*?<\/a><\/div><!-- catalogue-reading:end -->/g,'$1');
+const links=html=>[...html.matchAll(/<a class="catalogue-reading" href="([^"]+)" aria-label="([^"]*)">/g)];
+const result=refreshCatalogueReadings(source,articles);
+assert.equal(cards(result).length,18);assert.equal(links(result).length,18,'Every existing game has one curated reading');
+assert.equal(strip(result),strip(source),'Only secondary reading links are added: game links, descriptions, JSON-LD, archive/difficulty queries and controls remain exact');
+assert.equal(refreshCatalogueReadings(result,articles),result,'Rebuilds never duplicate the reading action');
+for(const card of cards(result)){
+ const reading=links(card[2]);assert.equal(reading.length,1,card[1]);
+ const article=articles.find(a=>reading[0][1]==='/learn/'+a.slug+'/');assert.ok(article?.title,card[1]);
+ assert.ok(existsSync('learn/'+article.slug+'/index.html'));assert.ok(readFileSync('learn/'+article.slug+'/index.html','utf8').includes('rel="canonical"'));
+ assert.match(card[2],/class="difficulty-actions(?: single-action)?"/,'The primary Play action remains present');
+ assert.ok(!/catalogue-reading[^>]*(?:target=|data-random-past-game|data-game-filter)/.test(card[2]));
+}
+const flag=html=>cards(html).find(c=>c[1]==='worldflags')[2];
+const retired=articles.filter(a=>a.slug!=='how-to-learn-world-flags');
+assert.equal(links(flag(refreshCatalogueReadings(result,retired)))[0][1],'/learn/nepal-flag-shape/','A retired first choice falls back to the game’s second curated article');
+const noFlags=retired.filter(a=>a.slug!=='nepal-flag-shape');assert.equal(links(flag(refreshCatalogueReadings(result,noFlags))).length,0);
+assert.equal(strip(refreshCatalogueReadings(result,[])),strip(source),'No published articles leaves every original game action intact');
+const drafts=articles.map(a=>({...a,status:'draft'}));assert.equal(links(refreshCatalogueReadings(result,drafts)).length,0);
+const hostile=articles.map(a=>({...a,title:'<img src=x onerror=alert(1)> "Curious" & fun'}));
+const safe=refreshCatalogueReadings(result,hostile);assert.ok(safe.includes('&lt;img src=x onerror=alert(1)&gt; &quot;Curious&quot; &amp; fun'));assert.equal((safe.match(/<img\b/g)||[]).length,(source.match(/<img\b/g)||[]).length,'Article titles cannot add images or executable markup');
+let external=strip(source).replace('href="brain-mix/index.html?archive=2026-08-29"','href="https://example.org/games/brain-mix/"');
+assert.equal(links(cards(refreshCatalogueReadings(external,articles)).find(c=>c[1]==='brainmix')[2]).length,0,'Only existing same-origin game routes receive a reading');
+assert.equal(refreshCatalogueReadings('<main>Other page</main>',articles),'<main>Other page</main>');
+console.log('PASS catalogue readings: 18 published static destinations, original game links/content/schema, idempotence, withdrawal/draft fallback, safe titles, no added images or client requests.');

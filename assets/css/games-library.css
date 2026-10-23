@@ -1,4 +1,9 @@
 /* Games catalogue only: compact actions, readable copy and quieter score details. */
+/* Reading stays secondary to Play and shares the existing footer space. */
+.games-library-page .game-card-context{display:grid;justify-items:start;flex:1;min-width:0}
+.games-library-page a.catalogue-reading{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#2d296e;font-size:14px;font-weight:600;text-decoration:underline;text-decoration-color:#cbc7dc;text-underline-offset:4px;white-space:nowrap}
+.games-library-page a.catalogue-reading:hover{text-decoration-color:currentColor}
+.games-library-page a.catalogue-reading span{font-size:17px;line-height:1}
 .games-library-page .anytime-game-card[hidden],.game-filters[hidden],.game-filter-count[hidden]{display:none!important}
 .game-filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
 .game-filters button{min-height:44px;padding:10px 17px;border:1px solid #ded9e9;border-radius:24px;background:#fffdf8;color:#2d296e;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
