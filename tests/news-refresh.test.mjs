@@ -115,6 +115,37 @@ test('a failed reviewed recovery stays paused across later slots, reads and depl
   assert.equal(calls,1);assert.deepEqual([...s.data],after);assert.equal(s.data.get('status').code,'api-error');
 });
 
+const rotatedAt=Date.parse('2026-10-23T09:00:00Z');
+function keyRotationStore(){const s=state();s.data.set('bootstrapped',true);s.data.set('status',{code:'invalid-key',checkedAt:'2026-10-20T00:00:31.000Z'});s.data.set('last-slot',Math.floor(Date.parse('2026-10-20T00:00:31Z')/REFRESH_MS));s.data.set('budget:2026-10',{cents:280,calls:20});return {s,store:new BreakingNewsStore(s,{OPENAI_API_KEY:'rotated'})};}
+
+test('after the key rotation one reviewed attempt runs, inside the unchanged ledger',async()=>{
+  const {s,store}=keyRotationStore();let alarms=0;s.storage.setAlarm=async()=>{alarms++;};
+  await Promise.all(Array.from({length:5},()=>store.fetch(new Request('https://news.internal/edition'),rotatedAt)));
+  assert.equal(alarms,1);
+  let calls=0;await Promise.all(Array.from({length:5},()=>store.refresh(rotatedAt,async()=>{calls++;return Response.json(result([{...story,reportedAt:'2026-10-23T08:00:00Z'}]));})));
+  assert.equal(calls,1);assert.deepEqual(s.data.get('budget:2026-10'),{cents:280+RESERVATION_CENTS,calls:21});
+  assert.equal(s.data.get('status').code,'updated');assert.equal(s.data.has('audit:review:key-rotation-2026-10-23'),true);
+  assert.equal(s.data.get('review-attempt:key-rotation-2026-10-23').originalFailureAt,'2026-10-20T00:00:31.000Z');
+});
+
+test('a failed key-rotation attempt is not repeated and other failures stay paused',async()=>{
+  const {s,store}=keyRotationStore();let calls=0;
+  const api=async()=>{calls++;return Response.json({error:{type:'invalid_request_error',code:'invalid_api_key'}},{status:401});};
+  await store.refresh(rotatedAt,api);assert.equal(calls,1);assert.equal(s.data.get('status').code,'invalid-key');
+  const after=structuredClone([...s.data]);
+  await store.refresh(rotatedAt+REFRESH_MS,api);await store.fetch(new Request('https://news.internal/edition'),rotatedAt+REFRESH_MS);
+  assert.equal(calls,1);assert.deepEqual([...s.data],after);
+  for(const scenario of ['other-failure','before-rotation','expired','exhausted']){
+    const {s,store}=keyRotationStore();let at=rotatedAt;
+    if(scenario==='other-failure')s.data.set('status',{code:'api-quota',checkedAt:'2026-10-20T00:00:31.000Z'});
+    if(scenario==='before-rotation')at=Date.parse('2026-10-23T08:00:00Z');
+    if(scenario==='expired')at=Date.parse('2026-10-30T00:00:00Z');
+    if(scenario==='exhausted')s.data.set('budget:2026-10',{cents:MONTHLY_CENTS,calls:64});
+    const before=structuredClone([...s.data]);let n=0;await store.refresh(at,async()=>{n++;});
+    assert.equal(n,0,scenario);assert.deepEqual([...s.data],before,scenario);
+  }
+});
+
 test('review authorization cannot retry a different failure, expired review or exhausted budget',async()=>{
   for(const scenario of ['different-failure','different-validation-failure','no-previous-review','expired','exhausted']){
     const {s,store}=reviewedStore();let at=reviewedAt;
