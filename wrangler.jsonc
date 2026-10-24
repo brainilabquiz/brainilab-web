@@ -11,7 +11,7 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "/", "/index.html", "/halloween", "/halloween/*", "/profile", "/profile/*", "/breaking-news", "/breaking-news/*", "/learn", "/learn/*", "/sitemap.xml", "/about", "/about/*", "/games", "/games/*", "/daily-quiz", "/daily-quiz/*", "/rankings", "/rankings/*", "/groups", "/groups/*", "/geography", "/geography/*", "/science", "/science/*", "/history", "/history/*", "/sports", "/sports/*", "/general-knowledge", "/general-knowledge/*", "/reasoning", "/reasoning/*", "/categories", "/categories/*", "/leaderboards", "/leaderboards/*"],
+    "run_worker_first": ["/api/*", "/", "/index.html", "/halloween", "/halloween/*", "/profile", "/profile/*", "/breaking-news", "/breaking-news/*", "/learn", "/learn/*", "/sitemap.xml", "/llms.txt", "/about", "/about/*", "/games", "/games/*", "/daily-quiz", "/daily-quiz/*", "/rankings", "/rankings/*", "/groups", "/groups/*", "/geography", "/geography/*", "/science", "/science/*", "/history", "/history/*", "/sports", "/sports/*", "/general-knowledge", "/general-knowledge/*", "/reasoning", "/reasoning/*", "/categories", "/categories/*", "/leaderboards", "/leaderboards/*"],
     "not_found_handling": "404-page"
   }
 }
