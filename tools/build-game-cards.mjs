@@ -35,8 +35,16 @@ const art={
  'topic-rush':()=>box(40,30,330,90,'#eeeafa')+text(205,88,'Topic: Fruits',34)+`<circle cx="445" cy="75" r="50" fill="${yellow}" stroke="${navy}" stroke-width="3"/>`+text(445,86,'60s',30)+box(40,160,460,76,'#fffdf9')+text(70,210,'mango|',32,navy,'start',400)+['apple','kiwi','pear','plum'].map((w,i)=>box(40+(i%2)*240,280+Math.floor(i/2)*84,220,64,'#edf5e8',green,32,2)+text(150+(i%2)*240,322+Math.floor(i/2)*84,'✓ '+w,26)).join(''),
  'europe-flags-quiz':()=>`<g transform="translate(120 30)"><rect width="100" height="200" fill="#009246"/><rect x="100" width="100" height="200" fill="#ffffff"/><rect x="200" width="100" height="200" fill="#ce2b37"/><rect width="300" height="200" fill="none" stroke="${navy}" stroke-width="3"/></g>`+text(270,280,'Which country?',26)+choices(['Italy','Ireland','Hungary','Bulgaria'],300),
  'world-flags-quiz':()=>`<g transform="translate(120 30)"><rect width="300" height="200" fill="#ffffff" stroke="${navy}" stroke-width="3"/><circle cx="150" cy="100" r="60" fill="#bc002d"/></g>`+text(270,280,'Which country?',26)+choices(['Japan','China','South Korea','Vietnam'],300),
- 'world-capitals-quiz':()=>'<g transform="translate(0 70)">'+box(40,30,460,130,'#eeeafa')+text(270,95,'Australia',50)+text(270,138,'What is the capital?',24,navy,'middle',400)+choices(['Canberra','Sydney','Melbourne','Perth'],200)+'</g>'
+ 'world-capitals-quiz':()=>'<g transform="translate(0 70)">'+box(40,30,460,130,'#eeeafa')+text(270,95,'Australia',50)+text(270,138,'What is the capital?',24,navy,'middle',400)+choices(['Canberra','Sydney','Melbourne','Perth'],200)+'</g>',
+ // Topic quizzes reuse their page's opening question; no answer is marked.
+ 'science-quiz':()=>question('Science · Question 1 of 20','What is the closest','star to Earth?',['The Sun','Proxima Centauri','Sirius','Polaris'],'#edf5e8'),
+ 'history-quiz':()=>question('History · Question 1 of 20','Who built the','pyramids of Giza?',['Egyptians','Romans','Greeks','Maya'],'#fff4c0'),
+ 'sports-quiz':()=>question('Sports · Question 1 of 20','How many players does a','soccer team have on the field?',['9','10','11','12'],'#eeeafa'),
+ 'general-knowledge-quiz':()=>['Easy','Medium','Hard'].map((t,i)=>box(55+i*150,20,130,46,['#edf5e8','#fff4c0','#fdecec'][i],navy,23,2)+text(120+i*150,51,t,22)).join('')+box(40,95,460,180,'#fffdf9')+text(270,140,'Question 1 of 20',24,grey,'middle',400)+text(270,215,'?',70)+choices(['A','B','C','D'],310)
 };
+function question(label,line1,line2,options,fill){
+ return box(40,20,460,200,fill)+text(270,62,label,20,grey,'middle',400)+text(270,125,line1,30)+text(270,165,line2,30)+choices(options,250).replace(/font-size="24"/g,'font-size="21"');
+}
 function svg(card){
  const size=Math.min(64,Math.floor(500/(0.6*card.title.length)));
  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><rect width="${W}" height="${H}" fill="${paper}"/>`+
