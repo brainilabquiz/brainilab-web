@@ -5,6 +5,7 @@ import {pageStyles} from '../lib/page-styles.js';
 import {homeConsent} from '../lib/home-consent.js';
 import {homeFirstPaint,homeConsentFirstResponse,homeSeasonFirstPaint} from '../lib/home-first-paint.js';
 import {brandLogoAVIF} from '../lib/brand-logo-images.js';
+import {entryConsent} from '../lib/entry-consent.js';
 // Publish one clean directory; keep editable sources and historical notes out.
 import {build} from 'esbuild';
 import {mkdir,copyFile,rm,lstat,stat,readdir,readFile,writeFile} from 'node:fs/promises';
@@ -32,6 +33,7 @@ import './test-image-sitemap.mjs';
 import './test-brand-logo-images.mjs';
 import './test-catalogue-readings.mjs';
 import './test-page-styles.mjs';
+import './test-entry-consent.mjs';
 
 const root=path.resolve('.');
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -111,6 +113,7 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
     pageStyleBundles.push({page:file,asset:styles.asset,sheets:styles.files.length});html=styles.html;
   }
   html=brandLogoAVIF(versionAssets(html,file,assetVersions),file);
+  if(['games/math-rush/index.html','games/sequence/index.html','learn/index.html'].includes(file))html=entryConsent(html,file,await readFile('assets/js/meta-pixel.js','utf8'),await readFile(path.join(output,'assets/js/consent.bundle.js'),'utf8'));
   html=await homeFirstPaint(html,file,css=>readFile(path.join(output,css),'utf8'));
   if(file==='index.html')html=homeConsentFirstResponse(html,file,await readFile(path.join(output,'assets/js/consent.bundle.js'),'utf8'));
   if(file==='index.html')html=homeSeasonFirstPaint(html,file,await readFile(path.join(output,'assets/css/halloween.css'),'utf8'),halloweenAssets['assets/css/halloween.css']);
