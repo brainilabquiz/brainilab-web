@@ -72,3 +72,9 @@ Only external HTTP(S) links open a new tab with `target="_blank"` and `rel="noop
 Topic scope includes practical skills as well as curiosity: foundational to college-level mathematics, SEO, regional driving knowledge, maps and US state capitals. Build coherent prerequisite sequences. See `ACADEMY_CURRICULUM.md` for the staged plan; planned courses are not published courses and do not increment article/HUB counts.
 
 Review `content/editorial-priorities-2026-10-01.json` alongside the cluster inventory. It records the latest observed Search Console window and researched priorities; planned briefs are not publications. Reuse published Academy lessons when they already cover a planned angle instead of writing a duplicate under another slug. Preserve the daily quota when progressing toward a hub.
+
+## Owner-authorised automatic upload
+
+The 24 October 2026 upload workflow can use the existing authenticated management connector without a browser session. See [automatic editorial upload](docs/editorial-automatic-upload.md). The private release function validates current CMS compatibility, fresh reviews, deployed cover variants, exact draft/public revisions and hub return links, then preserves the normal editorial tables and immutable history. Only the management postgres role can execute it; browser role/MFA checks remain unchanged. No API key or actor impersonation is required.
+
+Consume the existing editorial queue without adding another generation quota. Keep source captures, raw analytics, private backups and publication packets outside the public repository. A prepared JSON or database receipt is not a verified public publication. Incomplete demand or review keeps an item in draft.
