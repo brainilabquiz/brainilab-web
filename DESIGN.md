@@ -79,3 +79,15 @@ content, navigation destinations or publication settings change. Validate with
 browser renders across 320, 375, 390, 768, 1024 and 1440px, including filters,
 library search, Academy, reading, forms and expanded avatar choices. Viewport
 checks are not physical Android/iPhone or Safari certification.
+
+## Shared visual details, 24 October 2026
+
+- Public help and source disclosures use one right-aligned chevron, a readable
+  label and a full-width native summary target. Navigation menus and admin editors
+  keep their own controls. Existing open states and hidden content stay native.
+- The mobile menu uses 15px destination labels and compact 48px rows; Community
+  retains its hierarchy, descriptions and existing keyboard behaviour.
+- At narrow widths, Learn places its browse link beside the heading/count and
+  its native topic selector on the following row, bringing articles closer.
+- Wrapped section headings use a comfortable line height without new fonts,
+  artwork, scripts, tracking or changes to game/account data.

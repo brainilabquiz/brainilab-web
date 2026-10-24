@@ -133,6 +133,51 @@ body.braini-visual{
 .braini-visual.admin-body .admin-card{border-color:var(--line);border-radius:14px}
 .braini-visual.admin-body :is(.admin-input,.admin-select,.admin-textarea){border-color:#bdb8d0}
 
+/* Optional help uses one quiet, full-row affordance across reading and play.
+   Keep native details/summary semantics and leave navigation and editors alone. */
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary,
+.braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary{
+  position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:48px;
+  padding:12px 32px 12px 0;box-sizing:border-box;list-style:none;cursor:pointer;
+  font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:700;line-height:1.5;color:var(--navy);
+}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary::-webkit-details-marker,
+.braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary::-webkit-details-marker{display:none}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary::after,
+.braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary::after{
+  content:"";position:absolute;right:8px;top:50%;width:8px;height:8px;
+  border:solid currentColor;border-width:0 2px 2px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none;
+}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details[open]>summary::after,
+.braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)[open]>summary::after{transform:translateY(-20%) rotate(225deg)}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq) details{padding-block:0}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq) details>summary{font-size:16px;padding-block:16px}
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq) details[open]{padding-bottom:16px}
+.braini-visual :is(.entry-example,.route-demo)>summary{padding-left:14px}
+.braini-visual :is(.ranking-streak-details,.profile-xp-guide,.profile-ranks)>summary>span[aria-hidden=true]{display:none}
+.braini-visual .ranking-privacy>summary>span{margin-left:auto;flex:none;font-size:12px}
+.braini-visual .profile-level-footer :is(.profile-xp-guide,.profile-ranks)>summary{font-size:13px}
+.braini-visual .group-room-settings>summary{font-weight:600}
+.braini-visual .halloween-intro-rules>summary::before{content:none}
+.braini-visual .article-reading .article-fold>summary{font-size:14px}
+.braini-visual .article-reading .article-fold>summary>span{min-width:0}
+
+/* Keep headings readable when a title wraps; no new fonts or decorative assets. */
+.braini-visual :is(.section-head,.section-heading,.topic-index-header) :is(h1,h2),
+.braini-visual.topic-page .page-hero h1{line-height:1.2;text-wrap:balance}
+.braini-visual :is(.section-head,.section-heading){min-width:0}
+
+@media(max-width:920px){
+  /* Shared mobile menu: larger labels, less padding, the same destinations. */
+  .braini-visual .topbar .links.mobile-open{gap:4px;padding:8px}
+  .braini-visual .topbar .links>a{min-height:48px;padding:10px 12px;font-size:15px;line-height:1.4}
+  .braini-visual .topbar .links a[aria-current=page]::after{display:none}
+  .braini-visual .topbar .nav-community>summary{min-height:44px;padding:10px 12px;font-size:15px;line-height:1.4}
+  .braini-visual .topbar .nav-community-links{margin:0 4px 4px 12px}
+  .braini-visual .topbar .nav-community-links a{min-height:56px;padding:8px 12px;gap:3px;font-size:14px;line-height:1.4}
+  .braini-visual .topbar .nav-community-links small{font-size:12px;line-height:1.4}
+}
+
 @media(max-width:760px){
   .braini-visual .page-hero-card{padding:24px 20px}
   .braini-visual .page-hero h1{font-size:32px}
@@ -155,8 +200,15 @@ body.braini-visual{
 }
 @media(max-width:460px){
   .braini-visual.editorial-page .learn-catalog .learn-toolbar{row-gap:8px}
-  .braini-visual.editorial-page .learn-catalog .learn-topic-select{grid-column:1/-1;grid-row:auto;width:100%;min-width:0}
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar .library-heading{grid-column:1;grid-row:1;font-size:20px;line-height:1.3}
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar .learn-count{grid-column:1;grid-row:2;font-size:12px;line-height:1.5}
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar .learn-index-link{grid-column:2;grid-row:1/3;max-width:120px;min-height:44px;font-size:12px;line-height:1.5}
+  .braini-visual.editorial-page .learn-catalog .learn-topic-select{grid-column:1/-1;grid-row:3;width:100%;min-width:0}
   .braini-visual.editorial-page .learn-catalog .learn-topic-select select{width:100%;min-height:44px}
+}
+@media(max-width:350px){
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar .library-heading{font-size:18px}
+  .braini-visual.editorial-page .learn-catalog .learn-toolbar .learn-index-link{max-width:100px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
