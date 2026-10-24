@@ -61,6 +61,11 @@ button{cursor:pointer}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:17px}
 .section h2{font-size:30px;margin:0}
 .sub{margin-top:5px;color:var(--muted);font-size:13px;line-height:1.55;font-weight:650}
+.game-faq h2{font-size:24px;margin:0 0 12px}
+.game-faq__item{max-width:760px;border-top:1px solid var(--line)}
+.game-faq__item:last-child{border-bottom:1px solid var(--line)}
+.game-faq__item summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700;color:var(--navy)}
+.game-faq__item p{margin:0 0 14px;color:var(--muted);line-height:1.65;max-width:68ch}
 .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:20px;min-height:205px;box-shadow:0 8px 23px rgba(45,41,110,.05);transition:.16s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(45,41,110,.09)}

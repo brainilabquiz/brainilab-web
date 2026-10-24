@@ -1,0 +1,61 @@
+{
+  "brain-mix": [
+    ["How many questions are in Brain Mix?", "Ten questions on a mix of topics, with feedback on every answer."],
+    ["When can I see the correct answers?", "Finish the round to see your score and review the correct answers. You can share your result without spoiling the quiz."]
+  ],
+  "brainiword": [
+    ["How many tries do I get in BrainiWord?", "Five attempts to guess the daily five-letter English word."],
+    ["What do the colours mean?", "Green means the letter is in the correct position. Yellow means it appears elsewhere in the word. Dark grey means there is no remaining copy of that letter to match."],
+    ["Can I use my own keyboard?", "Yes. You can type on your physical keyboard or use the on-screen keyboard."]
+  ],
+  "connections": [
+    ["How does a Connections round work?", "Each round shows 4–8 clues and four possible connections. You have one answer per round."],
+    ["How is Connections scored?", "A correct connection earns 1,000 points. A wrong answer earns none and reveals the explanation. Play Anytime has 20 rounds; the Daily has three."]
+  ],
+  "higher-lower": [
+    ["What do you compare in Higher or Lower?", "Ten comparisons from science, geography, history, nature and more. Each round uses the wording that fits the fact, such as older or younger, bigger or smaller, or faster or slower."],
+    ["How does scoring work?", "Correct answers in a row build a combo bonus."]
+  ],
+  "math-rush": [
+    ["How long is a Math Rush round?", "60 seconds. The questions mix addition, subtraction, multiplication and division, and every answer is a whole number."],
+    ["How is Math Rush scored?", "A correct answer earns 100 points and a wrong answer costs 50. If you are stuck, you can skip a question."]
+  ],
+  "number-route": [
+    ["What are the rules of Number Route?", "Keep all four numbers in their order and choose +, −, × or ÷ between them, working from left to right until you reach the target."],
+    ["Why left to right?", "It is a rule of this game. In ordinary arithmetic, multiplication and division come before addition and subtraction."],
+    ["How many routes are there?", "Ten routes, worth up to 2,500 points. Fewer attempts earn more points."]
+  ],
+  "odd-one-out": [
+    ["How does Odd One Out work?", "Each of the ten rounds has four items. Three share a link; pick the one that does not belong, then see why."],
+    ["How is it scored?", "One answer per round, and a correct pick is worth 100 points, up to 1,000 in total."]
+  ],
+  "order-up": [
+    ["How does Order Up work?", "Two rounds of ten items each. Tap the items in the order shown, such as oldest to newest, and score up to 2,500 points."],
+    ["Can I change a choice?", "No. Each choice locks immediately, and the round is scored after the tenth choice, so read the requested order before you start."]
+  ],
+  "sequence": [
+    ["How does Sequence work?", "Ten rounds. Read the number sequence and choose the next number from four options, for up to 2,500 points."],
+    ["What kinds of patterns appear?", "Steps that add the same amount, changing step sizes, multiplication and alternating rules. A good rule explains every jump, not just the first."]
+  ],
+  "survival": [
+    ["How many lives do I have in Survival?", "Three. Every wrong answer costs one life, and the run ends when you have none left or clear the full challenge."],
+    ["How hard does it get?", "Up to 30 questions that move from Easy to Medium and Hard. Consecutive correct answers build a scoring bonus."],
+    ["Is Survival part of the Daily?", "Not at the moment. Survival is a Play Anytime game, outside the rotating Daily pool."]
+  ],
+  "topic-rush": [
+    ["How does Topic Rush work?", "You get one topic and 60 seconds to type as many valid answers as you can."],
+    ["When do I see the topic?", "Only when you start. The topic appears and the timer begins at the same moment."]
+  ],
+  "europe-flags-quiz": [
+    ["How many flags are in the Europe Flags Quiz?", "20 European flags, with no time limit. The score is for practice."],
+    ["Can I play it again?", "Yes. When you play again, the questions and choices come in a different order."]
+  ],
+  "world-flags-quiz": [
+    ["How many questions are in the World Flags Quiz?", "20 questions. Choose Easy, Medium or Hard before you start."],
+    ["When do I see the correct answers?", "Each answer includes feedback, and a complete review with explanations is available when you finish all 20."]
+  ],
+  "world-capitals-quiz": [
+    ["How does the World Capitals Quiz work?", "Each question names a country and offers four cities. Choose Easy, Medium or Hard for a 20-question run."],
+    ["When do I see the correct answers?", "Each answer includes feedback, and a complete review with explanations is available when you finish all 20."]
+  ]
+}
