@@ -135,20 +135,20 @@ body.braini-visual{
 
 /* Optional help uses one quiet, full-row affordance across reading and play.
    Keep native details/summary semantics and leave navigation and editors alone. */
-.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary,
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,:where(.article-body section)) details>summary,
 .braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary{
   position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:48px;
   padding:12px 32px 12px 0;box-sizing:border-box;list-style:none;cursor:pointer;
   font-family:Montserrat,system-ui,sans-serif;font-size:14px;font-weight:700;line-height:1.5;color:var(--navy);
 }
-.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary::-webkit-details-marker,
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,:where(.article-body section)) details>summary::-webkit-details-marker,
 .braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary::-webkit-details-marker{display:none}
-.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details>summary::after,
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,:where(.article-body section)) details>summary::after,
 .braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)>summary::after{
   content:"";position:absolute;right:8px;top:50%;width:8px;height:8px;
   border:solid currentColor;border-width:0 2px 2px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none;
 }
-.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,.article-body section) details[open]>summary::after,
+.braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq,.seo-copy,.academy-outline,.entry-example,:where(.article-body section)) details[open]>summary::after,
 .braini-visual :is(.entry-example,.route-demo,.discovery-example,.lab-times-table,.article-fold,.practice-answer,.daily-points-guide,.groups-help,.group-room-settings,.ranking-rules,.ranking-streak-details,.ranking-privacy,.avatar-help,.profile-period-details,.profile-reward-rules,.profile-xp-guide,.profile-ranks,.suggestions-reply,.halloween-intro-rules,.halloween-result-options,.halloween-result-answers)[open]>summary::after{transform:translateY(-20%) rotate(225deg)}
 .braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq) details{padding-block:0}
 .braini-visual :is(.home-faq,.daily-faqs,.game-faq,.geo-faq,.topic-faq) details>summary{font-size:16px;padding-block:16px}
