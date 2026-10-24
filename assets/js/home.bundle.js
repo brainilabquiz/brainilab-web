@@ -2534,6 +2534,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
     };
     if(context!==modernContext){
+      // Never leave another account's or yesterday's completed result in the DOM.
+      // Reads for the same account/day retain their confirmed UI and focus.
+      if(modernContext){paintModern('');modernPaintedContext='';}
       modernContext=context;
       root.setAttribute('data-home-loading','');root.setAttribute('aria-busy','true');
     }

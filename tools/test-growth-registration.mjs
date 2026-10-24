@@ -10,13 +10,13 @@ w.BrainiPostGame.inviteAccount(root,{practice:true,gameId:'europeflags'});
 assert.match(root.textContent,/This practice round stays on this page/);assert.equal(opened.length,0);
 w.BrainiPostGame.inviteAccount(root,{practice:true,gameId:'europeflags'});assert.equal(root.querySelectorAll('[data-join-account]').length,1);
 const flush=()=>new Promise(r=>setTimeout(r,0));
-root.querySelector('[data-join-account]').click();await flush();assert.equal(root.querySelector('[data-account-error]').hidden,false);assert.equal(root.querySelector('[data-join-account]').disabled,false);assert.equal(events.length,1);
+root.querySelector('[data-join-account]').click();await flush();assert.equal(root.querySelector('[data-account-error]').hidden,false);assert.equal(root.querySelector('[data-join-account]').disabled,false);assert.deepEqual(events.map(e=>e[0]),['render','click']);
 w.BrainiPerf={ensureCloud:async()=>{w.BrainiAuth={open:opts=>opened.push(opts)};return true;}};
 root.querySelector('[data-join-account]').click();await flush();assert.equal(opened[0].mode,'signup');assert.equal(opened[0].source,'practice_result');assert.equal(events.at(-1)[0],'open');
 root.querySelector('[data-dismiss-account]').click();assert.equal(root.hidden,true);assert.equal(w.document.activeElement.tagName,'A');
 w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(root.hidden,true);
 const second=w.document.createElement('div');w.document.body.append(second);status='authenticated';w.BrainiPostGame.inviteAccount(second);assert.equal(second.hidden,true);assert.equal(second.children.length,0);
-status='guest';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(second.hidden,false);
+status='guest';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(second.hidden,true,'Respect Not now across games and sign-in changes during this visit');
 status='authenticated';w.dispatchEvent(new w.Event('brainilab:authchange'));assert.equal(second.hidden,true);assert.equal(second.children.length,0);w.close();
 
 const a=new JSDOM('<title>Public quiz</title>',{url:'https://brainilabgames.com/geography/',referrer:'https://www.google.com/',runScripts:'outside-only'}),aw=a.window;

@@ -1,0 +1,62 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
+const analytics=readFileSync('assets/js/site-analytics.js','utf8'),postGame=readFileSync('assets/js/post-game.js','utf8');
+const growthKey='brainilab_growth_entry_v1',dismissKey='brainilab_account_invite_dismissed_v1';
+const page=()=>new JSDOM('<title>BrainiLab</title><main><a class="post-primary" href="/games/">Play again</a><div id="invite"></div><div id="second"></div></main>',{url:'https://brainilabgames.com/games/math-rush/',runScripts:'outside-only'});
+const events=w=>w.dataLayer?.filter(e=>e[0]==='event')||[];
+const count=(w,name)=>events(w).filter(e=>e[1]===name).length;
+let dom=page(),w=dom.window;
+w.eval(analytics);
+w.BrainiSiteAnalytics.gameStart('mathrush',{});w.BrainiSiteAnalytics.accountPrompt('render','game_result','mathrush');
+assert.equal(w.dataLayer,undefined);assert.equal(w.localStorage.getItem(growthKey),null);
+w.BrainiSiteAnalytics.setConsent(true);
+const now=w.Date.now();w.localStorage.setItem(growthKey,JSON.stringify({channel:'organic_search',path:'/learn/mental-maths/',startedAt:now-42000,lastAt:now-2000}));
+const round={};w.BrainiSiteAnalytics.gameStart('mathrush',round);w.BrainiSiteAnalytics.gameStart('mathrush',round);w.BrainiSiteAnalytics.gameStart('connections',{});
+assert.equal(count(w,'game_start'),2);assert.equal(count(w,'first_game_start'),1);
+const first=events(w).find(e=>e[1]==='first_game_start')[2];
+assert(first.seconds_to_play>=42&&first.seconds_to_play<46);assert.equal(first.growth_entry_channel,'organic_search');
+assert.deepEqual(Object.keys(w.BrainiSiteAnalytics.registrationContext()).sort(),['channel','lastAt','path','startedAt']);
+const saved=w.localStorage.getItem(growthKey);
+const next=page();next.window.localStorage.setItem(growthKey,saved);next.window.localStorage.setItem('brainilab_statistics_consent_v1',JSON.stringify({allowed:true,at:now}));next.window.eval(analytics);
+next.window.BrainiSiteAnalytics.gameStart('brainmix',{},'daily');assert.equal(count(next.window,'first_game_start'),0,'Same visit across pages');next.window.close();
+// Expiry starts a fresh consented visit; invalid games and modes never create milestones.
+w.localStorage.setItem(growthKey,JSON.stringify({channel:'direct',path:'/',startedAt:now-3600000,lastAt:now-1800001,firstGameStarted:true}));
+w.BrainiSiteAnalytics.gameStart('private@example.com',{});w.BrainiSiteAnalytics.gameStart('mathrush',{},'practice');assert.equal(count(w,'first_game_start'),1);
+w.BrainiSiteAnalytics.gameStart('brainmix',{},'daily');assert.equal(count(w,'first_game_start'),2);
+for(const action of ['render','dismiss','click','open'])w.BrainiSiteAnalytics.accountPrompt(action,'game_result','mathrush');
+assert.equal(count(w,'account_prompt_render'),1);assert.equal(count(w,'account_prompt_dismiss'),1);
+w.BrainiSiteAnalytics.accountPrompt('private@example.com','game_result','mathrush');assert(!JSON.stringify(w.dataLayer).includes('private@example.com'));
+w.BrainiSiteAnalytics.setConsent(false);w.BrainiSiteAnalytics.gameStart('mathrush',{});assert.equal(events(w).length,0);assert.equal(w.localStorage.getItem(growthKey),null);w.close();
+
+// A failed storage write still deduplicates this page's first play in memory.
+dom=page();w=dom.window;w.eval(analytics);w.BrainiSiteAnalytics.setConsent(true);
+const storageProto=Object.getPrototypeOf(w.localStorage),write=storageProto.setItem;
+storageProto.setItem=()=>{throw Error('blocked')};
+w.BrainiSiteAnalytics.gameStart('mathrush',{});w.BrainiSiteAnalytics.gameStart('connections',{});
+assert.equal(count(w,'first_game_start'),1);storageProto.setItem=write;w.close();
+
+dom=page();w=dom.window;let status='guest',opens=0;const actions=[];
+w.BrainiData={authState:()=>({status})};w.BrainiAuth={open:async options=>{assert.equal(options.mode,'signup');opens++;}};
+w.BrainiSiteAnalytics={accountPrompt:(...args)=>actions.push(args)};w.eval(postGame);
+const root=w.document.getElementById('invite'),second=w.document.getElementById('second');
+w.BrainiPostGame.inviteAccount(root,{gameId:'mathrush'});assert.equal(opens,0);
+assert.match(root.querySelector('[data-join-account]').textContent,/Save my progress/);assert.match(root.textContent,/Free account/);
+w.BrainiPostGame.inviteAccount(root,{gameId:'mathrush'});assert.equal(actions.filter(a=>a[0]==='render').length,1);
+root.querySelector('[data-join-account]').click();await new Promise(r=>setTimeout(r,0));assert.equal(opens,1);
+root.querySelector('[data-dismiss-account]').click();assert(root.hidden);assert.equal(w.sessionStorage.getItem(dismissKey),'1');
+w.BrainiPostGame.inviteAccount(second,{gameId:'connections'});assert(second.hidden);assert.equal(second.children.length,0);
+w.dispatchEvent(new w.Event('brainilab:authchange'));assert(root.hidden&&second.hidden);
+const session=w.sessionStorage.getItem(dismissKey);w.close();
+dom=page();w=dom.window;w.sessionStorage.setItem(dismissKey,session);w.eval(postGame);
+w.BrainiPostGame.inviteAccount(w.document.getElementById('invite'),{gameId:'science'});assert(w.document.getElementById('invite').hidden,'Dismissal survives navigation');w.close();
+
+dom=page();w=dom.window;let accountStatus='authenticated';w.BrainiData={authState:()=>({status:accountStatus})};w.eval(postGame);
+w.BrainiPostGame.inviteAccount(w.document.getElementById('invite'));assert(w.document.getElementById('invite').hidden);
+accountStatus='guest';w.dispatchEvent(new w.Event('brainilab:authchange'));assert(!w.document.getElementById('invite').hidden,'A guest without a dismissal can still choose a free account');w.close();
+dom=page();w=dom.window;w.eval(postGame);w.BrainiPostGame.inviteAccount(w.document.getElementById('invite'),{practice:true,gameId:'europeflags'});
+assert.match(w.document.getElementById('invite').textContent,/This practice round stays on this page/);assert.match(w.document.querySelector('[data-join-account]').textContent,/Create free account/);
+Object.getPrototypeOf(w.sessionStorage).setItem=()=>{throw Error('blocked')};
+w.document.querySelector('[data-dismiss-account]').click();w.BrainiPostGame.inviteAccount(w.document.getElementById('second'));assert(w.document.getElementById('second').hidden);w.close();
+console.log('PASS first value: consent-only timing, visit deduplication/expiry, private-data limits, no retroactive tracking, storage fallback, optional signup and persistent Not now.');
