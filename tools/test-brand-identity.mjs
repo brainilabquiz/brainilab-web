@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {brandPage,pageTitle,organization} from '../lib/brand-identity.js';
+import {brandPage,pageTitle,organization,podcastSeries} from '../lib/brand-identity.js';
 
 const fixture='<html><head><title>A puzzle | BrainiLab</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://brainilabgames.com/profile/"><meta content="Old name" property="og:site_name"><META PROPERTY=\'og:site_name\' CONTENT=\'Duplicate\'><meta property="og:title" content="A puzzle"><script type="application/ld+json">{"@type":"Organization","name":"A source"}</script><script>const title="Keep this";</script></head><body><h1>A puzzle</h1><p>Keep the words and links.</p></body></html>';
 const result=brandPage(fixture);
@@ -27,6 +27,7 @@ for(const file of ['index.html','about/index.html']){
  const html=readFileSync(file,'utf8');
  const graph=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
  assert.deepEqual(graph.find(n=>n['@type']==='Organization'),JSON.parse(JSON.stringify(organization)),file);
+ assert.deepEqual(graph.find(n=>n['@type']==='PodcastSeries'),JSON.parse(JSON.stringify(podcastSeries)),file+' links the podcast to its actual publisher');
  assert.equal(graph.filter(n=>n['@type']==='WebSite').length,1,file);
  assert.equal(graph.find(n=>n['@type']==='WebSite').name,'BrainiLab',file);
  assert.ok(html.includes('<link href="https://www.youtube.com/@BrainiLabKnowledge" rel="me"/>'),'the verified Knowledge channel is linked from the authoritative identity pages');
@@ -40,4 +41,9 @@ for(const url of organization.sameAs){
  const escaped=url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  assert.match(profiles,new RegExp('<a href="'+escaped+'" rel="me noopener noreferrer" target="_blank">'),'each declared profile has a matching safe visible link');
 }
+assert.ok(!organization.sameAs.includes(podcastSeries.url),'a podcast series is a published work rather than an organisation profile');
+assert.ok(profiles.includes('href="'+podcastSeries.url+'"'),'the verified podcast stays available as a readable link');
+const home=readFileSync('index.html','utf8');
+const homeProfiles=home.match(/<div class="home-social-links"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+for(const url of organization.sameAs.slice(0,4))assert.ok(homeProfiles?.includes('href="'+url+'"'),'Home links directly to its official video and social profiles');
 console.log('PASS brand identity: shared publisher matches Home/About; one site-name tag; repeat rendering; unrelated schema, scripts, noindex, canonical and body preserved; no repeated brand in titles.');
