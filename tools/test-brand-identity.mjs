@@ -29,5 +29,15 @@ for(const file of ['index.html','about/index.html']){
  assert.deepEqual(graph.find(n=>n['@type']==='Organization'),JSON.parse(JSON.stringify(organization)),file);
  assert.equal(graph.filter(n=>n['@type']==='WebSite').length,1,file);
  assert.equal(graph.find(n=>n['@type']==='WebSite').name,'BrainiLab',file);
+ assert.ok(html.includes('<link href="https://www.youtube.com/@BrainiLabKnowledge" rel="me"/>'),'the verified Knowledge channel is linked from the authoritative identity pages');
+}
+const about=readFileSync('about/index.html','utf8');
+const profiles=about.match(/<div id="official-profiles">([\s\S]*?)<\/div>/)?.[1];
+assert.ok(profiles,'make the official identity links available in readable page content');
+assert.ok(profiles.includes('brainilabgames.com'),'name the actual website alongside its official profiles');
+assert.equal(new Set(organization.sameAs).size,organization.sameAs.length,'do not duplicate profile identities');
+for(const url of organization.sameAs){
+ const escaped=url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ assert.match(profiles,new RegExp('<a href="'+escaped+'" rel="me noopener noreferrer" target="_blank">'),'each declared profile has a matching safe visible link');
 }
 console.log('PASS brand identity: shared publisher matches Home/About; one site-name tag; repeat rendering; unrelated schema, scripts, noindex, canonical and body preserved; no repeated brand in titles.');
