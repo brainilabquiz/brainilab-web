@@ -101,11 +101,11 @@
 @media(max-width:370px){.home-article{gap:12px;padding:10px}.home-article>img{width:92px;height:100px}}
 @media(max-width:700px){.home-article>picture{width:112px;height:98px}}
 @media(max-width:370px){.home-article>picture{width:92px;height:100px}}
-/* On phones, play comes first; media and reading follow the game. */
+/* On phones, keep the introduction compact; the game precedes media and reading. */
 @media(max-width:700px){
  .home-hero>.challenge-wrap{order:-1}
  .home-intro{display:flex;flex-direction:column}
- .home-intro h1,.home-intro .home-tagline{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
  .home-intro .home-video{order:1;margin-top:0}
  .home-intro .home-article,.home-intro .home-article-empty{order:2;margin-top:12px}
  .home-intro .home-social-links{order:3;margin-top:14px}
@@ -143,8 +143,10 @@ body.braini-visual.home-page .home-reading{grid-area:reading;min-width:0;display
 body.braini-visual.home-page .home-reading .home-article{width:100%;max-width:none;margin:0;align-self:stretch}
 body.braini-visual.home-page .home-reading .home-article-empty{display:flex;align-items:center;min-height:64px;margin:0}
 @media(max-width:900px){
- body.braini-visual.home-page main>.home-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"daily" "videos" "reading";gap:16px;padding-top:24px}
- body.braini-visual.home-page .home-hero>.home-intro{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ body.braini-visual.home-page main>.home-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "daily" "videos" "reading";gap:16px;padding-top:24px}
+ body.braini-visual.home-page .home-hero>.home-intro{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none;white-space:normal}
+ body.braini-visual.home-page .home-hero>.home-intro h1{font-size:24px;line-height:1.2}
+ body.braini-visual.home-page .home-hero>.home-intro .home-tagline{font-size:14px;line-height:1.5;margin-top:8px}
  body.braini-visual.home-page .home-hero .challenge{min-height:0}
  body.braini-visual.home-page .home-intro-media{gap:6px}
  body.braini-visual.home-page .home-video-grid .home-video-copy{padding:12px;gap:7px}
