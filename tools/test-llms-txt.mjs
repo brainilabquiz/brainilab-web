@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {readFileSync,readdirSync} from 'node:fs';
+import {serveLearn} from '../lib/learn-worker.js';
+import {LLMS_GAMES} from '../lib/llms-text.js';
+// /llms.txt maps the public site for AI assistants from published content only.
+const read=p=>JSON.parse(readFileSync(p,'utf8'));
+const authors=read('content/authors.json'),articles=readdirSync('content/articles').map(f=>read('content/articles/'+f)),paths=readdirSync('content/paths').map(f=>read('content/paths/'+f));
+const fetcher=async url=>new Response(JSON.stringify((url.includes('learn_paths?')?paths:url.includes('learn_authors?')?authors:articles).map(document=>({document}))));
+const env={ASSETS:{fetch:async()=>new Response('')}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
+const r=await serveLearn(new Request('https://brainilabgames.com/llms.txt'),env,ctx,cache,fetcher);
+assert.equal(r.status,200);assert.match(r.headers.get('Content-Type'),/^text\/plain; charset=utf-8/);
+const text=await r.text();
+assert.match(text,/^# BrainiLab\n\n> /);
+for(const [,path] of LLMS_GAMES)assert.ok(text.includes('https://brainilabgames.com'+path),path);
+for(const [,path] of LLMS_GAMES)assert.match(readFileSync(path.slice(1)+"index.html","utf8"),/rel="canonical"/,path+" is a live page");
+for(const p of paths.filter(p=>p.status!=='draft'))assert.ok(text.includes(`/learn/paths/${p.slug}/`),p.slug);
+const sample=articles.slice(0,10);for(const a of sample)assert.ok(text.includes(`(https://brainilabgames.com/learn/${a.slug}/)`),a.slug);
+assert.ok(!/<[a-z]/i.test(text),'plain text, no HTML');
+const head=await serveLearn(new Request('https://brainilabgames.com/llms.txt',{method:'HEAD'}),env,ctx,cache,fetcher);assert.equal(head.status,200);assert.equal(await head.text(),'');
+console.log(`PASS llms.txt: ${LLMS_GAMES.length} games, Academy paths and published articles by topic, plain text, HEAD supported.`);
