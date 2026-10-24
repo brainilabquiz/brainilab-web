@@ -46,6 +46,13 @@ for(const removed of [refreshLearnSitemap(xml,[],[]),refreshLearnSitemap(origina
  assert.ok(removed.includes(game));
 }
 for(const tag of ['caption','title','license','geo_location'])assert.ok(!xml.includes('<image:'+tag));
+// Course pages list their visible cover and their own update date.
+const course={slug:'sky-colours',coverArticle:sample.slug,updatedAt:'2026-10-14T10:00:00Z',lessons:[{slug:sample.slug}]};
+const withCourse=refreshLearnSitemap(original,[sample],[course]);
+const courseEntry=withCourse.match(/<url><loc>https:\/\/brainilabgames\.com\/learn\/paths\/sky-colours\/<\/loc>[\s\S]*?<\/url>/)[0];
+assert.ok(courseEntry.includes(articleSitemapImage(sample))&&/<lastmod>2026-10-14/.test(courseEntry),courseEntry);
+assert.equal(refreshLearnSitemap(withCourse,[sample],[course]),withCourse);
+assert.ok(!refreshLearnSitemap(original,[],[{...course,coverArticle:'missing',lessons:[]}]).includes('<image:image>'),'no image for an unpublished cover');
 
 const env={ASSETS:{fetch:async()=>new Response(original)}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
 let articleRows=[sample];
