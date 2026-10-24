@@ -40,4 +40,7 @@ for(const url of organization.sameAs){
  const escaped=url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  assert.match(profiles,new RegExp('<a href="'+escaped+'" rel="me noopener noreferrer" target="_blank">'),'each declared profile has a matching safe visible link');
 }
+const home=readFileSync('index.html','utf8');
+const homeProfiles=home.match(/<div class="home-social-links"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+for(const url of organization.sameAs.slice(0,4))assert.ok(homeProfiles?.includes('href="'+url+'"'),'Home links directly to its official video and social profiles');
 console.log('PASS brand identity: shared publisher matches Home/About; one site-name tag; repeat rendering; unrelated schema, scripts, noindex, canonical and body preserved; no repeated brand in titles.');
