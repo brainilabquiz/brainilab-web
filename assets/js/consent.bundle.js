@@ -22,14 +22,14 @@ window.BrainiSiteAnalytics=(()=>{
   function entryContext(){
     const now=Date.now();let old=entry;try{old=JSON.parse(localStorage.getItem(entryKey))||entry;}catch{}
     const channels=['organic_search','paid','social','referral','direct','unknown'];
-    if(old&&channels.includes(old.channel)&&typeof old.path==='string'&&old.path.length<180&&/^\/(?:[a-z0-9-]+\/)*$/.test(old.path)&&now>=old.startedAt&&now>=old.lastAt&&now-old.lastAt<1800000){entry={channel:old.channel,path:old.path,startedAt:old.startedAt,lastAt:now};}
+    if(old&&channels.includes(old.channel)&&typeof old.path==='string'&&old.path.length<180&&/^\/(?:[a-z0-9-]+\/)*$/.test(old.path)&&now>=old.startedAt&&now>=old.lastAt&&now-old.lastAt<1800000){const firstGameStarted=old.firstGameStarted===true||entry?.startedAt===old.startedAt&&entry?.path===old.path&&entry?.firstGameStarted===true;entry={channel:old.channel,path:old.path,startedAt:old.startedAt,lastAt:now,firstGameStarted};}
     else{
       let host='';try{host=new URL(document.referrer).hostname;}catch{}
       const query=new URLSearchParams(location.search);
       const searchHosts=/^(?:(?:www|search)\.)?(?:google\.(?:com|es|co\.uk|fr|de|it|ca|com\.au)|bing\.com|duckduckgo\.com|search\.yahoo\.com|ecosia\.org|search\.brave\.com)$/;
       const channel=['gclid','dclid','msclkid'].some(k=>query.has(k))?'paid':campaign().campaign_source?'social':searchHosts.test(host)?'organic_search':host&&!['brainilabgames.com','www.brainilabgames.com'].includes(host)?'referral':host?'unknown':'direct';
       const landing=/^\/(?:[a-z0-9-]+\/)*$/.test(path())&&path().length<180?path():'/';
-      entry={channel,path:landing,startedAt:now,lastAt:now};
+      entry={channel,path:landing,startedAt:now,lastAt:now,firstGameStarted:false};
     }
     try{localStorage.setItem(entryKey,JSON.stringify(entry));}catch{}
     return entry;
@@ -39,13 +39,19 @@ window.BrainiSiteAnalytics=(()=>{
     finishedPractice.add(round);send('practice_complete',{game_id:gameId});
   }
   const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword','sequence','survival','oddoneout','higherlower','orderup','topicrush']);
+  function firstGameStart(gameId,mode){
+    const context=entryContext();if(context.firstGameStarted)return;
+    context.firstGameStarted=true;entry=context;
+    try{localStorage.setItem(entryKey,JSON.stringify(entry));}catch{}
+    send('first_game_start',{game_id:gameId,mode,seconds_to_play:Math.min(1800,Math.max(0,Math.floor((Date.now()-context.startedAt)/1000)))});
+  }
   function gameStart(gameId,round,mode='anytime'){
     if(gameId==='europeflags'&&mode==='practice'){
       if(!allowed()||!round||typeof round!=='object'||started.has(round))return;
       started.add(round);send('practice_start',{game_id:gameId});return;
     }
     if(!allowed()||!measuredGames.has(gameId)||!round||typeof round!=='object'||started.has(round)||!['daily','anytime'].includes(mode))return;
-    started.add(round);send('game_start',{game_id:gameId,mode});
+    started.add(round);send('game_start',{game_id:gameId,mode});firstGameStart(gameId,mode);
   }
   function read(){try{const c=JSON.parse(localStorage.getItem(key));return c&&typeof c.allowed==='boolean'&&c.at<=Date.now()&&Date.now()-c.at<maxAge?c.allowed:null;}catch{return null;}}
   function safe(){return ['brainilabgames.com','www.brainilabgames.com'].includes(location.hostname)&&!/^\/(admin|auth|profile)(\/|$)/.test(location.pathname)&&![...new URLSearchParams(location.search+'&'+location.hash.slice(1)).keys()].some(k=>/^(code|access_token|refresh_token|token_hash|error_description|email|password)$/.test(k));}
@@ -122,7 +128,7 @@ window.BrainiSiteAnalytics=(()=>{
   const timer=setInterval(()=>{if(articleRead||!safe()){clearInterval(timer);return;}const article=document.querySelector('.article-body');if(!article){clearInterval(timer);return;}if(allowed()&&!document.hidden)activeSeconds++;if(activeSeconds>=30&&article.getBoundingClientRect().top+article.offsetHeight/2<=innerHeight){articleRead=true;send('article_read',{article_slug:path().split('/')[2]});clearInterval(timer);}},1000);
   if(choice===true)activate();else revoke();
   function accountPrompt(action,placement,gameId){
-    if(!['click','open'].includes(action)||!['game_result','practice_result'].includes(placement)||!['brainmix','brainiword','orderup','topicrush','generalknowledge','connections','survival','oddoneout','higherlower','mathrush','numberroute','sequence','worldflags','europeflags','worldcapitals','science','history','sports'].includes(gameId))return;
+    if(!['render','dismiss','click','open'].includes(action)||!['game_result','practice_result'].includes(placement)||!['brainmix','brainiword','orderup','topicrush','generalknowledge','connections','survival','oddoneout','higherlower','mathrush','numberroute','sequence','worldflags','europeflags','worldcapitals','science','history','sports'].includes(gameId))return;
     send('account_prompt_'+action,{placement,game_id:gameId});
   }
   function learningAccountPrompt(action,placement){
@@ -131,7 +137,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(placement==='learn_library'&&path()==='/learn/')send('account_prompt_'+action,{placement});
     else if(placement==='academy_result'&&article)send('account_prompt_'+action,{placement,article_slug:article[1]});
   }
-  return {setConsent,setAccountState,accountStatus:()=>accountState,consentChoice:()=>choice,gameStart,practiceComplete,accountPrompt,learningAccountPrompt,registrationContext:()=>allowed()?{...entryContext()}:null,registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true&&accountState==='included'};
+  return {setConsent,setAccountState,accountStatus:()=>accountState,consentChoice:()=>choice,gameStart,practiceComplete,accountPrompt,learningAccountPrompt,registrationContext:()=>{if(!allowed())return null;const {channel,path,startedAt,lastAt}=entryContext();return {channel,path,startedAt,lastAt};},registrationRequest:method=>{if(method==='email')send('registration_request',{method});},needsConsent:()=>choice===null,isAllowed:()=>choice===true&&accountState==='included'};
 })();
 
 /* ===== meta-pixel.js ===== */

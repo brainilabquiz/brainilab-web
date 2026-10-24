@@ -66,17 +66,29 @@ window.BrainiPostGame=(()=>{
    try{const url=new URL(href,location.href);if(url.origin===location.origin&&url.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/')===context.path&&!href.includes('#'))tab.setAttribute('href',href+context.hash);}catch{}
   }
  }
- const invitations=new Map(),dismissed=new WeakSet();
+ const invitations=new Map(),dismissed=new WeakSet(),dismissKey='brainilab_account_invite_dismissed_v1';
+ let visitDismissed=false;
+ function accountInviteDismissed(){
+  try{visitDismissed=visitDismissed||sessionStorage.getItem(dismissKey)==='1';}catch{}
+  return visitDismissed;
+ }
  function inviteAccount(container,{practice=false,gameId='brainmix'}={}){
   if(!container)return;
   for(const root of invitations.keys())if(!root.isConnected)invitations.delete(root);
   invitations.set(container,{practice,gameId});
   const signedIn=window.BrainiData?.authState?.()?.status==='authenticated';
-  if(signedIn||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
+  if(signedIn||accountInviteDismissed()||dismissed.has(container)){container.replaceChildren();container.hidden=true;return;}
   if(container.querySelector('[data-join-account]'))return;
   container.hidden=false;
-  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free to join</p><h3>Keep your progress.</h3><p>${practice?'Save your next scores across devices.':'Save your scores and Daily streak across devices.'}</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account>Create free account <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
-  container.querySelector('[data-dismiss-account]').onclick=()=>{dismissed.add(container);container.hidden=true;const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');fallback?.focus();};
+  container.innerHTML=`<aside class="post-account-invite" aria-label="Free BrainiLab account"><div><p class="post-account-kicker">Free account</p><h3>Keep your progress.</h3><p>${practice?'Save your next scores across devices.':'Your scores, streak and avatar, together on any device.'}</p>${practice?'<small>This practice round stays on this page.</small>':''}</div><div class="post-account-actions"><button type="button" data-join-account aria-label="Create a free account to save your progress">${practice?'Create free account':'Save my progress'} <span aria-hidden="true">→</span></button><button type="button" data-dismiss-account>Not now</button></div><p role="status" data-account-error hidden></p></aside>`;
+  try{window.BrainiSiteAnalytics?.accountPrompt?.('render',practice?'practice_result':'game_result',gameId);}catch{}
+  container.querySelector('[data-dismiss-account]').onclick=()=>{
+   dismissed.add(container);visitDismissed=true;
+   try{sessionStorage.setItem(dismissKey,'1');}catch{}
+   try{window.BrainiSiteAnalytics?.accountPrompt?.('dismiss',practice?'practice_result':'game_result',gameId);}catch{}
+   const fallback=container.closest('.post-game')?.querySelector('.post-primary')||container.parentElement.querySelector('a');
+   refreshInvitations();fallback?.focus();
+  };
   container.querySelector('[data-join-account]').onclick=async event=>{
    const button=event.currentTarget,error=container.querySelector('[data-account-error]');
    button.disabled=true;error.hidden=true;
