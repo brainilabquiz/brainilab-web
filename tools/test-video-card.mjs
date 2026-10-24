@@ -3,11 +3,11 @@ import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const html=readFileSync('index.html','utf8'),script=readFileSync('assets/js/latest-video.js','utf8');
-const playlist='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4',channel='UCcqUq1aWcDoKyGT9QYCPqIA';
+const brainilab='UCy35EdjSpdYufOLJBybevsA',channel='UCcqUq1aWcDoKyGT9QYCPqIA';
 const published=new Date(Date.now()-60000).toISOString();
-const video={id:'newerVid002',playlistId:playlist,title:'<img src=x onerror=alert(1)>',published,stale:false};
+const video={id:'newerVid002',channelId:brainilab,title:'<img src=x onerror=alert(1)>',published,stale:false};
 const knowledge={id:'knwVideo001',channelId:channel,title:'A knowledge video',published};
-const cases=[video,{...video,stale:true},{unavailable:true},{...video,playlistId:'wrong'},
+const cases=[video,{...video,stale:true},{unavailable:true},{...video,channelId:'wrong'},
  {...video,published:'invalid'},{...video,published:new Date(Date.now()+86400000).toISOString()},
  {...video,published:'2020-01-01T00:00:00Z'},{...video,id:'bad-id'}];
 for(const data of cases){

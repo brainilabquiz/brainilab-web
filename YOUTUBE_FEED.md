@@ -1,3 +1,15 @@
+# Homepage videos — current behaviour (24 October 2026)
+
+Both homepage cards now follow their official channel's newest public upload: BrainiLab Knowledge (`UCcqUq1aWcDoKyGT9QYCPqIA`) and BrainiLab (`UCy35EdjSpdYufOLJBybevsA`). The owner requested the latest uploads on 24 October; the BrainiLab homepage card is therefore no longer limited to the older General Knowledge playlist. `/api/latest-video?channel=knowledge` and `?channel=brainilab` accept these two fixed selections only. The legacy playlist endpoint is retained for existing related-game integrations.
+
+The homepage renders validated cached video records into its initial HTML, while refreshing in the background. It does not wait for YouTube before showing the Daily. The client also refreshes each card independently on a visit. The existing 15-minute freshness window, short failure backoff and bounded stale fallback remain. The verified 23 October videos are included as the initial fallback; no new credential or billing change is required. This is automatic visit-driven refresh, not an instant upload webhook.
+
+Only the two allowlisted channels and public uploads are eligible. Actual video publication dates determine recency. Titles are escaped, future/foreign/malformed data is rejected, and each video opens directly without a playlist parameter. Cache outages retain a useful existing card. No visitor cookies or account data are sent to YouTube by these requests.
+
+Validation: `tools/test-home-video-freshness.mjs`, `tools/test-knowledge-video.mjs`, `tools/test-latest-video.mjs`, `tools/test-video-card.mjs`, plus the complete review suite. Check both public API selections, initial HTML and rendered cards after deployment.
+
+## Historical playlist integration
+
 # Homepage YouTube card
 
 The public channel is `UCy35EdjSpdYufOLJBybevsA`, confirmed from the official
