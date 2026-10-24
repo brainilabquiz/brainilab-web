@@ -3,15 +3,30 @@ import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const html=readFileSync('index.html','utf8'),script=readFileSync('assets/js/latest-video.js','utf8');
-const playlist='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4';
-const video={id:'newerVid002',playlistId:playlist,title:'<img src=x onerror=alert(1)>',stale:false};
-for(const data of [video,{...video,stale:true},{unavailable:true},{...video,playlistId:'wrong'}]){
+const playlist='PLUJ2DxFEKsFSGP_Ry6gY5jDwQNnDgFKh4',channel='UCcqUq1aWcDoKyGT9QYCPqIA';
+const published=new Date(Date.now()-60000).toISOString();
+const video={id:'newerVid002',playlistId:playlist,title:'<img src=x onerror=alert(1)>',published,stale:false};
+const knowledge={id:'knwVideo001',channelId:channel,title:'A knowledge video',published};
+const cases=[video,{...video,stale:true},{unavailable:true},{...video,playlistId:'wrong'},
+ {...video,published:'invalid'},{...video,published:new Date(Date.now()+86400000).toISOString()},
+ {...video,published:'2020-01-01T00:00:00Z'},{...video,id:'bad-id'}];
+for(const data of cases){
  const d=new JSDOM(html,{url:'https://brainilabgames.com/',runScripts:'outside-only'}),w=d.window;
- w.fetch=async()=>Response.json(data);w.AbortSignal=AbortSignal;w.eval(script);
+ const card=w.document.querySelector('[data-latest-video]:not([data-video-source="knowledge"])'),other=w.document.querySelector('[data-video-source="knowledge"]');
+ assert(card&&other);card.dataset.videoPublished='2021-01-01T00:00:00Z';other.dataset.videoPublished='2021-01-01T00:00:00Z';
+ const originalHref=card.href,originalTitle=card.querySelector('[data-video-title]').textContent;
+ w.fetch=async url=>Response.json(String(url).includes('channel=knowledge')?knowledge:data);w.AbortSignal=AbortSignal;w.eval(script);
  await new Promise(resolve=>setTimeout(resolve,20));
- const card=w.document.querySelector('[data-latest-video]');
- if(data===video){assert.ok(card.href.includes('watch?v=newerVid002'));assert.equal(card.querySelector('[data-video-title]').textContent,video.title);assert.equal(card.querySelector('[data-video-title] img'),null);assert.ok(card.classList.contains('has-video'));}
- else{assert.equal(card.href,'https://www.youtube.com/playlist?list='+playlist);assert.equal(card.classList.contains('has-video'),false);assert.equal(card.querySelector('[data-video-title]').textContent,'Watch a quiz. Play along.');}
+ if(data===video||data.stale){
+  assert(card.href.includes('watch?v=newerVid002'));assert.equal(card.querySelector('[data-video-title]').textContent,video.title);
+  assert.equal(card.querySelector('[data-video-title] img'),null);assert(card.classList.contains('has-video'));
+  assert.equal(card.querySelector('[data-video-label]').textContent,'BrainiLab');
+ }else{
+  assert.equal(card.href,originalHref,'Keep the existing working video on invalid, unavailable or older data');
+  assert.equal(card.querySelector('[data-video-title]').textContent,originalTitle);
+ }
+ assert(other.href.includes('watch?v=knwVideo001'),'The Knowledge channel updates independently');
+ assert.equal(other.querySelector('[data-video-label]').textContent,'BrainiLab Knowledge');
  w.close();
 }
-console.log('Video card: fresh title is escaped; stale, unavailable and foreign-playlist data preserve the playlist link.');
+console.log('Video cards: independent sources, truthful stale labels, escaped titles, real dates, no downgrade, safe IDs and working fallbacks passed.');
