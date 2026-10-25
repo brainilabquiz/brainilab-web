@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import {durationSeconds,isLongVideo,latestPlaylistVideo} from '../lib/youtube-playlist.js';
+import {HOME_CHANNELS,channelCacheKey,validChannelCache,channelVideo} from '../lib/youtube-channel.js';
+import {renderHomeVideoCards} from '../lib/home-video-cards.js';
+for(const [duration,seconds]of [['PT3M',180],['PT3M1S',181],['PT12M34S',754],['PT1H2M3S',3723],['P1DT2H',93600],['PT0S',null],['PT',null],['bad',null],[undefined,null]])assert.equal(durationSeconds(duration),seconds);
+assert(!isLongVideo({durationSeconds:180}));assert(isLongVideo({durationSeconds:181}));assert(!isLongVideo({durationSeconds:'600'}));
+const channel=HOME_CHANNELS.brainilab.id,uploads='UU'+channel.slice(2),published='2026-09-20T00:00:00Z';
+const item=(id,date=published)=>({snippet:{playlistId:uploads,videoOwnerChannelId:channel,title:id,resourceId:{kind:'youtube#video',videoId:id}},contentDetails:{videoId:id,videoPublishedAt:date},status:{privacyStatus:'public'}});
+const detail=(id,duration,owner=channel,privacy='public',live='none')=>({id,snippet:{channelId:owner,title:id,publishedAt:published,liveBroadcastContent:live},contentDetails:{duration},status:{privacyStatus:privacy}});
+const calls=[];
+const api=async(address,options)=>{
+ const u=new URL(address);calls.push(u.pathname);assert.equal(options.redirect,'manual');assert(options.signal);
+ if(u.pathname.endsWith('/playlistItems'))return Response.json(u.searchParams.has('pageToken')?{items:[item('longVideo01')]}:{items:[item('shortVid001'),item('noLength001'),item('private0001'),item('foreign0001'),item('upcoming001')],nextPageToken:'next'});
+ assert(u.pathname.endsWith('/videos'));
+ return Response.json(u.searchParams.get('id')==='longVideo01'?{items:[detail('longVideo01','PT9M')]}:{items:[detail('shortVid001','PT3M'),detail('noLength001',undefined),detail('private0001','PT9M',channel,'private'),detail('foreign0001','PT9M','foreign'),detail('upcoming001','PT9M',channel,'public','upcoming')]});
+};
+const chosen=await latestPlaylistVideo('fixture-only',api,{playlistId:uploads,channelId:channel,standalone:true,longForm:true});
+assert.equal(chosen.id,'longVideo01');assert.equal(chosen.durationSeconds,540);assert.equal(calls.length,4,'Continue past a page containing only Shorts and invalid records');
+const request=new Request('https://brainilabgames.com/'),saved={...chosen,channelId:channel,checkedAt:Date.now()};
+assert(validChannelCache(saved,'brainilab'));assert.equal(validChannelCache({...saved,durationSeconds:180},'brainilab'),null);assert.equal(validChannelCache({...saved,durationSeconds:undefined},'brainilab'),null);
+assert.match(channelCacheKey(request,'brainilab','fixture-only').url,/v=2-long/);
+const html='<a data-latest-video data-video-source="brainilab" data-video-published="2000-01-01T00:00:00Z">Existing long video</a>';
+assert.equal(renderHomeVideoCards(html,{brainilab:{...saved,durationSeconds:180}}),html);
+assert.match(renderHomeVideoCards(html,{brainilab:saved}),/watch\?v=longVideo01/);
+let fetched=false;const pending=[],ctx={waitUntil:p=>pending.push(p)},cache={match:async()=>null,put:async()=>{}};
+const unavailable=await channelVideo(request,ctx,cache,()=>{fetched=true;throw Error('Must not fetch an untyped feed')},'','brainilab');await Promise.all(pending);
+assert.equal(unavailable.status,503);assert.equal((await unavailable.json()).unavailable,true);assert.equal(fetched,false);
+console.log('PASS homepage long videos: verified duration >180s, later pages, unknown/private/foreign/upcoming rejection, cache invalidation, SSR safety and no untyped-feed promotion.');

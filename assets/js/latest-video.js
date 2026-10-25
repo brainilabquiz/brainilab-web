@@ -10,7 +10,7 @@
   fetch('/api/latest-video?channel='+source,{signal:AbortSignal.timeout(9000),credentials:'omit'})
    .then(response=>{if(!response.ok)throw Error('Unavailable');return response.json();})
    .then(video=>{
-    if(video.unavailable||video.channelId!==channels[source]||!/^[-\w]{11}$/.test(video.id||'')||typeof video.title!=='string'||!video.title.trim()||video.title.length>250||!Number.isFinite(Date.parse(video.published))||Date.parse(video.published)>Date.now())return;
+    if(video.unavailable||!Number.isFinite(video.durationSeconds)||video.durationSeconds<=180||video.channelId!==channels[source]||!/^[-\w]{11}$/.test(video.id||'')||typeof video.title!=='string'||!video.title.trim()||video.title.length>250||!Number.isFinite(Date.parse(video.published))||Date.parse(video.published)>Date.now())return;
     // A stale but valid record is still useful. The label names the channel,
     // rather than making a freshness promise when an upstream request fails.
     const old=Date.parse(card.dataset.videoPublished);
