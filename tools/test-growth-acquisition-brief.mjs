@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {briefText,toolsHTML,bindTools} from '../editor/growth-tools.js';
+import {acquisitionCheck} from '../editor/growth-acquisition-brief.js';
+import {unassignedFixture} from './fixtures/growth-unassigned.mjs';
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+const {report}=unassignedFixture();
+report.availablePeriod=report.seoExplorer.searchSources.period;
+const lead={url:'https://brainilabgames.com/learn/sample-0/',name:'Sample',kind:'article',action:'Review',pageSourceSnapshot:'dated-fixture',pageEvidence:{impressions:100,clicks:2,position:12},queryEvidence:[{value:'sample question',impressions:100,clicks:2}],brief:{finding:'Inspect the existing answer.',checks:['Check the primary source']},conversionGoal:'A useful visit, measured separately'};
+const before=JSON.stringify({lead,report});
+const brief=briefText(lead,report);
+assert.match(brief,/sample question: 100 impressions, 2 clicks/);assert.match(brief,/Check the primary source/);
+assert.match(brief,/plan to validate, not a measured audience/);assert.match(brief,/What, if anything, stopped you/);
+assert.match(brief,/Landing sessions: 3/);assert.match(brief,/Game start events in those sessions: 0/);assert.match(brief,/Practice start events in those sessions: Not measured/);
+assert.match(brief,/2026-07-25 to 2026-10-22/);assert.match(brief,/2026-09-26 to 2026-10-23/);
+assert.match(brief,/not distinct playing sessions/);assert.match(brief,/Do not divide game events by sessions/);
+assert.match(brief,/do not restart stopped outreach/);assert.match(brief,/Preserve a working page/);
+assert.equal(JSON.stringify({lead,report}),before);
+const unknown=acquisitionCheck({...lead,url:'https://brainilabgames.com/learn/sample-1/'},report);
+assert.match(unknown,/Sessions and game starts are Not measured here, not zero/);assert.doesNotMatch(unknown,/Landing sessions: 3/);
+const privatePage=acquisitionCheck({...lead,url:'https://brainilabgames.com/account/?token=private'},report);
+assert.match(privatePage,/Not a validated public URL/);assert.doesNotMatch(privatePage,/token=private/);
+const limited=structuredClone(report);limited.searchPerformance.current.analyticsQuality.sampled=true;
+assert.match(acquisitionCheck(lead,limited),/Quality limitation/);
+limited.searchPerformance.current.analyticsQuality=null;assert.match(acquisitionCheck(lead,limited),/Quality flags were not supplied/);
+const alias=acquisitionCheck({...lead,url:lead.url+'index.html'},report);assert.match(alias,/Not measured here/);
+// Exercise the actual download handler: the richer plan reaches the artifact,
+// not just an unused helper; existing search and editorial evidence survive.
+const dom=new JSDOM('<main></main>');globalThis.document=dom.window.document;
+const root=document.querySelector('main');report.discovery=[lead];root.innerHTML=toolsHTML(report);
+let blob=null,download='';globalThis.URL.createObjectURL=value=>{blob=value;return 'blob:fixture';};globalThis.URL.revokeObjectURL=()=>{};
+dom.window.HTMLAnchorElement.prototype.click=function(){download=this.download;};
+globalThis.fetch=()=>{throw Error('Brief preparation must not fetch or write data');};
+bindTools(root,report);root.querySelector('[data-export-brief]').click();
+assert.equal(download,'brainilab-editorial-brief.md');assert.equal(await blob.text(),briefText(lead,report));
+console.log('PASS acquisition brief: real download, original evidence retained, hypothesis/feedback gate, exact-path dated baseline, null versus zero, quality/privacy guards and no conversion or publication claims.');
