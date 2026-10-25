@@ -23,7 +23,7 @@ function harness(){
     signInWithPassword:async()=>{calls.push('sign-in');session={user:account};return {data:{session}};},
     signInWithOAuth:async()=>{calls.push('oauth');return {data:{url:'https://accounts.google.com/'}};},
     signUp:async()=>({data:{user:account,session:null}}),
-    signOut:async()=>{session=null;return {};}
+    signOut:async options=>{calls.push('sign-out:'+options?.scope);session=null;return {};}
   },rpc:async(name,args)=>{
     calls.push(name);
     if(name==='get_my_brainilab_progression')return {data:{progression:{user_id:account.id,xp:1200,current_streak:4}}};
@@ -84,6 +84,7 @@ function harness(){
   check(c.BrainiData.recentResults().some(r=>r.clientResultId===result.clientResultId),'unique guest progress survives login');
   check(c.BrainiData.recentResults().find(r=>r.clientResultId===result.clientResultId).ownerUserId===h.account.id,'successful server claim transfers the recovery owner');
   await c.BrainiBackendAuth.signOut();
+  check(h.calls.includes('sign-out:local'),'this browser signs out only its own session and preserves other devices');
   check(c.BrainiData.recentResults().length===0 && !c.BrainiBackendAuth.hasPlayerSession(),'sign-out isolates previous account progress from a new guest');
 }
 {

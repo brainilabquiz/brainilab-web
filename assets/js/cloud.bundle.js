@@ -343,7 +343,8 @@ window.BrainiBackendAuth = (function(){
       await BrainiData.api.clearExternalAuthUser();
       return;
     }
-    const {error}=await sb.auth.signOut();
+    // The profile action says "This browser"; keep phone and other sessions.
+    const {error}=await sb.auth.signOut({scope:'local'});
     if(error) throw error;
     localStorage.removeItem(guestClaimKey);
     await BrainiData.api.clearExternalAuthUser();
