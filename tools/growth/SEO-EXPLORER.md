@@ -224,3 +224,28 @@ keeps the separate periods and guards. This feature adds no data collection,
 tracking, scoring, database writes, permissions or automatic content changes.
 Validate with tools/test-growth-seo-actions.mjs plus the existing Explorer/page
 tests and production build; check live decision navigation and responsive UI.
+
+### Search pages without a recorded decision
+
+Next checks also offers a separate Observed pages without a decision scope.
+Previously, observed pages could only appear here after a decision already
+existed. This scope groups the validated final Web query/page rows by exact URL,
+selects one strongest matching row without summing, and requires one unambiguous,
+dated HTTP 200 inspection returning that same public URL. Every recorded decision
+state excludes that URL from this scope. Redirects, missing/failed inspections,
+private paths and duplicated inspection records cannot become suggestions.
+
+An empty Needs review view points to these other observed pages when available.
+Review evidence opens the existing exact-page review with search, technical,
+link and independently dated organic landing-session evidence. The table and
+complete CSV preserve actual clicks, missing activity, dates and the absence of
+a decision; no artificial decision ID or status is generated. Search filters
+select the strongest matching query, not combined totals.
+
+This is a discovery list for investigation, not an automatic recommendation to
+rewrite. No recorded decision does not prove a page has never changed. Recent
+work, low/irrelevant observations and working pages must be reviewed before
+selecting an edit. It adds no data collection, database mutation, metric, score,
+permission or publication action. Validate the omission regression, protected
+states, ambiguous sources, export and navigation with
+tools/test-growth-seo-unassigned.mjs and the existing action/page/Explorer tests.
