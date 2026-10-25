@@ -1,0 +1,63 @@
+{
+  "slug": "metaphor-examples-desk-jungle",
+  "title": "Metaphor examples: why is your desk a jungle?",
+  "description": "A desk becomes a jungle and a question becomes a key. Three small examples show how metaphors work, and what changes when you add “like”.",
+  "topic": "Words & puzzles",
+  "status": "draft",
+  "authorId": "biel-sarda",
+  "order": 208,
+  "minutes": 2,
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/games/connections/",
+    "name": "Connections"
+  },
+  "practice": "Look for another unexpected link between words in Connections.",
+  "related": [
+    "what-is-an-idiom",
+    "oxymoron-examples-deafening-silence"
+  ],
+  "cover": {
+    "src": "/assets/images/learn/metaphor-examples-desk-jungle.webp",
+    "small": "/assets/images/learn/metaphor-examples-desk-jungle-small.webp",
+    "thumbnail": "/assets/images/learn/metaphor-examples-desk-jungle-thumb.webp",
+    "alt": "An open notebook and yellow pencil on a wooden desk crowded with potted green plants",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined plant-filled desk, not a documentary photograph.",
+    "position": 58
+  },
+  "sources": [
+    {
+      "url": "https://www.merriam-webster.com/dictionary/metaphor",
+      "name": "Merriam-Webster — Metaphor: a comparison through a transferred meaning"
+    },
+    {
+      "url": "https://www.merriam-webster.com/grammar/metaphor-vs-simile",
+      "name": "Merriam-Webster — Metaphor vs. simile"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-desk-with-leaves",
+      "title": "Your desk has become a jungle",
+      "html": "<p><strong>A metaphor describes one thing through another to suggest a likeness.</strong> Say “My desk is a jungle” when papers and cables have taken over. You are borrowing the jungle’s tangled, crowded image. Nobody needs to water the stapler.</p><p><a href=\"https://www.merriam-webster.com/dictionary/metaphor\">Merriam-Webster explains this transfer of meaning</a>. The words invite you to notice a shared quality, rather than take the description literally.</p>"
+    },
+    {
+      "id": "three-small-examples",
+      "title": "Three examples, three different links",
+      "html": "<p><strong>“My desk is a jungle.”</strong> The connection is the tangle: finding one receipt feels like picking a route through thick growth.</p><p><strong>“Her question was a key.”</strong> Imagine one question suddenly helping a group understand a problem. The question has not grown metal teeth; it opens a way into the idea.</p><p><strong>“The inbox was a snowdrift.”</strong> In this invented scene, messages have piled up until the important ones seem buried. The link is the accumulating heap, not the temperature of your email.</p>"
+    },
+    {
+      "id": "add-one-word",
+      "title": "What changes when you add “like”?",
+      "html": "<p>Compare <em>“My desk is a jungle”</em> with <em>“My desk is like a jungle.”</em> The second makes the comparison explicit. That is a <strong>simile</strong>, a comparison often introduced by <em>like</em> or <em>as</em>.</p><p><a href=\"https://www.merriam-webster.com/grammar/metaphor-vs-simile\">Merriam-Webster distinguishes the two devices</a>. Both versions point towards the same crowded desk; they phrase the connection differently.</p>"
+    },
+    {
+      "id": "find-the-shared-quality",
+      "title": "Look for the shared quality",
+      "html": "<p>A sentence with <em>is</em> is not automatically a metaphor. “My desk is wooden” can simply describe its material. Ask what image is being borrowed and which quality it brings.</p><p>Words have other ways to surprise you too. An <a href=\"/learn/what-is-an-idiom/\">idiom such as “a piece of cake”</a> has an established phrase-level meaning, while an <a href=\"/learn/oxymoron-examples-deafening-silence/\">oxymoron brings apparently clashing ideas together</a>. The useful clue is what the words are doing in that sentence.</p>"
+    }
+  ]
+}
