@@ -712,6 +712,7 @@ button{cursor:pointer}
   width:min(520px,100%);
   max-height:92vh;
   overflow:auto;
+  overscroll-behavior:contain;
   position:relative;
   background:#fff;
   border-radius:28px;
@@ -722,8 +723,8 @@ button{cursor:pointer}
   position:absolute;
   right:15px;
   top:15px;
-  width:38px;
-  height:38px;
+  width:44px;
+  height:44px;
   border:0;
   border-radius:50%;
   background:var(--soft-navy);
@@ -1080,7 +1081,10 @@ button{cursor:pointer}
 }
 @media(max-width:620px){
   .auth-dialog{padding:24px 16px 18px;border-radius:23px}
-  .auth-keep,.auth-success-stats{grid-template-columns:1fr}
+  .auth-keep{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .auth-keep>div{padding:8px;min-width:0}
+  .auth-keep strong{font-size:12px;overflow-wrap:anywhere}
+  .auth-success-stats{grid-template-columns:1fr}
   .auth-success-actions{grid-template-columns:1fr}
   .auth-email-row{flex-direction:column}
   .auth-email-row button{min-height:46px}
@@ -1558,7 +1562,7 @@ button{cursor:pointer}
 }
 .auth-password-field{position:relative;min-width:0}
 .auth-password-field .auth-full-input{padding-right:76px}
-.auth-password-field button{position:absolute;right:4px;top:2px;min-width:64px;min-height:42px;padding:8px;border:0;border-radius:10px;background:transparent;color:var(--navy);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.auth-password-field button{position:absolute;right:4px;top:2px;min-width:64px;min-height:44px;padding:8px;border:0;border-radius:10px;background:transparent;color:var(--navy);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
 .auth-password-field button:focus-visible,.auth-email-tabs button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 .auth-dialog [aria-busy="true"] button,.auth-dialog button:disabled{cursor:wait;opacity:.65}
 .auth-dialog .auth-email-tabs button{font-size:14px;min-height:44px}

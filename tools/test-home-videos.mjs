@@ -13,9 +13,9 @@ async function client({knowledge={},brainilab={},failKnowledge=false}={}){
 }
 const initial=new JSDOM(template),fallback=initial.window.document.querySelector('[data-video-source="knowledge"]').href;initial.window.close();
 const published=new Date(Date.now()-1000).toISOString();
-let view=await client({failKnowledge:true,brainilab:{channelId:'UCy35EdjSpdYufOLJBybevsA',id:'newerVid002',title:'Newest quiz',published}});
+let view=await client({failKnowledge:true,brainilab:{channelId:'UCy35EdjSpdYufOLJBybevsA',id:'newerVid002',title:'Newest quiz',published,durationSeconds:600}});
 assert.equal(view.cards[0].href,fallback);assert.ok(view.cards[1].href.includes('newerVid002'));assert.ok(!view.cards[1].href.includes('list='));view.dom.window.close();
-view=await client({knowledge:{channelId:channel,id:'newerVid002',title:'<img src=x onerror=bad()>',published}});
+view=await client({knowledge:{channelId:channel,id:'newerVid002',title:'<img src=x onerror=bad()>',published,durationSeconds:600}});
 assert.equal(view.cards[0].querySelector('[data-video-title]').textContent,'<img src=x onerror=bad()>');assert.equal(view.cards[0].querySelector('[data-video-title] img'),null);assert.ok(!view.cards[0].href.includes('list='));view.dom.window.close();
 for(const bad of [{channelId:'wrong',published:'2026-10-23T00:00:00Z'},{channelId:channel,published:'2999-01-01T00:00:00Z'},{channelId:channel,published:'2026-01-01T00:00:00Z'}]){
  view=await client({knowledge:{id:'newerVid002',title:'Rejected',...bad}});assert.equal(view.cards[0].href,fallback);view.dom.window.close();

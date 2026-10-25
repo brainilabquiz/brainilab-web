@@ -12,10 +12,11 @@ const calls=[];
 const api=async(address,options)=>{
  const u=new URL(address);calls.push(u);assert.equal(u.origin,'https://www.googleapis.com');assert.equal(u.searchParams.get('key'),secret);assert.equal(options.redirect,'manual');assert.ok(options.signal);
  if(u.pathname.endsWith('/channels')){assert.equal(u.searchParams.get('id'),channel);return Response.json({items:[{id:channel,contentDetails:{relatedPlaylists:{uploads}}}]});}
+ if(u.pathname.endsWith('/videos'))return Response.json({items:u.searchParams.get('id').split(',').map(id=>({id,snippet:{channelId:channel,title:id,publishedAt:id==='newerVid002'?'2026-09-20T00:00:00Z':'2026-09-01T00:00:00Z',liveBroadcastContent:'none'},contentDetails:{duration:'PT12M'},status:{privacyStatus:'public'}}))});
  assert.equal(u.pathname,'/youtube/v3/playlistItems');assert.equal(u.searchParams.get('playlistId'),uploads);
  return Response.json(u.searchParams.has('pageToken')?{items:[item('newerVid002','2026-09-20T00:00:00Z')]}:{items:[item('olderVid001','2026-09-01T00:00:00Z'),item('private0001','2026-09-23T00:00:00Z','private'),item('unlisted001','2026-09-23T00:00:00Z','unlisted'),item('foreign0001','2026-09-23T00:00:00Z','public','other'),item('future00001','2999-01-01T00:00:00Z')],nextPageToken:'second'});
 };
-assert.equal((await latestKnowledgeVideo(secret,api)).id,'newerVid002');assert.equal(calls.length,3);
+assert.equal((await latestKnowledgeVideo(secret,api)).id,'newerVid002');assert.equal(calls.length,5);
 for(const items of [[],[{id:'wrong'}],[{id:channel,contentDetails:{relatedPlaylists:{uploads:'arbitrary'}}}]])await assert.rejects(latestKnowledgeVideo(secret,async()=>Response.json({items})));
 const saved=new Map(),pending=[],ctx={waitUntil:p=>pending.push(p)},cache={match:async key=>saved.get(key.url)?.clone(),put:async(key,response)=>saved.set(key.url,response.clone())};
 const req=new Request('https://brainilabgames.com/api/latest-video?channel=knowledge&playlist=not-forwarded');
@@ -27,6 +28,6 @@ const fail=async()=>{failures++;throw Error('sensitive upstream '+secret)};
 response=await knowledgeVideo(req,ctx,cache,fail,secret);await Promise.all(pending);let stale=await response.json();assert.equal(stale.stale,true);assert.equal(stale.id,data.id);assert.equal(stale.checkedAt,data.checkedAt);assert.ok(!JSON.stringify(stale).includes(secret));
 await knowledgeVideo(req,ctx,cache,fail,secret);assert.equal(failures,1,'backoff avoids repeated failures');
 saved.set(key,Response.json({...data,checkedAt:Date.now()-8*86400000}));response=await knowledgeVideo(req,ctx,cache,fail,secret);assert.equal(response.status,503);assert.equal((await response.json()).id,undefined);
-saved.clear();response=await knowledgeVideo(req,ctx,cache,async address=>{assert.equal(address,'https://www.youtube.com/feeds/videos.xml?channel_id='+channel);return new Response(feed(channel.slice(2)));});assert.equal((await response.json()).id,'newerVid002');
+saved.clear();response=await knowledgeVideo(req,ctx,cache,async()=>{throw Error('An untyped feed must not select a homepage video');});assert.equal(response.status,503);assert.equal((await response.json()).unavailable,true);
 response=await latestVideo(new Request('https://brainilabgames.com/api/latest-video?channel=untrusted'),ctx,cache,()=>{throw Error('must not fetch')},secret);assert.equal(response.status,400);
 console.log('PASS Knowledge: fixed ownership, uploads pagination, public-only/actual publication, feed ID variants, separate cache, expiry/backoff and no secret leakage.');
