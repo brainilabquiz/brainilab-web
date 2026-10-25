@@ -7,11 +7,14 @@ from distribution import attach_distribution
 from seo_explorer import attach_seo
 from datetime import date, datetime
 from youtube_studio import attach as attach_youtube
+from play_sessions import attach as attach_play
+from google_indexing import attach as attach_indexing
 
 
-def attach_measurement(report, private):
+def attach_measurement(report, private, now=None):
+    report = attach_play(attach_indexing(report,private),private)
     report = attach_seo(report, private)
-    report = attach_youtube(report, private)
+    report = attach_youtube(report, private, now)
     report = attach_distribution(report, private)
     report = attach_search(report, private)
     report = attach_content(report, private)

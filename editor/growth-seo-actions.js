@@ -1,6 +1,7 @@
 import {searchSources} from './growth-seo-sources.js';
 import {publicPageURL} from './growth-seo-page.js';
 import {unassignedSearchPages} from './growth-seo-unassigned.js';
+import {pageIndexContext} from './growth-indexing.js';
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const count=v=>Number.isSafeInteger(v)&&v>=0?v:null;
@@ -74,7 +75,8 @@ export function actionsView(report,workspace,scope,filter){
 export function pageActionContext(report,workspace,url){
  const decisions=currentDecisions(workspace),matched=decisions?.filter(d=>d.url===url)||[],activity=playerActivity(report,url),exported=[];
  const protectedPage=matched.some(d=>protectedStates.has(d.state));
- let html='<section aria-labelledby="growth-page-decisions-title"><h4 id="growth-page-decisions-title">Recorded decisions</h4>';
+ const index=pageIndexContext(report,url);exported.push(...index.exported);
+ let html=index.html+'<section aria-labelledby="growth-page-decisions-title"><h4 id="growth-page-decisions-title">Recorded decisions</h4>';
  if(!decisions)html+='<p>Current decisions are unavailable. Load Growth before choosing work; an imported proposal status is not a current decision.</p>';
  else if(!matched.length)html+='<p>No decision for this exact URL in the currently loaded workspace. This does not mean the page has never changed.</p>';
  else html+=`<ul>${matched.map(d=>`<li><strong>${esc(states[d.state])}</strong> · last recorded ${esc(date(d.updated_at))}${d.published_at?` · publication recorded ${esc(date(d.published_at))}`:''}${decisionButton(d.id)}</li>`).join('')}</ul>`;

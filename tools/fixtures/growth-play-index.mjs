@@ -1,0 +1,8 @@
+export function playIndexFixture(size=32){
+ const at='2026-10-25T18:00:00Z',url=i=>`https://brainilabgames.com/learn/sample-${i}/`,quality={thresholded:false,sampled:false,otherRow:false};
+ const cohort={sessions:10,sessionsWithStart:3,startEventCount:5,quality,baselineObservedAt:'2026-10-25T17:00:00Z',startsObservedAt:at,landingBaselineObservedAt:at,landingStartsObservedAt:at,rowsWithheld:0,landingPages:Array.from({length:size},(_,i)=>({path:`/learn/sample-${i}/`,sessions:10,sessionsWithStart:i===1?null:3,startEventCount:i===1?null:5}))};
+ return {
+  playSessions:{schemaVersion:1,collectorVersion:2,property:'555562532',source:'GA4 Data API',observedAt:at,period:{start:'2026-09-26',end:'2026-10-23'},timezone:'Europe/Madrid',startEvents:['game_start','practice_start'],cohorts:{all:structuredClone(cohort),googleOrganic:{...structuredClone(cohort),sessions:2,sessionsWithStart:null,startEventCount:null,landingPages:[{path:'/learn/sample-0/',sessions:2,sessionsWithStart:null,startEventCount:null}]}}},
+  googleIndexing:{schemaVersion:1,collectorVersion:1,property:'sc-domain:brainilabgames.com',source:'Google URL Inspection API',mode:'indexed_version',observedAt:at,inventorySHA256:'a'.repeat(64),inventory:Array.from({length:size},(_,i)=>url(i)),results:Array.from({length:size-1},(_,i)=>({url:url(i),observedAt:at,verdict:i%2?'NEUTRAL':'PASS',coverageState:i%2?'Discovered - currently not indexed':'Submitted and indexed',lastCrawlTime:i%2?null:'2026-10-24T12:00:00Z',googleCanonical:i%2?null:url(i),userCanonical:url(i),googleCanonicalWithheld:false,userCanonicalWithheld:false,robotsTxtState:'ALLOWED',indexingState:'INDEXING_ALLOWED',pageFetchState:i%2?'PAGE_FETCH_STATE_UNSPECIFIED':'SUCCESSFUL'})),failures:[]}
+ };
+}

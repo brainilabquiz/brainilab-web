@@ -1,5 +1,13 @@
 # Private BrainiLab Growth tools
 
+## Sessions with a recorded start and Google indexing
+
+[Play and indexing evidence](PLAY-INDEXING.md) documents the two independent,
+dated report sections: GA4-reported sessions containing an existing start event,
+and Google's URL Inspection indexed-version verdicts. They preserve missing data,
+source scopes, consent/coverage limitations and private history without adding
+tracking, indexing requests, player access or scoring changes.
+
 ## Our own SEO Explorer
 
 The [SEO Explorer](SEO-EXPLORER.md) adds anonymous public-page checks, deduplicated
