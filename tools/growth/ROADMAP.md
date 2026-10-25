@@ -1,4 +1,31 @@
-# Growth product decisions — 2026-10-01
+# Growth product decisions
+
+## Review, 25 October 2026
+
+This review supersedes the capability statuses in the historical 1 October
+table below. It uses the current code and the saved 25 October observations;
+it does not start a new crawl, publish content or claim a traffic increase.
+
+| Priority | Observed gap | Status and next acceptance criterion |
+| --- | --- | --- |
+| 1 | Next checks only joined pages that already had a recorded decision. A valid empty pending list could hide other observed searches. | Corrected with the separate Observed pages without a decision scope. One exact, dated HTTP 200 inspection and one final query/page observation are required; all recorded decision states are protected. Review current content and recent work before proposing an edit. |
+| 2 | Organic landing sessions and game event counts do not measure how many distinct sessions actually reached a game. Multiple game starts can belong to one session; missing events are unknown. | Keep the current counts honest. A future collector change must obtain compatible, consent-limited session evidence, validate a same-period denominator and quality flags, and avoid query/player attribution. No event-count/session conversion rate or new tracking is added by this review. |
+| 3 | The technical checklist observes HTTP, canonical and noindex behavior; it cannot establish which URLs Google currently indexes. | Keep indexing evidence separate and dated, using the existing authorised Search Console access. An HTTP 200 response or a submitted sitemap is not an indexed verdict. Missing or old observations must remain unknown; do not repeatedly request indexing to fill a quota. |
+| 4 | Recent edits cannot yet be assessed using the planned full 21 October–3 November follow-up window. | Preserve the original 4–17 October baseline, decision history and measurement-coverage changes. Only compare complete, equal, non-overlapping periods after the follow-up window is available; do not credit the tool or directories with unobserved growth. |
+
+Current capabilities already include dated GSC queries and query/page evidence,
+GA4 acquisition and content observations, independent search-source windows,
+an inspected HTML backlink sample, exact destination checks and page reviews.
+Backlink coverage remains limited to the inspected public sources, rather than a
+global index. Failed requests are not evidence of lost links. Page Trust reports
+eight technical checks and external evidence, without an invented authority score.
+AI citations, global reputation and keyword-to-player attribution remain
+unmeasured unless a specific, dated observation establishes them.
+
+The new scope is a read-only review aid. It changes no decisions, baselines,
+accounts, player data, XP, scores, publication states, permissions or tracking.
+
+## Historical decisions — 1 October 2026
 
 The objective is recurring qualified organic discovery followed by useful games, learning and voluntary account/Plus adoption. More published pages alone are not success.
 
