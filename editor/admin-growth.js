@@ -1,6 +1,8 @@
 import {contentHTML,bindContent} from './growth-content.js';
 import {searchHTML,bindSearch} from './growth-search.js';
 import {seoHTML,bindSEO} from './growth-seo-explorer.js';
+import {playSessionsHTML,bindPlaySessions} from './growth-play-sessions.js';
+import {indexingHTML,bindIndexing} from './growth-indexing.js';
 import {distributionHTML,bindDistribution} from './growth-distribution.js';
 import {toolsHTML,bindTools,connectionText} from './growth-tools.js';
 import {openSEOHTML,bindOpenSEO,evidenceLink} from './growth-openseo.js';
@@ -44,6 +46,8 @@ function draw(){
  bindDistribution(root,workspace.report?.document);
  root.querySelector('.growth-distribution').insertAdjacentHTML('afterend',searchHTML(workspace.report?.document));
  bindSearch(root,workspace.report?.document);
+ root.querySelector('#growth-search').insertAdjacentHTML('afterend',playSessionsHTML(workspace.report?.document)+indexingHTML(workspace.report?.document));
+ bindPlaySessions(root,workspace.report?.document);bindIndexing(root,workspace.report?.document);
  root.querySelector('.growth-search').insertAdjacentHTML('beforebegin',seoHTML(workspace.report?.document));
  bindSEO(root,workspace.report?.document,workspace);
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',confirmationsHTML(workspace.confirmedAccounts));
