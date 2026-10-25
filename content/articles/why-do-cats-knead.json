@@ -1,0 +1,61 @@
+{
+  "slug": "why-do-cats-knead",
+  "title": "Why do cats knead? Meet the tiny biscuit maker",
+  "description": "Why do cats knead blankets and laps? The habit starts during kittenhood, but the reason adult cats keep making biscuits is less certain.",
+  "topic": "Curiosity",
+  "status": "published",
+  "order": 220,
+  "authorId": "biel-sarda",
+  "cover": {
+    "src": "/assets/images/learn/why-do-cats-knead.webp",
+    "small": "/assets/images/learn/why-do-cats-knead-small.webp",
+    "thumbnail": "/assets/images/learn/why-do-cats-knead-thumb.webp",
+    "alt": "A tabby cat presses its front paws into a cream knitted blanket on a sofa",
+    "credit": "AI-generated photorealistic illustration created for BrainiLab; an illustrative pet scene, not a research photograph.",
+    "position": 55
+  },
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Fancy another curious question? Try the General Knowledge Quiz.",
+  "related": [
+    "why-do-cats-purr",
+    "why-do-cats-love-boxes"
+  ],
+  "sources": [
+    {
+      "url": "https://www.cats.org.uk/cats-blog/why-do-cats-knead",
+      "name": "Cats Protection — Why do cats knead?"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-bakery-with-no-bread",
+      "title": "A bakery with no bread",
+      "html": "<p><strong>Cats knead by pressing their front paws into something soft, one after the other. The habit begins when kittens feed from their mother.</strong> Those little pushes help stimulate milk flow.</p><p>Years later, the same movement can appear on your favourite blanket. People call it “making biscuits”, although the cat has supplied neither flour nor a washing-up plan.</p>"
+    },
+    {
+      "id": "why-adults-still-do-it",
+      "title": "Why do grown-up cats still do it?",
+      "html": "<p>This is where the answer becomes less certain. <a href=\"https://www.cats.org.uk/cats-blog/why-do-cats-knead\">Cats Protection explains that we do not know exactly why some cats keep kneading as adults</a>.</p><p>One possibility is that the action feels comforting because of its early association with feeding. Another is that a soft texture triggers an ingrained response. These are explanations to consider, rather than thoughts we can read from a cat’s face.</p>"
+    },
+    {
+      "id": "a-blanket-is-not-dough",
+      "title": "Why your blanket gets the treatment",
+      "html": "<p>A fleecy throw offers a soft surface for those repeated paw movements. Some cats choose a lap instead, turning a quiet evening into a rather pointy massage.</p><p>Kneading can go along with the familiar rumble of <a href=\"/learn/why-do-cats-purr/\">purring, which also has more than one meaning</a>. Neither behaviour gives us a perfect translation of “cat”.</p>"
+    },
+    {
+      "id": "another-cat-mystery",
+      "title": "A small mystery on the sofa",
+      "html": "<p>The kitten connection is clear; the adult explanation remains open. That makes the behaviour more interesting than a simple “your cat is happy” label.</p><p>For another domestic puzzle, discover <a href=\"/learn/why-do-cats-love-boxes/\">why an empty box can beat an expensive cat bed</a>. Apparently, interior design has different rules when you have whiskers.</p>"
+    }
+  ],
+  "minutes": 2,
+  "publishedAt": "2026-10-25T19:22:59.824786+00:00",
+  "updatedAt": "2026-10-25T19:22:59.824786+00:00"
+}
