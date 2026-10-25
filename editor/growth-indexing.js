@@ -22,7 +22,8 @@ function items(s){
  for(const r of s.failures)if(!failed.has(r.url)||Date.parse(r.observedAt)>Date.parse(failed.get(r.url).observedAt))failed.set(r.url,r);
  return s.inventory.map(url=>{const row=rows.get(url),attempt=failed.get(url),failure=attempt&&(!row||Date.parse(attempt.observedAt)>=Date.parse(row.observedAt))?attempt:null;return {url,row,failure};});
 }
-const status=x=>x.failure?'Latest inspection unavailable':x.row?names[x.row.verdict]:'Not inspected';
+const unknownRow=row=>row&&(/^(URL is unknown to Google)$/i.test(row.coverageState||'')||['PARTIAL','VERDICT_UNSPECIFIED'].includes(row.verdict));
+const status=x=>x.failure?'Latest inspection unavailable':x.row?/^(URL is unknown to Google)$/i.test(x.row.coverageState||'')?'URL unknown to Google':names[x.row.verdict]:'Not inspected';
 function next(x){
  if(x.failure)return 'Keep the previous dated verdict; a failed request does not establish deindexing. Resolve the recorded limit/access issue before retrying.';
  if(!x.row)return 'No Google inspection in this snapshot. HTTP checks and search impressions are separate evidence.';
@@ -34,7 +35,7 @@ function next(x){
 export function indexingView(report,scope='all',filter=''){
  const s=indexingSnapshot(report);if(!s)return {rows:[],exported:[],caption:'Google indexing evidence not imported'};
  const q=filter.trim().toLowerCase();
- const values=items(s).filter(x=>(x.url+' '+(x.row?.coverageState||'')+' '+status(x)).toLowerCase().includes(q)&&(scope==='all'||scope==='unknown'&&(!x.row||x.failure||['PARTIAL','VERDICT_UNSPECIFIED'].includes(x.row.verdict))||scope===x.row?.verdict&&!x.failure));
+ const values=items(s).filter(x=>(x.url+' '+(x.row?.coverageState||'')+' '+status(x)).toLowerCase().includes(q)&&(scope==='all'||scope==='unknown'&&(!x.row||x.failure||unknownRow(x.row))||scope===x.row?.verdict&&!x.failure));
  const rows=values.map(x=>`<tr><th scope="row"><a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(new URL(x.url).pathname)}</a></th><td><strong>${esc(status(x))}</strong>${x.failure&&x.row?`<small>Previous: ${esc(names[x.row.verdict])}</small>`:''}</td><td>${esc(x.row?.coverageState||'Not observed')}<small>${esc(next(x))}</small></td><td>${esc(date(x.row?.lastCrawlTime))}</td><td>${esc(date(x.row?.observedAt))}${x.failure?`<small>Attempt: ${esc(date(x.failure.observedAt))} · ${esc(x.failure.reason)}</small>`:''}</td></tr>`);
  const exported=[['URL','Latest status','Last successful verdict','Google coverage','Google last crawl','Observation collected','Google canonical','Declared canonical','Latest failed attempt','Failure reason','Next check'],...values.map(x=>[x.url,status(x),x.row?.verdict||'',x.row?.coverageState||'',x.row?.lastCrawlTime||'',x.row?.observedAt||'',x.row?.googleCanonical||'',x.row?.userCanonical||'',x.failure?.observedAt||'',x.failure?.reason||'',next(x)])];
  return {rows,exported,caption:'Google indexed-version observations · separate from the live HTML checklist'};
