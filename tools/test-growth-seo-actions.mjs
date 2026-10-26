@@ -34,7 +34,7 @@ const combined=pageReviewHTML(seo,url,ctx);assert.ok(combined.exported.every(r=>
 const limited=structuredClone(report);limited.searchPerformance.current.analyticsQuality.sampled=true;assert.match(pageActionContext(limited,workspace,url).html,/Google reported thresholding/);
 assert.ok(actionsView(limited,workspace,'needs_review','').exported.some(row=>row.includes('Sampling')));
 limited.searchPerformance.current.analyticsQuality=null;assert.match(pageActionContext(limited,workspace,url).html,/Quality flags were not supplied/);
-assert.ok(actionsView(report,workspace,'needs_review','').exported.every(r=>r.length===19));
+assert.ok(actionsView(report,workspace,'needs_review','').exported.every(r=>r.length===37));
 const empty=structuredClone(report);empty.seoExplorer.searchSources.webPages.rows=[];assert.equal(actionRows(empty,workspace).rows.length,0);
 assert.match(actionsView(report,null,'needs_review','').note,/not a current decision/);
 const xss=structuredClone(report);xss.seoExplorer.searchSources.webPages.rows[0].query='<img src=x onerror=alert(1)>';assert.doesNotMatch(actionsView(xss,workspace,'needs_review','').rows.join(''),/<img/);
