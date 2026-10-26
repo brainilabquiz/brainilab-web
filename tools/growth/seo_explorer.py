@@ -24,7 +24,7 @@ import seo_discovery
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
 VERSION = 1
-PRODUCER_VERSION = 4
+PRODUCER_VERSION = 5
 MAX_BYTES = 2_000_000
 CHECKS = {'https': 10, 'available': 20, 'title': 10, 'description': 10,
           'heading': 10, 'canonical': 15, 'indexable': 15, 'structuredData': 10}
@@ -209,7 +209,10 @@ def audit_page(url, response, observed):
         'title': len(p.titles) == 1 and bool(p.titles[0]),
         'description': len(p.descriptions) == 1 and bool(p.descriptions[0]),
         'heading': len(p.headings) == 1 and bool(p.headings[0]),
-        'canonical': p.canonicals == [url],
+        # This HTML belongs to the returned response after redirects. Compare
+        # its own declaration with that final URL, never with the old request.
+        # The requested URL and exact response hash remain separate evidence.
+        'canonical': final is not None and p.canonicals == [final],
         'indexable': not any(re.search(r'(^|[,\s])(?:noindex|none)(?=$|[,\s])', x) for x in [*p.robots, response['robotsHeader'].lower()]),
         'structuredData': bool(p.schemas) and all(x is not None for x in p.schemas),
     }
@@ -305,6 +308,9 @@ def validate(value):
             'pages': pages, 'sources': sources, 'backlinks': links, 'knownLinks':list(known.values()),'domainTrust': trust_summary(pages),
             'limitations': LIMITATIONS, 'scoreWeights': CHECKS,
             'scope': 'Published catalogue, recorded public game listings and reviewed candidate URLs; anonymous HTML fetches only.'}
+    if 'canonicalReference' in value:
+        if value['canonicalReference'] != 'final_response_url': raise ValueError('Unsupported canonical reference')
+        result['canonicalReference'] = value['canonicalReference']
     if value.get('keywords') is not None: result['keywords'] = seo_keywords.validate(value['keywords'])
     if value.get('reputation') is not None: result['reputation'] = seo_reputation.validate(value['reputation'])
     if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
@@ -377,7 +383,7 @@ def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch, source
     if not any(p['trust'] is not None for p in pages):
         raise RuntimeError('No public page could be inspected; preserve the last successful index')
     sources=list({s['url']:s for s in sources}.values())
-    return validate({'schemaVersion':VERSION,'domain':DOMAIN,'observedAt':observed,'pages':pages,'sources':sources,'backlinks':links,'knownLinks':previous.get('knownLinks',previous.get('backlinks',[]))})
+    return validate({'schemaVersion':VERSION,'domain':DOMAIN,'observedAt':observed,'canonicalReference':'final_response_url','pages':pages,'sources':sources,'backlinks':links,'knownLinks':previous.get('knownLinks',previous.get('backlinks',[]))})
 
 
 def ledger_sources(value):
