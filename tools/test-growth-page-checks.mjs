@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {technicalChecks,publicPageURL,pageCheckContext,technicalView} from '../editor/growth-page-checks.js';
+import {pageReview,pageReviewHTML} from '../editor/growth-seo-page.js';
+import {seoHTML,bindSEO} from '../editor/growth-seo-explorer.js';
+const at='2026-10-26T08:25:14.665277+00:00',url='https://brainilabgames.com/games/example/',alias=url+'index.html';
+const passed=Object.fromEntries(Object.keys(technicalChecks).map(k=>[k,true]));
+const target={url,finalUrl:url,status:200,trust:100,checks:passed,checkedAt:at,authorDeclared:false,externalSourceLinks:0,sha256:'a'.repeat(64)};
+const legacy={...target,url:alias,trust:85,checks:{...passed,canonical:false}};
+const snapshot={schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[legacy,target],sources:[],backlinks:[]};
+const raw=JSON.stringify(snapshot),context=pageCheckContext(snapshot,legacy);
+assert.equal(context.state,'alias');assert.equal(context.canonicalConfirmed,true);assert.equal(context.passed,7);assert.equal(context.destination.url,url);assert.deepEqual(context.failed,['canonical']);
+assert.equal(pageCheckContext(snapshot,target).state,'passed');
+assert.deepEqual(technicalView(snapshot).counts,{passed:1,attention:0,alias:1,uninspected:0,aliasConfirmed:1,aliasUnconfirmed:0});assert.equal(technicalView(snapshot,'attention').rows.length,0);assert.equal(technicalView(snapshot,'aliases').rows.length,1);
+for(const hash of [undefined,'b'.repeat(64),'invalid','e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855']){const s=structuredClone(snapshot);s.pages[0].sha256=hash;const c=pageCheckContext(s,s.pages[0]);assert.equal(c.state,'alias');assert.equal(c.canonicalConfirmed,false);assert.equal(c.passed,7);assert.equal(technicalView(s,'attention').rows.length,1);assert.match(c.text,/not proven identical/);}
+assert.equal(technicalView(snapshot,'aliases','absent').rows.length,0);assert.equal(technicalView(snapshot,'aliases','example').rows.length,1);
+for(const mutate of [
+ s=>s.pages.pop(),s=>s.pages.push({...s.pages[1]}),s=>s.pages.push({...s.pages[0]}),s=>s.pages[1].checkedAt='2026-10-25T08:25:14Z',s=>s.observedAt='2026-10-25T08:25:14Z',s=>s.pages[1].checkedAt='2026-02-30T08:25:14Z',s=>s.pages[1].checks={...passed,title:false},s=>s.pages[1].checks={...passed,indexable:false},s=>s.pages[1].status=404,s=>s.pages[1].finalUrl=url+'other/',s=>s.pages[0].finalUrl='https://example.org/',s=>s.pages[0].status=404,s=>s.pages[0].checks={...s.pages[0].checks,title:false}
+]){const s=structuredClone(snapshot);mutate(s);assert.equal(pageCheckContext(s,s.pages[0]).state,'attention');assert.equal(technicalView(s,'aliases').rows.length,0);}
+const uninspected=structuredClone(snapshot);uninspected.pages[1].trust=null;assert.equal(pageCheckContext(uninspected,uninspected.pages[0]).state,'attention');assert.equal(pageCheckContext(uninspected,uninspected.pages[1]).state,'uninspected');
+const incomplete=structuredClone(snapshot);delete incomplete.pages[0].checks.heading;assert.equal(pageCheckContext(incomplete,incomplete.pages[0]).state,'uninspected');assert.equal(technicalView(incomplete,'uninspected').rows.length,1);
+for(const path of ['/admin/','/api/','/cdn-cgi/']){const t={...target,url:'https://brainilabgames.com'+path,finalUrl:'https://brainilabgames.com'+path},a={...legacy,url:t.url+'index.html',finalUrl:t.url};assert.equal(pageCheckContext({...snapshot,pages:[a,t]},a).state,'attention');}
+assert.equal(publicPageURL('https://brainilabgames.com/admin/'),null);assert.equal(publicPageURL(url),url);
+const view=technicalView(snapshot,'aliases');assert.equal(view.exported[0].length,13);assert.ok(view.exported.every(r=>r.length===13));assert.equal(view.exported[1][2],7);assert.equal(view.exported[1][3],'Self canonical');assert.equal(view.exported[1][8],url);assert.equal(view.exported[1][9],at);assert.equal(view.exported[1][11],target.sha256);assert.equal(view.exported[1][12],target.sha256);
+const page=pageReview(snapshot,alias);assert.equal(page.inspected,true);assert.deepEqual(page.failed,['canonical']);assert.match(page.steps[0],/Keep the alias raw 7\/8 result/);
+const reviewed=pageReviewHTML(snapshot,alias);assert.match(reviewed.html,/Legacy alias · matching HTML response/);assert.match(reviewed.html,/Self canonical<\/dt><dd>Needs review/);assert.ok(reviewed.exported.every(r=>r.length===13));assert.ok(reviewed.exported.some(r=>r[0]==='Canonical context'&&r[10]===url&&r[11]===alias));
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom'),dom=new JSDOM('<main></main>',{url:'https://brainilabgames.com/admin/'});globalThis.document=dom.window.document;globalThis.Event=dom.window.Event;
+let requests=0;globalThis.fetch=async()=>{requests++;throw Error('Unexpected request');};
+const root=document.querySelector('main');root.innerHTML=seoHTML({seoExplorer:snapshot});bindSEO(root,{seoExplorer:snapshot});root.querySelector('[data-seo-view=pages]').click();
+const scope=root.querySelector('[data-seo-page-checks]');assert.equal(scope.closest('label').hidden,false);scope.value='aliases';scope.dispatchEvent(new Event('change'));assert.match(root.querySelector('tbody').textContent,/7 \/ 8 checks/);assert.match(root.querySelector('tbody').textContent,/matching HTML response/);
+root.querySelector('[data-seo-review-url]').click();assert.equal(root.querySelector('[data-seo-selected-page]').value,url);assert.equal(document.activeElement.id,'growth-page-review-title');
+root.querySelector('[data-seo-view=pages]').click();scope.value='attention';scope.dispatchEvent(new Event('change'));assert.match(root.querySelector('[data-seo-note]').textContent,/0 other failed/);assert.equal(root.querySelector('[data-seo-export]').disabled,true);
+assert.equal(requests,0);assert.equal(root.querySelectorAll('script,img').length,0);assert.equal(JSON.stringify(snapshot),raw);
+console.log('PASS technical context: same-observation destination context, identical valid HTML-hash proof required for confirmation, different/missing hashes stay in failed-check triage, all raw checks preserved, stale/missing/duplicate/failing/private guards, unknown inspections, filters/CSV and safe keyboard navigation without requests.');
