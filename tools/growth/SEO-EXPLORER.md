@@ -249,3 +249,33 @@ selecting an edit. It adds no data collection, database mutation, metric, score,
 permission or publication action. Validate the omission regression, protected
 states, ambiguous sources, export and navigation with
 tools/test-growth-seo-unassigned.mjs and the existing action/page/Explorer tests.
+
+### Explain missing play evidence before selecting work
+
+Next checks now distinguishes an absent exact landing row, an unreturned session
+denominator or start numerator, explicitly returned zero starts, incompatible
+counts, unknown collection dates and reported quality limitations. A comparable
+positive union-session count still qualifies for its own source focus; no event
+count, all-source total or other page can replace missing Google organic data.
+
+The recorded-start focuses include a collapsible explanation of why pages in
+the current decision scope and search filter qualify or are excluded. These are
+distinct-page counts, each in one primary availability state, not session totals,
+new opportunities or player counts. Decision protections apply before this
+summary; it cannot reopen completed work. A keyboard-accessible button removes
+only the start focus, retaining the decision scope and search text.
+
+Each existing result has the same explanation available beside the returned
+counts. The complete filtered Next checks CSV keeps its original37columns and
+appends four status/explanation fields for the two separate source scopes. A
+missing start numerator stays empty; an explicit zero stays numeric zero.
+Missing evidence does not prove broken tracking, no play or a need to rewrite.
+
+This uses only already imported evidence: no additional Google query, refresh,
+tracking, indexing request, database write or game change. Validate with
+tools/test-growth-play-coverage.mjs and the existing Growth suites. The26October
+saved observation reproduces the empty Google-organic focus:22of23matched pages
+have no exact organic landing row and one lacks the start numerator. The21pages
+without a decision all lack a matching organic landing row; the missing-numerator
+case remains in its protected recorded-decision scope. Do not treat dated local
+decision metadata used for offline QA as the live workspace state.

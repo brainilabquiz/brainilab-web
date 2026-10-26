@@ -38,7 +38,7 @@ assert.equal(actionRows(unsafe,workspace,'unassigned').rows.length,0);
 const invalid=structuredClone(report);invalid.seoExplorer.searchSources.dataState='all';
 assert.equal(actionRows(invalid,workspace,'unassigned').rows.length,0);
 const view=actionsView(report,workspace,'unassigned','');
-assert.equal(view.exported.length,4);assert.ok(view.exported.every(r=>r.length===37));
+assert.equal(view.exported.length,4);assert.ok(view.exported.every(r=>r.length===41));
 assert.equal(view.exported[1][1],'No recorded decision');assert.equal(view.exported[1][2],'');
 assert.equal(view.exported[1][12],0);assert.equal(view.exported[2][12],'');
 assert.equal(view.exported[1][7],'2026-07-25');assert.equal(view.exported[1][13],'2026-09-26');

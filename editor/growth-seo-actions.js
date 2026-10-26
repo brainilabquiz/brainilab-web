@@ -4,6 +4,7 @@ import {unassignedSearchPages} from './growth-seo-unassigned.js';
 import {pageIndexContext} from './growth-indexing.js';
 import {pagePlayContext} from './growth-page-play.js';
 import {reviewQueueHTML} from './growth-decision-queue.js';
+import {playFocusCoverage,playCoverageHTML} from './growth-play-coverage.js';
 import {queryOrder,focusActionRows,playCells,currentCheckHTML,focusCSVHeaders,focusCSV,focusNote} from './growth-seo-focus.js';
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -50,19 +51,19 @@ export function actionRows(report,workspace,scope='needs_review',filter='',focus
  const decisions=currentDecisions(workspace),sources=searchSources(report?.seoExplorer);
  if(!decisions||!sources)return {rows:[],decisions,sources};
  const order=queryOrder(focus),unassigned=unassignedSearchPages(report.seoExplorer,decisions,sources,filter,order);
- if(scope==='unassigned')return {rows:focusActionRows(unassigned.map(r=>({...r,activity:playerActivity(report,r.url)})),report,focus),decisions,sources,unassignedCount:unassigned.length};
+ if(scope==='unassigned')return {rows:focusActionRows(unassigned.map(r=>({...r,activity:playerActivity(report,r.url)})),report,focus),decisions,sources,unassignedCount:unassigned.length,coverage:playFocusCoverage(unassigned,report)};
  const q=filter.trim().toLowerCase();
  const rows=decisions.map(d=>{
   const matches=sources.webPages.rows.filter(r=>'https://brainilabgames.com'+r.path===d.url&&r.impressions>0&&(!q||(d.url+' '+states[d.state]+' '+r.query).toLowerCase().includes(q))).slice().sort(order);
   const protectedPage=decisions.some(other=>other.url===d.url&&protectedStates.has(other.state));
   return {url:d.url,decision:d,query:matches[0]||null,activity:playerActivity(report,d.url),protectedPage};
  }).filter(r=>r.query&&(scope!=='needs_review'||(['pending','approved'].includes(r.decision.state)&&!r.protectedPage))&&(r.decision.url+' '+r.query.query+' '+states[r.decision.state]).toLowerCase().includes(q));
- return {rows:focusActionRows(rows,report,focus),decisions,sources,unassignedCount:unassigned.length};
+ return {rows:focusActionRows(rows,report,focus),decisions,sources,unassignedCount:unassigned.length,coverage:playFocusCoverage(rows,report)};
 }
 
 export function actionsView(report,workspace,scope,filter,focus='search',observations=null){
  const data=actionRows(report,workspace,scope,filter,focus),s=data.sources;
- const before=reviewQueueHTML(data.decisions,s,data.rows.length);
+ const before=reviewQueueHTML(data.decisions,s,data.rows.length)+playCoverageHTML(data.coverage,focus);
  if(!data.decisions)return {before,heads:[],rows:[],exported:[],caption:'Current decisions unavailable',note:'Load Growth decisions before choosing work. Imported proposal status is not a current decision; no old brief is promoted here.'};
  if(!s)return {before,heads:[],rows:[],exported:[],caption:'No validated query/page evidence',note:'Current decisions exist, but no matching final Web query/page source is available. Missing demand is unknown; no action is invented.'};
  const heads=['Existing page','Decision and current check','Matched query','Google query/page evidence','Google / organic sessions with a recorded start','All-source sessions with a recorded start'];

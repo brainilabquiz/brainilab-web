@@ -40,7 +40,7 @@ for(const mutate of [r=>r.playSessions.cohorts.googleOrganic.quality.sampled=tru
 for(const value of [null,0,99]){const bad=structuredClone(report);bad.playSessions.cohorts.googleOrganic.landingPages[0].sessionsWithStart=value;assert.equal(actionRows(bad,workspace,'unassigned','','google_starts').rows.some(r=>r.url===url),false);}
 const missing=structuredClone(report);delete missing.playSessions;missing.searchPerformance.current.landingPages[0].events.game_start=999;
 assert.equal(actionRows(missing,workspace,'unassigned','','all_starts').rows.length,0);assert.match(actionsView(missing,workspace,'unassigned','','all_starts').note,/does not establish zero/);
-const view=actionsView(report,workspace,'unassigned','','all_starts');assert.ok(view.exported.every(r=>r.length===37));
+const view=actionsView(report,workspace,'unassigned','','all_starts');assert.ok(view.exported.every(r=>r.length===41));
 assert.equal(view.exported[1][20],2);assert.equal(view.exported[1][21],1);assert.equal(view.exported[1][25],10);assert.equal(view.exported[1][26],2);
 assert.equal(view.exported[1][7],'2026-07-25');assert.equal(view.exported[1][30],'2026-09-26');assert.equal(view.exported[1][32],'Europe/Madrid');assert.match(view.note,/not an organic-only scope/);
 const observations=new Map([[url,{state:'ready',url,checkedAt:'2026-10-26T18:00:00Z',modifiedAt:'2026-10-21T05:16:51Z'}]]);
