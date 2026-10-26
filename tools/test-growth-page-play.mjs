@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {pagePlayEvidence,pagePlayContext} from '../editor/growth-page-play.js';
+import {pageActionContext} from '../editor/growth-seo-actions.js';
+import {pageReviewHTML,technicalChecks} from '../editor/growth-seo-page.js';
+import {seoHTML,bindSEO} from '../editor/growth-seo-explorer.js';
+import {briefText,toolsHTML,bindTools} from '../editor/growth-tools.js';
+import {playIndexFixture} from './fixtures/growth-play-index.mjs';
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+const report=playIndexFixture(),url=report.googleIndexing.inventory[0],at=report.playSessions.observedAt;
+const before=JSON.stringify(report),e=pagePlayEvidence(report,url);
+assert.equal(e.cohorts[0].row.sessionsWithStart,3);assert.equal(e.cohorts[0].row.startEventCount,5);assert.equal(e.cohorts[0].share,.3);
+assert.equal(e.cohorts[1].row.sessions,2);assert.equal(e.cohorts[1].row.sessionsWithStart,null);assert.equal(e.cohorts[1].share,null);
+for(const bad of [null,undefined,'https://elsewhere.test/','https://brainilabgames.com/account/',url+'index.html',url+'?token=private',url+'#fragment'])assert.equal(pagePlayEvidence(report,bad),null);
+const c=pagePlayContext(report,url);assert.match(c.html,/30%/);assert.match(c.html,/Not returned/);assert.match(c.html,/never add/);assert.match(c.html,/not unique players/);assert.match(c.text,/Landing baseline collected: 2026-10-25T18/);
+assert.ok(c.exported.every(r=>r.length===13));assert.equal(c.exported.filter(r=>r[1].endsWith('Sessions with a recorded start')).length,2);
+assert.ok(c.exported.some(r=>r[1]==='Google / organic only · Sessions with a recorded start'&&r[2]==='Not returned'));
+const absent=pagePlayEvidence(report,'https://brainilabgames.com/learn/not-returned/');assert.equal(absent.hasRows,false);assert.ok(absent.cohorts.every(c=>c.row===null));
+assert.doesNotMatch(pagePlayContext(report,'https://brainilabgames.com/learn/not-returned/').html,/>10<|>3<|>30%<|>0%</);
+for(const flag of ['thresholded','sampled','otherRow']){const limited=structuredClone(report);limited.playSessions.cohorts.all.quality[flag]=true;const ctx=pagePlayContext(limited,url);assert.equal(pagePlayEvidence(limited,url).cohorts[0].share,null);assert.doesNotMatch(ctx.html,/>30%</);}
+for(const values of [{sessions:0,sessionsWithStart:0},{sessions:2,sessionsWithStart:3},{sessions:null,sessionsWithStart:1}]){const bad=structuredClone(report);Object.assign(bad.playSessions.cohorts.all.landingPages[0],values);assert.equal(pagePlayEvidence(bad,url).cohorts[0].share,null);}
+const zero=structuredClone(report);zero.playSessions.cohorts.all.landingPages[0].sessionsWithStart=0;assert.match(pagePlayContext(zero,url).html,/>0%</);
+const undated=structuredClone(report);delete undated.playSessions.cohorts.all.landingStartsObservedAt;assert.equal(pagePlayEvidence(undated,url).cohorts[0].share,null);assert.match(pagePlayContext(undated,url).html,/Not reported/);
+const duplicate=structuredClone(report);duplicate.playSessions.cohorts.all.landingPages.push(duplicate.playSessions.cohorts.all.landingPages[0]);assert.equal(pagePlayEvidence(duplicate,url),null);
+const injected=structuredClone(report);injected.playSessions.timezone='<img src=x onerror=alert(1)>';assert.doesNotMatch(pagePlayContext(injected,url).html,/<img/);
+const wrong=structuredClone(report);wrong.playSessions.property='another';assert.equal(pagePlayEvidence(wrong,url),null);
+assert.equal(JSON.stringify(report),before);
+
+report.seoExplorer={schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[{url,finalUrl:url,status:200,trust:100,checkedAt:at,checks:Object.fromEntries(Object.keys(technicalChecks).map(k=>[k,true]))}],sources:[],backlinks:[]};
+const workspace={opportunities:[{id:1,url,state:'published',revision:2,updated_at:at,published_at:at}]};
+const context=pageActionContext(report,workspace,url);assert.match(context.steps[0],/Preserve/);assert.match(context.steps[1],/all-source sessions separate/);
+const review=pageReviewHTML(report.seoExplorer,url,context);assert.match(review.html,/Sessions reaching a recorded start/);assert.match(review.html,/Additional organic event counts/);assert.ok(review.exported.some(r=>r[0]==='GA4 landing play sessions'));assert.ok(review.exported.every(r=>r.length===13));
+report.availablePeriod={start:'2026-07-25',end:'2026-10-22'};
+const lead={name:'Sample',url,kind:'article',action:'Review',pageSourceSnapshot:'fixture',queryEvidence:[],brief:{finding:'Check current content.',checks:[]},conversionGoal:'Useful activity',pageEvidence:{clicks:1,impressions:10}};
+report.discovery=[lead];
+assert.match(briefText(lead,report),/Sessions with a recorded start: 3/);assert.match(briefText(lead,report),/2026-09-26 to 2026-10-23/);assert.match(briefText(lead,report),/Not returned/);
+const dom=new JSDOM('<main></main>',{url:'https://brainilabgames.com/admin/'});globalThis.document=dom.window.document;globalThis.Event=dom.window.Event;
+globalThis.fetch=()=>{throw Error('Page reviews and downloads must not fetch or mutate');};
+let blob=null;globalThis.URL.createObjectURL=v=>{blob=v;return 'blob:fixture';};globalThis.URL.revokeObjectURL=()=>{};dom.window.HTMLAnchorElement.prototype.click=function(){};
+const root=document.querySelector('main');root.innerHTML=seoHTML(report)+toolsHTML(report);bindSEO(root,report,workspace);bindTools(root,report);
+root.querySelector('[data-seo-view="review"]').click();
+assert.match(root.querySelector('.growth-page-review').textContent,/Sessions reaching a recorded start/);
+root.querySelector('[data-seo-export]').click();assert.match(await blob.text(),/GA4 landing play sessions/);assert.match(await blob.text(),/Google \/ organic only · Sessions with a recorded start","Not returned/);
+root.querySelector('[data-export-brief]').click();assert.equal(await blob.text(),briefText(lead,report));assert.equal(root.querySelectorAll('img,script').length,0);
+console.log('PASS exact-page play evidence: union sessions distinct from events, separate overlapping scopes, missing/zero/quality/date guards, aliases/privacy, preserved decisions, full page CSV and brief downloads, no requests or writes.');
