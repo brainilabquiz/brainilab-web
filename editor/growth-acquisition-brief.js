@@ -1,5 +1,6 @@
 import {playerActivity} from './growth-seo-actions.js';
 import {publicPageURL} from './growth-seo-page.js';
+import {pagePlayContext} from './growth-page-play.js';
 
 const number=v=>Number.isSafeInteger(v)&&v>=0?String(v):'Not measured';
 
@@ -25,6 +26,7 @@ export function acquisitionCheck(lead,report){
   lines.push(!quality?'Quality flags were not supplied.':Object.values(quality).some(Boolean)?'Quality limitation: Google reported thresholding, sampling or grouped data.':'No thresholding, sampling or grouping reported for this observation.');
  }
  lines.push('','These are event counts within sessions that began on this normalised path, possibly on later pages. They are not distinct playing sessions, unique players or keyword conversions. Consent and coverage limit the sample. Do not divide game events by sessions to invent a conversion rate.',
+  pagePlayContext(report,url).text,'',
   'After a verified change, compare complete equal, non-overlapping periods and preserve the original baseline. Feedback remains voluntary and separate from measured attribution. No forecast, new tracking or automatic publication is created by this brief.');
  return lines.join('\n');
 }

@@ -2,6 +2,7 @@ import {searchSources} from './growth-seo-sources.js';
 import {publicPageURL} from './growth-seo-page.js';
 import {unassignedSearchPages} from './growth-seo-unassigned.js';
 import {pageIndexContext} from './growth-indexing.js';
+import {pagePlayContext} from './growth-page-play.js';
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const count=v=>Number.isSafeInteger(v)&&v>=0?v:null;
@@ -82,7 +83,8 @@ export function pageActionContext(report,workspace,url){
  else html+=`<ul>${matched.map(d=>`<li><strong>${esc(states[d.state])}</strong> · last recorded ${esc(date(d.updated_at))}${d.published_at?` · publication recorded ${esc(date(d.published_at))}`:''}${decisionButton(d.id)}</li>`).join('')}</ul>`;
  html+='<p class="growth-small">Reload Growth before acting. A recorded decision covers its own proposal; later edits and other URLs may not appear here. No decision is changed by this review.</p></section>';
  for(const d of matched){const row=blank();row[0]='Recorded decision';row[1]=states[d.state];row[2]=`Decision ${d.id}; current loaded workspace; later edits may not be recorded`;row[9]=d.updated_at;row[11]=url;exported.push(row);}
- html+='<section aria-labelledby="growth-page-activity-title"><h4 id="growth-page-activity-title">From a visit towards a game</h4>';
+ const play=pagePlayContext(report,url);html+=play.html;exported.push(...play.exported);
+ html+='<details><summary>Additional organic event counts — separate observation</summary><section aria-labelledby="growth-page-activity-title"><h4 id="growth-page-activity-title">From a visit towards a game</h4>';
  if(!activity)html+='<p>No single validated google / organic landing-path row matches this page. Missing sessions and game events are not zero. Index.html aliases are not assigned Analytics totals.</p>';
  else{
   const measures=[['Organic landing sessions',activity.sessions],['Engaged sessions',activity.engagedSessions],['Game start events',activity.events.game_start],['Practice start events',activity.events.practice_start],['Game completion events',activity.events.game_complete],['Practice completion events',activity.events.practice_complete]];
@@ -93,7 +95,7 @@ export function pageActionContext(report,workspace,url){
   for(const [label,value] of measures){const row=blank();row[0]='Analytics landing-path sample';row[1]=label;row[2]=value===null?'Not measured':String(value);row[6]=activity.period.start;row[7]=activity.period.end;row[8]=activity.timezone;row[9]=activity.observedAt;row[11]=url;exported.push(row);}
   const q=blank();q[0]='Analytics quality';q[2]=qualityText(activity.quality);q[6]=activity.period.start;q[7]=activity.period.end;q[8]=activity.timezone;q[9]=activity.observedAt;q[11]=url;exported.push(q);
  }
- html+='</section>';
- const steps=[protectedPage?'Preserve the recorded published, follow-up or set-aside decision. Read it and check for later changes before considering new work.':matched.length?'Read the live page and recorded decision before proposing or implementing a change. A pending decision alone is not evidence that an edit is needed.':'Check the live page and current Growth decisions before selecting work; no matching decision is proof of no prior edits.',activity?'Inspect the first useful route from this landing page into a relevant game. The session and event sample is descriptive, not keyword attribution or proof of a defect.':'Player activity for this landing path is unmeasured in this sample. Do not infer zero players or create a traffic forecast.', 'Keep search and Analytics periods separate. Review complete equal, non-overlapping periods after a verified change; preserve the original baseline.'];
+ html+='</section></details>';
+ const steps=[protectedPage?'Preserve the recorded published, follow-up or set-aside decision. Read it and check for later changes before considering new work.':matched.length?'Read the live page and recorded decision before proposing or implementing a change. A pending decision alone is not evidence that an edit is needed.':'Check the live page and current Growth decisions before selecting work; no matching decision is proof of no prior edits.',play.hasRows||activity?'Inspect the first useful route from this landing page into a relevant game. Keep all-source sessions separate from Google / organic. Recorded starts are descriptive, not keyword attribution or proof of a defect.':'Player activity for this landing path is unmeasured in this sample. Do not infer zero players or create a traffic forecast.', 'Keep search and Analytics periods separate. Review complete equal, non-overlapping periods after a verified change; preserve the original baseline.'];
  return {html,exported,steps};
 }

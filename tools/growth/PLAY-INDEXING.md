@@ -84,6 +84,15 @@ selection. Exact page reviews join the dated Google verdict to that URL, keeping
 it separate from the live technical checklist. Player XP and rankings are outside
 this entire flow.
 
+The SEO Explorer page review and its evidence download also show the existing
+play-session row for the exact public landing path, separately for all sources
+and Google / organic. Acquisition brief downloads reuse this same helper. No
+request or report import is needed. Site totals, aliases and another source scope
+never fill a missing path. Each scope retains its landing-baseline and start-query
+dates and quality flags; absent rows/counts remain unknown. Shares also require
+known landing-query dates. Older organic event counts remain a separate dated
+observation in the expandable details, without being treated as playing sessions.
+
 ## Primary references
 
 - [GA4 dimensions and metrics](https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema)
