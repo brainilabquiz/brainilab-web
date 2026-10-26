@@ -36,6 +36,34 @@ class SEOTest(unittest.TestCase):
         self.assertEqual(row['trust'],80)
         self.assertFalse(row['checks']['structuredData']);self.assertFalse(row['checks']['heading'])
 
+    def test_redirect_response_canonical_uses_final_url_not_requested_alias(self):
+        alias=URL+'index.html'
+        row=seo.audit_page(alias,response(URL),AT.isoformat())
+        self.assertTrue(row['checks']['canonical']);self.assertEqual(row['trust'],100)
+        self.assertEqual(row['url'],alias);self.assertEqual(row['finalUrl'],URL)
+        self.assertEqual(row['sha256'],hashlib.sha256(HTML).hexdigest())
+        # A different alias response must be parsed itself, not cleared using
+        # the independent clean-page result or its requested URL.
+        for declared in [alias,URL+'other/','https://other.example/']:
+            body=HTML.replace(URL.encode(),declared.encode())
+            bad=seo.audit_page(alias,response(URL,body),AT.isoformat())
+            self.assertFalse(bad['checks']['canonical']);self.assertEqual(bad['trust'],85)
+        duplicate=HTML.replace(b'</head>',b'<link rel="canonical" href="'+URL.encode()+b'"></head>')
+        self.assertFalse(seo.audit_page(alias,response(URL,duplicate),AT.isoformat())['checks']['canonical'])
+        self.assertFalse(seo.audit_page(alias,response(URL,HTML.replace(b'<link rel="canonical" href="'+URL.encode()+b'">',b'')),AT.isoformat())['checks']['canonical'])
+
+    def test_reference_metadata_and_legacy_observations_are_preserved(self):
+        current=seo.crawl([URL],[],now=AT,fetcher=fake)
+        self.assertEqual(current['canonicalReference'],'final_response_url')
+        old=copy.deepcopy(current);old.pop('canonicalReference')
+        old['pages'][0]=seo.audit_page(URL,response(URL),AT.isoformat())
+        old['pages'][0]['url']=URL+'index.html';old['pages'][0]['checks']['canonical']=False;old['pages'][0]['trust']=85
+        validated=seo.validate(old)
+        self.assertNotIn('canonicalReference',validated)
+        self.assertFalse(validated['pages'][0]['checks']['canonical']);self.assertEqual(validated['pages'][0]['trust'],85)
+        invalid=copy.deepcopy(current);invalid['canonicalReference']='private query'
+        with self.assertRaises(ValueError):seo.validate(invalid)
+
     def test_direct_links_only_and_private_url_data(self):
         body=b'<a href="https://brainilabgames.com/games/example/?token=secret#x" rel="nofollow noopener">=SUM(1)</a><a href="https://brainilabgames.com/profile/">Private</a><a href="https://evil.example/?url=https://brainilabgames.com/">Redirector</a><script>"https://brainilabgames.com/"</script>'
         links=seo.backlinks(SOURCE,response(SOURCE,body),AT.isoformat())
@@ -94,7 +122,8 @@ class SEOTest(unittest.TestCase):
         pages={p['url']:p for p in result['pages']}
         self.assertEqual(len(pages),4);self.assertEqual(requests.count(URL),1)
         self.assertEqual(pages[alias]['finalUrl'],URL)
-        self.assertFalse(pages[alias]['checks']['canonical'])
+        self.assertTrue(pages[alias]['checks']['canonical'])
+        self.assertEqual(result['canonicalReference'],'final_response_url')
         self.assertTrue(pages[URL]['checks']['canonical'])
         self.assertEqual(pages[missing]['status'],404);self.assertIsNone(pages[missing]['trust'])
         self.assertEqual(pages[blocked]['status'],0);self.assertNotIn(blocked,requests)
