@@ -8,7 +8,7 @@ The two restricted save helpers preserve the observed CMS validation, advisory l
 
 ## Queue and review
 
-Reconcile the existing local editorial run and its edition ledger before work. This uploader consumes reviewed content; it does not add a third daily generation stream. A shared database lock and deterministic release ID prevent overlapping retries. The release-wide daily allowance is two new supporting articles, including manual publications. Hubs are additional; Academy extensions reuse current lessons. A failed transaction publishes nothing.
+Reconcile the existing local editorial run and its edition ledger before work. Owner instruction of 26 October 2026 removes the daily ceiling on published articles, including manual and automated releases. Keep one coordinated editorial queue; the existing two daily trend research assignments do not impose a publication cap. Publish only reviewed, authorised content in order, and verify each release before continuing. A shared database lock and deterministic release ID prevent overlapping retries. The per-packet size and entry limits are transaction safeguards, not a daily allowance. All source, demand, cover, freshness, revision, author and quiz checks remain mandatory. Academy extensions preserve current lessons. A failed transaction publishes nothing.
 
 Keep queue documents, raw Search Console/Growth reports, source captures, screenshots, backups and receipts in a private working directory outside the public repository. Never commit them to fix a rejected upload. Public repository research may contain public sources, never internal analytics exports. PR361 contains text drafts, not approved publication packets.
 
@@ -35,3 +35,4 @@ Preparation is not publication, and a database receipt is not public rendering o
 Run node --test tools/test-editorial-publish.mjs. Run supabase/tests/editorial_management_release.sql inside BEGIN / ROLLBACK through the management connector; all fixture evidence is synthetic and all writes must roll back. Tests cover missing evidence, assets, expiry, stale revisions, atomic hub failure, idempotency, history, path publication and denial of browser/anon/service roles. Run the normal repository editorial/course/build checks for the actual content packet as well.
 
 If the management connection fails, keep the private queue and exact packet for retry. Do not open browser credential storage, fabricate a JWT, grant public access, weaken RLS or publish directly around the release checks. If demand or another substantive gate is missing, keep the draft, record the specific gap privately and move to a genuinely supported candidate. Notify only for completed publications or a new actionable incident.
+

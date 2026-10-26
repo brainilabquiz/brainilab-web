@@ -3,7 +3,7 @@ begin;
 do $test$
 declare
  d jsonb; path jsonb; review jsonb; entry jsonb; payload jsonb; receipt jsonb;
- before_count integer; after_count integer; failures integer:=0; gate text;
+ before_count integer; after_count integer; failures integer:=0; gate text; i integer; fixture_slug text; extra_document jsonb; extra_entry jsonb;
  proof text:=repeat('a',64); stamp text:=now()::text;
 begin
  if has_function_privilege('anon','brainilab_editor.publish_reviewed_release(text)','execute')
@@ -70,6 +70,20 @@ begin
   perform brainilab_editor.publish_reviewed_release((payload||'{"backupSha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}')::text);
   raise exception 'TEST EXPECTED ID collision';
  exception when others then if sqlerrm<>'Release ID reused with changed content' then raise;end if;end;
+ -- More than two new articles can be published after other daily publications.
+ -- Three distinct reviewed fixtures are accepted and retried without duplicate history.
+ for i in 1..3 loop
+  fixture_slug:='automation-unlimited-rollback-'||i;
+  extra_document:=d||jsonb_build_object('slug',fixture_slug);
+  extra_entry:=entry||jsonb_build_object('slug',fixture_slug,'documentText',extra_document::text,
+   'documentSha256',encode(sha256(convert_to(extra_document::text,'UTF8')),'hex'));
+  payload:=jsonb_build_object('id',fixture_slug,'authorisation','owner-authorised-editorial-publication-2026-10-24','backupSha256',proof,'entries',jsonb_build_array(extra_entry));
+  receipt:=brainilab_editor.publish_reviewed_release(payload::text);
+  if receipt->>'replayed'<>'false' then raise exception 'Unlimited fixture was not new';end if;
+  receipt:=brainilab_editor.publish_reviewed_release(payload::text);
+  if receipt->>'replayed'<>'true' or (select count(*) from brainilab_editor.revisions where slug=fixture_slug)<>1
+   then raise exception 'Unlimited retry duplicated history';end if;
+ end loop;
  -- The path uses existing verified lessons, with no score/progress writes.
  select document-array['publishedAt','updatedAt']::text[] into path from public.learn_paths where slug='sky-colours';
  path:=path||'{"slug":"automation-path-rollback-fixture","status":"draft"}';
@@ -78,8 +92,9 @@ begin
  receipt:=brainilab_editor.publish_reviewed_release(jsonb_build_object('id','automation-path-rollback-fixture','authorisation','owner-authorised-editorial-publication-2026-10-24','backupSha256',proof,'entries',jsonb_build_array(entry))::text);
  if not exists(select 1 from public.learn_paths where slug='automation-path-rollback-fixture') then raise exception 'Path missing';end if;
  select count(*) into after_count from public.learn_publications;
- if after_count<>before_count+1 then raise exception 'Unexpected article writes';end if;
- raise notice 'Management publisher rollback tests passed: gates, assets, concurrency, atomicity, history, no impersonation, idempotency and path publication';
+ if after_count<>before_count+4 then raise exception 'Unexpected article writes';end if;
+ raise notice 'Management publisher rollback tests passed: gates, assets, concurrency, atomicity, history, no impersonation, idempotency, no daily publication cap and path publication';
 end $test$;
 
 rollback;
+
