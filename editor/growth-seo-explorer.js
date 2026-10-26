@@ -4,6 +4,7 @@ import {discoveryView,referralView} from './growth-seo-sources.js';
 import {pageChoices,pageReviewHTML,technicalChecks as checks} from './growth-seo-page.js';
 import {actionsView,pageActionContext,currentDecisions} from './growth-seo-actions.js';
 import {destinationStates,destinationsView} from './growth-seo-destinations.js';
+import {currentPageView,readCurrentPage} from './growth-current-page.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>typeof v==='number'&&Number.isFinite(v)?v.toLocaleString('en-GB',{maximumFractionDigits:1}):'—';
 const date=v=>Number.isFinite(Date.parse(v))?new Date(v).toLocaleString('en-GB',{timeZone:'UTC',dateStyle:'medium',timeStyle:'short'})+' UTC':'Not measured';
@@ -24,11 +25,11 @@ export function bindSEO(root,report,workspace=null){
  const s=seoSnapshot(report),panel=root.querySelector('#growth-seo-explorer');if(!panel)return;
  panel.querySelector('[data-seo-keywords]')?.addEventListener('click',()=>{root.querySelector('[data-search-view="queries"]')?.click();root.querySelector('[data-keyword-search]')?.focus({preventScroll:true});});
  if(!s)return;
- let view='links',page=0,exported=[];
+ let view='links',page=0,exported=[];const currentPages=new Map();
  const input=panel.querySelector('[data-seo-filter]'),select=panel.querySelector('[data-seo-state]'),destinationState=panel.querySelector('[data-seo-destination-state]'),window=panel.querySelector('[data-seo-window]'),source=panel.querySelector('[data-seo-source]'),selectedPage=panel.querySelector('[data-seo-selected-page]'),decisionScope=panel.querySelector('[data-seo-decision-scope]');
  function draw(){
   const query=input.value.trim().toLowerCase();let rows=[],heads=[],caption='',help='';select.closest('label').hidden=view!=='links';destinationState.closest('label').hidden=view!=='destinations';panel.querySelector('[data-seo-window-label]').hidden=view!=='keywords'||source.value!=='web';source.closest('label').hidden=view!=='keywords';input.closest('label').hidden=view==='reputation'||view==='review';panel.querySelector('[data-seo-page-label]').hidden=view!=='review';panel.querySelector('[data-seo-decision-label]').hidden=view!=='actions';panel.querySelectorAll('[data-seo-prev],[data-seo-next],[data-seo-page]').forEach(el=>el.hidden=view==='review');panel.querySelector('.growth-search-pagination').hidden=view==='reputation';panel.querySelector('[data-seo-note]').textContent='';panel.querySelector(':scope > .growth-caution').hidden=view==='reputation';
-  if(view==='review'){const result=pageReviewHTML(s,selectedPage.value,pageActionContext(report,workspace,selectedPage.value));panel.querySelector('[data-seo-results]').innerHTML=result.html;panel.querySelector('[data-seo-count]').textContent=result.status;exported=result.exported;panel.querySelector('[data-seo-export]').disabled=!exported.length;return;}
+  if(view==='review'){const target=selectedPage.value,context=pageActionContext(report,workspace,target),current=currentPageView(report,target,currentPages.get(target));context.html+=current.html;context.exported.push(...current.exported);const result=pageReviewHTML(s,target,context);panel.querySelector('[data-seo-results]').innerHTML=result.html;panel.querySelector('[data-seo-count]').textContent=result.status;exported=result.exported;panel.querySelector('[data-seo-export]').disabled=!exported.length;return;}
   if(view==='reputation'){panel.querySelector('[data-seo-results]').innerHTML=reputationHTML(s);panel.querySelector('[data-seo-count]').textContent='Dated first-party reports and verified external links · no authority score';return;}
   if(view==='destinations'){const result=destinationsView(s,destinationState.value,query);({rows,heads,caption}=result);help=result.help;exported=result.exported;panel.querySelector('[data-seo-note]').textContent=result.note;}
   else if(view==='actions'){const result=actionsView(report,workspace,decisionScope.value,query);({rows,heads,caption}=result);help=result.help||'';exported=result.exported;panel.querySelector('[data-seo-note]').textContent=result.note;}
@@ -71,6 +72,13 @@ export function bindSEO(root,report,workspace=null){
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-unassigned]'))return;decisionScope.value='unassigned';page=0;draw();panel.querySelector('[data-seo-results] .growth-table')?.focus();});
  panel.addEventListener('click',event=>{const button=event.target.closest('[data-seo-open-decision]');if(!button)return;const id=Number(button.dataset.seoOpenDecision);if(!currentDecisions(workspace)?.some(d=>d.id===id))return;const card=root.querySelector(`[data-opportunity="${id}"]`);if(!card)return;const filter=root.querySelector('[data-growth-filter]');if(filter){filter.value='all';filter.dispatchEvent(new Event('change',{bubbles:true}));}card.focus();});
  panel.querySelector('[data-seo-results]').addEventListener('click',event=>{const button=event.target.closest('[data-seo-review-url]');if(!button||!pageChoices(s).includes(button.dataset.seoReviewUrl))return;selectedPage.value=button.dataset.seoReviewUrl;view='review';page=0;panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.seoView==='review')));draw();panel.querySelector('#growth-page-review-title')?.focus();});
+ panel.addEventListener('click',async event=>{
+  if(!event.target.closest('[data-seo-check-current]')||view!=='review')return;
+  const target=selectedPage.value;if(currentPages.has(target)||!pageChoices(s).includes(target))return;
+  currentPages.set(target,{state:'loading',url:target});draw();
+  const result=await readCurrentPage(target);currentPages.set(target,result);
+  if(view==='review'&&selectedPage.value===target){draw();panel.querySelector('[data-seo-current-status]')?.focus({preventScroll:true});}
+ });
  panel.querySelector('[data-seo-prev]').onclick=()=>{page--;draw();};panel.querySelector('[data-seo-next]').onclick=()=>{page++;draw();};
  panel.querySelector('[data-seo-export]').onclick=()=>{const blob=new Blob([exported.map(r=>r.map(csvCell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),objectURL=URL.createObjectURL(blob),a=document.createElement('a');a.href=objectURL;a.download='brainilab-seo-'+view+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(objectURL),1000);};
  draw();
