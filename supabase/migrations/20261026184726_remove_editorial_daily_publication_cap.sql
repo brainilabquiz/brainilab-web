@@ -131,3 +131,4 @@ begin
  insert into brainilab_editor.automation_releases values(id,h,saved,now());
  return saved;
 end $function$;
+
