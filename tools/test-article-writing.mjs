@@ -1,11 +1,15 @@
 import assert from 'node:assert/strict';
 import {pathToFileURL} from 'node:url';
-import {inspectArticle} from '../lib/article-writing.js';
+import {inspectArticle,isSourceAddress} from '../lib/article-writing.js';
+import {articleChecks} from '../lib/article-checks.js';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const dom=new JSDOM(''),document=dom.window.document;
 const base={slug:'a-real-question',title:'What happens next?',description:'A useful, short answer.',topic:'Learning',sections:[{id:'answer',title:'The answer',html:'<p>One two.</p><p>Three<br>four &amp; five. <a href="https://example.org/source">Source</a>.</p>'}],sources:[{name:'A primary source',url:'https://example.org/source'}],related:['another-question'],game:{name:'Connections',url:'/games/connections/'},practice:'Find the link.',cover:{src:'/assets/images/learn/test.webp',small:'/assets/images/learn/test-small.webp',thumbnail:'/assets/images/learn/test-thumb.webp',alt:'A real subject',credit:'Original imagined scene'}};
 const context={document,articles:[{slug:'another-question',title:'Another question'}],paths:[{slug:'a-real-course'}],mode:'new'};
 const run=change=>{const a=structuredClone(base);change?.(a);return inspectArticle(a,context);};
+for(const url of ['/games/connections/','/daily-quiz/','/plus/','https://example.org/primary'])assert.equal(isSourceAddress(url),true,url);
+for(const url of ['//outside.test/','/admin/','/games/../admin/','/games/%2e%2e/admin/','/games/?email=private','https://name:password@example.org/','javascript:alert(1)'])assert.equal(isSourceAddress(url),false,url);
+assert.equal(articleChecks({...base,sources:[{name:'BrainiLab rules',url:'/games/connections/'}]}).every(x=>x.ok),true,'first-party public rules can be a named source');
 assert.equal(run().passed,true);
 assert.equal(run().metrics.words,7,'paragraph and line-break boundaries count as spaces; entities are decoded');
 assert.equal(run().metrics.paragraphs,2);
