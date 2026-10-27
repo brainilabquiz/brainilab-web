@@ -1,5 +1,7 @@
 # Article publication requirements
 
+Writing workflow: use the shared review in `lib/article-writing.js` and the private brief/review commands documented in `docs/article-writing-workflow.md`. Keep dated demand evidence, claim-level source checks, English and cover review, and mobile/desktop evidence beside the private draft. Never store briefs or captures in public content directories. Draft review and publication review are distinct; suggestions are not quotas or an SEO score, and a manual reviewed label is not independent factual verification. Preserve the established guarded publisher and its revision/history checks.
+
 These requirements reflect the user's explicit instruction of 11 October 2026: no new article may be published without following all the editorial, SEO, AEO and GEO guidelines. They apply to articles, Academy lessons and editorial learning paths.
 
 For public English, also follow PUBLIC_COPY.md in this directory. The user requested clear, easy English and accurate, inviting headlines on 12 October 2026. Keep account invitations voluntary and separate from any future newsletter subscription.
