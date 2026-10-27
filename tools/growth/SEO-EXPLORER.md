@@ -279,3 +279,39 @@ have no exact organic landing row and one lacks the start numerator. The21pages
 without a decision all lack a matching organic landing row; the missing-numerator
 case remains in its protected recorded-decision scope. Do not treat dated local
 decision metadata used for offline QA as the live workspace state.
+
+### Measured starts outside the returned query sample
+
+Next checks previously required a matching Search Console query/page row. This
+omitted independently measured landing sessions with recorded play. The new
+decision scope Measured starts outside query sample exposes these other public
+paths, with a separate All measured sources / Google organic selector. A shortcut
+appears when such rows are available in the current search filter.
+
+A row requires a validated final Web query/page sample, a comparable positive
+union-session observation for that exact public landing path, one complete dated
+HTTP200 inspection returning the same URL, no returned query/page row and no
+current Growth decision in ANY state. Duplicate/missing/failed inspections,
+aliases, private/API paths, unknown counts/dates or quality limitations cannot
+qualify. Property-only and Images queries are not assigned to these pages.
+
+Rows sort by observed start sessions, then landing sessions; no score or traffic
+forecast is generated. Missing query rows remain unknown demand. All-source play
+is explicitly labelled and never presented as Google-organic acquisition or
+keyword conversion. A start can occur after the landing page; these are GA4
+estimates, not unique players or completed games. Existing review and current-page
+checks let the user inspect recent work before proposing a change. No decision
+is created, approved, reopened or written by this view.
+
+The separate21-column CSV includes every filtered row, both source periods and
+collection dates, quality, exact inspection and review guard. Existing41-column
+search-focus exports remain unchanged. Filters/navigation/download use imported
+evidence only; no collection, tracking, database, CMS, XP or score change occurs.
+
+With the saved26October report and the latest local27October sources, five paths
+qualify across all measured sources: Brain Mix, BrainiWord, General Knowledge
+Quiz, History Quiz and Word Detective. None qualifies for Google organic in this
+sample; this is not zero play or demand. The Rankings landing is not promoted
+because no exact page inspection was returned. These are review candidates,
+not five approved edits, newly published resources or proven traffic gains.
+Validate with tools/test-growth-play-discovery.mjs and the existing Growth suites.
