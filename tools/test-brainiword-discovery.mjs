@@ -25,7 +25,7 @@ for(const [query,resumed] of [['',false],['?try=1',false],['?archive=2026-09-07'
 const d=new JSDOM('',{url:'https://brainilabgames.com/',runScripts:'outside-only'}),w=d.window;
 w.BrainiBackendAuth={isConfigured:()=>true,getClient:()=>({rpc:async()=>({data:true})})};
 w.eval(readFileSync('assets/js/daily-games.js','utf8'));
-for(const [answer,guess,expected] of [['APPLE','ALLEY',['correct','present','absent','present','absent']],['LEVEL','LEMON',['correct','correct','absent','absent','absent']],['APPLE','AMPLE',['correct','absent','correct','correct','correct']]]){
+for(const [answer,guess,expected] of [['PLANT','TRAIN',['present','absent','correct','absent','present']],['APPLE','ALLEY',['correct','present','absent','present','absent']],['LEVEL','LEMON',['correct','correct','absent','absent','absent']],['APPLE','AMPLE',['correct','absent','correct','correct','correct']]]){
  const r=await w.BrainiDailyGames.checkBrainiWordGuess({source:'local',fallbackAnswer:answer},guess,1);assert.deepEqual(Array.from(r.states),expected);
 }
 w.close();
