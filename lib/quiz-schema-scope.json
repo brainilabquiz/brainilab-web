@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-28",
+  "review": "https://github.com/brainilabquiz/brainilab-web/pull/410",
+  "topics": [
+    {
+      "slug": "general-knowledge",
+      "path": "/general-knowledge/general-knowledge-quiz/",
+      "local": "generalknowledge",
+      "equivalents": [
+        [
+          "How many continents are there?",
+          "How many continents are commonly recognized?"
+        ],
+        [
+          "Which metal is liquid at room temperature?",
+          "Which metal is liquid near room temperature?"
+        ]
+      ]
+    },
+    {
+      "slug": "world-capitals",
+      "path": "/geography/world-capitals-quiz/",
+      "local": "worldcapitals",
+      "equivalents": []
+    },
+    {
+      "slug": "world-flags",
+      "path": "/geography/world-flags-quiz/",
+      "local": "worldflags",
+      "equivalents": [
+        [
+          "Which country uses the flag 🇨🇦?",
+          "Which country does this flag represent? 🇨🇦"
+        ],
+        [
+          "Which country uses the flag 🇯🇵?",
+          "Which country does this flag represent? 🇯🇵"
+        ],
+        [
+          "Which country uses the flag 🇧🇷?",
+          "Which country does this flag represent? 🇧🇷"
+        ],
+        [
+          "Which country uses the flag 🇳🇿?",
+          "Which country does this flag represent? 🇳🇿"
+        ]
+      ]
+    },
+    {
+      "slug": "history",
+      "path": "/history/history-quiz/",
+      "local": "history",
+      "equivalents": [
+        [
+          "The Renaissance began in which modern country?",
+          "In which country did the Renaissance begin?"
+        ]
+      ]
+    },
+    {
+      "slug": "science",
+      "path": "/science/science-quiz/",
+      "local": "science",
+      "equivalents": [
+        [
+          "What is H2O commonly called?",
+          "What is H₂O commonly called?"
+        ]
+      ]
+    },
+    {
+      "slug": "sports",
+      "path": "/sports/sports-quiz/",
+      "local": "sports",
+      "equivalents": [
+        [
+          "How many players does a football team have on the pitch at kick-off?",
+          "How many players does a soccer team normally have on the field at once?"
+        ],
+        [
+          "A marathon is approximately how long?",
+          "What is the official marathon distance?"
+        ]
+      ]
+    }
+  ]
+}
