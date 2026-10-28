@@ -59,6 +59,7 @@
 .article-cover-crops figcaption{font-size:12px;margin-top:6px;color:#625e71}
 
 .article-evidence-activity>summary{min-height:44px;padding:10px 0;box-sizing:border-box;cursor:pointer;font-weight:650}
+.page-link-evidence{overflow-wrap:anywhere}.page-link-evidence summary{min-height:44px;padding:10px 0;cursor:pointer}.page-link-evidence li{margin-bottom:12px}.page-link-evidence code{font-size:12px}.article-public-links [role=status]{outline-offset:3px}
 
 /* A small local link chooser, with native dialog keyboard handling. */
 .article-link-dialog{box-sizing:border-box;width:min(640px,94vw);max-height:90dvh;overflow:auto;padding:24px;border:1px solid #d8d5e8;border-radius:16px;background:#fff;color:#242238}

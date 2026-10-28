@@ -1,5 +1,6 @@
 import {publicPageURL} from './growth-seo-page.js';
 import {searchSources} from './growth-seo-sources.js';
+import {observePageLinks,pageLinksHTML,pageLinksCSV} from './page-link-evidence.js';
 
 const MAX_BYTES=1024*1024;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -13,7 +14,7 @@ export function declaredTimestamp(v){
 const own=url=>typeof url==='string'&&publicPageURL(url)===url&&!url.endsWith('/index.html')&&!/^\/(?:api|cdn-cgi)(\/|$)/.test(new URL(url).pathname);
 const identifier=v=>typeof v==='string'?v:v&&typeof v==='object'?v['@id']:null;
 
-export function parseCurrentPage(html,url,checkedAt){
+export function parseCurrentPage(html,url,checkedAt,document=globalThis.document){
  if(!own(url)||typeof html!=='string'||html.length>MAX_BYTES||!declaredTimestamp(checkedAt))return null;
  const nodes=[];
  function graph(v,depth=0){if(depth>4||nodes.length>1000||!v||typeof v!=='object')return;if(Array.isArray(v)){for(const x of v)graph(x,depth+1);}else{nodes.push(v);if(v['@graph'])graph(v['@graph'],depth+1);}}
@@ -28,10 +29,10 @@ export function parseCurrentPage(html,url,checkedAt){
  });
  const a=articles.length===1?articles[0]:null;
  const publishedAt=declaredTimestamp(a?.datePublished),modifiedAt=declaredTimestamp(a?.dateModified);
- return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null};
+ return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document)};
 }
 
-export async function readCurrentPage(url,fetcher=globalThis.fetch){
+export async function readCurrentPage(url,fetcher=globalThis.fetch,document=globalThis.document){
  if(!own(url))return {state:'unavailable',url:null,reason:'invalid_url'};
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
  const failure=reason=>({state:'unavailable',url,reason,checkedAt:new Date().toISOString()});
@@ -42,7 +43,7 @@ export async function readCurrentPage(url,fetcher=globalThis.fetch){
   const reader=r.body.getReader(),chunks=[];let size=0;
   try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>MAX_BYTES){controller.abort();await reader.cancel();return failure('size_limit');}chunks.push(value);}}finally{reader.releaseLock();}
   const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
-  return parseCurrentPage(new TextDecoder('utf-8',{fatal:true}).decode(bytes),url,new Date().toISOString())||failure('unsupported_response');
+  return parseCurrentPage(new TextDecoder('utf-8',{fatal:true}).decode(bytes),url,new Date().toISOString(),document)||failure('unsupported_response');
  }catch{return failure('unavailable');}finally{clearTimeout(timer);}
 }
 
@@ -65,6 +66,7 @@ export function currentPageView(report,url,observation){
   const comparison=updateWindow(o,s);status='Public HTML checked '+displayDate(o.checkedAt)+'.';
   content=`<dl class="growth-page-checks"><div><dt>Current HTML title</dt><dd class="growth-current-title">${esc(o.title||'Not reported')}</dd></div><div><dt>Article declares published</dt><dd>${esc(displayDate(o.publishedAt))}</dd></div><div><dt>Article declares updated</dt><dd>${esc(displayDate(o.modifiedAt))}</dd></div></dl><p class="growth-current-comparison">${esc(comparison.text)}</p>${s?`<p class="growth-small">Compared with saved final Web query/page evidence: ${esc(s.period.start)} to ${esc(s.period.end)} · ${esc(s.timezone)}. The declared timestamp is converted to those search-day boundaries.</p>`:''}`;
   add('HTTP status','200');add('Current HTML title',o.title||'Not reported');add('Article declares published',o.publishedAt||'Not reported');add('Article declares updated',o.modifiedAt||'Not reported');add('Search-window check',comparison.text);
+  content+=pageLinksHTML(o);exported.push(...pageLinksCSV(o));
   if(s){const r=Array(13).fill('');r[0]='Search period for declared-date context';r[2]='No comparison of traffic totals or causal effect';r[6]=s.period.start;r[7]=s.period.end;r[8]=s.timezone;r[9]=s.observedAt;r[11]=url;exported.push(r);}
  }
  const disabled=!safe||!!o;
