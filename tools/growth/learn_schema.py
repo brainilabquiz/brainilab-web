@@ -75,7 +75,7 @@ def record(private,value,expected):
 
 
 def attach(snapshot,private,candidates=()):
-    values=[v.get('learnSchema')for v in candidates if isinstance(v,dict)]
+    values=[v.get('learnSchema')for v in [snapshot,*candidates] if isinstance(v,dict)]
     path=Path(private)/'learn-schema-latest.json'
     if path.exists():
         try:values.append(json.loads(path.read_text(encoding='utf-8')))

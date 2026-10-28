@@ -85,6 +85,38 @@ class QuizSchemaTest(unittest.TestCase):
         self.assertNotIn('question_options',sql);self.assertNotIn('is_correct',sql)
         self.assertEqual(sum(len(p['prompts']) for p in q.local_providers(AT).values()),360)
 
+    def test_newer_crawl_does_not_hide_newer_quiz_read_in_another_candidate(self):
+        later='2026-10-28T20:00:00Z';newest_crawl='2026-10-28T21:00:00Z'
+        row=lambda at:seo.audit_page(URL,response(html([{'@type':'Question','name':'A real question?'}])),at)
+        base=lambda at,p:{'schemaVersion':1,'domain':'brainilabgames.com','observedAt':at,'pages':[p],'sources':[],'backlinks':[]}
+        with tempfile.TemporaryDirectory()as tmp,patch('seo_explorer.fetch',side_effect=AssertionError('No crawl')):
+            private=Path(tmp)
+            (private/'seo-explorer-latest.json').write_text(json.dumps(base(newest_crawl,row(AT))),encoding='utf-8')
+            (private/'quiz-schema-latest.json').write_text(json.dumps(snapshot()),encoding='utf-8')
+            report={'seoExplorer':{**base(later,row(later)),'quizSchema':snapshot()}}
+            before=copy.deepcopy(report);files={p.name:p.read_bytes()for p in private.iterdir()}
+            attached=seo.attach_seo(report,private);evidence=attached['seoExplorer']['quizSchema']
+            self.assertEqual(evidence['pages'][0]['checkedAt'],q.timestamp(later))
+            self.assertEqual(evidence['banks'][0]['providers'][0]['observedAt'],q.timestamp(AT))
+            self.assertEqual(report,before);self.assertEqual({p.name:p.read_bytes()for p in private.iterdir()},files)
+            self.assertEqual(seo.attach_seo(attached,private),attached)
+
+    def test_current_root_and_only_bound_candidate_rows_survive_old_private_source(self):
+        later='2026-10-28T20:00:00Z'
+        with tempfile.TemporaryDirectory()as tmp:
+            private=Path(tmp);(private/'quiz-schema-latest.json').write_text(json.dumps(snapshot()),encoding='utf-8')
+            current=snapshot(later);current['banks'][0]['providers']=current['banks'][0]['providers'][:1]
+            attached=q.attach({'pages':[],'quizSchema':current},private)['quizSchema']
+            self.assertEqual(attached['pages'][0]['checkedAt'],q.timestamp(later))
+            self.assertEqual([p['observedAt']for p in attached['banks'][0]['providers']],[q.timestamp(later),q.timestamp(AT),q.timestamp(AT)])
+            valid=seo.audit_page(URL,response(html([{'@type':'Question','name':'A real question?'}])),later)
+            for field,value in [('url',URL+'other/'),('sha256','a'*64),('checkedAt',AT)]:
+                invalid=copy.deepcopy(valid);invalid[field]=value
+                with self.subTest(field):
+                    result=q.attach({'pages':[]},private,[{'pages':[invalid,None]}])
+                    self.assertEqual(result['quizSchema']['pages'][0]['checkedAt'],q.timestamp(AT))
+            self.assertEqual(q.attach({'pages':[]},private,[{'pages':[valid]}])['quizSchema']['pages'][0]['checkedAt'],q.timestamp(later))
+
     def test_include_local_reuses_same_day_observation(self):
         with tempfile.TemporaryDirectory() as tmp,patch.object(api,'PRIVATE',Path(tmp)):
             first=q.with_local(snapshot(),tmp,datetime(2026,10,28,19,tzinfo=timezone.utc))

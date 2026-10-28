@@ -171,12 +171,24 @@ def record(private, value, expected):
 
 
 def attach(snapshot, private, candidates=()):
-    values=[c.get('quizSchema') for c in candidates if isinstance(c,dict)]
+    sources=[snapshot,*candidates]
+    values=[c.get('quizSchema') for c in sources if isinstance(c,dict)]
     path=Path(private)/'quiz-schema-latest.json'
     if path.exists():
         try: values.append(json.loads(path.read_text(encoding='utf-8')))
         except (OSError,ValueError): pass
-    values.append({'schemaVersion':1,'domain':'brainilabgames.com','pages':[p['quizQuestions'] for p in snapshot.get('pages',[]) if p.get('quizQuestions')]})
+    # Crawl age does not determine the age of every URL. Older crawl candidates
+    # can hold the newest exact-response observation for an individual quiz.
+    for source in sources:
+        if not isinstance(source,dict): continue
+        bound=[]
+        for p in source.get('pages',[]) if isinstance(source.get('pages',[]),list) else []:
+            if not isinstance(p,dict): continue
+            try:
+                evidence=page(p['quizQuestions'])
+                if evidence['url']==p['url'] and evidence['sha256']==p['sha256'] and evidence['checkedAt']==timestamp(p['checkedAt']): bound.append(evidence)
+            except (ValueError,TypeError,KeyError): pass
+        values.append({'schemaVersion':1,'domain':'brainilabgames.com','pages':bound})
     valid=[]
     for v in values:
         try: valid.append(validate(v))

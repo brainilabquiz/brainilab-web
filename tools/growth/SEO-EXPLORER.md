@@ -200,6 +200,14 @@ reuses its one response for the workspace session.
 Template/noscript payloads, malformed graphs and ambiguous entities do not supply
 a usable main entity. No page, lesson, quiz version, XP or score is changed.
 
+Schema attachment considers the current exported root and every saved crawl
+candidate independently. A newer overall crawl cannot hide a more recent quiz
+declaration held by an older crawl: nested observations must match that candidate's
+exact URL, HTML hash and read time. Learn pages and quiz declarations keep their
+newest valid per-URL observation; published quiz providers retain their own dates.
+Restoring an older private source cannot replace newer exported schema evidence.
+This selection is in memory only and neither fetches pages nor writes source files.
+
 Existing dated HTML captures can be fed to the adapter as a JSON stdin array of
 `{url, checkedAt, html}`. Keep the original read dates and validate capture hashes;
 do not fetch them again just to populate this view. Wrap its output as

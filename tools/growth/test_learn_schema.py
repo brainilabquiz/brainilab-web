@@ -47,6 +47,16 @@ class LearnSchemaTest(unittest.TestCase):
         with patch('learn_schema.subprocess.run',side_effect=OSError('unavailable')):
             self.assertEqual(s.enrich(pages,[(URL,{'url':URL,'status':200,'body':b'<h1>A page</h1>'},AT)]),before)
 
+    def test_exported_root_keeps_newest_page_when_private_source_was_restored(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            private=Path(tmp);path=private/'learn-schema-latest.json';path.write_text(json.dumps(snapshot()),encoding='utf-8');before=path.read_bytes()
+            newer=observation();newer['checkedAt']='2026-10-28T21:00:00Z';newer['contentSha256']='c'*64
+            other=copy.deepcopy(newer);other['url']=URL.replace('/example/','/another/')
+            root={'pages':[],'learnSchema':{**snapshot(newer),'pages':[newer,other]}};original=copy.deepcopy(root)
+            result=s.attach(root,private)
+            self.assertEqual(result['learnSchema'],s.validate(root['learnSchema']))
+            self.assertEqual(s.attach(result,private),result);self.assertEqual(root,original);self.assertEqual(path.read_bytes(),before)
+
     def test_one_bad_utf8_response_does_not_block_a_good_page(self):
         good=b'<main><h1>Good page</h1></main>';bad=URL.replace('/example/','/bad/')
         p=observation();p['sha256']=hashlib.sha256(good).hexdigest()
