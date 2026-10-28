@@ -56,6 +56,35 @@ The website publishes none of this directory. Real exports, SQLite data, OAuth c
 
 ## Current workflow
 
+### Workbench: resume, review and measure
+
+The first Growth panel now builds a read-only worklist from the current loaded
+decisions. Approved work comes first, followed by conflicts, comparable published
+results and pending reviews. Published/follow-up decisions are measurement work,
+never promoted as another edit; dismissed decisions stay excluded. Duplicate or
+incomplete records cannot authorise resuming work. Open recorded decision/history
+uses the existing card and preserves unsaved notes.
+
+Each publication keeps its original baseline and shows the earliest complete
+equal-length follow-up in Search Console Pacific dates, starting after the
+publication day. The loaded report must match property, Web filters, timezone,
+non-overlapping period length and one exact-page observation. An unfinished
+window, missing reference, different scope, missing counts or absent page has an
+explicit reason. Missing is not zero, and query rows never replace page totals.
+Before/after values are descriptive, not a causal finding or traffic forecast.
+
+The folded measurement plan also shows the independently dated Google/organic
+landing-session/start observation, when present. It is not joined to keywords,
+compared with a GSC denominator or presented as post-change play. Source dates,
+quality and missing counts stay visible. No new query or tracking is triggered.
+
+Search, next-move filters and five-row pagination keep the worklist usable. The
+33-column CSV exports every matching row, including original/required/loaded
+periods, filters, separate play dates and unknowns, not only the visible page.
+The panel adds no API, migration, permissions, automation or decision mutation.
+Validate with `test-growth-followup.mjs`, `test-growth-workbench.mjs` and the
+existing admin, decision-queue and page-play suites.
+
 ### Distribution workspace
 
 `/admin/#growth` now prepares campaign links and editable invitations for the published games, quizzes, articles and Academy catalogue. Source/medium/campaign/content use short public labels; directory traffic uses `referral`, social uses `social`, email uses `email`. Share these URLs externally, never on internal navigation. The tools copy or download text; they do not send, publish or count a prepared invitation as a launch.
