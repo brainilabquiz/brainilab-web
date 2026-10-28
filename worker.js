@@ -1,6 +1,7 @@
 import {channelVideo} from './lib/youtube-channel.js';
 import {cachedHomeVideos,renderHomeVideoCards} from './lib/home-video-cards.js';
-import {serveLearn,publishedArticles} from './lib/learn-worker.js';
+import {servePublicLearn,learnRelatedVideo} from './lib/learn-store.js';
+export {LearnPageStore} from './lib/learn-store.js';
 import {productionRequest} from './lib/production-origin.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
@@ -8,7 +9,7 @@ import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from 
 import {newsEdition} from './lib/news-refresh.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/news-refresh.js';
-import {VIDEO_GAMES,relatedVideo,cleanVideo} from './lib/video-card.js';
+import {VIDEO_GAMES,cleanVideo} from './lib/video-card.js';
 import {adminVideoInfo} from './lib/video-admin.js';
 import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './lib/youtube-playlist.js';
 // Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
@@ -129,7 +130,7 @@ export default {
       if(canonical.href!==url.href)return Response.redirect(canonical.href,308);
     }
     if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/llms.txt','/about/','/about/index.html','/profile/','/profile/index.html'].includes(url.pathname)){
-      let response=await serveLearn(request,env,ctx,caches.default);
+      let response=await servePublicLearn(request,env,ctx,caches.default);
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
         const html=await response.text(),news='';
         const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
@@ -167,8 +168,7 @@ export default {
         const game=url.searchParams.get('game');
         if(!Object.hasOwn(VIDEO_GAMES,game))return json({error:'Unknown game'},400,0);
         try{
-          const articles=await publishedArticles(request,ctx,caches.default,fetch,{summaryOnly:true});
-          let video=relatedVideo(articles,game);
+          let video=await learnRelatedVideo(request,env,ctx,caches.default,game);
           if(!video&&game==='generalknowledge'){
             const latest=await (await latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'')).json();
             if(!latest.stale&&!latest.unavailable)video=cleanVideo(latest);

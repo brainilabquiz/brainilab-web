@@ -1,5 +1,24 @@
 # Learn runtime and resource limits
 
+Public Learn rendering is delegated through `LEARN_PAGES` to `LearnPageStore`.
+The entry Worker forwards a request without cookies, authorization headers or
+query parameters. The object renders only the fixed Learn/public-page routes and
+fixed game-video recommendations. It cannot proxy arbitrary URLs or expose its
+source cache. Its only retained environment capability is the ASSETS binding.
+
+The SQLite-backed namespace works on the existing Free-compatible configuration.
+It uses an in-memory cache only: no SQL/KV storage writes, alarms or account data.
+Each cache lookup returns a new Response from plain stored strings; streams are
+never reused across invocations. The 60-second deadline applies in the object as
+well. An eviction creates an empty cache and reloads current public publications.
+
+Moving only body preparation to metadata reduced work but was insufficient:
+live verification reproduced another 1102 immediately after cache expiry. The
+object has the platform's normal Durable Object execution budget, so catalogue
+refresh and HTML rendering no longer share the entry Worker's small CPU limit.
+No paid-plan change or CPU-limit override is required. The entry Worker retains
+the same security headers, seasonal decoration and homepage video handling.
+
 The public catalogue is a source snapshot with a 60-second cache lifetime. The
 cache key is `/_learn-catalogue-v2`; it contains prepared metadata in `articles`
 and separate source section bodies in `bodies`. Do not expose this cache key as

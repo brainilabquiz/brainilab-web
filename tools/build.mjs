@@ -14,6 +14,7 @@ import './check-site-integrity.mjs';
 import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
 import './test-learn-runtime.mjs';
+import './test-learn-store.mjs';
 import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';

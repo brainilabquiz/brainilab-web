@@ -6,8 +6,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "previews": {},
   "triggers": {"crons": ["0 */12 * * *"]},
-  "durable_objects": {"bindings": [{"name":"BREAKING_NEWS","class_name":"BreakingNewsStore"}]},
-  "migrations": [{"tag":"breaking-news-v1","new_sqlite_classes":["BreakingNewsStore"]}],
+  "durable_objects": {"bindings": [{"name":"BREAKING_NEWS","class_name":"BreakingNewsStore"},{"name":"LEARN_PAGES","class_name":"LearnPageStore"}]},
+  "migrations": [{"tag":"breaking-news-v1","new_sqlite_classes":["BreakingNewsStore"]},{"tag":"learn-pages-v1","new_sqlite_classes":["LearnPageStore"]}],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
