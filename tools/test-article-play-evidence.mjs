@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {articlePlayEvidence,articlePlayEvidenceHTML} from '../editor/article-play-evidence.js';
+import {articleEvidence} from '../editor/article-evidence.js';
+import {playIndexFixture} from './fixtures/growth-play-index.mjs';
+import {pathToFileURL} from 'node:url';
+const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href),dom=new JSDOM('');
+const report={...playIndexFixture(3),property:'sc-domain:brainilabgames.com',privateContact:'never-copy@example.test'};
+const url='https://brainilabgames.com/learn/sample-0/';
+report.playSessions.cohorts.all.landingPages[2].privateNote='never-copy-note';
+const e=articlePlayEvidence(report,[url,url,'https://other.test/learn/sample-0/','https://www.brainilabgames.com/learn/sample-0/',url+'?source=test',url+'#answer']);
+assert.equal(e.pages.length,1,'only distinct selected canonical destinations; no alias/query joining');
+assert.equal(e.pages[0].cohorts[0].sessions,10);assert.equal(e.pages[0].cohorts[0].sessionsWithStart,3);assert.equal(e.pages[0].cohorts[0].share,.3);
+assert.equal(e.pages[0].cohorts[1].sessions,2);assert.equal(e.pages[0].cohorts[1].sessionsWithStart,null);assert.equal(e.pages[0].cohorts[1].share,null,'missing organic starts are not zero');
+assert.ok(!JSON.stringify(e).includes('never-copy'));assert.ok(!JSON.stringify(e).includes('/learn/sample-2/'),'unrelated landing rows are not copied');
+const html=articlePlayEvidenceHTML(e,Date.parse(report.playSessions.observedAt));assert.match(html,/Not returned/);assert.match(html,/never add these scopes/);assert.match(html,/does not prove that this article or its link caused it/);assert.ok(!html.includes('Older than 48 hours'));
+assert.match(articlePlayEvidenceHTML(e,Date.parse(report.playSessions.observedAt)+49*3600000),/Older than 48 hours/);
+const unknown=articlePlayEvidence(report,['https://brainilabgames.com/learn/new/']);assert.equal(unknown.pages[0].cohorts[0].returned,false);assert.match(articlePlayEvidenceHTML(unknown),/remain unknown/);
+const zero=structuredClone(report);zero.playSessions.cohorts.all.landingPages[0].sessionsWithStart=0;assert.equal(articlePlayEvidence(zero,[url]).pages[0].cohorts[0].share,0,'explicit numeric zero remains zero');
+for(const flag of ['sampled','thresholded','otherRow']){const bad=structuredClone(report);bad.playSessions.cohorts.all.quality[flag]=true;assert.equal(articlePlayEvidence(bad,[url]).pages[0].cohorts[0].share,null);}
+const inconsistent=structuredClone(report);inconsistent.playSessions.cohorts.all.landingPages[0].sessionsWithStart=11;assert.equal(articlePlayEvidence(inconsistent,[url]).pages[0].cohorts[0].share,null);assert.match(articlePlayEvidenceHTML(articlePlayEvidence(inconsistent,[url])),/Counts are inconsistent/);
+const noDates=structuredClone(report);delete noDates.playSessions.cohorts.all.landingStartsObservedAt;assert.equal(articlePlayEvidence(noDates,[url]).pages[0].cohorts[0].share,null,'snapshot time cannot substitute a missing landing-query time');assert.equal(articlePlayEvidence(noDates,[url]).cohorts[0].startsObservedAt,null);
+const denominator=structuredClone(report);denominator.playSessions.cohorts.all.landingPages[0].sessions=0;denominator.playSessions.cohorts.all.landingPages[0].sessionsWithStart=0;assert.equal(articlePlayEvidence(denominator,[url]).pages[0].cohorts[0].share,null);
+assert.equal(articlePlayEvidence({...report,property:'sc-domain:other.test'},[url]).available,false);assert.equal(articlePlayEvidence({},[url]).available,false);
+const article={slug:'sample-0',sections:[],sources:[],related:[]};
+const model=articleEvidence(article,{document:dom.window.document,report});assert.equal(model.growth.available,false,'SEO failure does not turn saved GA4 into SEO evidence');assert.equal(model.growth.activity.available,true,'GA4 has an independent validated section');assert.equal(model.growth.activity.pages[0].cohorts[1].sessions,2);
+const saved=articleEvidence(article,{document:dom.window.document,growth:model.growth});assert.deepEqual(saved.growth.activity,model.growth.activity,'private hash-bound contexts retain their original activity evidence');
+dom.window.close();console.log('PASS article activity: reuse of validated per-page evidence, two separate scopes, null/zero/date/quality gates, exact selected paths, independent source clocks and private minimisation.');

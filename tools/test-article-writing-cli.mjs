@@ -41,7 +41,7 @@ await saveGrowth('input-growth.json',input);
 const runGrowth=(mode,...args)=>spawnSync(process.execPath,['tools/review-article-writing.mjs',mode,growthDir,...args],{encoding:'utf8',env:process.env});
 assert.equal(runGrowth('brief','--growth',path.join(growthDir,'input-growth.json')).status,0);
 const bound=JSON.parse(await readFile(path.join(growthDir,'editorial-brief.json'),'utf8')),contextFile=path.join(growthDir,bound.growthContext.file),contextText=await readFile(contextFile,'utf8');
-assert.equal(sha(contextText),bound.growthContext.sha256);assert.ok(!contextText.includes('do-not-export')&&!contextText.includes('private-contact'),'only relevant allowlisted context is copied, not the full report');
+assert.equal(sha(contextText),bound.growthContext.sha256);assert.ok(Object.hasOwn(JSON.parse(contextText).articles[0].growth,'activity'),'the private hash-bound context preserves the independent activity section');assert.ok(!contextText.includes('do-not-export')&&!contextText.includes('private-contact'),'only relevant allowlisted context is copied, not the full report');
 assert.equal(runGrowth('review').status,0);const review=JSON.parse(await readFile(path.join(growthDir,'writing-review.json'),'utf8'));assert.equal(review.articles[0].linkPlan.growth.available,true);assert.equal(review.articles[0].linkPlan.growth.pages[0].search,null,'missing data stays unknown');
 await writeFile(contextFile,contextText+' ');assert.equal(runGrowth('review','--publish').status,1);assert.ok(JSON.parse(await readFile(path.join(growthDir,'writing-review.json'),'utf8')).manualReviewPending.some(x=>/Growth context/.test(x)),'changed private context cannot pass publication review');
 await writeFile(contextFile,contextText);

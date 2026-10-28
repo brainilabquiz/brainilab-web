@@ -57,3 +57,5 @@
 .article-cover-crops img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:8px;background:#f3f0e5}
 .article-cover-crops [data-cover-crop=square]{aspect-ratio:1}
 .article-cover-crops figcaption{font-size:12px;margin-top:6px;color:#625e71}
+
+.article-evidence-activity>summary{min-height:44px;padding:10px 0;box-sizing:border-box;cursor:pointer;font-weight:650}
