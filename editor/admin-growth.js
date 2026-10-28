@@ -7,6 +7,9 @@ import {distributionHTML,bindDistribution} from './growth-distribution.js';
 import {toolsHTML,bindTools,connectionText} from './growth-tools.js';
 import {openSEOHTML,bindOpenSEO,evidenceLink} from './growth-openseo.js';
 import {confirmationsHTML} from './growth-confirmations.js';
+import {comparison} from './growth-followup.js';
+import {workbenchHTML,bindWorkbench} from './growth-workbench.js';
+export {comparison};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=value=>{try{const u=new URL(value);return u.protocol==='https:'&&['brainilabgames.com','github.com','developers.google.com'].includes(u.hostname)?u.href:null;}catch{return null;}};
 const link=(url,text)=>safeURL(url)?`<a href="${esc(safeURL(url))}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>`:esc(text);
@@ -15,20 +18,6 @@ const metric=(key,value)=>key==='ctr'&&value!=null?number(value*100)+'%':number(
 const labels={pending:'Pending review',approved:'Approved',published:'Published',monitoring:'In follow-up',dismissed:'Set aside'};
 const transitions={pending:['pending','approved','dismissed'],approved:['approved','pending','published','dismissed'],published:['published','monitoring'],monitoring:['monitoring'],dismissed:['dismissed','pending']};
 let context,workspace,epoch=0,busy=false,dirty=false;
-export function comparison(opportunity,report,reports){
- if(!opportunity.published_at)return {ready:false,message:'Record the verified publication first. Your original baseline stays attached to this proposal.'};
- const baselineReport=reports.find(r=>r.id===opportunity.baseline_report),baseline=baselineReport?.period;
- const period=report?.document?.availablePeriod;
- if(!baseline||!period)return {ready:false,message:'A dated baseline and follow-up report are needed.'};
- const scope=f=>JSON.stringify(Object.entries(f||{}).filter(([k])=>k!=='requestedRange').sort());
- if(scope(baselineReport.filters)!==scope(report.document.filters))return {ready:false,message:'The reports use different filters. Import a matching scope before comparing.'};
- const days=p=>(Date.parse(p.end)-Date.parse(p.start))/86400000+1;
- const publishedDay=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(opportunity.published_at));
- if(period.start<=publishedDay||baseline.end>=publishedDay||baseline.end>=period.start||days(period)!==days(baseline))return {ready:false,message:`Waiting for a full ${days(baseline)}-day report after publication. Overlapping or unequal periods are not compared.`};
- const current=report.document.opportunities?.find(o=>o.url===opportunity.url)?.pageEvidence;
- if(!current)return {ready:false,message:'The follow-up report does not contain this page. Missing data is not zero traffic.'};
- return {ready:true,before:opportunity.proposal.pageEvidence,after:current,message:'Descriptive before/after comparison. It does not prove that the change caused the difference.'};
-}
 function status(message){const el=context?.root.querySelector('[data-growth-status]');if(el)el.textContent=message;}
 function summary(){
  const r=workspace.report?.document,s=r?.propertySummary;
@@ -53,6 +42,7 @@ function draw(){
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',confirmationsHTML(workspace.confirmedAccounts));
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',openSEOHTML(workspace.report?.document));
  bindOpenSEO(root);
+ root.querySelector('.growth-lead').insertAdjacentHTML('afterend',workbenchHTML());
  workspace.opportunities.filter(o=>o.proposal?.provider==='openseo').forEach(o=>{
   const card=root.querySelector(`[data-opportunity="${Number(o.id)}"]`),e=o.proposal.providerEvidence;
   if(!card||!e)return;
@@ -64,12 +54,13 @@ function draw(){
  root.querySelector('[data-growth-filter]').onchange=e=>{let shown=0;root.querySelectorAll('[data-opportunity]').forEach(el=>{const o=workspace.opportunities.find(o=>String(o.id)===el.dataset.opportunity);el.hidden=e.target.value!=='all'&&o.state!==e.target.value;if(!el.hidden)shown++;});root.querySelector('[data-growth-empty]').hidden=shown>0;};
  root.querySelectorAll('[data-growth-form]').forEach(form=>{form.oninput=()=>{dirty=true;};form.onsubmit=async e=>{e.preventDefault();if(busy||!form.reportValidity())return;const o=workspace.opportunities.find(o=>String(o.id)===form.dataset.growthForm),f=new FormData(form);await mutate('admin_update_growth_opportunity',{p_id:o.id,p_revision:o.revision,p_state:f.get('state'),p_note:f.get('note'),p_reference:f.get('reference')},'Decision saved. Website content was not published.');};});
  root.querySelector('[data-growth-import]').onsubmit=async e=>{e.preventDefault();const run=epoch,file=e.target.elements.report.files[0];if(!file||busy)return;if(dirty){status('Save your decision before importing another report.');return;}try{if(file.size>1000000)throw Error('Use a report smaller than 1 MB.');const data=JSON.parse(await file.text());if(run!==epoch||busy)return;await mutate('admin_import_growth_report',{p_report:data},'Report imported. Existing decisions and baselines were preserved.');}catch(error){if(run===epoch)status(error.message||'Invalid report file.');}};
+ bindWorkbench(root,workspace);
 }
 async function mutate(name,args,message){
- const run=epoch,ctx=context;let saved=false;busy=true;ctx.root.querySelectorAll('button,input,textarea,select').forEach(el=>el.disabled=true);status('Saving…');
+ const run=epoch,ctx=context,disabled=new Map([...ctx.root.querySelectorAll('button,input,textarea,select')].map(el=>[el,el.disabled]));let saved=false;busy=true;disabled.forEach((value,el)=>el.disabled=true);status('Saving…');
  try{await ctx.rpc(name,args);saved=true;if(run!==epoch)return;dirty=false;workspace=await ctx.rpc('admin_get_growth_workspace');if(run!==epoch)return;draw();status(message);ctx.root.querySelector('[data-growth-status]').setAttribute('tabindex','-1');ctx.root.querySelector('[data-growth-status]').focus();}
  catch(error){if(run===epoch)status(saved?'Saved, but the updated view could not load. Refresh Growth before making another decision.':error.message||'Could not save. Your last report is unchanged.');}
- finally{if(run===epoch){busy=false;ctx.root.querySelectorAll('button,input,textarea,select').forEach(el=>el.disabled=false);}}
+ finally{if(run===epoch){busy=false;disabled.forEach((value,el)=>{if(el.isConnected)el.disabled=value;});}}
 }
 export const GrowthAdmin={
  async render(options){context=options;const run=++epoch;busy=false;dirty=false;const data=await options.rpc('admin_get_growth_workspace');if(run!==epoch)return;workspace=data;draw();},
