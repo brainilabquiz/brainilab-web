@@ -7,10 +7,10 @@ async function wrangler(command,extra=[]){return new Promise((resolve,reject)=>{
 if(mode==='production'){
  await productionPreflight(); // fail closed before any production upload
  await wrangler('deploy');
- console.log('PASS production publication followed a matching 130-second preview check.');
+ console.log('PASS production publication followed matching availability and full Learn/Academy schema checks.');
 }else{
  const output=await wrangler('preview',['--name',PREVIEW_NAME]),origin=output.match(/Preview URL:\s*(https:\/\/[a-z0-9-]+-brainilab-web\.brainilabquiz\.workers\.dev)\b/)?.[1];
  if(origin!==PREVIEW_ORIGIN)throw Error('No verified preview URL in deployment output');
- await verifyRelease(origin,JSON.parse(await readFile('dist/_release.json','utf8')),{onResult:r=>console.log(JSON.stringify({stage:'preview',checkedAt:r.checkedAt,ok:r.ok,checks:r.checks.length}))});
- console.log('PASS preview stayed available through two cache expirations.');
+ await verifyRelease(origin,JSON.parse(await readFile('dist/_release.json','utf8')),{onResult:r=>console.log(JSON.stringify({stage:'preview',checkedAt:r.checkedAt,ok:r.ok,checks:r.checks.length})),onSchema:r=>console.log(JSON.stringify({stage:'preview-schema',checkedAt:r.checkedAt,ok:r.ok,articles:r.articles,courses:r.courses,checked:r.checked,problems:r.problems}))});
+ console.log('PASS preview availability through two cache expirations and full Learn/Academy schema audit.');
 }

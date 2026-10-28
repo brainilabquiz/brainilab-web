@@ -3,7 +3,7 @@ import {verifyRelease,successfulPreview,productionPreflight,RELEASE_WINDOW,PREVI
 const sha='a'.repeat(40),hash='b'.repeat(64),origin=PREVIEW_ORIGIN,checked=[],headings='<main><h1>A page</h1><script type="application/ld+json">{"@graph":[{"@type":"Article"},{"@type":"Course"}]}</script></main>';
 let clock=0,fail=false,mismatch=false;
 const fetcher=async url=>{checked.push({url,at:clock});if(url.includes('api.github.com'))return Response.json({check_runs:[{id:4,name:'Workers Builds: brainilab-web',status:'completed',conclusion:'success',details_url:'https://dash.cloudflare.com/e94344c3c4926a4c9031114fc7c36a57/workers/services/view/brainilab-web/production/previews/codex-test/builds/aaa-bbb'}]});if(url.endsWith('_release.json'))return Response.json({schemaVersion:1,commit:sha,runtimeHash:mismatch?'c'.repeat(64):hash});if(fail)return new Response('error code: 1102',{status:503});return new Response(url.endsWith('.xml')?'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://brainilabgames.com/learn/example/</loc></url><url><loc>https://brainilabgames.com/learn/paths/example/</loc></url></urlset>':headings,{headers:{'Content-Type':'text/html'}});};
-const options={fetcher,clock:()=>clock,sleep:async ms=>{clock+=ms;}};
+const options={fetcher,clock:()=>clock,sleep:async ms=>{clock+=ms;},audit:async()=>({ok:true,articles:1,courses:1,checked:2,problems:[]})};
 const result=await verifyRelease(origin,{commit:sha,runtimeHash:hash},options);assert.equal(result.ok,true);assert.equal(result.durationMs,RELEASE_WINDOW);assert.deepEqual(result.results.map(r=>Date.parse(r.checkedAt)),[0,65000,130000]);
 fail=true;clock=0;await assert.rejects(()=>verifyRelease(origin,{commit:sha,runtimeHash:hash},options),/Public release check failed/);assert.equal(clock,0,'Failures stop immediately, without retry masking');fail=false;mismatch=true;
 await assert.rejects(()=>verifyRelease(origin,{runtimeHash:hash},options),/does not match/);mismatch=false;
@@ -11,4 +11,8 @@ assert.equal(await successfulPreview(sha,fetcher),origin);await assert.rejects((
 let verified=0;const read=async()=>JSON.stringify({commit:sha,runtimeHash:hash}),run=()=>`tree ${hash}\nparent ${'d'.repeat(40)}\nparent ${sha}\n\nMerge`;
 await productionPreflight({fetcher,run,read,verify:async(url,expected)=>{verified++;assert.equal(url,origin);assert.equal(expected.commit,sha);assert.equal(expected.runtimeHash,hash);return{ok:true};}});assert.equal(verified,1);
 await assert.rejects(()=>productionPreflight({fetcher,run:()=>`tree ${hash}\nparent ${sha}\n\nDirect`,read}),/reviewed merge/);
+clock=0;
+await assert.rejects(()=>verifyRelease(origin,{commit:sha,runtimeHash:hash},{...options,audit:async()=>({ok:false,problems:[{path:'/learn/example/',field:'headline',state:'different'}]})}),/structured data check failed/);
+clock=0;
+await assert.rejects(()=>verifyRelease(origin,{commit:sha,runtimeHash:hash},{...options,audit:async()=>{mismatch=true;return{ok:true,problems:[]};}}),/changed during the schema check/);mismatch=false;
 console.log('PASS release gate: matching revision and content hash, real 130-second window, both expiry boundaries, fail-closed HTTP/content/hash/status checks, preview identity and production merge lineage.');

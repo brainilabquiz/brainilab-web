@@ -2,12 +2,13 @@ import {readFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {healthOrigin,checkPublicPages} from '../lib/site-health.js';
 import {publicJSON} from '../lib/public-json.js';
+import {checkLearnCatalogue} from './release-schema.mjs';
 export const RELEASE_WINDOW=130000;
 export const REPO='brainilabquiz/brainilab-web';
 export const PREVIEW_NAME='codex/learn-render-store-oct28';
 export const PREVIEW_ORIGIN='https://codex-learn-render-store-oct28-brainilab-web.brainilabquiz.workers.dev';
 export async function remoteManifest(origin,fetcher=fetch){const r=await fetcher(healthOrigin(origin)+'/_release.json',{redirect:'manual',signal:AbortSignal.timeout(10000)});if(r.status!==200)throw Error('Release manifest unavailable');const m=await publicJSON(r,2048);if(m.schemaVersion!==1||!/^[0-9a-f]{40}$/.test(m.commit)||!/^[0-9a-f]{64}$/.test(m.runtimeHash))throw Error('Invalid release manifest');return m;}
-export async function verifyRelease(origin,expected,{fetcher=fetch,clock=Date.now,sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),onResult=()=>{}}={}){
+export async function verifyRelease(origin,expected,{fetcher=fetch,clock=Date.now,sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),onResult=()=>{},audit=checkLearnCatalogue,onSchema=()=>{}}={}){
  const start=clock(),results=[];
  for(const deadline of [0,65000,RELEASE_WINDOW]){
   const delay=start+deadline-clock();if(delay>0)await sleep(delay);
@@ -16,7 +17,10 @@ export async function verifyRelease(origin,expected,{fetcher=fetch,clock=Date.no
   if(!result.ok)throw Error('Public release check failed: '+result.checks.filter(c=>!c.ok).map(c=>c.path+' '+(c.status||c.code)).join(', '));
  }
  if(clock()-start<RELEASE_WINDOW)throw Error('Release check ended too early');
- return {ok:true,durationMs:clock()-start,results};
+ const schema=await audit(origin,{fetcher,clock});onSchema(schema);
+ if(!schema.ok)throw Error('Learn/Academy structured data check failed: '+schema.problems.slice(0,8).map(p=>p.path+' ['+p.field+': '+p.state+']').join(', '));
+ const final=await remoteManifest(origin,fetcher);if(final.runtimeHash!==expected.runtimeHash||expected.commit&&final.commit!==expected.commit)throw Error('Preview changed during the schema check');
+ return {ok:true,durationMs:clock()-start,results,schema};
 }
 export async function successfulPreview(head,fetcher=fetch){
  if(!/^[0-9a-f]{40}$/.test(head))throw Error('Invalid revision');
@@ -33,6 +37,6 @@ export async function productionPreflight({fetcher=fetch,run=execFileSync,read=r
  const header=run('git',['cat-file','-p',local.commit],{encoding:'utf8'}).split('\n\n')[0],parents=[...header.matchAll(/^parent ([0-9a-f]{40})$/gm)].map(m=>m[1]);
  if(parents.length!==2)throw Error('Production requires a reviewed merge with a verified preview');
  const origin=await successfulPreview(parents[1],fetcher);
- const proof=await verify(origin,{runtimeHash:local.runtimeHash,commit:parents[1]},{fetcher,onResult:r=>console.log(JSON.stringify({stage:'pre-publish',checkedAt:r.checkedAt,ok:r.ok,checks:r.checks.length}))});
+ const proof=await verify(origin,{runtimeHash:local.runtimeHash,commit:parents[1]},{fetcher,onResult:r=>console.log(JSON.stringify({stage:'pre-publish',checkedAt:r.checkedAt,ok:r.ok,checks:r.checks.length})),onSchema:r=>console.log(JSON.stringify({stage:'pre-publish-schema',checkedAt:r.checkedAt,ok:r.ok,articles:r.articles,courses:r.courses,checked:r.checked,problems:r.problems}))});
  return {origin,proof};
 }

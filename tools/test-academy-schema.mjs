@@ -34,6 +34,8 @@ for(const p of [path,{...path,coverArticle:undefined}]){
  assert.equal(course.datePublished,'2026-09-30T18:56:22.650105+00:00');
  assert.equal(course.dateModified,'2026-10-01T09:05:03.120000+02:30');
  assert.ok(html.includes('datetime="'+course.datePublished+'"'),'Visible byline and Course retain the same publication time');
+ assert.deepEqual(values(html,'article:published_time'),[course.datePublished]);
+ assert.deepEqual(values(html,'article:modified_time'),[course.dateModified]);
  assert.equal(course.author.name,authors.find(a=>a.slug===p.authorId).name);
  assert.equal(course.hasPart.length,p.lessons.length);
  assert.equal(course.offers[0].price,0);
@@ -41,6 +43,8 @@ for(const p of [path,{...path,coverArticle:undefined}]){
  const again=renderLearningPage(html,{paths,articles,authors,path:p});
  assert.deepEqual(values(again,'og:image'),[course.image],'Repeated rendering must not duplicate previews');
  assert.deepEqual(values(again,'twitter:image'),[course.image]);
+ assert.deepEqual(values(again,'article:published_time'),[course.datePublished],'Repeated rendering keeps one real publication time');
+ assert.deepEqual(values(again,'article:modified_time'),[course.dateModified]);
 }
 const indexHTML=renderLearningPage(template,{paths:[path,...paths.slice(1)],articles,authors});
 const index=graphOf(indexHTML).find(n=>n['@type']==='CollectionPage');
@@ -49,5 +53,7 @@ assert.equal(index.hasPart[0].dateModified,'2026-10-01T09:05:03.120000+02:30');
 assert.equal(index.hasPart[0].image,courseOf(renderLearningPage(template,{paths,articles,authors,path})).image);
 assert.deepEqual(values(indexHTML,'twitter:image'),values(indexHTML,'og:image'),'The course directory retains its existing site preview');
 assert.equal(index.hasPart.length,paths.length);
+assert.equal(values(indexHTML,'article:published_time').length,0,'Do not invent a publication date for the Academy directory');
+assert.equal(values(indexHTML,'article:modified_time').length,0);
 assert.deepEqual({articles,authors,paths},original,'Rendering must not rewrite CMS dates, lessons or quiz versions');
 console.log('Academy schema: visible cover, byline, ISO dates, directory and social previews passed');
