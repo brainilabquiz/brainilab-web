@@ -430,6 +430,13 @@ Validate with tools/test-growth-play-discovery.mjs and the existing Growth suite
 
 ## Current outgoing HTML links
 
+The explicit current-page check keeps declared dates unknown when any active
+JSON-LD block is malformed or the bounded graph parse is incomplete. It cannot
+use a partially parsed Article/Course to classify a search window relative to an
+update. The same guard applies to the string/date fallback and cached incomplete
+observations. The title, link sample and successful HTTP response remain usable;
+this does not establish a current site failure or trigger another request.
+
 The explicit current-page check also observes a bounded, inert main-content anchor sample from the same response, with exact destinations, text, location and rel. It makes no additional request to any destination and does not alter the imported report. Its download keeps these outgoing rows separate from saved incoming backlinks and their verification dates. The article editor reuses this check on demand to compare published links with a draft; see docs/article-writing-workflow.md. Query-bearing/private URLs are omitted; absent or ambiguous main content is unknown. No indexing, citation, reputation or conversion outcome is inferred.
 
 The same inert response supplies a folded Article/page comparison and separate download rows: response/canonical identity, declared Article page identity, headline/main heading, author/byline and Article/social-preview images. Missing, malformed, conflicting or ambiguous evidence remains unknown. A difference prompts contextual review, not an automatic technical failure, rewrite or publication blocker; alternate image crops can be valid. This is not a complete schema validator, Google-selected canonical or rich-result/AI-visibility check. Nothing is added to the eight saved technical checks, report, decisions or baselines. See `tools/test-page-schema-evidence.mjs` and the editor writing workflow for the shared behaviour and scoped keyboard-focus regression.
