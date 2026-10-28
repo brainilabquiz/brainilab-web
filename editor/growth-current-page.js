@@ -36,9 +36,9 @@ export function parseCurrentPage(html,url,checkedAt,document=globalThis.document
   const ids=[identifier(n.url),identifier(n.mainEntityOfPage)].filter(v=>v!=null);
   return ids.length?ids.every(v=>v===url):n['@id']===url+'#article';
  });
- const a=articles.length===1?articles[0]:null;
+ const a=!incomplete&&articles.length===1?articles[0]:null;
  const publishedAt=declaredTimestamp(a?.datePublished),modifiedAt=declaredTimestamp(a?.dateModified);
- return {state:'ready',url,entityKind,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document,fragment),schemaEvidence:observePageSchema(fragment,url,nodes,{incomplete}),quizQuestions:observeQuizQuestions(fragment,url),learnSchema:compactLearnSchema(observeLearnSchema(fragment,url,nodes,{incomplete}))};
+ return {state:'ready',url,entityKind,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:incomplete?'incomplete_schema':articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document,fragment),schemaEvidence:observePageSchema(fragment,url,nodes,{incomplete}),quizQuestions:observeQuizQuestions(fragment,url),learnSchema:compactLearnSchema(observeLearnSchema(fragment,url,nodes,{incomplete}))};
 }
 
 export async function readCurrentPage(url,fetcher=globalThis.fetch,document=globalThis.document){
@@ -57,6 +57,7 @@ export async function readCurrentPage(url,fetcher=globalThis.fetch,document=glob
 }
 
 export function updateWindow(observation,source){
+ if(observation?.dateReason==='incomplete_schema')return {state:'unknown',text:'Some structured data in this response could not be read completely. Its declared dates cannot be compared with the search period.'};
  const modified=declaredTimestamp(observation?.modifiedAt),captured=declaredTimestamp(observation?.checkedAt);
  if(!modified||!captured||observation.dateReason==='inconsistent_dates'||modified>captured||!source?.period||![source.period.start,source.period.end].every(v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v)||source.period.start>source.period.end)return {state:'unknown',text:'No usable declared update date and search window can be compared. Missing dates do not mean the page is unchanged.'};
  let day;try{const parts=new Intl.DateTimeFormat('en-GB',{timeZone:source.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(modified));day=['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('-');}catch{return {state:'unknown',text:'The search timezone is unavailable; the declared update is not compared with the search days.'};}

@@ -29,6 +29,24 @@ assert.equal(updateWindow({...observation,modifiedAt:'2026-07-01T00:00:00Z'},sou
 assert.equal(updateWindow({...observation,modifiedAt:'2026-11-01T00:00:00Z'},source).state,'unknown');
 assert.equal(updateWindow(observation,{...source,timezone:'Unavailable'}).state,'unknown');
 assert.equal(updateWindow(observation,{period:{start:'not a date'}}).state,'unknown');
+// Dates cannot bypass the same incomplete-graph guard used by schema evidence.
+const parserDom=new JSDOM(''),extraGraphs=['{broken',JSON.stringify({'@graph':{'@graph':{'@graph':{'@graph':{'@graph':{}}}}}}),JSON.stringify(Array.from({length:1001},()=>({})))];
+for(const extra of extraGraphs)for(const parser of [null,parserDom.window.document]){
+ const incomplete=parseCurrentPage(html()+'<script type="application/ld+json">'+extra+'</script><main><h1>Current page</h1></main>',url,at,parser);
+ assert.equal(incomplete.state,'ready');assert.equal(incomplete.title,observation.title);
+ assert.equal(incomplete.dateReason,'incomplete_schema');assert.equal(incomplete.publishedAt,null);assert.equal(incomplete.modifiedAt,null);
+ assert.equal(updateWindow(incomplete,source).state,'unknown');assert.match(updateWindow(incomplete,source).text,/could not be read completely/);
+ if(parser){assert.equal(incomplete.schemaEvidence.articleState,'incomplete');assert.equal(incomplete.linkEvidence.state,'ready');}
+ const exported=currentPageView(null,url,incomplete).exported;
+ assert.equal(exported.find(r=>r[1]==='Article declares updated')[2],'Not reported');
+}
+assert.equal(parseCurrentPage(html()+'<template><script type="application/ld+json">{broken</script></template><main></main>',url,at,parserDom.window.document).modifiedAt,observation.modifiedAt,'Inert template data does not invalidate usable declarations');
+assert.equal(parseCurrentPage(html(),url,at,parserDom.window.document).modifiedAt,observation.modifiedAt);
+assert.equal(updateWindow({...observation,dateReason:'incomplete_schema'},source).state,'unknown','A cached incomplete observation cannot supply an update window');
+const courseURL='https://brainilabgames.com/learn/paths/example/',courseGraph={...article,'@type':'Course',url:courseURL,mainEntityOfPage:courseURL};
+const incompleteCourse=parseCurrentPage(html([courseGraph])+'<script type="application/ld+json">{broken</script><main></main>',courseURL,at,parserDom.window.document);
+assert.equal(incompleteCourse.entityKind,'Course');assert.equal(incompleteCourse.dateReason,'incomplete_schema');assert.equal(incompleteCourse.modifiedAt,null);assert.equal(updateWindow(incompleteCourse,source).state,'unknown');
+parserDom.window.close();
 let requests=[];
 const fetched=await readCurrentPage(url,async(u,options)=>{requests.push({u,options});return response();});
 assert.equal(fetched.state,'ready');assert.equal(requests.length,1);assert.equal(requests[0].options.credentials,'omit');assert.equal(requests[0].options.redirect,'error');assert.equal(requests[0].options.method,'GET');assert.equal(requests[0].options.cache,'no-store');assert.deepEqual(Object.keys(requests[0].options.headers),['Accept']);
