@@ -73,6 +73,12 @@ window, missing reference, different scope, missing counts or absent page has an
 explicit reason. Missing is not zero, and query rows never replace page totals.
 Before/after values are descriptive, not a causal finding or traffic forecast.
 
+Known exact-page original baseline counts stay visible and exported while a
+follow-up window is incomplete or the loaded report is incompatible. They do
+not make the comparison ready. The follow-up cells stay empty in CSV and say
+Not comparable yet on screen until the existing comparison guards pass. An
+absent or invalid original count remains unknown; no zero or rate is inferred.
+
 The folded measurement plan also shows the independently dated Google/organic
 landing-session/start observation, when present. It is not joined to keywords,
 compared with a GSC denominator or presented as post-change play. Source dates,
