@@ -101,3 +101,6 @@ again, so a changed catalogue or replaced preview cannot pass with partial work.
 JSDOM is a pinned development-only parser: scripts, images and remote validators
 are never loaded. This site consistency policy does not claim Google's optional
 Article fields are mandatory, verify factual claims or guarantee search features.
+When blocked, inspect the reported path and field, correct the declaration or
+renderer against the stored publication record, then build a new candidate.
+Do not invent an updated date or relax the gate just to make a release pass.
