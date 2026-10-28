@@ -11,6 +11,9 @@ const f=followupFixture(),before=JSON.stringify(f),plan=comparison(f.opportunity
 assert.equal(plan.ready,true);assert.equal(plan.before.clicks,0);assert.equal(plan.after.clicks,2);assert.match(plan.message,/does not prove/);
 const waiting=comparison(f.opportunity,f.report,f.reports,Date.parse('2026-10-28T18:00:00Z'));
 assert.equal(waiting.status,'waiting');assert.deepEqual(waiting.earliestPeriod,{start:'2026-10-21',end:'2026-11-03',timezone:zone});
+assert.equal(waiting.before.clicks,0,'An observed original zero is retained while waiting');assert.equal(waiting.before.impressions,104);assert.equal(waiting.after,undefined);assert.equal(waiting.ready,false);
+const mismatchedScope=structuredClone(f);mismatchedScope.report.document.filters.country='USA';const separated=comparison(mismatchedScope.opportunity,mismatchedScope.report,mismatchedScope.reports,now);assert.equal(separated.before.impressions,104);assert.equal(separated.after,undefined);assert.equal(separated.ready,false);
+const unknownBaseline=structuredClone(f);delete unknownBaseline.opportunity.proposal.pageEvidence.clicks;const unknownBefore=comparison(unknownBaseline.opportunity,unknownBaseline.report,unknownBaseline.reports,Date.parse('2026-10-28T18:00:00Z'));assert.equal(unknownBefore.before,undefined,'Missing original counts are not inferred');
 assert.equal(comparison(f.opportunity,f.report,f.reports,Date.parse('2026-11-04T06:00:00Z')).status,'waiting','The last Pacific day must finish, including the DST boundary');
 for(const [reason,change]of [
  ['publication_unverified',x=>x.opportunity.change_reference=null],
