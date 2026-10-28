@@ -85,3 +85,19 @@ Review old previews, their ownership and stored data before any separately autho
 permanent removal. Never delete the production namespace or upgrade a plan as a
 side effect of a release. The migration identity regression test remains in the
 normal build.
+
+## Learn and Academy structured data gate
+
+The release check also audits every published Learn article and Academy course
+listed in the sitemap, with two concurrent anonymous reads and a short pause.
+It reuses Growth's Article/Course comparison against inert HTML. Titles, author
+bylines, visible covers, registered social-image equivalents, publication time,
+the displayed publication date, modification metadata and ordered course lessons
+must agree. Missing or ambiguous evidence stops the release as unverified; it
+is not labelled a proven mismatch. Publication dates are visible; modification
+dates are compared with the existing HTML metadata, not invented visible dates.
+The complete inventory is reread at the end and the candidate manifest checked
+again, so a changed catalogue or replaced preview cannot pass with partial work.
+JSDOM is a pinned development-only parser: scripts, images and remote validators
+are never loaded. This site consistency policy does not claim Google's optional
+Article fields are mandatory, verify factual claims or guarantee search features.

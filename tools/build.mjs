@@ -17,6 +17,7 @@ import './test-learn-runtime.mjs';
 import './test-learn-store.mjs';
 import './test-site-health.mjs';
 import './test-release-check.mjs';
+import './test-release-schema.mjs';
 execFileSync(process.execPath,['--max-old-space-size=96','tools/test-learn-resources.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
