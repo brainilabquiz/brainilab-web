@@ -41,4 +41,6 @@ assert.ok(run(a=>a.description='Our SEO acquisition strategy.').warnings.some(x=
 assert.ok(run(a=>a.title='Our SEO plan').warnings.some(x=>x.code==='internal-copy'&&x.field==='article-title'));
 assert.ok(run(a=>a.sections[0].html='<p>Our acquisition strategy uses SEO.</p>').warnings.some(x=>x.code==='internal-copy'));
 assert.ok(run(a=>a.title='An extremely long title '.repeat(8)).warnings.some(x=>x.field==='article-title'));
+const similar=inspectArticle({...base,slug:'new-river-reading',title:'River deltas explained'},{...context,articles:[{slug:'another-question'},{slug:'old-river-reading',title:'What is a river delta? A river drops its luggage'}]});
+assert.equal(similar.passed,true);assert.ok(similar.warnings.some(x=>x.code==='near-title'),'overlapping words prompt a manual comparison without blocking a useful article');
 dom.window.close();console.log('PASS shared writing review: text boundaries, entities, safe links, missing destinations, identifiers, credits, revisions and non-blocking advice.');
