@@ -16,7 +16,7 @@ export function articlePlayEvidence(report,urls){
   return {key,label,returned:!!r,sessions:r?.sessions??null,sessionsWithStart:r?.sessionsWithStart??null,
    share:e?.share??null};
  })}));
- return {available:true,source:s.source,property:s.property,period:{...s.period},timezone:s.timezone,observedAt:s.observedAt,cohorts:Object.entries(scopes).map(([key,label])=>{const c=s.cohorts[key];return {key,label,quality:{...c.quality},rowsWithheld:c.rowsWithheld,baselineObservedAt:c.landingBaselineObservedAt??null,startsObservedAt:c.landingStartsObservedAt??null};}),pages};
+ return {available:true,source:s.source,property:s.property,period:{start:s.period.start,end:s.period.end},timezone:s.timezone,observedAt:s.observedAt,cohorts:Object.entries(scopes).map(([key,label])=>{const c=s.cohorts[key];return {key,label,quality:Object.fromEntries(['thresholded','sampled','otherRow'].map(k=>[k,c.quality[k]])),rowsWithheld:c.rowsWithheld,baselineObservedAt:c.landingBaselineObservedAt??null,startsObservedAt:c.landingStartsObservedAt??null};}),pages};
 }
 
 export function articlePlayEvidenceHTML(activity,now=Date.now()){

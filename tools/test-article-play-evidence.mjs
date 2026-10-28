@@ -7,6 +7,7 @@ const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href),dom=new
 const report={...playIndexFixture(3),property:'sc-domain:brainilabgames.com',privateContact:'never-copy@example.test'};
 const url='https://brainilabgames.com/learn/sample-0/';
 report.playSessions.cohorts.all.landingPages[2].privateNote='never-copy-note';
+report.playSessions.cohorts.all.quality.privateNote='never-copy-quality';report.playSessions.period.privateNote='never-copy-period';
 const e=articlePlayEvidence(report,[url,url,'https://other.test/learn/sample-0/','https://www.brainilabgames.com/learn/sample-0/',url+'?source=test',url+'#answer']);
 assert.equal(e.pages.length,1,'only distinct selected canonical destinations; no alias/query joining');
 assert.equal(e.pages[0].cohorts[0].sessions,10);assert.equal(e.pages[0].cohorts[0].sessionsWithStart,3);assert.equal(e.pages[0].cohorts[0].share,.3);
