@@ -13,6 +13,7 @@ from quiz_schema import timestamp
 
 FIELDS={'canonical','identity','headline','author','preview','cover','published','modified','lessons'}
 ROOT=Path(__file__).resolve().parents[2]
+BATCH_BYTES=16000000
 
 
 def own(url):
@@ -111,21 +112,36 @@ def enrich(pages,responses):
     found={};batch=[];size=0
     def flush():
         nonlocal batch,size
-        if not batch:return
-        result=subprocess.run([node,str(Path(__file__).with_suffix('.mjs'))],input=json.dumps(batch,ensure_ascii=False),encoding='utf-8',capture_output=True,timeout=90,cwd=ROOT)
-        if result.returncode==0:
-            for p in json.loads(result.stdout):found[p['url']]=page(p)
+        if not batch:return True
+        current=batch
         batch=[];size=0
+        result=subprocess.run([node,str(Path(__file__).with_suffix('.mjs'))],input=json.dumps(current,ensure_ascii=False),encoding='utf-8',capture_output=True,timeout=90,cwd=ROOT)
+        if result.returncode!=0:return False
+        output=json.loads(result.stdout)
+        if not isinstance(output,list) or len(output)>len(current):return False
+        expected={p['url']:p for p in current};valid={};duplicates=set()
+        for raw in output:
+            try:
+                clean=page(raw);source=expected.get(clean['url'])
+                if not source or clean['sha256']!=hashlib.sha256(source['html'].encode('utf-8')).hexdigest() or clean['checkedAt']!=timestamp(source['checkedAt']):continue
+                if clean['url'] in valid:duplicates.add(clean['url'])
+                else:valid[clean['url']]=clean
+            except (ValueError,TypeError,KeyError):continue
+        found.update({url:p for url,p in valid.items()if url not in duplicates})
+        return True
     try:
         for url,response,at in responses:
-            if not own(url) or response['url']!=url or response['status']!=200:continue
-            item={'url':url,'checkedAt':at,'html':response['body'].decode('utf-8',errors='strict')}
-            count=len(json.dumps(item,ensure_ascii=False).encode('utf-8'))
+            try:
+                if not own(url) or response['url']!=url or response['status']!=200:continue
+                item={'url':url,'checkedAt':at,'html':response['body'].decode('utf-8',errors='strict')}
+                count=len(json.dumps(item,ensure_ascii=False).encode('utf-8'))
+            except (ValueError,TypeError,KeyError,AttributeError):continue
             if count>4000000:continue
-            if size+count>16000000:flush()
+            if size+count>BATCH_BYTES and not flush():break
             batch.append(item);size+=count
-        flush()
-    except (OSError,ValueError,TypeError,KeyError,subprocess.SubprocessError):return pages
+        else:flush()
+    except (OSError,ValueError,TypeError,KeyError,subprocess.SubprocessError):pass
+    # A later failed batch must not discard already validated observations.
     for p in pages:
         evidence=found.get(p['url'])
         if evidence and evidence['sha256']==p['sha256'] and evidence['checkedAt']==timestamp(p['checkedAt']):p['learnSchema']=evidence

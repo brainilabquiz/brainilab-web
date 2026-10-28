@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from types import SimpleNamespace
+import subprocess
 from unittest.mock import patch
 import learn_schema as s
 import gsc_sync as api
@@ -44,6 +46,53 @@ class LearnSchemaTest(unittest.TestCase):
         pages=[{'url':URL,'sha256':'a'*64,'checkedAt':AT}];before=copy.deepcopy(pages)
         with patch('learn_schema.subprocess.run',side_effect=OSError('unavailable')):
             self.assertEqual(s.enrich(pages,[(URL,{'url':URL,'status':200,'body':b'<h1>A page</h1>'},AT)]),before)
+
+    def test_one_bad_utf8_response_does_not_block_a_good_page(self):
+        good=b'<main><h1>Good page</h1></main>';bad=URL.replace('/example/','/bad/')
+        p=observation();p['sha256']=hashlib.sha256(good).hexdigest()
+        pages=[{'url':URL,'checkedAt':AT,'sha256':p['sha256']}]
+        responses=[(bad,{'url':bad,'status':200,'body':b'\xff'},AT),(URL,{'url':URL,'status':200,'body':good},AT)]
+        with patch('learn_schema.subprocess.run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps([p])))as run:
+            result=s.enrich(pages,responses)
+        self.assertEqual(result[0]['learnSchema']['contentSha256'],p['contentSha256']);self.assertEqual(run.call_count,1)
+        sent=json.loads(run.call_args.kwargs['input']);self.assertEqual([p['url']for p in sent],[URL])
+
+    def test_bad_adapter_row_does_not_drop_valid_row_and_unrequested_data_is_ignored(self):
+        body=b'<main>Good</main>';p=observation();p['sha256']=hashlib.sha256(body).hexdigest()
+        invalid=copy.deepcopy(p);invalid['url']='https://private.invalid/'
+        unrequested=copy.deepcopy(p);unrequested['url']=URL.replace('/example/','/unrequested/')
+        pages=[{'url':URL,'checkedAt':AT,'sha256':p['sha256']}]
+        with patch('learn_schema.subprocess.run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps([invalid,p,unrequested]))):
+            # The result must stay within the requested response count too.
+            result=s.enrich(copy.deepcopy(pages),[(URL,{'url':URL,'status':200,'body':body},AT)])
+            self.assertNotIn('learnSchema',result[0])
+        other=URL.replace('/example/','/other/')
+        responses=[(URL,{'url':URL,'status':200,'body':body},AT),(other,{'url':other,'status':200,'body':body},AT)]
+        with patch('learn_schema.subprocess.run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps([invalid,p]))):
+            result=s.enrich(pages,responses)
+        self.assertEqual(result[0]['learnSchema']['sha256'],p['sha256'])
+
+    def test_late_adapter_timeout_keeps_earlier_batch_and_stops_without_retry(self):
+        body=b'<main>Good</main>';p=observation();p['sha256']=hashlib.sha256(body).hexdigest()
+        responses=[(u,{'url':u,'status':200,'body':body},AT)for u in [URL,URL.replace('/example/','/second/'),URL.replace('/example/','/third/')]]
+        pages=[{'url':URL,'checkedAt':AT,'sha256':p['sha256']}]
+        success=SimpleNamespace(returncode=0,stdout=json.dumps([p]))
+        with patch('learn_schema.BATCH_BYTES',1),patch('learn_schema.subprocess.run',side_effect=[success,subprocess.TimeoutExpired('node',90)])as run:
+            result=s.enrich(pages,responses)
+        self.assertIn('learnSchema',result[0]);self.assertEqual(run.call_count,2,'Do not repeat the failed process or request more pages')
+
+    def test_adapter_results_must_match_requested_response_and_be_unique(self):
+        body=b'<main>Good</main>';p=observation();p['sha256']=hashlib.sha256(body).hexdigest()
+        other=URL.replace('/example/','/other/')
+        responses=[(u,{'url':u,'status':200,'body':body},AT)for u in [URL,other]]
+        for label,field,value in [('url','url',URL.replace('/example/','/unrequested/')),('hash','sha256','c'*64),('time','checkedAt','2026-10-29T20:00:00Z')]:
+            wrong=copy.deepcopy(p);wrong[field]=value
+            with self.subTest(label),patch('learn_schema.subprocess.run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps([wrong]))):
+                result=s.enrich([{'url':URL,'checkedAt':AT,'sha256':p['sha256']}],responses)
+                self.assertNotIn('learnSchema',result[0])
+        with patch('learn_schema.subprocess.run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps([p,p]))):
+            result=s.enrich([{'url':URL,'checkedAt':AT,'sha256':p['sha256']}],responses)
+            self.assertNotIn('learnSchema',result[0])
 
     def test_crawl_uses_existing_response_and_preserves_same_day_cache(self):
         calls=[]
