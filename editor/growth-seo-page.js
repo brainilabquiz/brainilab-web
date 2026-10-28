@@ -1,5 +1,6 @@
 import {searchSources} from './growth-seo-sources.js';
 import {quizSchemaView,quizPageURLs} from './growth-quiz-schema.js';
+import {learnEvidence,learnSchemaPage} from './growth-learn-schema.js';
 import {technicalChecks,publicPageURL as own,pageCheckContext,canonicalContextHTML} from './growth-page-checks.js';
 export {technicalChecks,publicPageURL} from './growth-page-checks.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -11,7 +12,7 @@ const table=(caption,heads,rows)=>`<div class="growth-table" role="region" tabin
 
 export function pageChoices(snapshot){
  const sources=searchSources(snapshot);
- return [...new Set([...quizPageURLs,...(snapshot?.pages||[]).map(p=>own(p.url)),...(snapshot?.backlinks||[]).map(b=>own(b.targetUrl)),...(sources?.webPages.rows||[]).map(r=>own('https://brainilabgames.com'+r.path))].filter(Boolean))].sort();
+ return [...new Set([...quizPageURLs,...(learnEvidence(snapshot)?.pages||[]).map(p=>p.url),...(snapshot?.pages||[]).map(p=>own(p.url)),...(snapshot?.backlinks||[]).map(b=>own(b.targetUrl)),...(sources?.webPages.rows||[]).map(r=>own('https://brainilabgames.com'+r.path))].filter(Boolean))].sort();
 }
 
 export function pageReview(snapshot,target){
@@ -48,7 +49,8 @@ export function pageReviewHTML(snapshot,target,context={}){
  for(const b of r.links){row=blank();row[0]='Incoming HTML link';row[1]=b.anchor;row[2]='Recorded sample; not an endorsement';row[9]=b.verifiedAt;row[10]=b.sourceUrl;row[11]=r.url;row[12]=b.rel.join(' ');exported.push(row);}
  exported.push(...(context.exported||[]));
  const quiz=quizSchemaView(snapshot,target,context.currentObservation);exported.push(...quiz.exported);
+ const learn=learnSchemaPage(snapshot,target,context.currentObservation);exported.push(...learn.exported);
  for(const step of steps){row=blank();row[0]='Next check';row[2]=step;exported.push(row);}
  row=blank();row[0]='Limitations';row[2]='No global backlink total, authority score, search volume, live rank or page-level referral attribution. Missing samples are not zero. Preserve recent changes before comparing equal non-overlapping periods.';exported.push(row);
- return {html:html.replace('<section aria-labelledby="growth-page-next-title">',quiz.html+'<section aria-labelledby="growth-page-next-title">'),exported,status:`${r.queries.length} matching query/page rows · ${r.links.length} recorded HTML links · exact URL sample`};
+ return {html:html.replace('<section aria-labelledby="growth-page-next-title">',quiz.html+learn.html+'<section aria-labelledby="growth-page-next-title">'),exported,status:`${r.queries.length} matching query/page rows · ${r.links.length} recorded HTML links · exact URL sample`};
 }
