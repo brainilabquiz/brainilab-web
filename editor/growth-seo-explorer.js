@@ -75,7 +75,7 @@ export function bindSEO(root,report,workspace=null){
   if(!event.target.closest('[data-seo-check-current]')||view!=='review')return;
   const target=selectedPage.value;if(currentPages.has(target)||!pageChoices(s).includes(target))return;
   currentPages.set(target,{state:'loading',url:target});draw();
-  const result=await readCurrentPage(target);currentPages.set(target,result);
+  const result=await readCurrentPage(target,globalThis.fetch,root.ownerDocument);currentPages.set(target,result);
   if(view==='review'&&selectedPage.value===target){draw();panel.querySelector('[data-seo-current-status]')?.focus({preventScroll:true});}
  });
  panel.querySelector('[data-seo-prev]').onclick=()=>{page--;draw();};panel.querySelector('[data-seo-next]').onclick=()=>{page++;draw();};

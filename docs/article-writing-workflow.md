@@ -92,3 +92,12 @@ After publishing, check the real URL, text, cover, byline, canonical, Article da
 Run the shared review, editor workflow and private CLI tests with the configured JSDOM runtime, followed by the existing learn-editor and affected presentation tests. Negative cases cover unsafe and missing links, stale evidence, document mismatches, revisions and accidental publication. Browser checks still matter: tests cannot inspect a real photograph or judge whether an explanation is enjoyable.
 
 Also run `node tools/test-article-evidence.mjs`. It covers exact query/page matching, backlink source verification and deduplication, unpublished/draft catalogue rows, independent dates, unknown data and private-field minimisation.
+
+
+### Compare the draft with the current public links
+
+The folded evidence panel offers **Read current public links** for an article already published in the loaded catalogue. New drafts are not fetched. One explicit click makes the same bounded anonymous HTML read used by Growth's **Check public page now**; it sends no account cookies and does not load response scripts, frames, images or linked destinations.
+
+Both tools show eligible internal and external anchors from the single main element, including their text, exact destination, location and rel attributes. Source-list entries and game invitations are labelled separately. Fragments and www aliases are retained as observed URLs, not merged with search or Analytics evidence. Duplicate destination/text/rel/location combinations are shown once. Query-bearing, credentialled, private and unsafe destinations are omitted rather than rewritten into a different URL; ambiguous or absent main content remains unknown. Samples are bounded and explicitly labelled if cut short.
+
+This is an observation of outgoing HTML, not a destination check, a factual source endorsement, an incoming backlink, a Google/AI citation or a game conversion. The editor keeps it separate from draft links and the saved Growth report, reuses results and errors for the editor session and never copies them into a CMS save. Growth includes the observed link rows in its existing evidence download. Preserve useful existing links and perform the actual destination/source review before publishing; do not add links or rewrite text for a quota.
