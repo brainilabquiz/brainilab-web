@@ -27,6 +27,7 @@ import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
 import './test-preferred-source.mjs';
 import './test-content-links.mjs';
+import './test-page-itemlists.mjs';
 import './test-article-previews.mjs';
 import './test-image-sitemap.mjs';
 import './test-brand-logo-images.mjs';
