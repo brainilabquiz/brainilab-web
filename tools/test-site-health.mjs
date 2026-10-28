@@ -30,5 +30,6 @@ assert.equal(healthAlert({incident:'',checkedAt:good.checkedAt},bad,now).notify,
 const missed={...good,lastServerError:{checkedAt:new Date(now+1000).toISOString(),checks:bad.checks.filter(c=>!c.ok)}};
 assert.equal(healthAlert({incident:'',checkedAt:good.checkedAt},missed,now+2000).notify,true,'A new server error between desktop checks is retained');
 assert.equal(healthAlert({incident:'',checkedAt:new Date(now+2000).toISOString()},missed,now+3000).notify,false);
+assert.equal(healthAlert({incident:'',checkedAt:good.checkedAt,lastServerErrorAt:missed.lastServerError.checkedAt},missed,now+3000).notify,false,'A server failure already reported during a desktop run cannot alert again after recovery');
 assert.equal(healthAlert(null,{...good,lastServerError:{checkedAt:new Date(now-11*60000).toISOString()}},now).notify,false,'Old errors do not create an initial alert');
 console.log('PASS site health: anonymous bounded reads, rotating public article/course, preview canonical URLs, HTTP/content failures, isolated bounded incident record, passive status/staleness, five-minute cron and zero news/account activity.');
