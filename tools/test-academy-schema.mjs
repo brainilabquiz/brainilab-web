@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import {readFileSync,readdirSync} from 'node:fs';
+import {prepareArticle} from '../lib/learn-content.js';
+import {enrichAuthors,renderLearningPage} from '../lib/learning-render.js';
+
+const read=p=>JSON.parse(readFileSync(p,'utf8'));
+const authors=read('content/authors.json');
+const articles=enrichAuthors(readdirSync('content/articles').filter(f=>f.endsWith('.json')).map(f=>prepareArticle(read('content/articles/'+f))),authors);
+const paths=readdirSync('content/paths').filter(f=>f.endsWith('.json')).map(f=>read('content/paths/'+f));
+const source=readFileSync('learn/index.html','utf8');
+const template=source.replace('</head>','<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:type" content="image/png"/><meta name="twitter:image" content="https://example.com/stale.png"/><meta name="twitter:image:alt" content="Stale artwork"/></head>');
+const graphOf=html=>JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
+const courseOf=html=>graphOf(html).find(n=>[].concat(n['@type']).includes('Course'));
+const values=(html,key)=>[...html.matchAll(new RegExp('<meta (?:property|name)="'+key+'" content="([^"]*)"','g'))].map(m=>m[1]);
+const base='https://brainilabgames.com';
+const original=structuredClone({articles,authors,paths});
+const path={...paths[0],coverArticle:paths[0].lessons[1].slug,publishedAt:'2026-09-30 18:56:22.650105+00',updatedAt:'2026-10-01 09:05:03.120000+0230'};
+
+for(const p of [path,{...path,coverArticle:undefined}]){
+ const cover=articles.find(a=>a.slug===(p.coverArticle||p.lessons[0].slug)).cover;
+ const html=renderLearningPage(template,{paths,articles,authors,path:p});
+ const course=courseOf(html);
+ assert.equal(course.name,p.title);
+ assert.equal(course.image,base+cover.src);
+ assert.ok(html.includes('<h1>'+p.title+'</h1>'));
+ assert.ok(html.includes('src="'+cover.src+'" alt="'+cover.alt+'"'));
+ assert.deepEqual(values(html,'og:image'),[course.image]);
+ assert.deepEqual(values(html,'twitter:image'),[course.image]);
+ assert.deepEqual(values(html,'og:image:alt'),[cover.alt]);
+ assert.deepEqual(values(html,'twitter:image:alt'),[cover.alt]);
+ assert.equal(values(html,'og:image:width').length,0,'Do not retain dimensions from the generic image');
+ assert.equal(values(html,'og:image:height').length,0);
+ assert.equal(values(html,'og:image:type').length,0);
+ assert.equal(course.datePublished,'2026-09-30T18:56:22.650105+00:00');
+ assert.equal(course.dateModified,'2026-10-01T09:05:03.120000+02:30');
+ assert.ok(html.includes('datetime="'+course.datePublished+'"'),'Visible byline and Course retain the same publication time');
+ assert.equal(course.author.name,authors.find(a=>a.slug===p.authorId).name);
+ assert.equal(course.hasPart.length,p.lessons.length);
+ assert.equal(course.offers[0].price,0);
+ assert.equal(course.provider['@id'],base+'/#organization');
+ const again=renderLearningPage(html,{paths,articles,authors,path:p});
+ assert.deepEqual(values(again,'og:image'),[course.image],'Repeated rendering must not duplicate previews');
+ assert.deepEqual(values(again,'twitter:image'),[course.image]);
+}
+const indexHTML=renderLearningPage(template,{paths:[path,...paths.slice(1)],articles,authors});
+const index=graphOf(indexHTML).find(n=>n['@type']==='CollectionPage');
+assert.equal(index.hasPart[0].datePublished,'2026-09-30T18:56:22.650105+00:00');
+assert.equal(index.hasPart[0].dateModified,'2026-10-01T09:05:03.120000+02:30');
+assert.equal(index.hasPart[0].image,courseOf(renderLearningPage(template,{paths,articles,authors,path})).image);
+assert.deepEqual(values(indexHTML,'twitter:image'),values(indexHTML,'og:image'),'The course directory retains its existing site preview');
+assert.equal(index.hasPart.length,paths.length);
+assert.deepEqual({articles,authors,paths},original,'Rendering must not rewrite CMS dates, lessons or quiz versions');
+console.log('Academy schema: visible cover, byline, ISO dates, directory and social previews passed');
