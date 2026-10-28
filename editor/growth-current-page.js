@@ -1,6 +1,7 @@
 import {publicPageURL} from './growth-seo-page.js';
 import {searchSources} from './growth-seo-sources.js';
-import {observePageLinks,pageLinksHTML,pageLinksCSV} from './page-link-evidence.js';
+import {inertPublicHTML,observePageLinks,pageLinksHTML,pageLinksCSV} from './page-link-evidence.js';
+import {observePageSchema,pageSchemaHTML,pageSchemaCSV} from './page-schema-evidence.js';
 
 const MAX_BYTES=1024*1024;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -16,12 +17,12 @@ const identifier=v=>typeof v==='string'?v:v&&typeof v==='object'?v['@id']:null;
 
 export function parseCurrentPage(html,url,checkedAt,document=globalThis.document){
  if(!own(url)||typeof html!=='string'||html.length>MAX_BYTES||!declaredTimestamp(checkedAt))return null;
- const nodes=[];
- function graph(v,depth=0){if(depth>4||nodes.length>1000||!v||typeof v!=='object')return;if(Array.isArray(v)){for(const x of v)graph(x,depth+1);}else{nodes.push(v);if(v['@graph'])graph(v['@graph'],depth+1);}}
+ const nodes=[],fragment=inertPublicHTML(html,document);let incomplete=false;
+ function graph(v,depth=0){if(depth>4||nodes.length>=1000){incomplete=true;return;}if(!v||typeof v!=='object')return;if(Array.isArray(v)){for(const x of v)graph(x,depth+1);}else{nodes.push(v);if(v['@graph'])graph(v['@graph'],depth+1);}}
  // Parse inert JSON text only. No DOM insertion, resource loading or script execution.
  for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)){
   if(!/(?:^|\s)type\s*=\s*(?:"application\/ld\+json"|'application\/ld\+json'|application\/ld\+json(?=\s|$))/i.test(m[1]))continue;
-  try{graph(JSON.parse(m[2]));}catch{/* Malformed declarations are not evidence. */}
+  try{graph(JSON.parse(m[2]));}catch{incomplete=true;/* Malformed declarations are not evidence. */}
  }
  const articles=nodes.filter(n=>[n['@type']].flat().includes('Article')).filter(n=>{
   const ids=[identifier(n.url),identifier(n.mainEntityOfPage)].filter(v=>v!=null);
@@ -29,7 +30,7 @@ export function parseCurrentPage(html,url,checkedAt,document=globalThis.document
  });
  const a=articles.length===1?articles[0]:null;
  const publishedAt=declaredTimestamp(a?.datePublished),modifiedAt=declaredTimestamp(a?.dateModified);
- return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document)};
+ return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document,fragment),schemaEvidence:observePageSchema(fragment,url,nodes,{incomplete})};
 }
 
 export async function readCurrentPage(url,fetcher=globalThis.fetch,document=globalThis.document){
@@ -66,7 +67,7 @@ export function currentPageView(report,url,observation){
   const comparison=updateWindow(o,s);status='Public HTML checked '+displayDate(o.checkedAt)+'.';
   content=`<dl class="growth-page-checks"><div><dt>Current HTML title</dt><dd class="growth-current-title">${esc(o.title||'Not reported')}</dd></div><div><dt>Article declares published</dt><dd>${esc(displayDate(o.publishedAt))}</dd></div><div><dt>Article declares updated</dt><dd>${esc(displayDate(o.modifiedAt))}</dd></div></dl><p class="growth-current-comparison">${esc(comparison.text)}</p>${s?`<p class="growth-small">Compared with saved final Web query/page evidence: ${esc(s.period.start)} to ${esc(s.period.end)} · ${esc(s.timezone)}. The declared timestamp is converted to those search-day boundaries.</p>`:''}`;
   add('HTTP status','200');add('Current HTML title',o.title||'Not reported');add('Article declares published',o.publishedAt||'Not reported');add('Article declares updated',o.modifiedAt||'Not reported');add('Search-window check',comparison.text);
-  content+=pageLinksHTML(o);exported.push(...pageLinksCSV(o));
+  content+=pageLinksHTML(o)+pageSchemaHTML(o);exported.push(...pageLinksCSV(o),...pageSchemaCSV(o));
   if(s){const r=Array(13).fill('');r[0]='Search period for declared-date context';r[2]='No comparison of traffic totals or causal effect';r[6]=s.period.start;r[7]=s.period.end;r[8]=s.timezone;r[9]=s.observedAt;r[11]=url;exported.push(r);}
  }
  const disabled=!safe||!!o;

@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {parseCurrentPage,currentPageView} from '../editor/growth-current-page.js';
+import {pageSchemaHTML,pageSchemaCSV} from '../editor/page-schema-evidence.js';
+import {bindArticleGrowthPanel} from '../editor/article-growth-panel.js';
+import {unassignedFixture} from './fixtures/growth-unassigned.mjs';
+const {JSDOM,ResourceLoader}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+let resources=0;class NoResources extends ResourceLoader{fetch(){resources++;return null;}}
+const dom=new JSDOM('<input id="outside"><section id="root"></section>',{url:'https://brainilabgames.com/admin/',runScripts:'outside-only',resources:new NoResources()}),document=dom.window.document;
+const url='https://brainilabgames.com/learn/sample-0/',at='2026-10-28T17:00:00Z';
+const article={'@type':'Article',url,mainEntityOfPage:url,headline:'A real question?',author:{'@id':'https://brainilabgames.com/about/#writer'},image:['https://brainilabgames.com/assets/preview.png','https://brainilabgames.com/assets/alternate.png']};
+const person={'@id':'https://brainilabgames.com/about/#writer','@type':'Person',name:'A writer'};
+const html=(nodes=[article,person],extra='')=>'<link rel="canonical" href="'+url+'"><meta property="og:image" content="https://brainilabgames.com/assets/preview.png"><script type="application/ld+json">'+JSON.stringify({'@graph':nodes})+'</script><main><h1>A real question?</h1><p class="article-byline">By <a rel="author" href="/about/#writer">A writer</a></p><figure class="article-cover"><img src="https://not-loaded.invalid/different-crop.webp"></figure><p><a href="/learn/">Read more</a></p></main>'+extra;
+const parse=source=>parseCurrentPage(source,url,at,document),observed=parse(html());
+assert.equal(observed.schemaEvidence.state,'ready');assert.equal(observed.schemaEvidence.articleState,'single');
+assert.equal(observed.schemaEvidence.checks.length,5);assert.ok(observed.schemaEvidence.checks.every(c=>c.state==='same'),'a valid alternate cover crop is not compared as an invalid image');
+const difference=parse(html([{...article,headline:'Another wording',author:{name:'Another author'},image:'https://brainilabgames.com/assets/another.png'},person]));
+assert.equal(difference.schemaEvidence.checks.filter(c=>c.state==='different').length,3);
+assert.match(pageSchemaHTML(difference),/Different — review context/);assert.match(pageSchemaHTML(difference),/Different crops or preview assets can be valid/);
+const conflicting=parse(html([{...article,mainEntityOfPage:'https://brainilabgames.com/learn/elsewhere/'},person]));
+assert.equal(conflicting.schemaEvidence.checks[1].state,'unknown','conflicting Article identities are not silently resolved');
+for(const nodes of [[article,article,person],[person],[]])assert.ok(parse(html(nodes)).schemaEvidence.checks.slice(1).every(c=>c.state==='unknown'));
+for(const nodes of [[article,person,{...person,name:'Conflicting'}],[{...article,author:{'@id':person['@id'],name:'Another'}},person],[{...article,author:[person,person]}]])assert.equal(parse(html(nodes)).schemaEvidence.checks[3].state,'unknown');
+assert.equal(parse(html([article,person],'<script type="application/ld+json">{broken</script>')).schemaEvidence.articleState,'incomplete');
+assert.equal(parse(html([article,person],'<link rel="canonical" href="'+url+'">')).schemaEvidence.checks[0].state,'unknown');
+assert.equal(parse(html([article,person],'<base href="https://other.invalid/">')).schemaEvidence.state,'unavailable');
+assert.equal(parse(html([article,person],'<main></main>')).schemaEvidence.state,'unavailable');
+assert.equal(parseCurrentPage(html(),url,at,null).schemaEvidence.reason,'parser_unavailable');
+assert.equal(parse(html([{...article,author:{name:'A'.repeat(481)}}])).schemaEvidence.checks[3].state,'unknown');
+const privateValues=parse(html([{...article,image:'https://example.org/?token=fixture-secret',url:'https://example.org/?token=fixture-secret',mainEntityOfPage:null}]));
+assert.ok(!JSON.stringify(privateValues.schemaEvidence).includes('fixture-secret'));
+const hostile=parse(html([{...article,headline:'<img onerror=alert(1)>'},person],'<script>window.didRun=true</script><iframe src="https://not-loaded.invalid/"></iframe>'));
+assert.doesNotMatch(pageSchemaHTML(hostile),/<img|onerror="/);assert.equal(dom.window.didRun,undefined);assert.equal(resources,0);
+assert.equal(pageSchemaCSV(observed).length,5);assert.ok(pageSchemaCSV(observed).every(r=>r.length===13&&r[9]===observed.checkedAt));
+const view=currentPageView(null,url,observed);assert.match(view.html,/Article declarations and page content/);assert.equal(view.exported.filter(r=>r[0]==='Current Article\/page comparison').length,5);
+// A delayed saved-report response must not discard summary focus or disclosure state.
+const report={...unassignedFixture().report,property:'sc-domain:brainilabgames.com'},draft={slug:'sample-0',title:'Draft title',sections:[],sources:[],related:[]},root=document.getElementById('root');
+root.innerHTML='<details id="article-evidence" open><summary>Evidence</summary><button>Load saved report</button><p role="status"></p><div data-article-evidence></div></details>';
+const cache={report,publicPages:new Map([[url,observed]])},unchanged=JSON.stringify({draft,report});let finish;
+const panel=bindArticleGrowthPanel({root,rpc:()=>new Promise(resolve=>finish=resolve),article:()=>draft,review:()=>null,articles:()=>[{slug:draft.slug,document:draft,revision:1,published_revision:1}],cache});
+for(const selector of ['.page-link-evidence','.page-schema-evidence','.article-evidence-activity']){
+ if(!root.querySelector(selector))continue;
+ root.querySelector('#article-evidence button').click();const d=root.querySelector(selector);d.open=true;d.querySelector('summary').focus();
+ finish({report:{document:report}});await new Promise(r=>setTimeout(r,10));
+ assert.equal(root.querySelector(selector).open,true);assert.equal(document.activeElement,root.querySelector(selector+' > summary'));
+ root.querySelector(selector).open=false;panel.update();assert.equal(root.querySelector(selector).open,false);assert.equal(document.activeElement,root.querySelector(selector+' > summary'));
+}
+document.getElementById('outside').focus();panel.update();assert.equal(document.activeElement.id,'outside','unrelated editor focus is not stolen');
+assert.equal(JSON.stringify({draft,report}),unchanged);panel.dispose();assert.equal(cache.publicPageListeners.size,0);assert.equal(resources,0);dom.window.close();
+console.log('PASS Article/page evidence: exact identity, headline/byline/preview context, graph ambiguity and omissions, no crops-as-errors, inert bounded response reuse, CSV scope, async disclosure focus/state and no draft/report mutation.');

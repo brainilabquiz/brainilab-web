@@ -20,13 +20,18 @@ export function publicLinkAddress(href,base){
  }catch{return null;}
 }
 
-export function observePageLinks(html,url,document){
- if(!document?.implementation?.createHTMLDocument)return {state:'unavailable',reason:'parser_unavailable'};
+export function inertPublicHTML(html,document){
+ if(!document?.implementation?.createHTMLDocument)return null;
  // A detached template is inert: do not append it, enable scripts or load resources.
  const inert=document.implementation.createHTMLDocument(''),template=inert.createElement('template');
  template.innerHTML=html;
- if(template.content.querySelector('base[href]'))return {state:'unavailable',reason:'declared_base'};
- const mains=template.content.querySelectorAll('main');
+ return template.content;
+}
+
+export function observePageLinks(html,url,document,fragment=inertPublicHTML(html,document)){
+ if(!fragment)return {state:'unavailable',reason:'parser_unavailable'};
+ if(fragment.querySelector('base[href]'))return {state:'unavailable',reason:'declared_base'};
+ const mains=fragment.querySelectorAll('main');
  if(mains.length!==1)return {state:'unavailable',reason:mains.length?'ambiguous_main':'no_main'};
  const anchors=mains[0].querySelectorAll('a[href]'),seen=new Set(),links=[];
  let omitted=0,scanned=0;
