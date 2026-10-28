@@ -37,17 +37,20 @@ export function comparison(opportunity,report,reports,now=Date.now()){
  const saved=baselines[0],baseline=saved.period,publishedDay=pacific(opportunity.published_at),days=length(baseline);
  Object.assign(result,{baseline,publishedDay,days,baselineScope:scopeLabel(saved.filters)});
  if(baseline.end>=publishedDay)return stop('baseline_overlaps','The original baseline includes or follows the publication day. Review its history; it is not replaced automatically.');
+ // Known original counts remain useful while follow-up evidence is unavailable.
+ // Keep them separate: retaining a baseline must never make a comparison ready.
+ const scope=filters(saved.filters),before=scope&&(!saved.filters.page||saved.filters.page===opportunity.url)?metricRow(opportunity.proposal?.pageEvidence,opportunity.url):null;
+ if(before)result.before=before;
  const start=shift(publishedDay,1),end=shift(start,days-1);result.earliestPeriod={start,end,timezone:ZONE};
  const today=pacific(now),current=report?.document;
  if(!today)return stop('unknown_clock','The current date is unavailable. No readiness date is inferred.');
  if(today<=end)return stop('window_incomplete',`Wait for a full ${days}-day observation after publication. The earliest window is ${start} to ${end}, in Search Console Pacific dates.`,'waiting');
  if(!period(current?.availablePeriod)||current?.property!=='sc-domain:brainilabgames.com')return stop('missing_report','Load a dated BrainiLab Web Search report with matching Pacific day boundaries.');
- const scope=filters(saved.filters);
  if(!scope||scope!==filters(current.filters)||[saved.filters,current.filters].some(f=>f.page&&f.page!==opportunity.url))return stop('scope_mismatch','The reports use different or unknown filters. Load a matching scope before comparing.');
  const p=current.availablePeriod;
  if(p.end>=today)return stop('unfinished_report','The loaded report includes an unfinished or future Pacific day. Wait for complete final data.');
  if(p.start<=publishedDay||p.start<=baseline.end||length(p)!==days)return stop('window_mismatch',`Load a complete ${days}-day report after publication. The earliest eligible window is ${start} to ${end}; overlapping or unequal periods are not compared.`);
- const before=metricRow(opportunity.proposal?.pageEvidence,opportunity.url),matches=Array.isArray(current.opportunities)?current.opportunities.filter(o=>o.url===opportunity.url):[];
+ const matches=Array.isArray(current.opportunities)?current.opportunities.filter(o=>o.url===opportunity.url):[];
  if(!before)return stop('missing_baseline_page','The original baseline lacks usable exact-page counts. Missing values remain unknown; the baseline is preserved.');
  const after=matches.length===1?metricRow(matches[0].pageEvidence,opportunity.url):null;
  if(!after)return stop('missing_followup_page','The follow-up report has no single usable exact-page observation. Missing data is not zero traffic; query rows are not summed to fill it.');
