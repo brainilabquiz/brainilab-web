@@ -1,6 +1,7 @@
 import {channelVideo} from './lib/youtube-channel.js';
 import {cachedHomeVideos,renderHomeVideoCards} from './lib/home-video-cards.js';
 import {servePublicLearn,learnRelatedVideo} from './lib/learn-store.js';
+import {HEALTH_CRON,scheduledHealth,healthStatus} from './lib/site-health.js';
 import {productionRequest} from './lib/production-origin.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
@@ -69,6 +70,8 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
 }
 export default {
   async scheduled(event,env,ctx){
+    if(event.cron===HEALTH_CRON){ctx.waitUntil(scheduledHealth(env));return;}
+    if(event.cron!=='0 */12 * * *')return;
     if(!env.BREAKING_NEWS)return;
     const store=env.BREAKING_NEWS.get(env.BREAKING_NEWS.idFromName('world-news-v1'));
     ctx.waitUntil(store.fetch('https://news.internal/refresh',{method:'POST'}));
@@ -76,6 +79,10 @@ export default {
   async fetch(request,env,ctx){
     request=productionRequest(request);
     const url=new URL(request.url);
+    if(url.pathname==='/api/site-health'){
+      if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{Allow:'GET, HEAD'}});
+      const result=await healthStatus(env);return request.method==='HEAD'?new Response(null,{status:result.status,headers:result.headers}):result;
+    }
     // Retired pages move permanently, so search engines pass their signals on
     // instead of indexing a JavaScript redirect that answers 200.
     const legacy=LEGACY_PAGES[url.pathname.replace(/\/index\.html$/,'/').replace(/\/?$/,'/')];

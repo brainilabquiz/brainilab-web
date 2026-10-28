@@ -5,7 +5,7 @@
   "compatibility_date": "2026-08-30",
   "compatibility_flags": ["nodejs_compat"],
   "previews": {"durable_objects":{"bindings":[{"name":"LEARN_PAGES","class_name":"BreakingNewsStore"}]}},
-  "triggers": {"crons": ["0 */12 * * *"]},
+  "triggers": {"crons": ["0 */12 * * *","*/5 * * * *"]},
   "durable_objects": {"bindings": [{"name":"BREAKING_NEWS","class_name":"BreakingNewsStore"},{"name":"LEARN_PAGES","class_name":"BreakingNewsStore"}]},
   "migrations": [{"tag":"breaking-news-v1","new_sqlite_classes":["BreakingNewsStore"]}],
   "assets": {

@@ -15,6 +15,9 @@ import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
 import './test-learn-runtime.mjs';
 import './test-learn-store.mjs';
+import './test-site-health.mjs';
+import './test-release-check.mjs';
+execFileSync(process.execPath,['--max-old-space-size=96','tools/test-learn-resources.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';
@@ -125,4 +128,6 @@ for(const required of ['index.html','404.html','learn/index.html','assets/js/hom
   await stat(path.join(output,required));
 }
 console.log(`Built ${publicFiles.length} public files in dist; ${count} JS/CSS files minified (${original} → ${compressed} bytes).`);
+const {releaseManifest}=await import('./release-manifest.mjs');
+console.log('Release identity: '+JSON.stringify(await releaseManifest(root)));
 
