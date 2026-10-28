@@ -26,6 +26,15 @@ assert.equal(long.passed,true,'readability advice is not a word quota');assert.o
 const many=run(a=>a.sections=Array.from({length:7},(_,i)=>({id:'part-'+i,title:'Part '+i,html:'<p>A short explanation.</p>'})));
 assert.equal(many.passed,true,'no fixed section count');
 const repeated=run(a=>a.sections[0].html='<p>The the example needs a second look.</p>');assert.equal(repeated.passed,true);assert.ok(repeated.warnings.some(x=>x.code==='repeated-word'));
+assert.equal(repeated.warnings.find(x=>x.code==='repeated-word').excerpt,'The the','advice carries the exact visible text');
+assert.ok(long.warnings.find(x=>x.code==='long-paragraph').excerpt.startsWith('word word'));
+assert.equal(long.warnings.find(x=>x.code==='long-paragraph').sectionIndex,0);
+const paragraph='This original example explains a useful idea in clear words that readers can follow easily.';
+const duplicate=run(a=>a.sections[0].html='<p>'+paragraph+'</p><p>'+paragraph+'</p>');
+assert.equal(duplicate.passed,true,'repetition remains a manual decision, not a publication quota');
+assert.ok(duplicate.warnings.some(x=>x.code==='repeated-paragraph'&&x.excerpt===paragraph));
+assert.ok(run(a=>a.description='Our SEO acquisition strategy.').warnings.some(x=>x.code==='internal-copy'&&x.field==='article-description'));
+assert.ok(run(a=>a.title='Our SEO plan').warnings.some(x=>x.code==='internal-copy'&&x.field==='article-title'));
 assert.ok(run(a=>a.sections[0].html='<p>Our acquisition strategy uses SEO.</p>').warnings.some(x=>x.code==='internal-copy'));
 assert.ok(run(a=>a.title='An extremely long title '.repeat(8)).warnings.some(x=>x.field==='article-title'));
 dom.window.close();console.log('PASS shared writing review: text boundaries, entities, safe links, missing destinations, identifiers, credits, revisions and non-blocking advice.');
