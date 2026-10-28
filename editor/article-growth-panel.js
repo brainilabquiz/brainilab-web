@@ -14,7 +14,7 @@ export function bindArticleGrowthPanel({root,rpc,article,review,articles,cache})
  }
  button.onclick=async()=>{
   if(loading||disposed)return;loading=true;error='';update();
-  try{const workspace=await rpc('admin_get_growth_workspace');if(disposed)return;cache.report=workspace?.report?.document||null;if(!cache.report)error='No saved report is available. Your draft is unchanged.';}
+  try{const workspace=await rpc('admin_get_growth_workspace');if(disposed)return;const candidate=workspace?.report?.document;if(!candidate||!articleEvidence(article(),{document:body.ownerDocument,articles:[],report:candidate,incomingIndex:new Map()}).growth.available)error='No valid saved report is available. Existing evidence and your draft are unchanged.';else cache.report=candidate;}
   catch{if(!disposed)error='The saved report could not load. Existing evidence and your draft are unchanged. You can try again.';}
   finally{if(!disposed){loading=false;update();}}
  };
