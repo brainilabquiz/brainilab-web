@@ -79,12 +79,23 @@ def attach(snapshot,private,candidates=()):
     if path.exists():
         try:values.append(json.loads(path.read_text(encoding='utf-8')))
         except (OSError,ValueError):pass
-    values.append({'schemaVersion':1,'domain':'brainilabgames.com','pages':[p['learnSchema']for p in snapshot.get('pages',[])if p.get('learnSchema')]})
+    for candidate in [*candidates,snapshot]:
+        if not isinstance(candidate,dict):continue
+        bound=[]
+        for p in candidate.get('pages',[]) if isinstance(candidate.get('pages',[]),list) else []:
+            try:
+                e=page(p['learnSchema'])
+                if e['url']==p['url'] and e['sha256']==p['sha256'] and e['checkedAt']==timestamp(p['checkedAt']):bound.append(e)
+            except (ValueError,TypeError,KeyError):pass
+        values.append({'schemaVersion':1,'domain':'brainilabgames.com','pages':bound})
     result={'schemaVersion':1,'domain':'brainilabgames.com','pages':[]}
     for v in values:
         try:result=merge([result,v])
         except (ValueError,TypeError,KeyError):pass
-    return {**snapshot,'learnSchema':result} if result['pages'] else snapshot
+    # Keep exact response bindings in the private crawl, but export one copy.
+    # Duplicating every comparison inside pages and learnSchema can exceed the
+    # existing one-megabyte Growth ingest limit as the catalogue grows.
+    return {**snapshot,'pages':[{k:v for k,v in p.items()if k!='learnSchema'}for p in snapshot.get('pages',[])],'learnSchema':result} if result['pages'] else snapshot
 
 
 def enrich(pages,responses):

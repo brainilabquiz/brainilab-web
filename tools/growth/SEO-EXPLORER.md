@@ -209,6 +209,8 @@ timestamp with CAS, a writer lock, private hashed history and idempotence. Older
 restored files cannot replace newer observations. The normal export attaches this
 source independently of crawl age. Matched field values are not repeated in every
 report; only field states and bounded difference/unknown context are exported.
+Response-bound page evidence stays in the private crawl; the report keeps one
+copy in `learnSchema`, avoiding duplication against the existing ingest bound.
 The exact full public response stays in private evidence. Stable review keys use
 comparison content, not read timestamps. No Growth decision is opened or modified.
 Captures before the recorded Academy renderer correction remain historical, not

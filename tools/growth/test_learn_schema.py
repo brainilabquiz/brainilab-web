@@ -35,6 +35,10 @@ class LearnSchemaTest(unittest.TestCase):
             self.assertTrue(s.record(tmp,snapshot(),second['sha256'])['reused'])
             self.assertEqual(len(list((Path(tmp)/'learn-schema-history').glob('*.json'))),1)
             attached=s.attach({'pages':[]},tmp,[{'learnSchema':snapshot(p)}]);self.assertEqual(attached['learnSchema']['pages'][0]['contentSha256'],'c'*64)
+            bound={'url':URL,'sha256':p['sha256'],'checkedAt':p['checkedAt'],'learnSchema':p}
+            exported=s.attach({'pages':[bound]},tmp)
+            self.assertNotIn('learnSchema',exported['pages'][0]);self.assertEqual(exported['learnSchema']['pages'][0]['contentSha256'],'c'*64)
+            self.assertEqual(s.attach(exported,tmp),exported,'Root evidence survives removal of duplicate page payloads')
 
     def test_adapter_failure_does_not_discard_other_sections(self):
         pages=[{'url':URL,'sha256':'a'*64,'checkedAt':AT}];before=copy.deepcopy(pages)
