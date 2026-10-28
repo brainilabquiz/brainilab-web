@@ -190,8 +190,13 @@ The ordinary crawl passes its successful Learn responses through
 `learn_schema.mjs` once in bounded local batches. No additional HTTP or subresource
 request is made. The adapter needs the existing Node/JSDOM runtime (set
 `JSDOM_MODULE` to its local module); if unavailable, other Growth sources continue
-and prior Learn evidence retains its dates. The explicit current-page button uses
-the same inert comparator and reuses its one response for the workspace session.
+and prior Learn evidence retains its dates. One invalid UTF-8 response or malformed
+adapter row cannot discard other valid observations. A later adapter failure
+retains earlier completed batches and stops
+without retrying the process or fetching more pages. Each returned row must match
+the exact requested URL, read time and HTML hash; extra or duplicate results are
+not accepted. The explicit current-page button uses the same inert comparator and
+reuses its one response for the workspace session.
 Template/noscript payloads, malformed graphs and ambiguous entities do not supply
 a usable main entity. No page, lesson, quiz version, XP or score is changed.
 
