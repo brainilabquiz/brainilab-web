@@ -1,5 +1,13 @@
 # Private BrainiLab Growth tools
 
+Learn article/course comparisons now share the existing inert Article comparator.
+The ordinary crawl reuses its successful HTML responses in a bounded local
+Node/JSDOM pass (`JSDOM_MODULE` points to the existing local dependency). Saved
+captures/revisions can seed `learn-schema-latest.json` with original dates and
+exact hash/CAS, without another crawl. `Learn schema`, page detail and full CSV
+show matching, equivalent, different and unknown evidence; historical corrections
+do not reopen work. See the Learn section of `SEO-EXPLORER.md`.
+
 Dynamic quiz schema evidence is now attached by the ordinary SEO export without
 new crawling or gameplay calls. Reuse today's `quiz-schema-latest.json`; refresh
 published prompt-only banks through the existing management connector only when

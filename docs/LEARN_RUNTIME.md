@@ -1,11 +1,19 @@
 # Learn runtime and resource limits
 
 Public Learn rendering is delegated through `LEARN_PAGES` to `LearnPageStore`.
+The binding aliases the existing `BreakingNewsStore` class and SQLite namespace.
+`public-page-store.js` routes the internal `/_learn-render/` prefix to a separate
+named object (`public-learn-v1:<origin host>`). It never uses `world-news-v1`.
+There is no new production namespace or migration, and existing news routes,
+alarms, storage and budget logic remain inherited unchanged. Previews bind only
+the public-render alias, using their own isolated existing-class namespace.
 The entry Worker forwards a request without cookies, authorization headers or
 query parameters. The object renders only the fixed Learn/public-page routes and
 fixed game-video recommendations. It cannot proxy arbitrary URLs or expose its
 source cache. Its only retained environment capability is the ASSETS binding.
 
+This avoids the account namespace limit reached by accumulated preview classes.
+Do not add a new class migration just to isolate these public rendering calls.
 The SQLite-backed namespace works on the existing Free-compatible configuration.
 It uses an in-memory cache only: no SQL/KV storage writes, alarms or account data.
 Each cache lookup returns a new Response from plain stored strings; streams are

@@ -125,3 +125,4 @@ for(const required of ['index.html','404.html','learn/index.html','assets/js/hom
   await stat(path.join(output,required));
 }
 console.log(`Built ${publicFiles.length} public files in dist; ${count} JS/CSS files minified (${original} → ${compressed} bytes).`);
+
