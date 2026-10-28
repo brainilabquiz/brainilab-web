@@ -6,10 +6,11 @@ export function bindArticleGrowthPanel({root,rpc,article,review,articles,cache})
  let disposed=false,loading=false,error='',incomingIndex=null;
  function update(){
   if(disposed)return;
-  const active=body.ownerDocument.activeElement,open=box.open;
+  const active=body.ownerDocument.activeElement,open=box.open,activityOpen=!!body.querySelector('.article-evidence-activity')?.open;
   status.textContent=loading?'Loading the saved report…':error||(!cache.report?'Load the existing Growth report. No Google query or website crawl is made.':'Saved report loaded. Source dates below are independent; nothing was added to the draft.');
   button.disabled=loading;button.textContent=cache.report?'Reload saved Growth report':'Load saved Growth report';box.open=open;
   if(open){incomingIndex??=incomingArticleLinks(articles(),body.ownerDocument);body.innerHTML=articleEvidenceHTML(articleEvidence(article(),{document:body.ownerDocument,articles:articles(),review:review(),report:cache.report,incomingIndex}));}
+  if(activityOpen&&body.querySelector('.article-evidence-activity'))body.querySelector('.article-evidence-activity').open=true;
   if(active===button)button.focus();
  }
  button.onclick=async()=>{
