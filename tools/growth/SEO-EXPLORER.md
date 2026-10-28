@@ -175,6 +175,52 @@ tools/test-growth-seo-destinations.mjs, in addition to the existing Explorer tes
 
 ## Review a page
 
+### Learn article and course schema
+
+`Learn schema` lists saved exact-URL Article and Course comparisons, with page
+detail, search and the complete CSV. It extends the existing Article comparator
+instead of introducing a separate definition of matching fields. Identity,
+headline/name, byline, preview, visible cover and date instants are compared;
+courses also compare ordered lesson names and URLs in the visible lesson list.
+Dates retain fractional precision and offset equivalence. A missing visible
+updated date remains unknown. Registered cover/preview identities are labelled
+as equivalent, never as equal URLs; images are not loaded or fact-checked.
+
+The ordinary crawl passes its successful Learn responses through
+`learn_schema.mjs` once in bounded local batches. No additional HTTP or subresource
+request is made. The adapter needs the existing Node/JSDOM runtime (set
+`JSDOM_MODULE` to its local module); if unavailable, other Growth sources continue
+and prior Learn evidence retains its dates. The explicit current-page button uses
+the same inert comparator and reuses its one response for the workspace session.
+Template/noscript payloads, malformed graphs and ambiguous entities do not supply
+a usable main entity. No page, lesson, quiz version, XP or score is changed.
+
+Existing dated HTML captures can be fed to the adapter as a JSON stdin array of
+`{url, checkedAt, html}`. Keep the original read dates and validate capture hashes;
+do not fetch them again just to populate this view. Wrap its output as
+`{schemaVersion:1, domain:"brainilabgames.com", pages:[...]}` and record it:
+
+```text
+python tools/growth/learn_schema.py --private PRIVATE --input OBSERVATIONS.json --expected-sha256 HASH
+```
+
+Use `missing` only for an absent file. Each URL merges independently by its read
+timestamp with CAS, a writer lock, private hashed history and idempotence. Older
+restored files cannot replace newer observations. The normal export attaches this
+source independently of crawl age. Matched field values are not repeated in every
+report; only field states and bounded difference/unknown context are exported.
+The exact full public response stays in private evidence. Stable review keys use
+comparison content, not read timestamps. No Growth decision is opened or modified.
+Captures before the recorded Academy renderer correction remain historical, not
+new unresolved work. Comparisons older than 48 hours are labelled dated.
+
+Differences require context review, not automatic rewriting. These comparisons
+do not assert required Article properties, rich-result eligibility, Google
+indexing, AI citations, visits, games, expertise or factual accuracy. Validate
+`test_learn_schema.py` and `tools/test-growth-learn-schema.mjs` together with the
+existing page/schema/quiz suites. No new dependency, OAuth, migration, endpoint,
+permission, external validator, tracking or automation is introduced.
+
 ### Dynamic quiz question declarations
 
 `Quiz schema` reuses the six quizzes' saved JSON-LD declarations and dated,

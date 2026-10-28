@@ -21,6 +21,7 @@ import seo_keywords
 import seo_reputation
 import seo_discovery
 import quiz_schema
+import learn_schema
 
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
@@ -281,6 +282,11 @@ def validate(value):
             if evidence['url']!=p['url'] or evidence['sha256']!=p['sha256'] or evidence['checkedAt']!=quiz_schema.timestamp(p['checkedAt']):
                 raise ValueError('Quiz declarations are not bound to this response')
             pages[-1]['quizQuestions'] = evidence
+        if p.get('learnSchema') is not None:
+            evidence=learn_schema.page(p['learnSchema'])
+            if evidence['url']!=p['url'] or evidence['sha256']!=p['sha256'] or evidence['checkedAt']!=quiz_schema.timestamp(p['checkedAt']):
+                raise ValueError('Learn evidence is not bound to this exact response')
+            pages[-1]['learnSchema']=evidence
     for s in value['sources']:
         if public_url(s['url']) != s['url'] or not stamp(s['checkedAt']) or s['state'] not in ('verified','not_found_in_html','unavailable','robots_disallowed','not_external'):
             raise ValueError('Invalid backlink source')
@@ -324,6 +330,7 @@ def validate(value):
     if value.get('reputation') is not None: result['reputation'] = seo_reputation.validate(value['reputation'])
     if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
     if value.get('quizSchema') is not None: result['quizSchema'] = quiz_schema.validate(value['quizSchema'])
+    if value.get('learnSchema') is not None: result['learnSchema'] = learn_schema.validate(value['learnSchema'])
     return result
 
 
@@ -393,6 +400,8 @@ def crawl(page_urls, source_urls, previous=None, now=None, fetcher=fetch, source
     if not any(p['trust'] is not None for p in pages):
         raise RuntimeError('No public page could be inspected; preserve the last successful index')
     sources=list({s['url']:s for s in sources}.values())
+    # One bounded local pass, reusing these responses. No schema-specific crawl.
+    learn_schema.enrich(pages,[(url,response,observed)for url,response,failure in [*results,*target_results]if response is not None and not failure])
     return validate({'schemaVersion':VERSION,'domain':DOMAIN,'observedAt':observed,'canonicalReference':'final_response_url','pages':pages,'sources':sources,'backlinks':links,'knownLinks':previous.get('knownLinks',previous.get('backlinks',[]))})
 
 
@@ -471,7 +480,7 @@ def attach_seo(report, private):
     bases = []
     for candidate in candidates:
         if not isinstance(candidate,dict): continue
-        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources','quizSchema')}))
+        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources','quizSchema','learnSchema')}))
         except (ValueError,KeyError,TypeError): continue
     if not bases: return report
     clean = max(bases,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
@@ -496,6 +505,7 @@ def attach_seo(report, private):
                 merged[section]=max(valid,key=lambda s:datetime.fromisoformat(stamp(s[section]['observedAt'])))[section]
             clean[key]=validator(merged)
     clean = quiz_schema.attach(clean, private, candidates)
+    clean = learn_schema.attach(clean, private, candidates)
     return {**report,'seoExplorer':clean}
 
 
