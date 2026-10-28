@@ -2,6 +2,7 @@ import {articleEvidence,articleEvidenceHTML,incomingArticleLinks} from './articl
 import {publishedRecord} from '../lib/article-links.js';
 import {readCurrentPage} from './growth-current-page.js';
 import {pageLinksHTML} from './page-link-evidence.js';
+import {pageSchemaHTML} from './page-schema-evidence.js';
 
 // Read only, shared cache for this editor session. Never enters the CMS document.
 export function bindArticleGrowthPanel({root,rpc,article,review,articles,cache}){
@@ -12,18 +13,19 @@ export function bindArticleGrowthPanel({root,rpc,article,review,articles,cache})
  function publicHTML(){
   const url=publicURL(),o=url?publicPages.get(url):null;
   const state=o?.state==='loading'?'Reading the public HTML…':o?.state==='unavailable'?'The public page could not be read. Your draft and saved evidence are unchanged.':o?.state==='ready'?'Read '+o.checkedAt+'. This is the published response, separate from your draft.':'No public request has been made for this article in this editor session.';
-  return '<section class="article-public-links"><h3>Compare with current public links</h3><button type="button" class="admin-button" data-article-check-public '+(!url||o?'disabled':'')+'>'+(o?.state==='loading'?'Reading public page…':o?'Public check recorded for this session':'Read current public links')+'</button><p role="status" aria-live="polite" tabindex="-1">'+state+'</p>'+(!url?'<p>A published article in the loaded catalogue is needed. New drafts are not fetched.</p>':o?.state==='ready'?pageLinksHTML(o):'')+'<p class="article-help">One explicit click reads this exact public page without cookies, scripts or subresources. No link destinations are followed, draft text is changed, report is imported or indexing is requested. Results and errors are reused while this editor session stays open.</p></section>';
+  return '<section class="article-public-links"><h3>Compare with current public links and Article declarations</h3><button type="button" class="admin-button" data-article-check-public '+(!url||o?'disabled':'')+'>'+(o?.state==='loading'?'Reading public page…':o?'Public check recorded for this session':'Read current public page')+'</button><p role="status" aria-live="polite" tabindex="-1">'+state+'</p>'+(!url?'<p>A published article in the loaded catalogue is needed. New drafts are not fetched.</p>':o?.state==='ready'?pageLinksHTML(o)+pageSchemaHTML(o):'')+'<p class="article-help">One explicit click reads this exact public page without cookies, scripts or subresources. No link destinations are followed, draft text is changed, report is imported or indexing is requested. Results and errors are reused while this editor session stays open.</p></section>';
  }
  function update(){
   if(disposed)return;
-  const active=body.ownerDocument.activeElement,open=box.open,activityOpen=!!body.querySelector('.article-evidence-activity')?.open,linksOpen=!!body.querySelector('.page-link-evidence')?.open,publicFocus=!!active?.matches('[data-article-check-public],.article-public-links [role=status]');
+  const active=body.ownerDocument.activeElement,open=box.open,publicFocus=!!active?.matches('[data-article-check-public],.article-public-links [role=status]');
+  const disclosures=['.article-evidence-activity','.page-link-evidence','.page-schema-evidence'].map(selector=>{const d=body.querySelector(selector);return {selector,open:!!d?.open,focused:!!d&&active===d.querySelector(':scope > summary')};});
   status.textContent=loading?'Loading the saved report…':error||(!cache.report?'Load the existing Growth report. No Google query or website crawl is made.':'Saved report loaded. Source dates below are independent; nothing was added to the draft.');
   button.disabled=loading;button.textContent=cache.report?'Reload saved Growth report':'Load saved Growth report';box.open=open;
 if(open){incomingIndex??=incomingArticleLinks(articles(),body.ownerDocument);body.innerHTML=publicHTML()+articleEvidenceHTML(articleEvidence(article(),{document:body.ownerDocument,articles:articles(),review:review(),report:cache.report,incomingIndex}));}
-  if(activityOpen&&body.querySelector('.article-evidence-activity'))body.querySelector('.article-evidence-activity').open=true;
-  if(linksOpen&&body.querySelector('.page-link-evidence'))body.querySelector('.page-link-evidence').open=true;
+  for(const saved of disclosures){const d=body.querySelector(saved.selector);if(d)d.open=saved.open;}
   if(active===button)button.focus();
   else if(publicFocus)body.querySelector('.article-public-links [role=status]')?.focus();
+  else {const saved=disclosures.find(d=>d.focused);if(saved)body.querySelector(saved.selector+' > summary')?.focus({preventScroll:true});}
  }
  button.onclick=async()=>{
   if(loading||disposed)return;loading=true;error='';update();
