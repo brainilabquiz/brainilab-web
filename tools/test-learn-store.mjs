@@ -35,6 +35,7 @@ assert.equal((await object.fetch(new Request('https://brainilabgames.com/learn/'
 offline=false;
 const evicted=new LearnPageStore(state,env,fetcher);assert.equal((await evicted.fetch(new Request('https://brainilabgames.com/learn/'))).status,200);await flush();
 const config=read('wrangler.jsonc');assert.ok(config.durable_objects.bindings.some(b=>b.name==='LEARN_PAGES'&&b.class_name==='LearnPageStore'));assert.ok(config.durable_objects.bindings.some(b=>b.name==='BREAKING_NEWS'&&b.class_name==='BreakingNewsStore'));
+assert.deepEqual(config.previews.durable_objects.bindings,[{name:'LEARN_PAGES',class_name:'LearnPageStore'}],'The preview uses an isolated public-render namespace, without enabling news refresh');
 assert.deepEqual(config.migrations[0],{tag:'breaking-news-v1',new_sqlite_classes:['BreakingNewsStore']});assert.ok(config.migrations.some(m=>m.tag==='learn-pages-v1'&&m.new_sqlite_classes.includes('LearnPageStore')));
 assert.match(readFileSync('worker.js','utf8'),/export \{LearnPageStore\} from '\.\/lib\/learn-store\.js'/);
 console.log('PASS Learn store: bound rendering, anonymous requests, shared fresh public cache, independent streams, routing scope, expiry/withdrawal, outage/eviction and additive namespace migration.');

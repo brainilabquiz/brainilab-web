@@ -4,7 +4,7 @@
   "main": "worker.js",
   "compatibility_date": "2026-08-30",
   "compatibility_flags": ["nodejs_compat"],
-  "previews": {},
+  "previews": {"durable_objects":{"bindings":[{"name":"LEARN_PAGES","class_name":"LearnPageStore"}]}},
   "triggers": {"crons": ["0 */12 * * *"]},
   "durable_objects": {"bindings": [{"name":"BREAKING_NEWS","class_name":"BreakingNewsStore"},{"name":"LEARN_PAGES","class_name":"LearnPageStore"}]},
   "migrations": [{"tag":"breaking-news-v1","new_sqlite_classes":["BreakingNewsStore"]},{"tag":"learn-pages-v1","new_sqlite_classes":["LearnPageStore"]}],
