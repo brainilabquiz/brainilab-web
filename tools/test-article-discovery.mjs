@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {catalogueMatches,nearbyArticleTitles} from '../lib/article-discovery.js';
+const rows=[{slug:'self',published_revision:1,document:{slug:'self',title:'Why do zebras have stripes?',topic:'Curiosity'}},{slug:'river-delta',published_revision:1,document:{slug:'river-delta',title:'What is a river delta? A river drops its luggage',topic:'Geography'}},{slug:'zebra-coats',published_revision:1,document:{slug:'zebra-coats',title:'Zebra stripes and patterned coats',topic:'Curiosity'}},{slug:'draft-only',published_revision:null,document:{slug:'draft-only',title:'Zebra stripes test draft',topic:'Curiosity'}}];
+assert.equal(catalogueMatches('delta river',rows,{publishedOnly:true})[0].slug,'river-delta','search words may appear in any order');
+assert.deepEqual(catalogueMatches('zebra',rows,{excludeSlug:'self',publishedOnly:true}).map(x=>x.slug),['zebra-coats'],'a source chooser excludes its current article and unpublished drafts');
+assert.equal(catalogueMatches('',rows,{topic:'Geography'})[0].slug,'river-delta','category preference is local relevance, not traffic');
+assert.equal(catalogueMatches('nothing matches',rows).length,0);
+const overlap=nearbyArticleTitles({slug:'new-delta',title:'River deltas explained'},rows);
+assert.ok(overlap.some(x=>x.slug==='river-delta'),'a shorter related title prompts a manual comparison');
+assert.ok(overlap.every(x=>x.sharedTerms.length>=2));
+assert.equal(nearbyArticleTitles({slug:'new',title:'What is a strait?'},rows).length,0,'one generic word does not trigger a comparison');
+assert.equal(nearbyArticleTitles({slug:'self',title:rows[0].document.title},rows).some(x=>x.slug==='self'),false);
+console.log('PASS article discovery: word-order search, category preference, published-only filtering, self exclusion and advisory title overlap.');

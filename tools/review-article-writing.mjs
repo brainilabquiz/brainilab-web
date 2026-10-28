@@ -3,6 +3,7 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {inspectArticle} from '../lib/article-writing.js';
+import {nearbyArticleTitles} from '../lib/article-discovery.js';
 import {articleEvidence,articleEvidenceHTML} from '../editor/article-evidence.js';
 const digest=b=>createHash('sha256').update(b).digest('hex');
 const parse=s=>JSON.parse(s.replace(/^\uFEFF/,''));
@@ -53,7 +54,7 @@ async function main(){
    const lessons=new Set((baseline.paths||[]).flatMap(p=>(p.document?.lessons||[]).map(l=>l.slug)));
    const categories=[...new Set(baseline.articles.map(x=>x.document.topic))].map(topic=>{const list=baseline.articles.filter(x=>x.document.topic===topic);return{topic,total:list.length,lessons:list.filter(x=>lessons.has(x.slug)).length,independent:list.filter(x=>!lessons.has(x.slug)).length};}).sort((a,b)=>a.independent-b.independent||a.topic.localeCompare(b.topic));
    const brief={version:2,createdAt:new Date().toISOString(),limits:'Private editorial record. Pending fields need real research and manual review; this tool does not invent demand or validate facts.',categories,...(growthContext?{growthContext}:{}),articles:docs.map(d=>({
-    slug:d.slug,documentSha256:hashes.get(d.slug),readerQuestion:d.title,intent:'',whyThisAddsSomethingNew:'',
+    slug:d.slug,documentSha256:hashes.get(d.slug),readerQuestion:d.title,possibleOverlaps:nearbyArticleTitles(d,baseline.articles),intent:'',whyThisAddsSomethingNew:'',
     demand:{status:'pending',query:'',market:'',language:'en',observedAt:null,provider:'',displayedMetric:null,intentMatch:{status:'pending',notes:''},evidence:[]},
     sources:(d.sources||[]).map(s=>({url:s.url,status:'pending',openedAt:null,claims:[],evidence:[]})),
     answerReview:{status:'pending',location:'',sourceUrls:[],notes:'Check the central answer and its attribution; no FAQ or AI-citation promise is required.'},

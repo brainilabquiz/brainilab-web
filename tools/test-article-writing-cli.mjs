@@ -16,6 +16,7 @@ const b=JSON.parse(await readFile(path.join(dir,'editorial-brief.json'),'utf8'))
 await writeFile(path.join(dir,'fixture-proof.txt'),'Fixture only, not real research or an article for publication.');
 const proof={file:'fixture-proof.txt',sha256:sha(await readFile(path.join(dir,'fixture-proof.txt')))};
 assert.equal(b.version,2);
+assert.ok(Array.isArray(item.possibleOverlaps),'the brief records advisory catalogue comparisons');
 item.intent='Definition';item.whyThisAddsSomethingNew='Test fixture with no existing article.';item.demand={status:'reviewed',query:'test fixture',market:'Test',language:'en',provider:'Test fixture, not research',observedAt:at,intentMatch:{status:'reviewed',notes:'Fixture-specific question. No real demand or metrics are claimed.'},evidence:[proof]};
 item.sources[0]={url:a.sources[0].url,status:'reviewed',openedAt:at,claims:[{claim:'A fixture claim',location:'Fixture paragraph',reviewed:true}],evidence:[proof]};
 for(const key of ['english','cover','mobile','desktop'])item[key]={status:'reviewed',notes:'Explicit fixture review, not a real editorial verification.',evidence:[proof]};
