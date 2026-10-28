@@ -15,10 +15,16 @@ assert.equal(cli('review').status,0,'a working draft can have pending manual rev
 const b=JSON.parse(await readFile(path.join(dir,'editorial-brief.json'),'utf8')),item=b.articles[0],at=new Date().toISOString();
 await writeFile(path.join(dir,'fixture-proof.txt'),'Fixture only, not real research or an article for publication.');
 const proof={file:'fixture-proof.txt',sha256:sha(await readFile(path.join(dir,'fixture-proof.txt')))};
-item.intent='Definition';item.whyThisAddsSomethingNew='Test fixture with no existing article.';item.demand={status:'reviewed',query:'test fixture',market:'Test',language:'en',provider:'Test fixture, not research',observedAt:at,evidence:[proof]};
+assert.equal(b.version,2);
+item.intent='Definition';item.whyThisAddsSomethingNew='Test fixture with no existing article.';item.demand={status:'reviewed',query:'test fixture',market:'Test',language:'en',provider:'Test fixture, not research',observedAt:at,intentMatch:{status:'reviewed',notes:'Fixture-specific question. No real demand or metrics are claimed.'},evidence:[proof]};
 item.sources[0]={url:a.sources[0].url,status:'reviewed',openedAt:at,claims:[{claim:'A fixture claim',location:'Fixture paragraph',reviewed:true}],evidence:[proof]};
-for(const key of ['english','cover','mobile','desktop'])item[key]={status:'reviewed',evidence:[proof]};
+for(const key of ['english','cover','mobile','desktop'])item[key]={status:'reviewed',notes:'Explicit fixture review, not a real editorial verification.',evidence:[proof]};
 await save('editorial-brief.json',b);assert.equal(cli('review','--publish').status,0,'complete fixture review passes the completeness gate, not independent factual verification');
+const currentBaseline={capturedAt:at,articles:[],paths:[]};
+await save('baseline.json',{...currentBaseline,capturedAt:new Date(Date.now()-2*86400000).toISOString()});assert.equal(cli('review','--publish').status,1,'two-day-old catalogue is too stale for publication');assert.equal(cli('review').status,0,'a draft still permits pending publication checks');await save('baseline.json',currentBaseline);
+const intent=item.demand.intentMatch;delete item.demand.intentMatch;await save('editorial-brief.json',b);assert.equal(cli('review','--publish').status,1,'demand estimates need a recorded intent match, not a general reviewed label');item.demand.intentMatch=intent;
+const cover=item.cover.evidence;item.cover.evidence=[];await save('editorial-brief.json',b);assert.equal(cli('review','--publish').status,1,'cover review needs bound evidence');item.cover.evidence=cover;
+const english=item.english.notes;item.english.notes='';await save('editorial-brief.json',b);assert.equal(cli('review','--publish').status,1,'English review needs an actual note');item.english.notes=english;await save('editorial-brief.json',b);
 await writeFile(path.join(dir,'fixture-proof.txt'),'Changed proof');assert.equal(cli('review','--publish').status,1,'changed evidence invalidates its hash');
 await save('documents.json',[{...a,title:'Different from the individual file'}]);assert.equal(cli('review').status,1,'batch and individual documents must agree');
 await save('documents.json',[{...a,slug:'../../outside'}]);assert.equal(cli('review').status,1,'unsafe slugs are rejected before file reads');

@@ -22,6 +22,10 @@ This creates `editorial-brief.json` with pending fields, source URLs and categor
 
 Complete the reader question, search intent, novelty explanation and actual research evidence. For each source, record when its actual page was opened, which claim was checked and where the supporting passage appears. A blocked page is not a checked source. Evidence references have the shape `{ "file": "source-capture.txt", "sha256": "…" }` and must resolve inside the private folder.
 
+The current brief is version 2. Complete `demand.intentMatch` with `status: "reviewed"` and a specific `notes` explanation of how the observed query fits this reading. An ambiguous query can mix unrelated subjects: for example, snow colour and the fictional Snow White. Keep a broad topic’s figures separate from a specific question. This is a recorded manual judgement, not an automated intent check.
+
+English and cover reviews each need `status: "reviewed"`, meaningful `notes` and an `evidence` list. Reference the actual review record or inspected image/crop evidence. The CLI checks those hashes too; a reviewed label alone is insufficient. Existing version-1 briefs are preserved: add the missing fields after actually reviewing them rather than regenerating or overwriting their records.
+
 ## 3. Write one enjoyable answer
 
 Give the answer near the start, then a concrete example or small surprise. Use original, everyday British English, short paragraphs and a few headings that help the reader. Use the relevant search words naturally; do not add unrelated trends, repeated definitions, artificial FAQs, exaggerated promises or internal acquisition goals.
@@ -45,11 +49,15 @@ The tools use the existing JSDOM test runtime: set `JSDOM_MODULE` to its absolut
 
 Draft review permits pending manual research. Publication review requires the brief, recent demand and source observations, claim-level review notes, unchanged evidence hashes, English and cover review, and mobile and desktop evidence. Refresh the catalogue first. The generated `writing-review.html` and JSON show structural problems, suggestions and manual work separately.
 
+Demand and source observations may be up to 30 days old when still relevant; the catalogue snapshot for publication must be less than 24 hours old. Its freshness does not replace the publisher’s revision checks. Reports include the section and an exact excerpt for applicable writing suggestions, so a reviewer can find the passage without guessing. Repeated long paragraphs are advisory, as repetition can be deliberate. The review never rewrites copy or certifies its grammar.
+
 For an existing URL, use `--revision` and a fresh baseline with its actual revision. This permits reviewing an existing article; it does not permit overwriting a concurrent edit. If the text changes after review, re-review the changed parts and bind the brief to the new individual-file SHA-256; do not refresh evidence hashes or dates without actually rechecking the evidence.
 
 ## 6. Preview, publish and verify
 
 In the admin, use Focus on writing, the live reading count and the Desktop/Mobile preview. Review links focus the relevant field. Search related readings without changing the draft. Ctrl/Cmd+S saves a private draft; it never publishes. The publish button checks required fields and structural problems, while leaving writing suggestions advisory.
+
+Click an excerpt-based suggestion to select its text in the section. Only the first three suggestions are expanded initially; open the remaining ones when useful. Search appearance is a folded illustration of the current title, URL and description, not a promise of Google’s snippet. Check library crops shows the actual selected small and thumbnail assets at wide and square ratios. These controls do not dirty or rewrite a draft. Saving an unchanged existing draft creates no duplicate revision.
 
 Complete the existing review record and guarded editorial release after the cover assets are deployed and checked. Preserve authentication, revision checks, author, original publication date and history; do not impersonate an admin or change permissions. This assistant does not replace that publisher.
 

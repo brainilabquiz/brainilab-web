@@ -38,3 +38,21 @@
 .article-preview-sizes{display:flex;gap:4px;flex-wrap:wrap}.article-preview-sizes button{font:inherit;font-size:13px;min-height:38px;padding:7px 12px;border:1px solid #d8d5e8;border-radius:7px;background:#fff;color:#2d296e;cursor:pointer}
 #article-preview-dialog>div{gap:12px;flex-wrap:wrap}#article-preview-dialog iframe{display:block;max-width:100%;margin:16px auto 0;background:#fffdf8}
 @media(max-width:650px){.article-writing-summary{align-items:start;gap:6px}.article-editor-actions>div{gap:6px;flex-wrap:wrap}.article-editor-actions .admin-button{font-size:12px;padding:9px 10px}.article-preview-sizes{order:3;width:100%}.article-richtext{font-size:16px}}
+
+/* Actionable writing feedback stays beside, and never inside, the article. */
+.article-readiness li>div{min-width:0}
+.article-readiness li button{font:inherit;text-align:left;color:inherit;border:0;background:none;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.article-review-excerpt{display:block;margin-top:6px;padding-left:10px;border-left:2px solid #e2dfed;color:#625e71;font-size:12px;overflow-wrap:anywhere}
+.article-readiness h3 small{font-size:12px;font-weight:500;margin-left:4px}
+.article-readiness [data-more-suggestions]>summary{font-size:13px;font-weight:500}
+.article-search-result{margin-top:16px;overflow-wrap:anywhere}
+.article-search-result small{display:block;color:#625e71;font-size:12px}
+.article-search-result strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px;font-size:18px;line-height:1.4;color:#2d296e}
+.article-search-result p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.6;margin:8px 0}
+.article-cover-crops{margin:16px 0;font-size:13px}
+.article-cover-crops summary{cursor:pointer;font-weight:650}
+.article-cover-crops>div{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;align-items:start;margin-top:12px}
+.article-cover-crops figure{margin:0;min-width:0}
+.article-cover-crops img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:8px;background:#f3f0e5}
+.article-cover-crops [data-cover-crop=square]{aspect-ratio:1}
+.article-cover-crops figcaption{font-size:12px;margin-top:6px;color:#625e71}
