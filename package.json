@@ -7,6 +7,7 @@
     "dev": "python3 -m http.server 8000",
     "build": "python3 tools/build-editorial.py && python3 tools/rebuild-bundles.py && node tools/build.mjs",
     "bundle": "python3 tools/rebuild-bundles.py",
+    "deploy:checked": "node tools/deploy-verified.mjs",
     "editorial": "python3 tools/build-editorial.py",
     "test:review": "node tools/review-core.mjs --release-phase=launched"
   },
