@@ -167,7 +167,7 @@ export default {
         const game=url.searchParams.get('game');
         if(!Object.hasOwn(VIDEO_GAMES,game))return json({error:'Unknown game'},400,0);
         try{
-          const articles=await publishedArticles(request,ctx,caches.default);
+          const articles=await publishedArticles(request,ctx,caches.default,fetch,{summaryOnly:true});
           let video=relatedVideo(articles,game);
           if(!video&&game==='generalknowledge'){
             const latest=await (await latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'')).json();
