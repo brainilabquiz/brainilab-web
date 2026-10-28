@@ -7,7 +7,6 @@ import json
 import os
 from pathlib import Path
 import re
-import unicodedata
 import gsc_sync as api
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,7 +37,7 @@ def digest(value):
 
 
 def page(value):
-    if value.get('url') not in URLS or value.get('state') not in ('ready', 'unknown', 'not_declared'):
+    if not isinstance(value,dict) or value.get('url') not in URLS or value.get('state') not in ('ready', 'unknown', 'not_declared'):
         raise ValueError('Unsupported quiz declaration')
     names = value.get('questions', [])
     if not isinstance(names, list) or len(names)>100: raise ValueError('Question declarations exceed bounds')
@@ -52,9 +51,10 @@ def page(value):
 
 class Declarations(HTMLParser):
     def __init__(self):
-        super().__init__(); self.inert=0; self.active=False; self.text=''; self.documents=[]; self.bad=False
+        super().__init__(); self.inert=0; self.active=False; self.text=''; self.documents=[]; self.bad=False; self.base=False
 
     def handle_starttag(self, tag, attrs):
+        if tag=='base' and 'href' in dict(attrs): self.base=True
         if tag in ('template', 'noscript'): self.inert+=1
         if tag=='script' and not self.inert and dict(attrs).get('type', '').lower()=='application/ld+json':
             self.active=True; self.text=''
@@ -86,7 +86,7 @@ def observe(url, response, checked_at):
     try:
         walk(parser.documents)
         quizzes=[n for n in nodes if 'Quiz' in ([n.get('@type')] if not isinstance(n.get('@type'),list) else n['@type'])]
-        if parser.bad or len(quizzes)!=1: return page(result)
+        if parser.bad or parser.base or len(quizzes)!=1: return page(result)
         quiz=quizzes[0]
         if quiz.get('url',url)!=url or quiz.get('@id',url+'#quiz')!=url+'#quiz': return page(result)
         if 'hasPart' not in quiz: result['state']='not_declared'; return page(result)
@@ -110,10 +110,11 @@ def observe(url, response, checked_at):
 
 
 def bank(value):
-    if value.get('topic') not in TOPICS or value.get('source')!='published-question-tables': raise ValueError('Unsupported published bank')
+    if not isinstance(value,dict) or value.get('topic') not in TOPICS or value.get('source')!='published-question-tables': raise ValueError('Unsupported published bank')
+    if not isinstance(value.get('providers'),list): raise ValueError('Providers must be an array')
     providers=[]
     for p in value['providers']:
-        if p.get('name') not in PROVIDERS or type(p.get('complete')) is not bool: raise ValueError('Invalid provider')
+        if not isinstance(p,dict) or p.get('name') not in PROVIDERS or type(p.get('complete')) is not bool: raise ValueError('Invalid provider')
         names=p.get('prompts')
         if not isinstance(names,list) or len(names)>2000: raise ValueError('Bank exceeds bounds')
         providers.append({'name':p['name'],'complete':p['complete'],'observedAt':timestamp(p['observedAt']),
@@ -195,6 +196,20 @@ def local_providers(observed_at):
             for slug,t in TOPICS.items()}
 
 
+def with_local(value, private, now=None):
+    at=(now or datetime.now(timezone.utc)).isoformat(); local=local_providers(at)
+    path=Path(private)/'quiz-schema-latest.json'
+    old=validate(json.loads(path.read_text(encoding='utf-8'))) if path.exists() else {'banks':[]}
+    for b in value.get('banks',[]):
+        previous=next((p for bank in old['banks'] if bank['topic']==b['topic'] for p in bank['providers'] if p['name']=='local'),None)
+        current=local[b['topic']]
+        # A repeated same-day content check reuses the honest previous date.
+        if previous and previous['complete'] and previous['observedAt'][:10]==at[:10] and previous['prompts']==sorted(set(current['prompts'])):
+            current=previous
+        b['providers']=[p for p in b['providers'] if p.get('name')!='local']+[current]
+    return value
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--private',type=Path,default=api.PRIVATE)
     p.add_argument('--input',type=Path);p.add_argument('--expected-sha256');p.add_argument('--sql',action='store_true')
@@ -204,8 +219,5 @@ if __name__=='__main__':
     else:
         if not args.input or not args.expected_sha256: p.error('Provide input and exact previous hash (or missing)')
         api.PRIVATE=args.private.resolve(); value=json.loads(args.input.read_text(encoding='utf-8'))
-        if args.include_local:
-            local=local_providers(datetime.now(timezone.utc).isoformat())
-            for b in value.get('banks',[]):
-                b['providers']=[p for p in b['providers'] if p.get('name')!='local']+[local[b['topic']]]
+        if args.include_local: value=with_local(value,api.PRIVATE)
         print(json.dumps(record(api.PRIVATE,value,args.expected_sha256)))

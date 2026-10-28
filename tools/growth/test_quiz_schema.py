@@ -74,6 +74,8 @@ class QuizSchemaTest(unittest.TestCase):
             self.assertEqual(seo.attach_seo(attached,Path(tmp)),attached)
 
     def test_allowlist_and_sql_read_only_contract(self):
+        for bad in [None,{'schemaVersion':1,'domain':'brainilabgames.com','banks':[None]}]:
+            with self.assertRaises(ValueError):q.validate(bad)
         x=snapshot();x['banks'][0]['privateAnswer']='do not export';x['banks'][0]['providers'][0]['answers']=['never']
         clean=q.validate(x);self.assertNotIn('never',json.dumps(clean));self.assertNotIn('privateAnswer',json.dumps(clean))
         x['banks'][0]['providers'].append(x['banks'][0]['providers'][0])
@@ -82,5 +84,12 @@ class QuizSchemaTest(unittest.TestCase):
         self.assertIn('begin transaction read only',sql.lower());self.assertNotIn('public.verified_question_answers',sql)
         self.assertNotIn('question_options',sql);self.assertNotIn('is_correct',sql)
         self.assertEqual(sum(len(p['prompts']) for p in q.local_providers(AT).values()),360)
+
+    def test_include_local_reuses_same_day_observation(self):
+        with tempfile.TemporaryDirectory() as tmp,patch.object(api,'PRIVATE',Path(tmp)):
+            first=q.with_local(snapshot(),tmp,datetime(2026,10,28,19,tzinfo=timezone.utc))
+            result=q.record(tmp,first,'missing')
+            second=q.with_local(snapshot(),tmp,datetime(2026,10,28,20,tzinfo=timezone.utc))
+            self.assertTrue(q.record(tmp,second,result['sha256'])['reused'])
 
 if __name__=='__main__':unittest.main()

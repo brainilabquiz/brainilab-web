@@ -22,6 +22,7 @@ for(const mutate of [s=>s.quizSchema.banks[0].providers.pop(),s=>s.quizSchema.ba
  assert.equal(compareQuiz(s,url,null,now).reviewNeeded,0,'incomplete, ambiguous or old data cannot establish a mismatch');
 }
 const invalid=structuredClone(snapshot);invalid.quizSchema.banks[0].providers.push(bank.providers[0]);assert.equal(compareQuiz(invalid,url,null,now).unknown,true);
+for(const field of ['banks','pages']){const s=structuredClone(snapshot);s.quizSchema[field]=[null];assert.equal(compareQuiz(s,url,null,now).unknown,true);}
 const missing=structuredClone(snapshot);missing.quizSchema.banks[0].providers.forEach(p=>p.prompts=[]);assert.equal(compareQuiz(missing,url,null,now).rows[0].state,'review_needed','a reviewed counterpart must still exist');
 const xss=structuredClone(snapshot);xss.quizSchema.pages[0].questions=['<img src=x onerror=alert(1)>'];assert.doesNotMatch(quizSchemaView(xss,url,null,now).html,/<img/);
 const graph=parts=>'<main><h1>Quiz</h1></main><script type="application/ld+json">'+JSON.stringify({'@graph':[{'@type':'Quiz','@id':url+'#quiz',...(parts===null?{}:{hasPart:parts})}]})+'</script>';

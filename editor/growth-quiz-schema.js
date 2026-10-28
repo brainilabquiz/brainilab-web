@@ -34,10 +34,10 @@ export function quizEvidence(snapshot){
  const s=snapshot?.quizSchema;if(s?.schemaVersion!==1||s.domain!=='brainilabgames.com'||!Array.isArray(s.banks)||!Array.isArray(s.pages)||s.banks.length>6||s.pages.length>6)return null;
  const ids=new Set(),urls=new Set();
  for(const b of s.banks){
-  if(!scope.topics.some(t=>t.slug===b.topic)||b.source!=='published-question-tables'||!/^[a-f0-9]{64}$/.test(b.sha256)||ids.has(b.topic)||!Array.isArray(b.providers)||b.providers.length>3)return null;ids.add(b.topic);
-  const seen=new Set();for(const p of b.providers){if(!providers.includes(p.name)||seen.has(p.name)||typeof p.complete!=='boolean'||!stamp(p.observedAt)||!Array.isArray(p.prompts)||p.prompts.length>2000||!p.prompts.every(text))return null;seen.add(p.name);}
+  if(!b||typeof b!=='object'||!scope.topics.some(t=>t.slug===b.topic)||b.source!=='published-question-tables'||!/^[a-f0-9]{64}$/.test(b.sha256)||ids.has(b.topic)||!Array.isArray(b.providers)||b.providers.length>3)return null;ids.add(b.topic);
+  const seen=new Set();for(const p of b.providers){if(!p||typeof p!=='object'||!providers.includes(p.name)||seen.has(p.name)||typeof p.complete!=='boolean'||!stamp(p.observedAt)||!Array.isArray(p.prompts)||p.prompts.length>2000||!p.prompts.every(text))return null;seen.add(p.name);}
  }
- for(const p of s.pages){if(!topic(p.url)||urls.has(p.url)||!stamp(p.checkedAt)||!/^[a-f0-9]{64}$/.test(p.sha256)||!['ready','unknown','not_declared'].includes(p.state)||!Array.isArray(p.questions)||p.questions.length>100||!p.questions.every(text)||p.state!=='ready'&&p.questions.length)return null;urls.add(p.url);}
+ for(const p of s.pages){if(!p||typeof p!=='object'||!topic(p.url)||urls.has(p.url)||!stamp(p.checkedAt)||!/^[a-f0-9]{64}$/.test(p.sha256)||!['ready','unknown','not_declared'].includes(p.state)||!Array.isArray(p.questions)||p.questions.length>100||!p.questions.every(text)||p.state!=='ready'&&p.questions.length)return null;urls.add(p.url);}
  return s;
 }
 
