@@ -13,6 +13,7 @@ import path from 'node:path';
 import './check-site-integrity.mjs';
 import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
+import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';
 import './test-result-cross-device.mjs';
