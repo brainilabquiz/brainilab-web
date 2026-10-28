@@ -175,6 +175,56 @@ tools/test-growth-seo-destinations.mjs, in addition to the existing Explorer tes
 
 ## Review a page
 
+### Dynamic quiz question declarations
+
+`Quiz schema` reuses the six quizzes' saved JSON-LD declarations and dated,
+prompt-only inventories from the published anytime bank, latest fixed cloud
+packs and local fallback. It does not invoke quiz/answer/result RPCs, inspect
+player history, expose answer keys or change XP, scores, questions or decisions.
+It is separate from the eight technical checks and introduces no score.
+
+The ordinary crawl extracts `quizQuestions` from its existing HTML response.
+There is no extra GET and no producer-version bump to force a repeated crawl.
+An explicit page check reuses the same bounded anonymous response for this
+comparison. Templates, malformed/ambiguous graphs, redirects and unresolved
+references remain unknown. An absent `hasPart` is not a failure.
+
+Before reading banks, reuse `quiz-schema-latest.json` when all three providers
+already have a valid observation for today. The native authorised Growth cycle
+can obtain the next complete prompt inventory through the existing management
+connector using `quiz_schema.py --sql` (the read-only `quiz_schema.sql`). Review
+the actual selectors if their implementation changes. This script does not hold
+database credentials or execute SQL itself. Save the returned
+`quiz_schema_snapshot` object privately, then:
+
+```text
+python tools/growth/quiz_schema.py --private PRIVATE --input OBSERVATION.json --include-local --expected-sha256 HASH
+```
+
+Use `missing` only for an absent file. `--include-local` reads only prompt fields
+from the current checkout's fallback; no answer fields enter the snapshot.
+Record source capture dates honestly, including when reusing old HTML. The
+existing refresh/export attaches this source independently from crawl age.
+Source/provider and page observations merge by their own timestamps; exact
+hash/CAS, a writer lock, idempotence and private hashed history protect prior
+evidence. Failed or older inputs cannot retimestamp a successful observation.
+Opening Growth never refreshes the database. No new OAuth, service key, endpoint,
+migration, permission or schedule is required.
+
+Ten dated wording equivalences from PR410 are retained in
+`lib/quiz-schema-scope.json`. An equivalence is used only while its exact bank
+counterpart remains. New unmatched wording requests review, not an automatic
+invalid-schema verdict or edit. Incomplete or over-48-hour evidence stays
+unknown. Stable review keys depend on topic bank content and declaration, not
+read timestamps, so identical reads do not create new work. These checks do not
+reopen the 28 Growth decisions or change their baselines.
+
+The page detail and full CSV show declarations, observed counterparts, providers
+and independent dates. The list describes eligible bank content, not the exact
+random 20 questions in a session. It does not fact-check answers or establish
+indexing, rich results, clicks or games. Validate with `test_quiz_schema.py` and
+`tools/test-growth-quiz-schema.mjs`, plus the existing Explorer/current-page tests.
+
 The admin Review a page view joins saved evidence for one exact public URL:
 its eight technical checks, validated final Web query/page discovery rows and
 incoming links from successfully inspected sources. Review evidence buttons in

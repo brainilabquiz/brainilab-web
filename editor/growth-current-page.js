@@ -2,6 +2,7 @@ import {publicPageURL} from './growth-seo-page.js';
 import {searchSources} from './growth-seo-sources.js';
 import {inertPublicHTML,observePageLinks,pageLinksHTML,pageLinksCSV} from './page-link-evidence.js';
 import {observePageSchema,pageSchemaHTML,pageSchemaCSV} from './page-schema-evidence.js';
+import {observeQuizQuestions} from './growth-quiz-schema.js';
 
 const MAX_BYTES=1024*1024;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,7 +31,7 @@ export function parseCurrentPage(html,url,checkedAt,document=globalThis.document
  });
  const a=articles.length===1?articles[0]:null;
  const publishedAt=declaredTimestamp(a?.datePublished),modifiedAt=declaredTimestamp(a?.dateModified);
- return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document,fragment),schemaEvidence:observePageSchema(fragment,url,nodes,{incomplete})};
+ return {state:'ready',url,checkedAt:declaredTimestamp(checkedAt),httpStatus:200,title:clean(entity(html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||''))||null,publishedAt,modifiedAt,dateReason:articles.length>1?'ambiguous_article':!a?'no_matching_article':!publishedAt&&!modifiedAt?'no_usable_dates':publishedAt&&modifiedAt&&publishedAt>modifiedAt?'inconsistent_dates':null,linkEvidence:observePageLinks(html,url,document,fragment),schemaEvidence:observePageSchema(fragment,url,nodes,{incomplete}),quizQuestions:observeQuizQuestions(fragment,url)};
 }
 
 export async function readCurrentPage(url,fetcher=globalThis.fetch,document=globalThis.document){

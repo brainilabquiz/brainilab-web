@@ -1,5 +1,12 @@
 # Private BrainiLab Growth tools
 
+Dynamic quiz schema evidence is now attached by the ordinary SEO export without
+new crawling or gameplay calls. Reuse today's `quiz-schema-latest.json`; refresh
+published prompt-only banks through the existing management connector only when
+needed, then record with exact hash/CAS. The six-quiz overview, page review and
+CSV preserve dated evidence, reviewed equivalents and unknown cases. See
+`SEO-EXPLORER.md` → Dynamic quiz question declarations for the SQL/record contract.
+
 ## Sessions with a recorded start and Google indexing
 
 [Play and indexing evidence](PLAY-INDEXING.md) documents the two independent,

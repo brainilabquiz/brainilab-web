@@ -20,6 +20,7 @@ import gsc_sync as api
 import seo_keywords
 import seo_reputation
 import seo_discovery
+import quiz_schema
 
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
@@ -222,9 +223,12 @@ def audit_page(url, response, observed):
     author = bool(p.authors) or bool(re.search(r'"author"\s*:', schema_text))
     sources = len({public_url(urljoin(url, a['href'])) for a in p.links
                    if public_url(urljoin(url, a['href'])) and urlsplit(urljoin(url, a['href'])).hostname not in (DOMAIN, 'www.' + DOMAIN)})
-    return {'url': url, 'finalUrl': final, 'status': response['status'], 'checkedAt': observed,
+    row = {'url': url, 'finalUrl': final, 'status': response['status'], 'checkedAt': observed,
             'trust': score, 'checks': rules, 'authorDeclared': author,
             'externalSourceLinks': sources, 'sha256': hashlib.sha256(response['body']).hexdigest()}
+    evidence = quiz_schema.observe(url, response, observed)
+    if evidence is not None: row['quizQuestions'] = evidence
+    return row
 
 
 def backlinks(url, response, observed):
@@ -272,6 +276,11 @@ def validate(value):
         score = sum(CHECKS[k] for k, passed in checks.items() if passed) if available else None
         if score != p.get('trust'): raise ValueError('Trust score does not match its evidence')
         pages.append({k:p[k] for k in ('url','finalUrl','status','checkedAt','trust','authorDeclared','externalSourceLinks','sha256')} | {'checks': checks})
+        if p.get('quizQuestions') is not None:
+            evidence = quiz_schema.page(p['quizQuestions'])
+            if evidence['url']!=p['url'] or evidence['sha256']!=p['sha256'] or evidence['checkedAt']!=quiz_schema.timestamp(p['checkedAt']):
+                raise ValueError('Quiz declarations are not bound to this response')
+            pages[-1]['quizQuestions'] = evidence
     for s in value['sources']:
         if public_url(s['url']) != s['url'] or not stamp(s['checkedAt']) or s['state'] not in ('verified','not_found_in_html','unavailable','robots_disallowed','not_external'):
             raise ValueError('Invalid backlink source')
@@ -314,6 +323,7 @@ def validate(value):
     if value.get('keywords') is not None: result['keywords'] = seo_keywords.validate(value['keywords'])
     if value.get('reputation') is not None: result['reputation'] = seo_reputation.validate(value['reputation'])
     if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
+    if value.get('quizSchema') is not None: result['quizSchema'] = quiz_schema.validate(value['quizSchema'])
     return result
 
 
@@ -461,7 +471,7 @@ def attach_seo(report, private):
     bases = []
     for candidate in candidates:
         if not isinstance(candidate,dict): continue
-        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources')}))
+        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources','quizSchema')}))
         except (ValueError,KeyError,TypeError): continue
     if not bases: return report
     clean = max(bases,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
@@ -485,6 +495,7 @@ def attach_seo(report, private):
             for section in ('manualActions','securityIssues','links'):
                 merged[section]=max(valid,key=lambda s:datetime.fromisoformat(stamp(s[section]['observedAt'])))[section]
             clean[key]=validator(merged)
+    clean = quiz_schema.attach(clean, private, candidates)
     return {**report,'seoExplorer':clean}
 
 
