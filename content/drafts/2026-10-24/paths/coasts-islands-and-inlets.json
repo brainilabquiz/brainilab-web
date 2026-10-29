@@ -1,0 +1,79 @@
+{
+  "slug": "coasts-islands-and-inlets",
+  "title": "Coasts and islands: four ways to read the water",
+  "description": "Start with a group of islands, follow the sea into a glacier-shaped valley, meet an estuary and finish at a coral reef around a lagoon.",
+  "topic": "Geography",
+  "status": "draft",
+  "authorId": "biel-sarda",
+  "coverArticle": "what-is-an-archipelago",
+  "introduction": "<p>A group of islands, a narrow sea inlet and a ring of reef can all catch your eye on a map. They have different names because the names describe different things.</p><p>Begin with the island group. Then follow the shape of the coast, the meeting of waters and the edge of a lagoon. Each reading stands on its own; short quizzes are optional.</p>",
+  "prerequisites": "No geography background needed. Each new term is explained in the reading.",
+  "lessons": [
+    {
+      "slug": "what-is-an-archipelago",
+      "level": "1 · Start with separate islands",
+      "objective": "Identify the group without assuming that every island has the same origin."
+    },
+    {
+      "slug": "what-is-a-fjord",
+      "level": "2 · Follow the sea into a valley",
+      "objective": "Connect a fjord’s sea water and steep valley to earlier glacier erosion."
+    },
+    {
+      "slug": "what-is-an-estuary",
+      "level": "3 · Notice where waters meet",
+      "objective": "Explain brackish water and recognise that freshwater estuaries also exist."
+    },
+    {
+      "slug": "what-is-an-atoll",
+      "level": "4 · Separate the reef from its lagoon",
+      "objective": "Distinguish an atoll’s reef ring from the water it surrounds."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Archipelago",
+      "definition": "A group or chain of islands."
+    },
+    {
+      "term": "Fjord",
+      "definition": "A sea inlet occupying a steep-sided valley shaped by glaciers."
+    },
+    {
+      "term": "Brackish",
+      "definition": "Partly salty, as in a mixture of freshwater and seawater."
+    },
+    {
+      "term": "Atoll",
+      "definition": "A ring-shaped coral reef surrounding, or nearly surrounding, a lagoon."
+    },
+    {
+      "term": "Lagoon",
+      "definition": "Water partly separated from a larger body of water by a natural barrier."
+    }
+  ],
+  "outcomes": [
+    "Identify the group without assuming that every island has the same origin.",
+    "Connect a fjord’s sea water and steep valley to earlier glacier erosion.",
+    "Explain brackish water and recognise that freshwater estuaries also exist.",
+    "Distinguish an atoll’s reef ring from the water it surrounds."
+  ],
+  "sources": [
+    {
+      "url": "https://oceanservice.noaa.gov/facts/archipelago.html",
+      "name": "NOAA — What is an archipelago?"
+    },
+    {
+      "url": "https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm",
+      "name": "National Park Service — U-Shaped Valleys, Fjords, and Hanging Valleys"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/estuary.html",
+      "name": "NOAA — What is an estuary?"
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/education/tutorial_corals/coral04_reefs.html",
+      "name": "NOAA — How do coral reefs form?"
+    }
+  ]
+}
