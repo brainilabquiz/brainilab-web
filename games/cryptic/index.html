@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Daily Cryptic Clue — One Word, Four Hints | BrainiLab</title>
+<meta name="description" content="Crack one daily cryptic clue, shared by everyone. Get hints for the indicator, fodder and definition, or reveal a random letter. Free, with no timer."/>
+<meta name="robots" content="index,follow,max-image-preview:large"/>
+<link rel="canonical" href="https://brainilabgames.com/games/cryptic/"/>
+<link rel="icon" type="image/png" href="/assets/brand/iso-multicolor.png"/>
+<link rel="stylesheet" href="/assets/css/site.css?v=41.53.0"/>
+<link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3"/>
+<link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
+<link rel="stylesheet" href="/assets/css/cryptic.css?v=1"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="BrainiLab"/>
+<meta property="og:title" content="Daily Cryptic Clue — One Word, Four Hints | BrainiLab"/>
+<meta property="og:description" content="One clue. One word. Can you crack it? A free daily cryptic with four optional hints and a clear explanation."/>
+<meta property="og:url" content="https://brainilabgames.com/games/cryptic/"/>
+<meta property="og:image" content="https://brainilabgames.com/assets/brand/brainilab-logo.png"/>
+<meta property="og:image:alt" content="BrainiLab"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#2d296e"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://brainilabgames.com/games/cryptic/#webpage","url":"https://brainilabgames.com/games/cryptic/","name":"Daily Cryptic Clue — One Word, Four Hints | BrainiLab","description":"Crack one daily cryptic clue, shared by everyone. Get hints for the indicator, fodder and definition, or reveal a random letter. Free, with no timer.","inLanguage":"en","isPartOf":{"@id":"https://brainilabgames.com/#website"},"mainEntity":{"@id":"https://brainilabgames.com/games/cryptic/#game"}},{"@type":"VideoGame","@id":"https://brainilabgames.com/games/cryptic/#game","name":"Cryptic","url":"https://brainilabgames.com/games/cryptic/","description":"One daily cryptic word puzzle with four optional hints and an explanation of the answer.","inLanguage":"en","isAccessibleForFree":true,"gamePlatform":"Web browser","playMode":"SinglePlayer","genre":["Word puzzle","Daily game"],"publisher":{"@id":"https://brainilabgames.com/#organization"},"image":"https://brainilabgames.com/assets/illustrations/games/cryptic.svg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://brainilabgames.com/"},{"@type":"ListItem","position":2,"name":"Games","item":"https://brainilabgames.com/games/"},{"@type":"ListItem","position":3,"name":"Cryptic","item":"https://brainilabgames.com/games/cryptic/"}]}]}</script>
+<script defer src="/assets/js/consent.bundle.js?v=41.53.0"></script>
+<script defer src="/assets/js/shell.bundle.js?v=41.53.0"></script>
+<script crossorigin="anonymous" defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/assets/js/cloud.bundle.js?v=41.53.0"></script>
+<script defer src="/assets/js/cryptic.bundle.js?v=1"></script>
+</head>
+<body class="braini-visual">
+<header class="topbar"><div class="wrap nav">
+<a class="brand" aria-label="BrainiLab home" href="/"><picture><source srcset="/assets/brand/brainilab-logo-200.webp 200w, /assets/brand/brainilab-logo.webp 450w" sizes="(max-width: 600px) 100px, 160px" type="image/webp"/><img src="/assets/brand/brainilab-logo.png" alt="BrainiLab" width="450" height="153" fetchpriority="high" decoding="async"/></picture></a>
+<nav class="links" id="mainNav" aria-label="Main navigation"><a href="/games/" aria-current="page">Games</a><a href="/daily-quiz/">Daily</a><a href="/learn/">Learn</a><a href="/rankings/">Rankings</a><a href="/groups/">Groups</a></nav>
+<div class="nav-right"><div class="streak">🔥 <span data-player-streak>0</span></div><a class="avatar" href="/profile/" aria-label="My BrainiLab">B</a><button class="mobile-menu" data-mobile-menu type="button" aria-controls="mainNav" aria-expanded="false" aria-label="Open navigation menu">Menu</button></div>
+</div></header>
+<main class="cryptic-page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/games/">Games</a><span aria-hidden="true">›</span><span>Cryptic</span></nav>
+<div class="cryptic-heading"><img src="/assets/illustrations/games/cryptic.svg" width="64" height="64" alt=""/><div><h1>Cryptic</h1><p>One clue. One word. A little light-bulb moment.</p></div></div>
+<section class="cryptic-card" data-cryptic aria-label="Daily cryptic clue">
+<div class="cryptic-meta"><span data-date>Daily word puzzle</span><span>Same clue for everyone · 00:00 UTC</span></div>
+<p class="cryptic-loading" data-loading>Loading today’s clue…</p>
+<div data-board hidden>
+<p class="cryptic-clue" data-clue></p>
+<div class="cryptic-hints" role="group" aria-label="Optional hints">
+<button type="button" data-hint="indicator" aria-pressed="false">Indicator<small>What’s the instruction?</small></button>
+<button type="button" data-hint="fodder" aria-pressed="false">Fodder<small>Which letters do I use?</small></button>
+<button type="button" data-hint="definition" aria-pressed="false">Definition<small>What does it mean?</small></button>
+<button type="button" data-letter>Reveal a letter<small>One random letter at a time</small></button>
+</div>
+<aside class="cryptic-hint-note" data-hint-note hidden><strong data-hint-name></strong><p data-hint-text></p></aside>
+<form autocomplete="off"><fieldset class="cryptic-answer"><legend data-count>Your answer</legend><div class="cryptic-letters" data-letters></div></fieldset><button class="cryptic-check" type="submit" data-check>Check answer <span aria-hidden="true">→</span></button></form>
+<section class="cryptic-result" data-result hidden aria-labelledby="crypticResultTitle">
+<h2 id="crypticResultTitle" data-result-title tabindex="-1"></h2><div class="cryptic-result-answer" data-answer></div><p data-explanation></p><ul class="cryptic-parse" data-parse></ul><p class="cryptic-result-note" data-result-note></p><button type="button" class="cryptic-share" data-share>Challenge a friend <span aria-hidden="true">↗</span></button><textarea readonly class="cryptic-share-text" data-share-text aria-label="Your spoiler-free sharing message" hidden></textarea>
+</section>
+<details class="cryptic-give-up" data-give-up><summary>Stuck? See the answer</summary><p>This finishes today’s clue as “answer revealed”. You’ll still get the full explanation.</p><button class="cryptic-secondary" type="button" data-reveal>Reveal answer</button></details>
+</div>
+<p class="cryptic-status" data-status role="status" aria-live="polite" aria-atomic="true"></p><button class="cryptic-secondary" type="button" data-retry hidden>Try loading again</button><p class="cryptic-save" data-save-note></p>
+<noscript><p>This game needs JavaScript to load the daily clue and check your answer.</p></noscript>
+</section>
+<details class="cryptic-help"><summary>New to cryptic clues?</summary><p>Each clue gives you two ways to the same word: a definition and a little recipe for its letters. The number in brackets tells you how many letters you need.</p><p>Use any hint you like. <strong>Indicator</strong> shows the instruction; <strong>fodder</strong> shows the letters to work with; <strong>definition</strong> shows the meaning. You can also reveal one random letter at a time. There’s no timer.</p><p>Cryptic is its own daily puzzle. It does not add points, XP or a streak to the main Daily.</p><p>Want more examples? <a href="https://www.minutecryptic.com/guide" target="_blank" rel="noopener noreferrer">Minute Cryptic’s guide</a> · <a href="https://www.theguardian.com/lifeandstyle/2010/may/03/how-to-solve-cryptic-crossword" target="_blank" rel="noopener noreferrer">The Guardian’s guide</a></p></details>
+<nav class="cryptic-below" aria-label="Keep exploring"><a href="/games/brainiword/">Try BrainiWord →</a><a href="/learn/paths/word-detective/">Explore word puzzles →</a></nav>
+</main>
+<footer class="footer"><div class="wrap footer-grid"><div><a href="/" aria-label="BrainiLab home"><img class="footer-logo" src="/assets/brand/brainilab-logo.png" alt="BrainiLab" width="450" height="153" loading="lazy"/></a><div class="footer-links"><a href="/games/">Games</a><a href="/daily-quiz/">Daily</a><a href="/learn/">Learn</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/cookies/#privacy-choices" data-manage-privacy>Manage privacy</a></div></div></div></footer>
+<div class="toast">Done</div>
+</body></html>

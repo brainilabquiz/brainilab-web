@@ -3,6 +3,7 @@ import {cachedHomeVideos,renderHomeVideoCards} from './lib/home-video-cards.js';
 import {servePublicLearn,learnRelatedVideo} from './lib/learn-store.js';
 import {HEALTH_CRON,scheduledHealth,healthStatus} from './lib/site-health.js';
 import {productionRequest} from './lib/production-origin.js';
+import {crypticAPI} from './lib/cryptic-api.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from './lib/breaking-news.js';
@@ -79,6 +80,7 @@ export default {
   async fetch(request,env,ctx){
     request=productionRequest(request);
     const url=new URL(request.url);
+    if(url.pathname==='/api/cryptic')return crypticAPI(request);
     if(url.pathname==='/api/site-health'){
       if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{Allow:'GET, HEAD'}});
       const result=await healthStatus(env);return request.method==='HEAD'?new Response(null,{status:result.status,headers:result.headers}):result;

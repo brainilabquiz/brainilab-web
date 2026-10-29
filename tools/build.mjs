@@ -40,8 +40,10 @@ import './test-image-sitemap.mjs';
 import './test-brand-logo-images.mjs';
 import './test-catalogue-readings.mjs';
 import './test-page-styles.mjs';
+import './test-cryptic.mjs';
 
 const root=path.resolve('.');
+await build({entryPoints:['editor/cryptic.js'],outfile:'assets/js/cryptic.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const videoMarker='/* related-video bundle */';
 const shellSource=await readFile('assets/js/shell.bundle.js','utf8');
@@ -68,7 +70,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set(['assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['assets/js/cryptic.bundle.js','assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.

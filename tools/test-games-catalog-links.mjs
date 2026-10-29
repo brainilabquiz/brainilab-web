@@ -33,7 +33,7 @@ for(const fixture of fixtures){
  w.BrainiData={dailyGameIdsForDate:date=>date<'2026-09-01'?['brainmix','brainiword','orderup','topicrush']:[],recentResults:()=>[{practice:true,challengeDate:'2026-08-29'}],personalBest:()=>null,player:()=>({level:1}),saveResult:()=>{writes++;},addXP:()=>{writes++;}};
  w.BrainiIcons={product:()=>''};w.eval(script);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  const links=[...w.document.querySelectorAll('[data-random-past-game]')];
- const readings=[...w.document.querySelectorAll('.catalogue-reading')];assert.equal(readings.length,18);
+ const readings=[...w.document.querySelectorAll('.catalogue-reading')];assert.equal(readings.length,19);
  const readingHrefs=readings.map(a=>a.getAttribute('href'));w.dispatchEvent(new w.Event('brainilab:datachange'));
  assert.ok(readings.every(a=>a.isConnected),'Score/status hydration preserves each reading action');
  assert.deepEqual([...w.document.querySelectorAll('.catalogue-reading')].map(a=>a.getAttribute('href')),readingHrefs);
