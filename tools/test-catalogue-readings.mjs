@@ -8,7 +8,7 @@ const cards=html=>[...html.matchAll(/<article\b[^>]*data-anytime-game="([^"]+)"[
 const strip=html=>html.replace(/<!-- catalogue-reading:start --><div class="game-card-context">([\s\S]*?)<a class="catalogue-reading"[\s\S]*?<\/a><\/div><!-- catalogue-reading:end -->/g,'$1');
 const links=html=>[...html.matchAll(/<a class="catalogue-reading" href="([^"]+)" aria-label="([^"]*)">/g)];
 const result=refreshCatalogueReadings(source,articles);
-assert.equal(cards(result).length,18);assert.equal(links(result).length,18,'Every existing game has one curated reading');
+assert.equal(cards(result).length,19);assert.equal(links(result).length,19,'Every game, including Cryptic, has one curated reading');
 assert.equal(strip(result),strip(source),'Only secondary reading links are added: game links, descriptions, JSON-LD, archive/difficulty queries and controls remain exact');
 assert.equal(refreshCatalogueReadings(result,articles),result,'Rebuilds never duplicate the reading action');
 for(const card of cards(result)){
@@ -29,4 +29,4 @@ const safe=refreshCatalogueReadings(result,hostile);assert.ok(safe.includes('&lt
 let external=strip(source).replace('href="brain-mix/index.html?archive=2026-08-29"','href="https://example.org/games/brain-mix/"');
 assert.equal(links(cards(refreshCatalogueReadings(external,articles)).find(c=>c[1]==='brainmix')[2]).length,0,'Only existing same-origin game routes receive a reading');
 assert.equal(refreshCatalogueReadings('<main>Other page</main>',articles),'<main>Other page</main>');
-console.log('PASS catalogue readings: 18 published static destinations, original game links/content/schema, idempotence, withdrawal/draft fallback, safe titles, no added images or client requests.');
+console.log('PASS catalogue readings: 19 published static destinations, original game links/content/schema, idempotence, withdrawal/draft fallback, safe titles, no added images or client requests.');
