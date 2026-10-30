@@ -36,6 +36,9 @@ await setup('pending');show();check().click();assert.equal(requests,1);await sav
 
 await setup('pending');show();check().click();await save();show(other);const chosen=root.querySelector('[data-seo-selected-page]');chosen.focus();resolve();await pause();assert.match(status(),/Not checked/);assert.equal(document.activeElement,chosen);show();assert.match(status(),/Public HTML checked/);assert.equal(requests,1);
 
+await setup('pending');show();check().click();const reopeningResult=resolve,oldChoice=root.querySelector('[data-seo-selected-page]');oldChoice.focus();let deliverWorkspace;
+const reopening=GrowthAdmin.render({root,rpc:()=>new Promise(r=>deliverWorkspace=r)});reopeningResult();await pause();assert.equal(document.activeElement,oldChoice,'A previous response cannot take focus while a new workspace is loading');deliverWorkspace(structuredClone(data));await reopening;show();assert.match(status(),/Not checked/);assert.equal(check().disabled,false);
+
 await setup('pending');show();check().click();const oldResult=resolve;GrowthAdmin.reset();await GrowthAdmin.render({root,rpc:async()=>structuredClone(data)});show();const freshStatus=status(),focus=document.activeElement;oldResult();await pause();assert.equal(status(),freshStatus);assert.equal(check().disabled,false);assert.equal(document.activeElement,focus,'A previous Growth session cannot focus the new one');
 globalThis.fetch=async()=>{requests++;return response();};check().click();await pause();assert.equal(requests,2,'A fresh workspace needs a new explicit check');assert.match(status(),/Public HTML checked/);
 assert.equal(JSON.stringify(data),original);assert.equal(dom.window.location.hash,'#growth');GrowthAdmin.reset();dom.window.close();

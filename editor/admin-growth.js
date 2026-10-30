@@ -89,8 +89,8 @@ async function mutate(name,args,message,savedForm){
  finally{if(run===epoch){busy=false;disabled.forEach((value,el)=>{if(el.isConnected)el.disabled=value;});}}
 }
 export const GrowthAdmin={
- async render(options){releaseNavigation();context=options;const run=++epoch;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';const data=await options.rpc('admin_get_growth_workspace');if(run!==epoch)return;workspace=data;draw();},
+ async render(options){releaseNavigation();pageCheckSession.refresh=null;context=options;const run=++epoch;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';const data=await options.rpc('admin_get_growth_workspace');if(run!==epoch)return;workspace=data;draw();},
  canLeave(){return !busy&&(!dirty||confirm('Leave without saving this Growth decision?'));},
- reset(){releaseNavigation();releaseNavigation=()=>{};epoch++;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';if(context?.root.querySelector('[data-growth]'))context.root.replaceChildren();context=null;workspace=null;}
+ reset(){releaseNavigation();releaseNavigation=()=>{};pageCheckSession.refresh=null;epoch++;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';if(context?.root.querySelector('[data-growth]'))context.root.replaceChildren();context=null;workspace=null;}
 };
 if(typeof window!=='undefined'){window.BrainiGrowth=GrowthAdmin;window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});}
