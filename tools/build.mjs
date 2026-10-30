@@ -24,6 +24,7 @@ execFileSync(process.execPath,['tools/test-growth-schema-navigation.mjs'],{stdio
 execFileSync(process.execPath,['tools/test-growth-review-return.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-open.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-drafts.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['tools/test-growth-public-check-session.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-learning-discovery.mjs';
 import './test-sitemap-dates.mjs';
