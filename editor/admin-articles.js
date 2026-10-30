@@ -5,6 +5,7 @@ import {catalogueMatches} from '../lib/article-discovery.js';
 import {bindArticleLinkPicker} from './article-link-picker.js';
 import {bindArticleGrowthPanel} from './article-growth-panel.js';
 import {writingReviewMarkup,focusWritingIssue} from './article-writing-review.js';
+import {articleDraftSignature,acknowledgedArticle} from './article-save-state.js';
 import {coverImage} from '../lib/cover-images.js';
 import {quizFields,collectQuiz,authorSelect} from './quiz-fields.js';
 import {validQuiz} from '../lib/learning-model.js';
@@ -12,7 +13,7 @@ import {uploadCover} from './cover-upload.js';
 import {videoEditor,bindVideoEditor} from './article-video.js';
 let authors=[];
 let context,rows=[],active=null,dirty=false,busy=false,coverSelection=null,videoSelection=null,writingFocused=false,cleanDraftSignature='';
-let articleEvidencePanel=null;
+let articleEvidencePanel=null,editSession=0;
 const growthCache={report:null};
 const $=selector=>context.root.querySelector(selector);
 const slugify=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100);
@@ -20,6 +21,7 @@ const topics=['Curiosity','Everyday inventions','Geography','Getting started','H
 const gameOptions=[['Brain Mix','/games/brain-mix/'],['World Flags','/geography/world-flags-quiz/'],['World Capitals','/geography/world-capitals-quiz/'],['General Knowledge','/general-knowledge/general-knowledge-quiz/'],['Science Quiz','/science/science-quiz/'],['History Quiz','/history/history-quiz/'],['Sports Quiz','/sports/sports-quiz/'],['Connections','/games/connections/'],['Math Rush','/games/math-rush/'],['Sequence','/games/sequence/'],['BrainiWord','/games/brainiword/'],['Number Route','/games/number-route/'],['Order Up','/games/order-up/'],['Topic Rush','/games/topic-rush/'],['Odd One Out','/games/odd-one-out/'],['Higher or Lower','/games/higher-lower/'],['Survival','/games/survival/']];
 function markDirty(){if(!active)return;dirty=true;if(busy)return;const status=$('#article-save-state');if(status)status.textContent='Unsaved changes';renderChecks();}
 function canLeave(){if(busy){context.toast('Please wait for the current save or upload to finish.');return false;}return !dirty||window.confirm('You have unsaved article changes. Leave without saving?');}
+function draftSignature(){return JSON.stringify([articleDraftSignature(collect()),$('#article-video-url')?.value.trim()||'']);}
 function writingReview(){return inspectArticle(collect(),{document:context.root.ownerDocument,articles:rows,mode:active.revision?'revision':'new'});}
 function setWritingFocus(value){writingFocused=value;context.root.querySelector('.article-editor')?.classList.toggle('is-writing-focused',value);const button=$('#article-focus');if(button){button.setAttribute('aria-pressed',String(value));button.textContent=value?'Show all fields':'Focus on writing';}}
 function focusField(id){setWritingFocus(false);const field=$('#'+id);if(!field)return;for(let p=field.parentElement;p&&p!==context.root;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;field.focus();field.scrollIntoView?.({block:'center',behavior:'auto'});}
@@ -40,8 +42,9 @@ function field(id,label,value='',type='text',extra=''){return `<label class="art
 function area(id,label,value='',rows=3){return `<label class="article-field" for="${id}">${label}<textarea id="${id}" rows="${rows}">${esc(value)}</textarea></label>`;}
 function setStatus(message,error=false){const el=$('#article-save-state');if(el){el.textContent=message;el.classList.toggle('error',error);}}
 async function guarded(fn){if(busy)return;busy=true;context.root.querySelectorAll('[data-save],#article-upload').forEach(e=>e.disabled=true);try{await fn();}catch(error){setStatus(error.message||String(error),true);context.toast(error.message||'Could not save');}finally{busy=false;context.root.querySelectorAll('[data-save],#article-upload').forEach(e=>e.disabled=false);}}
-async function load(){[rows,authors]=await Promise.all([context.rpc('admin_list_learn_articles'),context.rpc('admin_list_learning_entities',{p_kind:'author'})]);authors=authors||[];}
+async function load(session=editSession){const result=await Promise.all([context.rpc('admin_list_learn_articles'),context.rpc('admin_list_learning_entities',{p_kind:'author'})]);if(session!==editSession)return;[rows,authors]=result;authors=authors||[];}
 function listing(){
+ editSession++;
  articleEvidencePanel?.dispose();articleEvidencePanel=null;
  active=null;dirty=false;videoSelection=null;writingFocused=false;context.root.oninput=null;context.root.onchange=null;context.root.onkeydown=null;
  context.root.innerHTML=`<div class="admin-panel"><div class="article-list-toolbar"><p>${rows.filter(r=>r.published_revision).length} published · ${rows.filter(r=>r.revision!==r.published_revision).length} drafts / changes</p><button type="button" class="admin-button primary" id="article-new">+ New article</button></div><div class="article-list-toolbar">${field('article-search','Search articles')}<label class="article-field">Category<select id="article-category"><option value="">All categories</option>${[...new Set(rows.map(r=>r.document.topic).filter(Boolean))].sort().map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></label><label class="article-field">Status<select id="article-status"><option value="">All</option><option value="published">Published</option><option value="draft">Drafts / changes</option></select></label></div><p id="article-list-count" class="article-help" role="status"></p><div id="article-list"></div></div>`;
@@ -67,7 +70,45 @@ function collect(){
  sections:[...context.root.querySelectorAll('[data-section]')].map((section,i)=>({id:section.querySelector('[data-section-id]').value||slugify(section.querySelector('[data-section-title]').value)||'section-'+(i+1),title:section.querySelector('[data-section-title]').value.trim(),html:cleanHtml(section.querySelector('[data-rich]').innerHTML)})),
  sources:[...context.root.querySelectorAll('[data-source]')].map(source=>({name:source.querySelector('[data-source-name]').value.trim(),url:source.querySelector('[data-source-url]').value.trim()})).filter(s=>s.name||s.url),related:[...context.root.querySelectorAll('[data-related]:checked')].map(input=>input.value)};
 }
+function publicationActions(){return active.published_revision?`<a href="/learn/${esc(active.slug)}/" target="_blank" rel="noopener">Open published article ↗</a><button type="button" class="admin-button" data-save="unpublish"${busy?' disabled':''}>Move published article to draft</button>`:'';}
+function bindSaveButtons(){
+ context.root.querySelectorAll('[data-save]').forEach(button=>button.onclick=()=>guarded(async()=>{
+  const action=button.dataset.save;if(action==='draft'&&active.revision&&(!dirty||draftSignature()===cleanDraftSignature)){dirty=false;setStatus('No changes to save.');return;}if(action==='unpublish'&&!confirm('Remove this article from the public library? Its draft and history will remain.'))return;
+  if(action!=='unpublish')videoSelection?.validate();
+  const a=collect();if(action==='publish'){
+   if(a.quiz&&!validQuiz(a.quiz))throw Error('The quick round needs 2–8 complete questions, four distinct choices and explanations.');
+   if(!a.sections.length||a.sections.some(s=>!s.title||!s.html.replace(/<[^>]*>/g,'').trim()))throw Error('Each section needs a heading and text before publishing.');
+   if(!safeCover(a.cover.src))throw Error('Choose or upload a cover before publishing.');
+   const missing=articleChecks(a).filter(c=>!c.ok);if(missing.length){setWritingFocus(false);$('#article-checks').open=true;throw Error('Complete before publishing: '+missing.map(c=>c.label).join(', ')+'.');}
+   const writing=writingReview();if(writing.problems.length){setWritingFocus(false);$('#article-checks').open=true;throw Error(writing.problems[0].message);}
+   const cover=$('#article-cover-preview');if(!cover.complete||!cover.naturalWidth)throw Error('The cover has not loaded. Check its URL or upload a new image.');
+  }
+  const session=editSession,previous=active,signature=draftSignature(),slug=$('#article-slug');
+  slug.readOnly=true;setStatus(action==='publish'?'Publishing…':'Saving…');
+  let result;
+  try{result=await context.rpc('admin_save_learn_article',{p_slug:a.slug,p_document:a,p_revision:previous.revision,p_action:action});}
+  catch(error){if(session!==editSession)return;$('#article-slug').readOnly=!!active.revision;throw error;}
+  if(session!==editSession)return;
+  // A refreshed catalogue can already contain somebody else's later edit.
+  // Only the acknowledged save advances this editor's concurrency revision.
+  active=acknowledgedArticle(previous,result,a,action);
+  cleanDraftSignature=signature;
+  $('#article-slug').value=active.slug;$('#article-slug').readOnly=true;
+  $('#article-url-label').textContent=active.slug;
+  $('#article-history').disabled=false;
+  $('#article-publication-actions').innerHTML=publicationActions();bindSaveButtons();
+  rows=[active,...rows.filter(row=>row.slug!==active.slug)];
+  let refreshFailed=false;try{await load(session);}catch{refreshFailed=true;}
+  if(session!==editSession)return;
+  // Keep the existing editing nodes: copy, caret, native undo, focus and open
+  // panels survive, including edits made while either request was pending.
+  dirty=draftSignature()!==cleanDraftSignature;renderChecks();
+  const message=action==='publish'?'Published · website updates within about a minute.':action==='unpublish'?'Moved to draft · public links will be removed within about a minute.':'Draft saved · published article unchanged.';
+  setStatus(message+(dirty?' Newer changes are not saved.':'')+(refreshFailed?' Could not refresh the article list.':''),refreshFailed);
+ }));
+}
 function openArticle(row,documentOverride){
+ if(!documentOverride)editSession++;
  articleEvidencePanel?.dispose();articleEvidencePanel=null;
  active=row?structuredClone(row):{slug:'',revision:0,document:blank(),published_revision:null};
  if(documentOverride)active.document=structuredClone(documentOverride);
@@ -75,12 +116,12 @@ function openArticle(row,documentOverride){
  coverSelection=structuredClone(a.cover||{});
  const covers=[...new Map(rows.filter(r=>safeCover(r.document.cover?.src)).map(r=>[r.document.cover.src,r.document])).values()];
  context.root.innerHTML=`<div class="article-editor"><div class="article-editor-actions"><button class="admin-button" type="button" id="articles-back">← Articles</button><div><button type="button" class="admin-button" id="article-focus" aria-pressed="false">Focus on writing</button><button type="button" class="admin-button" id="article-preview">Preview</button><button type="button" class="admin-button" data-save="draft">Save draft</button><button type="button" class="admin-button primary" data-save="publish">Publish</button></div></div><p id="article-save-state" role="status">${active.revision?'Saved revision '+active.revision:'New draft'}${active.published_revision?' · currently published':''}</p>
-<div class="article-writing-summary"><strong id="article-writing-stats"></strong><span id="article-writing-hint"></span></div><div class="article-editor-grid"><div class="admin-panel article-writing-main">${field('article-title','Title',a.title,'text','maxlength="180" required')}${area('article-description','Short description / search description',a.description)}<div class="article-writing-meta"><div class="article-two-columns">${field('article-topic','Category',a.topic,'text','list="article-topics" maxlength="60"')}<datalist id="article-topics">${topics.map(t=>`<option value="${esc(t)}">`).join('')}</datalist>${field('article-slug','Article URL',a.slug,'text',active.revision?'readonly':'placeholder="short-readable-url"')}</div><p class="article-help">/learn/<span id="article-url-label">${esc(a.slug||'your-article')}</span>/ ${active.revision?' · URL stays stable for existing links.':''}</p>
+<div class="article-writing-summary"><strong id="article-writing-stats"></strong><span id="article-writing-hint"></span></div><div class="article-editor-grid"><div class="admin-panel article-writing-main">${field('article-title','Title',a.title,'text','maxlength="180" required')}${area('article-description','Short description / search description',a.description)}<div class="article-writing-meta"><div class="article-two-columns">${field('article-topic','Category',a.topic,'text','list="article-topics" maxlength="60"')}<datalist id="article-topics">${topics.map(t=>`<option value="${esc(t)}">`).join('')}</datalist>${field('article-slug','Article URL',a.slug,'text',active.revision||busy?'readonly':'placeholder="short-readable-url"')}</div><p class="article-help">/learn/<span id="article-url-label">${esc(a.slug||'your-article')}</span>/ ${active.revision?' · URL stays stable for existing links.':''}</p>
 ${authorSelect(authors,a.authorId||'')}</div><h2>Article</h2><div id="article-sections">${a.sections.map(sectionMarkup).join('')}</div><button type="button" class="admin-button" id="article-add-section">+ Add section</button>
 ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &amp; further reading</summary><div id="article-sources">${a.sources.map(sourceMarkup).join('')}</div><button type="button" class="admin-button" id="article-add-source">+ Add source</button></details>
 <details class="article-settings"><summary>Related game and articles</summary><label class="article-field">Choose a game<select id="article-game-pick"><option value="">Custom / current</option>${gameOptions.map(([name,url])=>`<option value="${url}">${esc(name)}</option>`).join('')}</select></label><div class="article-two-columns">${field('article-game-name','Game name',a.game?.name)}${field('article-game-url','Game path',a.game?.url)}</div>${area('article-practice','Invitation to play',a.practice)}<div class="article-two-columns">${field('article-hub-name','Topic link label',a.hub?.name)}${field('article-hub-url','Topic path',a.hub?.url)}</div><fieldset class="article-related-choices"><legend>Related articles</legend><label class="article-field" for="article-related-search">Find a related article<input type="search" id="article-related-search" placeholder="Search titles or categories"/></label><p class="article-help" id="article-related-count" role="status"></p>${rows.filter(r=>r.slug!==a.slug&&(r.published_revision||a.related?.includes(r.slug))).map(r=>`<label><input type="checkbox" data-related value="${esc(r.slug)}"${a.related?.includes(r.slug)?' checked':''}/> ${esc(r.document.title)}${r.published_revision?'':' (not published)'}</label>`).join('')}<button type="button" id="article-related-more" hidden>Show more articles</button></fieldset></details></div>
 <aside><div class="admin-panel"><h2>Cover</h2><div class="article-cover-preview"><img id="article-cover-preview" src="${safeCover(a.cover?.src)?esc(a.cover.src):'/assets/brand/iso-multicolor.png'}" alt="Cover crop preview" style="object-position:center ${Number(a.cover?.position??45)}%"/></div><label class="article-field">Use an existing cover<select id="article-cover-pick"><option value="">Choose a cover…</option>${covers.map(c=>`<option value="${esc(c.cover.src)}">${esc(c.title)}</option>`).join('')}</select></label><label class="article-field">Upload photo<input id="article-upload" type="file" accept="image/jpeg,image/png,image/webp"/></label><p class="article-help">JPG, PNG or WebP. Images are resized before upload. Uploaded covers are public.</p><details class="article-cover-crops"><summary>Check library crops</summary><div><figure><img data-cover-crop="wide" alt="Wide library crop preview"/><figcaption>Wide card</figcaption></figure><figure><img data-cover-crop="square" alt="Square library crop preview"/><figcaption>Small card</figcaption></figure></div><p class="article-help">Check that the subject stays clear in both crops.</p></details>${field('article-cover-url','Cover URL',a.cover?.src)}${field('article-cover-position','Vertical crop position',a.cover?.position??45,'range','min="0" max="100"')}${area('article-cover-alt','Describe the image (alt text)',a.cover?.alt,2)}${field('article-cover-credit','Photo credit',a.cover?.credit)}</div>
-<details class="admin-panel article-settings"><summary>Publishing &amp; history</summary>${field('article-order','Order within the same publication date',a.order??999,'number','min="0" max="9999"')}<p class="article-help">Edits stay private until Publish. Changes appear on the website within about a minute.</p>${active.published_revision?`<a href="/learn/${esc(a.slug)}/" target="_blank" rel="noopener">Open published article ↗</a><button type="button" class="admin-button" data-save="unpublish">Move published article to draft</button>`:''}<button type="button" class="admin-button" id="article-history" ${active.revision?'':'disabled'}>Version history</button><div id="article-history-list"></div></details></aside></div><dialog id="article-preview-dialog"><div><strong>Article preview · not published</strong><div class="article-preview-sizes" aria-label="Preview size"><button type="button" data-preview-size="desktop" aria-pressed="true">Desktop</button><button type="button" data-preview-size="mobile" aria-pressed="false">Mobile</button></div><button type="button" class="admin-button" id="article-preview-close">Close</button></div><iframe title="Article preview" sandbox=""></iframe></dialog></div>`;
+<details class="admin-panel article-settings"><summary>Publishing &amp; history</summary>${field('article-order','Order within the same publication date',a.order??999,'number','min="0" max="9999"')}<p class="article-help">Edits stay private until Publish. Changes appear on the website within about a minute.</p><div id="article-publication-actions">${publicationActions()}</div><button type="button" class="admin-button" id="article-history" ${active.revision?'':'disabled'}>Version history</button><div id="article-history-list"></div></details></aside></div><dialog id="article-preview-dialog"><div><strong>Article preview · not published</strong><div class="article-preview-sizes" aria-label="Preview size"><button type="button" data-preview-size="desktop" aria-pressed="true">Desktop</button><button type="button" data-preview-size="mobile" aria-pressed="false">Mobile</button></div><button type="button" class="admin-button" id="article-preview-close">Close</button></div><iframe title="Article preview" sandbox=""></iframe></dialog></div>`;
  context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('afterbegin','<details id="article-checks" class="admin-panel article-readiness"></details>');
  context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('beforeend',`<details id="article-search-appearance" class="admin-panel article-settings"><summary>Search appearance</summary><div class="article-search-result"><small data-search-url></small><strong data-search-title></strong><p data-search-description></p></div><p class="article-help">An illustration of your title and description. Search engines may show different text.</p></details>`+videoEditor(a.video));
  context.root.querySelector('.article-editor-grid>aside').insertAdjacentHTML('beforeend','<details id="article-evidence" class="admin-panel article-evidence"><summary>Search evidence &amp; link plan</summary><p class="article-help" role="status" aria-live="polite"></p><button type="button" class="admin-button">Load saved Growth report</button><div data-article-evidence></div></details>');
@@ -99,7 +140,7 @@ ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &am
  $('#article-related-search').oninput=()=>{relatedLimit=8;filterRelated();};$('#article-related-more').onclick=()=>{relatedLimit+=8;filterRelated();};context.root.querySelectorAll('[data-related]').forEach(input=>input.addEventListener('change',filterRelated));filterRelated();
  context.root.querySelectorAll('[data-preview-size]').forEach(button=>button.onclick=()=>{const dialog=$('#article-preview-dialog'),mobile=button.dataset.previewSize==='mobile';dialog.querySelector('iframe').style.width=mobile?'390px':'100%';dialog.querySelectorAll('[data-preview-size]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));});
  $('#articles-back').onclick=()=>{if(canLeave())listing();};
- $('#article-title').oninput=()=>{if(!active.revision&&!$('#article-slug').dataset.edited){$('#article-slug').value=slugify($('#article-title').value);$('#article-url-label').textContent=$('#article-slug').value;}};
+ $('#article-title').oninput=()=>{if(!active.revision&&!busy&&!$('#article-slug').dataset.edited){$('#article-slug').value=slugify($('#article-title').value);$('#article-url-label').textContent=$('#article-slug').value;}};
  $('#article-slug').oninput=()=>{$('#article-slug').dataset.edited='1';$('#article-url-label').textContent=$('#article-slug').value;};
  $('#add-question').onclick=()=>{const a=collect();if((a.quiz?.questions.length||0)>=8)return;const questions=a.quiz?.questions||[];questions.push({prompt:'',options:['','','',''],answer:0,explanation:''});a.quiz={version:crypto.randomUUID(),questions};openArticle(active,a);markDirty();};
  context.root.querySelectorAll('[data-remove-question]').forEach((button,i)=>button.onclick=()=>{const a=collect();a.quiz.questions.splice(i,1);if(!a.quiz.questions.length)a.quiz=null;openArticle(active,a);markDirty();});
@@ -122,25 +163,12 @@ ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &am
  $('#article-cover-pick').onchange=()=>{const a=covers.find(a=>a.cover.src===$('#article-cover-pick').value);if(a){coverSelection=structuredClone(a.cover);$('#article-cover-url').value=a.cover.src;$('#article-cover-alt').value=a.cover.alt;$('#article-cover-credit').value=a.cover.credit;$('#article-cover-position').value=a.cover.position??45;updateCover();}};
  $('#article-cover-url').oninput=updateCover;$('#article-cover-position').oninput=updateCover;
  $('#article-upload').onchange=()=>guarded(async()=>{const file=$('#article-upload').files[0];if(!file)return;setStatus('Preparing cover and thumbnails…');const uploaded=await uploadCover(file,context.sb.storage.from('learn-covers'));coverSelection=uploaded;$('#article-cover-url').value=uploaded.src;updateCover();markDirty();setStatus('Cover and thumbnails uploaded · save your draft to keep this selection.');});
- context.root.querySelectorAll('[data-save]').forEach(button=>button.onclick=()=>guarded(async()=>{
-  const action=button.dataset.save;if(action==='draft'&&active.revision&&(!dirty||JSON.stringify(collect())===cleanDraftSignature)){dirty=false;setStatus('No changes to save.');return;}if(action==='unpublish'&&!confirm('Remove this article from the public library? Its draft and history will remain.'))return;
-  if(action!=='unpublish')videoSelection?.validate();
-  const a=collect();if(action==='publish'){
-   if(a.quiz&&!validQuiz(a.quiz))throw Error('The quick round needs 2–8 complete questions, four distinct choices and explanations.');
-   if(!a.sections.length||a.sections.some(s=>!s.title||!s.html.replace(/<[^>]*>/g,'').trim()))throw Error('Each section needs a heading and text before publishing.');
-   if(!safeCover(a.cover.src))throw Error('Choose or upload a cover before publishing.');
-   const missing=articleChecks(a).filter(c=>!c.ok);if(missing.length){setWritingFocus(false);$('#article-checks').open=true;throw Error('Complete before publishing: '+missing.map(c=>c.label).join(', ')+'.');}
-   const writing=writingReview();if(writing.problems.length){setWritingFocus(false);$('#article-checks').open=true;throw Error(writing.problems[0].message);}
-   const cover=$('#article-cover-preview');if(!cover.complete||!cover.naturalWidth)throw Error('The cover has not loaded. Check its URL or upload a new image.');
-  }
-  setStatus(action==='publish'?'Publishing…':'Saving…');
-  const result=await context.rpc('admin_save_learn_article',{p_slug:a.slug,p_document:a,p_revision:active.revision,p_action:action});
-  dirty=false;await load();openArticle(rows.find(r=>r.slug===result.slug));setStatus(action==='publish'?'Published · website updates within about a minute.':action==='unpublish'?'Moved to draft · public links will be removed within about a minute.':'Draft saved · published article unchanged.');
- }));
+ bindSaveButtons();
  $('#article-preview').onclick=()=>{try{const a=prepareArticle({...collect(),slug:$('#article-slug').value||'preview'});const dialog=$('#article-preview-dialog');dialog.querySelector('iframe').srcdoc=`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="${location.origin}/assets/css/site.css"><link rel="stylesheet" href="${location.origin}/assets/css/editorial.css"><body class="editorial-page">${articleBody(a,rows.map(r=>prepareArticle(r.document)))}</body></html>`;dialog.showModal();}catch(error){setStatus(error.message,true);}};
  $('#article-preview-close').onclick=()=>$('#article-preview-dialog').close();
  $('#article-history').onclick=()=>guarded(async()=>{const versions=await context.rpc('admin_learn_article_history',{p_slug:active.slug});$('#article-history-list').innerHTML=versions.map(v=>`<button type="button" data-version="${v.revision}">Revision ${v.revision} · ${esc(v.action)} · ${new Date(v.created_at).toLocaleDateString()}</button>`).join('');context.root.querySelectorAll('[data-version]').forEach(button=>button.onclick=()=>{if(!canLeave())return;const v=versions.find(v=>v.revision===Number(button.dataset.version));openArticle(active,v.document);setStatus('Revision '+v.revision+' loaded as unsaved changes. Save draft or Publish to use it.');});});
- if(!documentOverride)cleanDraftSignature=JSON.stringify(collect());
+ if(!documentOverride)cleanDraftSignature=draftSignature();
+ if(busy)context.root.querySelectorAll('[data-save],#article-upload').forEach(button=>button.disabled=true);
 }
 window.addEventListener('beforeunload',event=>{if(dirty||busy){event.preventDefault();event.returnValue='';}});
-window.BrainiArticles={async render(options){articleEvidencePanel?.dispose();growthCache.report=null;context=options;await load();listing();},canLeave,reset(){articleEvidencePanel?.dispose();articleEvidencePanel=null;growthCache.report=null;dirty=false;if(context){context.root.oninput=null;context.root.onchange=null;context.root.onkeydown=null;}active=null;}};
+window.BrainiArticles={async render(options){const session=++editSession;articleEvidencePanel?.dispose();growthCache.report=null;context=options;await load(session);if(session===editSession)listing();},canLeave,reset(){editSession++;articleEvidencePanel?.dispose();articleEvidencePanel=null;growthCache.report=null;dirty=false;if(context){context.root.oninput=null;context.root.onchange=null;context.root.onkeydown=null;}active=null;}};
