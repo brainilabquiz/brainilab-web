@@ -16,7 +16,7 @@ const click=selector=>root.querySelector(selector).click(),input=(name,value)=>{
 async function open(data){const bytes=new TextEncoder().encode(JSON.stringify(data));Object.defineProperty(root.querySelector('[data-open-project]'),'files',{configurable:true,value:[{size:bytes.length,arrayBuffer:async()=>bytes.buffer}]});root.querySelector('[data-open-project]').dispatchEvent(new dom.window.Event('change',{bubbles:true}));await flush();}
 click('[data-demo]');click('[data-save]');assert.equal(leave(),false);
 click('[data-view="plan"]');const initialActions=structuredClone(app.snapshot().actions),initialSearch=structuredClone(app.snapshot().search);
-const target='https://juniper.example/first-workshop/',draft={url:target,title:'  Keep the captured schema context  ',evidence:'  Unsubmitted local QA note. Read the saved comparison before any edit.\nKeep its source date.  '};
+const target='https://juniper.example/first-workshop/',draft={url:target,title:'  Keep the captured schema context  ',evidence:'\n  Unsubmitted local QA note. Read the saved comparison before any edit.\nKeep its source date.  '};
 for(const [name,value]of Object.entries(draft))input(name,value);
 assert.equal(leave(),true,'Pending inputs participate in the unsaved-work guard');assert.equal(root.querySelector('[data-discard-action-draft]').disabled,false);
 const textarea=root.querySelector('[data-action-form] [name="evidence"]');textarea.setSelectionRange(3,7);input('title',draft.title+'x');assert.equal(root.querySelector('[data-action-form] [name="evidence"]'),textarea,'Typing does not rebuild the form');assert.equal(textarea.selectionStart,3);input('title',draft.title);
