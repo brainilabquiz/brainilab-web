@@ -13,7 +13,7 @@ const articles=enrichAuthors(raw.filter(a=>a.status==='published').map(prepareAr
 const paths=(await Promise.all((await readdir('content/paths')).filter(f=>f.endsWith('.json')).map(f=>read('content/paths/'+f)))).filter(p=>p.status==='published');
 await mkdir('assets/data',{recursive:true});
 await writeFile('assets/data/learn-game-links.json',JSON.stringify({version:1,articles:articles.map(articleJourney).filter(Boolean)}));
-for(const file of readingPages){const html=await readFile(file,'utf8');await writeFile(file,refreshGameReadings(html,articles,file));}
+for(const file of readingPages){const html=await readFile(file,'utf8');await writeFile(file,refreshGameReadings(html,articles,file,paths));}
 await writeFile('games/index.html',refreshCatalogueReadings(await readFile('games/index.html','utf8'),articles));
 if(readyPaths(paths,articles).length!==paths.length)throw Error('Every published path must have distinct published lessons with valid quizzes.');
 const template=await readFile('learn/index.html','utf8');

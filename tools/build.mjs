@@ -25,6 +25,7 @@ execFileSync(process.execPath,['tools/test-growth-review-return.mjs'],{stdio:'in
 execFileSync(process.execPath,['tools/test-growth-decision-open.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-drafts.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
+import './test-learning-discovery.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';
 import './test-result-cross-device.mjs';
