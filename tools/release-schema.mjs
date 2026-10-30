@@ -1,7 +1,7 @@
 import {JSDOM} from 'jsdom';
 import {createHash} from 'node:crypto';
 import {inertPublicHTML} from '../editor/page-link-evidence.js';
-import {observeLearnSchema,learnSchemaURL} from '../editor/page-schema-evidence.js';
+import {observeLearnSchema,learnSchemaURL,learnBylineDates} from '../editor/page-schema-evidence.js';
 import {boundedText} from '../lib/public-json.js';
 import {healthOrigin,PRODUCTION_ORIGIN} from '../lib/site-health.js';
 
@@ -30,14 +30,19 @@ export function compareLearnSchema(html,path,{document}={}){
   const evidence=observeLearnSchema(fragment,url,nodes,{incomplete});
   if(evidence?.state!=='ready')add('primary_entity','unverified');
   for(const c of evidence?.checks||[])if(!['same','equivalent'].includes(c.state))add(c.field,c.state==='different'?'different':'unverified',c.declaration,c.page);
-  for(const [field,selector]of [['headline','main h1'],['author','main .article-byline [rel~="author"],main .article-byline > span'],['cover',path.includes('/paths/')?'main .academy-hero > img':'main .article-cover img'],['published','main .article-byline time']]){
+  for(const [field,selector]of [['headline','main h1'],['author','main .article-byline [rel~="author"],main .article-byline > span'],['cover',path.includes('/paths/')?'main .academy-hero > img':'main .article-cover img']]){
    const matches=fragment.querySelectorAll(selector);if(matches.length!==1||!exposed(matches[0]))add(field+'_visibility','unverified');
   }
-  const times=fragment.querySelectorAll('main .article-byline time[datetime]');
-  if(times.length===1){const stamp=Date.parse(times[0].getAttribute('datetime'));
-   const expected=Number.isFinite(stamp)?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(stamp):null;
-   if(!expected)add('published_label','unverified');
-   else if(normal(times[0].textContent)!==normal(expected))add('published_label','different',expected,normal(times[0].textContent));
+  const main=fragment.querySelector('main');
+  for(const [kind,field]of [['published','published'],['modified','modified_visible']]){
+   const times=main?learnBylineDates(main,kind):[];
+   if(kind==='modified'&&!times.length)continue;
+   if(times.length!==1||!exposed(times[0]))add(field+'_visibility','unverified');
+   if(times.length===1){const stamp=Date.parse(times[0].getAttribute('datetime'));
+    const expected=Number.isFinite(stamp)?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(stamp):null;
+    if(!expected)add(field+'_label','unverified');
+    else if(normal(times[0].textContent)!==normal(expected))add(field+'_label','different',expected,normal(times[0].textContent));
+   }
   }
   return {path,kind:evidence?.kind||null,ok:problems.length===0,sha256:createHash('sha256').update(html).digest('hex'),checks:(evidence?.checks||[]).map(c=>({field:c.field,state:c.state})),problems};
  }finally{owned?.window.close();}

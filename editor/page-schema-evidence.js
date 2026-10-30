@@ -75,10 +75,12 @@ export function observeLearnSchema(fragment,url,nodes,options={}){
  add('cover',images.length&&images.length<=10&&declared.length===images.length?(declared.includes(cover)?cover:declared.join(' · ')):null,cover);
  const registered=kind==='Article'&&cover?articlePreviews[new URL(cover).pathname]:null;
  if(checks.at(-1).state==='different'&&registered&&declared.includes(new URL(registered.src,url).href))checks.at(-1).state='equivalent';
- const times=main.querySelectorAll('.article-byline time[datetime]');
+ const times=learnBylineDates(main,'published');
  add('published',text(a?.datePublished),times.length===1?text(times[0].getAttribute('datetime')):null,instant);
  const modified=fragment.querySelectorAll('meta[property="article:modified_time"][content]');
  add('modified',text(a?.dateModified),modified.length===1?text(modified[0].getAttribute('content')):null,instant);
+ const updated=learnBylineDates(main,'modified');
+ if(updated.length)add('modified_visible',text(a?.dateModified),updated.length===1?text(updated[0].getAttribute('datetime')):null,instant);
  if(kind==='Course'){
   const parts=Array.isArray(a?.hasPart)?a.hasPart:null,links=[...main.querySelectorAll('.path-lessons > li .lesson-copy h3 a[href]')];
   const declaredLessons=parts&&parts.length<=100&&parts.every((p,i)=>p&&typeof p==='object'&&address(p.url,url)&&text(p.name)&&p.position===i+1)?parts.map(p=>[address(p.url,url),text(p.name)]):null;
@@ -86,6 +88,13 @@ export function observeLearnSchema(fragment,url,nodes,options={}){
   add('lessons',declaredLessons?JSON.stringify(declaredLessons):null,visibleLessons?JSON.stringify(visibleLessons):null);
  }
  return {state:a?'ready':'unknown',kind,checks};
+}
+
+// Explicit roles distinguish the two dates; a single legacy date is publication.
+export function learnBylineDates(root,kind){
+ const all=[...root.querySelectorAll('.article-byline time')];
+ const marked=all.filter(t=>t.getAttribute('data-article-date')===kind);
+ return marked.length?marked:kind==='published'&&all.length===1&&!all[0].hasAttribute('data-article-date')?all:[];
 }
 
 // Matched values are not repeated for every article in the saved Growth report.
