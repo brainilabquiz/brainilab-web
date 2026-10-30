@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {seoHTML,bindSEO} from '../editor/growth-seo-explorer.js';
+import {bindGrowthNavigation} from '../editor/growth-navigation.js';
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+const dom=new JSDOM('<main></main>',{url:'https://brainilabgames.com/admin/#growth'}),d=dom.window.document;
+globalThis.document=d;let fetches=0;globalThis.fetch=()=>{fetches++;throw Error('Saved schema navigation must not fetch');};
+const at='2026-10-20T20:00:00Z',pages=Array.from({length:61},(_,i)=>({url:'https://brainilabgames.com/learn/page-'+String(i).padStart(2,'0')+'/',kind:'Article',state:'ready',checkedAt:at,sha256:'a'.repeat(64),contentSha256:'b'.repeat(64),checks:[['headline','same']],details:[]}));
+const report={seoExplorer:{schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[],sources:[],backlinks:[],learnSchema:{schemaVersion:1,domain:'brainilabgames.com',pages}}},workspace={opportunities:[]},original=JSON.stringify({report,workspace});
+const root=d.querySelector('main');root.innerHTML='<div data-growth><header class="growth-lead"></header><section class="growth-workbench"></section>'+seoHTML(report)+'<div class="growth-toolbar"></div><div class="growth-proposals"><textarea aria-label="Unsaved note">Keep this local note</textarea></div></div>';
+bindSEO(root,report,workspace);const release=bindGrowthNavigation(root);
+const area=key=>root.querySelector('[data-growth-area="'+key+'"]').click(),tab=key=>root.querySelector('[data-seo-view="'+key+'"]').click(),page=()=>root.querySelector('[data-seo-page]').textContent;
+area('seo');tab('learn');const input=root.querySelector('[data-seo-filter]');input.value='learn/page';input.dispatchEvent(new dom.window.Event('input'));
+root.querySelector('[data-seo-next]').click();root.querySelector('[data-seo-next]').click();assert.equal(page(),'Page 3 of 3');
+const origin=root.querySelector('[data-seo-review-url]'),target=origin.dataset.seoReviewUrl;origin.click();
+assert.equal(d.activeElement.id,'growth-page-review-title');assert.match(root.querySelector('[data-seo-return-schema]').textContent,/Back to Learn schema · page 3/);
+assert.match(root.querySelector('.growth-learn-schema').textContent,/older than 48 hours|incomplete/,'Dated observations do not become new failures');
+area('decisions');const note=root.querySelector('textarea');note.value='Still unsaved';area('seo');assert.equal(note.value,'Still unsaved');
+root.querySelector('[data-seo-return-schema]').click();assert.equal(page(),'Page 3 of 3');assert.equal(input.value,'learn/page');assert.equal(d.activeElement.dataset.seoReviewUrl,target);assert.equal(root.querySelector('[data-seo-view="learn"]').getAttribute('aria-pressed'),'true');
+// The existing schema tab is also a return path, not an implicit list reset.
+d.activeElement.click();tab('learn');assert.equal(page(),'Page 3 of 3');assert.equal(d.activeElement.dataset.seoReviewUrl,target);
+tab('quiz');const quiz=root.querySelector('[data-seo-review-url]'),quizTarget=quiz.dataset.seoReviewUrl;quiz.click();assert.equal(root.querySelector('[data-seo-return-schema]').textContent,'Back to Quiz schema');root.querySelector('[data-seo-return-schema]').click();assert.equal(d.activeElement.dataset.seoReviewUrl,quizTarget);assert.equal(root.querySelector('[data-seo-view="quiz"]').getAttribute('aria-pressed'),'true');assert.equal(root.querySelector('[data-seo-prev]').hidden,true);
+root.querySelector('[data-seo-review-url]').click();tab('pages');tab('review');assert.equal(root.querySelector('[data-seo-return-schema]'),null,'Leaving the schema flow clears the return context');
+assert.equal(dom.window.location.hash,'#growth');assert.equal(fetches,0);assert.equal(JSON.stringify({report,workspace}),original);release();dom.window.close();
+console.log('PASS saved schema review return: Learn filter/page and exact row focus, both return paths, six-quiz context, cross-area unsaved note, cleared stale context, unchanged dates/report/decisions and zero requests.');
