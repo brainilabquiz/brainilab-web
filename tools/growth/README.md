@@ -1,5 +1,26 @@
 # Private BrainiLab Growth tools
 
+## Growth work areas
+
+Growth opens at **Next moves**, the existing decision workbench. The work-area
+navigation provides direct access to SEO Explorer, Search & indexing, Visits &
+play, Content, Distribution, Decisions and Research & data. Each source keeps its
+own dates, quality limitations and metric definitions. The historical property
+summary belongs to Search & indexing; GA4 acquisition and the separate account
+confirmation report belong to Visits & play.
+
+On narrow screens a labelled native selector provides the same eight areas.
+Switching areas retains the mounted tools, filters, pagination, open disclosures
+and unsaved decision notes. It performs no query, import, publication or decision
+write. Saved-record and query/page shortcuts reveal their destination before
+moving focus. A confirmed save retains the selected area; a fresh Growth session
+starts at Next moves. The existing leave-with-unsaved-changes guard still applies.
+No navigation preference or private report is added to browser storage.
+
+Verify with `node tools/test-growth-navigation.mjs` and the existing workbench,
+admin, SEO Explorer, decision queue and measurement suites. Native keyboard and
+responsive checks remain separate from automated DOM tests or a conformance claim.
+
 Learn article/course comparisons now share the existing inert Article comparator.
 The ordinary crawl reuses its successful HTML responses in a bounded local
 Node/JSDOM pass (`JSDOM_MODULE` points to the existing local dependency). Saved
