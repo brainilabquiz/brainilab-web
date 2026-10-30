@@ -50,7 +50,7 @@ export function observePageSchema(fragment,url,nodes,{incomplete=false,resources
  return {state:'ready',articleState:incomplete?'incomplete':articles.length===1?'single':articles.length?'ambiguous':'absent',checks};
 }
 
-export const learnSchemaFields={canonical:'Canonical / response URL',identity:'Declared page identity',headline:'Title / main heading',author:'Author / visible byline',preview:'Image / social preview',cover:'Image / visible cover',published:'Published date / visible time',modified:'Updated date / HTML metadata',lessons:'Ordered lesson names and URLs'};
+export const learnSchemaFields={canonical:'Canonical / response URL',identity:'Declared page identity',headline:'Title / main heading',author:'Author / visible byline',preview:'Image / social preview',cover:'Image / visible cover',published:'Published date / visible time',modified:'Updated date / HTML metadata',modified_visible:'Updated date / visible time',lessons:'Ordered lesson names and URLs'};
 export function learnSchemaURL(url){
  return typeof url==='string'&&/^https:\/\/brainilabgames\.com\/learn\/(?:paths\/)?[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(url)&&!/^https:\/\/brainilabgames\.com\/learn\/(?:topics|paths|authors)\/$/.test(url);
 }

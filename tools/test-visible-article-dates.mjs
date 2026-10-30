@@ -5,6 +5,8 @@ import {prepareArticle,renderPage} from '../lib/learn-content.js';
 import {articleByline} from '../lib/learn-seo.js';
 import {articleUpdateDateVisible} from '../lib/article-updated-dates.js';
 import {compareLearnSchema} from './release-schema.mjs';
+import {observeLearnSchema,compactLearnSchema} from '../editor/page-schema-evidence.js';
+import {learnEvidence,learnSchemaPage} from '../editor/growth-learn-schema.js';
 const template=readFileSync('learn/index.html','utf8');
 const source=prepareArticle(JSON.parse(readFileSync('content/articles/connections-puzzles-find-the-hidden-link.json','utf8')));
 const a={...source,publishedAt:'2026-09-23 21:51:37.123456+02',updatedAt:'2026-10-30 22:25:00.988664+01'};
@@ -16,6 +18,10 @@ assert.equal(published.dateTime,'2026-09-23T21:51:37.123456+02:00');assert.equal
 assert.match(modified.parentElement.textContent,/Published 23 Sept 2026 · Updated 30 Oct 2026/);
 for(const page of [html,again]){const result=compareLearnSchema(page,path);assert.equal(result.ok,true,JSON.stringify(result.problems));assert.ok(result.checks.some(c=>c.field==='modified_visible'&&c.state==='same'));assert.equal((page.match(/data-article-date="modified"/g)||[]).length,1);}
 assert.equal(JSON.stringify(a),before,'Presentation must not mutate publication dates or the article/quiz document');
+const graph=JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'];
+const saved={learnSchema:{schemaVersion:1,domain:'brainilabgames.com',pages:[{url:'https://brainilabgames.com'+path,checkedAt:new Date().toISOString(),sha256:'a'.repeat(64),contentSha256:'b'.repeat(64),...compactLearnSchema(observeLearnSchema(d,'https://brainilabgames.com'+path,graph))}]}};
+assert.ok(learnEvidence(saved),'A saved two-date comparison must remain importable');
+assert.ok(learnSchemaPage(saved,'https://brainilabgames.com'+path).exported.some(r=>r[1]==='Updated date / visible time'),'Retain the visible update date in review and CSV exports');
 assert.equal(compareLearnSchema(html.replace('>30 Oct 2026</time>','>29 Oct 2026</time>'),path).problems.some(c=>c.field==='modified_visible_label'&&c.state==='different'),true);
 assert.equal(compareLearnSchema(html.replace('datetime="2026-10-30T22:25:00.988664+01:00"','datetime="2026-10-30T22:25:00.988665+01:00"'),path).problems.some(c=>c.field==='modified_visible'&&c.state==='different'),true,'Detect differences beyond milliseconds');
 assert.equal(compareLearnSchema(html.replace('data-article-date="modified"','hidden data-article-date="modified"'),path).ok,false);
