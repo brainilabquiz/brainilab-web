@@ -97,6 +97,19 @@ correct disclosure behaviour is unchanged. Validate with
 `tools/test-growth-decision-open.mjs` and the existing queue/workbench/follow-up
 suites.
 
+Saving one decision keeps other edited decision forms mounted, including their
+unsaved state/reference/note, text selection and disclosure state. Only the
+acknowledged form is cleared from the unsaved guard. Other drafts continue to
+block report import and warn before leaving. A failed save or reload retains
+them too. Each kept form remains bound to its original revision; a concurrent
+change or missing record shows a recovery notice and blocks submitting that
+draft. Copy it before reloading to review the current record. No draft is
+silently attached to a newer revision or recreated as a decision. Drafts stay
+in memory, are not exported or stored in the browser, and reset with the Growth
+session. Validate with `tools/test-growth-decision-drafts.mjs` and the existing
+admin/navigation suites. Local tests simulate acknowledgement; they do not write
+production decisions or alter baselines.
+
 Each publication keeps its original baseline and shows the earliest complete
 equal-length follow-up in Search Console Pacific dates, starting after the
 publication day. The loaded report must match property, Web filters, timezone,
