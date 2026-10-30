@@ -20,6 +20,7 @@ import './test-release-check.mjs';
 import './test-release-schema.mjs';
 execFileSync(process.execPath,['--max-old-space-size=96','tools/test-learn-resources.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-navigation.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['tools/test-growth-schema-navigation.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';

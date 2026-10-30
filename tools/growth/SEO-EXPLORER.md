@@ -229,6 +229,15 @@ comparison content, not read timestamps. No Growth decision is opened or modifie
 Captures before the recorded Academy renderer correction remain historical, not
 new unresolved work. Comparisons older than 48 hours are labelled dated.
 
+Opening saved Learn or Quiz schema detail keeps a return context for the mounted
+Explorer. The Back button, or the same schema tab, restores the original filter,
+Learn page number and the exact row button's keyboard focus. Moving to another
+Growth work area preserves that context; selecting a different Explorer view
+clears it. No schema observation, review key, decision or evidence date changes,
+and returning makes no request. This avoids repeating the list from page one.
+Validate with `tools/test-growth-schema-navigation.mjs` and the existing Learn,
+quiz, Explorer and work-area suites.
+
 Differences require context review, not automatic rewriting. These comparisons
 do not assert required Article properties, rich-result eligibility, Google
 indexing, AI citations, visits, games, expertise or factual accuracy. Validate

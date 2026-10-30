@@ -30,11 +30,11 @@ export function bindSEO(root,report,workspace=null){
  const s=seoSnapshot(report),panel=root.querySelector('#growth-seo-explorer');if(!panel)return;
  panel.querySelector('[data-seo-keywords]')?.addEventListener('click',()=>{root.querySelector('[data-search-view="queries"]')?.click();root.querySelector('[data-keyword-search]')?.focus({preventScroll:true});});
  if(!s)return;
- let view='links',page=0,exported=[];const currentPages=new Map();
+ let view='links',page=0,exported=[],schemaReturn=null;const currentPages=new Map();
  const input=panel.querySelector('[data-seo-filter]'),select=panel.querySelector('[data-seo-state]'),destinationState=panel.querySelector('[data-seo-destination-state]'),window=panel.querySelector('[data-seo-window]'),source=panel.querySelector('[data-seo-source]'),selectedPage=panel.querySelector('[data-seo-selected-page]'),decisionScope=panel.querySelector('[data-seo-decision-scope]'),focus=panel.querySelector('[data-seo-focus]'),pageScope=panel.querySelector('[data-seo-page-checks]'),playSource=panel.querySelector('[data-seo-play-source]');
  function draw(){
   const query=input.value.trim().toLowerCase();let rows=[],heads=[],caption='',help='',before='';select.closest('label').hidden=view!=='links';destinationState.closest('label').hidden=view!=='destinations';panel.querySelector('[data-seo-window-label]').hidden=view!=='keywords'||source.value!=='web';source.closest('label').hidden=view!=='keywords';input.closest('label').hidden=view==='reputation'||view==='review'||view==='quiz';panel.querySelector('[data-seo-page-label]').hidden=view!=='review';panel.querySelector('[data-seo-decision-label]').hidden=view!=='actions';panel.querySelector('[data-seo-focus-label]').hidden=view!=='actions'||decisionScope.value==='play_landings';panel.querySelector('[data-seo-play-source-label]').hidden=view!=='actions'||decisionScope.value!=='play_landings';panel.querySelector('[data-seo-page-checks-label]').hidden=view!=='pages';panel.classList.toggle('growth-actions-view',view==='actions');panel.querySelectorAll('[data-seo-prev],[data-seo-next],[data-seo-page]').forEach(el=>el.hidden=view==='review'||view==='quiz');panel.querySelector('.growth-search-pagination').hidden=view==='reputation';panel.querySelector('[data-seo-note]').textContent='';panel.querySelector(':scope > .growth-caution').hidden=view==='reputation';
-  if(view==='review'){const target=selectedPage.value,context=pageActionContext(report,workspace,target),current=currentPageView(report,target,currentPages.get(target));context.currentObservation=currentPages.get(target);context.html+=current.html;context.exported.push(...current.exported);const result=pageReviewHTML(s,target,context);panel.querySelector('[data-seo-results]').innerHTML=result.html;panel.querySelector('[data-seo-count]').textContent=result.status;exported=result.exported;panel.querySelector('[data-seo-export]').disabled=!exported.length;return;}
+  if(view==='review'){const target=selectedPage.value,context=pageActionContext(report,workspace,target),current=currentPageView(report,target,currentPages.get(target));context.currentObservation=currentPages.get(target);context.html+=current.html;context.exported.push(...current.exported);const result=pageReviewHTML(s,target,context),back=schemaReturn?'<p><button type="button" class="admin-button" data-seo-return-schema>'+esc(schemaReturn.view==='learn'?'Back to Learn schema · page '+(schemaReturn.page+1):'Back to Quiz schema')+'</button></p>':'';panel.querySelector('[data-seo-results]').innerHTML=back+result.html;panel.querySelector('[data-seo-count]').textContent=result.status;exported=result.exported;panel.querySelector('[data-seo-export]').disabled=!exported.length;return;}
   if(view==='reputation'){panel.querySelector('[data-seo-results]').innerHTML=reputationHTML(s);panel.querySelector('[data-seo-count]').textContent='Dated first-party reports and verified external links · no authority score';return;}
   if(view==='quiz'){const result=quizSchemaOverview(s);panel.querySelector('[data-seo-results]').innerHTML=result.html;panel.querySelector('[data-seo-count]').textContent=result.status;exported=result.exported;panel.querySelector('[data-seo-export]').disabled=false;return;}
   if(view==='destinations'){const result=destinationsView(s,destinationState.value,query);({rows,heads,caption}=result);help=result.help;exported=result.exported;panel.querySelector('[data-seo-note]').textContent=result.note;}
@@ -66,7 +66,14 @@ export function bindSEO(root,report,workspace=null){
   panel.querySelector('[data-seo-prev]').disabled=page===0;panel.querySelector('[data-seo-next]').disabled=page===total-1;
   panel.querySelector('[data-seo-export]').disabled=rows.length===0;
  }
- panel.querySelectorAll('[data-seo-view]').forEach(b=>b.onclick=()=>{view=b.dataset.seoView;page=0;panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw();});
+ function returnToSchema(){
+  if(!schemaReturn)return;
+  const previous=schemaReturn;schemaReturn=null;view=previous.view;page=previous.page;input.value=previous.query;
+  panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.seoView===view)));draw();
+  const button=[...panel.querySelectorAll('[data-seo-review-url]')].find(x=>x.dataset.seoReviewUrl===previous.url);
+  button?.focus();button?.scrollIntoView?.({block:'nearest',behavior:'auto'});
+ }
+ panel.querySelectorAll('[data-seo-view]').forEach(b=>b.onclick=()=>{if(view==='review'&&schemaReturn?.view===b.dataset.seoView){returnToSchema();return;}schemaReturn=null;view=b.dataset.seoView;page=0;panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw();});
  input.addEventListener('input',()=>{page=0;draw();});select.addEventListener('change',()=>{page=0;draw();});window.addEventListener('change',()=>{page=0;draw();});
  source.addEventListener('change',()=>{page=0;draw();});destinationState.addEventListener('change',()=>{page=0;draw();});
  selectedPage.addEventListener('change',()=>draw());decisionScope.addEventListener('change',()=>{page=0;draw();});focus.addEventListener('change',()=>{page=0;draw();});playSource.addEventListener('change',()=>{page=0;draw();});pageScope.addEventListener('change',()=>{page=0;draw();});
@@ -74,7 +81,12 @@ export function bindSEO(root,report,workspace=null){
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-play-landings]'))return;decisionScope.value='play_landings';playSource.value='all';page=0;draw();playSource.focus();});
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-reset-focus]')||view!=='actions')return;focus.value='search';page=0;draw();focus.focus();});
  panel.addEventListener('click',event=>{const button=event.target.closest('[data-seo-open-decision]');if(!button)return;const id=Number(button.dataset.seoOpenDecision);if(!currentDecisions(workspace)?.some(d=>d.id===id))return;const card=root.querySelector(`[data-opportunity="${id}"]`);if(!card)return;const filter=root.querySelector('[data-growth-filter]');if(filter){filter.value='all';filter.dispatchEvent(new Event('change',{bubbles:true}));}card.focus();});
- panel.querySelector('[data-seo-results]').addEventListener('click',event=>{const button=event.target.closest('[data-seo-review-url]');if(!button||!pageChoices(s).includes(button.dataset.seoReviewUrl))return;selectedPage.value=button.dataset.seoReviewUrl;view='review';page=0;panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.seoView==='review')));draw();panel.querySelector('#growth-page-review-title')?.focus();});
+ panel.querySelector('[data-seo-results]').addEventListener('click',event=>{
+  if(event.target.closest('[data-seo-return-schema]')){returnToSchema();return;}
+  const button=event.target.closest('[data-seo-review-url]');if(!button||!pageChoices(s).includes(button.dataset.seoReviewUrl))return;
+  schemaReturn=['learn','quiz'].includes(view)?{view,page,query:input.value,url:button.dataset.seoReviewUrl}:null;
+  selectedPage.value=button.dataset.seoReviewUrl;view='review';page=0;panel.querySelectorAll('[data-seo-view]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.seoView==='review')));draw();panel.querySelector('#growth-page-review-title')?.focus();
+ });
  panel.addEventListener('click',async event=>{
   if(!event.target.closest('[data-seo-check-current]')||view!=='review')return;
   const target=selectedPage.value;if(currentPages.has(target)||!pageChoices(s).includes(target))return;
