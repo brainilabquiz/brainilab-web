@@ -1,6 +1,6 @@
 import {contentHTML,bindContent} from './growth-content.js';
 import {searchHTML,bindSearch} from './growth-search.js';
-import {seoHTML,bindSEO} from './growth-seo-explorer.js';
+import {seoHTML,bindSEO,createPageCheckSession} from './growth-seo-explorer.js';
 import {playSessionsHTML,bindPlaySessions} from './growth-play-sessions.js';
 import {indexingHTML,bindIndexing} from './growth-indexing.js';
 import {distributionHTML,bindDistribution} from './growth-distribution.js';
@@ -19,6 +19,7 @@ const metric=(key,value)=>key==='ctr'&&value!=null?number(value*100)+'%':number(
 const labels={pending:'Pending review',approved:'Approved',published:'Published',monitoring:'In follow-up',dismissed:'Set aside'};
 const transitions={pending:['pending','approved','dismissed'],approved:['approved','pending','published','dismissed'],published:['published','monitoring'],monitoring:['monitoring'],dismissed:['dismissed','pending']};
 let context,workspace,epoch=0,busy=false,dirty=false,area='overview',releaseNavigation=()=>{};
+let pageCheckSession=createPageCheckSession();
 const decisionDrafts=new Set();
 function status(message){const el=context?.root.querySelector('[data-growth-status]');if(el)el.textContent=message;}
 function summary(){
@@ -42,7 +43,7 @@ function draw(){
  root.querySelector('#growth-search').insertAdjacentHTML('afterend',playSessionsHTML(workspace.report?.document)+indexingHTML(workspace.report?.document));
  bindPlaySessions(root,workspace.report?.document);bindIndexing(root,workspace.report?.document);
  root.querySelector('.growth-search').insertAdjacentHTML('beforebegin',seoHTML(workspace.report?.document));
- bindSEO(root,workspace.report?.document,workspace);
+ bindSEO(root,workspace.report?.document,workspace,pageCheckSession);
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin','<div data-growth-confirmations>'+confirmationsHTML(workspace.confirmedAccounts)+'</div>');
  root.querySelector('.growth-import').insertAdjacentHTML('beforebegin',openSEOHTML(workspace.report?.document));
  bindOpenSEO(root);
@@ -88,8 +89,8 @@ async function mutate(name,args,message,savedForm){
  finally{if(run===epoch){busy=false;disabled.forEach((value,el)=>{if(el.isConnected)el.disabled=value;});}}
 }
 export const GrowthAdmin={
- async render(options){releaseNavigation();context=options;const run=++epoch;busy=false;dirty=false;decisionDrafts.clear();area='overview';const data=await options.rpc('admin_get_growth_workspace');if(run!==epoch)return;workspace=data;draw();},
+ async render(options){releaseNavigation();pageCheckSession.refresh=null;context=options;const run=++epoch;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';const data=await options.rpc('admin_get_growth_workspace');if(run!==epoch)return;workspace=data;draw();},
  canLeave(){return !busy&&(!dirty||confirm('Leave without saving this Growth decision?'));},
- reset(){releaseNavigation();releaseNavigation=()=>{};epoch++;busy=false;dirty=false;decisionDrafts.clear();area='overview';if(context?.root.querySelector('[data-growth]'))context.root.replaceChildren();context=null;workspace=null;}
+ reset(){releaseNavigation();releaseNavigation=()=>{};pageCheckSession.refresh=null;epoch++;busy=false;dirty=false;decisionDrafts.clear();pageCheckSession=createPageCheckSession();area='overview';if(context?.root.querySelector('[data-growth]'))context.root.replaceChildren();context=null;workspace=null;}
 };
 if(typeof window!=='undefined'){window.BrainiGrowth=GrowthAdmin;window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});}

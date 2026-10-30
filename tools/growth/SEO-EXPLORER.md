@@ -450,6 +450,17 @@ Validate with tools/test-growth-play-discovery.mjs and the existing Growth suite
 
 ## Current outgoing HTML links
 
+Explicit public-page observations belong to the open Growth session, including
+ready, unavailable and in-flight reads. An acknowledged decision save or report
+import can rebuild the interface without discarding that cache, changing its
+original checked date or issuing another request. Its active panel receives a
+pending result only for the selected exact URL; a replaced panel or an earlier
+Growth session cannot take focus or populate a new session. Reopening/resetting
+Growth deliberately starts a new cache and still requires an explicit click.
+No observation is imported, stored in browser storage or added to a decision or
+baseline. Validate this lifecycle with `tools/test-growth-public-check-session.mjs`
+and the existing current-page, schema, admin and unsaved-decision suites.
+
 The explicit current-page check keeps declared dates unknown when any active
 JSON-LD block is malformed or the bounded graph parse is incomplete. It cannot
 use a partially parsed Article/Course to classify a search window relative to an
