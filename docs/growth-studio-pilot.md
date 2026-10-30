@@ -28,6 +28,11 @@ draft, credential, decision or session from BrainiLab.
    Export Markdown with explicit draft metadata and removable review notes.
 6. Record concrete page actions, evidence and follow-up notes. Planned/done is a
    local user record, not a publication, deployment receipt or measured result.
+   Inputs not yet added to the plan are kept as a separate unsubmitted draft.
+   Switching tools or downloading the project retains its exact text and page
+   address. Reopening the project restores it without adding a reviewed action.
+   Only **Add reviewed action** validates and adds it to the plan, then clears
+   the pending draft. **Discard draft** asks before removing it.
 7. Download/reopen the allowlisted project JSON and a standalone, printable HTML
    review report. The draft is excluded from the report unless selected. Review
    the report before sharing: search rows, observations and action notes are
@@ -58,6 +63,17 @@ files preserve existing work. File size is limited to 2 MB; CSV to 2,000 rows;
 one project to 100 page observations and 100 actions. JSON exports keep only the
 supported fields. Credentials, private BrainiLab reports and player data have no
 reader in this tool. Sharing/export remains a deliberate user action.
+
+Project downloads use version 2 with `actionDraft` containing only `url`, `title`
+and `evidence` strings, or null. Old version-1 files open with no pending draft,
+retaining their evidence, dates and reviewed actions. The version bump makes an
+old v1-only workspace reject a new file rather than silently discard its draft.
+This field permits incomplete text (including an unfinished page address) for
+recovery; it is not treated as a public URL or a trusted page identity. The
+existing exact-origin validation still applies when adding a reviewed action.
+Project downloads include this draft; client reports exclude it even when the
+separate article-draft option is selected. The draft has the same field limits
+as its form and counts toward the project's existing 2 MB download limit.
 
 Use Download project to keep work between visits. The pilot intentionally has no
 automatic save. A leave warning protects unsaved browser work, but a download
