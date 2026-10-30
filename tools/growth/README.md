@@ -86,6 +86,17 @@ never promoted as another edit; dismissed decisions stay excluded. Duplicate or
 incomplete records cannot authorise resuming work. Open recorded decision/history
 uses the existing card and preserves unsaved notes.
 
+The SEO Explorer queue, matched rows and page evidence open the same card's
+relevant disclosure: published/follow-up records reveal Follow-up and change
+history; pending/approved/set-aside records reveal the recorded proposal. The
+loaded validated decision state controls this choice, never an imported proposal
+status. Opening a set-aside proposal for reading does not reopen its decision.
+Other disclosures and unsaved fields remain intact. This performs no request,
+save, status transition or comparison recalculation. The workbench's existing
+correct disclosure behaviour is unchanged. Validate with
+`tools/test-growth-decision-open.mjs` and the existing queue/workbench/follow-up
+suites.
+
 Each publication keeps its original baseline and shows the earliest complete
 equal-length follow-up in Search Console Pacific dates, starting after the
 publication day. The loaded report must match property, Web filters, timezone,

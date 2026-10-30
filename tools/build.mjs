@@ -22,6 +22,7 @@ execFileSync(process.execPath,['--max-old-space-size=96','tools/test-learn-resou
 execFileSync(process.execPath,['tools/test-growth-navigation.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-schema-navigation.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-review-return.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['tools/test-growth-decision-open.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-sitemap-dates.mjs';
 import './test-result-receipts.mjs';

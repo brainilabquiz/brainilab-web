@@ -84,7 +84,15 @@ export function bindSEO(root,report,workspace=null){
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-unassigned]'))return;decisionScope.value='unassigned';page=0;draw();panel.querySelector('[data-seo-results] .growth-table')?.focus();});
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-play-landings]'))return;decisionScope.value='play_landings';playSource.value='all';page=0;draw();playSource.focus();});
  panel.addEventListener('click',event=>{if(!event.target.closest('[data-seo-reset-focus]')||view!=='actions')return;focus.value='search';page=0;draw();focus.focus();});
- panel.addEventListener('click',event=>{const button=event.target.closest('[data-seo-open-decision]');if(!button)return;const id=Number(button.dataset.seoOpenDecision);if(!currentDecisions(workspace)?.some(d=>d.id===id))return;const card=root.querySelector(`[data-opportunity="${id}"]`);if(!card)return;const filter=root.querySelector('[data-growth-filter]');if(filter){filter.value='all';filter.dispatchEvent(new Event('change',{bubbles:true}));}card.focus();});
+ panel.addEventListener('click',event=>{
+  const button=event.target.closest('[data-seo-open-decision]');if(!button)return;
+  const id=Number(button.dataset.seoOpenDecision),decision=currentDecisions(workspace)?.find(d=>d.id===id);if(!decision)return;
+  const card=root.querySelector(`[data-opportunity="${id}"]`);if(!card)return;
+  const filter=root.querySelector('[data-growth-filter]');if(filter){filter.value='all';filter.dispatchEvent(new Event('change',{bubbles:true}));}
+  const sections=card.querySelectorAll(':scope > details'),section=sections[['published','monitoring'].includes(decision.state)?1:0];
+  if(section)section.open=true;
+  card.focus();
+ });
  panel.querySelector('[data-seo-results]').addEventListener('click',event=>{
   if(event.target.closest('[data-seo-return-list]')){returnToList();return;}
   const button=event.target.closest('[data-seo-review-url]');if(!button||!pageChoices(s).includes(button.dataset.seoReviewUrl))return;
