@@ -2,7 +2,7 @@
 import {inertPublicHTML} from './page-link-evidence.js';
 import {articleTimestamp} from '../lib/article-date.js';
 import {sitemapDate} from '../lib/sitemap-date.js';
-export const STUDIO_VERSION=1;
+export const STUDIO_VERSION=2;
 export const limits={file:2*1024*1024,rows:2000,pages:100,actions:100};
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=(v,max=500)=>{if(typeof v!=='string'||v.length>max||/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(v))throw Error('A text field is missing or too long.');return v.trim();};
@@ -16,7 +16,7 @@ export function siteOrigin(value){const u=publicURL(value);if(!u||new URL(u).pat
 export function project(profile){
  const name=text(profile.name,100),origin=siteOrigin(profile.origin),goal=text(profile.goal,300),measure=text(profile.measure,100);
  if(!name||!goal||!measure)throw Error('Add a business name, goal and success measure.');
- return {version:STUDIO_VERSION,profile:{name,origin,goal,measure},demo:false,search:null,pages:[],backlinks:[],draft:{url:origin+'/',question:'',title:'',description:'',answer:'',body:'',sources:''},actions:[]};
+ return {version:STUDIO_VERSION,profile:{name,origin,goal,measure},demo:false,search:null,pages:[],backlinks:[],draft:{url:origin+'/',question:'',title:'',description:'',answer:'',body:'',sources:''},actionDraft:null,actions:[]};
 }
 export function parseCSV(input){
  if(typeof input!=='string'||input.length>limits.file)throw Error('Use a CSV smaller than 2 MB.');
@@ -96,7 +96,7 @@ export async function inspectHTML(html,url,capturedAt,profile,document,originalB
  return {url,capturedAt,sha256:[...new Uint8Array(digest)].map(v=>v.toString(16).padStart(2,'0')).join(''),title:clean(one([...f.querySelectorAll('title')])?.textContent)||'',checks,links,linkState:main?'bounded main-content sample':'unknown: no single main element',omitted,truncated:!!main&&scanned<main.querySelectorAll('a[href]').length,incomplete};
 }
 export function validateProject(input){
- if(!input||input.version!==STUDIO_VERSION)throw Error('Use a Growth Studio version 1 project file.');
+ if(!input||![1,STUDIO_VERSION].includes(input.version))throw Error('Use a Growth Studio version 1 or 2 project file. Newer files need an updated workspace.');
  const p=project(input.profile);p.demo=input.demo===true;
  if(p.demo&&!p.profile.origin.endsWith('.example'))throw Error('The demonstration label requires an example-domain project.');
  if(input.search){
@@ -111,6 +111,15 @@ export function validateProject(input){
  const backlinks=[['Source','Target','Observed at','Rel'],...input.backlinks.map(b=>[b.source,b.target,b.observedAt,b.rel])];p.backlinks=input.backlinks.length?importBacklinks(backlinks.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n'),p.profile):[];
  const d=input.draft;if(!d||!publicURL(d.url)||new URL(d.url).origin!==p.profile.origin)throw Error('The draft address must belong to this project.');
  p.draft={url:d.url,question:text(d.question,500),title:text(d.title,300),description:text(d.description,500),answer:text(d.answer,2000),body:text(d.body,50000),sources:text(d.sources,5000)};
+ // V2 protects drafts from silent loss in older v1-only workspaces. Legacy
+ // files still open; their source evidence is not changed by the upgrade.
+ // Incomplete input is recovery text only:
+ // it is never a linked page, reviewed action or part of a client report.
+ if(input.actionDraft!==undefined&&input.actionDraft!==null){
+  const a=input.actionDraft;if(typeof a!=='object'||Array.isArray(a))throw Error('The unsubmitted action draft is invalid.');
+  const raw=(v,max)=>{text(v,max);return v;};
+  p.actionDraft={url:raw(a.url,2000),title:raw(a.title,300),evidence:raw(a.evidence,2000)};
+ }
  p.actions=input.actions.map(a=>{if(!publicURL(a.url)||new URL(a.url).origin!==p.profile.origin||!['planned','done'].includes(a.state))throw Error('An action has an invalid page or state.');return {url:a.url,title:text(a.title,300),evidence:text(a.evidence,2000),state:a.state};});
  if(new TextEncoder().encode(JSON.stringify(p,null,2)+'\n').length>limits.file)throw Error('This project exceeds 2 MB. Keep a smaller evidence sample so its download can be reopened.');
  return p;
