@@ -13,7 +13,7 @@ On narrow screens a labelled native selector provides the same eight areas.
 Switching areas retains the mounted tools, filters, pagination, open disclosures
 and unsaved decision notes. It performs no query, import, publication or decision
 write. Saved-record and query/page shortcuts reveal their destination before
-moving focus. A confirmed save retains the selected area; a fresh Growth session
+moving focus, keeping the admin's `#growth` route intact. A confirmed save retains the selected area; a fresh Growth session
 starts at Next moves. The existing leave-with-unsaved-changes guard still applies.
 No navigation preference or private report is added to browser storage.
 

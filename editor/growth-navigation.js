@@ -48,7 +48,11 @@ export function bindGrowthNavigation(root,{initial='overview',onChange=()=>{}}={
   if(Number.isSafeInteger(id)&&root.querySelector(`[data-opportunity="${id}"]`))show('decisions');
  };
  const anchor=event=>{
-  const link=event.target.closest?.('a[href="#growth-search"]');if(link&&surface.contains(link))show('search');
+  const link=event.target.closest?.('a[href="#growth-search"]');if(!link||!surface.contains(link))return;
+  // The admin owns its #growth route. A fragment navigation would trigger its
+  // popstate handler and treat growth-search as a different admin view.
+  event.preventDefault();show('search');
+  const heading=surface.querySelector('#growth-search-title');if(heading){heading.tabIndex=-1;heading.focus();heading.scrollIntoView?.({block:'start',behavior:'auto'});}
  };
  root.addEventListener('click',reveal,true);root.addEventListener('click',anchor,true);
  show(panels.has(initial)?initial:'overview');
