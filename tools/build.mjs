@@ -25,6 +25,7 @@ execFileSync(process.execPath,['tools/test-growth-review-return.mjs'],{stdio:'in
 execFileSync(process.execPath,['tools/test-growth-decision-open.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-drafts.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-public-check-session.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['tools/test-growth-studio.mjs'],{stdio:'inherit'});
 import './test-academy-schema.mjs';
 import './test-learning-discovery.mjs';
 import './test-sitemap-dates.mjs';
@@ -56,6 +57,7 @@ const videoMarker='/* related-video bundle */';
 const shellSource=await readFile('assets/js/shell.bundle.js','utf8');
 await writeFile('assets/js/shell.bundle.js',shellSource.split(videoMarker)[0].trimEnd()+'\n'+videoMarker+'\n'+videoBundle.outputFiles[0].text);
 await build({entryPoints:['editor/admin-growth.js'],outfile:'assets/js/admin-growth.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
+await build({entryPoints:['editor/studio-app.js'],outfile:'assets/js/growth-studio.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/reasoning.js'],outfile:'assets/js/reasoning.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/admin-articles.js'],outfile:'assets/js/admin-articles.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/admin-learning.js'],outfile:'assets/js/admin-learning.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -77,7 +79,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set(['assets/js/cryptic.bundle.js','assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['assets/js/growth-studio.bundle.js','assets/js/cryptic.bundle.js','assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.
