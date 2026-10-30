@@ -44,7 +44,9 @@ from the previous project cannot populate the next one.
 There are no network calls, Google OAuth, account logins, cloud storage, browser
 storage, analytics, payments, automated crawling or publication endpoints in the
 pilot. The document CSP blocks network connections and third-party resources.
-Files are read only after selection and processed in the browser. The upload
+Files are read only after selection and decoded strictly as UTF-8 in the browser.
+Malformed encoding is rejected without replacing existing work. The original
+HTML file bytes, including a UTF-8 BOM if present, define its SHA256. The upload
 control sends nothing to a server. Raw supplied HTML is never saved in a project
 or report; bounded observations and its SHA256 are retained. Scripts, images,
 styles, iframes and destinations from supplied HTML are never loaded.
