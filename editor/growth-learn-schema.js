@@ -7,9 +7,9 @@ const labels={same:'Matches captured HTML',equivalent:'Registered preview identi
 const courseCorrection={at:'2026-10-28T19:07:06Z',url:'https://github.com/brainilabquiz/brainilab-web/commit/2a355b1b80bb59d9c4f6623384c7271ed83d7d0c'};
 export function learnEvidence(snapshot){
  const s=snapshot?.learnSchema;if(s?.schemaVersion!==1||s.domain!=='brainilabgames.com'||!Array.isArray(s.pages)||s.pages.length>500)return null;
- const seen=new Set();
+ const seen=new Set(),maxChecks=Object.keys(learnSchemaFields).length;
  for(const p of s.pages){
-  if(!p||!learnSchemaURL(p.url)||seen.has(p.url)||!['Article','Course'].includes(p.kind)||!['ready','unknown'].includes(p.state)||!stamp(p.checkedAt)||!['sha256','contentSha256'].every(k=>typeof p[k]==='string'&&/^[a-f0-9]{64}$/.test(p[k]))||!Array.isArray(p.checks)||p.checks.length>9||!Array.isArray(p.details)||p.details.length>9)return null;
+  if(!p||!learnSchemaURL(p.url)||seen.has(p.url)||!['Article','Course'].includes(p.kind)||!['ready','unknown'].includes(p.state)||!stamp(p.checkedAt)||!['sha256','contentSha256'].every(k=>typeof p[k]==='string'&&/^[a-f0-9]{64}$/.test(p[k]))||!Array.isArray(p.checks)||p.checks.length>maxChecks||!Array.isArray(p.details)||p.details.length>maxChecks)return null;
   if((p.kind==='Course')!==p.url.includes('/learn/paths/'))return null;seen.add(p.url);
   const fields=new Set();for(const c of p.checks){if(!Array.isArray(c)||c.length!==2||!Object.hasOwn(learnSchemaFields,c[0])||!Object.hasOwn(labels,c[1])||fields.has(c[0]))return null;fields.add(c[0]);}
   const details=new Set();for(const v of p.details){if(!Array.isArray(v)||v.length!==3||!p.checks.some(c=>c[0]===v[0]&&c[1]!=='same')||details.has(v[0])||v.slice(1).some(t=>t!==null&&(typeof t!=='string'||t.length>800)))return null;details.add(v[0]);}
