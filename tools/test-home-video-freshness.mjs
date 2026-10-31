@@ -39,3 +39,7 @@ const response=await latestVideo(new Request('https://brainilabgames.com/api/lat
 const body=await response.json();assert.equal(body.channelId,channel);assert.equal(body.id,'brainVid001');assert.equal(body.url,'https://www.youtube.com/watch?v=brainVid001');assert.equal(calls.length,3);
 assert.equal((await latestVideo(new Request('https://brainilabgames.com/api/latest-video?channel=foreign'),ctx,emptyCache,()=>{throw Error('must not fetch')})).status,400);
 console.log('PASS home videos: both official uploads channels, current cached first paint, background-only refresh, safe text/dates/owners, cache failure fallback and independent direct links.');
+
+const selectedReads=[],selectedPending=[];
+const selectedData=await cachedHomeVideos(request,{waitUntil:p=>selectedPending.push(p)},{match:async key=>{selectedReads.push(key.url);return saved.get(key.url)?.clone();},put:cache.put},()=>{throw Error('fresh cache')},'',['knowledge']);
+await Promise.all(selectedPending);assert.deepEqual(Object.keys(selectedData),['knowledge']);assert.equal(selectedPending.length,1);assert.ok(selectedReads.every(url=>url.includes('channel=knowledge')),'The single-card homepage never refreshes the other channel');
