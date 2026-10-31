@@ -15,7 +15,7 @@ for(const file of files){
  assert.equal(halloweenAssets[file],'/'+file+'?v='+assetVersion(Buffer.from(bytes)),'Stable bytes reuse the cache');
  assert.notEqual(url.searchParams.get('v'),assetVersion(Buffer.concat([bytes,Buffer.from('\n/* changed */')])),'Changed bytes invalidate the cache');
 }
-const template='<html><head><title>Learn</title><link rel="canonical" href="https://brainilabgames.com/learn/"></head><body><main id="main-content"></main></body></html>';
+const template='<html><head><title>Learn</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","url":"https://brainilabgames.com/learn/"}</script><link rel="canonical" href="https://brainilabgames.com/learn/"></head><body><main id="main-content"></main></body></html>';
 for(const time of [Date.parse(HALLOWEEN.start),Date.parse(HALLOWEEN.end)]){
  const state=halloweenState(time,true);
  for(const game of [null,'trick-or-think','spooky-connections']){
