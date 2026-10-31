@@ -42,4 +42,4 @@ console.log('PASS home videos: both official uploads channels, current cached fi
 
 const selectedReads=[],selectedPending=[];
 const selectedData=await cachedHomeVideos(request,{waitUntil:p=>selectedPending.push(p)},{match:async key=>{selectedReads.push(key.url);return saved.get(key.url)?.clone();},put:cache.put},()=>{throw Error('fresh cache')},'',['knowledge']);
-await Promise.all(selectedPending);assert.deepEqual(Object.keys(selectedData),['knowledge']);assert.equal(selectedPending.length,1);assert.ok(selectedReads.every(url=>url.includes('channel=knowledge')),'The single-card homepage never refreshes the other channel');
+await Promise.all(selectedPending);assert.deepEqual(Object.keys(selectedData),['knowledge']);assert.equal(selectedPending.length,1);assert.ok(selectedReads.every(url=>url.includes('channel=knowledge')),'An explicit single-channel read never refreshes another channel');
