@@ -142,7 +142,7 @@ export default {
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
         const html=await response.text(),news='';
         const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
-        const videos=await cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
+        const videos=await cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'',['knowledge']);
         response=new Response(renderHomeVideoCards(html,videos).replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
       }
       const secured=new Response(response.body,response);
