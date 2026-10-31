@@ -43,6 +43,7 @@ import './test-latest-video.mjs';
 import './test-knowledge-video.mjs';
 import './test-knowledge-shorts.mjs';
 import './test-home-videos.mjs';
+import './test-home-video-schema.mjs';
 import './test-factual-revisions.mjs';
 import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
