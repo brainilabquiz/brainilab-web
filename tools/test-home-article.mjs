@@ -13,10 +13,10 @@ assert.match(html,/href="\/learn\/newest\/"/);assert.ok(!html.includes('/learn/o
 assert.match(html,/Newest &lt;test&gt;/);assert.match(html,/object-position:center 20%/);
 assert.match(html,/<aside class="home-reading" aria-label="Latest from Learn">\s*<!-- learn-preview:start -->\s*<a class="home-article"/);
 assert.ok(html.indexOf('class="home-reading"')>html.indexOf('class="challenge-wrap"'));
-assert.equal((html.match(/data-latest-video/g)||[]).length,1);
-assert.match(html,/data-video-source="knowledge"/);assert.doesNotMatch(html,/data-video-source="brainilab"/);
+assert.equal((html.match(/data-latest-video/g)||[]).length,2);
+assert.ok(html.indexOf('data-video-source="brainilab"')<html.indexOf('data-video-source="knowledge"'));assert.match(html,/data-video-source="knowledge" data-video-format="short"/);
 assert.equal((html.match(/class="home-article"/g)||[]).length,1);
 html=await home([older]);assert.ok(!html.includes('/learn/newest/'));assert.match(html,/\/learn\/older\//);
 html=await home([]);assert.match(html,/Explore the library/);assert.ok(!html.includes('class="home-article"'));
 html=await home([],true);assert.ok(!html.includes('class="home-article"'));assert.match(html,/Explore Learn/);
-console.log('PASS: newest publication over editorial order, withdrawal, empty/offline library, escaped title, cover crop, one Knowledge video and reading beneath the Daily.');
+console.log('PASS: newest publication over editorial order, withdrawal, empty/offline library, escaped title, cover crop, BrainiLab video then Knowledge Short and reading beneath the Daily.');

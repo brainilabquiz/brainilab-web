@@ -1,4 +1,5 @@
 import {channelVideo} from './lib/youtube-channel.js';
+import {knowledgeShortsVideo} from './lib/youtube-shorts.js';
 import {cachedHomeVideos,renderHomeVideoCards} from './lib/home-video-cards.js';
 import {servePublicLearn,learnRelatedVideo} from './lib/learn-store.js';
 import {HEALTH_CRON,scheduledHealth,healthStatus} from './lib/site-health.js';
@@ -38,7 +39,11 @@ export function parseFeed(xml){
 function json(body,status=200,maxAge=60){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':`public, max-age=${maxAge}`,'X-Content-Type-Options':'nosniff'}});}
 export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
   const url=new URL(request.url),channel=url.pathname==='/api/latest-video'?url.searchParams.get('channel'):null;
-  if(channel!==null)return ['knowledge','brainilab'].includes(channel)?channelVideo(request,ctx,cache,fetcher,apiKey,channel):json({error:'Unknown channel'},400,0);
+  if(channel!==null){
+    const format=url.searchParams.get('format')||'long';
+    if(format==='short')return channel==='knowledge'?knowledgeShortsVideo(request,ctx,cache,fetcher):json({error:'Unknown Shorts channel'},400,0);
+    return format==='long'&&['knowledge','brainilab'].includes(channel)?channelVideo(request,ctx,cache,fetcher,apiKey,channel):json({error:'Unknown channel or format'},400,0);
+  }
   const source=apiKey?'youtube-api':'youtube-feed';
   const key=new Request(new URL('/api/latest-video?playlist='+PLAYLIST+'&source='+source+'&v=2',request.url));
   const cached=await cache.match(key);
@@ -142,7 +147,7 @@ export default {
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
         const html=await response.text(),news='';
         const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
-        const videos=await cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'',['knowledge']);
+        const videos=await cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'',['brainilab','knowledge'],{knowledge:'short'});
         response=new Response(renderHomeVideoCards(html,videos).replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
       }
       const secured=new Response(response.body,response);

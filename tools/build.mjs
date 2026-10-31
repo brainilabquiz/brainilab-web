@@ -41,6 +41,8 @@ import './test-admin-operations-model.mjs';
 import './test-home-entry.mjs';
 import './test-latest-video.mjs';
 import './test-knowledge-video.mjs';
+import './test-knowledge-shorts.mjs';
+import './test-home-videos.mjs';
 import './test-factual-revisions.mjs';
 import './validate-game-batches.mjs';
 import './test-brand-identity.mjs';
