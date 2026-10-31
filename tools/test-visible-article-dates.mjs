@@ -32,6 +32,6 @@ assert.match(renderPage(template,[other],other),/data-article-date="modified"/,'
 const firstPublication={...other,updatedAt:null},firstHTML=renderPage(template,[firstPublication],firstPublication),firstDOM=new JSDOM(firstHTML);
 assert.equal(firstDOM.window.document.querySelector('[data-article-date="modified"]').dateTime,published.dateTime,'The existing schema fallback remains the original publication instant');
 assert.equal(compareLearnSchema(firstHTML,'/learn/'+other.slug+'/').ok,true);firstDOM.window.close();
-assert.doesNotMatch(articleByline(a),/Updated/,'Courses and other callers retain their existing presentation by default');
+assert.doesNotMatch(articleByline(a),/Updated/,'Direct callers opt in explicitly');
 for(const updatedAt of ['invalid','2026-09-22T12:00:00Z'])assert.doesNotMatch(articleByline({...a,updatedAt},{showUpdated:true}),/Updated/,'Invalid/backdated values cannot be presented as an update');
 dom.window.close();console.log('PASS visible article dates: all article routes, exact original/modified instants, first-publication fallback, readable labels, inert rerendering, precision mismatches, hidden/missing/duplicate/ambiguous dates and unchanged source/quiz documents.');
