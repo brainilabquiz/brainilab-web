@@ -190,3 +190,25 @@
 @media(max-width:460px){.learn-catalog .learn-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}.learn-catalog .learn-toolbar>div{display:contents}.learn-catalog .learn-toolbar .library-heading,.learn-catalog .learn-toolbar .learn-count{grid-column:1/-1;margin:0}.learn-catalog .learn-toolbar .learn-index-link{grid-column:1}.learn-catalog .learn-toolbar .learn-topic-select{grid-column:2;grid-row:3}}
 
 .topic-index-explore{margin-top:20px;font-size:14px;line-height:1.6}.topic-index-explore p{font-size:13px;color:#625d75;margin:0 0 8px}.topic-index-explore ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;column-gap:24px;row-gap:4px}.topic-index-explore li{max-width:100%}.topic-index-explore a{display:inline-block;min-height:44px;padding:10px 0;color:var(--brand-blue);text-underline-offset:4px}
+
+/* Topic-coloured photographic frames for articles, with quiet readable copy. */
+.learn-card[data-format=article],.article-reading[data-topic]{--reading-accent:var(--brand-blue);--reading-tint:#ecebf5}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='Science & nature']{--reading-accent:#207d5b;--reading-tint:#e4f4e9}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='Sports']{--reading-accent:#b7461b;--reading-tint:#fff0df}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='Geography']{--reading-accent:#176e9c;--reading-tint:#e5f3fa}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='History']{--reading-accent:#9a5c22;--reading-tint:#faf0dc}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='Curiosity']{--reading-accent:#a93e61;--reading-tint:#fcebf1}
+:is(.learn-card[data-format=article],.article-reading)[data-topic='Everyday inventions']{--reading-accent:#137f83;--reading-tint:#e4f4f2}
+.learn-card[data-format=article]{border-color:color-mix(in srgb,var(--reading-accent) 24%,#e5e0d7);box-shadow:0 4px 16px color-mix(in srgb,var(--reading-accent) 7%,transparent)}
+.learn-card[data-format=article]:is(:hover,:focus-within){border-color:var(--reading-accent);box-shadow:0 6px 20px color-mix(in srgb,var(--reading-accent) 12%,transparent)}
+.learn-card[data-format=article] .learn-card-art,.learn-catalog .learn-card[data-format=article] .learn-card-art{box-sizing:border-box;padding:5px;background:var(--reading-tint);border:1px solid color-mix(in srgb,var(--reading-accent) 32%,white);border-radius:12px;box-shadow:inset 0 0 0 2px #ffffffc9}
+.learn-catalog .learn-card[data-format=article]{border-color:color-mix(in srgb,var(--reading-accent) 24%,#e5e0d7);box-shadow:0 4px 16px color-mix(in srgb,var(--reading-accent) 7%,transparent)}
+.learn-catalog .learn-card[data-format=article]:is(:hover,:focus-within){border-color:var(--reading-accent);box-shadow:0 6px 20px color-mix(in srgb,var(--reading-accent) 12%,transparent)}
+.learn-card[data-format=article] .learn-card-art img{border-radius:7px}
+.learn-catalog .learn-card[data-format=article] .learn-topic-heading{border-bottom-color:color-mix(in srgb,var(--reading-accent) 23%,#e5e0d7)}
+.learn-catalog .learn-card[data-format=article] .learn-topic-heading .eyebrow{color:var(--reading-accent)}
+.article-reading .article-header>.eyebrow{color:var(--reading-accent)}
+.article-reading .article-cover{padding:10px;background:var(--reading-tint);border:1px solid color-mix(in srgb,var(--reading-accent) 28%,white);border-radius:18px;box-shadow:inset 0 0 0 3px #ffffffbf,0 8px 28px color-mix(in srgb,var(--reading-accent) 9%,transparent)}
+.article-reading .article-cover img{border-radius:10px}
+.article-reading .article-cover figcaption{padding:0 4px 2px;color:#59544f}
+@media(max-width:600px){.article-reading .article-cover{padding:7px;border-radius:14px}.learn-card[data-format=article] .learn-card-art{padding:4px}}
