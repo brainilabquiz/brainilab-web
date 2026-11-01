@@ -33,6 +33,12 @@ draft, credential, decision or session from BrainiLab.
    address. Reopening the project restores it without adding a reviewed action.
    Only **Add reviewed action** validates and adds it to the plan, then clears
    the pending draft. **Discard draft** asks before removing it.
+   Reviewed actions can be edited in place. Their recorded page, text and status
+   stay unchanged until **Save reviewed changes** passes validation. Editing does
+   not replace a separate new-action draft. Navigation and project downloads keep
+   unfinished edits; client reports include only the recorded version. Cancel
+   asks before discarding edits. The action being edited cannot be removed or
+   marked done until its edits are saved or cancelled.
 7. Download/reopen the allowlisted project JSON and a standalone, printable HTML
    review report. The draft is excluded from the report unless selected. Review
    the report before sharing: search rows, observations and action notes are
@@ -64,10 +70,15 @@ one project to 100 page observations and 100 actions. JSON exports keep only the
 supported fields. Credentials, private BrainiLab reports and player data have no
 reader in this tool. Sharing/export remains a deliberate user action.
 
-Project downloads use version 2 with `actionDraft` containing only `url`, `title`
-and `evidence` strings, or null. Old version-1 files open with no pending draft,
+Project downloads use version 3 with `actionDraft` containing only `url`, `title`
+and `evidence` strings, or null. Old version-1 and version-2 files open without an action edit,
 retaining their evidence, dates and reviewed actions. The version bump makes an
-old v1-only workspace reject a new file rather than silently discard its draft.
+older workspace reject a new file rather than silently discard its draft.
+The separate `actionEdit` is null or an allowlisted action index plus `url`,
+`title` and `evidence` recovery strings. Its index must refer to an existing
+recorded action. Removing a preceding action adjusts this index without changing
+its target. Version 3 makes older workspaces reject unfinished edits rather than
+silently lose them. Neither kind of unfinished action text appears in a report.
 This field permits incomplete text (including an unfinished page address) for
 recovery; it is not treated as a public URL or a trusted page identity. The
 existing exact-origin validation still applies when adding a reviewed action.
