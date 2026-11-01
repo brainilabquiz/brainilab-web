@@ -42,6 +42,26 @@ Give the answer near the start, then a concrete example or small surprise. Use o
 
 Read it aloud. Check grammar, meaning, uncertainty and examples manually. The tool can flag a long paragraph, a long sentence or a repeated word, but those are suggestions, not quotas or proof of an English error. There is no fixed word count, section count or daily publication limit.
 
+### Record the contribution and the related questions
+
+New private briefs include optional `contributionReview` and `questionCoverage` notes, displayed in the private HTML and JSON review. Existing briefs keep their previous requirements. These notes add no publication gate or automated originality score.
+
+In `contributionReview`, record the actual contribution in `adds`, its `kind`, the section or paragraph in `location`, its factual or practical `basis`, and its `limits`. A checked worked example, a useful comparison, a carefully explained mechanism or a synthesis that connects reliable sources can help the reader. It need not be a new scientific finding or a first-person story. Do not invent experiments, player statistics, quotations, professional experience or disagreement to make an article seem original. Distinguish our explanation from a source's findings. `whyThisAddsSomethingNew` still records how the reading differs from the existing BrainiLab catalogue.
+
+For `questionCoverage.questions`, record `{ "question": "…", "destination": "section or existing public URL", "basis": "dated query evidence, reader feedback or an editorial inference" }`. Keep observed search questions separate from plausible editorial follow-ups. Use the current article for a short related answer; link to an existing reading when it already explains the question properly. Leave a genuinely unsupported question unanswered or in the private plan. No FAQ block, question count, word count or new URL is required. These notes do not establish Google's hidden queries or promise AI citations.
+
+### Give each page a useful role
+
+Before creating a page, map the current topic's entry point, supporting explanations, definitions and specific questions in the private plan. A page may serve more than one role. Prefer improving a demonstrated omission in an existing page, then embedding an existing relevant playable video or tool where it helps, then producing a distinct missing reading. Preserve an already useful answer while its follow-up measurement period is incomplete.
+
+The public topic directory groups selected existing readings into smaller subject routes. Curated exact slugs apply only to current publications in the same topic; they never revive withdrawn content. Unassigned new readings remain visible under More questions. Preserve category anchors, one entry per reading, course and game routes, crawlable links and accurate CollectionPage declarations. This is reader navigation, not a search ranking score or a universal three-click rule.
+
+### Coordinate useful external references with Growth
+
+Offer something a real reader or editor would use: an original puzzle, a playable game, a relevant video, a carefully sourced explanation or genuinely collected data. Before proposing a campaign, record the audience, actual useful asset, evidence and limitations, existing coverage and a measurement plan. Growth owns its private prospect, contact, permission and receipt records. Reuse that ledger to avoid repeated submissions. A plan or pitch is not an earned link, and a verified link is not a measured visit or game completion. Do not buy, exchange or automatically manufacture links, and do not send outreach without its own authorisation.
+
+Measure matched periods and the exact page or journey using the saved Growth contract. Retain query/page impressions, clicks, referrals, measured landings, recorded starts and completions as separate observations. A missing or incomplete period cannot establish a gain or loss. Do not install a collection of third-party skills or run copied commands merely because a reference image recommends them; use the adapted instructions and inspect any genuinely missing capability first.
+
 ## 4. Give it a quiet next step
 
 Use an appropriate game, a short invitation and a small number of genuinely related readings. Preserve existing URLs when revising an article. Check every destination on the live website before publication; the catalogue check catches missing article slugs but does not prove a live HTTP response or game behaviour.

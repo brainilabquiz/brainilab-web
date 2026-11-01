@@ -3,6 +3,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {prepareArticle,renderPage,libraryBody,articleBody} from '../lib/learn-content.js';
 import {topicAnchor,topicIndexBody} from '../lib/learn-topic-index.js';
+import {groupTopicReadings,questionGroups} from '../lib/learn-question-groups.js';
 import {serveLearn} from '../lib/learn-worker.js';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const template=readFileSync('learn/index.html','utf8');
@@ -25,6 +26,20 @@ const attacker={...first,slug:'escaped-title',title:'<img src=x onerror=alert(1)
 const safe=new JSDOM(topicIndexBody([attacker])).window.document;assert.equal(safe.querySelectorAll('img,script').length,0);assert.ok(safe.querySelector('.topic-index-list a').textContent.includes(attacker.title));assert.match(topicAnchor(attacker.topic),/^[a-z0-9-]+$/);
 assert.notEqual(topicAnchor('History'),topicAnchor('history'));assert.equal(topicAnchor('History'),topicAnchor('History'));
 assert.match(topicIndexBody([]),/No articles are available/);
+for(const [topic,parts] of questionGroups){
+ const slugs=parts.flatMap(([,slugs])=>slugs);assert.equal(slugs.length,new Set(slugs).size,topic+': each curated reading has one role');
+ const fixture=slugs.map(slug=>({...first,slug,title:slug,topic}));
+ const future={...first,topic,slug:'future-reading',title:'A future question'};
+ const grouped=new JSDOM(topicIndexBody([...fixture,future])).window.document;
+ assert.equal(grouped.querySelectorAll('.topic-index-list li').length,fixture.length+1);
+ for(const a of [...fixture,future])assert.equal(grouped.querySelectorAll(`.topic-index-list a[href="/learn/${a.slug}/"]`).length,1);
+ assert.equal(grouped.querySelectorAll('.topic-index-group h3').length,parts.length+1,'Uncurated readings remain visible under More questions');
+ for(const list of grouped.querySelectorAll('[aria-labelledby]'))assert.ok(grouped.getElementById(list.getAttribute('aria-labelledby')));
+ const withdrawn=groupTopicReadings(topic,fixture.slice(1));assert.ok(!withdrawn.flatMap(g=>g.articles).some(a=>a.slug===fixture[0].slug),'Curated configuration cannot revive withdrawn readings');
+ assert.equal(groupTopicReadings(topic,[]).length,0,'No empty question groups');
+}
+assert.equal(groupTopicReadings('Unlisted topic',[first])[0].title,null,'Other topics retain their ordinary list');
+assert.equal(groupTopicReadings('Words & puzzles',[{...first,slug:'why-is-the-sky-blue'}])[0].title,null,'A slug listed in another topic does not move the reading');
 const newer={...first,slug:'newly-published-read',title:'A newly published question',publishedAt:'2026-10-18T08:00:00Z'};
 const env={ASSETS:{fetch:async request=>new Response(new URL(request.url).pathname==='/sitemap.xml'?'<urlset><url><loc>https://brainilabgames.com/learn/topics/</loc></url><url><loc>https://brainilabgames.com/games/</loc></url></urlset>':template)}};
 const ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};

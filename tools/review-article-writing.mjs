@@ -8,6 +8,15 @@ import {articleEvidence,articleEvidenceHTML} from '../editor/article-evidence.js
 const digest=b=>createHash('sha256').update(b).digest('hex');
 const parse=s=>JSON.parse(s.replace(/^\uFEFF/,''));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const editorialNotes=entry=>({contribution:entry?.contributionReview||null,coverage:entry?.questionCoverage||null});
+const editorialNotesHTML=entry=>{
+ const {contribution:c,coverage:q}=editorialNotes(entry);
+ if(!c&&!q)return '';
+ const contribution=c?`<h3>What this reading contributes</h3><p>${esc(c.status)} · ${esc(c.kind)}</p><p>${esc(c.adds)}</p><p>Location: ${esc(c.location)}<br>Basis: ${esc(c.basis)}<br>Limits: ${esc(c.limits)}</p>`:'';
+ const questions=Array.isArray(q?.questions)?q.questions:[];
+ const coverage=q?`<h3>Related reader questions</h3><p>${esc(q.status)} · ${esc(q.notes)}</p>${questions.length?'<ul>'+questions.map(x=>`<li>${esc(x.question)} — ${esc(x.destination)} (${esc(x.basis)})</li>`).join('')+'</ul>':'<p>No question map recorded.</p>'}`:'';
+ return `<details><summary>Contribution &amp; question coverage — editorial notes</summary>${contribution}${coverage}<p>Optional manual notes, not an originality score, verified search demand or a prediction of Google’s queries.</p></details>`;
+};
 const [command,folder,...flags]=process.argv.slice(2);
 if(!['brief','review'].includes(command)||!folder){console.log('Usage: node tools/review-article-writing.mjs brief|review <private-folder> [--revision] [--publish] [brief only: --growth <private-report.json>]\nBrief creates a private review template, never facts or a publication.');process.exitCode=1;}
 else await main().catch(e=>{console.error(e.message);process.exitCode=1;});
@@ -58,6 +67,8 @@ async function main(){
     demand:{status:'pending',query:'',market:'',language:'en',observedAt:null,provider:'',displayedMetric:null,intentMatch:{status:'pending',notes:''},evidence:[]},
     sources:(d.sources||[]).map(s=>({url:s.url,status:'pending',openedAt:null,claims:[],evidence:[]})),
     answerReview:{status:'pending',location:'',sourceUrls:[],notes:'Check the central answer and its attribution; no FAQ or AI-citation promise is required.'},
+    contributionReview:{status:'pending',kind:'',location:'',adds:'',basis:'',limits:''},
+    questionCoverage:{status:'pending',questions:[],notes:'Optional: record useful related questions, their evidence and the section or existing URL that answers them. Do not manufacture demand or require a new page for each question.'},
     linkReview:{status:'pending',checkedAt:null,notes:'Open the actual internal and external destinations and supporting passages. Saved Growth observations do not replace a live check.',evidence:[]},
     english:{status:'pending',notes:'',evidence:[]},cover:{status:'pending',notes:'Inspect the original, wide cover, square and small crops; verify rights, alt text and credit.',evidence:[]},mobile:{status:'pending',evidence:[]},desktop:{status:'pending',evidence:[]}
    }))};
@@ -90,7 +101,7 @@ async function main(){
    const model=plan(d,result),saved=savedGrowth?.find(x=>x.slug===d.slug);
    if(saved){if(saved.linkTargetsSha256===linkHash(model))model.growth=saved.growth;else manual.push(d.slug+': link destinations changed after the saved Growth context. Preserve the old record and create a current private brief.');}
    else if(savedGrowth)manual.push(d.slug+': no matching article in the saved Growth context.');
-   items.push({slug:d.slug,...result,evidence:model});
+   items.push({slug:d.slug,...result,evidence:model,editorialReview:editorialNotes(brief?.articles?.find(x=>x.slug===d.slug))});
    const b=brief?.articles?.find(x=>x.slug===d.slug),label=d.slug;
    if(!b){manual.push(label+': create and complete the editorial brief.');continue;}
    if(b.documentSha256!==hashes.get(d.slug))manual.push(label+': the article changed after its brief was bound. Re-review the changed copy and update its hash.');
@@ -112,10 +123,10 @@ async function main(){
   }
   if(publish&&!dateOK(baseline.capturedAt,86400000))manual.push('Refresh the catalogue snapshot before publication: it must be from the last 24 hours.');
   const problems=items.flatMap(x=>x.problems.map(p=>({slug:x.slug,...p}))),warnings=items.flatMap(x=>x.warnings.map(p=>({slug:x.slug,...p})));
-  const report={checkedAt:new Date().toISOString(),mode:revision?'revision':'new',publicationReview:publish,passed:!problems.length&&(!publish||!manual.length),problems,warnings,manualReviewPending:manual,articles:items.map(({slug,metrics,evidence})=>({slug,...metrics,linkPlan:evidence})),limits:'Structural checks and evidence completeness only. A reviewed label is a manual assertion, not independent verification of facts, demand, English or image rights. Saved Growth dates remain independent. Publishing still uses the guarded release workflow.'};
+  const report={checkedAt:new Date().toISOString(),mode:revision?'revision':'new',publicationReview:publish,passed:!problems.length&&(!publish||!manual.length),problems,warnings,manualReviewPending:manual,articles:items.map(({slug,metrics,evidence,editorialReview})=>({slug,...metrics,linkPlan:evidence,editorialReview})),limits:'Structural checks and evidence completeness only. A reviewed label is a manual assertion, not independent verification of facts, demand, English, originality or image rights. Contribution and question maps are optional manual notes. Saved Growth dates remain independent. Publishing still uses the guarded release workflow.'};
   await writeFile(path.join(root,'writing-review.json'),JSON.stringify(report,null,2)+'\n');
   const list=(heading,values)=>'<h2>'+heading+'</h2>'+(values.length?'<ul>'+values.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>None.</p>');
-  const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BrainiLab writing review</title><style>body{font:16px/1.65 system-ui;background:#fffdf8;color:#242238;max-width:850px;margin:40px auto;padding:0 20px;overflow-wrap:anywhere}h1,h2{color:#2d296e}li{margin:8px 0}section{padding:16px 0;border-bottom:1px solid #ddd9e8}small{color:#656177}</style></head><body><h1>Writing review</h1><p>'+esc(report.passed?'Structural checks passed. Read the manual review notes before publication.':'Some checks need attention.')+'</p>'+items.map(x=>'<section><h2>'+esc(x.slug)+'</h2><p>'+x.metrics.words+' words · '+x.metrics.minutes+' min read · '+x.metrics.sections+' sections</p><details><summary>Search evidence &amp; link plan</summary>'+articleEvidenceHTML(x.evidence)+'</details></section>').join('')+list('Fix before publishing',problems.map(x=>x.slug+': '+x.message))+list('Writing suggestions',warnings.map(x=>x.slug+': '+x.message+(x.sectionIndex===undefined?'':' (section '+(x.sectionIndex+1)+')')+(x.excerpt?' — “'+x.excerpt+'”':'')))+list('Manual review',manual)+'<small>'+esc(report.limits)+'</small></body></html>';
+  const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BrainiLab writing review</title><style>body{font:16px/1.65 system-ui;background:#fffdf8;color:#242238;max-width:850px;margin:40px auto;padding:0 20px;overflow-wrap:anywhere}h1,h2{color:#2d296e}li{margin:8px 0}section{padding:16px 0;border-bottom:1px solid #ddd9e8}small{color:#656177}</style></head><body><h1>Writing review</h1><p>'+esc(report.passed?'Structural checks passed. Read the manual review notes before publication.':'Some checks need attention.')+'</p>'+items.map(x=>'<section><h2>'+esc(x.slug)+'</h2><p>'+x.metrics.words+' words · '+x.metrics.minutes+' min read · '+x.metrics.sections+' sections</p><details><summary>Search evidence &amp; link plan</summary>'+articleEvidenceHTML(x.evidence)+'</details>'+editorialNotesHTML(brief?.articles?.find(b=>b.slug===x.slug))+'</section>').join('')+list('Fix before publishing',problems.map(x=>x.slug+': '+x.message))+list('Writing suggestions',warnings.map(x=>x.slug+': '+x.message+(x.sectionIndex===undefined?'':' (section '+(x.sectionIndex+1)+')')+(x.excerpt?' — “'+x.excerpt+'”':'')))+list('Manual review',manual)+'<small>'+esc(report.limits)+'</small></body></html>';
   await writeFile(path.join(root,'writing-review.html'),html);
   console.log(JSON.stringify({passed:report.passed,problems:problems.length,suggestions:warnings.length,manualReviewPending:manual.length,report:'writing-review.html'}));
   if(!report.passed)process.exitCode=1;
