@@ -86,6 +86,23 @@ be `{url, discovery}` objects with allowlisted provenance or legacy URL strings.
 The only preserved external query parameter is numeric `page`, for exact public
 pagination observed in a source report; arbitrary query data remain excluded.
 
+Distribution also accepts an email submission's explicitly recorded
+`subsequentPublicationVerification`. It requires the original verified send,
+an exact public listing on the recorded organisation's host, a dated anonymous
+200 observation and a checked link to the original BrainiLab destination.
+Notices, uncertain sends, incomplete evidence and future observations do not
+become published listings. Only the public organisation, listing and dates are
+exported; the email, receipt, text and reviewer claims stay private. This does
+not invent a form, another submission or a human reply. Producer 5 refreshes the
+same-day distribution cache once; the report schema and decision rules stay intact.
+
+A verified public URL can also enter the explicit SEO source registry with
+`owner_submitted_listing` provenance. Reusing saved HTML must retain its actual
+verification time and hash, deduplicate source/destination/rel, and preserve all
+other page and source dates. `nofollow` remains visible; neither a listing nor
+matching structured data establishes a followed link, search benefit, visit or
+independently witnessed playtest.
+
 `--keywords` collects query-only final Web Search results for 28 and 90 days,
 ending three UTC days ago, using the existing webmasters.readonly authorization.
 Both use byProperty aggregation, pagination and sensitive-format minimisation.

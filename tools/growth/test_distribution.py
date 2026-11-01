@@ -45,6 +45,50 @@ class DistributionTest(unittest.TestCase):
         self.registry['forms'][0]['status'] = 'send_uncertain'
         self.assertEqual(self.snapshot()['directories'][0]['state'], 'uncertain')
 
+    def checked_email(self):
+        return {'id': 'private-receipt', 'domain': 'directory.example', 'organization': 'Public directory',
+            'status': 'sent_verified', 'verifiedAt': STAMP,
+            'destination': 'https://brainilabgames.com/games/number-route/',
+            'recipient': 'private@directory.example', 'body': 'private correspondence',
+            'subsequentPublicationVerification': {'publicListingVerified': True,
+                'listingUrl': 'https://directory.example/games/number-route/', 'observedAt': STAMP,
+                'anonymousHTTPStatus': 200, 'directOriginalGameHrefVerified': True,
+                'targets': ['https://brainilabgames.com/games/number-route/'],
+                'evidence': 'C:/private/mail-proof.txt', 'publisherPlaytestClaim': 'PRIVATE CLAIM'}}
+
+    def test_checked_email_placement_is_exported_without_inventing_a_form_or_feedback(self):
+        email = self.checked_email(); self.registry['emails'] = [email]
+        original = copy.deepcopy(self.registry)
+        s = validate(self.snapshot()); row = next(r for r in s['directories'] if r['domain'] == email['domain'])
+        self.assertEqual(row, {'domain': email['domain'], 'name': 'Public directory', 'state': 'published',
+            'submittedAt': STAMP, 'listingUrl': email['subsequentPublicationVerification']['listingUrl'], 'listingVerifiedAt': STAMP})
+        self.assertEqual(self.registry, original)
+        for private in ['private@', 'private correspondence', 'private-receipt', 'mail-proof', 'PRIVATE CLAIM', 'publisherPlaytestClaim']:
+            self.assertNotIn(private, json.dumps(s))
+
+    def test_email_notice_or_incomplete_or_wrong_source_proof_is_not_a_public_listing(self):
+        cases = [('status', 'send_uncertain'), ('publicListingVerified', False), ('anonymousHTTPStatus', '200'),
+            ('directOriginalGameHrefVerified', False), ('targets', []), ('targets', None),
+            ('targets', 'https://brainilabgames.com/games/number-route/'), ('observedAt', None),
+            ('observedAt', '2026-10-12T00:00:00+00:00'), ('observedAt', '2026-10-10T00:00:00+00:00'),
+            ('listingUrl', 'https://other.example/games/number-route/'),
+            ('listingUrl', 'https://directory.example/account/'),
+            ('listingUrl', 'https://directory.example/game/?private=token')]
+        for key, value in cases:
+            with self.subTest(key=key, value=value):
+                email = self.checked_email()
+                (email if key == 'status' else email['subsequentPublicationVerification'])[key] = value
+                self.registry['emails'] = [email]
+                self.assertFalse(any(r['domain'] == email['domain'] for r in self.snapshot()['directories']))
+
+    def test_email_and_form_for_one_domain_stay_one_public_listing(self):
+        email = self.checked_email(); self.registry['emails'] = [email, copy.deepcopy(email)]
+        self.registry['forms'].append({'domain': email['domain'], 'organization': 'Public directory',
+            'resource': email['destination'], 'status': 'form_sent_confirmed', 'verifiedAt': STAMP})
+        rows = [r for r in self.snapshot()['directories'] if r['domain'] == email['domain']]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['state'], 'published')
+
     def test_submitted_resource_records_keep_receipt_uncertainty_and_unknown_dates(self):
         self.registry['forms'] = [
             {'domain': 'puzzlelinks.com', 'submittedResource': 'https://brainilabgames.com/daily-quiz/?utm_source=puzzlelinks.com', 'status': 'send_uncertain', 'verification': {'observedAt': STAMP}, 'body': 'private message'},

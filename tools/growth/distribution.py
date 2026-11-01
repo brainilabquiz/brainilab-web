@@ -9,7 +9,7 @@ import re
 import gsc_sync as api
 import outreach_summary
 
-PRODUCER_VERSION = 4
+PRODUCER_VERSION = 5
 
 
 def domain(value):
@@ -59,10 +59,42 @@ def resource(row):
     return {'path': p, 'title': title.strip(), 'kind': kind}
 
 
+def verified_email_listing(row, observed):
+    """Export only an explicitly checked public placement, never mail content."""
+    proof = row.get('subsequentPublicationVerification')
+    if row.get('status') != 'sent_verified' or not isinstance(proof, dict):
+        return None
+    host = domain(row.get('domain'))
+    listing = public_url(proof.get('listingUrl'))
+    checked = dated(proof.get('observedAt'))
+    destination = public_url(row.get('destination'))
+    targets = proof.get('targets')
+    if not host or not listing or listing != proof.get('listingUrl') or domain(urlsplit(listing).hostname) != host:
+        return None
+    if urlsplit(listing).path.split('/')[1].lower() in ('account', 'admin', 'auth', 'dashboard'):
+        return None
+    if (proof.get('publicListingVerified') is not True or type(proof.get('anonymousHTTPStatus')) is not int
+            or proof['anonymousHTTPStatus'] != 200 or proof.get('directOriginalGameHrefVerified') is not True
+            or not destination or urlsplit(destination).hostname != 'brainilabgames.com'
+            or not isinstance(targets, list) or destination not in targets or not checked
+            or datetime.fromisoformat(checked) > observed):
+        return None
+    submitted = dated(row.get('verifiedAt'))
+    if submitted and datetime.fromisoformat(checked) < datetime.fromisoformat(submitted):
+        return None
+    name = row.get('organization', host)
+    if not isinstance(name, str) or not name.strip() or len(name) > 120 or '@' in name:
+        name = host
+    return {'domain': host, 'name': name, 'state': 'published',
+            'submittedAt': submitted, 'listingUrl': listing, 'listingVerifiedAt': checked}
+
+
 def build(registry, catalog, game_rows, now=None):
     if not isinstance(registry.get('forms'), list) or not isinstance(catalog.get('rows'), list) or not dated(catalog.get('collectedAt')):
         raise ValueError('A dated published catalogue and outreach registry are required')
     directories, blocked = {}, set()
+    collected = now or datetime.now(timezone.utc)
+    rank = lambda r: (r['state'] == 'published', r['submittedAt'] or '')
     for f in registry['forms']:
         source = public_url(f.get('contactSource') or f.get('source') or f.get('submissionUrl') or f.get('url'))
         host = domain(f.get('domain')) or (domain(urlsplit(source).hostname) if source else None)
@@ -86,9 +118,14 @@ def build(registry, catalog, game_rows, now=None):
                 'listingVerifiedAt': placement_at if published else None}
         # Prefer a verified listing, then the latest submission, for a domain.
         previous = directories.get(host)
-        rank = lambda r: (r['state'] == 'published', r['submittedAt'] or '')
         if not previous or rank(item) > rank(previous):
             directories[host] = item
+    for email in registry.get('emails', []):
+        item = verified_email_listing(email, collected)
+        if item:
+            previous = directories.get(item['domain'])
+            if not previous or rank(item) > rank(previous):
+                directories[item['domain']] = item
     # Domain-only duplicate guard. Consumer mail providers cannot identify an organisation.
     consumer = {'gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com', 'proton.me'}
     for row in registry.get('emails', []) + registry.get('suppression', []):
@@ -108,7 +145,6 @@ def build(registry, catalog, game_rows, now=None):
             resources[clean['path']] = clean
     if not resources:
         raise ValueError('No published resources')
-    collected = now or datetime.now(timezone.utc)
     stamp = collected.isoformat()
     result = {'schemaVersion': 1, 'source': 'Private outreach registry and published catalogue',
             'observedAt': stamp, 'catalogCollectedAt': catalog['collectedAt'],
