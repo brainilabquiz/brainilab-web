@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {demoProject,validateProject,reportHTML} from '../editor/studio-model.js';
+const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom');
+const dom=new JSDOM('<div id="root"></div>',{url:'https://brainilabgames.com/admin/growth-studio/'}),root=dom.window.document.getElementById('root');
+globalThis.FormData=dom.window.FormData;
+const {mountStudio}=await import('../editor/studio-app.js');
+const initial=demoProject(),downloads=[];let accept=true,requests=0;
+globalThis.fetch=()=>{requests++;throw Error('No requests in portable editing');};
+const app=mountStudio(root,{download:(content,name)=>downloads.push({content,name}),confirm:()=>accept});
+const click=s=>root.querySelector(s).click(),submit=()=>root.querySelector('[data-action-edit-form]').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));
+const edit=(name,value,form='[data-action-edit-form]')=>{const el=root.querySelector(form+' [name="'+name+'"]');el.value=value;el.dispatchEvent(new dom.window.Event('input',{bubbles:true}));};
+const leave=()=>{const event=new dom.window.Event('beforeunload',{cancelable:true});dom.window.dispatchEvent(event);return event.defaultPrevented;};
+async function open(data){const bytes=new TextEncoder().encode(JSON.stringify(data));Object.defineProperty(root.querySelector('[data-open-project]'),'files',{configurable:true,value:[{size:bytes.length,arrayBuffer:async()=>bytes.buffer}]});root.querySelector('[data-open-project]').dispatchEvent(new dom.window.Event('change',{bubbles:true}));await new Promise(r=>setTimeout(r,5));}
+for(const version of [1,2]){const old={...initial,version};delete old.actionEdit;const p=validateProject(old);assert.equal(p.version,3);assert.equal(p.actionEdit,null);assert.deepEqual(p.actions,initial.actions);}
+const pending={index:0,url:'https://',title:'  Revised wording  ',evidence:'\n  Unsubmitted follow-up — Málaga <b>text</b>  '};
+assert.deepEqual(validateProject({...initial,actionEdit:{...pending,unknown:'not exported'}}).actionEdit,pending);
+for(const value of [[],true,{...pending,index:-1},{...pending,index:1},{...pending,index:0.5},{...pending,title:42},{...pending,evidence:'x'.repeat(2001)}])assert.throws(()=>validateProject({...initial,actionEdit:value}));
+await open(initial);click('[data-view="plan"]');
+edit('title','Separate new-action draft','[data-action-form]');const newDraft=app.snapshot().actionDraft;
+click('[data-save]');assert.equal(leave(),false);click('[data-action-edit="0"]');assert.equal(leave(),true);
+assert.equal(dom.window.document.activeElement.name,'title','Editing focuses the named control');
+assert.equal(root.querySelector('[data-action-remove="0"]').disabled,true);assert.equal(root.querySelector('[data-action-toggle="0"]').disabled,true);
+for(const [name,value]of Object.entries(pending))if(name!=='index')edit(name,value);
+assert.deepEqual(app.snapshot().actions,initial.actions,'Typing cannot overwrite recorded evidence');
+click('[data-view="pages"]');click('[data-view="writing"]');click('[data-view="plan"]');
+assert.equal(root.querySelector('[data-action-edit-form] [name="evidence"]').value,pending.evidence,'Exact leading newlines survive navigation');
+assert.deepEqual(app.snapshot().actionDraft,newDraft,'Existing new-action draft is independent');
+for(const includeDraft of [false,true]){const report=reportHTML(app.snapshot(),{includeDraft});assert.equal(report.includes('Unsubmitted follow-up'),false);assert.equal(report.includes(initial.actions[0].evidence),true);}
+click('[data-report-download]');assert.equal(leave(),true);click('[data-save]');const saved=JSON.parse(downloads.at(-1).content);assert.equal(saved.version,3);assert.deepEqual(saved.actionEdit,pending);
+click('[data-new]');await open(saved);click('[data-view="plan"]');assert.deepEqual(app.snapshot().actionEdit,pending);assert.deepEqual(app.snapshot().actions,initial.actions);
+submit();assert.deepEqual(app.snapshot().actions,initial.actions);assert.deepEqual(app.snapshot().actionEdit,pending,'Invalid address remains recovery text, not a reviewed action');
+assert.match(root.querySelector('[data-status]').textContent,/invalid page/);
+edit('url',initial.actions[0].url);edit('title','   ');submit();assert.match(root.querySelector('[data-status]').textContent,/revised action/);
+edit('title','Recheck the owner’s confirmed details');submit();
+assert.equal(app.snapshot().actions.length,1,'Save updates instead of duplicating');assert.equal(app.snapshot().actions[0].state,'planned');assert.equal(app.snapshot().actionEdit,null);assert.equal(app.snapshot().actions[0].evidence,pending.evidence.trim());assert.deepEqual(app.snapshot().actionDraft,newDraft);assert.equal(dom.window.document.activeElement.dataset.actionEdit,'0');
+click('[data-action-toggle="0"]');const recorded=app.snapshot().actions[0];click('[data-action-edit="0"]');edit('title','Done action with corrected note');submit();assert.equal(app.snapshot().actions[0].state,'done','Editing never resets recorded status');
+click('[data-action-edit="0"]');edit('title','Do not save this');accept=false;click('[data-action-edit-cancel]');assert.equal(app.snapshot().actionEdit.title,'Do not save this');accept=true;click('[data-action-edit-cancel]');assert.equal(app.snapshot().actionEdit,null);assert.equal(app.snapshot().actions[0].title,'Done action with corrected note');assert.equal(dom.window.document.activeElement.dataset.actionEdit,'0');
+const second={...initial,actions:[...initial.actions,{...recorded,title:'Second action',state:'done'}]};await open(second);click('[data-view="plan"]');click('[data-action-edit="1"]');edit('evidence','Keep attached to the second action.');
+click('[data-action-remove="0"]');assert.equal(app.snapshot().actionEdit.index,0);assert.equal(app.snapshot().actions[0].title,'Second action');submit();assert.equal(app.snapshot().actions[0].evidence,'Keep attached to the second action.');assert.equal(app.snapshot().actions[0].state,'done');
+const full={...initial,actions:Array.from({length:100},(_,i)=>({...initial.actions[0],title:'Action '+i}))};await open(full);click('[data-view="plan"]');click('[data-action-edit="99"]');edit('title','Edit at full capacity');submit();assert.equal(app.snapshot().actions.length,100);assert.equal(app.snapshot().actions[99].title,'Edit at full capacity');
+await open(initial);assert.equal(app.snapshot().actionEdit,null,'Replacing a project cannot carry client edits across');assert.equal(requests,0);
+app.dispose();dom.window.close();
+console.log('PASS Studio action editing: staged updates, exact recovery text, v1/v2 portability, navigation, download/reopen, report exclusion, validation, cancel, status preservation, index adjustment, full plan, focus and zero requests.');

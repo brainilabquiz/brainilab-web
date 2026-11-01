@@ -4,7 +4,7 @@ import {demoProject,validateProject,reportHTML} from '../editor/studio-model.js'
 const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom'),dom=new JSDOM('<main id="root"></main>',{url:'https://brainilabgames.com/admin/growth-studio/'}),root=dom.window.document.getElementById('root');
 globalThis.FormData=dom.window.FormData;
 const {mountStudio}=await import('../editor/studio-app.js');
-const old=demoProject();old.version=1;delete old.actionDraft;assert.equal(validateProject(old).actionDraft,null,'Existing v1 files remain compatible');assert.equal(validateProject(old).version,2);
+const old=demoProject();old.version=1;delete old.actionDraft;assert.equal(validateProject(old).actionDraft,null,'Existing v1 files remain compatible');assert.equal(validateProject(old).version,3);
 const raw={url:'https://',title:'  Pending review — not an action  ',evidence:'  Line one\nLine two with Málaga and <img src=x>  '};
 const imported=validateProject({...old,actionDraft:{...raw,privateUnknown:'omitted',state:'done'}});assert.deepEqual(imported.actionDraft,raw,'Incomplete inputs and whitespace survive without promotion');assert.deepEqual(imported.actions,old.actions);assert.equal(JSON.stringify(imported).includes('privateUnknown'),false);
 for(const includeDraft of [false,true])assert.equal(reportHTML(imported,{includeDraft}).includes('Pending review — not an action'),false,'Client reports never include pending action drafts');
@@ -25,7 +25,7 @@ click('[data-view="evidence"]');root.querySelector('[data-review-page="https://j
 click('[data-report-download]');assert.equal(downloads.at(-1).content.includes('Keep the captured schema context'),false);assert.equal(leave(),true,'A report download does not mark project work saved');
 click('[data-action-toggle="0"]');assert.deepEqual(fields(),draft);assert.equal(app.snapshot().actions.length,1);
 throwDownload=true;click('[data-save]');assert.deepEqual(fields(),draft);assert.equal(leave(),true);assert.match(root.querySelector('[data-status]').textContent,/Local download failed/);throwDownload=false;
-click('[data-save]');const saved=JSON.parse(downloads.at(-1).content);assert.equal(saved.version,2);assert.deepEqual(saved.actionDraft,draft);assert.equal(leave(),false);assert.deepEqual(fields(),draft,'Downloading does not empty the live form');assert.deepEqual(saved.search,initialSearch);
+click('[data-save]');const saved=JSON.parse(downloads.at(-1).content);assert.equal(saved.version,3);assert.deepEqual(saved.actionDraft,draft);assert.equal(leave(),false);assert.deepEqual(fields(),draft,'Downloading does not empty the live form');assert.deepEqual(saved.search,initialSearch);
 click('[data-new]');assert.equal(app.snapshot(),null);await open(saved);click('[data-view="plan"]');assert.deepEqual(fields(),draft);assert.equal(app.snapshot().actions.length,1,'Reopening never adds the pending action');
 allowReplace=false;click('[data-discard-action-draft]');assert.deepEqual(fields(),draft);click('[data-new]');assert.deepEqual(fields(),draft);assert.ok(confirmations>=2);allowReplace=true;
 input('url','https://outside.example/private-draft/');root.querySelector('[data-action-form]').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));assert.equal(app.snapshot().actions.length,1);assert.equal(fields().url,'https://outside.example/private-draft/','Rejected submission retains the recovery input');assert.match(root.querySelector('[data-status]').textContent,/invalid page/);
