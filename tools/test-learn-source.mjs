@@ -6,7 +6,7 @@ import {serveLearn} from '../lib/learn-worker.js';
 import {checkPublicPages} from '../lib/site-health.js';
 
 const url='https://example.invalid/public-read',json=value=>Response.json(value);
-for(const failure of [()=>{throw new TypeError('private transport details');},()=>{throw new DOMException('private timeout details','TimeoutError');},...([408,500,502,503,504,520,522,524].map(status=>()=>new Response('private upstream body',{status}))),()=>new Response(new ReadableStream({start(controller){controller.error(new TypeError('body connection lost'));}}))]){
+for(const failure of [()=>{throw new TypeError('private transport details');},()=>{throw Error('Network connection lost.');},()=>{throw Error('daemonDown');},()=>{throw new DOMException('private timeout details','TimeoutError');},...([408,500,502,503,504,520,522,524].map(status=>()=>new Response('private upstream body',{status}))),()=>new Response(new ReadableStream({start(controller){controller.error(new TypeError('body connection lost'));}}))]){
  let calls=0;
  const result=await learnSourceJSON(url,{headers:{apikey:'public-fixture'},fetcher:async(input,options)=>{assert.equal(input,url);assert.equal(options.method,'GET');assert.equal(options.redirect,'manual');assert.equal(options.headers.apikey,'public-fixture');return ++calls===1?failure():json([]);}});
  assert.deepEqual(result,[]);assert.equal(calls,2,'One transient failure recovers with exactly one new read');
