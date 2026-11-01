@@ -23,6 +23,11 @@ two failures still return 503 with Retry-After and no stale/static fallback.
 The response and server monitor retain only a coarse source error code,
 never database error bodies, credentials or visitor data.
 
+This includes Cloudflare's documented `Network connection lost` and
+`daemonDown` transport failures. See [Workers errors](https://developers.cloudflare.com/workers/observability/errors/)
+and [Supabase retry guidance](https://supabase.com/docs/guides/api/automatic-retries-in-supabase-js).
+These public reads use native fetch, so SDK retries do not apply automatically.
+
 `dist/_release.json` identifies the commit and hashes the built public files,
 Worker source, runtime libraries and configuration. It contains no credentials,
 visitor identities or publication data. It is excluded from its own hash.
