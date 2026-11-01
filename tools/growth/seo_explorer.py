@@ -443,7 +443,10 @@ def refresh(private, distribution_path=None, force=False, now=None, sources_path
             kind = 'reviewed_public_candidate' if isinstance(entry,str) else entry.get('discovery') if isinstance(entry,dict) else None
             if public_url(u)!=u or not u or own_host(u) or kind not in DISCOVERY:
                 raise ValueError('Additional sources must be explicit public external page URLs')
-            provenance.setdefault(u, kind)
+            # An explicit owner-submission record is more specific than the
+            # generic published-directory frontier. Never erase that origin.
+            if kind == 'owner_submitted_listing': provenance[u] = kind
+            else: provenance.setdefault(u, kind)
     source_urls = sorted(provenance)
     if len(page_urls)>250 or len(source_urls)>500: raise ValueError('Crawl exceeds explicit index limits')
     path = private/'seo-explorer-latest.json'; prior = path.read_bytes() if path.exists() else None
