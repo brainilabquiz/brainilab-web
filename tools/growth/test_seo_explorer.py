@@ -216,4 +216,18 @@ class SEOTest(unittest.TestCase):
         self.assertEqual(result['sources'][0]['url'],SOURCE)
         self.assertEqual(result['sources'][0]['discovery'],'owner_submitted_listing')
 
+    def test_explicit_owner_origin_survives_published_directory_and_daily_reuse(self):
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as directory,patch.object(api,'PRIVATE',Path(directory)):
+            private=Path(directory)
+            (private/'distribution-latest.json').write_text(json.dumps({'resources':[{'path':'/games/example/'}],'directories':[{'state':'published','listingUrl':SOURCE}]}))
+            (private/'seo-explorer-sources.json').write_text(json.dumps([{'url':SOURCE,'discovery':'owner_submitted_listing'}]))
+            snapshot=seo.crawl([URL],[SOURCE],now=AT,fetcher=fake,source_kinds={SOURCE:'owner_submitted_listing'})
+            with patch.object(seo,'crawl',return_value=snapshot) as collect:
+                self.assertFalse(seo.refresh(private,now=AT)['reused'])
+                self.assertEqual(collect.call_args.kwargs['source_kinds'][SOURCE],'owner_submitted_listing')
+                self.assertTrue(seo.refresh(private,now=AT)['reused'])
+                self.assertEqual(collect.call_count,1)
+            saved=json.loads((private/'seo-explorer-latest.json').read_text())
+            self.assertEqual(saved['sources'][0]['discovery'],'owner_submitted_listing')
+
 if __name__=='__main__':unittest.main()
