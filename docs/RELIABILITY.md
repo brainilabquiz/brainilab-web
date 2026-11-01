@@ -14,6 +14,20 @@ Cloudflare CPU or memory limit. Catalogue source reads stop at 8 MiB; directory
 reads at 2 MiB. Oversized or invalid source responses fail explicitly instead of
 restoring withdrawn static content.
 
+Public catalogue and directory GETs keep their original six-second first
+attempt. A transport timeout, network error or transient HTTP error permits
+one fresh read within an eight-second total budget, including body reads.
+Permission errors, rate limits, invalid JSON and oversized responses do not
+retry. The 60-second cache lifetime and withdrawal boundary are unchanged;
+two failures still return 503 with Retry-After and no stale/static fallback.
+The response and server monitor retain only a coarse source error code,
+never database error bodies, credentials or visitor data.
+
+This includes Cloudflare's documented `Network connection lost` and
+`daemonDown` transport failures. See [Workers errors](https://developers.cloudflare.com/workers/observability/errors/)
+and [Supabase retry guidance](https://supabase.com/docs/guides/api/automatic-retries-in-supabase-js).
+These public reads use native fetch, so SDK retries do not apply automatically.
+
 `dist/_release.json` identifies the commit and hashes the built public files,
 Worker source, runtime libraries and configuration. It contains no credentials,
 visitor identities or publication data. It is excluded from its own hash.
