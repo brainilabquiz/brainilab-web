@@ -64,6 +64,8 @@ Measure matched periods and the exact page or journey using the saved Growth con
 
 ## 4. Give it a quiet next step
 
+The article editor’s Add link panel can find published Academy courses as well as sources and Learn readings. Choose Academy courses, search by title or topic, then select a course to fill its public address. Your selected words stay as the link text; insertion uses the browser’s ordinary undo history. The list loads only when requested, can be retried after a loading error, and excludes courses or lessons with unpublished changes. Choosing a destination does not save or publish the article. Check that the course helps the reader before inserting it.
+
 Use an appropriate game, a short invitation and a small number of genuinely related readings. Preserve existing URLs when revising an article. Check every destination on the live website before publication; the catalogue check catches missing article slugs but does not prove a live HTTP response or game behaviour.
 
 The link plan distinguishes internal links, outgoing source links and incoming links from supplied published readings. Absolute BrainiLab addresses receive the same catalogue checks as relative addresses; unpublished drafts are not published destinations. An incoming-link claim excludes an admin row whose current document has unpublished changes. This plan is a supplied-catalogue observation, not a live whole-site crawl. Use it to check context, not to manufacture cross-links or impose a number of links.

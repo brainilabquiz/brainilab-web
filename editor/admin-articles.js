@@ -148,7 +148,8 @@ ${quizFields(a.quiz)}<details class="article-settings" open><summary>Sources &am
  $('#article-add-source').onclick=()=>{const a=collect();a.sources.push({name:'',url:''});openArticle(active,a);markDirty();};
  context.root.querySelectorAll('[data-remove-section],[data-move]').forEach(button=>button.onclick=()=>{const section=button.closest('[data-section]'),index=[...section.parentNode.children].indexOf(section),a=collect();if(button.hasAttribute('data-remove-section')){if(!confirm('Remove this section from the draft?'))return;a.sections.splice(index,1);}else{const destination=index+Number(button.dataset.move);if(destination<0||destination>=a.sections.length)return;[a.sections[index],a.sections[destination]]=[a.sections[destination],a.sections[index]];}openArticle(active,a);markDirty();});
  context.root.querySelectorAll('[data-remove-source]').forEach(button=>button.onclick=()=>{button.closest('[data-source]').remove();markDirty();});
- const linkPicker=bindArticleLinkPicker({root:context.root,getArticle:collect,getRows:()=>rows,changed:rich=>{rich.closest('[data-section]').querySelector('[data-html]').value=cleanHtml(rich.innerHTML);markDirty();}});
+ const courseContext=context;
+ const linkPicker=bindArticleLinkPicker({root:context.root,getArticle:collect,getRows:()=>rows,getCourses:()=>courseContext.rpc('admin_list_learning_entities',{p_kind:'path'}),changed:rich=>{rich.closest('[data-section]').querySelector('[data-html]').value=cleanHtml(rich.innerHTML);markDirty();}});
  context.root.querySelectorAll('[data-section]').forEach(section=>{
   const rich=section.querySelector('[data-rich]'),html=section.querySelector('[data-html]');
   rich.oninput=()=>{html.value=cleanHtml(rich.innerHTML);};html.oninput=()=>{rich.innerHTML=cleanHtml(html.value);};
