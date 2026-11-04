@@ -25,6 +25,28 @@ eligibility result. Indexing, ranking value and visits remain unverified.
 Validate with `test_rendered_evidence.py` and
 `tools/test-growth-seo-rendered.mjs` alongside the existing SEO suites.
 
+Report attachment can encode this optional collection as version2 dictionaries
+and tuples when smaller. Private recording and validation still use the same
+version1 observations. Shared public URL prefixes, anchors, rel arrays, schema
+count triples and discovery origins are dictionaries; capture dates share only
+their exact common string prefix, and SHA256 bytes use canonical base64 on the
+wire. Each tuple stores source/target prefix references and suffixes, anchor/rel
+indices, date suffix and hash, followed by optional canonical/schema/origin
+overrides. Missing trailing overrides mean source canonical and dictionary
+index0; explicit null canonical or unknown schema counts remain null. Expansion
+is bounded and passes the complete v1 validator. Both versions remain readable;
+the view and CSV retain the public URL values, 64-character hashes and exact dates.
+This is lossless storage for the new evidence only, not a change to the existing
+1,000,000-byte import safeguard, other report sections or any metric/count.
+
+Targets reuse the existing HTML index's public-path/query minimization. Keep
+the original archived-round/options/UTM hrefs in the private saved capture and
+review record, not in exported query strings. A public game path is not a claim
+that the submitted link opens today's round. Multiple buttons with the same
+source/public target/qualifying rel remain one observation. Saved accessibility
+links with no attribute coverage record no observed qualifying rel; that does
+not establish attribute absence. Unknown microdata/RDFa counts remain null.
+
 Our own limited, dated SEO index adds known backlinks and page checks to the
 existing Search intelligence keyword, landing-page and country/device views.
 No Ahrefs account/API, paid data, tracking script, Google OAuth scope or database

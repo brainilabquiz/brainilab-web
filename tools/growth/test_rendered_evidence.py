@@ -48,14 +48,40 @@ class RenderedEvidenceTest(unittest.TestCase):
             dom.record(private, snapshot(newer), one['sha256'])
             self.assertEqual(len(list((private/'rendered-evidence-history').glob('*.json'))), 1)
             (private/dom.FILE).write_bytes(raw)
-            self.assertEqual(dom.attach({'renderedEvidence': snapshot(newer)}, private)['renderedEvidence'], snapshot(newer))
+            self.assertEqual(dom.validate(dom.attach({'renderedEvidence': snapshot(newer)}, private)['renderedEvidence']), snapshot(newer))
             base = seo.crawl([URL], [SOURCE], now=AT, fetcher=fake); before = copy.deepcopy(base)
             report = seo.attach_seo({'seoExplorer': base}, private)
-            self.assertEqual(report['seoExplorer']['renderedEvidence'], snapshot(ROW))
+            self.assertEqual(dom.validate(report['seoExplorer']['renderedEvidence']), snapshot(ROW))
             self.assertEqual({k: v for k,v in report['seoExplorer'].items() if k!='renderedEvidence'}, before)
             self.assertEqual(seo.validate(report['seoExplorer']), report['seoExplorer'])
             self.assertEqual(dom.attach(base, private)['backlinks'], before['backlinks'])
             (private/dom.FILE).write_text('{}')
             self.assertEqual(seo.attach_seo({'seoExplorer': base}, private)['seoExplorer'], before)
+
+    def test_compact_round_trip_keeps_every_capture_and_unknown(self):
+        rows = [{**ROW, 'sourceUrl': f'https://directory.example/games/example-{i}',
+                 'targetUrl': f'https://brainilabgames.com/games/example-{i}/',
+                 'observedAt': f'2026-10-20T18:00:{i:02d}.123Z', 'evidenceSha256': f'{i:064x}'} for i in range(21)]
+        rows[0] = {**rows[0], 'canonical': None, 'rel': [], 'discovery': 'reviewed_public_candidate'}
+        rows[1] = {**rows[1], 'observedAt': '2026-10-21T10:00:00.123456+00:00', 'anchor': 'Quoted "title" & more'}
+        original = dom.validate(snapshot(*rows)); packed = dom.compact(original)
+        self.assertEqual(packed['schemaVersion'], 2)
+        self.assertEqual(dom.validate(packed), original)
+        self.assertEqual(dom.compact(packed), packed)
+        self.assertIsNone(dom.validate(packed)['observations'][0]['canonical'])
+        self.assertLess(len(json.dumps(packed)), len(json.dumps(original)))
+        for mutate in [lambda p: p['rows'][0][0].__setitem__(0, 9999),
+                       lambda p: p['rows'][0].__setitem__(5, 'bad'),
+                       lambda p: p['prefixes'].__setitem__(0, 'https://mail.google.com/mail/'),
+                       lambda p: p.__setitem__('rows', [p['rows'][0]]*1001),
+                       lambda p: p['rows'][0].__setitem__(6, False)]:
+            invalid = copy.deepcopy(packed); mutate(invalid)
+            with self.assertRaises((ValueError, TypeError)): dom.validate(invalid)
+
+    def test_valid_legacy_data_can_decline_optional_encoding(self):
+        rows = [{**ROW, 'sourceUrl': f'https://directory.example/game-{i}/',
+                 'structuredData': {'jsonldBlocks': i, 'microdataElements': 0, 'rdfaElements': None}} for i in range(65)]
+        original = dom.validate(snapshot(*rows))
+        self.assertEqual(dom.compact(original), original)
 
 if __name__ == '__main__': unittest.main()
