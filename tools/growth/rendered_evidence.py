@@ -153,7 +153,15 @@ def merge(values):
             if old and timestamp(old['observedAt']) == timestamp(row['observedAt']) and old != row:
                 raise ValueError('Conflicting captures at the same time')
             if not old or timestamp(row['observedAt']) > timestamp(old['observedAt']): rows[key] = row
-    return validate({'schemaVersion': 1, 'domain': DOMAIN, 'observations': list(rows.values())})
+    # Keep all rel variants from the latest positive capture of each target.
+    # Otherwise an older unknown-rel placeholder becomes a third current link.
+    latest = {}
+    for row in rows.values():
+        pair = (row['sourceUrl'], row['targetUrl'])
+        latest[pair] = max(latest.get(pair, timestamp(row['observedAt'])), timestamp(row['observedAt']))
+    current = [row for row in rows.values()
+               if timestamp(row['observedAt']) == latest[(row['sourceUrl'], row['targetUrl'])]]
+    return validate({'schemaVersion': 1, 'domain': DOMAIN, 'observations': current})
 
 
 def record(private, value, expected):

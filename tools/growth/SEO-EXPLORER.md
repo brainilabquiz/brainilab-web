@@ -12,8 +12,12 @@ stay null. No private body text, accounts, correspondence or capture paths are
 exported. This command does not visit a URL.
 
 The independent private snapshot uses CAS, a write lock, history and idempotent
-merge by source/destination/rel. Each combination keeps its latest dated
-observation when an older crawl or file is restored. Refresh and report
+merge. For each source/destination, retain the latest positive DOM capture
+and all distinct rel variants observed at that capture time. An earlier
+unknown-rel placeholder is not another current variant; older captures remain
+in history. An empty or failed capture does not remove other destinations or
+establish a lost link. Restoring an older file cannot revive superseded
+attribute coverage. Refresh and report
 attachment preserve this evidence independently of the HTML crawl date.
 Invalid optional evidence cannot discard valid HTML evidence.
 
