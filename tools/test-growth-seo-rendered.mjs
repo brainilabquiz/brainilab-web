@@ -26,3 +26,16 @@ root.querySelector('[data-seo-view=links]').click();assert.match(root.querySelec
 for(const bad of [{...row,sourceUrl:source+'?token=x'},{...row,targetUrl:'https://brainilabgames.com/account/'},{...row,structuredData:{}},{...row,evidenceSha256:'no'}])assert.equal(renderedSnapshot({...s,renderedEvidence:{...s.renderedEvidence,observations:[bad]}}),null);
 assert.equal(renderedSnapshot({...s,renderedEvidence:{...s.renderedEvidence,observations:[row,row]}}),null);assert.equal(renderedView({...s,renderedEvidence:null}).rows.length,0);
 console.log('PASS separate saved DOM evidence: original dates, unknown schema, safe rendering, filters, downloads, deduplication and unchanged HTML metrics/report.');
+
+const packed={schemaVersion:2,domain:s.domain,prefixes:['https://guilyx.github.io/','https://brainilabgames.com/'],datePrefix:'2026-10-20T18:',anchors:[row.anchor],rels:[row.rel],schemas:[[0,0,null]],origins:[row.discovery],rows:[[[0,'awesome-daily-minigames/'],[1,'daily-quiz/'],0,0,'00:00Z',btoa(String.fromCharCode(...Array(32).fill(0xaa)))]]};
+const compactIndex={...s,renderedEvidence:packed};
+assert.deepEqual(renderedSnapshot(compactIndex),s.renderedEvidence);
+assert.deepEqual(renderedView(compactIndex).exported,renderedView(s).exported);
+assert.deepEqual(renderedView(compactIndex).rows,renderedView(s).rows);
+root.innerHTML=seoHTML({seoExplorer:compactIndex});bindSEO(root,{seoExplorer:compactIndex});root.querySelector('[data-seo-view=rendered]').click();
+assert.equal(root.querySelectorAll('tbody tr').length,1);assert.match(root.querySelector('tbody').textContent,/RDFa elements: Unknown/);
+assert.equal(root.querySelector('.growth-metrics').textContent,metrics);
+for(const alter of [v=>v.rows[0][0][0]=99,v=>v.rows[0][5]='bad',v=>v.prefixes[0]='https://mail.google.com/mail/',v=>v.rows[0].push(0,99),v=>v.rows[0][4]='bad']){
+ const v=structuredClone(packed);alter(v);assert.equal(renderedSnapshot({...s,renderedEvidence:v}),null);
+}
+console.log('PASS compact saved DOM evidence: v1-compatible rendering/CSV, full hashes/dates, unknown counts, bounded tables and rejected invalid/private references.');

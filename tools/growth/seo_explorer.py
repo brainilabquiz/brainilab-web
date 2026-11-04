@@ -332,7 +332,7 @@ def validate(value):
     if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
     if value.get('quizSchema') is not None: result['quizSchema'] = quiz_schema.validate(value['quizSchema'])
     if value.get('learnSchema') is not None: result['learnSchema'] = learn_schema.validate(value['learnSchema'])
-    if value.get('renderedEvidence') is not None: result['renderedEvidence'] = rendered_evidence.validate(value['renderedEvidence'])
+    if value.get('renderedEvidence') is not None: result['renderedEvidence'] = rendered_evidence.compact(value['renderedEvidence'])
     return result
 
 
