@@ -22,6 +22,7 @@ import seo_reputation
 import seo_discovery
 import quiz_schema
 import learn_schema
+import rendered_evidence
 
 DOMAIN = 'brainilabgames.com'
 AGENT = 'BrainiLabSEO'
@@ -331,6 +332,7 @@ def validate(value):
     if value.get('searchSources') is not None: result['searchSources'] = seo_discovery.validate(value['searchSources'])
     if value.get('quizSchema') is not None: result['quizSchema'] = quiz_schema.validate(value['quizSchema'])
     if value.get('learnSchema') is not None: result['learnSchema'] = learn_schema.validate(value['learnSchema'])
+    if value.get('renderedEvidence') is not None: result['renderedEvidence'] = rendered_evidence.validate(value['renderedEvidence'])
     return result
 
 
@@ -463,7 +465,7 @@ def refresh(private, distribution_path=None, force=False, now=None, sources_path
     try:
         os.close(fd)
         clean = crawl(page_urls, source_urls, previous, now, source_kinds=provenance)
-        clean = validate(clean)
+        clean = validate(rendered_evidence.attach(clean, private, [previous]))
         if (path.read_bytes() if path.exists() else None)!=prior or source.read_bytes()!=data_bytes or (extra_path.read_bytes() if extra_path.exists() else None)!=extra_bytes or (ledger_path.read_bytes() if ledger_path else None)!=ledger_bytes:
             raise RuntimeError('SEO inputs changed concurrently; reread before retrying')
         if prior: api.private_write(private/'seo-explorer-history'/(hashlib.sha256(prior).hexdigest()+'.json'),json.loads(prior))
@@ -483,7 +485,7 @@ def attach_seo(report, private):
     bases = []
     for candidate in candidates:
         if not isinstance(candidate,dict): continue
-        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources','quizSchema','learnSchema')}))
+        try: bases.append(validate({k:v for k,v in candidate.items() if k not in ('keywords','reputation','searchSources','quizSchema','learnSchema','renderedEvidence')}))
         except (ValueError,KeyError,TypeError): continue
     if not bases: return report
     clean = max(bases,key=lambda s:datetime.fromisoformat(stamp(s['observedAt'])))
@@ -509,6 +511,7 @@ def attach_seo(report, private):
             clean[key]=validator(merged)
     clean = quiz_schema.attach(clean, private, candidates)
     clean = learn_schema.attach(clean, private, candidates)
+    clean = rendered_evidence.attach(clean, private, candidates)
     return {**report,'seoExplorer':clean}
 
 
