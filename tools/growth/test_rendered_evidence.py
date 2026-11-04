@@ -78,6 +78,25 @@ class RenderedEvidenceTest(unittest.TestCase):
             invalid = copy.deepcopy(packed); mutate(invalid)
             with self.assertRaises((ValueError, TypeError)): dom.validate(invalid)
 
+    def test_latest_positive_capture_replaces_unknown_without_losing_variants(self):
+        partial = {**ROW, 'rel': []}
+        newer = {**ROW, 'observedAt': '2026-10-21T18:00:00Z', 'evidenceSha256': 'b'*64}
+        nofollow = {**newer, 'rel': ['nofollow', 'noopener'], 'anchor': 'Second link'}
+        other_target = {**partial, 'targetUrl': 'https://brainilabgames.com/games/other/'}
+        old, new = snapshot(partial, other_target), snapshot(newer, nofollow, nofollow)
+        expected = dom.validate(snapshot(newer, nofollow, other_target))
+        self.assertEqual(dom.merge([old, new]), expected)
+        self.assertEqual(dom.merge([new, old]), expected)
+        self.assertEqual(dom.validate(dom.compact(expected)), expected)
+        self.assertEqual(dom.merge([expected, snapshot()]), expected)
+        with tempfile.TemporaryDirectory() as folder, patch.object(api, 'PRIVATE', Path(folder)):
+            private = Path(folder); first = dom.record(private, old, 'missing')
+            before = (private/dom.FILE).read_bytes()
+            updated = dom.record(private, new, first['sha256'])
+            self.assertEqual(json.loads((private/dom.FILE).read_bytes()), expected)
+            self.assertEqual((private/'rendered-evidence-history'/(first['sha256']+'.json')).read_bytes(), before)
+            self.assertTrue(dom.record(private, old, updated['sha256'])['reused'])
+
     def test_valid_legacy_data_can_decline_optional_encoding(self):
         rows = [{**ROW, 'sourceUrl': f'https://directory.example/game-{i}/',
                  'structuredData': {'jsonldBlocks': i, 'microdataElements': 0, 'rdfaElements': None}} for i in range(65)]
