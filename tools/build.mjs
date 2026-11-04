@@ -25,6 +25,7 @@ import './test-game-page-dates.mjs';
 execFileSync(process.execPath,['--max-old-space-size=96','tools/test-learn-resources.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-navigation.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-schema-navigation.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['tools/test-growth-seo-rendered.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-review-return.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-open.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['tools/test-growth-decision-drafts.mjs'],{stdio:'inherit'});

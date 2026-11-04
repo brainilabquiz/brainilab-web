@@ -1,5 +1,30 @@
 # BrainiLab SEO Explorer
 
+## Saved rendered evidence
+
+`seoExplorer.renderedEvidence` is an optional, separate collection of dated
+public browser DOM observations. Record minimised metadata with
+`rendered_evidence.py --private PRIVATE --input FILE --expected-sha256 HASH`
+(`missing` only for the first record). Bind each observation to the original
+capture SHA256, source, destination, anchor, rel and capture time. Canonical
+and JSON-LD/microdata/RDFa counts describe that saved DOM only; unknown counts
+stay null. No private body text, accounts, correspondence or capture paths are
+exported. This command does not visit a URL.
+
+The independent private snapshot uses CAS, a write lock, history and idempotent
+merge by source/destination/rel. Each combination keeps its latest dated
+observation when an older crawl or file is restored. Refresh and report
+attachment preserve this evidence independently of the HTML crawl date.
+Invalid optional evidence cannot discard valid HTML evidence.
+
+The DOM evidence view and download never add these observations to HTML
+backlinks, referring hosts, known-link history, distribution/publication
+counts or the eight technical checks. A rendered link can be absent from raw
+HTML. No markup found is an observation, not a schema error or Google feature
+eligibility result. Indexing, ranking value and visits remain unverified.
+Validate with `test_rendered_evidence.py` and
+`tools/test-growth-seo-rendered.mjs` alongside the existing SEO suites.
+
 Our own limited, dated SEO index adds known backlinks and page checks to the
 existing Search intelligence keyword, landing-page and country/device views.
 No Ahrefs account/API, paid data, tracking script, Google OAuth scope or database
