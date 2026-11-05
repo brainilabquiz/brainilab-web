@@ -1,0 +1,55 @@
+{
+  "slug": "how-to-study-and-remember-guide",
+  "title": "How to study and remember: ten short reads to find your next step",
+  "description": "A reading route through explaining, recalling, grouping and checking what you learn. Choose the question you have today rather than trying every technique at once.",
+  "topic": "Learning",
+  "status": "draft",
+  "authorId": "biel-sarda",
+  "minutes": 4,
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Find one interesting answer in a General Knowledge round and choose a way to revisit it.",
+  "related": [
+    "remember-quiz-answers-tomorrow",
+    "explain-an-answer-in-your-own-words"
+  ],
+  "sources": [
+    {
+      "url": "https://psychology.ucsd.edu/undergraduate-program/undergraduate-resources/academic-writing-resources/effective-studying/index.html",
+      "name": "UC San Diego Department of Psychology — How to Effectively Study"
+    }
+  ],
+  "sections": [
+    {
+      "id": "choose-your-question",
+      "title": "What would you like to do with the idea?",
+      "html": "<p><strong>Understanding an explanation, recalling a fact and organising a study session are different jobs.</strong> These ten short reads help you choose a next step, with concrete examples and the limits of the evidence beside them.</p><p>You do not need to work through a checklist. Start with the question that matches the page or quiz answer in front of you.</p>"
+    },
+    {
+      "id": "make-sense",
+      "title": "Make sense of the answer",
+      "html": "<p><a href=\"/learn/explain-an-answer-in-your-own-words/\">Can you explain what you’ve learned?</a> starts with a small gap: “Earth moves” does not quite explain why night happens. Use it when the result sounds familiar but the connection is missing.</p><p><a href=\"/learn/can-a-wrong-guess-help-you-learn/\">Can a wrong guess help you learn?</a> explores trying a question before studying its answer. The follow-up explanation matters; the article does not recommend collecting mistakes for their own sake.</p><p><a href=\"/learn/confidence-is-not-a-memory-test/\">Could you draw a familiar logo from memory?</a> separates feeling sure from checking details. Read this when “I see it every day” feels like enough evidence.</p>"
+    },
+    {
+      "id": "give-information-a-shape",
+      "title": "Give the information a shape",
+      "html": "<p><a href=\"/learn/chunking-memory-familiar-groups/\">What is chunking?</a> puts the same nine letters into three familiar words. The point is a meaningful group, rather than extra spaces.</p><p><a href=\"/learn/what-is-a-mnemonic/\">What is a mnemonic?</a> gives a short cue a specific job. Its shopping-list example also shows why remembering a cue is not enough if you forget what it stands for.</p><p><a href=\"/learn/what-is-a-memory-palace/\">What is a memory palace?</a> takes a duck, a lemon and an umbrella through a familiar home. This is one particular kind of cue, with research limits made explicit.</p>"
+    },
+    {
+      "id": "choose-your-practice",
+      "title": "Choose a small way to practise",
+      "html": "<p><a href=\"/learn/remember-quiz-answers-tomorrow/\">How to remember what you learn in a quiz</a> turns one interesting answer into a question you can try later. You can check an explanation without making a card for every fact.</p><p><a href=\"/learn/what-is-interleaving-learning/\">What is interleaving?</a> compares related kinds of example. It distinguishes a purposeful mixed set from switching between unrelated subjects.</p><p><a href=\"/learn/does-reading-aloud-help-memory/\">Does reading aloud help you remember?</a> looks at giving selected material a voice. Its word-memory findings are not a promise of understanding an entire textbook.</p>"
+    },
+    {
+      "id": "make-room",
+      "title": "Make room, then check what happened",
+      "html": "<p><a href=\"/learn/pomodoro-technique-tomato-timer/\">What is the Pomodoro technique?</a> gives a study task a time boundary. A timer organises work; it cannot confirm that the idea makes sense.</p><p>Choose one modest action: explain a connection, try recalling one answer or check one uncertain detail. For a broader introduction to studying, <a href=\"https://psychology.ucsd.edu/undergraduate-program/undergraduate-resources/academic-writing-resources/effective-studying/index.html\">UC San Diego’s guide</a> distinguishes when you practise from what you do during practice. None of these readings promises a perfect memory.</p>"
+    }
+  ]
+}

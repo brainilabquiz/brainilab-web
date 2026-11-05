@@ -1,0 +1,107 @@
+{
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "slug": "what-is-an-estuary",
+  "cover": {
+    "alt": "A broad tidal river channel winds between green salt marshes and mud banks into a sheltered coastal bay",
+    "src": "/assets/images/learn/what-is-an-estuary.webp",
+    "small": "/assets/images/learn/what-is-an-estuary-small.webp",
+    "credit": "AI-generated realistic illustration created for BrainiLab; an imagined estuary, not a photograph of a named location.",
+    "position": 50,
+    "thumbnail": "/assets/images/learn/what-is-an-estuary-thumb.webp"
+  },
+  "order": 190,
+  "title": "What is an estuary? Where a river meets the sea",
+  "topic": "Geography",
+  "status": "draft",
+  "minutes": 2,
+  "related": [
+    "why-is-the-ocean-salty",
+    "what-is-a-river-meander"
+  ],
+  "sources": [
+    {
+      "url": "https://oceanservice.noaa.gov/facts/estuary.html",
+      "name": "NOAA National Ocean Service — What is an estuary?"
+    },
+    {
+      "url": "https://www.fisheries.noaa.gov/national/habitat-conservation/estuary-habitat",
+      "name": "NOAA Fisheries — Estuary habitat and nurseries of the sea"
+    },
+    {
+      "url": "https://coast.noaa.gov/nerrs/about/what-is-an-estuary.html",
+      "name": "NOAA National Estuarine Research Reserves — What is an estuary? Freshwater exceptions"
+    }
+  ],
+  "authorId": "biel-sarda",
+  "practice": "Keep exploring our planet with a round of General Knowledge.",
+  "sections": [
+    {
+      "id": "a-meeting-place",
+      "html": "<p><strong>An estuary is usually a coastal body of water where freshwater from rivers meets and mixes with seawater.</strong> Its surrounding wetlands are part of the story too.</p><p>A river brings water from the land. The sea brings salt and tides. Where they meet, the landscape can become a shifting mixture of channels, mudflats and marshes. Geography has arranged a rather busy meeting.</p>",
+      "title": "A meeting place with moving edges"
+    },
+    {
+      "id": "a-little-salty",
+      "html": "<p><a href=\"https://oceanservice.noaa.gov/facts/estuary.html\">NOAA describes the mixture as brackish water</a>: partly salty, rather than fully fresh or as salty as the open sea.</p><p>It is not a permanent recipe. River flow and incoming tides can change the balance. You should not expect a neat line with freshwater on one side and seawater on the other. The meeting is a mixing process.</p>",
+      "title": "What does brackish mean?"
+    },
+    {
+      "id": "a-wildlife-nursery",
+      "html": "<p><a href=\"https://www.fisheries.noaa.gov/national/habitat-conservation/estuary-habitat\">NOAA Fisheries calls estuaries nurseries of the sea</a>. Many animals reproduce or spend their early lives there, finding food and shelter in habitats such as marshes and seagrass beds.</p><p>Rising and falling tides change water depth and conditions. For an estuary’s residents, adapting to change is part of living in the neighbourhood.</p>",
+      "title": "Why so much wildlife?"
+    },
+    {
+      "id": "a-freshwater-twist",
+      "html": "<p>Not every estuary contains seawater. <a href=\"https://coast.noaa.gov/nerrs/about/what-is-an-estuary.html\">Freshwater estuaries occur around the Great Lakes</a>, where chemically different river and lake waters meet. Old Woman Creek on Lake Erie is one example.</p><p>Follow the water a little further: discover <a href=\"/learn/why-is-the-ocean-salty/\">where the ocean gets its salt</a>, or see <a href=\"/learn/what-is-a-river-meander/\">how a river bend can move</a>. Water is a remarkably restless mapmaker.</p>",
+      "title": "The freshwater plot twist"
+    }
+  ],
+  "updatedAt": "2026-10-20T19:57:01Z",
+  "description": "An estuary is usually where river water meets the sea. Discover brackish water, tidal changes and the surprising estuaries that contain no seawater.",
+  "publishedAt": "2026-10-20T19:57:01Z",
+  "quiz": {
+    "version": "geography-coastal-forms-what-is-an-estuary-v1",
+    "questions": [
+      {
+        "prompt": "What does brackish water mean?",
+        "options": [
+          "Water made entirely of ice",
+          "Water with no dissolved substances",
+          "Only water below the ocean floor",
+          "A mixture of fresh water and salty seawater"
+        ],
+        "answer": 3,
+        "explanation": "Brackish water is partly salty. In a coastal estuary, river water and seawater can mix."
+      },
+      {
+        "prompt": "Why can an estuary’s saltiness change?",
+        "options": [
+          "River flow and incoming tides can change the mixture",
+          "The word estuary changes its meaning every day",
+          "All the water stops moving at night",
+          "Salt turns into sand every morning"
+        ],
+        "answer": 0,
+        "explanation": "The river and sea inputs vary, so the mixture need not stay at one fixed saltiness."
+      },
+      {
+        "prompt": "Must every estuary contain seawater?",
+        "options": [
+          "Yes, without exception",
+          "No, freshwater estuaries occur around the Great Lakes",
+          "Only in winter",
+          "Only if there are no wetlands"
+        ],
+        "answer": 1,
+        "explanation": "The lesson explains the freshwater estuary exception around the Great Lakes, where river and lake waters meet."
+      }
+    ]
+  }
+}

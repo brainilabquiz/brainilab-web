@@ -1,0 +1,54 @@
+{
+  "slug": "can-you-average-quiz-percentages",
+  "title": "Can you average quiz percentages? Count the answers first",
+  "description": "Two quiz percentages can look easy to combine. A tiny example and BrainiLab’s own recorded answers show why the number behind each percentage matters.",
+  "topic": "Learning",
+  "status": "draft",
+  "authorId": "biel-sarda",
+  "minutes": 3,
+  "hub": {
+    "url": "/learn/",
+    "name": "Learn"
+  },
+  "game": {
+    "url": "/general-knowledge/general-knowledge-quiz/",
+    "name": "General Knowledge Quiz"
+  },
+  "practice": "Choose a topic you enjoy, then look at the answers behind your result.",
+  "related": [
+    "first-200-games-what-we-learned",
+    "mean-vs-median-biscuit-average"
+  ],
+  "sources": [
+    {
+      "url": "https://brainilabgames.com/assets/data/first-200-games-2026-10-23.json",
+      "name": "BrainiLab — first 200 completed recorded games, aggregate snapshot checked 23 October 2026"
+    },
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data",
+      "name": "OpenStax — Introductory Statistics 2e, Measures of the Center of the Data"
+    }
+  ],
+  "sections": [
+    {
+      "id": "the-short-answer",
+      "title": "A percentage needs its headcount",
+      "html": "<p><strong>To find the percentage of answers that were correct across several quizzes, add the correct answers and divide by all the counted answers.</strong> Simply averaging the percentages gives each quiz equal weight, even when one contains many more questions.</p><p>Both calculations can answer a question. The trick is noticing which question you meant to ask.</p>"
+    },
+    {
+      "id": "two-small-quizzes",
+      "title": "One short quiz, one longer quiz",
+      "html": "<p>Imagine getting <strong>1 out of 2</strong> answers right in one quiz: 50%. In another, you get <strong>9 out of 10</strong> right: 90%.</p><p>The mean of the two quiz percentages is 70%: add 50 and 90, then divide by two. Each quiz has one equal vote.</p><p>But you answered <strong>10 out of 12</strong> questions correctly altogether. Divide 10 by 12, then multiply by 100: about <strong>83.3%</strong>. Here, each question has one equal vote. The longer quiz contributes more questions.</p>"
+    },
+    {
+      "id": "our-recorded-answers",
+      "title": "The same distinction in BrainiLab’s data",
+      "html": "<p>Our <a href=\"/learn/first-200-games-what-we-learned/\">first-200-games article</a> reported three games with at least ten eligible recorded rounds. Their answer counts were 283/308 for Math Rush, 199/240 for World Flags and 216/320 for Science Quiz.</p><p>Across those three groups, that is <strong>698 correct answers out of 868 counted answers: 80.4%</strong>, rounded to one decimal place. Averaging their three displayed percentages instead gives 80.8%. That gives each game group equal weight, rather than each counted answer.</p><p>These are <strong>44 rounds from a fixed historical snapshot</strong>, not all 200 recorded games or all 90 eligible rounds. Repeat players count more than once. Math Rush skips are excluded from its answer total.</p>"
+    },
+    {
+      "id": "choose-the-question",
+      "title": "Useful arithmetic, modest conclusions",
+      "html": "<p>The pooled figure describes those counted answers. It does not compare players fairly, measure improvement or reveal a typical visitor’s ability: the games had different questions, difficulties and rules.</p><p>Start by asking whether you want an average per quiz or a share of all answers. Then keep the original counts beside the percentages. As <a href=\"https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data\">OpenStax’s frequency-based mean explains</a>, the number of observations behind a value can matter.</p>"
+    }
+  ]
+}
