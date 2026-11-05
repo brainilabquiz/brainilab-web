@@ -2,11 +2,17 @@ import {learnSchemaFields,learnSchemaURL} from './page-schema-evidence.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stamp=v=>typeof v==='string'&&Number.isFinite(Date.parse(v));
 const labels={same:'Matches captured HTML',equivalent:'Registered preview identity · URLs differ',different:'Different — review context',unknown:'Unknown'};
+const columns=['url','checkedAt','sha256','contentSha256','kind','state','checks','details'];
 // A dated source correction is a reason not to reopen work from an older capture.
 // This is not a claimed deployment time or proof that a later response is correct.
 const courseCorrection={at:'2026-10-28T19:07:06Z',url:'https://github.com/brainilabquiz/brainilab-web/commit/2a355b1b80bb59d9c4f6623384c7271ed83d7d0c'};
 export function learnEvidence(snapshot){
- const s=snapshot?.learnSchema;if(s?.schemaVersion!==1||s.domain!=='brainilabgames.com'||!Array.isArray(s.pages)||s.pages.length>500)return null;
+ let s=snapshot?.learnSchema;
+ if(s?.schemaVersion===2){
+  if(!Array.isArray(s.columns)||s.columns.length!==columns.length||!s.columns.every((v,i)=>v===columns[i])||!Array.isArray(s.rows)||s.rows.length>500||s.rows.some(r=>!Array.isArray(r)||r.length!==columns.length))return null;
+  s={schemaVersion:1,domain:s.domain,pages:s.rows.map(r=>Object.fromEntries(columns.map((k,i)=>[k,r[i]])))};
+ }
+ if(s?.schemaVersion!==1||s.domain!=='brainilabgames.com'||!Array.isArray(s.pages)||s.pages.length>500)return null;
  const seen=new Set(),maxChecks=Object.keys(learnSchemaFields).length;
  for(const p of s.pages){
   if(!p||!learnSchemaURL(p.url)||seen.has(p.url)||!['Article','Course'].includes(p.kind)||!['ready','unknown'].includes(p.state)||!stamp(p.checkedAt)||!['sha256','contentSha256'].every(k=>typeof p[k]==='string'&&/^[a-f0-9]{64}$/.test(p[k]))||!Array.isArray(p.checks)||p.checks.length>maxChecks||!Array.isArray(p.details)||p.details.length>maxChecks)return null;

@@ -17,6 +17,39 @@ def observation():return {'url':URL,'checkedAt':AT,'sha256':'a'*64,'contentSha25
 def snapshot(p=None):return {'schemaVersion':1,'domain':'brainilabgames.com','pages':[p or observation()]}
 
 class LearnSchemaTest(unittest.TestCase):
+    def test_compact_roundtrip_keeps_values_dates_unknowns_and_private_v1(self):
+        pages=[]
+        for i in range(10):
+            p=observation();p['url']=URL.replace('/example/',f'/example-{i}/')
+            p['checks']=[['author','unknown'],['headline','different']]
+            p['details']=[['author',None,'Biel Sardà'],['headline','Codi 日本語','Visible title']]
+            pages.append(p)
+        original={'schemaVersion':1,'domain':'brainilabgames.com','pages':pages};before=copy.deepcopy(original)
+        packed=s.compact(original)
+        self.assertEqual(packed['schemaVersion'],2)
+        self.assertEqual(s.validate(packed),s.validate(original))
+        self.assertEqual(s.compact(packed),packed)
+        self.assertEqual(original,before)
+        self.assertLess(len(json.dumps(packed)),len(json.dumps(original)))
+        self.assertEqual(s.compact(snapshot()),s.validate(snapshot()))
+        with tempfile.TemporaryDirectory()as tmp,patch.object(api,'PRIVATE',Path(tmp)):
+            saved=s.record(tmp,packed,'missing');private=json.loads((Path(tmp)/'learn-schema-latest.json').read_text(encoding='utf-8'))
+            self.assertEqual(private,s.validate(original));self.assertEqual(private['schemaVersion'],1)
+            self.assertEqual(s.attach({'pages':[]},tmp)['learnSchema'],packed)
+            self.assertTrue(s.record(tmp,packed,saved['sha256'])['reused'])
+
+    def test_compact_rows_reject_bad_shape_and_preserve_semantic_guards(self):
+        base={'schemaVersion':2,'domain':'brainilabgames.com','columns':list(s.COLUMNS),'rows':[[observation()[k] for k in s.COLUMNS]]}
+        bads=[]
+        bad=copy.deepcopy(base);bad['columns'][0]='__proto__';bads.append(bad)
+        bad=copy.deepcopy(base);bad['rows'][0].pop();bads.append(bad)
+        bad=copy.deepcopy(base);bad['rows']*=501;bads.append(bad)
+        bad=copy.deepcopy(base);bad['rows'][0][0]='https://private.invalid/';bads.append(bad)
+        bad=copy.deepcopy(base);bad['rows'][0][6]=[['headline','invented']];bads.append(bad)
+        bad=copy.deepcopy(base);bad['rows']*=2;bads.append(bad)
+        for bad in bads:
+            with self.assertRaises(ValueError):s.validate(bad)
+
     def test_bounds_and_allowlist(self):
         for url in [URL+'index.html',URL+'?token=private','https://brainilabgames.com/learn/paths/','https://other.example/learn/example/','https://brainilabgames.com/profile/']:
             bad=observation();bad['url']=url

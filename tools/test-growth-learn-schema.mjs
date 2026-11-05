@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {observeLearnSchema,compactLearnSchema} from '../editor/page-schema-evidence.js';
 import {inertPublicHTML} from '../editor/page-link-evidence.js';
-import {learnComparison,learnSchemaPage,learnSchemaTable} from '../editor/growth-learn-schema.js';
+import {learnEvidence,learnComparison,learnSchemaPage,learnSchemaTable} from '../editor/growth-learn-schema.js';
 import {seoHTML,bindSEO} from '../editor/growth-seo-explorer.js';
 const {JSDOM}=createRequire(import.meta.url)(process.env.JSDOM_MODULE||'jsdom'),dom=new JSDOM('<main></main>',{url:'https://brainilabgames.com/admin/'}),d=dom.window.document;
 const at='2026-10-28T20:00:00Z',now=Date.parse(at)+1000,url='https://brainilabgames.com/learn/example/',course='https://brainilabgames.com/learn/paths/example/',image='https://brainilabgames.com/assets/images/learn/example.webp';
@@ -25,6 +25,15 @@ const old=structuredClone(snapshot);old.learnSchema.pages[0].checkedAt='2026-10-
 assert.equal(learnComparison(old,course,null,now).reviewNeeded,0);assert.equal(learnComparison(old,course,null,now).historical,true);
 assert.equal(learnComparison(snapshot,course,null,now+3*86400000).unknown,true);
 const csv=learnSchemaPage(snapshot,course,null,now).exported;assert.ok(csv.every(r=>r.length===13));assert.equal(csv.find(r=>r[1]==='Ordered lesson names and URLs')[2].includes('b'.repeat(64)),true);
+const columns=['url','checkedAt','sha256','contentSha256','kind','state','checks','details'];
+const packed={learnSchema:{schemaVersion:2,domain:'brainilabgames.com',columns,rows:snapshot.learnSchema.pages.map(p=>columns.map(k=>p[k]))}},packedBefore=JSON.stringify(packed);
+assert.deepEqual(learnEvidence(packed),learnEvidence(snapshot));
+assert.deepEqual(learnSchemaPage(packed,course,null,now),learnSchemaPage(snapshot,course,null,now),'Transport preserves page text, unknowns, dates and CSV');
+assert.deepEqual(learnSchemaTable(packed,'Course',now),learnSchemaTable(snapshot,'Course',now),'Transport preserves filtered table and complete export');
+assert.equal(JSON.stringify(packed),packedBefore,'Decoding does not mutate imported evidence');
+for(const edit of [v=>v.columns[0]='__proto__',v=>v.rows[0].pop(),v=>v.rows.push(v.rows[0]),v=>v.rows[0][0]='https://private.invalid/',v=>v.rows=Array(501).fill(v.rows[0])]){
+ const bad=structuredClone(packed);edit(bad.learnSchema);assert.equal(learnEvidence(bad),null,'Compact form retains shape, public URL and duplicate guards');
+}
 const later=structuredClone(snapshot);later.learnSchema.pages[0].checkedAt='2026-10-28T20:01:00Z';assert.equal(learnSchemaPage(later,course,null,now+120000).exported[0][2],csv[0][2]);
 const xss=structuredClone(snapshot);xss.learnSchema.pages[0].checks[0][1]='different';xss.learnSchema.pages[0].details=[['canonical','<img src=x onerror=alert(1)>',course]];assert.doesNotMatch(learnSchemaPage(xss,course,null,now).html,/<img/);
 const report={seoExplorer:{schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[],sources:[],backlinks:[],...snapshot}},before=JSON.stringify(report);let requests=0;globalThis.fetch=()=>{requests++;throw Error('No fetch');};globalThis.document=d;

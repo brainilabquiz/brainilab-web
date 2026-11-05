@@ -14,6 +14,27 @@ from quiz_schema import timestamp
 FIELDS={'canonical','identity','headline','author','preview','cover','published','modified','lessons'}
 ROOT=Path(__file__).resolve().parents[2]
 BATCH_BYTES=16000000
+COLUMNS=('url','checkedAt','sha256','contentSha256','kind','state','checks','details')
+
+
+def expand(value):
+    """Decode bounded report tuples; private snapshots remain ordinary v1."""
+    if not isinstance(value,dict) or value.get('schemaVersion')!=2 or value.get('domain')!='brainilabgames.com' or value.get('columns')!=list(COLUMNS):
+        raise ValueError('Unsupported compact Learn snapshot')
+    rows=value.get('rows')
+    if not isinstance(rows,list) or len(rows)>500 or any(not isinstance(r,list) or len(r)!=len(COLUMNS) for r in rows):
+        raise ValueError('Invalid compact Learn rows')
+    return {'schemaVersion':1,'domain':'brainilabgames.com','pages':[dict(zip(COLUMNS,row)) for row in rows]}
+
+
+def compact(value):
+    """Remove repeated column labels, preserving every original field value."""
+    clean=validate(value)
+    if len(clean['pages'])<8:return clean
+    packed={'schemaVersion':2,'domain':'brainilabgames.com','columns':list(COLUMNS),
+            'rows':[[p[k] for k in COLUMNS] for p in clean['pages']]}
+    size=lambda v:len(json.dumps(v,ensure_ascii=False,separators=(',',':')).encode('utf-8'))
+    return packed if size(packed)<size(clean) else clean
 
 
 def own(url):
@@ -40,6 +61,7 @@ def page(p):
 
 
 def validate(value):
+    if isinstance(value,dict) and value.get('schemaVersion')==2:value=expand(value)
     if not isinstance(value,dict) or value.get('schemaVersion')!=1 or value.get('domain')!='brainilabgames.com' or not isinstance(value.get('pages',[]),list):
         raise ValueError('Unsupported Learn schema snapshot')
     pages=[page(p)for p in value.get('pages',[])]
@@ -96,7 +118,7 @@ def attach(snapshot,private,candidates=()):
     # Keep exact response bindings in the private crawl, but export one copy.
     # Duplicating every comparison inside pages and learnSchema can exceed the
     # existing one-megabyte Growth ingest limit as the catalogue grows.
-    return {**snapshot,'pages':[{k:v for k,v in p.items()if k!='learnSchema'}for p in snapshot.get('pages',[])],'learnSchema':result} if result['pages'] else snapshot
+    return {**snapshot,'pages':[{k:v for k,v in p.items()if k!='learnSchema'}for p in snapshot.get('pages',[])],'learnSchema':compact(result)} if result['pages'] else snapshot
 
 
 def enrich(pages,responses):

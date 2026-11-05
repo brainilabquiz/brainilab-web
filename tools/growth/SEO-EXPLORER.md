@@ -261,6 +261,17 @@ regression and the Explorer/page/destination/action suites.
 
 ### Learn article and course schema
 
+The report may store this collection as version2 column tuples when smaller.
+The fixed eight columns preserve each exact URL, original capture time, both
+hashes, resource kind, state, checks and nullable details. Python and the UI
+expand and validate the same bounded version1 observations; the list, page,
+CSV, historical-date labels and decision protections are unchanged. Unknown
+values remain unknown. Private recording/history stays version1. This lossless
+transport avoids repeated field names; it does not raise the existing
+1,000,000-byte ingest guard, truncate evidence, refresh a source, or change
+another report section. Both versions remain readable. Tests cover roundtrip,
+Unicode/nulls, malformed bounds, exports and unchanged private history.
+
 `Learn schema` lists saved exact-URL Article and Course comparisons, with page
 detail, search and the complete CSV. It extends the existing Article comparator
 instead of introducing a separate definition of matching fields. Identity,
