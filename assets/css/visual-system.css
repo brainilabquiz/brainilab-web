@@ -220,12 +220,12 @@ body.braini-visual{
 .braini-visual :is(.learn-catalog .learn-card,.article-reading){
   --reading-accent:#2d296e;--reading-tint:#eeecf8;
 }
-.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Science & nature']{--reading-accent:#207d5b;--reading-tint:#e4f4e9}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Science & nature']{--reading-accent:#1c7453;--reading-tint:#e4f4e9}
 .braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Sports']{--reading-accent:#b7461b;--reading-tint:#fff0df}
 .braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Geography']{--reading-accent:#176e9c;--reading-tint:#e5f3fa}
 .braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='History']{--reading-accent:#9a5c22;--reading-tint:#faf0dc}
 .braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Curiosity']{--reading-accent:#a93e61;--reading-tint:#fcebf1}
-.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Everyday inventions']{--reading-accent:#137f83;--reading-tint:#e4f4f2}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Everyday inventions']{--reading-accent:#0f7276;--reading-tint:#e4f4f2}
 .braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Learning']{--reading-accent:#32762b;--reading-tint:#edf6e7}
 .braini-visual .learn-catalog .learn-format-filters{
   gap:4px;padding:4px;border:1px solid var(--line);border-radius:14px;background:var(--card);
