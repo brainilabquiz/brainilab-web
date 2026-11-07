@@ -215,6 +215,88 @@ body.braini-visual{
   .braini-visual :is(.card,.learn-card,.anytime-game-card,.btn,.answer){transition:none;transform:none}
 }
 
+/* Learn discovery: topic colour belongs to the frame, leaving the text quiet.
+   Keep native links, filters, image focal points and account progress unchanged. */
+.braini-visual :is(.learn-catalog .learn-card,.article-reading){
+  --reading-accent:#2d296e;--reading-tint:#eeecf8;
+}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Science & nature']{--reading-accent:#207d5b;--reading-tint:#e4f4e9}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Sports']{--reading-accent:#b7461b;--reading-tint:#fff0df}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Geography']{--reading-accent:#176e9c;--reading-tint:#e5f3fa}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='History']{--reading-accent:#9a5c22;--reading-tint:#faf0dc}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Curiosity']{--reading-accent:#a93e61;--reading-tint:#fcebf1}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Everyday inventions']{--reading-accent:#137f83;--reading-tint:#e4f4f2}
+.braini-visual :is(.learn-catalog .learn-card,.article-reading)[data-topic='Learning']{--reading-accent:#32762b;--reading-tint:#edf6e7}
+.braini-visual .learn-catalog .learn-format-filters{
+  gap:4px;padding:4px;border:1px solid var(--line);border-radius:14px;background:var(--card);
+}
+.braini-visual .learn-catalog .learn-format-filters button{
+  min-height:44px;padding:10px 16px;border:0;border-radius:10px;color:var(--navy);font-size:14px;
+}
+.braini-visual .learn-catalog .learn-format-filters button[aria-pressed=true]{background:var(--navy);color:#fff}
+.braini-visual .learn-catalog .learn-format-filters button:not([aria-pressed=true]):hover{background:#f0eef8}
+.braini-visual.editorial-page .learn-catalog .learn-card{
+  border:1px solid color-mix(in srgb,var(--reading-accent) 24%,#dedce9);
+  border-top:4px solid var(--reading-accent);border-radius:18px;
+  box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 8%,transparent);
+}
+.braini-visual.editorial-page .learn-catalog .learn-card:is(:hover,:focus-within){
+  border-color:var(--reading-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 18%,transparent);
+}
+.braini-visual .learn-catalog .learn-topic-heading{margin-bottom:18px;border-bottom-color:color-mix(in srgb,var(--reading-accent) 18%,#dedce9)}
+.braini-visual .learn-catalog .learn-topic-heading .eyebrow{
+  padding:4px 10px;border-radius:6px;background:var(--reading-tint);color:var(--reading-accent);font-size:12px;
+}
+.braini-visual .learn-catalog .learn-card[data-format=article]{grid-template-columns:160px minmax(0,1fr)}
+.braini-visual .learn-catalog .learn-card[data-format=article] .learn-card-art,
+.braini-visual .learn-catalog .library-grid[data-view=academy] .learn-card-art{
+  box-sizing:border-box;aspect-ratio:4/3;width:100%;padding:6px;background:var(--reading-tint);
+  border:1px solid color-mix(in srgb,var(--reading-accent) 40%,white);border-radius:12px;
+  box-shadow:inset 0 0 0 2px #fff;
+}
+.braini-visual .learn-catalog .learn-card-art img{border-radius:6px}
+.braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{
+  grid-template-columns:160px minmax(0,1fr);gap:20px;min-height:0;padding:20px;
+  border-radius:18px;box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 8%,transparent);
+}
+.braini-visual .learn-catalog .library-grid[data-view=academy] .eyebrow{color:var(--reading-accent);line-height:1.6}
+.braini-visual .learn-catalog .library-grid[data-view=academy] .path-continue{
+  margin-top:12px;padding:8px 12px;min-height:44px;box-sizing:border-box;border-radius:10px;
+  color:var(--navy);background:var(--reading-tint);text-decoration:underline;text-underline-offset:4px;
+}
+.braini-visual .learn-catalog .library-grid[data-view=academy] .path-progress.has-progress{margin-top:12px}
+.braini-visual .article-reading .article-cover{
+  padding:12px;border:1px solid color-mix(in srgb,var(--reading-accent) 40%,white);
+  border-bottom:4px solid var(--reading-accent);border-radius:20px;background:var(--reading-tint);
+  box-shadow:inset 0 0 0 3px #fff,0 6px 0 color-mix(in srgb,var(--reading-accent) 8%,transparent);
+}
+.braini-visual .article-reading .article-cover img{border-radius:10px}
+.braini-visual .article-reading .article-cover figcaption{padding:4px 4px 0;line-height:1.5}
+@media(max-width:1100px){
+  .braini-visual .learn-catalog .learn-card[data-format=article],
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{grid-template-columns:120px minmax(0,1fr)}
+}
+@media(max-width:760px){
+  .braini-visual .learn-catalog .learn-controls{gap:12px}
+  .braini-visual .learn-catalog .learn-format-filters{max-width:100%;box-sizing:border-box}
+  .braini-visual .learn-catalog .learn-format-filters button{font-size:13px;padding-inline:12px}
+}
+@media(max-width:520px){
+  .braini-visual .learn-catalog .learn-card[data-format=article],
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{grid-template-columns:96px minmax(0,1fr);gap:0 12px}
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{padding:16px;min-height:0}
+  .braini-visual .learn-catalog .learn-topic-heading{margin-bottom:16px}
+  .braini-visual .learn-catalog .learn-topic-heading .eyebrow{padding-inline:8px}
+  .braini-visual .learn-catalog .learn-card[data-format=article] .learn-card-art,
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .learn-card-art{padding:4px}
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .path-continue{font-size:13px;margin-top:8px;padding-inline:10px}
+  .braini-visual .article-reading .article-cover{padding:8px;border-radius:16px}
+}
+@media(max-width:350px){
+  .braini-visual .learn-catalog .learn-card[data-format=article],
+  .braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{grid-template-columns:76px minmax(0,1fr)}
+}
+
 /* The news destination uses one quiet red treatment, without a second active underline. */
 .braini-visual .topbar .links a.news-nav-link{color:#a8241d!important;border:1px solid transparent!important;border-radius:8px;padding:8px 12px;background:#fff1ef;animation:none!important;box-shadow:none!important}
 .braini-visual .topbar .links a.news-nav-link:hover{background:#fce5e1}
