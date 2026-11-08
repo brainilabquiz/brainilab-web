@@ -91,3 +91,26 @@ checks are not physical Android/iPhone or Safari certification.
   its native topic selector on the following row, bringing articles closer.
 - Wrapped section headings use a comfortable line height without new fonts,
   artwork, scripts, tracking or changes to game/account data.
+
+## Learn and Academy discovery, 7 November 2026
+
+Preserving redesign, variance 6, motion 3, density 5. Keep the light theme,
+Pally/Montserrat/Georgia, native logo and established topic palette. Topic colours
+identify subjects rather than applying a new accent to the whole product.
+
+- Article and course cards share a topic-coloured top edge and a recessed photo
+  frame. Dark topic labels sit on pale tints; titles retain the navy hierarchy.
+- Discovery thumbnails use landscape 4:3 frames instead of tall crops. Images,
+  focal points and descriptions stay original. Mobile course cards grow with
+  their title and progress, without a forced minimum height or empty lower half.
+- Articles and Academy use a compact segmented control with a filled selected
+  state. Existing labels, search/filter behaviour and keyboard focus remain.
+- Course continuation links have a tinted, 44px target. Real saved progress
+  remains visible when present; nothing writes or resets progress in this layer.
+- Reading covers use the same inset white frame and a stronger topic-coloured
+  lower edge. Text, credits, visible dates and structured data stay unchanged.
+
+This pass adds only scoped CSS. No new fonts, images, scripts or dependencies.
+Verify the library in both modes, search/empty states, long titles, keyboard
+focus and narrow layouts at 320, 390, 768, 1024 and 1280px. Other page families
+retain their existing presentation.
