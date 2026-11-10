@@ -304,12 +304,22 @@ body.braini-visual{
 .braini-visual .topbar .links a.news-nav-link::after{display:none!important}
 
 
-/* Decorative section photographs share the compact Breaking News treatment. */
-body.braini-visual .games-choice-hero .games-choice-panel,
-body.braini-visual .daily-overview-page .daily-discovery-header,
-body.braini-visual.editorial-page .learn-catalog .learn-hero,
-body.braini-visual .rankings-shell .rankings-title-row,
-body.braini-visual .groups-hero .groups-heading{box-sizing:border-box;min-height:156px;padding:24px 28px;border:1px solid var(--line,#dedce9);border-radius:20px;background-color:#faf8f3;background-image:linear-gradient(90deg,rgba(250,248,243,.98),rgba(250,248,243,.91) 45%,rgba(250,248,243,.12) 78%),var(--section-art);background-size:cover;background-position:center;overflow:hidden}
+/* Section identity comes from colour and the existing artwork. */
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading){
+  --feature-accent:#6259a8;
+  --feature-paper:#f1effb;
+  --art-edge:12%;
+  box-sizing:border-box;min-height:156px;padding:24px 28px;
+  border:1px solid var(--line);border-color:color-mix(in srgb,var(--feature-accent) 28%,var(--line));border-radius:20px;
+  background-color:var(--feature-paper);
+  background-image:linear-gradient(90deg,var(--feature-paper),color-mix(in srgb,var(--feature-paper) 94%,transparent) 48%,color-mix(in srgb,var(--feature-paper) var(--art-edge),transparent)),var(--section-art);
+  background-size:cover;background-position:center;
+  box-shadow:inset 0 4px 0 var(--feature-accent);
+}
+body.braini-visual .daily-overview-page .daily-discovery-header{--feature-accent:#c69300;--feature-paper:#fff7dc}
+body.braini-visual .learn-catalog .learn-hero{--feature-accent:#438745;--feature-paper:#eff7e9}
+body.braini-visual .rankings-shell .rankings-title-row{--feature-accent:#bd722b;--feature-paper:#fff2df}
+body.braini-visual .groups-hero .groups-heading{--feature-accent:#298471;--feature-paper:#e9f6ef}
 body.braini-visual .games-choice-hero .games-choice-panel{--section-art:image-set(url("../images/headers/games-960.webp") 1x,url("../images/headers/games-1440.webp") 2x)}
 body.braini-visual .daily-overview-page .daily-discovery-header{--section-art:image-set(url("../images/headers/daily-960.webp") 1x,url("../images/headers/daily-1440.webp") 2x)}
 body.braini-visual.editorial-page .learn-catalog .learn-hero{--section-art:image-set(url("../images/headers/learn-960.webp") 1x,url("../images/headers/learn-1440.webp") 2x)}
@@ -318,11 +328,7 @@ body.braini-visual .games-choice-panel>div,body.braini-visual .daily-discovery-h
 body.braini-visual :is(.games-choice-panel,.daily-discovery-header,.rankings-title-row,.groups-heading)>a{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;max-width:100%;padding:10px 14px;border:1px solid #b8b2cd;border-radius:8px;background:#fff;color:var(--navy);text-align:center}
 body.braini-visual .learn-catalog .learn-hero{padding-block:24px;margin-bottom:20px}
 @media(max-width:760px){
-body.braini-visual .games-choice-hero .games-choice-panel,
-body.braini-visual .daily-overview-page .daily-discovery-header,
-body.braini-visual.editorial-page .learn-catalog .learn-hero,
-body.braini-visual .rankings-shell .rankings-title-row,
-body.braini-visual .groups-hero .groups-heading{min-height:148px;padding:20px;background-image:linear-gradient(90deg,rgba(250,248,243,.97),rgba(250,248,243,.92) 55%,rgba(250,248,243,.6)),var(--section-art)}
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading){--art-edge:82%;min-height:148px;padding:20px}
 body.braini-visual .games-choice-panel>div,body.braini-visual .daily-discovery-header>div,body.braini-visual .learn-catalog .learn-hero>div:first-child{max-width:100%}
 body.braini-visual .learn-catalog .learn-hero{padding-block:20px}
 }
@@ -338,4 +344,58 @@ body.braini-visual .games-choice-panel h1,body.braini-visual .daily-discovery-he
 body.braini-visual .games-choice-panel p,body.braini-visual .daily-intro{font-size:14px;line-height:1.55}
 body.braini-visual .daily-discovery-header .daily-date{font-size:11px;margin-bottom:8px}
 body.braini-visual .daily-discovery-header .daily-progress-link{margin-top:10px}
+}
+
+/* Carry the inset media frame from Learn to the home page and Academy. */
+body.braini-visual.home-page .home-video-grid .home-video{
+  --video-frame:#f5dfcc;
+  --video-label:#763623;
+  --video-paper:#fff5eb;
+  padding:6px;background:var(--video-paper);border-color:var(--video-frame);border-radius:18px;
+}
+body.braini-visual.home-page .home-video-grid [data-video-source=knowledge]{
+  --video-frame:#c4dacc;
+  --video-label:#285c44;
+  --video-paper:#eef7ef;
+}
+.braini-visual .home-video-player{border-radius:11px;overflow:hidden}
+body.braini-visual.home-page .home-video-grid .home-video-copy{padding:10px 8px 4px;gap:8px}
+body.braini-visual.home-page .home-video-grid .video-label{
+  align-self:flex-start;min-height:0;padding:4px 7px;border-radius:6px;
+  background:var(--card);color:var(--video-label);overflow:visible;
+}
+body.braini-visual.home-page .home-video-grid .video-action{
+  display:inline-flex;align-items:center;align-self:flex-start;gap:4px;min-height:44px;
+  text-decoration:underline;text-underline-offset:3px;
+}
+.braini-visual.home-page .home-article>:is(img,picture){
+  box-sizing:border-box;padding:3px;background:var(--card);border:1px solid #b8d2b3;border-radius:12px;
+}
+.braini-visual.home-page .home-article>picture>img{border-radius:8px}
+.braini-visual.home-page .home-game-card>img{box-shadow:inset 0 -1px 0 var(--line)}
+.braini-visual .academy-hero>img{box-sizing:border-box;border:12px solid #494481;border-radius:20px}
+.braini-visual .academy-course .lesson-photo{box-sizing:border-box;border:4px solid #efedf7;border-radius:10px}
+
+/* Give category and game introductions the same separation as the hubs. */
+.braini-visual :is(.geo-discovery .geo-intro,.topic-discovery .topic-intro,.science-intro,.game-entry-heading){
+  box-sizing:border-box;margin-block-end:20px;padding:24px;
+  border:1px solid var(--line);border-radius:18px;
+  background:#f1effb;box-shadow:inset 0 4px 0 #6259a8;
+}
+.braini-visual .geo-discovery .geo-intro{background:#eaf5f9;box-shadow:inset 0 4px 0 #3f829e}
+.braini-visual.science-page .science-intro{background:#eff7e9;box-shadow:inset 0 4px 0 #438745}
+.braini-visual .game-entry-heading{margin-block-start:8px}
+.braini-visual :is(.topic-intro,.game-entry-heading)>img{
+  box-sizing:border-box;padding:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+}
+.braini-visual .anytime-category-icon{box-shadow:inset 0 0 0 2px var(--card)}
+@media(max-width:760px){
+  .braini-visual :is(.geo-discovery .geo-intro,.topic-discovery .topic-intro,.science-intro,.game-entry-heading){padding:16px}
+  .braini-visual .academy-hero>img{border-width:8px;border-radius:16px}
+}
+@media(max-width:420px){
+  .braini-visual .rankings-shell .rankings-title-row{flex-wrap:wrap}
+}
+@media(max-width:350px){
+  .braini-visual.rankings-page .ranking-filters{grid-template-columns:minmax(0,1fr)}
 }
