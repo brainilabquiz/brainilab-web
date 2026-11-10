@@ -26,7 +26,10 @@ for(const [source,preview] of Object.entries(articlePreviews)){
  const html=renderPage(template,articles,article),twice=renderPage(html,articles,article);
  for(const page of [html,twice]){
   for(const key of ['og:image','twitter:image'])assert.equal(meta(page,key),'https://brainilabgames.com'+preview.src);
-  assert.equal(graph(page).find(n=>n['@type']==='Article').image,meta(page,'og:image'));
+  assert.deepEqual(graph(page).find(n=>n['@type']==='Article').image,[
+   new URL(source,'https://brainilabgames.com').href,
+   meta(page,'og:image')
+  ]);
   for(const key of ['width','height','type']){
    assert.equal(meta(page,'og:image:'+key),String(preview[key]));
    assert.equal((page.match(new RegExp(`property="og:image:${key}"`,'g'))||[]).length,1);

@@ -27,7 +27,12 @@ for(const file of ['index.html','about/index.html']){
  const html=readFileSync(file,'utf8');
  const graph=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
  assert.deepEqual(graph.find(n=>n['@type']==='Organization'),JSON.parse(JSON.stringify(organization)),file);
- assert.deepEqual(graph.find(n=>n['@type']==='PodcastSeries'),JSON.parse(JSON.stringify(podcastSeries)),file+' links the podcast to its actual publisher');
+ const podcast=graph.find(n=>n['@type']==='PodcastSeries');
+ if(file==='about/index.html'){
+  assert.deepEqual(podcast,JSON.parse(JSON.stringify(podcastSeries)),file+' links the visible podcast to its actual publisher');
+ }else{
+  assert.equal(podcast,undefined,file+' does not mark up a podcast that it does not show');
+ }
  assert.equal(graph.filter(n=>n['@type']==='WebSite').length,1,file);
  assert.equal(graph.find(n=>n['@type']==='WebSite').name,'BrainiLab',file);
  assert.ok(html.includes('<link href="https://www.youtube.com/@BrainiLabKnowledge" rel="me"/>'),'the verified Knowledge channel is linked from the authoritative identity pages');
