@@ -1,0 +1,82 @@
+{
+  "name": "BrainiLab recorded quiz rounds: October–November 2026",
+  "capturedAt": "2026-11-10T15:06:30.927227+00:00",
+  "periodUtc": {
+    "start": "2026-10-19",
+    "endExclusive": "2026-11-10"
+  },
+  "selection": "Completed website game sessions with one recorded result, selected by completion time. Excludes known administration accounts, records without verified answers and invalid verified totals. Repeat rounds count separately.",
+  "coverage": {
+    "recorded": 227,
+    "excluded_admin": 34,
+    "excluded_invalid": 0,
+    "excluded_unverified": 1
+  },
+  "total": {
+    "rounds": 192,
+    "profiles": 57,
+    "gameTypes": 15
+  },
+  "games": [
+    {
+      "game": "generalknowledge",
+      "rounds": 65,
+      "profiles": 24,
+      "countedAnswers": 1300,
+      "correctAnswers": 960,
+      "meanRoundAccuracyPercent": 73.8,
+      "medianRoundAccuracyPercent": 80
+    },
+    {
+      "game": "mathrush",
+      "rounds": 36,
+      "profiles": 11,
+      "countedAnswers": 593,
+      "correctAnswers": 550,
+      "meanRoundAccuracyPercent": 91.9,
+      "medianRoundAccuracyPercent": 92.8
+    },
+    {
+      "game": "oddoneout",
+      "rounds": 11,
+      "profiles": 10,
+      "countedAnswers": 110,
+      "correctAnswers": 81,
+      "meanRoundAccuracyPercent": 73.6,
+      "medianRoundAccuracyPercent": 80
+    }
+  ],
+  "generalKnowledgeLevels": [
+    {
+      "difficulty": "easy",
+      "rounds": 26,
+      "countedAnswers": 520,
+      "correctAnswers": 430,
+      "profiles": 18
+    },
+    {
+      "difficulty": "medium",
+      "rounds": 28,
+      "countedAnswers": 560,
+      "correctAnswers": 403,
+      "profiles": 16
+    }
+  ],
+  "repeatPlay": {
+    "profiles": 57,
+    "oneRound": 34,
+    "twoOrMoreRounds": 23,
+    "twoOrMoreGameTypes": 12
+  },
+  "method": {
+    "groupMinimumProfiles": 10,
+    "median": "Middle round accuracy after sorting; average of the two middle values for an even number of rounds.",
+    "limitations": [
+      "This sample counts recorded completions, not starts, visits, or all guests.",
+      "A profile can contribute multiple rounds and may appear in more than one game or difficulty.",
+      "Excludes known administration accounts; other test use may remain.",
+      "The dates and selection differ from the first-200 snapshot; neither is a matched sample or a measure of growth, retention, or learning gains."
+    ]
+  },
+  "privacy": "Aggregate counts only; no raw play records, individual scores, timestamps, identifiers or answers."
+}
