@@ -29,11 +29,12 @@
 .games-library-page .anytime-category-icon{flex:0 0 52px;width:52px;height:52px;border-radius:15px;background:#f7f6fc;display:grid;place-items:center}
 .games-library-page .anytime-category-icon img{width:44px;height:44px}
 .games-library-page .anytime-difficulty-label{font-size:12px;line-height:1.5;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted,#65617b);margin:0 0 10px}
-.games-library-page .game-card-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:10px;border-top:1px solid #eeedf4}
+.games-library-page .game-card-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:10px;border-top:1px solid #eeedf4}
+.games-library-page .game-card-footer .game-card-context{flex-basis:min-content}
 .games-library-page .anytime-status{display:flex;flex-wrap:wrap;gap:4px 8px;margin:0;min-height:0;font-size:12px;line-height:1.5;font-weight:600;color:var(--muted,#65617b)}
 .games-library-page .anytime-new{color:#767185;font-weight:500}
 .games-library-page .anytime-played{color:#24791d}
-.games-library-page .difficulty-actions.single-action{display:block;flex-shrink:0}
+.games-library-page .difficulty-actions.single-action{display:block;flex-shrink:0;margin-inline-start:auto}
 .games-library-page .difficulty-actions.single-action a{display:inline-flex;align-items:center;justify-content:center;gap:20px;padding:0 18px;min-width:106px;min-height:44px!important;border:1px solid var(--navy);border-radius:24px;background:var(--navy);color:#fff;font-size:14px!important;line-height:1.2;text-decoration:none}
 .games-library-page .difficulty-actions.single-action a:not([aria-disabled="true"])::after{content:"→";font-size:19px;line-height:1}
 .games-library-page .difficulty-actions.single-action a:hover{background:#484194;border-color:#484194}
@@ -101,8 +102,4 @@
 @media(max-width:540px){
   body.games-library-page.braini-visual .games-choice-hero .games-choice-panel{padding:16px}
   .games-library-page .game-finder{grid-template-columns:minmax(0,1fr);gap:10px;padding-bottom:12px}
-}
-@media(max-width:360px){
-  .games-library-page .game-card-footer{flex-wrap:wrap}
-  .games-library-page .game-card-footer .single-action{margin-inline-start:auto}
 }
