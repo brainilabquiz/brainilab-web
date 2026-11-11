@@ -46,6 +46,10 @@ def build_handoff(report):
                     'source':'GA4 google / organic','data':matches[0],
                     'limit':'Session landing-page evidence only. Never attribute these outcomes to a keyword or treat registration requests as confirmed accounts.'}
     return {'schemaVersion':2,'mode':'automatic_codex','authorization':'Owner explicitly authorized detection, execution and publication on 2026-10-01. Video research and packs authorized 2026-10-13 for preparation only; video publication is not authorized.',
+        'skillGuidance': {
+            'directoryReview': '.agents/skills/growth-directory-review/SKILL.md',
+            'pilotMeasurement': '.agents/skills/growth-pilot-measurement/SKILL.md',
+        },
         'videoResearch':video_handoff(report),
         'researchTasks':research_tasks(report.get('openseo')),
         'researchInstructions':['Use installed openseo:seo-project-setup, openseo:seo-audit and openseo:keyword-research skills in that order.',
@@ -53,7 +57,7 @@ def build_handoff(report):
             'If tools or account access are blocked, record the reason once and continue the independent Search Console cycle.',
             'Never purchase credits, activate subscriptions or repeat paid research automatically without a defined budget.',
             'Record actual results through tools/growth/openseo.py record with the expected previous hash; export again to import into Growth.',
-            'A queued workflow is not a completed audit. New content uses the existing editorial quota.'],
+            'A queued workflow is not a completed audit. Route new content ideas to the existing editorial workflow.'],
         'delivery':'Existing Codex chat heartbeat at 09:15 Europe/Madrid; local computer and app required.',
         'maxChangesPerRun':1,'tasks':enrich_tasks(tasks),'liveStateRequired':True,
         'acquisitionPolicy':'Satisfy a real reading, learning or playing need on an existing page. Intent briefs are research candidates, not forecasts or permission to repeat completed work. Prefer acquisition and feedback over cosmetic edits; never create filler or duplicate pages for keyword variants.',
