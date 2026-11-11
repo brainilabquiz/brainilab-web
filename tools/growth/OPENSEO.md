@@ -30,7 +30,7 @@ growth targets, credentials, competitors or Plus features.
 3. Preserve the owner's writing rules: teach beginners one idea at a time, cite
    primary sources, use photorealistic generated covers and Biel Sardà by default.
    Ten complementary supporting articles earn an additional hub; Academy is a
-   separate curriculum. Existing daily publication quota remains one article.
+   separate curriculum. Apply the current editorial publication policy.
 4. Read recent research before spending credits. Context setup is reused until
    material facts change, audit review is due after seven days, and keyword
    discovery after thirty days. These are review intervals, not permission to
