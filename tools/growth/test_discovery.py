@@ -16,6 +16,18 @@ class DiscoveryTests(unittest.TestCase):
         public[URL]['robots']=['noindex']
         self.assertEqual(discover(data,public,'snapshot'),[])
 
+    def test_homepage_does_not_become_an_opportunity(self):
+        home = 'https://brainilabgames.com/'
+        pages = [
+            {'value': url, 'impressions': 12, 'clicks': 0, 'ctr': 0, 'position': 3}
+            for url in (home, URL)
+        ]
+        data = {'tables': {'page': pages, 'queryPage': []}}
+        public = {url: {'status': 200, 'titles': ['Example'], 'robots': []} for url in (home, URL)}
+
+        self.assertEqual([lead['url'] for lead in discover(data, public, 'snapshot')], [URL])
+        self.assertEqual([page['value'] for page in data['tables']['page']], [home, URL])
+
     def test_duplicate_pair_rejected(self):
         row={'keys':['q',URL],'clicks':0,'impressions':1,'ctr':0,'position':1}
         with self.assertRaises(ValueError):
