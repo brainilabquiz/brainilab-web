@@ -49,6 +49,7 @@ def build_handoff(report):
         'skillGuidance': {
             'directoryReview': '.agents/skills/growth-directory-review/SKILL.md',
             'pilotMeasurement': '.agents/skills/growth-pilot-measurement/SKILL.md',
+            'youtubeReview': '.agents/skills/growth-youtube-review/SKILL.md',
         },
         'videoResearch':video_handoff(report),
         'researchTasks':research_tasks(report.get('openseo')),

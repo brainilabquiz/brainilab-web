@@ -61,7 +61,7 @@ Normalize the observed fields into schema 1 described by `youtube_studio.validat
 
 Enable only in private `video-policy.json` with `{"enabled":true,"publishingAuthorized":false}`. `measurement.attach_measurement` then enriches the daily Growth report with dated `youtubeStudio` and `videoPlanning`; same-day reuse updates the export hash. `handoff.py` includes a distinct draft-only `videoResearch` queue with stable identities, data provenance and prior drafts. A query merely typed without an actual returned signal is excluded. Older-than-seven-day observations and failed refreshes do not produce executable video candidates; the ordinary GSC/GA4 cycle continues.
 
-Compare three candidates and verify their website destinations, actual current upload history, both local pack libraries and the existing calendar. Do not choose by different-age view totals, copy a competitor's script, duplicate a scheduled video or revive a deferred post. Low/very-low audience interest needs a specific experimental justification; it is not a reason to manufacture a daily quota. Prepare at most **one new pack per local day**; retries resume it.
+Use the [YouTube review](../../.agents/skills/growth-youtube-review/SKILL.md) before choosing a promotion or drafting a pack. Compare three candidates and verify their website destinations, current uploads and schedule, both local pack libraries and the existing production calendar. Do not choose by different-age view totals, copy a competitor's script, duplicate a scheduled video or revive a deferred post. Low/very-low audience interest needs a specific experimental justification; it is not a reason to manufacture a daily quota. Prepare at most **one new pack per local day**; retries resume it.
 
 Curate a full original plan as in the previously prepared local pilot: titles, actual script/questions with checked answers/sources, three thumbnail prompts, metadata, resources, destination and feedback. Bind `youtubeEvidence.snapshotSha256` and `references` to the actual Studio snapshot and document `fitExplanation`, `currentUploadReview`, `currentCalendarReview`, and an `experimentalJustification` when required. Run `video_packs.py --report GROWTH.json --plans REVIEWED_PLANS.json --studio PRIVATE/youtube-studio-latest.json --output NEW_DRAFT_FOLDER --as-of YYYY-MM-DD`. This automatic path accepts one plan, keeps unknowns and source periods, checks current published inventory and preserves existing/human-edited output. It does not invent video files, durations, chapters, subtitle timestamps or publication dates.
 
@@ -188,12 +188,13 @@ Official references: [Google installed-app OAuth](https://developers.google.com/
 
 The daily exporter also writes private `data/codex-handoff.json`, including on same-day reuse. Each task has a stable URL identity, the evidence snapshot, actual query/page rows and acceptance criteria. The native Codex heartbeat reads this queue and executes work in the existing chat; no separate message gateway, exposed token or other chat is required. This is a daily local cycle, not an always-on cloud worker.
 
-The private handoff points to two BrainiLab project skills in its `skillGuidance`
-section. Load the relevant one when reviewing a directory or planning or
-evaluating a pilot. They guide an existing task and add no new work to the queue.
+The private handoff points to BrainiLab project skills in its `skillGuidance`
+section. Load the guide for the work being reviewed. The guides apply to the
+existing queue.
 
 - [Directory review](../../.agents/skills/growth-directory-review/SKILL.md) covers audience fit, duplicate checks, listing evidence and referrals.
 - [Pilot measurement](../../.agents/skills/growth-pilot-measurement/SKILL.md) covers a useful next action, an observable measure and comparison limits.
+- [YouTube review](../../.agents/skills/growth-youtube-review/SKILL.md) covers channel and calendar evidence, draft overlap and a verified game destination.
 
 Always reconcile queue entries with current Supabase decisions. Resume unfinished approved work; skip dismissed/published/monitoring. Start at most one coherent improvement per run. Read current source and public pages before acting; a stale proposal may already be solved. If evidence is weak or the change unnecessary, record that finding rather than manufacture an edit. Route new article ideas to the existing editorial workflow and apply its current publication policy.
 
