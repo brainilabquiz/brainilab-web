@@ -19,7 +19,7 @@ class HandoffTests(unittest.TestCase):
         queue = build_handoff({})
         root = Path(__file__).resolve().parents[2]
         self.assertEqual(queue['tasks'], [])
-        self.assertEqual(set(queue['skillGuidance']), {'directoryReview', 'pilotMeasurement', 'youtubeReview'})
+        self.assertEqual(set(queue['skillGuidance']), {'directoryReview', 'pilotMeasurement', 'youtubeReview', 'schemaReview'})
         for relative_path in queue['skillGuidance'].values():
             skill = root / relative_path
             with self.subTest(path=relative_path):

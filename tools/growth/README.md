@@ -36,6 +36,10 @@ needed, then record with exact hash/CAS. The six-quiz overview, page review and
 CSV preserve dated evidence, reviewed equivalents and unknown cases. See
 `SEO-EXPLORER.md` → Dynamic quiz question declarations for the SQL/record contract.
 
+Use the [structured data review](../../.agents/skills/growth-schema-review/SKILL.md)
+to prioritize games and Learn pages from the saved Search Console page table.
+It uses these existing comparisons and dated public captures for a targeted review.
+
 ## Sessions with a recorded start and Google indexing
 
 [Play and indexing evidence](PLAY-INDEXING.md) documents the two independent,
@@ -195,6 +199,7 @@ existing queue.
 - [Directory review](../../.agents/skills/growth-directory-review/SKILL.md) covers audience fit, duplicate checks, listing evidence and referrals.
 - [Pilot measurement](../../.agents/skills/growth-pilot-measurement/SKILL.md) covers a useful next action, an observable measure and comparison limits.
 - [YouTube review](../../.agents/skills/growth-youtube-review/SKILL.md) covers channel and calendar evidence, draft overlap and a verified game destination.
+- [Structured data review](../../.agents/skills/growth-schema-review/SKILL.md) covers Search Console prioritization, game and Learn markup, and current Google feature criteria.
 
 Always reconcile queue entries with current Supabase decisions. Resume unfinished approved work; skip dismissed/published/monitoring. Start at most one coherent improvement per run. Read current source and public pages before acting; a stale proposal may already be solved. If evidence is weak or the change unnecessary, record that finding rather than manufacture an edit. Route new article ideas to the existing editorial workflow and apply its current publication policy.
 
