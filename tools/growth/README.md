@@ -188,7 +188,14 @@ Official references: [Google installed-app OAuth](https://developers.google.com/
 
 The daily exporter also writes private `data/codex-handoff.json`, including on same-day reuse. Each task has a stable URL identity, the evidence snapshot, actual query/page rows and acceptance criteria. The native Codex heartbeat reads this queue and executes work in the existing chat; no separate message gateway, exposed token or other chat is required. This is a daily local cycle, not an always-on cloud worker.
 
-Always reconcile queue entries with current Supabase decisions. Resume unfinished approved work; skip dismissed/published/monitoring. Start at most one coherent improvement per run. Read current source and public pages before acting; a stale proposal may already be solved. If evidence is weak or the change unnecessary, record that finding rather than manufacture an edit. New article ideas join the existing one-article-per-day editorial plan, not an additional publishing stream.
+The private handoff points to two BrainiLab project skills in its `skillGuidance`
+section. Load the relevant one when reviewing a directory or planning or
+evaluating a pilot. They guide an existing task and add no new work to the queue.
+
+- [Directory review](../../.agents/skills/growth-directory-review/SKILL.md) covers audience fit, duplicate checks, listing evidence and referrals.
+- [Pilot measurement](../../.agents/skills/growth-pilot-measurement/SKILL.md) covers a useful next action, an observable measure and comparison limits.
+
+Always reconcile queue entries with current Supabase decisions. Resume unfinished approved work; skip dismissed/published/monitoring. Start at most one coherent improvement per run. Read current source and public pages before acting; a stale proposal may already be solved. If evidence is weak or the change unnecessary, record that finding rather than manufacture an edit. Route new article ideas to the existing editorial workflow and apply its current publication policy.
 
 Before any write, save a private backup and inspect Git changes and the opportunity revision. Record automatic approval under the explicit owner authorization, without impersonating a user (`actor=null`). Use a transaction with `WHERE id=... AND revision=... AND state=...`; add the event only from the rows actually updated. Zero updated rows means a concurrent change: stop and reread. Never replace the proposal or baseline. Implement and test, open/attach a PR, merge using the expected SHA, then verify Cloudflare and the public URL. Only then record `published_at`, change reference and the next revision, with an event describing the tested result. Failed deployment stays unfinished and must be resumed, not duplicated.
 
