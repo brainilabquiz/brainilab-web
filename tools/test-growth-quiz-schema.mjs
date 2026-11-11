@@ -36,6 +36,7 @@ assert.deepEqual(verified.comparison.rows.map(row=>row.state),['reviewed_equival
 assert.match(verified.html,/Targeted check of the listed declarations/);
 assert.match(verified.html,/local · reviewed equivalent/);
 assert.equal(verified.exported[0][9],checkAt);
+assert.doesNotMatch(verified.exported[0][2],/original declaration capture/);
 assert.match(quizSchemaView(targeted,url,null,checkNow+3*86400000).html,/Dated verification/);
 const changed={url,checkedAt:checkAt,state:'ready',quizQuestions:{state:'ready',questions:['Different question?']}};
 assert.notEqual(compareQuiz(targeted,url,changed,checkNow).source,'targeted');
@@ -44,6 +45,11 @@ const archived=quizSchemaView(targeted,url,removed,checkNow);
 assert.equal(archived.comparison.archived,true);
 assert.equal(archived.comparison.recent,false);
 assert.match(archived.html,/current page declares no Question entries/);
+for(const row of archived.exported.slice(0,-1)){
+ assert.ok(row[2].includes('; original declaration capture: '+at+'; stable review key: '));
+ assert.equal(row[9],checkAt,'keep the bank check date in Observed at');
+}
+assert.equal(archived.exported.at(-1)[9],checkAt,'keep the later page capture in the date row');
 const newBank=structuredClone(targeted);newBank.quizSchema.banks[0].providers[0].observedAt='2026-11-11T11:49:01Z';
 assert.notEqual(compareQuiz(newBank,url,null,checkNow).source,'targeted');
 const graph=parts=>'<main><h1>Quiz</h1></main><script type="application/ld+json">'+JSON.stringify({'@graph':[{'@type':'Quiz','@id':url+'#quiz',...(parts===null?{}:{hasPart:parts})}]})+'</script>';
