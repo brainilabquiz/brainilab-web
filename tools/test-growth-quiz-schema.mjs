@@ -25,6 +25,27 @@ const invalid=structuredClone(snapshot);invalid.quizSchema.banks[0].providers.pu
 for(const field of ['banks','pages']){const s=structuredClone(snapshot);s.quizSchema[field]=[null];assert.equal(compareQuiz(s,url,null,now).unknown,true);}
 const missing=structuredClone(snapshot);missing.quizSchema.banks[0].providers.forEach(p=>p.prompts=[]);assert.equal(compareQuiz(missing,url,null,now).rows[0].state,'review_needed','a reviewed counterpart must still exist');
 const xss=structuredClone(snapshot);xss.quizSchema.pages[0].questions=['<img src=x onerror=alert(1)>'];assert.doesNotMatch(quizSchemaView(xss,url,null,now).html,/<img/);
+const targeted=structuredClone(snapshot);
+const checkAt='2026-11-11T11:49:00Z',checkNow=Date.parse(checkAt)+1000;
+targeted.quizSchema.verifications=[{url,scopeVersion:scope.version,receiptSha256:'c'.repeat(64),declarationsSha256:'d'.repeat(64),declarationsAt:at,cloudAt:checkAt,localAt:checkAt,
+ rows:[[page.questions[0],['equivalent','equivalent','equivalent']],[page.questions[1],['text','text','text']]]}];
+const verified=quizSchemaView(targeted,url,null,checkNow);
+assert.equal(verified.comparison.source,'targeted');
+assert.equal(verified.comparison.unknown,false,'targeted verification retains the original declaration date');
+assert.deepEqual(verified.comparison.rows.map(row=>row.state),['reviewed_equivalent','matched']);
+assert.match(verified.html,/Targeted check of the listed declarations/);
+assert.match(verified.html,/local · reviewed equivalent/);
+assert.equal(verified.exported[0][9],checkAt);
+assert.match(quizSchemaView(targeted,url,null,checkNow+3*86400000).html,/Dated verification/);
+const changed={url,checkedAt:checkAt,state:'ready',quizQuestions:{state:'ready',questions:['Different question?']}};
+assert.notEqual(compareQuiz(targeted,url,changed,checkNow).source,'targeted');
+const removed={...changed,quizQuestions:{state:'not_declared',questions:[]}};
+const archived=quizSchemaView(targeted,url,removed,checkNow);
+assert.equal(archived.comparison.archived,true);
+assert.equal(archived.comparison.recent,false);
+assert.match(archived.html,/current page declares no Question entries/);
+const newBank=structuredClone(targeted);newBank.quizSchema.banks[0].providers[0].observedAt='2026-11-11T11:49:01Z';
+assert.notEqual(compareQuiz(newBank,url,null,checkNow).source,'targeted');
 const graph=parts=>'<main><h1>Quiz</h1></main><script type="application/ld+json">'+JSON.stringify({'@graph':[{'@type':'Quiz','@id':url+'#quiz',...(parts===null?{}:{hasPart:parts})}]})+'</script>';
 const declaration=[{'@type':'Question',name:'A real question?'}];
 const parsed=parseCurrentPage(graph(declaration),url,at,d);assert.deepEqual(parsed.quizQuestions,{state:'ready',questions:['A real question?']});
@@ -37,14 +58,15 @@ const packs=JSON.parse(readFileSync('assets/js/quiz-packs.js','utf8').match(/con
 let declared=0;
 for(const t of scope.topics){
  const u='https://brainilabgames.com'+t.path,html=readFileSync('.'+t.path+'index.html','utf8'),obs=parseCurrentPage(html,u,at,d),prompts=Object.values(packs[t.local]).flatMap(sets=>Object.values(sets).flatMap(qs=>qs.map(q=>q.q)));
+ if(t.slug==='general-knowledge'){assert.equal(obs.quizQuestions.state,'not_declared');continue;}
  const s={quizSchema:{schemaVersion:1,domain:'brainilabgames.com',banks:[{...bank,topic:t.slug,providers:bank.providers.map(p=>({...p,prompts}))}],pages:[{url:u,checkedAt:at,sha256:'a'.repeat(64),...obs.quizQuestions}]}};
  const compared=compareQuiz(s,u,null,now);assert.equal(compared.reviewNeeded,0,t.slug);assert.equal(compared.unknown,false,t.slug);declared+=compared.rows.length;
 }
-assert.equal(declared,22);
+assert.equal(declared,20);
 const report={seoExplorer:{schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[],sources:[],backlinks:[],...snapshot}},workspace={opportunities:[]};
 const before=JSON.stringify({report,workspace});let calls=0;globalThis.fetch=()=>{calls++;throw Error('No automatic requests');};globalThis.document=d;
 const root=d.querySelector('main');root.innerHTML=seoHTML(report,now);bindSEO(root,report,workspace);root.querySelector('[data-seo-view="quiz"]').click();
 assert.equal(calls,0);assert.equal(root.querySelector('[data-seo-prev]').hidden,true);assert.equal(root.querySelectorAll('[data-seo-review-url]').length,6);
 root.querySelector('[data-seo-review-url]').click();assert.equal(d.activeElement.id,'growth-page-review-title');assert.match(root.textContent,/Dynamic quiz questions/);assert.equal(calls,0);
 assert.equal(JSON.stringify({report,workspace}),before);assert.ok(quizSchemaOverview(snapshot,now).exported.every(r=>r.length===13));
-dom.window.close();console.log('PASS dynamic quiz schema: 22 real declarations, reviewed equivalences, preserved qualifiers, stale/incomplete/ambiguous data, stable review identity, safe CSV/HTML, inert parsing, six-page navigation/focus, zero automatic requests and no decision writes.');
+dom.window.close();console.log('PASS dynamic quiz schema: 20 current declarations, archived and targeted evidence, reviewed wording, dated observations, safe exports and six-page navigation.');

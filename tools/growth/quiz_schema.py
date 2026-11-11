@@ -15,6 +15,7 @@ TOPICS = {t['slug']: t for t in SCOPE['topics']}
 ORIGIN = 'https://brainilabgames.com'
 URLS = {ORIGIN+t['path']: t['slug'] for t in TOPICS.values()}
 PROVIDERS = ('anytime', 'fixed', 'local')
+OUTCOMES = ('text', 'equivalent', 'unmatched')
 
 
 def timestamp(value):
@@ -126,16 +127,54 @@ def bank(value):
     return {'topic':value['topic'],'source':'published-question-tables','providers':providers,'sha256':digest(content)}
 
 
+def verification(value):
+    if not isinstance(value, dict) or value.get('url') not in URLS or type(value.get('scopeVersion')) is not int:
+        raise ValueError('Invalid targeted quiz verification')
+    if not isinstance(value.get('receiptSha256'), str) or not re.fullmatch('[a-f0-9]{64}', value['receiptSha256']):
+        raise ValueError('A verification receipt hash is required')
+    rows = value.get('rows')
+    if not isinstance(rows, list) or not 1 <= len(rows) <= 100:
+        raise ValueError('Invalid targeted quiz rows')
+    clean = []
+    equivalents = dict(TOPICS[URLS[value['url']]]['equivalents'])
+    for row in rows:
+        if not isinstance(row, list) or len(row) != 2:
+            raise ValueError('Invalid targeted quiz row')
+        name, outcomes = row
+        name = prompt(name)
+        if not isinstance(outcomes, list) or len(outcomes) != len(PROVIDERS) or any(state not in OUTCOMES for state in outcomes):
+            raise ValueError('Invalid targeted quiz outcomes')
+        if value['scopeVersion'] == SCOPE['version'] and 'equivalent' in outcomes and name not in equivalents:
+            raise ValueError('No registered wording equivalent')
+        clean.append([name, outcomes])
+    if digest([name for name, _ in clean]) != value.get('declarationsSha256'):
+        raise ValueError('Verification declarations do not match their hash')
+    return {'url': value['url'], 'scopeVersion': value['scopeVersion'], 'receiptSha256': value['receiptSha256'],
+            'declarationsSha256': value['declarationsSha256'], 'declarationsAt': timestamp(value.get('declarationsAt')),
+            'cloudAt': timestamp(value.get('cloudAt')),
+            'localAt': timestamp(value.get('localAt')), 'rows': clean}
+
+
 def validate(value):
     if not isinstance(value,dict) or value.get('schemaVersion')!=1 or value.get('domain')!='brainilabgames.com': raise ValueError('Unsupported quiz evidence')
     banks=[bank(v) for v in value.get('banks',[])]; pages=[page(v) for v in value.get('pages',[])]
     if len(banks)>6 or len(pages)>6 or len({b['topic'] for b in banks})!=len(banks) or len({p['url'] for p in pages})!=len(pages):
         raise ValueError('Duplicate or excessive quiz evidence')
-    return {'schemaVersion':1,'domain':'brainilabgames.com','banks':sorted(banks,key=lambda b:b['topic']),'pages':sorted(pages,key=lambda p:p['url'])}
+    result = {'schemaVersion':1,'domain':'brainilabgames.com','banks':sorted(banks,key=lambda b:b['topic']),'pages':sorted(pages,key=lambda p:p['url'])}
+    if 'verifications' in value:
+        rows = value['verifications']
+        if not isinstance(rows, list) or len(rows) > len(URLS):
+            raise ValueError('Invalid targeted quiz verifications')
+        rows = [verification(row) for row in rows]
+        if len({row['url'] for row in rows}) != len(rows):
+            raise ValueError('Duplicate targeted quiz verification')
+        if rows:
+            result['verifications'] = sorted(rows, key=lambda row: row['url'])
+    return result
 
 
 def merge(values):
-    banks={};pages={}
+    banks={};pages={}; verifications={}
     for value in values:
         if not value: continue
         v=validate(value)
@@ -150,7 +189,16 @@ def merge(values):
             prior=pages.get(p['url'])
             if not prior or p['checkedAt']>prior['checkedAt']: pages[p['url']]=p
             elif p['checkedAt']==prior['checkedAt'] and p!=prior: raise ValueError('Conflicting same-time declarations')
-    return validate({'schemaVersion':1,'domain':'brainilabgames.com','banks':list(banks.values()),'pages':list(pages.values())})
+        for row in v.get('verifications', []):
+            prior = verifications.get(row['url'])
+            dates = (row['cloudAt'], row['localAt'])
+            previous = (prior['cloudAt'], prior['localAt']) if prior else None
+            if previous is None or (dates != previous and all(now >= old for now, old in zip(dates, previous))):
+                verifications[row['url']] = row
+            elif dates == previous and row != prior:
+                raise ValueError('Conflicting same-time targeted quiz verification')
+    return validate({'schemaVersion':1,'domain':'brainilabgames.com','banks':list(banks.values()),'pages':list(pages.values()),
+                     'verifications':list(verifications.values())})
 
 
 def record(private, value, expected):
@@ -197,7 +245,7 @@ def attach(snapshot, private, candidates=()):
     for v in valid:
         try: combined=merge([combined,v])
         except ValueError: continue  # Preserve good sources on a conflicting restored file.
-    return {**snapshot,'quizSchema':combined} if combined['banks'] or combined['pages'] else snapshot
+    return {**snapshot,'quizSchema':combined} if combined['banks'] or combined['pages'] or combined.get('verifications') else snapshot
 
 
 def local_providers(observed_at):
