@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import sanitizeHtml from 'sanitize-html';
 
-// This checks declared list destinations against actual HTML anchors only.
+// Check declared list destinations against actual HTML anchors.
 // It does not fetch destinations, infer ranks or inspect dynamic question packs.
 function missingDestinations(html,base){
  const address=href=>{try{const u=new URL(href,base);return u.origin+u.pathname.replace(/index\.html$/,'');}catch{return null;}};
@@ -27,6 +27,15 @@ for(const route of ['', 'games/','general-knowledge/','geography/','geography/fl
  const file=route+'index.html',html=readFileSync(file,'utf8'),r=missingDestinations(html,'https://brainilabgames.com/'+route);
  assert.ok(r.lists.length,file+' retains its existing ItemList');
  assert.deepEqual(r.missing,[],file+' declares only destinations linked in the returned HTML');checked+=r.lists.length;
+ if(route==='geography/'){
+  const labels=[...html.matchAll(/<h3>([^<]+)<\/h3>/g)].map(match=>match[1]);
+  assert.deepEqual(r.lists[0].itemListElement.map(item=>item.name),labels,file+' uses the game card names');
+ }
+ if(['general-knowledge/','history/','sports/'].includes(route)){
+  const daily=r.lists[0].itemListElement.find(item=>new URL(item.url).pathname==='/daily-quiz/');
+  assert.equal(daily?.name,'Today’s Daily',file+' uses the current Daily name');
+  assert.match(html,/<a href="\/daily-quiz\/"[^>]*>Try today’s Daily/,file+' shows the Daily link');
+ }
 }
 assert.ok(checked>=8);
 console.log('PASS page ItemLists: eight public catalogues, observed anchor destinations, legacy/difficulty URL context and exclusion of script/template-only links; no fetch or gameplay changes.');
