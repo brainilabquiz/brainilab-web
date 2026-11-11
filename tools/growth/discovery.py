@@ -12,6 +12,9 @@ def discover(data, public, snapshot_id):
         if page['impressions']<10 or page['position'] is None:
             continue
         path=urlsplit(url).path
+        # The homepage stays in the metrics, but Growth ingest cannot store it as an opportunity.
+        if path in ('', '/'):
+            continue
         if path.startswith(('/admin/','/profile/','/privacy/','/cookies/','/suggestions/')):
             continue
         evidence=sorted([r for r in pairs if r.get('page')==url],key=lambda r:-r['impressions'])[:8]
