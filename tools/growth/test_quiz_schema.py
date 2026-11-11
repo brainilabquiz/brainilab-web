@@ -61,6 +61,24 @@ class QuizSchemaTest(unittest.TestCase):
         changed=snapshot();changed['banks'][0]['providers'][0]['prompts']=['A real question greater than 100?']
         self.assertNotEqual(a['sha256'],q.validate(changed)['banks'][0]['sha256'])
 
+    def test_targeted_verification_preserves_inventories_and_dates(self):
+        base = q.validate(snapshot())
+        page = base['pages'][0]
+        at = '2026-10-30T19:00:00+00:00'
+        check = {'url': URL, 'scopeVersion': q.SCOPE['version'], 'receiptSha256': 'a'*64,
+                 'declarationsSha256': page['declarationsSha256'], 'declarationsAt': page['checkedAt'], 'cloudAt': at, 'localAt': at,
+                 'rows': [[page['questions'][0], ['text', 'text', 'text']]]}
+        added = q.merge([base, {**base, 'verifications': [check]}])
+        self.assertEqual(added['banks'], base['banks'])
+        self.assertEqual(added['pages'], base['pages'])
+        self.assertEqual(added['verifications'], [check])
+        older = {**check, 'cloudAt': AT, 'localAt': AT}
+        self.assertEqual(q.merge([added, {**base, 'verifications': [older]}]), added)
+        self.assertEqual(q.attach({'quizSchema': added}, Path('missing'))['quizSchema'], added)
+        wrong = {**check, 'rows': [['Changed question?', ['text', 'text', 'text']]]}
+        with self.assertRaisesRegex(ValueError, 'hash'):
+            q.validate({**base, 'verifications': [wrong]})
+
     def test_crawl_binding_and_attachment_without_fetch_or_rescanning(self):
         row=seo.audit_page(URL,response(html([{'@type':'Question','name':'A real question?'}])),AT)
         base={'schemaVersion':1,'domain':'brainilabgames.com','observedAt':AT,'pages':[row],'sources':[],'backlinks':[]}

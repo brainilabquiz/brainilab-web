@@ -41,12 +41,43 @@ export function quizEvidence(snapshot){
  return s;
 }
 
+function targetedVerification(evidence, page, topic, bank, now){
+ if(!['ready','not_declared'].includes(page?.state)||!Array.isArray(evidence?.verifications)||evidence.verifications.length>6)return null;
+ const matches=evidence.verifications.filter(row=>row?.url===page.url);
+ if(matches.length!==1)return null;
+ const [check]=matches;
+ if(check.scopeVersion!==scope.version||!stamp(check.declarationsAt)||!stamp(check.cloudAt)||!stamp(check.localAt)||
+    !/^[a-f0-9]{64}$/.test(check.receiptSha256)||!/^[a-f0-9]{64}$/.test(check.declarationsSha256)||
+    !Array.isArray(check.rows)||check.rows.length===0||check.rows.length>100)return null;
+ const archived=page.state==='not_declared';
+ if(archived?Date.parse(page.checkedAt)<=Date.parse(check.declarationsAt):
+    (page.declarationsSha256&&page.declarationsSha256!==check.declarationsSha256)||check.rows.length!==page.questions.length)return null;
+ const times={anytime:check.cloudAt,fixed:check.cloudAt,local:check.localAt};
+ if(Object.values(times).some(at=>Date.parse(at)>now+300000)||(!archived&&bank?.providers.some(p=>p.complete&&Date.parse(p.observedAt)>Date.parse(times[p.name]))))return null;
+ const counterparts=new Map(topic.equivalents);
+ if(check.rows.some((row,index)=>!Array.isArray(row)||row.length!==2||!text(row[0])||(!archived&&row[0]!==page.questions[index])||
+     !Array.isArray(row[1])||row[1].length!==providers.length||row[1].some(s=>!['text','equivalent','unmatched'].includes(s))||
+     (row[1].includes('equivalent')&&!counterparts.has(row[0]))))return null;
+ const recent=!archived&&Object.values(times).every(at=>now-Date.parse(at)<=2*DAY);
+ const rows=check.rows.map(([name,states])=>{
+  const matched=providers.filter((_,index)=>states[index]!=='unmatched');
+  const equivalent=states.includes('equivalent');
+  return {name,state:matched.length?(equivalent?'reviewed_equivalent':'matched'):'review_needed',
+   matchedPrompt:equivalent?counterparts.get(name):matched.length?name:null,providers:matched,
+   providerDetail:providers.map((provider,index)=>provider+' · '+({text:'text match',equivalent:'reviewed equivalent',unmatched:'no checked match'})[states[index]]).join(', '),
+   review:equivalent?scope.review:null,reviewKey:JSON.stringify([page.url,normal(name),states,scope.version])};
+ });
+ return {rows,recent,archived,declarationsAt:check.declarationsAt,unknown:!recent&&!archived,reviewNeeded:recent?rows.filter(row=>row.state==='review_needed').length:0,times};
+}
+
 export function compareQuiz(snapshot,url,current=null,now=Date.now()){
  const t=topic(url);if(!t)return null;
  const evidence=quizEvidence(snapshot),b=evidence?.banks.find(b=>b.topic===t.slug),saved=evidence?.pages.find(p=>p.url===url);
  const fresh=current?.url===url&&current.state==='ready'&&current.quizQuestions?{...current.quizQuestions,url,checkedAt:current.checkedAt}:null;
  const p=fresh&&(!saved||Date.parse(fresh.checkedAt)>Date.parse(saved.checkedAt))?fresh:saved;
  const complete=providers.every(name=>b?.providers.some(p=>p.name===name&&p.complete));
+ const verification=targetedVerification(evidence,p,t,b,now);
+ if(verification)return {url,topic:t.slug,page:p,bank:b||null,complete,...verification,source:'targeted'};
  const dated=v=>stamp(v)&&Date.parse(v)<=now+300000&&now-Date.parse(v)<=2*DAY;
  const recent=!!p&&dated(p.checkedAt)&&complete&&b.providers.every(v=>dated(v.observedAt));
  const rows=p?.state==='ready'?p.questions.map(name=>{
@@ -61,17 +92,21 @@ export function compareQuiz(snapshot,url,current=null,now=Date.now()){
 const labels={matched:'Observed in saved banks',reviewed_equivalent:'Reviewed equivalent',review_needed:'No match — review wording and banks',unknown:'Unknown — evidence incomplete or dated'};
 export function quizSchemaView(snapshot,url,current=null,now=Date.now()){
  const c=compareQuiz(snapshot,url,current,now);if(!c)return {html:'',exported:[]};
- const rows=c.rows.map(r=>'<tr><th scope="row">'+esc(r.name)+'</th><td>'+esc(labels[r.state])+'</td><td>'+esc(r.matchedPrompt||'Not established')+'</td><td>'+esc(r.providers.join(', ')||'Not established')+'</td></tr>').join('');
+ const label=r=>(c.source==='targeted'&&!c.recent?'Dated · ':'')+labels[r.state];
+ const rows=c.rows.map(r=>'<tr><th scope="row">'+esc(r.name)+'</th><td>'+esc(label(r))+'</td><td>'+esc(r.matchedPrompt||'Not established')+'</td><td>'+esc(r.providerDetail||r.providers.join(', ')||'Not established')+'</td></tr>').join('');
  const note='No literal match is a review candidate, not a proven semantic error. The reviewed equivalences are reused only while their exact counterpart remains in a bank. Eligibility in a bank does not guarantee selection in a random 20-question run. Missing hasPart is not an error; acceptedAnswer is not required by this check. No indexing, rich result, click or game is established.';
- const times=(c.bank?.providers||[]).map(p=>p.name+': '+when(p.observedAt)+(p.complete?' · complete prompt inventory':' · incomplete')).join('; ');
- const html='<section class="growth-quiz-schema" aria-label="Dynamic quiz question evidence"><h4>Dynamic quiz questions</h4><p>Public declarations: '+esc(c.page?when(c.page.checkedAt):'Not observed')+'. Banks: '+esc(times||'Not imported')+'.</p><p>'+(c.unknown?'No current complete comparison is available. Preserve the dated observations; unknown is not a failure.':c.reviewNeeded?esc(c.reviewNeeded)+' declarations need a wording and bank review.':'All '+c.rows.length+' declared questions have a saved match or reviewed equivalent.')+'</p>'+(rows?'<div class="growth-table" role="region" tabindex="0" aria-label="Declared questions and bank evidence"><table><thead><tr><th scope="col">Declaration</th><th scope="col">Comparison</th><th scope="col">Observed counterpart</th><th scope="col">Provider</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p>No usable Question list was established. No question or answer is inferred from the initial game placeholder.</p>')+'<p class="growth-small">'+esc(note)+'</p></section>';
- const exported=c.rows.map(r=>{const row=Array(13).fill('');row[0]='Dynamic quiz question';row[1]=r.name;row[2]=labels[r.state]+'; counterpart: '+(r.matchedPrompt||'unknown')+'; providers: '+r.providers.join(', ')+'; stable review key: '+r.reviewKey;row[9]=c.page.checkedAt;row[10]=r.review||'';row[11]=url;return row;});
- const row=Array(13).fill('');row[0]='Dynamic quiz evidence dates';row[1]=c.topic;row[2]=(times||'Banks not imported')+'; '+note;row[9]=c.page?.checkedAt||'';row[11]=url;exported.push(row);
+ const times=c.source==='targeted'?providers.map(name=>name+': '+when(c.times[name])).join('; '):
+  (c.bank?.providers||[]).map(p=>p.name+': '+when(p.observedAt)+(p.complete?' · complete prompt inventory':' · incomplete')).join('; ');
+ const sourceLabel=c.source==='targeted'?'Targeted check of the listed declarations':'Banks';
+ const summary=c.archived?'The current page declares no Question entries. These '+c.rows.length+' earlier declarations were observed '+when(c.declarationsAt)+'.':c.source==='targeted'&&!c.recent?'Dated verification of these declarations.':c.unknown?'No current complete comparison is available. Preserve the dated observations; unknown is not a failure.':c.reviewNeeded?c.reviewNeeded+' declarations need a wording and bank review.':'All '+c.rows.length+' declared questions have a saved match or reviewed equivalent.';
+ const html='<section class="growth-quiz-schema" aria-label="Dynamic quiz question evidence"><h4>Dynamic quiz questions</h4><p>Public declarations: '+esc(c.page?when(c.page.checkedAt):'Not observed')+'. '+sourceLabel+': '+esc(times||'Not imported')+'.</p><p>'+esc(summary)+'</p>'+(rows?'<div class="growth-table" role="region" tabindex="0" aria-label="Declared questions and bank evidence"><table><thead><tr><th scope="col">Declaration</th><th scope="col">Comparison</th><th scope="col">Observed counterpart</th><th scope="col">Provider</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p>No usable Question list was established. No question or answer is inferred from the initial game placeholder.</p>')+'<p class="growth-small">'+esc(note)+'</p></section>';
+ const exported=c.rows.map(r=>{const row=Array(13).fill('');row[0]='Dynamic quiz question';row[1]=r.name;row[2]=label(r)+'; counterpart: '+(r.matchedPrompt||'unknown')+'; providers: '+(r.providerDetail||r.providers.join(', '))+'; stable review key: '+r.reviewKey;row[9]=c.source==='targeted'?c.times.anytime:c.page.checkedAt;row[10]=r.review||'';row[11]=url;return row;});
+ const row=Array(13).fill('');row[0]='Dynamic quiz evidence dates';row[1]=c.topic;row[2]=sourceLabel+': '+(times||'Banks not imported')+'; '+note;row[9]=c.page?.checkedAt||'';row[11]=url;exported.push(row);
  return {html,exported,comparison:c};
 }
 
 export function quizSchemaOverview(snapshot,now=Date.now()){
  const comparisons=scope.topics.map(t=>compareQuiz(snapshot,origin+t.path,null,now));
- const html='<h3 tabindex="-1">Dynamic quiz schema</h3><p>Saved declarations compared with complete published prompt inventories and the local fallback. Opening this view makes no requests. Existing reviewed wording is reused; no Growth decisions are created or reopened.</p><div class="growth-table" role="region" tabindex="0" aria-label="Six dynamic quizzes"><table><thead><tr><th scope="col">Quiz</th><th scope="col">Comparison</th><th scope="col">Evidence</th></tr></thead><tbody>'+comparisons.map(c=>'<tr><th scope="row">'+esc(c.topic)+'</th><td>'+esc(c.unknown?'Unknown or dated evidence':c.reviewNeeded?c.reviewNeeded+' need review':c.rows.length+' matched or reviewed')+'</td><td><button class="admin-button" type="button" data-seo-review-url="'+esc(c.url)+'">Review evidence</button></td></tr>').join('')+'</tbody></table></div>';
+ const html='<h3 tabindex="-1">Dynamic quiz schema</h3><p>Saved declarations compared with published banks and the local fallback. Targeted checks cover the listed questions. Open a quiz for the observations and dates.</p><div class="growth-table" role="region" tabindex="0" aria-label="Six dynamic quizzes"><table><thead><tr><th scope="col">Quiz</th><th scope="col">Comparison</th><th scope="col">Evidence</th></tr></thead><tbody>'+comparisons.map(c=>'<tr><th scope="row">'+esc(c.topic)+'</th><td>'+esc(c.archived?'No current declarations · '+c.rows.length+' previously checked':c.unknown?(c.source==='targeted'?'Dated verification':'Unknown or dated evidence'):c.reviewNeeded?c.reviewNeeded+' need review':c.rows.length+' matched or reviewed')+'</td><td><button class="admin-button" type="button" data-seo-review-url="'+esc(c.url)+'">Review evidence</button></td></tr>').join('')+'</tbody></table></div>';
  return {html,exported:[['Section','Item','Detail','Clicks','Impressions','Historical average position','Period start','Period end','Timezone','Observed at','Source URL','Target URL','Rel'],...comparisons.flatMap(c=>quizSchemaView(snapshot,c.url,null,now).exported)],status:'Six quizzes · '+comparisons.filter(c=>!c.unknown&&c.reviewNeeded).length+' with review candidates · '+comparisons.filter(c=>c.unknown).length+' unknown or dated'};
 }

@@ -371,6 +371,16 @@ evidence. Failed or older inputs cannot retimestamp a successful observation.
 Opening Growth never refreshes the database. No new OAuth, service key, endpoint,
 migration, permission or schedule is required.
 
+The same evidence file also accepts `verifications` for targeted, saved checks
+of particular declarations. Each entry binds the ordered question names to
+their hash and exact URL, records the separate cloud and local observation times,
+and carries the private receipt hash and wording scope version. Each question
+has one outcome for Play Anytime, fixed packs and the local fallback, in that
+order. Record it using the same `--input` and exact previous hash. Targeted
+verification leaves full inventories and their dates intact. The quiz view and
+CSV show the targeted results when the declarations match, label them dated
+after 48 hours, and defer to newer complete provider evidence.
+
 Ten dated wording equivalences from PR410 are retained in
 `lib/quiz-schema-scope.json`. An equivalence is used only while its exact bank
 counterpart remains. New unmatched wording requests review, not an automatic
