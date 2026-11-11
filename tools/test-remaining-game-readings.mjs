@@ -23,7 +23,13 @@ for(const file of readingPages){
  assert.equal(doc.querySelectorAll('link[href*="game-entry.css"]').length,1,file);
  assert.ok(section.querySelectorAll('.game-reading-card').length<=2,file);
  assert.ok(section.querySelectorAll('.game-reading-extra a').length<=1,file);
- assert.ok(section.querySelectorAll('a').length<=3,file);
+ const topicLinks=[...section.querySelectorAll('.game-reading-paths a')];
+ assert.equal(topicLinks.length,1,file+' links to its topic directory');
+ assert.match(topicLinks[0].getAttribute('href'),/^\/learn\/topics\/#[-a-z0-9]+$/,file);
+ const readingLinks=[...section.querySelectorAll('a')].filter(a=>!topicLinks.includes(a));
+ assert.ok(readingLinks.length<=3,file+' keeps the reading list compact');
+ const destinations=[...section.querySelectorAll('a')].map(a=>a.getAttribute('href'));
+ assert.equal(new Set(destinations).size,destinations.length,file+' has no duplicate destinations');
  if(file==='games/brainiword/index.html')assert.match(doc.querySelector('.play-guide').textContent,/PLANT.*TRAIN/);
  d.window.close();
 }
