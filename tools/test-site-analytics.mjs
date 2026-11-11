@@ -33,6 +33,32 @@ w=page('https://brainilabgames.com/'+socialQuery.replace('flags_video','private@
 config=w.dataLayer.find(x=>x[0]==='config')[2];assert.equal(config.campaign_content,undefined);assert.ok(!JSON.stringify(w.dataLayer).includes('private@example.com'));w.close();
 console.log('GA4 consent, sanitized events, result deduplication, withdrawal, independent choices and allowlisted social attribution passed.');
 
+const trialPath='/general-knowledge/general-knowledge-quiz/';
+const trialName='general_knowledge_trial_20261111';
+const trialLink=(source,medium,content)=>`https://brainilabgames.com${trialPath}?utm_source=${source}&utm_medium=${medium}&utm_campaign=${trialName}&utm_content=${content}`;
+for(const [source,medium,content] of [['youtube','social','look_familiar'],['dledex.com','referral','listing']]){
+  const trial=page(trialLink(source,medium,content));
+  assert.equal(trial.dataLayer,undefined);
+  trial.BrainiSiteAnalytics.setConsent(true);
+  const config=trial.dataLayer.find(x=>x[0]==='config')[2];
+  assert.equal(config.campaign_name,trialName);
+  assert.equal(config.campaign_source,source);
+  assert.equal(config.campaign_medium,medium);
+  assert.equal(config.campaign_content,content);
+  assert.equal(config.page_location,'https://brainilabgames.com'+trialPath);
+  trial.BrainiSiteAnalytics.gameStart('generalknowledge',{});
+  const start=trial.dataLayer.find(x=>x[0]==='event'&&x[1]==='game_start')[2];
+  assert.equal(start.growth_entry_channel,medium);
+  assert.equal(start.page_location,config.page_location);
+  trial.close();
+}
+for(const url of [trialLink('youtube','referral','look_familiar'),trialLink('dledex.com','referral','arbitrary'),trialLink('dledex.com','referral','listing')+'&utm_source=youtube',trialLink('youtube','social','look_familiar').replace(trialPath,'/games/')]){
+  const trial=page(url,{allowed:true,at:Date.now()});
+  assert.equal(trial.dataLayer.find(x=>x[0]==='config')[2].campaign_name,undefined);
+  trial.close();
+}
+console.log('General Knowledge trial attribution checks passed.');
+
 w=page('https://brainilabgames.com/games/');
 w.dispatchEvent(new w.CustomEvent('brainilab:discovery',{detail:{type:'numbers'}}));assert.equal(w.dataLayer,undefined);
 w.BrainiSiteAnalytics.setConsent(true);
