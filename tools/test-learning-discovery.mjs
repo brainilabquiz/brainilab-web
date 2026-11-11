@@ -34,4 +34,11 @@ for(const file of readingPages){
  assert.equal(outside(html),outside(original),'Game scripts, controls and metadata remain unchanged');
 }
 assert.ok(articleBody(articles[0],articles,paths).includes('/learn/topics/#'+topicAnchor(articles[0].topic)),'Existing article-to-topic route is retained');
+const moon=articles.find(a=>a.slug==='why-the-moon-changes-shape');
+const moonPage=doc(articleBody(moon,articles,paths));
+const groupLink=moonPage.querySelector('.article-next a[href^="/learn/topics/#"]');
+assert.equal(groupLink?.textContent.trim(),'Sky, space and seasons →');
+const group=index.getElementById(groupLink.hash.slice(1));
+assert.ok(group?.querySelector('a[href="/learn/why-the-moon-changes-shape/"]'),'The group link reaches the right reading in the directory');
+assert.equal(doc(articleBody({...moon,slug:'new-unmapped-reading'},articles,paths)).querySelector('.article-next a[href^="/learn/topics/#"]'),null,'An unclassified reading retains its category route');
 console.log('PASS discovery: complete topic inventory, real fragments, ready course membership, withdrawal/draft guards, safe labels, idempotence and preserved game/lesson content.');
