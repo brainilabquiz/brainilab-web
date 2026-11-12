@@ -466,3 +466,11 @@ body.braini-visual .geo-choice .geo-levels a:hover{background:var(--navy);border
   body.braini-visual :is(.topic-level,.geo-choice),body.braini-visual.topic-page .card{transition:none}
   body.braini-visual :is(.topic-level,.geo-choice):hover,body.braini-visual.topic-page .card:hover{transform:none}
 }
+
+/* Footer: the five-colour brand stripe used on game heroes closes every page,
+   and footer links get a clear hover colour. */
+body.braini-visual .footer{position:relative;border-top:0}
+body.braini-visual .footer::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,var(--navy) 80%)}
+body.braini-visual .footer-grid{border-top:0}
+body.braini-visual .footer-links a{color:var(--navy);font-weight:700}
+body.braini-visual .footer-links a:hover{color:#484194}
