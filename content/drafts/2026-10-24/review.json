@@ -1,0 +1,210 @@
+{
+  "date": "2026-10-24",
+  "state": "DRAFT_ONLY_NOT_CMS_SAVED_NOT_PUBLISHED",
+  "repositoryBase": "0525c89d5b911709cab48371a4f2b9793b023214",
+  "instructionsRead": [
+    "PROJECT_CONTEXT.md",
+    "EDITORIAL_WORKFLOW.md",
+    "content/AGENTS.md",
+    "content/PUBLIC_COPY.md",
+    "ACADEMY_CURRICULUM.md"
+  ],
+  "scope": "One new article using first-party aggregates, one ten-reading Learning hub, one four-lesson Geography Academy path with proposed quizzes on existing articles. No runtime, main branch or database writes.",
+  "inventory": {
+    "source": "Fresh read-only live publication and learning-entity query on 24 October 2026",
+    "publishedArticles": 167,
+    "publishedPaths": 8,
+    "classification": "Academy = referenced by a published path; hubs are still included in regular counts.",
+    "counts": {
+      "Everyday inventions": {
+        "regular": 16,
+        "academy": 0
+      },
+      "Words & puzzles": {
+        "regular": 8,
+        "academy": 8
+      },
+      "Numbers & logic": {
+        "regular": 4,
+        "academy": 30
+      },
+      "Learning": {
+        "regular": 16,
+        "academy": 0
+      },
+      "History": {
+        "regular": 12,
+        "academy": 4
+      },
+      "Geography": {
+        "regular": 15,
+        "academy": 1
+      },
+      "Science & nature": {
+        "regular": 10,
+        "academy": 9
+      },
+      "Sports": {
+        "regular": 16,
+        "academy": 0
+      },
+      "Curiosity": {
+        "regular": 15,
+        "academy": 0
+      },
+      "Getting started": {
+        "regular": 3,
+        "academy": 0
+      }
+    }
+  },
+  "demand": {
+    "date": "2026-10-24",
+    "language": "English",
+    "market": "Not established for the new targets; no country-filtered first-party query export available in this run.",
+    "candidateQueries": [
+      "can you average percentages",
+      "how to study and remember",
+      "coastal landforms"
+    ],
+    "evidence": "Search results checked for intent on 24 October. Search results alone do not establish demand. Prior Learning research dated 16–17 October supports related individual articles, not these exact new targets.",
+    "volumes": null,
+    "difficulty": null,
+    "rankings": null,
+    "decision": "Hold all new targets in draft until relevant query-level Search Console evidence or dated pertinent external estimates are recorded. Broad/relative prior Trends interest is not treated as strong exact demand."
+  },
+  "novelty": {
+    "article": "New pooling-versus-equal-weight question using the original published aggregate counts. The existing first-200 article compares difficulty and explains filtering; this draft does not rank abilities. Existing mean-vs-median and percentage-change lessons have different questions. Full new draft compared with live sections of these closest matches.",
+    "hub": "New guided route across ten existing Learning articles, grouped by reader question. Do not publish a duplicate of an existing or concurrent Learning hub; recheck live catalogue and cluster plan first.",
+    "academy": "Reuses four existing article slugs and their covers rather than copying their definitions to new URLs. None currently has a quiz in the fresh live snapshot. New path is Geography; no default Numbers & logic expansion."
+  },
+  "primarySources": [
+    {
+      "url": "https://github.com/brainilabquiz/brainilab-web/blob/main/assets/data/first-200-games-2026-10-23.json",
+      "access": "Complete repository file read through GitHub connector; public website JSON fetch failed, so live public accessibility is not verified.",
+      "claims": "283/308, 199/240, 216/320 across 44 eligible rounds; historical snapshot and exclusions."
+    },
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data",
+      "access": "Opened via web; mean and frequency-based calculation at lines 22–37 checked.",
+      "claims": "Arithmetic mean and weighting by observation frequency."
+    },
+    {
+      "url": "https://psychology.ucsd.edu/undergraduate-program/undergraduate-resources/academic-writing-resources/effective-studying/index.html",
+      "access": "Opened via web; study guidance read.",
+      "claims": "Distinguishes timing (spaced practice) from activity (retrieval practice). Not a source for universal technique benefits."
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/archipelago.html",
+      "access": "Opened via web, definition and formation paragraphs checked.",
+      "claims": "Group or chain of islands; lake/river/ocean occurrence; origins vary."
+    },
+    {
+      "url": "https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm",
+      "access": "Opened via web, valley and fjord paragraphs checked; dated 9 February 2018.",
+      "claims": "Glacial shaping and seawater-filled floors below sea level."
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/facts/estuary.html",
+      "access": "Opened via web, body checked.",
+      "claims": "Brackish mixing and Great Lakes freshwater exceptions."
+    },
+    {
+      "url": "https://oceanservice.noaa.gov/education/tutorial_corals/coral04_reefs.html",
+      "access": "Opened via web, reef types and atoll paragraph checked.",
+      "claims": "Reef ring, lagoon, islands and gaps."
+    }
+  ],
+  "calculations": {
+    "example": {
+      "correct": 10,
+      "total": 12,
+      "percent": 83.3,
+      "equalQuizWeightPercent": 70
+    },
+    "historical": {
+      "correct": 698,
+      "counted": 868,
+      "rounds": 44,
+      "pooledRounded": 80.4,
+      "meanOfThreeDisplayedRatesRounded": 80.8
+    },
+    "limits": "Not all 200 games, not all 90 eligible rounds, not unique players, not a matched test. Historical snapshot, not current platform performance."
+  },
+  "checks": {
+    "jsonParsed": true,
+    "draftStatusOnly": true,
+    "authorId": true,
+    "existingArticleLinksResolveInLiveInventory": true,
+    "hubSupportingArticles": 10,
+    "quizChecks": [
+      {
+        "slug": "what-is-an-archipelago",
+        "questions": 3,
+        "allCorrect": 3,
+        "allWrong": 0
+      },
+      {
+        "slug": "what-is-a-fjord",
+        "questions": 3,
+        "allCorrect": 3,
+        "allWrong": 0
+      },
+      {
+        "slug": "what-is-an-estuary",
+        "questions": 3,
+        "allCorrect": 3,
+        "allWrong": 0
+      },
+      {
+        "slug": "what-is-an-atoll",
+        "questions": 3,
+        "allCorrect": 3,
+        "allWrong": 0
+      }
+    ],
+    "existingLessonBodiesMetadataCoversAndDatesUnchanged": true,
+    "quizVersion": "New version IDs only on existing articles without a quiz; current versions never replaced.",
+    "cmsRendererValidators": "Not run: local clone blocked by DNS/network access. These files are outside the active articles/paths directories and are intentionally not claimed to pass publication validation.",
+    "mobileDesktop": "Not inspected; no rendered or live publication produced."
+  },
+  "publicationBlockers": [
+    "Relevant demand evidence for each new target.",
+    "Original new article and hub covers with 960/480/240 WebP variants and visual inspection. Existing four lesson covers preserved.",
+    "Re-open original research behind the ten Learning summaries before release; this run read their published BrainiLab bodies and UCSD guidance, not all original papers.",
+    "Register the proposed coherent ten-member hub block, recheck collisions with the existing provisional remembering-what-you-learn block, and prepare reciprocal links without discarding existing related links.",
+    "Refresh live revisions and backup immediately before any CMS save; current lesson revision observations are not future write authorisation.",
+    "Run repository editorial/course/build validators and real renderer quiz tests, including all-correct and all-wrong; inspect mobile and desktop.",
+    "Deploy and verify new assets first; publish only through guarded CMS flow with history. Check article/course links, canonical, Article data, RSS and sitemap afterwards."
+  ],
+  "expectedLessonRevisions": [
+    {
+      "slug": "what-is-an-archipelago",
+      "revision": 1
+    },
+    {
+      "slug": "what-is-a-fjord",
+      "revision": 1
+    },
+    {
+      "slug": "what-is-an-estuary",
+      "revision": 1
+    },
+    {
+      "slug": "what-is-an-atoll",
+      "revision": 1
+    }
+  ],
+  "coverBriefs": [
+    {
+      "slug": "can-you-average-quiz-percentages",
+      "prompt": "Original photorealistic still life on a warm wooden desk: one small cream tray with two wooden counters, another larger tray with ten wooden counters, some green and some plain, and an open notebook with no legible writing. Natural window light, restrained purple accent, generous empty space, landscape 3:2. Conceptual illustration, no charts, no generated numerical labels. Do not treat counter colours as documentary results.",
+      "credit": "AI-generated realistic illustration created for BrainiLab; a conceptual arrangement, not a photograph of game data."
+    },
+    {
+      "slug": "how-to-study-and-remember-guide",
+      "prompt": "Original photorealistic study desk with a small open notebook, three blank index cards, a pencil and a simple tomato-shaped kitchen timer. Warm daylight, subtle purple cover on one book, uncluttered central composition that survives a wide crop and 240px thumbnail, landscape 3:2. No text, no logos, no invented research materials.",
+      "credit": "AI-generated realistic illustration created for BrainiLab; an imagined study desk, not a research photograph."
+    }
+  ]
+}
