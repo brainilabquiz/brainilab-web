@@ -23,6 +23,7 @@
 .topic-more{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
 .topic-reading{display:grid;gap:12px;align-content:start}
 .topic-reading a{display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.topic-reading a.topic-reading-index{grid-template-columns:1fr;background:#f3f1f9;border-color:#e2def0}
 .topic-reading img{width:80px;height:64px;object-fit:cover;border-radius:8px}
 .topic-reading strong{font-size:17px;line-height:1.45}
 .topic-faq details{border-top:1px solid var(--line)}
