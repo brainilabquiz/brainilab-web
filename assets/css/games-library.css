@@ -103,3 +103,106 @@
   body.games-library-page.braini-visual .games-choice-hero .games-choice-panel{padding:16px}
   .games-library-page .game-finder{grid-template-columns:minmax(0,1fr);gap:10px;padding-bottom:12px}
 }
+
+/* Card refresh: each game shows its colour in a tinted header with a larger illustration.
+   Play stays the main action; the reading link and level choice read as secondary.
+   Visual only: markup, links, filters and structured data are unchanged. */
+body.games-library-page.braini-visual .anytime-grid{gap:18px}
+body.games-library-page.braini-visual .anytime-game-card{
+  padding:0 20px 18px;
+  border:1px solid #e7e4f0;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 1px 2px #2d296e0a,0 6px 20px #2d296e08;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+body.games-library-page.braini-visual .anytime-game-card:hover{
+  transform:translateY(-3px);
+  border-color:color-mix(in srgb,var(--game-accent) 45%,#e7e4f0);
+  box-shadow:0 2px 4px #2d296e0d,0 16px 32px #2d296e17;
+}
+body.games-library-page.braini-visual .anytime-game-card:focus-within{border-color:color-mix(in srgb,var(--game-accent) 55%,#e7e4f0)}
+body.games-library-page.braini-visual .anytime-game-head{
+  flex:1 0 auto;
+  align-items:center;
+  gap:16px;
+  margin:0 -20px 16px;
+  padding:20px;
+  border-radius:19px 19px 0 0;
+  background:color-mix(in srgb,var(--game-accent) 11%,white);
+  border-bottom:1px solid color-mix(in srgb,var(--game-accent) 24%,white);
+}
+body.games-library-page.braini-visual .anytime-game-card.accent-yellow .anytime-game-head{background:color-mix(in srgb,var(--game-accent) 16%,white)}
+body.games-library-page.braini-visual .anytime-game-card .anytime-category-icon{
+  flex:0 0 76px;
+  width:76px;
+  height:76px;
+  border:1px solid color-mix(in srgb,var(--game-accent) 32%,white);
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 6px 14px color-mix(in srgb,var(--game-accent) 20%,transparent);
+}
+body.games-library-page.braini-visual .anytime-category-icon img{width:60px;height:60px}
+body.games-library-page.braini-visual .anytime-game-head h2{font-size:22px!important;line-height:1.15}
+body.games-library-page.braini-visual .anytime-game-head p{margin-top:6px;color:#4f4b66;font-size:14px!important;line-height:1.55}
+/* Format facts ("20 rounds · one answer each") become a quiet chip. */
+body.games-library-page.braini-visual .anytime-game-card>.anytime-difficulty-label,
+body.games-library-page.braini-visual .game-card-context>.anytime-difficulty-label{
+  display:inline-flex;
+  align-self:flex-start;
+  align-items:center;
+  margin:0 0 14px;
+  padding:5px 12px;
+  border-radius:999px;
+  background:#f3f1f9;
+  color:#46425f;
+  font-size:12px;
+  font-weight:700;
+}
+body.games-library-page.braini-visual .game-card-context>.anytime-difficulty-label{margin:0 0 4px;border-radius:12px}
+body.games-library-page.braini-visual :is(.game-card-footer,.game-difficulty-footer){padding-top:14px;border-top:1px solid #efedf5}
+body.games-library-page.braini-visual .game-card-footer{align-items:flex-end}
+body.games-library-page.braini-visual .game-difficulty-footer>.anytime-difficulty-label{color:#5a5672}
+body.games-library-page.braini-visual a.catalogue-reading{color:#5a5672;font-size:13px;text-decoration-color:#d9d5e6}
+body.games-library-page.braini-visual a.catalogue-reading:hover{color:var(--navy);text-decoration-color:currentColor}
+body.games-library-page.braini-visual .difficulty-actions.single-action a{
+  min-width:118px;
+  font-weight:700;
+  box-shadow:0 3px 0 #1b1850;
+  transition:background .15s,transform .1s,box-shadow .1s;
+}
+body.games-library-page.braini-visual .difficulty-actions.single-action a:active{transform:translateY(2px);box-shadow:0 1px 0 #1b1850}
+/* Easy / Medium / Hard read as one segmented choice. */
+body.games-library-page.braini-visual .game-difficulty-footer .difficulty-actions{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:4px;
+  padding:4px;
+  border-radius:14px;
+  background:#f3f1f9;
+}
+body.games-library-page.braini-visual .difficulty-actions:not(.single-action) a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #e7e4f0;
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 1px 1px #2d296e0d;
+  font-weight:700;
+}
+body.games-library-page.braini-visual .difficulty-actions:not(.single-action) a:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+@media(max-width:600px){
+  body.games-library-page.braini-visual .anytime-grid{gap:14px}
+  body.games-library-page.braini-visual .anytime-game-card{padding:0 16px 16px;border-radius:18px}
+  body.games-library-page.braini-visual .anytime-game-head{gap:14px;margin:0 -16px 14px;padding:16px;border-radius:17px 17px 0 0}
+  body.games-library-page.braini-visual .anytime-game-card .anytime-category-icon{flex-basis:64px;width:64px;height:64px;border-radius:17px}
+  body.games-library-page.braini-visual .anytime-category-icon img{width:50px;height:50px}
+  body.games-library-page.braini-visual .anytime-game-head h2{font-size:20px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  body.games-library-page.braini-visual .anytime-game-card,
+  body.games-library-page.braini-visual .difficulty-actions.single-action a{transition:none}
+  body.games-library-page.braini-visual .anytime-game-card:hover,
+  body.games-library-page.braini-visual .difficulty-actions.single-action a:active{transform:none}
+}
