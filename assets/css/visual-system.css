@@ -654,3 +654,26 @@ body.profile-page.braini-visual .profile-quick-links a:nth-child(3){background:#
   body.braini-visual :is(.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-block:24px 30px!important}
   body.profile-page.braini-visual .profile-v27-head{padding:24px 0 22px}
 }
+
+/* ===== Game pages (Nov 2026): the play area sits on a full-width navy band, like Home ===== */
+body.braini-visual :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page){position:relative;isolation:isolate;padding-top:28px!important;padding-bottom:44px!important}
+body.braini-visual :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page)::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .brainiword-page::before{bottom:auto;height:320px}
+body.braini-visual :is(.labgame-page,.connections-page,.daily-mechanic-page)::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+/* The game panel is lifted on the band (lighter navy, soft edge, deep shadow), like the home Daily panel. */
+body.braini-visual :is(.labgame-shell,.connections-shell,.daily-mechanic-shell){background-color:#3a3591!important;border:1px solid #ffffff2e!important;box-shadow:0 30px 60px #0b083066!important}
+body.braini-visual .brainiword-shell{box-shadow:0 30px 60px #0b08304d}
+/* Fix: the "not in today's Daily" message was near-black text on the navy panel. */
+body.braini-visual .daily-mechanic-shell .daily-load-error :is(h2,p){color:#fff}
+body.braini-visual .daily-mechanic-shell .daily-load-error p{color:#d9d6f2}
+/* Cryptic: its heading becomes the same navy band. */
+body.braini-visual .cryptic-heading{position:relative;isolation:isolate;padding-block:28px 34px;margin-bottom:24px;color:#fff}
+body.braini-visual .cryptic-heading::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .cryptic-heading::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual .cryptic-heading h1{color:#fff!important;font-weight:900}
+body.braini-visual .cryptic-heading :is(p,span,small,time){color:#d9d6f2!important}
+body.braini-visual .cryptic-heading img{box-sizing:border-box;padding:8px;border-radius:20px;background:#fff;box-shadow:0 10px 24px #0b08304d}
+@media(max-width:600px){
+  body.braini-visual :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page){padding-top:18px!important;padding-bottom:32px!important}
+  body.braini-visual .brainiword-page::before{height:240px}
+}
