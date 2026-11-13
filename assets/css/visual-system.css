@@ -504,3 +504,86 @@ body.home-page.braini-visual .seo-copy .inline-links a[href*="higher-lower"]::be
 /* Home: today's game is the hero of the Daily panel, shown large on a white tile. */
 body.home-page.braini-visual .challenge-wrap .home-daily-icon{box-sizing:border-box;width:112px;height:112px;margin:0 auto 14px;padding:14px;border-radius:28px;background:#fff;object-fit:contain;box-shadow:0 0 0 6px #ffffff1f,0 14px 30px #0b08304d}
 @media(max-width:600px){body.home-page.braini-visual .challenge-wrap .home-daily-icon{width:88px;height:88px;padding:11px;border-radius:22px}}
+
+/* ===== Home redesign (Nov 2026): full-width navy hero, vivid game cards, avatar band ===== */
+body.home-page.braini-visual{overflow-x:clip}
+body.home-page.braini-visual .home-hero{position:relative;isolation:isolate;padding-top:56px;padding-bottom:72px}
+body.home-page.braini-visual .home-hero::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.home-page.braini-visual .home-hero::after{content:"";position:absolute;bottom:0;left:50%;width:100vw;height:8px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.home-page.braini-visual .home-intro h1{color:#fff;font-weight:900}
+body.home-page.braini-visual .home-intro h1 span{color:var(--yellow,#ffd813)}
+body.home-page.braini-visual .home-intro>p{color:#d9d6f2}
+body.home-page.braini-visual .home-social-links a{color:#cfcbef}
+body.home-page.braini-visual .home-social-links a:hover{color:#fff}
+body.home-page.braini-visual .home-hero .challenge-wrap{position:relative}
+body.home-page.braini-visual .home-hero .challenge{background:#3a3591;border:1px solid #ffffff2e;box-shadow:0 30px 60px #0b083066}
+body.home-page.braini-visual .home-hero .challenge-wrap::before,
+body.home-page.braini-visual .home-hero .challenge-wrap::after{content:"";position:absolute;z-index:-1;width:104px;height:104px;border-radius:28px;background:#fff center/72px 72px no-repeat;box-shadow:0 18px 40px #0b083066}
+body.home-page.braini-visual .home-hero .challenge-wrap::before{top:-30px;left:-34px;transform:rotate(-10deg);background-image:url("/assets/illustrations/games/math-rush.svg")}
+body.home-page.braini-visual .home-hero .challenge-wrap::after{right:-30px;bottom:-26px;transform:rotate(9deg);background-image:url("/assets/illustrations/games/world-flags.svg")}
+body.home-page.braini-visual .home-hero:is(:has(.answers .answer),:has(.home-daily-state)) .challenge-wrap::before,
+body.home-page.braini-visual .home-hero:is(:has(.answers .answer),:has(.home-daily-state)) .challenge-wrap::after{display:none}
+/* Find a game: saturated colour cards with the illustration on a white tile. */
+body.home-page.braini-visual .home-featured .section-heading h2{font-size:clamp(28px,3.4vw,38px);font-weight:900}
+body.home-page.braini-visual .home-game-card{--card:#2f9d27;position:relative;overflow:hidden;border:0;border-radius:26px;background:var(--card);color:#fff;min-height:250px;box-shadow:0 14px 30px #2d296e26}
+body.home-page.braini-visual .home-game-card::after{content:"";position:absolute;right:-42px;top:-42px;width:160px;height:160px;border-radius:50%;background:#ffffff1f;pointer-events:none}
+body.home-page.braini-visual .home-game-card:nth-child(8n+1){--card:#1f86a8}
+body.home-page.braini-visual .home-game-card:nth-child(8n+2){--card:#5b55c8}
+body.home-page.braini-visual .home-game-card:nth-child(8n+3){--card:#e6680c}
+body.home-page.braini-visual .home-game-card:nth-child(8n+4){--card:#2f9d27}
+body.home-page.braini-visual .home-game-card:nth-child(8n+5){--card:#d8352f}
+body.home-page.braini-visual .home-game-card:nth-child(8n+6){--card:#ffd23f;color:var(--navy,#2d296e)}
+body.home-page.braini-visual .home-game-card:nth-child(8n+7){--card:#b8457a}
+body.home-page.braini-visual .home-game-card:nth-child(8n+8){--card:#2d296e}
+body.home-page.braini-visual .home-game-card img{box-sizing:border-box;width:92px;height:92px;padding:12px;border-radius:24px;background:#fff;box-shadow:0 10px 20px #00000029}
+body.home-page.braini-visual .home-game-card h3{color:inherit;font-weight:900;margin:22px 0 6px}
+body.home-page.braini-visual .home-game-card p{color:inherit;opacity:.92;margin:0 0 18px}
+body.home-page.braini-visual .home-game-card>span{align-self:flex-start;padding:9px 15px;border-radius:12px;background:#fff;color:var(--navy,#2d296e)}
+body.home-page.braini-visual .home-game-card:hover{transform:translateY(-4px);box-shadow:0 20px 36px #2d296e33}
+/* Avatar band: a warm full-width strip that shows what XP unlocks. */
+body.home-page.braini-visual .home-avatar-band{position:relative;isolation:isolate;margin-top:56px;padding:56px 0}
+body.home-page.braini-visual .home-avatar-band::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 50%;width:100vw;transform:translateX(-50%);background:linear-gradient(180deg,#fff3c4,#ffe88a)}
+body.home-page.braini-visual .home-avatar-band .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px;align-items:center}
+body.home-page.braini-visual .home-avatar-copy h2{margin:0 0 12px;color:var(--navy,#2d296e);font-size:clamp(30px,3.6vw,42px);line-height:1.08;font-weight:900}
+body.home-page.braini-visual .home-avatar-copy p{margin:0 0 24px;color:#5a4a12;font-size:17px;line-height:1.6}
+body.home-page.braini-visual .home-avatar-cta{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:14px 22px;border-radius:16px;background:var(--navy,#2d296e);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #17143f}
+body.home-page.braini-visual .home-avatar-cta:hover{background:#484194}
+body.home-page.braini-visual .home-avatar-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+body.home-page.braini-visual .home-avatar-look{margin:0;padding:14px 14px 12px;border-radius:26px;background:#fff;text-align:center;box-shadow:0 14px 28px #7a5a002e}
+body.home-page.braini-visual .home-avatar-look svg{display:block;width:100%;height:auto;border-radius:50%}
+body.home-page.braini-visual .home-avatar-look strong{display:block;margin-top:8px;color:var(--navy,#2d296e);font-size:14px}
+body.home-page.braini-visual .home-avatar-look span{font-size:12px;font-weight:700;color:#6f5c1d}
+@media(max-width:950px){
+  body.home-page.braini-visual .home-hero .challenge-wrap::before,body.home-page.braini-visual .home-hero .challenge-wrap::after{display:none}
+  body.home-page.braini-visual .home-avatar-band .wrap{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  body.home-page.braini-visual .home-hero{padding-top:28px;padding-bottom:40px}
+  body.home-page.braini-visual .home-game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  body.home-page.braini-visual .home-game-card{min-height:0;padding:16px;border-radius:20px}
+  body.home-page.braini-visual .home-game-card h3{font-size:18px;margin:14px 0 4px}
+  body.home-page.braini-visual .home-game-card p{font-size:13px;line-height:1.45;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  body.home-page.braini-visual .home-game-card>span{padding:7px 11px;font-size:13px}
+  body.home-page.braini-visual .home-game-card img{width:60px;height:60px;padding:8px;border-radius:16px}
+  body.home-page.braini-visual .home-avatar-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.home-page.braini-visual .home-avatar-band{padding:40px 0}
+}
+@media(prefers-reduced-motion:reduce){body.home-page.braini-visual .home-game-card:hover{transform:none}}
+
+/* Footer on every page: navy, with the logo on a white tile and light links. */
+body.braini-visual .footer{background:var(--navy,#2d296e);color:#d9d6f2}
+body.braini-visual .footer .footer-logo{box-sizing:content-box;padding:8px 12px;border-radius:14px;background:#fff}
+body.braini-visual .footer :is(.footer-copy,.preferred-source p){color:#cfcbef}
+body.braini-visual .footer .footer-links a,body.braini-visual .footer .footer-contact,body.braini-visual .footer .footer-contact a{color:#fff}
+body.braini-visual .footer .footer-links a:hover,body.braini-visual .footer .footer-contact a:hover{color:var(--yellow,#ffd813)}
+
+/* Page headers (Games, Daily, Learn, Rankings, Groups) share the home hero's navy treatment:
+   the section photo fades in from the right and each section keeps its accent stripe. */
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading){--feature-paper:#2d296e;border-color:#2d296e;color:#fff;box-shadow:inset 0 5px 0 var(--feature-accent),0 18px 36px #2d296e2e}
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading) :is(h1,h2){color:#fff}
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading) :is(p,.daily-date,.games-choice-eyebrow,.daily-intro){color:#d9d6f2}
+body.braini-visual .games-choice-hero .games-choice-panel{--feature-accent:#8c84ff}
+body.braini-visual .daily-overview-page .daily-discovery-header{--feature-accent:#ffd813}
+body.braini-visual .learn-catalog .learn-hero{--feature-accent:#5cc24f}
+body.braini-visual .rankings-shell .rankings-title-row{--feature-accent:#ff9a3d}
+body.braini-visual .groups-hero .groups-heading{--feature-accent:#3fc2a6}
