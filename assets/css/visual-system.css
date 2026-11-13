@@ -587,3 +587,70 @@ body.braini-visual .daily-overview-page .daily-discovery-header{--feature-accent
 body.braini-visual .learn-catalog .learn-hero{--feature-accent:#5cc24f}
 body.braini-visual .rankings-shell .rankings-title-row{--feature-accent:#ff9a3d}
 body.braini-visual .groups-hero .groups-heading{--feature-accent:#3fc2a6}
+
+/* ===== Site-wide home style (Nov 2026): every page header is a full-width navy band ===== */
+body.braini-visual{overflow-x:clip}
+body.braini-visual :is(.games-choice-hero,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading,.profile-v27-head){--band-up:0px;position:relative;isolation:isolate;color:#fff}
+body.braini-visual :is(.games-choice-hero,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading,.profile-v27-head)::before{content:"";position:absolute;z-index:-1;top:calc(-1 * var(--band-up));bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual :is(.games-choice-hero,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading,.profile-v27-head)::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual .daily-overview-page .daily-discovery-header{--band-up:36px}
+body.braini-visual .rankings-shell .rankings-title-row{--band-up:40px}
+/* The band replaces the old contained panels: no photo panel, border or rounded box. */
+body.braini-visual :is(.games-choice-hero .games-choice-panel,.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.groups-hero .groups-heading,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+body.braini-visual :is(.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-block:32px 40px!important}
+body.braini-visual .games-choice-hero,body.braini-visual .groups-hero{padding-bottom:16px}
+body.braini-visual :is(.games-choice-panel,.daily-discovery-header,.learn-hero,.rankings-title-row,.groups-heading,.geo-intro,.science-intro,.topic-intro,.game-entry-heading,.profile-v27-title) h1{color:#fff!important;font-weight:900}
+body.braini-visual :is(.geo-intro,.science-intro,.topic-intro,.game-entry-heading,.profile-v27-title) :is(p,span,small,li,.geo-note,.geo-eyebrow){color:#d9d6f2!important}
+body.braini-visual :is(.geo-intro,.science-intro,.topic-intro,.game-entry-heading) a:not([class*=btn]){color:#fff!important;text-decoration-color:#ffffff80}
+body.braini-visual :is(.game-entry-heading,.topic-intro) img{box-sizing:border-box;padding:8px;border-radius:20px;background:#fff;box-shadow:0 10px 24px #0b08304d}
+/* Bolder section headings on the main browsing pages. */
+body.braini-visual:is(.games-library-page,.topic-page,.rankings-page,.groups-page) main h2,body.braini-visual .daily-overview-page h2{font-weight:900;color:var(--navy,#2d296e)}
+
+/* Vivid game cards on Games and Daily: the header is solid colour, like the home cards. */
+body.braini-visual .anytime-game-card{--head:#2d296e;--head-ink:#fff}
+body.braini-visual .anytime-game-card.accent-yellow{--head:#ffd23f;--head-ink:#2d296e}
+body.braini-visual .anytime-game-card.accent-green{--head:#23801c}
+body.braini-visual .anytime-game-card.accent-orange{--head:#c4540a}
+body.braini-visual .anytime-game-card.accent-red{--head:#c62d27}
+body.braini-visual .anytime-game-card .anytime-game-head,
+body.braini-visual .anytime-game-card.accent-yellow .anytime-game-head{background:var(--head);border-bottom:0;color:var(--head-ink)}
+body.braini-visual .anytime-game-card .anytime-game-head :is(h2,h3),body.braini-visual .anytime-game-card .anytime-game-head p{color:var(--head-ink)!important}
+body.braini-visual .anytime-game-card .anytime-game-head p{opacity:.92}
+body.braini-visual .anytime-game-card .anytime-category-icon{border:0;box-shadow:0 10px 20px #00000033}
+body.braini-visual .anytime-game-card:hover{border-color:var(--head)}
+
+/* Vivid topic hub cards: Easy green, Medium yellow, Hard red; white Play pill. */
+body.braini-visual :is(.topic-level,.geo-choice),body.braini-visual.topic-page .card{--hub-fill:#23801c;--hub-ink:#fff;background:var(--hub-fill)!important;border-color:var(--hub-fill)!important;color:var(--hub-ink)}
+body.braini-visual :is(.topic-level-medium,.geo-europe),body.braini-visual.topic-page .card.accent-yellow{--hub-fill:#ffd23f;--hub-ink:#2d296e}
+body.braini-visual .topic-level-hard,body.braini-visual.topic-page .card.accent-red{--hub-fill:#c62d27}
+body.braini-visual .geo-capitals,body.braini-visual.topic-page .card.accent-orange{--hub-fill:#c4540a}
+body.braini-visual :is(.topic-level,.geo-choice) :is(h3,p,small,.geo-eyebrow),body.braini-visual.topic-page .card :is(h3,p,.card-meta span:first-child){color:var(--hub-ink)!important}
+body.braini-visual :is(.topic-level,.geo-choice) p,body.braini-visual.topic-page .card p{opacity:.92}
+body.braini-visual .topic-level .topic-play,body.braini-visual .geo-choice .geo-play{background:#fff!important;color:var(--navy,#2d296e)!important;box-shadow:0 3px 0 #0000002e}
+body.braini-visual .topic-level-label{border-color:#fff}
+body.braini-visual .geo-choice .geo-levels{background:#ffffff33;border-color:#ffffff59}
+body.braini-visual .geo-choice > a:not(.geo-play){color:var(--hub-ink)!important}
+
+/* Home cards: deeper shades so white text stays readable. */
+body.home-page.braini-visual .home-game-card:nth-child(8n+1){--card:#1a7593}
+body.home-page.braini-visual .home-game-card:nth-child(8n+3){--card:#c4540a}
+body.home-page.braini-visual .home-game-card:nth-child(8n+4){--card:#23801c}
+body.home-page.braini-visual .home-game-card:nth-child(8n+5){--card:#c62d27}
+
+/* ===== My BrainiLab ===== */
+body.profile-page.braini-visual .profile-v27-head{padding:36px 0 30px}
+body.profile-page.braini-visual .profile-v27-title{color:#fff}
+body.profile-page.braini-visual .profile-v27-title h1{font-size:clamp(34px,4.4vw,52px);letter-spacing:-.02em}
+body.profile-page.braini-visual .profile-tabs{gap:6px;padding:6px;border-radius:18px;background:#ffffff1a;border:1px solid #ffffff26}
+body.profile-page.braini-visual .profile-tabs button{border:0;border-radius:13px;background:transparent;color:#fff;font-weight:700}
+body.profile-page.braini-visual .profile-tabs button:hover{background:#ffffff1f}
+body.profile-page.braini-visual .profile-tabs button.active,body.profile-page.braini-visual .profile-tabs button[aria-selected=true]{background:var(--yellow,#ffd813);color:var(--navy,#2d296e);box-shadow:0 3px 0 #c9a700}
+body.profile-page.braini-visual .avatar-studio-heading h2{font-weight:900;font-size:clamp(28px,3.4vw,38px)}
+body.profile-page.braini-visual .profile-rank-hero{border:0;border-radius:26px;background:linear-gradient(180deg,#fff3c4,#ffe88a);box-shadow:0 14px 30px #7a5a002e}
+body.profile-page.braini-visual .profile-quick-links a{border-radius:16px;font-weight:800;color:#fff;background:var(--navy,#2d296e);box-shadow:0 4px 0 #17143f}
+body.profile-page.braini-visual .profile-quick-links a:nth-child(2){background:#23801c;box-shadow:0 4px 0 #165212}
+body.profile-page.braini-visual .profile-quick-links a:nth-child(3){background:#c4540a;box-shadow:0 4px 0 #7f3606}
+@media(max-width:600px){
+  body.braini-visual :is(.daily-overview-page .daily-discovery-header,.learn-catalog .learn-hero,.rankings-shell .rankings-title-row,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-block:24px 30px!important}
+  body.profile-page.braini-visual .profile-v27-head{padding:24px 0 22px}
+}
