@@ -62,3 +62,16 @@
 @media(max-width:420px){.profile-page .avatar-studio-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.profile-page .avatar-studio-tabs>button{width:100%;min-width:0}}
 @media(max-width:380px){.achievement-collection{grid-template-columns:1fr}.achievement-choice{flex-direction:row;padding:.875rem}.achievement-choice-art{width:2.25rem;height:2.25rem}.achievement-choice-copy{width:auto}}
 @media(max-width:420px){.achievement-level-guide ol{grid-template-columns:repeat(3,minmax(0,1fr))}.achievement-choice-art:has(.achievement-emblem){width:2.5rem;height:2.5rem}.achievement-choice-art .achievement-emblem{width:2.5rem;height:2.5rem}}
+
+/* Show each badge's material artwork (paper to prismatic) at a readable size. Locked badges
+   keep their artwork visible but softened, so players can see what they are working towards. */
+.profile-achievements-panel .achievement-choice-art:has(.achievement-emblem),
+.profile-achievements-panel .achievement-choice-art .achievement-emblem{width:4rem;height:4rem}
+.profile-achievements-panel .achievement-choice-art .achievement-emblem{filter:drop-shadow(0 4px 6px #2d296e29)}
+.profile-achievements-panel .achievement-choice-art .achievement-emblem-level{min-width:1.35rem;height:1.35rem;border-radius:.4rem;font-size:.75rem}
+.profile-achievements-panel .achievement-choice:is([data-state=locked],[data-state=unknown]) .achievement-choice-art:has(.achievement-emblem){opacity:1;background:transparent}
+.profile-achievements-panel .achievement-choice:is([data-state=locked],[data-state=unknown]) .achievement-emblem{opacity:.7;filter:grayscale(.45) drop-shadow(0 3px 4px #2d296e1f)}
+@media(max-width:700px){
+  .profile-achievements-panel .achievement-choice-art:has(.achievement-emblem),
+  .profile-achievements-panel .achievement-choice-art .achievement-emblem{width:3.25rem;height:3.25rem}
+}
