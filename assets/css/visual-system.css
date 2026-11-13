@@ -677,3 +677,30 @@ body.braini-visual .cryptic-heading img{box-sizing:border-box;padding:8px;border
   body.braini-visual :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page){padding-top:18px!important;padding-bottom:32px!important}
   body.braini-visual .brainiword-page::before{height:240px}
 }
+
+/* ===== Breadcrumbs inside the navy band (Nov 2026): no light strip between the header and the band ===== */
+/* Case A: the breadcrumb has its own .wrap right before the band (games, topic hubs, quizzes). Case B: it sits right before the hero (Learn, Cryptic). */
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)),
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)){position:relative;isolation:isolate}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading))::before,
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading))::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb,
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)){color:#c9c5ee}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a,
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)) a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a:focus-visible,
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+/* Close the small gaps that would show a light line between the breadcrumb and the band. */
+body.braini-visual .wrap:has(> .breadcrumb:only-child) + .game-entry-heading,
+body.braini-visual .breadcrumb + .cryptic-heading{margin-top:0!important}
+body.braini-visual .cryptic-page:has(> .breadcrumb + .cryptic-heading){padding-top:0}
+/* Brain Mix has no breadcrumb: the band starts right under the header. */
+body.braini-visual .daily-quiz-main:has(> .game-entry-heading:first-child){padding-top:0}
+body.braini-visual .daily-quiz-main > .game-entry-heading:first-child{margin-top:0!important}
+/* The band is full width, so the hero text lines up with the breadcrumb and the content below. */
+body.braini-visual :is(.learn-catalog .learn-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-inline:0!important}
+@media(max-width:600px){
+  body.braini-visual :is(.learn-catalog .learn-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-inline:7px!important}
+  body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb,
+  body.braini-visual .learn-catalog .breadcrumb:has(+ .learn-hero){padding-inline:7px}
+}
