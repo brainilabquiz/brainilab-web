@@ -443,3 +443,64 @@ body.braini-visual .quiz-page.seo-copy{max-width:860px}
   body.braini-visual .anytime-game-card:hover,
   body.braini-visual .anytime-game-card .difficulty-actions.single-action a:active{transform:none}
 }
+
+/* Topic hubs: level and choice cards share the colour language of the game cards
+   (tinted card in the level's colour, white level chip, navy Play pill, segmented levels). */
+body.braini-visual :is(.topic-level,.geo-choice),body.braini-visual.topic-page .card{--hub-accent:var(--green,#40ab34);border:1px solid color-mix(in srgb,var(--hub-accent) 30%,#e7e4f0);border-radius:20px;background:color-mix(in srgb,var(--hub-accent) 8%,white);box-shadow:0 1px 2px #2d296e0a,0 6px 20px #2d296e08;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+body.braini-visual.topic-page .card{--hub-accent:var(--yellow,#ffd813)}
+body.braini-visual .topic-level.topic-level-medium,body.braini-visual .geo-choice.geo-europe,body.braini-visual.topic-page .card.accent-yellow{--hub-accent:var(--yellow,#ffd813);border-color:color-mix(in srgb,var(--hub-accent) 45%,#e7e4f0);background:color-mix(in srgb,var(--hub-accent) 12%,white)}
+body.braini-visual .topic-level.topic-level-hard,body.braini-visual.topic-page .card.accent-red{--hub-accent:var(--red,#e52720);border-color:color-mix(in srgb,var(--hub-accent) 30%,#e7e4f0);background:color-mix(in srgb,var(--hub-accent) 7%,white)}
+body.braini-visual.topic-page .card.accent-green{--hub-accent:var(--green,#40ab34);border-color:color-mix(in srgb,var(--hub-accent) 30%,#e7e4f0);background:color-mix(in srgb,var(--hub-accent) 8%,white)}
+body.braini-visual .geo-choice.geo-capitals,body.braini-visual.topic-page .card.accent-orange{--hub-accent:var(--orange,#e6680c);border-color:color-mix(in srgb,var(--hub-accent) 30%,#e7e4f0);background:color-mix(in srgb,var(--hub-accent) 8%,white)}
+body.braini-visual :is(.topic-level,.geo-choice):hover,body.braini-visual.topic-page .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--hub-accent) 60%,#e7e4f0);box-shadow:0 2px 4px #2d296e0d,0 16px 32px #2d296e17}
+body.braini-visual :is(.topic-level p,.geo-choice>p:not(.geo-eyebrow)),body.braini-visual.topic-page .card p{color:#4f4b66}
+body.braini-visual .topic-level-label{display:inline-flex;align-self:flex-start;align-items:center;padding:4px 12px;border:1px solid color-mix(in srgb,var(--hub-accent) 40%,white);border-radius:999px;background:#fff;font-size:13px}
+body.braini-visual .topic-level .topic-play{align-items:center;min-height:44px;padding:0 18px;border-radius:24px;background:var(--navy);color:#fff;font-size:15px;box-shadow:0 3px 0 #1b1850}
+body.braini-visual .topic-level:hover .topic-play{background:#484194;text-decoration:none}
+body.braini-visual .geo-choice .geo-play{border-radius:24px;box-shadow:0 3px 0 #1b1850}
+body.braini-visual .geo-choice .geo-play:hover{background:#484194}
+body.braini-visual .geo-choice .geo-levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border:1px solid color-mix(in srgb,var(--hub-accent) 22%,white);border-radius:14px;background:#ffffffb3}
+body.braini-visual .geo-choice .geo-levels a{border-color:#e7e4f0;border-radius:10px;background:#fff;box-shadow:0 1px 1px #2d296e0d}
+body.braini-visual .geo-choice .geo-levels a:hover{background:var(--navy);border-color:var(--navy);color:#fff!important}
+@media(prefers-reduced-motion:reduce){
+  body.braini-visual :is(.topic-level,.geo-choice),body.braini-visual.topic-page .card{transition:none}
+  body.braini-visual :is(.topic-level,.geo-choice):hover,body.braini-visual.topic-page .card:hover{transform:none}
+}
+
+/* Footer: the five-colour brand stripe used on game heroes closes every page,
+   and footer links get a clear hover colour. */
+body.braini-visual .footer{position:relative;border-top:0}
+body.braini-visual .footer::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,var(--navy) 80%)}
+body.braini-visual .footer-grid{border-top:0}
+body.braini-visual .footer-links a{color:var(--navy);font-weight:700}
+body.braini-visual .footer-links a:hover{color:#484194}
+
+/* Home: "Explore by topic" becomes a grid of illustrated tiles instead of small text pills.
+   Icons come from the existing game illustrations, matched by link target; markup unchanged. */
+body.home-page.braini-visual .seo-copy .inline-links{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:16px}
+body.home-page.braini-visual .seo-copy .inline-links a{--tile:var(--yellow,#ffd813);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:16px 10px 14px;border:1px solid color-mix(in srgb,var(--tile) 32%,#e7e4f0);border-radius:18px;background:color-mix(in srgb,var(--tile) 10%,white);color:var(--navy);font-size:14px;font-weight:700;line-height:1.3;text-align:center;text-decoration:none;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+body.home-page.braini-visual .seo-copy .inline-links a::before{content:"";width:64px;height:64px;flex:0 0 auto;border:1px solid color-mix(in srgb,var(--tile) 30%,white);border-radius:18px;background:#fff center/48px 48px no-repeat;box-shadow:0 6px 14px color-mix(in srgb,var(--tile) 22%,transparent)}
+body.home-page.braini-visual .seo-copy .inline-links a:nth-child(5n+2){--tile:var(--green,#40ab34)}
+body.home-page.braini-visual .seo-copy .inline-links a:nth-child(5n+3){--tile:var(--orange,#e6680c)}
+body.home-page.braini-visual .seo-copy .inline-links a:nth-child(5n+4){--tile:var(--red,#e52720)}
+body.home-page.braini-visual .seo-copy .inline-links a:nth-child(5n){--tile:var(--navy,#2d296e)}
+body.home-page.braini-visual .seo-copy .inline-links a:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tile) 60%,#e7e4f0);box-shadow:0 12px 26px #2d296e17}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="geography"]::before{background-image:url("/assets/illustrations/games/world-flags.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="general-knowledge"]::before{background-image:url("/assets/illustrations/games/mixed-general-knowledge.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="science"]::before{background-image:url("/assets/illustrations/games/science.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="history"]::before{background-image:url("/assets/illustrations/games/history.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="math-rush"]::before{background-image:url("/assets/illustrations/games/math-rush.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="number-route"]::before{background-image:url("/assets/illustrations/games/number-route.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="sequence"]::before{background-image:url("/assets/illustrations/games/sequence.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="connections"]::before{background-image:url("/assets/illustrations/games/connections.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="odd-one-out"]::before{background-image:url("/assets/illustrations/games/odd-one-out.svg")}
+body.home-page.braini-visual .seo-copy .inline-links a[href*="higher-lower"]::before{background-image:url("/assets/illustrations/games/higher-lower.svg")}
+@media(max-width:900px){body.home-page.braini-visual .seo-copy .inline-links{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:540px){
+  body.home-page.braini-visual .seo-copy .inline-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  body.home-page.braini-visual .seo-copy .inline-links a::before{width:52px;height:52px;background-size:40px 40px;border-radius:15px}
+}
+@media(prefers-reduced-motion:reduce){body.home-page.braini-visual .seo-copy .inline-links a{transition:none}body.home-page.braini-visual .seo-copy .inline-links a:hover{transform:none}}
+/* Home: today's game is the hero of the Daily panel, shown large on a white tile. */
+body.home-page.braini-visual .challenge-wrap .home-daily-icon{box-sizing:border-box;width:112px;height:112px;margin:0 auto 14px;padding:14px;border-radius:28px;background:#fff;object-fit:contain;box-shadow:0 0 0 6px #ffffff1f,0 14px 30px #0b08304d}
+@media(max-width:600px){body.home-page.braini-visual .challenge-wrap .home-daily-icon{width:88px;height:88px;padding:11px;border-radius:22px}}
