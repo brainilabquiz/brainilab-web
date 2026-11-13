@@ -285,3 +285,9 @@
   .avatar-stage-art::after{width:5.5rem;height:12px;bottom:.25rem}
 }
 @media(prefers-reduced-motion:reduce){.avatar-studio-controls .reward-choice{transition:none}.avatar-studio-controls .reward-choice:not(:disabled):hover{transform:none}}
+
+/* Avatar frames: preview the frame artwork large enough to see its detail. */
+.avatar-studio-controls .reward-grid-frame .reward-choice{min-height:156px}
+.avatar-studio-controls .reward-grid-frame .reward-choice-art{width:84px;height:84px}
+.avatar-studio-controls .reward-frame-sample.rank-avatar{width:72px;height:72px}
+@media(max-width:700px){.avatar-studio-controls .reward-grid-frame .reward-choice-art{width:72px;height:72px}.avatar-studio-controls .reward-frame-sample.rank-avatar{width:60px;height:60px}}

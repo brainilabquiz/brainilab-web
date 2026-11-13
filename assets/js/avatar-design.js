@@ -88,7 +88,7 @@ window.BrainiAvatarDesign=(function(){
   function star(cx,cy,r=13){
     return Array.from({length:10},(_,i)=>{const a=(i*36-90)*Math.PI/180,n=i%2?r*.46:r;return `${(cx+Math.cos(a)*n).toFixed(2)},${(cy+Math.sin(a)*n).toFixed(2)}`;}).join(' ');
   }
-  function accessory(kind,id){
+  function baseAccessory(kind,id){
     if(kind==='glasses'){
       if(id==='days_sunday')return '<g fill="none" stroke="#c28b31" stroke-width="2.5" stroke-linecap="round"><path d="M76 76V71M76 119V124M55 97H50M97 97H102M60 81 56 77M92 113 96 117M60 113 56 117M92 81 96 77M125 76V71M125 119V124M104 97H99M146 97H151M109 81 105 77M141 113 145 117M109 113 105 117M141 81 145 77"/><path d="M93 96Q100 92 108 96M57 89 51 85M144 89 150 85" stroke-width="4"/></g><g fill="#e4b95e" stroke="#ac782e" stroke-width="2.5"><circle cx="76" cy="97" r="17"/><circle cx="125" cy="97" r="17"/></g><g fill="#638f9c"><circle cx="76" cy="97" r="12"/><circle cx="125" cy="97" r="12"/></g><path d="m68 93 6-5M117 93l6-5" stroke="#d3ebec" stroke-width="3" stroke-linecap="round"/>';
       if(id==='discovery_gameface')return '<g fill="#3c375f" stroke="#252342" stroke-width="2.5" stroke-linejoin="round"><path d="M64 87Q80 81 94 88L97 108Q93 117 85 107H73Q62 118 61 108Z M106 88Q121 81 136 87L139 108Q137 118 127 107H115Q107 117 103 108Z"/><path d="M96 94Q100 91 104 94M62 90 52 85M138 90 148 85" fill="none" stroke-width="4"/></g><path d="M72 91V101M67 96H77" stroke="#f0cf76" stroke-width="2.5" stroke-linecap="round"/><circle cx="125" cy="92" r="2.5" fill="#8cbe9b"/><circle cx="131" cy="99" r="2.5" fill="#d58a91"/><path d="M79 104H86M112 104H119" stroke="#8e84b0" stroke-width="2" stroke-linecap="round"/>';
@@ -146,6 +146,26 @@ window.BrainiAvatarDesign=(function(){
       if(id==='nacho')return '<g transform="rotate(10 158 142)"><path d="M158 109Q159 107 161 110L180 157Q181 161 178 161L137 161Q133 161 135 157Z" fill="#dfa447" stroke="#a7712e" stroke-width="2.5" stroke-linejoin="round"/><path d="M159 115 177 151Q169 148 169 156Q169 162 164 159L162 150Q160 146 156 151Q151 157 151 149Q150 144 141 151Z" fill="#f7cc55"/><path d="M159 120 165 132" stroke="#ffe78c" stroke-width="3" stroke-linecap="round"/><g fill="#ba7c30"><circle cx="141" cy="157" r="1.5"/><circle cx="153" cy="156" r="1.5"/><circle cx="176" cy="155" r="1.5"/><circle cx="167" cy="143" r="1.5"/></g><path d="M151 139 153 141 155 139M164 138 166 140 168 138M155 146Q159 150 163 146" fill="none" stroke="#765232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>';
     }
     return '';
+  }
+  // Finish for the line-drawn glasses and the paler hats: tinted lenses with a glare, and soft
+  // shade or light on hats. Drawn around the original art, so geometry and framing are unchanged.
+  const glare=(a,b)=>`<path d="M${a-7} ${b+4}L${a+2} ${b-5}M${a-3} ${b+8}L${a} ${b+5}" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.6" stroke-linecap="round"/>`;
+  const tint=(shape,fill='#cfe8f3')=>`<g fill="${fill}" opacity=".42">${shape}</g>`;
+  const polish=Object.freeze({
+    round:{under:tint('<circle cx="80" cy="96" r="13.5"/><circle cx="120" cy="96" r="13.5"/>'),over:glare(80,96)+glare(120,96)},
+    square:{under:tint('<rect x="66" y="85" width="27" height="23" rx="5.5"/><rect x="107" y="85" width="27" height="23" rx="5.5"/>','#d6eedc'),over:glare(80,97)+glare(120,97)},
+    heart:{under:tint('<path d="M80 112 64 97C53 86 68 75 80 86C92 75 107 86 96 97ZM120 112 104 97C93 86 108 75 120 86C132 75 147 86 136 97Z"/>','#f7c6d4'),over:glare(76,93)+glare(116,93)},
+    camera:{under:tint('<circle cx="80" cy="97" r="9"/><circle cx="120" cy="97" r="9"/>','#cfe6e1'),over:glare(80,97)+glare(120,97)},
+    academy_mathspecs:{under:tint('<rect x="64" y="84" width="29" height="25" rx="6"/><rect x="107" y="84" width="29" height="25" rx="6"/>','#d3ebe9'),over:'<path d="M85 90 90 85M128 90 133 85" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.6" stroke-linecap="round"/>'},
+    egg:{over:'<path d="M57 55Q100 67 147 52" fill="none" stroke="#e3cfa8" stroke-opacity=".9" stroke-width="4" stroke-linecap="round"/><ellipse cx="103" cy="49" rx="17" ry="3.5" fill="#d9b067" opacity=".35"/>'},
+    academy_detective:{over:'<path d="M70 31Q98 24 127 29" fill="none" stroke="#f0d2a6" stroke-opacity=".65" stroke-width="3" stroke-linecap="round"/><path d="M50 56Q99 51 150 56" fill="none" stroke="#5e4330" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>'},
+    discovery_paperhat:{over:'<path d="M49 54 99 9V58Z" fill="#2d296e" opacity=".07"/><path d="M45 61H155" stroke="#8a8091" stroke-opacity=".4" stroke-width="2"/>'},
+    days_daydreamer:{over:'<path d="M62 50Q100 57 141 51" fill="none" stroke="#cfc3e3" stroke-width="4" stroke-linecap="round"/>'},
+    cloud:{over:'<path d="M58 59Q70 62 84 63M116 63Q130 62 143 59" fill="none" stroke="#c7d5ea" stroke-width="4.5" stroke-linecap="round"/>'}
+  });
+  function accessory(kind,id){
+    const art=baseAccessory(kind,id),extra=art&&Object.hasOwn(polish,id)?polish[id]:null;
+    return extra?(extra.under||'')+art+(extra.over||''):art;
   }
   // Safe framing measured from the original local SVG geometry; no runtime layout reads.
   const previewBoxes=Object.freeze({"pumpkin-thinker":"40 -5 120 85","little-bat":"105 95 100 80","round":"40.6 68.6 118.8 54.8","square":"39.7 65.7 129.6 57.6","sun":"40.6 73.1 118.8 49.6","monocle":"91.1 69.1 71.8 100.8","heart":"40.6 69 118.8 55.4","star":"40.6 68.6 118.8 51.9","visor":"39.4 70.4 121.2 56.7","doughnut":"40.6 64.6 118.8 56.8","camera":"40.6 65.6 118.8 58.8","academy_mathspecs":"40.6 69.6 118.8 53.8","discovery_gameface":"39.4 71.6 121.2 53.7","days_sunday":"36.9 57.9 127.2 79.2","beanie":"34.6 -2.4 130.8 77.8","egg":"31.5 -1.1 139.2 77.7","cap":"39.9 -2 138.1 74.2","corn":"40.3 -9.7 122.4 83.8","toast":"56.8 -4.8 86.4 76","cloud":"35.3 1.5 134.4 92.2","coffee":"49.5 -6.5 107.5 81.9","wave":"34.4 -5.1 133.2 87.2","wizard":"32 -9 138 88.3","graduate":"22.3 -6.7 158.4 100.4","academy_calendar":"51.9 -8.1 96.8 84.1","academy_detective":"28.6 3.9 142.8 72.8","academy_rainbow":"20.9 -5.1 163.2 87.2","discovery_paperhat":"28.6 -5.4 142.8 84.8","discovery_crunch":"48.4 -14.2 121.1 87.3","days_daydreamer":"33.5 -3.3 133.3 69.9","cookie":"118.8 96.4 77.5 78.8","icepop":"127.4 89.9 71.3 100.3","peas":"117.9 84.6 78 107.1","bulb":"124.5 53.4 85.2 111.2","train":"118.5 71.5 75.4 114.4","owl":"126.9 99.4 61.7 73.4","pencil":"125.5 93.5 65.7 101.7","nacho":"122.4 95.6 72.4 78","rocket":"126.2 84.4 65.5 110.1","roll":"117.7 106.7 81.2 83.5","book":"124.3 92.3 70.4 98.4","academy_abacus":"119.3 95.5 78.9 92.2","academy_moon":"111.3 86.1 85.6 88.8","academy_pie":"120.7 102.4 79.2 82.6","academy_puzzle":"107.4 98.1 88 82.4","discovery_trailmix":"123.8 95.5 73.1 88.9","discovery_globe":"118.6 91.6 78.8 94.8","days_thyme":"125.3 93.5 64.8 91.6","days_smore":"117.9 92.6 84.3 94.6"});
