@@ -364,10 +364,6 @@ body.braini-visual.home-page .home-video-grid .video-label{
   align-self:flex-start;min-height:0;padding:4px 7px;border-radius:6px;
   background:var(--card);color:var(--video-label);overflow:visible;
 }
-body.braini-visual.home-page .home-video-grid .video-action{
-  display:inline-flex;align-items:center;align-self:flex-start;gap:4px;min-height:44px;
-  text-decoration:underline;text-underline-offset:3px;
-}
 .braini-visual.home-page .home-article>:is(img,picture){
   box-sizing:border-box;padding:3px;background:var(--card);border:1px solid #b8d2b3;border-radius:12px;
 }
