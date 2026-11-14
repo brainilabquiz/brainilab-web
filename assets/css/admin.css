@@ -9,6 +9,9 @@ html,body{margin:0;min-height:100%;font-family:Montserrat,Arial,sans-serif;color
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 [hidden]{display:none!important}
+.admin-skip-link{position:fixed;top:12px;left:16px;z-index:1000;padding:10px 16px;border-radius:8px;background:#fff;color:var(--navy);transform:translateY(calc(-100% - 16px))}
+.admin-skip-link:focus{transform:none;outline:3px solid var(--navy);outline-offset:3px}
+.admin-main:focus{outline:3px solid var(--navy);outline-offset:-3px}
 .admin-body{min-height:100vh}
 .admin-auth-screen{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px;background:linear-gradient(145deg,#f7f6fb,#fff9de)}
 .admin-auth-card{width:min(470px,100%);padding:34px;border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:var(--shadow);text-align:center}

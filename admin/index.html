@@ -28,13 +28,14 @@
 <div class="admin-auth-card">
 <picture><source srcset="../assets/brand/brainilab-logo-200.webp 200w, ../assets/brand/brainilab-logo.webp 450w" sizes="(max-width: 600px) 100px, 160px" type="image/webp"/><img alt="BrainiLab" class="admin-auth-logo" decoding="async" fetchpriority="high" height="153" loading="eager" src="../assets/brand/brainilab-logo.png" width="450"/></picture>
 <span class="admin-eyebrow">Operations console</span>
-<h1>BrainiLab Admin</h1>
+<h1 id="adminPageTitle">BrainiLab Admin</h1>
 <p id="adminAuthMessage">Checking secure admin access…</p>
 <div id="adminAuthActions"></div>
 <small>Admin access is enforced in PostgreSQL. Knowing this URL is not enough.</small>
 </div>
 </div>
 <div class="admin-shell" hidden="" id="adminShell">
+<a class="admin-skip-link" href="#adminMain">Skip to main content</a>
 <aside class="admin-sidebar">
 <a aria-label="BrainiLab Admin dashboard" class="admin-brand" href="#dashboard">
 <picture><source srcset="../assets/brand/brainilab-logo-200.webp 200w, ../assets/brand/brainilab-logo.webp 450w" sizes="(max-width: 600px) 100px, 160px" type="image/webp"/><img alt="BrainiLab" decoding="async" fetchpriority="high" height="153" loading="eager" src="../assets/brand/brainilab-logo.png" width="450"/></picture>
@@ -70,11 +71,11 @@
 <button id="adminSignOut" type="button">Sign out</button>
 </div>
 </aside>
-<main class="admin-main">
+<main class="admin-main" id="adminMain" tabindex="-1">
 <header class="admin-topbar">
 <div>
 <span class="admin-eyebrow" id="adminPageEyebrow">BrainiLab</span>
-<h1 id="adminPageTitle">Dashboard</h1>
+<div id="adminTitleSlot"></div>
 </div>
 <div class="admin-topbar-actions">
 <span class="admin-env">PRODUCTION DATA</span><button class="admin-button primary" id="adminQuickQuestion" type="button" hidden>+ New question</button>

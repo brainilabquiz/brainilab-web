@@ -26,7 +26,7 @@ window.BrainiAdmin=(function(){
   };
 
   const titles={
-    dashboard:["Operations","Dashboard"],
+    dashboard:["Operations","Operations dashboard"],
     daily:["Daily operations","Daily"],
     questions:["Content","Question Bank"],
     content:["Content","Content Pools"],
@@ -291,6 +291,9 @@ window.BrainiAdmin=(function(){
   }
 
   function renderAuth(message,actions=""){
+    const title=$("#adminPageTitle");
+    title.textContent="BrainiLab Admin";
+    $("#adminAuthMessage").before(title);
     $("#adminAuthScreen").hidden=false;
     $("#adminShell").hidden=true;
     $("#adminAuthMessage").innerHTML=message;
@@ -378,6 +381,7 @@ window.BrainiAdmin=(function(){
     }
 
     $("#adminAuthScreen").hidden=true;
+    $("#adminTitleSlot").replaceChildren($("#adminPageTitle"));
     $("#adminShell").hidden=false;
     $("#adminSessionName").textContent=admin.display_name||"BrainiLab Admin";
     $("#adminSessionRole").textContent=`${admin.role} · ${admin.aal||"aal1"}`;
@@ -3615,6 +3619,10 @@ window.BrainiAdmin=(function(){
 
     $("#adminSignOut").onclick=signOut;
     $("#adminRefresh").onclick=()=>navigate(state.currentView,{replace:true});
+    $(".admin-skip-link").onclick=event=>{
+      event.preventDefault();
+      $("#adminMain").focus();
+    };
 
     window.addEventListener("popstate",()=>{
       const view=location.hash.slice(1)||"dashboard";
