@@ -18,8 +18,11 @@ button{cursor:pointer}
 .admin-auth-logo{width:180px;max-width:60%;margin-bottom:20px}
 .admin-eyebrow{display:block;color:var(--orange);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}
 .admin-auth-card h1{margin:7px 0 8px;font:700 38px/1 Montserrat,Arial,sans-serif;color:var(--navy)}
-.admin-auth-card p{margin:0 auto 20px;max-width:350px;color:var(--muted);font-size:14px;line-height:1.6}
-.admin-auth-card small{display:block;margin-top:16px;color:var(--muted);font-size:11px;line-height:1.5}
+.admin-auth-card p,.admin-auth-message{margin:0 auto 20px;max-width:350px;color:var(--muted);font-size:14px;line-height:1.6}
+.admin-auth-message p{margin:0}
+.admin-auth-card .admin-auth-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin:20px 0 0}
+.admin-auth-links a{display:inline-flex;align-items:center;min-height:24px;color:var(--navy);text-underline-offset:3px}
+.admin-auth-links a:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
 .admin-auth-primary,.admin-primary{border:0;border-radius:10px;padding:11px 15px;background:var(--navy);color:#fff;font-weight:850}
 .admin-auth-secondary,.admin-secondary{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff;color:var(--navy);font-weight:850}
 .admin-auth-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}

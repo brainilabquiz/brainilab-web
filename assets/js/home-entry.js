@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const stage = root?.querySelector(".challenge-inner");
   const template = document.getElementById("homeQuizTemplate");
   if (!stage || !template) return;
+  root.setAttribute('aria-busy','true');
   let playing=false;
   let modernRequest=0,modernContext='',modernPaintedContext='',lastMarkup='';
   const currentOwner=()=>{const auth=window.BrainiData?.authState?.()||window.BrainiData?.getState?.()?.auth;return auth?.user?.id||auth?.guestUserId||'guest';};

@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="/assets/css/post-game.css?v=41.50.0"/>
 <link rel="stylesheet" href="/assets/css/discovery-system.css?v=41.32.0"/>
 <link rel="stylesheet" href="/assets/css/continuity.css?v=41.51.0"/><link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
-<noscript><style>#homeQuiz[data-home-loading]>.challenge-inner{visibility:visible}#homeQuiz>.home-loading{display:none}</style></noscript>
+<noscript><style>#homeQuiz[data-home-loading]>.home-loading,#homeQuiz [data-home-start]{display:none!important}#homeQuiz[data-home-loading]>.challenge-inner{visibility:visible!important;pointer-events:auto!important}#homeQuiz .home-start-actions noscript{display:contents}</style></noscript>
 </head>
 <body class="home-page braini-visual">
 <a class="home-skip-link" href="#main-content">Skip to main content</a>
@@ -66,7 +66,7 @@
 </section>
 <section class="challenge-wrap">
 <div>
-<article class="challenge" id="homeQuiz" data-home-loading aria-busy="true">
+<article class="challenge" id="homeQuiz" data-home-loading>
 <div class="home-loading" role="status">Preparing today’s challenge…</div>
 <div class="challenge-inner home-start">
 <img class="home-daily-icon" src="/assets/illustrations/games/brain-mix.svg" width="72" height="60" alt=""/><span class="challenge-pill">Today’s Daily</span>
@@ -74,10 +74,10 @@
 <p>One main game. A fresh challenge each day.</p>
 <div class="home-start-actions">
 <button class="btn" type="button" data-home-start disabled>Loading today’s quiz…</button>
+<noscript><a class="btn" href="/daily-quiz/">See today’s Daily</a></noscript>
 <a class="btn-light" href="/games/">Explore all games</a>
 </div>
-<p class="home-ready" data-home-ready role="status">No account needed. The quiz starts when you’re ready.</p>
-<noscript><p>Enable JavaScript to play. You can still <a href="/geography/">explore our geography guides</a>.</p></noscript>
+<noscript><p>Enable JavaScript to play, or <a href="/learn/">browse the reading library</a>.</p></noscript>
 </div>
 <template id="homeQuizTemplate">
 <div class="challenge-labels">
