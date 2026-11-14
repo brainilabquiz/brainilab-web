@@ -19,6 +19,7 @@ import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './l
 export const LEGACY_PAGES=Object.freeze({'/games/flag-dash/':'/geography/world-flags-quiz/','/games/map-hunt/':'/games/topic-rush/','/categories/':'/games/','/leaderboards/':'/rankings/','/profile/plus/':'/plus/'});
 const FRESH_MS=15*60*1000;
 const MAX_STALE_MS=7*86400000;
+const PAGE_CONTENT_POLICY="object-src 'none'; base-uri 'none'; frame-ancestors 'none'";
 const decodeXML=value=>value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi,(_,entity)=>{
   if(entity[0]==='#'){
     const n=entity[1].toLowerCase()==='x'?parseInt(entity.slice(2),16):parseInt(entity.slice(1),10);
@@ -118,7 +119,7 @@ export default {
       if(!match)return new Response('Not found',{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
       if(normal!==url.pathname){const canonical=new URL(url);canonical.pathname=normal;return Response.redirect(canonical,308);}
       const template=await (await env.ASSETS.fetch(new Request(new URL('/learn/index.html',url)))).text();
-      return new Response(request.method==='HEAD'?null:renderHalloweenPage(template,holiday,holiday.status==='closed'?null:match[1]),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'strict-origin-when-cross-origin'}});
+      return new Response(request.method==='HEAD'?null:renderHalloweenPage(template,holiday,holiday.status==='closed'?null:match[1]),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':PAGE_CONTENT_POLICY,'X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'strict-origin-when-cross-origin'}});
     }
     if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
       if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
@@ -155,8 +156,8 @@ export default {
       secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
       secured.headers.set('X-Frame-Options','DENY');
       secured.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=()');
-      if(['/','/index.html'].includes(url.pathname)&&secured.headers.get('Content-Type')?.includes('text/html')){
-        secured.headers.set('Content-Security-Policy',"object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+      if(secured.headers.get('Content-Type')?.includes('text/html')){
+        secured.headers.set('Content-Security-Policy',PAGE_CONTENT_POLICY);
       }
       if(holiday.active&&['GET','HEAD'].includes(request.method)&&secured.headers.get('Content-Type')?.includes('text/html')){
         const headers=new Headers(secured.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');headers.set('Cache-Control','no-store');
