@@ -155,6 +155,9 @@ export default {
       secured.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
       secured.headers.set('X-Frame-Options','DENY');
       secured.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=()');
+      if(['/','/index.html'].includes(url.pathname)&&secured.headers.get('Content-Type')?.includes('text/html')){
+        secured.headers.set('Content-Security-Policy',"object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+      }
       if(holiday.active&&['GET','HEAD'].includes(request.method)&&secured.headers.get('Content-Type')?.includes('text/html')){
         const headers=new Headers(secured.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');headers.set('Cache-Control','no-store');
         return new Response(request.method==='HEAD'?null:decorateHalloween(await secured.text(),holiday,url.pathname),{status:secured.status,headers});

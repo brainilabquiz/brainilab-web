@@ -133,6 +133,10 @@ body.braini-visual.home-page .home-intro-media{grid-area:videos;min-width:0;disp
 .home-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .home-video-player{width:100%;aspect-ratio:16/9;min-height:200px;background:#171524}
 .home-video-player iframe{display:block;width:100%;height:100%;min-height:200px;border:0}
+.home-video-player [data-video-play]{position:relative;display:grid;place-items:center;width:100%;height:100%;min-height:inherit}
+.home-video-player [data-video-play]:focus-visible{outline:3px solid white;outline-offset:-5px}
+.home-video-player .video-play{background:#b41121;color:#fff;font-weight:750}
+.home-video-description{margin:0;color:var(--navy);font-size:12px;line-height:1.45}
 .home-video-copy h2{margin:0;font-size:14px;line-height:1.4;color:var(--navy);font-weight:750}
 .video-meta{margin:0;display:flex;flex-wrap:wrap;gap:4px 8px;font-size:12px;line-height:1.5;color:#655d54}
 .video-meta :is(time,[data-video-duration]){white-space:nowrap}
