@@ -48,7 +48,7 @@
     if(seconds){if(!duration){duration=document.createElement('span');duration.dataset.videoDuration='';date.parentElement.append(duration);}duration.textContent=Math.floor(seconds/60)+' min '+Math.floor(seconds%60)+' sec';}else duration?.remove();
     const link=card.querySelector('[data-video-link]');link.href=url;
     poster.href=url;
-    poster.setAttribute('aria-label','Play '+title+' on '+channel.name);
+    poster.setAttribute('aria-label',(short?'Play Short':'Play video')+': '+title+' on '+channel.name);
     if(card.dataset.videoId!==video.id)poster.querySelector('img').src=thumbnail;
     card.dataset.videoPublished=video.published;card.dataset.videoId=video.id;
     schemaElement.textContent=JSON.stringify(schema).replace(/</g,'\\u003c');

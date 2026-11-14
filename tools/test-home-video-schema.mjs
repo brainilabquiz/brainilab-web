@@ -10,7 +10,9 @@ function check(document){
  const cards=[...document.querySelectorAll('[data-latest-video]')];assert.equal(cards.length,2);assert.equal(document.querySelectorAll('[data-video-schema]').length,2);
  for(const [index,card]of cards.entries()){
   const schema=JSON.parse(card.querySelector('[data-video-schema]').textContent),poster=card.querySelector('[data-video-play]'),link=card.querySelector('[data-video-link]'),date=card.querySelector('time');
-  assert.equal(card.tagName,'ARTICLE');assert.equal(card.querySelector('iframe'),null);assert.equal(poster.getAttribute('aria-label'),'Play '+schema.name+' on '+schema.creator.name);
+  const action=poster.querySelector('.video-play').textContent;
+  assert.equal(action,index?'Play Short':'Play video');
+  assert.equal(card.tagName,'ARTICLE');assert.equal(card.querySelector('iframe'),null);assert.equal(poster.getAttribute('aria-label'),action+': '+schema.name+' on '+schema.creator.name);
   assert.equal(schema['@type'],'VideoObject');assert.equal(schema.name,card.querySelector('[data-video-title]').textContent);assert.equal(schema.url,link.href);assert.equal(poster.href,link.href);assert.equal(schema.uploadDate,date.dateTime);assert.equal(schema.thumbnailUrl,poster.querySelector('img').src);
   assert.ok(schema.description);assert.equal(schema.description,card.querySelector('[data-video-description]').textContent);assert.equal(card.querySelector('[data-video-description] b'),null);
   assert.equal(schema.creator.name,index?'BrainiLab Knowledge':'BrainiLab');assert.equal(schema.creator.url,'https://www.youtube.com/@'+(index?'BrainiLabKnowledge':'BrainiLab'));
@@ -44,7 +46,7 @@ const started=new URL(frame.src);
 assert.equal(started.searchParams.get('autoplay'),'1');
 started.searchParams.delete('autoplay');
 assert.equal(started.href,initialSchema.embedUrl);
-assert.equal(frame.title,'Play '+initialSchema.name+' on '+initialSchema.creator.name);
+assert.equal(frame.title,'Play video: '+initialSchema.name+' on '+initialSchema.creator.name);
 assert.equal(w.document.querySelectorAll('iframe').length,1);
 assert.equal(w.document.activeElement,frame);
 assert.equal(JSON.parse(first.querySelector('[data-video-schema]').textContent).name,initialSchema.name);
