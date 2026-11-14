@@ -135,7 +135,8 @@ body.braini-visual.home-page .home-intro-media{grid-area:videos;min-width:0;disp
 .home-video-player iframe{display:block;width:100%;height:100%;min-height:200px;border:0}
 .home-video-player [data-video-play]{position:relative;display:grid;place-items:center;width:100%;height:100%;min-height:inherit}
 .home-video-player [data-video-play]:focus-visible{outline:3px solid white;outline-offset:-5px}
-.home-video-player .video-play{background:#b41121;color:#fff;font-weight:750}
+.home-video-player .video-play{display:inline-flex;align-items:center;gap:6px;background:#b41121;color:#fff;font-weight:750}
+.home-video-player .video-play::before{content:"";border-block:5px solid transparent;border-inline-start:8px solid currentColor}
 .home-video-description{margin:0;color:var(--navy);font-size:12px;line-height:1.45}
 .home-video-copy h2{margin:0;font-size:14px;line-height:1.4;color:var(--navy);font-weight:750}
 .video-meta{margin:0;display:flex;flex-wrap:wrap;gap:4px 8px;font-size:12px;line-height:1.5;color:#655d54}
@@ -173,6 +174,9 @@ body.braini-visual.home-page .home-reading .home-article-empty{display:flex;alig
 body.braini-visual.home-page main>.home-hero:has(:is(.answers .answer,.home-daily-state)){grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "daily"}
 body.braini-visual.home-page .home-hero:has(:is(.answers .answer,.home-daily-state))>.home-intro{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none;white-space:normal}
 body.braini-visual.home-page .home-hero:has(:is(.answers .answer,.home-daily-state))>:is(.home-intro-media,.home-reading){display:none}
+
+/* Reserve the game grid’s real height before the topics below become visible. */
+.home-page main>.home-featured{content-visibility:visible}
 
 /* On phones, give the description one readable column and keep the entire card tappable. */
 @media (max-width: 640px) {
