@@ -4511,7 +4511,7 @@ window.BrainiPerf=(function(){
     if(cloudPromise) return cloudPromise;
 
     cloudPromise=(async()=>{
-      await ensureSupabase();
+      await Promise.all([ensureSupabase(), window.BrainiHomeStartup?.ensureAvatar()]);
       await loadFeature('cloud.bundle.js');
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;
@@ -6775,9 +6775,13 @@ window.BrainiAvatarAnnouncement=(()=>{
       if(error.isConnected){error.hidden=false;error.textContent='Sign-in could not open. Please try again.';}
     }finally{if(button.isConnected)button.disabled=false;}
   }
-  function show(){
+  async function show(){
     timer=null;
     if(finished||card||!browsing.has(location.pathname)||blocked()||seen())return;
+    if(!window.BrainiAvatarDesign&&window.BrainiHomeStartup){
+      try{await BrainiHomeStartup.ensureAvatar();}catch{return;}
+      if(finished||card||blocked()||seen())return;
+    }
     // Remember the invitation before showing it, including across tabs/navigation.
     try{const at=String(Date.now());localStorage.setItem(key,at);if(localStorage.getItem(key)!==at)return;}catch{return;}
     finished=true;card=document.createElement('aside');card.className='avatar-announcement';card.setAttribute('aria-labelledby','avatar-announcement-title');

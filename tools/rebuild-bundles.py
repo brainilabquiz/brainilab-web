@@ -1,14 +1,35 @@
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 JS=ROOT/'assets/js'
+SHELL=[
+ 'link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js',
+ 'profile-achievements-model.js','achievement-display.js','avatar-design.js',
+ 'profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-legacy-recovery.js',
+ 'halloween-entitlements.js','halloween-event-client.js','share.js','friend-challenge.js',
+ 'friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js',
+ 'try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js',
+ 'progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js',
+ 'monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js',
+]
+HOME_LEGACY={
+ 'share.js','friend-challenge.js','friend-replay-contract.js','game-challenge-model.js',
+ 'friend-replay.js','game-challenge.js','try-first-runtime.js','daily-choice-guard.js',
+ 'daily-completion-guard.js','reward-journey.js','post-game.js',
+}
+HOME_AVATAR=['avatar-design.js','profile-rewards-model.js']
 BUNDLES={
  'consent.bundle.js':['site-analytics.js','meta-pixel.js'],
- 'shell.bundle.js':['link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js','profile-achievements-model.js','achievement-display.js','avatar-design.js','profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-legacy-recovery.js','halloween-entitlements.js','halloween-event-client.js','share.js','friend-challenge.js','friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js','try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js','progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js','monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js'],
+ 'shell.bundle.js':SHELL,
+ 'home-shell.bundle.js':['supabase-config.js','home-startup.js',
+  *[part for part in SHELL if part not in HOME_AVATAR and part not in HOME_LEGACY],
+  'supabase-runtime.js'],
+ 'home-avatar.bundle.js':HOME_AVATAR,
+ 'home-legacy.bundle.js':[*[part for part in SHELL if part in HOME_LEGACY],'home-daily.js','quiz.js'],
  'cloud.bundle.js':['supabase-config.js','supabase-auth.js','guest-style-bridge.js','growth-conversions.js','supabase-profile.js','supabase-games.js','result-recovery.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
  'quiz.bundle.js':['supabase-content.js','quiz.js'],
  'daily.bundle.js':['supabase-daily.js','daily-hub.js','daily-journey.js','daily-games.js'],
  'daily-overview.bundle.js':['supabase-daily.js','daily-hub.js','daily-countdown.js','daily-games.js','daily-journey.js','daily-overview.js','anytime-browser.js'],
- 'home.bundle.js':['supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','home-daily.js','daily-games.js','quiz.js','home-entry.js'],
+ 'home.bundle.js':['supabase-content.js','supabase-daily.js','daily-hub.js','daily-countdown.js','daily-journey.js','daily-games.js','home-entry.js'],
  'games.bundle.js':['games-library.js','game-discovery.js'],
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],

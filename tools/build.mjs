@@ -1,6 +1,6 @@
 import {newTabLinks} from '../lib/link-policy.js';
 import {brandPage} from '../lib/brand-identity.js';
-import {assetVersion,versionAssets,lazyFeatureVersions} from '../lib/asset-versions.js';
+import {assetVersion,versionAssets,lazyFeatureVersions,featureLoaders} from '../lib/asset-versions.js';
 import {pageStyles} from '../lib/page-styles.js';
 import {gamePageDates} from '../lib/game-page-dates.js';
 import {homeConsent} from '../lib/home-consent.js';
@@ -43,6 +43,7 @@ import './test-guest-auth.mjs';
 import './test-halloween-legacy.mjs';
 import './test-admin-operations-model.mjs';
 import './test-home-entry.mjs';
+import './test-home-startup.mjs';
 import './test-latest-video.mjs';
 import './test-knowledge-video.mjs';
 import './test-knowledge-shorts.mjs';
@@ -65,8 +66,11 @@ const root=path.resolve('.');
 await build({entryPoints:['editor/cryptic.js'],outfile:'assets/js/cryptic.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const videoBundle=await build({entryPoints:['editor/video-recommendations.js'],write:false,bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 const videoMarker='/* related-video bundle */';
-const shellSource=await readFile('assets/js/shell.bundle.js','utf8');
-await writeFile('assets/js/shell.bundle.js',shellSource.split(videoMarker)[0].trimEnd()+'\n'+videoMarker+'\n'+videoBundle.outputFiles[0].text);
+for(const file of ['shell.bundle.js','home-legacy.bundle.js']){
+  const target='assets/js/'+file;
+  const source=await readFile(target,'utf8');
+  await writeFile(target,source.split(videoMarker)[0].trimEnd()+'\n'+videoMarker+'\n'+videoBundle.outputFiles[0].text);
+}
 await build({entryPoints:['editor/admin-growth.js'],outfile:'assets/js/admin-growth.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/studio-app.js'],outfile:'assets/js/growth-studio.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
 await build({entryPoints:['editor/reasoning.js'],outfile:'assets/js/reasoning.bundle.js',bundle:true,format:'iife',platform:'browser',minify:true,target:'es2020',legalComments:'none'});
@@ -90,7 +94,7 @@ async function generatedPages(directory){
   }
   return pages;
 }
-const candidates=new Set(['assets/js/growth-studio.bundle.js','assets/js/cryptic.bundle.js','assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
+const candidates=new Set(['assets/js/home-shell.bundle.js','assets/js/home-avatar.bundle.js','assets/js/home-legacy.bundle.js','assets/js/growth-studio.bundle.js','assets/js/cryptic.bundle.js','assets/data/learn-game-links.json','learn/feed.xml','assets/js/admin-growth.bundle.js','assets/css/admin-growth.css','assets/js/admin-learning.bundle.js','assets/js/learning-paths.bundle.js','assets/js/admin-articles.bundle.js',...files.filter(file=>!file.startsWith('tools/')&&(file.startsWith('assets/')||file.endsWith('.html')||rootPublic.has(file))),...await generatedPages(path.join(root,'learn'))]);
 const publicFiles=[];
 for(const file of candidates){
   // The editorial generator can unpublish a previously tracked article.
@@ -112,7 +116,8 @@ for(const file of publicFiles){
 // A changed lazy feature must invalidate the loader even when its HTML entry
 // point has no direct script tag for that feature (for example profile social).
 const featureManifest=Buffer.from(`window.BrainiFeatureVersions=Object.freeze(${JSON.stringify(lazyFeatureVersions(assetVersions))});\n`);
-for(const file of ['assets/js/shell.bundle.js','assets/js/perf-loader.js']){
+for(const loader of featureLoaders){
+  const file='assets/js/'+loader;
   if(!assetVersions.has(file))continue;
   const target=path.join(output,file),bytes=Buffer.concat([featureManifest,await readFile(target)]);
   await writeFile(target,bytes);
