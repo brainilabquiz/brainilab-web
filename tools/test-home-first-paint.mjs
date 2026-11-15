@@ -33,5 +33,6 @@ assert.equal(homeCoverAVIF(cover+'?replaced'),null,'a replacement source cannot 
 const article={slug:'test',title:'Same title',minutes:2,cover:{src:'/assets/images/learn/what-is-a-birdie-in-golf.webp',thumbnail:cover,position:37}};
 const art=homeArticle(article);
 assert.ok(art.includes('<picture><source type="image/avif"'));assert.ok(art.includes('src="'+cover+'"'));assert.ok(art.includes('object-position:center 37%'));assert.ok(art.includes('width="480" height="320"'));
+assert.ok(art.includes('loading="lazy"'),'the reading thumbnail is below the mobile fold');
 assert.ok(!homeArticle({...article,cover:{src:'/assets/images/learn/other.webp',position:10}}).includes('<picture>'),'unknown/future photos keep their original fallback');
 console.log('PASS homepage first paint: original cascade and complete content retained, no async CSS swap, root-resolved assets, safe edge cases, unchanged routes and exact-source AVIF fallbacks.');

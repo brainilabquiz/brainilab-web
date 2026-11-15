@@ -162,7 +162,7 @@ tree.write(ROOT/'sitemap.xml', encoding='utf-8', xml_declaration=True)
 if '<!-- learn-preview:start -->' in home:
     a = sorted(articles, key=lambda a: (-datetime.fromisoformat(a['publishedAt'].replace('Z','+00:00')).timestamp(),a['slug']))[0]
     position=a['cover'].get('position',20 if 'moon' in a['slug'] else 45)
-    preview = f'''<!-- learn-preview:start --><a class="home-article" href="/learn/{a['slug']}/"><img src="{escape(a['cover']['src'].replace('.webp','-small.webp'))}" alt="" style="object-position:center {position}%" width="480" height="320" decoding="async"/><span class="home-article-copy"><span class="home-article-label">Latest in Learn · {a['minutes']} min read</span><strong>{escape(a['title'])}</strong><span class="home-article-action">Read the article →</span></span></a><!-- learn-preview:end -->'''
+    preview = f'''<!-- learn-preview:start --><a class="home-article" href="/learn/{a['slug']}/"><img src="{escape(a['cover']['src'].replace('.webp','-small.webp'))}" alt="" style="object-position:center {position}%" width="480" height="320" loading="lazy" decoding="async"/><span class="home-article-copy"><span class="home-article-label">Latest in Learn · {a['minutes']} min read</span><strong>{escape(a['title'])}</strong><span class="home-article-action">Read the article →</span></span></a><!-- learn-preview:end -->'''
     home = re.sub(r'<!-- learn-preview:start -->.*?<!-- learn-preview:end -->', lambda _: preview, home, flags=re.S)
     (ROOT/'index.html').write_text(home, encoding='utf-8')
 print(f'Built Learn library and {len(articles)} published articles; drafts excluded.')
