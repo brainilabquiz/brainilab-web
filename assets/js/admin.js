@@ -20,6 +20,9 @@ window.BrainiAdmin=(function(){
     poolHealthSort:"default",
     questionHealthSort:"default",
     analyticsHealthSort:"health_asc",
+    analyticsRequest:0,
+    analyticsPlayerOpen:false,
+    analyticsPlayerFilter:"winners",
     contentHealthMap:new Map(),
     questionHealthMap:new Map(),
     lastDailyDate:new Date().toISOString().slice(0,10)
@@ -2399,19 +2402,123 @@ window.BrainiAdmin=(function(){
   // ==========================================================
 
   const GAME_LABELS={brainmix:"Brain Mix",orderup:"Order Up",topicrush:"Topic Rush",brainiword:"BrainiWord",connections:"Connections",survival:"Survival",oddoneout:"Odd One Out",higherlower:"Higher or Lower",mathrush:"Math Rush",numberroute:"Number Route",sequence:"Sequence",worldflags:"World Flags",worldcapitals:"World Capitals",science:"Science",history:"History",sports:"Sports",generalknowledge:"General Knowledge"};
+  const ANALYTICS_GAME_LABELS={...GAME_LABELS,cryptic:"Cryptic",europeflags:"Europe Flags",gtavi:"GTA VI Quiz",flagdash:"Flag Dash",maphunt:"Map Hunt"};
+
+  function gameAnalyticsRow(game,maxPlays){
+    const {plays,starts,coverage,exit_rate:exitRate}=game;
+    const hasStats=coverage!=="local_only" && coverage!=="unobserved";
+    const ratio=maxPlays?plays/maxPlays:0;
+    const usage=ratio>=.75?"top":ratio<.25?"low":"mid";
+    const signal=!hasStats?(coverage==="local_only"?"No cloud tracking":"No activity in period")
+      : plays===0?"No saved results":usage==="top"?"Strong usage":usage==="low"?"Low usage":"Healthy usage";
+    const count=value=>hasStats && value!=null?num(value):"—";
+    const percent=value=>value==null?"—":esc(value)+"%";
+    const detail=game.last_played?when(game.last_played):"No saved result";
+    return `<tr>
+      <th scope="row"><strong>${esc(ANALYTICS_GAME_LABELS[game.game_id]||game.game_id)}</strong>
+        <small>${game.in_catalog===false?"Historical activity · ":""}${esc(detail)}</small></th>
+      <td>${game.health_score==null?badge("No sample","info"):healthBadge({
+        health_score:game.health_score,sample_state:game.sample_state,
+        exposures:game.tracked_completions==null?starts:Number(game.tracked_completions)+Number(game.exits),exit_rate:exitRate
+      })}</td>
+      <td>${count(starts)}</td><td>${count(plays)}</td>
+      <td>${percent(exitRate)}${game.exits>0?`<small>${num(game.exits)} estimated · ${num(game.exits_first_checkpoint)} at first checkpoint</small>`:""}</td>
+      <td>${count(game.unique_players)}</td><td>${percent(game.avg_accuracy)}</td>
+      <td>${game.avg_score==null?"—":num(game.avg_score)}</td>
+      <td>${game.avg_duration_sec==null?"—":num(game.avg_duration_sec)+" s"}</td>
+      <td>${percent(game.verified_pct)}</td><td><span class="admin-analytics-signal ${usage}">${signal}</span></td>
+    </tr>`;
+  }
+
+  function wirePlayerActivity(days){
+    const details=$("#analyticsPlayerActivity");
+    const filter=$("#analyticsPlayerFilter");
+    const output=$("#analyticsPlayerRows");
+    let latestRequest=0;
+    let loaded=false;
+    let offset=0;
+
+    async function load(pageOffset=0,focusRange=false){
+      const request=++latestRequest;
+      const winnersOnly=filter.value==="winners";
+      output.setAttribute("aria-busy","true");
+      try{
+        const data=await rpc("admin_get_player_activity",{
+          p_days:days,p_winners_only:winnersOnly,p_offset:pageOffset
+        });
+        if(request!==latestRequest || !output.isConnected)return;
+        if(pageOffset>0 && !data.rows.length) return load(0,focusRange);
+        loaded=true;
+        offset=data.offset;
+        const {summary,rows,total,page_size:pageSize}=data;
+        output.innerHTML=`
+          <div class="admin-grid metrics">
+            ${metric("Plays per winner",summary.avg_plays_per_winner,`${num(summary.winning_players)} players with a recorded win`)}
+            ${metric("Active days per player",summary.avg_active_days,`${num(summary.active_players)} cloud players with recorded activity`)}
+          </div>
+          ${rows.length?`
+            <div class="admin-table-wrap" style="margin-top:12px"><table class="admin-table admin-player-activity-table">
+              <thead><tr><th scope="col">Player</th><th scope="col">Completed plays</th><th scope="col">Recorded wins</th><th scope="col">Active days (UTC)</th></tr></thead>
+              <tbody>${rows.map(player=>`<tr>
+                <th scope="row"><button type="button" class="admin-button" data-analytics-player="${esc(player.user_id)}">${esc(player.display_name||"Player")}</button></th>
+                <td>${num(player.completed_plays)}</td><td>${num(player.wins)}</td><td>${num(player.active_days)}</td>
+              </tr>`).join("")}</tbody>
+            </table></div>
+            <div class="admin-toolbar">
+              <button type="button" class="admin-button" data-activity-page="previous" ${offset===0?"disabled":""}>Previous</button>
+              <span tabindex="-1" data-activity-range>${num(offset+1)}–${num(offset+rows.length)} of ${num(total)}</span>
+              <button type="button" class="admin-button" data-activity-page="next" ${offset+rows.length>=total?"disabled":""}>Next</button>
+            </div>`:`<p class="admin-empty">${winnersOnly?"No recorded wins in this period.":"No recorded player activity in this period."}</p>`}`;
+        output.querySelectorAll("[data-analytics-player]").forEach(button=>{
+          button.onclick=safeAction(()=>openUserDetail(button.dataset.analyticsPlayer));
+        });
+        output.querySelectorAll("[data-activity-page]").forEach(button=>{
+          button.onclick=safeAction(()=>load(offset+(button.dataset.activityPage==="next"?pageSize:-pageSize),true));
+        });
+        if(focusRange)output.querySelector("[data-activity-range]")?.focus();
+      }catch(error){
+        if(request!==latestRequest || !output.isConnected)return;
+        loaded=false;
+        output.innerHTML=`<p role="status">Player activity could not load.</p><button type="button" class="admin-button" data-activity-retry>Try again</button>`;
+        output.querySelector("[data-activity-retry]").onclick=safeAction(()=>load(offset));
+        console.error(error);
+      }finally{
+        if(request===latestRequest)output.removeAttribute("aria-busy");
+      }
+    }
+
+    details.ontoggle=()=>{
+      if(!details.isConnected)return;
+      state.analyticsPlayerOpen=details.open;
+      if(details.open && !loaded && output.getAttribute("aria-busy")!=="true")load();
+    };
+    filter.onchange=()=>{
+      state.analyticsPlayerFilter=filter.value;
+      load();
+    };
+    if(details.open)load();
+  }
 
   async function renderAnalytics(days=30){
+    const request=++state.analyticsRequest;
     const [analytics,quality]=await Promise.all([
       rpc("admin_get_game_analytics",{p_days:days}),
       rpc("admin_question_quality_overview",{p_topic_slug:null,p_status:"published",p_min_attempts:0,p_limit:250})
     ]);
+    if(request!==state.analyticsRequest || state.currentView!=="analytics")return;
     let games=analytics?.games||[];const summary=analytics?.summary||{},qSummary=quality?.summary||{},issues=(quality?.rows||[]).filter(r=>!["healthy","insufficient_sample"].includes(r.quality_state));
     if(state.analyticsHealthSort==="health_asc" || state.analyticsHealthSort==="health_desc"){
       const dir=state.analyticsHealthSort==="health_desc"?-1:1;
-      games=games.slice().sort((a,b)=>(Number(a.health_score??-1)-Number(b.health_score??-1))*dir);
+      games=games.slice().sort((a,b)=>{
+        if(a.health_score==null)return b.health_score==null?0:1;
+        if(b.health_score==null)return -1;
+        return (Number(a.health_score)-Number(b.health_score))*dir;
+      });
+    }else{
+      games=games.slice().sort((a,b)=>Number(b.plays)-Number(a.plays));
     }
     const maxPlays=Math.max(0,...games.map(g=>Number(g.plays||0)));
-    const topLabel=GAME_LABELS[summary.top_game]||summary.top_game||"—";
+    const topLabel=ANALYTICS_GAME_LABELS[summary.top_game]||summary.top_game||"—";
     $("#adminContent").innerHTML=`
       <div class="admin-toolbar"><div class="admin-field"><label for="analyticsDays">Period</label><select class="admin-select" id="analyticsDays"><option value="7" ${days===7?"selected":""}>Last 7 days</option><option value="30" ${days===30?"selected":""}>Last 30 days</option><option value="90" ${days===90?"selected":""}>Last 90 days</option></select></div><div class="admin-field"><label for="analyticsHealthSort">Order games</label><select class="admin-select" id="analyticsHealthSort"><option value="health_asc" ${state.analyticsHealthSort==="health_asc"?"selected":""}>Health · needs attention</option><option value="health_desc" ${state.analyticsHealthSort==="health_desc"?"selected":""}>Health · strongest</option><option value="default" ${state.analyticsHealthSort==="default"?"selected":""}>Usage order</option></select></div><button class="admin-button" id="analyticsRefresh">Refresh</button></div>
       <div class="admin-grid metrics">
@@ -2420,12 +2527,36 @@ window.BrainiAdmin=(function(){
         ${metric("Top game",topLabel,"By completed plays")}
         ${metric("Questions needing review",qSummary.needs_review,"Verified-answer quality signals")}
       </div>
-      <section class="admin-panel" style="margin-top:14px"><div class="admin-panel-head"><div><h2>Game performance & Health</h2><p>Health combines starts, completed plays, exit/abandonment, accuracy and relative usage. A session that stays unfinished for 15 minutes is treated as an exit.</p></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Game</th><th>Health</th><th>Starts</th><th>Plays</th><th>Exit</th><th>Players</th><th>Avg accuracy</th><th>Avg score</th><th>Avg time</th><th>Verified</th><th>Signal</th></tr></thead><tbody>${games.map(g=>{const plays=Number(g.plays||0);const ratio=maxPlays?plays/maxPlays:0;const cls=plays===0?"low":ratio>=.75?"top":ratio<.25?"low":"mid";const signal=plays===0?"No plays":cls==="top"?"Strong usage":cls==="low"?"Low usage":"Healthy usage";return `<tr><td><strong>${esc(GAME_LABELS[g.game_id]||g.game_id)}</strong><small>Last: ${when(g.last_played)}</small></td><td>${healthBadge({health_score:g.health_score,sample_state:g.sample_state,exposures:g.starts,exit_rate:g.exit_rate})}</td><td>${num(g.starts||0)}</td><td>${num(g.plays)}</td><td>${g.exit_rate==null?"—":esc(g.exit_rate)+"%"}</td><td>${num(g.unique_players)}</td><td>${g.avg_accuracy==null?"—":esc(g.avg_accuracy)+"%"}</td><td>${g.avg_score==null?"—":num(g.avg_score)}</td><td>${g.avg_duration_sec==null?"—":esc(g.avg_duration_sec)+" s"}</td><td>${g.verified_pct==null?"—":esc(g.verified_pct)+"%"}</td><td><span class="admin-analytics-signal ${cls}">${signal}</span></td></tr>`}).join("")}</tbody></table>${games.length?"":`<div class="admin-empty">No game telemetry in this period.</div>`}</div></section>
+      <details class="admin-panel" id="analyticsPlayerActivity" style="margin-top:14px" ${state.analyticsPlayerOpen?"open":""}>
+        <summary><strong>Player activity</strong></summary>
+        <p>Active days count distinct UTC dates with a cloud game start or saved result. Browsing without a recorded game is outside this report.
+          A winner has at least one result marked as won. Plays per winner includes all completed games by those players in the selected period.</p>
+        <div class="admin-toolbar"><div class="admin-field"><label for="analyticsPlayerFilter">Players to show</label>
+          <select class="admin-select" id="analyticsPlayerFilter">
+            <option value="winners">Players with a win</option>
+            <option value="all" ${state.analyticsPlayerFilter==="all"?"selected":""}>All active players</option>
+          </select>
+        </div></div>
+        <div id="analyticsPlayerRows">${loading()}</div>
+      </details>
+      <section class="admin-panel" style="margin-top:14px">
+        <div class="admin-panel-head"><div><h2>Game performance &amp; Health</h2>
+          <p>Health uses cloud play completion, result accuracy and relative usage. Some quizzes record a start when the first question loads.
+            An unfinished start reaches the estimated-exit cutoff after 15 minutes of inactivity. Exit rate uses starts that finished or reached that cutoff.
+            The plays column counts saved results. The selected period includes today in UTC.</p>
+        </div></div>
+        <div class="admin-table-wrap" role="region" aria-label="Game and quiz statistics" tabindex="0"><table class="admin-table admin-game-health-table">
+          <thead><tr><th scope="col">Game</th><th scope="col">Health</th><th scope="col">Starts</th><th scope="col">Plays</th><th scope="col">Exit</th><th scope="col">Players</th><th scope="col">Avg accuracy</th><th scope="col">Avg score</th><th scope="col">Avg time</th><th scope="col">Verified</th><th scope="col">Signal</th></tr></thead>
+          <tbody>${games.map(game=>gameAnalyticsRow(game,maxPlays)).join("")}</tbody></table>
+          ${games.length?"":`<div class="admin-empty">No games are available.</div>`}
+        </div>
+      </section>
       <section class="admin-panel" style="margin-top:14px"><div class="admin-panel-head"><div><h2>Questions that need attention</h2><p>Signals from verified answers: unusual difficulty, high skip rate or weak distractors.</p></div><button class="admin-button" id="analyticsQuestionBank">Open Question Bank</button></div><div class="admin-mini-grid"><div class="admin-mini-card"><span>Too easy</span><strong>${num(qSummary.too_easy)}</strong></div><div class="admin-mini-card"><span>Too hard</span><strong>${num(qSummary.too_hard)}</strong></div><div class="admin-mini-card"><span>High skip</span><strong>${num(qSummary.high_skip)}</strong></div><div class="admin-mini-card"><span>Weak distractors</span><strong>${num(qSummary.weak_distractors)}</strong></div></div><div class="admin-table-wrap" style="margin-top:12px"><table class="admin-table"><thead><tr><th>Signal</th><th>Question</th><th>Topic</th><th>Attempts</th><th>Accuracy</th><th>Skip</th></tr></thead><tbody>${issues.slice(0,40).map(r=>`<tr class="clickable" data-analytics-q="${esc(r.question_version_id)}"><td>${qualityBadge(r.quality_state)}</td><td><strong>${esc(r.prompt)}</strong><small>${esc(r.external_key||"")}</small></td><td>${esc(r.topic_name||r.topic_slug)}</td><td>${num(r.attempts)}</td><td>${r.accuracy==null?"—":esc(r.accuracy)+"%"}</td><td>${r.skip_rate==null?"—":esc(r.skip_rate)+"%"}</td></tr>`).join("")}</tbody></table>${issues.length?"":`<div class="admin-empty">No question-quality issues with enough verified data.</div>`}</div></section>`;
     $("#analyticsDays").onchange=safeAction(e=>renderAnalytics(Number(e.target.value)));
     $("#analyticsHealthSort").onchange=safeAction(e=>{state.analyticsHealthSort=e.target.value;return renderAnalytics(Number($("#analyticsDays").value));});
     $("#analyticsRefresh").onclick=safeAction(()=>renderAnalytics(Number($("#analyticsDays").value)));
     $("#analyticsQuestionBank").onclick=()=>navigate("questions");
+    wirePlayerActivity(days);
     document.querySelectorAll("[data-analytics-q]").forEach(row=>row.onclick=safeAction(()=>openQuestionEditor(row.dataset.analyticsQ)));
   }
 
