@@ -34,6 +34,50 @@
 .home-page{background:#fafaf8}
 .home-page .wrap{width:min(1180px,calc(100% - 48px))}
 .home-hero{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;padding:64px 0 44px}
+.home-launch { margin-block: 16px 0; }
+.home-launch .home-launch-link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(12px, 2.2vw, 26px);
+  padding: 9px clamp(11px, 2.4vw, 24px);
+  border: 1px solid #f876bf;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 84% 5%, #733360 0, transparent 55%),
+              linear-gradient(106deg, #1a1029 10%, #39214f 62%, #43182f 100%);
+  box-shadow: 0 0 18px #dc46a65c, inset 0 1px 0 #ffacd7b3;
+  color: #fff6fc;
+  text-decoration: none;
+}
+.home-launch-mark {
+  display: block;
+  width: 80px;
+  height: auto;
+  border-radius: 9px;
+  box-shadow: 0 0 16px #f26dc77a;
+}
+.home-launch-copy { display: grid; gap: 2px; line-height: 1.2; }
+.home-launch-copy strong { font-size: clamp(1.12rem, 2.7vw, 1.8rem); letter-spacing: -.03em; }
+.home-launch-copy span { color: #f9d9ef; font-size: clamp(.82rem, 2vw, .97rem); }
+.home-launch-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #ffabd4;
+  border-radius: 50%;
+  color: #fff1f8;
+  background: #4e2449;
+  font-size: 1.3rem;
+}
+.home-launch .home-launch-link:hover { box-shadow: 0 0 25px #dc46a68c, inset 0 1px 0 #ffacd7; }
+.home-launch .home-launch-link:hover strong { text-decoration: underline; text-underline-offset: .16em; }
+.home-launch .home-launch-link:focus-visible { outline: 3px solid #812a80; outline-offset: 4px; }
+@media (max-width: 480px) {
+  .home-launch { margin-top: 12px; }
+  .home-launch-mark { width: 64px; }
+  .home-launch-arrow { width: 32px; height: 32px; font-size: 1.05rem; }
+}
 .home-intro{text-align:left;padding:0}
 .home-intro .eyebrow{font-size:12px;letter-spacing:.11em;line-height:1.6;color:var(--navy);font-weight:800;margin:0 0 22px}
 .home-intro h1{font-size:clamp(38px,4.8vw,62px);line-height:1.07;letter-spacing:-.045em;color:var(--ink)}
