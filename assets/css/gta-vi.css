@@ -96,7 +96,7 @@
 .gta-subhead a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; font-weight: 700; }
 
 /* Section headings */
-.gta-launch h2, .gta-news h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 900; letter-spacing: -.035em; }
+.gta-launch h2, .gta-news h2, .gta-guides h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 900; letter-spacing: -.035em; }
 .gta-section-intro { color: var(--muted); margin: .6rem 0 0; }
 
 /* Launch essentials */
@@ -166,7 +166,25 @@
 .gta-quiz-result h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 
 /* Reading list: full-width card grid under the news */
-.gta-read { margin-top: 3.4rem; }
+.gta-guides, .gta-read { margin-top: 3.4rem; }
+.gta-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+.gta-guide-grid article {
+  padding: clamp(1.15rem, 2.8vw, 1.9rem);
+  border: 1px solid var(--line);
+  border-top-color: var(--pink);
+  border-radius: 1.1rem;
+  background: linear-gradient(145deg, #27183c, #1a1029 65%);
+}
+.gta-guide-grid h3 { font-size: clamp(1.2rem, 2.3vw, 1.55rem); }
+.gta-guide-grid h4 { margin: 1.2rem 0 .35rem; color: var(--bright); font-size: 1rem; line-height: 1.3; }
+.gta-guide-grid p { margin: .65rem 0 0; color: var(--muted); }
+.gta-guide-grid strong { color: var(--bright); }
+.gta-guide-grid article p:last-child { margin-top: 1.2rem; }
 .gta-read h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -.035em; }
 .gta-read-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.3rem; }
 .gta-read a { display: grid; align-content: start; gap: .35rem; padding: .7rem .7rem 1rem; border-radius: 1.1rem; text-decoration: none; background: linear-gradient(180deg, #211437, #1a1029); border: 1px solid var(--line); transition: border-color .15s ease, transform .15s ease; }
@@ -229,7 +247,8 @@
   .gta-launch dl { grid-template-columns: 1fr; }
   .gta-editorial { grid-template-columns: minmax(0, 1fr); gap: 2.2rem; }
   .gta-side, .gta-news { grid-column: auto; grid-row: auto; }
-  .gta-read { margin-top: 2.6rem; }
+  .gta-guides, .gta-read { margin-top: 2.6rem; }
+  .gta-guide-grid { grid-template-columns: minmax(0, 1fr); }
   .gta-read-grid { grid-template-columns: minmax(0, 1fr); }
   .gta-read a { grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: .25rem .9rem; padding: .6rem; }
   .gta-read img { grid-row: span 2; margin: 0; border-radius: .6rem; }
