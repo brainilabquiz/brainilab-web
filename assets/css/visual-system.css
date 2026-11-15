@@ -677,15 +677,15 @@ body.braini-visual .cryptic-heading img{box-sizing:border-box;padding:8px;border
 /* ===== Breadcrumbs inside the navy band (Nov 2026): no light strip between the header and the band ===== */
 /* Case A: the breadcrumb has its own .wrap right before the band (games, topic hubs, quizzes). Case B: it sits right before the hero (Learn, Cryptic). */
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)),
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)){position:relative;isolation:isolate}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)){position:relative;isolation:isolate}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading))::before,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading))::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header))::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)){color:#c9c5ee}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)){color:#c9c5ee}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)) a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)) a{color:#fff;text-decoration-color:#ffffff66}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a:focus-visible,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading)) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
 /* Close the small gaps that would show a light line between the breadcrumb and the band. */
 body.braini-visual .wrap:has(> .breadcrumb:only-child) + .game-entry-heading,
 body.braini-visual .breadcrumb + .cryptic-heading{margin-top:0!important}
@@ -699,4 +699,65 @@ body.braini-visual :is(.learn-catalog .learn-hero,.geo-intro,.science-intro,.top
   body.braini-visual :is(.learn-catalog .learn-hero,.geo-intro,.science-intro,.topic-intro,.game-entry-heading){padding-inline:7px!important}
   body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb,
   body.braini-visual .learn-catalog .breadcrumb:has(+ .learn-hero){padding-inline:7px}
+}
+
+/* ===== Learn articles, the Academy and About on the navy band (Nov 2026) ===== */
+/* Articles: the breadcrumb (Case B above) and the header - topic, title, summary, byline - sit on the band. */
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro){position:relative;isolation:isolate;color:#fff}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro)::before{content:"";position:absolute;z-index:-1;top:calc(-1 * var(--band-up,0px));bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro)::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro) h1{color:#fff!important;font-weight:900}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro) :is(.eyebrow,.about-kicker){color:var(--yellow,#ffd23f)!important}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro) a{color:#fff!important;text-decoration-color:#ffffff80}
+body.braini-visual :is(.article-reading .article-header,.learning-paths>.section-heading:has(h1),.about-intro) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .article-reading .article-header{max-width:none;padding:26px 0 36px}
+body.braini-visual .article-reading .article-header h1{max-width:24ch}
+body.braini-visual .article-reading .article-header>.article-description{color:#e4e1f7}
+body.braini-visual .article-reading .article-header .article-byline{color:#c9c5ee}
+/* The cover is lifted onto the band's lower edge, in a white frame (position: it paints over the band). */
+body.braini-visual .article-reading:has(.article-body>.article-cover:first-child) .article-header{padding-bottom:88px}
+body.braini-visual .article-reading .article-body>.article-cover:first-child{position:relative;margin-top:-64px;background:#fff;box-shadow:0 22px 44px #0b083038}
+/* The end of an article: sources in a card, the game as a navy card, the next reads as cards. */
+body.braini-visual .article-reading .article-end{margin-top:44px;padding-top:0;border-top:0}
+body.braini-visual .article-reading .article-fold{margin:0 0 18px;padding:0 18px;border:1px solid #e3def0;border-radius:16px;background:#fff}
+body.braini-visual .article-reading .article-fold>summary{color:var(--navy,#2d296e);font-weight:800}
+body.braini-visual .article-reading a.article-game-link{border:0;border-radius:20px;padding:18px 20px;background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/22px 22px,var(--navy,#2d296e);box-shadow:0 16px 32px #2d296e33}
+body.braini-visual .article-reading a.article-game-link>img{box-sizing:border-box;padding:6px;border-radius:14px;background:#fff}
+body.braini-visual .article-reading .article-game-copy>strong{color:#fff;font-weight:900}
+body.braini-visual .article-reading .article-game-copy>span{color:#d9d6f2}
+body.braini-visual .article-reading .article-game-action{border-radius:999px;font-weight:800;box-shadow:0 3px 0 #c9a700}
+body.braini-visual .article-reading .article-next{margin-top:40px;padding-top:0;border-top:0}
+body.braini-visual .article-reading .article-next h2{margin:0 0 14px;font-size:24px;font-weight:900;color:var(--navy,#2d296e)}
+body.braini-visual .article-reading .article-next ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 24px}
+body.braini-visual .article-reading .article-next li a{box-sizing:border-box;height:100%;align-items:center;padding:16px 18px;border:1px solid #e3def0;border-left:5px solid var(--reading-accent,var(--navy,#2d296e));border-radius:16px;background:#fff;color:var(--navy,#2d296e);font-weight:800;line-height:1.4;box-shadow:0 6px 16px #2d296e14}
+body.braini-visual .article-reading .article-next li a:hover{text-decoration:none;box-shadow:0 12px 24px #2d296e29}
+body.braini-visual .article-reading .article-next li a>span{flex:none;color:var(--reading-accent,var(--navy,#2d296e));font-size:18px}
+body.braini-visual .article-reading .article-back{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border:2px solid var(--navy,#2d296e);border-radius:999px;color:var(--navy,#2d296e);font-size:14px;font-weight:800;text-decoration:none}
+body.braini-visual .article-reading .article-back:hover{background:var(--navy,#2d296e);color:#fff}
+@media(prefers-reduced-motion:no-preference){
+  body.braini-visual .article-reading :is(a.article-game-link,.article-next li a){transition:transform .15s ease,box-shadow .15s ease}
+  body.braini-visual .article-reading :is(a.article-game-link,.article-next li a):hover{transform:translateY(-2px)}
+}
+/* The Academy: its heading (title and the link to the articles) is the band, right under the site header. */
+body.braini-visual .learning-paths:has(>.section-heading:first-child h1){margin-top:0;padding-top:0;border-top:0}
+body.braini-visual .learning-paths>.section-heading:has(h1){padding:30px 0 36px;margin-bottom:24px}
+/* About: the introduction is the band; the box spans the page so the band stays centred, the text keeps its measure. */
+body.braini-visual .about-intro{--band-up:2.5rem;max-width:none;padding:32px 0 40px;margin-bottom:2.5rem}
+body.braini-visual .about-intro>*{max-width:42rem}
+body.braini-visual .about-intro>p:not(.about-kicker){color:#e4e1f7}
+@media(max-width:700px){
+  body.braini-visual .about-intro{--band-up:1.5rem;padding:24px 0 30px}
+}
+@media(max-width:600px){
+  body.braini-visual .article-reading .article-header{padding:18px 0 28px}
+  body.braini-visual .article-reading:has(.article-body>.article-cover:first-child) .article-header{padding-bottom:64px}
+  body.braini-visual .article-reading .article-body>.article-cover:first-child{margin-top:-46px}
+  body.braini-visual .learning-paths>.section-heading:has(h1){padding:22px 0 28px}
+}
+/* Breaking News: its header card keeps its own design and sits on the band, like the game panels. */
+body.braini-visual .breaking-news.wrap{position:relative;isolation:isolate}
+body.braini-visual .breaking-news.wrap::before{content:"";position:absolute;z-index:-1;top:-24px;left:50%;width:100vw;height:172px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%) 0 100%/100% 6px no-repeat,radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .breaking-news__header{box-shadow:0 24px 48px #0b083038}
+@media(max-width:767px){
+  body.braini-visual .breaking-news.wrap::before{top:-16px;height:136px}
 }
