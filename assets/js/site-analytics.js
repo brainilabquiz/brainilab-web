@@ -16,6 +16,7 @@ window.BrainiSiteAnalytics=(()=>{
   // Game-owned round objects deduplicate starts without retaining player identifiers.
   const started=new WeakSet();
   const finishedPractice=new WeakSet(),entryKey='brainilab_growth_entry_v1';
+  const measuredPracticeGames=new Set(['europeflags','sports']);
   let entry=null;
   function entryContext(){
     const now=Date.now();let old=entry;try{old=JSON.parse(localStorage.getItem(entryKey))||entry;}catch{}
@@ -34,7 +35,7 @@ window.BrainiSiteAnalytics=(()=>{
     return entry;
   }
   function practiceComplete(gameId,round){
-    if(gameId!=='europeflags'||!allowed()||!round||typeof round!=='object'||!started.has(round)||finishedPractice.has(round))return;
+    if(!measuredPracticeGames.has(gameId)||!allowed()||!round||typeof round!=='object'||!started.has(round)||finishedPractice.has(round))return;
     finishedPractice.add(round);send('practice_complete',{game_id:gameId});
   }
   const measuredGames=new Set(['brainmix','worldflags','worldcapitals','generalknowledge','science','history','sports','mathrush','numberroute','connections','brainiword','sequence','survival','oddoneout','higherlower','orderup','topicrush']);
@@ -45,7 +46,7 @@ window.BrainiSiteAnalytics=(()=>{
     send('first_game_start',{game_id:gameId,mode,seconds_to_play:Math.min(1800,Math.max(0,Math.floor((Date.now()-context.startedAt)/1000)))});
   }
   function gameStart(gameId,round,mode='anytime'){
-    if(gameId==='europeflags'&&mode==='practice'){
+    if(measuredPracticeGames.has(gameId)&&mode==='practice'){
       if(!allowed()||!round||typeof round!=='object'||started.has(round))return;
       started.add(round);send('practice_start',{game_id:gameId});return;
     }

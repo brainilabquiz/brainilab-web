@@ -43,6 +43,7 @@ import './test-guest-auth.mjs';
 import './test-halloween-legacy.mjs';
 import './test-admin-operations-model.mjs';
 import './test-admin-game-analytics.mjs';
+import './test-quiz-entry-order-up.mjs';
 import './test-home-entry.mjs';
 import './test-home-startup.mjs';
 import './test-latest-video.mjs';

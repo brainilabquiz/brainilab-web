@@ -34,10 +34,16 @@ for(const [page,topic] of pages){
  let init;
  const add=d.addEventListener.bind(d);
  d.addEventListener=(name,handler,...options)=>name==='DOMContentLoaded'?(init=handler):add(name,handler,...options);
- const inline=[...d.scripts].find(script=>!script.src&&script.textContent.includes('const pack=await BrainiQuiz.loadPack'));
+ const inline=[...d.scripts].find(script=>!script.src&&/BrainiQuiz\.(mountEntry|loadPack)\(/.test(script.textContent));
  assert.ok(inline,'the actual page uses the shared recoverable loader');
  w.eval(inline.textContent);d.addEventListener=add;
  const initialization=init();
+ const fullStart=d.querySelector('[data-quiz-start="full"]');
+ if(fullStart){
+  assert.equal(packRequests,0,'an explicit start has no requests on arrival');
+  fullStart.focus();
+  fullStart.click();
+ }
  await tick();await tick();
  const root=d.getElementById('leafQuiz'),stage=root.querySelector('.challenge-inner'),status=root.querySelector('[data-quiz-pack-status]'),retry=status.querySelector('button');
  assert.equal(root.getAttribute('aria-busy'),'false');assert.equal(stage.hidden,true);

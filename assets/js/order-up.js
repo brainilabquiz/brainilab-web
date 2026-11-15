@@ -97,6 +97,8 @@ window.BrainiOrderUp=(function(){
     let checking=false;
     let finishing=false;
     let healthTracker=null;
+    let elapsedMs=0;
+    let playingSince=null;
 
     const archiveDate=BrainiData.pastDailyDate?.(new URLSearchParams(location.search).get("archive"));
     const archiveMode=!!archiveDate;
@@ -178,6 +180,37 @@ window.BrainiOrderUp=(function(){
       )?.label||"";
     }
 
+    function currentElapsed(){
+      if(elapsedMs===null)return null;
+      return elapsedMs+(playingSince===null?0:performance.now()-playingSince);
+    }
+
+    function pauseClock(){
+      elapsedMs=currentElapsed();
+      playingSince=null;
+    }
+
+    function resumeClock(){
+      if(!game.hidden && !document.hidden && !finishing && playingSince===null){
+        playingSince=performance.now();
+      }
+    }
+
+    function saveOnPageHide(){
+      if(game.hidden||finishing)return;
+      pauseClock();
+      save();
+    }
+
+    function onVisibilityChange(){
+      if(document.hidden)saveOnPageHide();
+      else resumeClock();
+    }
+
+    document.addEventListener('visibilitychange',onVisibilityChange);
+    window.addEventListener('pagehide',saveOnPageHide);
+    window.addEventListener('pageshow',resumeClock);
+
     function save(){
       if(!content) return;
 
@@ -186,6 +219,7 @@ window.BrainiOrderUp=(function(){
         roundIndex,
         roundResults,
         selectedIds,
+        elapsedMs:currentElapsed(),
         finished:false
       });
     }
@@ -422,6 +456,10 @@ window.BrainiOrderUp=(function(){
     async function finish(){
       if(finishing)return;
       finishing=true;
+      pauseClock();
+      document.removeEventListener('visibilitychange',onVisibilityChange);
+      window.removeEventListener('pagehide',saveOnPageHide);
+      window.removeEventListener('pageshow',resumeClock);
       const totalScore=
         roundResults.reduce(
           (sum,x)=>sum+Number(x.score||0),
@@ -460,6 +498,7 @@ window.BrainiOrderUp=(function(){
             correct:exact,
             total:20,
             accuracy,
+            ...(elapsedMs===null?{}:{durationMs:Math.round(elapsedMs)}),
             orderPairsCorrect:pairs,
             orderPairsTotal:90,
             orderUpRounds:
@@ -529,6 +568,8 @@ window.BrainiOrderUp=(function(){
 
           roundResults=
             saved.roundResults;
+          // Older drafts have no measured time for the part already played.
+          elapsedMs=Number.isFinite(saved.elapsedMs)&&saved.elapsedMs>=0?saved.elapsedMs:null;
 
           selectedIds=
             Array.isArray(saved.selectedIds)
@@ -548,7 +589,9 @@ window.BrainiOrderUp=(function(){
 
         intro.hidden=true;
         loading.hidden=true;
-        if(!archiveMode&&!TRY_FIRST_MODE)window.BrainiSiteAnalytics?.gameStart("orderup",analyticsRound,"daily");game.hidden=false;
+        if(!archiveMode&&!TRY_FIRST_MODE)window.BrainiSiteAnalytics?.gameStart("orderup",analyticsRound,"daily");
+        game.hidden=false;
+        resumeClock();
 
         renderRound();
 
