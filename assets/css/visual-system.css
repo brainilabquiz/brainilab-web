@@ -677,15 +677,15 @@ body.braini-visual .cryptic-heading img{box-sizing:border-box;padding:8px;border
 /* ===== Breadcrumbs inside the navy band (Nov 2026): no light strip between the header and the band ===== */
 /* Case A: the breadcrumb has its own .wrap right before the band (games, topic hubs, quizzes). Case B: it sits right before the hero (Learn, Cryptic). */
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)),
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)){position:relative;isolation:isolate}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header,.topic-index-header)){position:relative;isolation:isolate}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading))::before,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header))::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header,.topic-index-header))::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)){color:#c9c5ee}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header,.topic-index-header)){color:#c9c5ee}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)) a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header,.topic-index-header)) a{color:#fff;text-decoration-color:#ffffff66}
 body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading)) .breadcrumb a:focus-visible,
-body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header)) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .breadcrumb:has(+ :is(.learn-hero,.cryptic-heading,.article-header,.topic-index-header)) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
 /* Close the small gaps that would show a light line between the breadcrumb and the band. */
 body.braini-visual .wrap:has(> .breadcrumb:only-child) + .game-entry-heading,
 body.braini-visual .breadcrumb + .cryptic-heading{margin-top:0!important}
@@ -760,4 +760,49 @@ body.braini-visual .breaking-news.wrap::before{content:"";position:absolute;z-in
 body.braini-visual .breaking-news__header{box-shadow:0 24px 48px #0b083038}
 @media(max-width:767px){
   body.braini-visual .breaking-news.wrap::before{top:-16px;height:136px}
+}
+
+/* ===== The remaining pages on the navy band (Nov 2026): Reasoning, Learn topics, courses, Suggestions, legal, 404 ===== */
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero){position:relative;isolation:isolate;color:#fff}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero)::before{content:"";position:absolute;z-index:-1;top:calc(-1 * var(--band-up,0px));bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero)::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero) h1{color:#fff!important;font-weight:900}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero) :is(p,.game-page-dates){color:#e4e1f7!important}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero) a{color:#fff!important;text-decoration-color:#ffffff80}
+body.braini-visual :is(.reason-header,.topic-index-header,.suggestions-copy,.info-page .page-hero) a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .suggestions-copy .auth-kicker{color:var(--yellow,#ffd23f)!important}
+/* Reasoning Challenge: the header (back link, title, dates, summary) is the band, right under the site header. */
+body.braini-visual .reason-header{--band-up:32px;padding:6px 0 30px;margin-bottom:28px}
+/* Learn topics: the breadcrumb (Case B above) and the heading. */
+body.braini-visual .topic-index-header{margin:0 0 24px;padding:24px 0 32px}
+/* Suggestions: the introduction is the band; the form card is lifted onto its edge when nothing sits between them. */
+body.braini-visual .suggestions-copy{--band-up:28px;margin-bottom:0;padding:4px 0 34px}
+body.braini-visual .suggestions-wrap:has(> .suggestions-copy + .feedback-context[hidden] + .suggestions-card) .suggestions-copy{padding-bottom:72px}
+body.braini-visual .suggestions-wrap:has(> .suggestions-copy + .feedback-context[hidden] + .suggestions-card) .suggestions-card{position:relative;margin-top:-44px;box-shadow:0 22px 44px #0b083030}
+body.braini-visual .suggestions-wrap:has(> .suggestions-copy + .feedback-context:not([hidden])) .feedback-context{margin-top:18px}
+/* Privacy and cookies: the breadcrumb and the hero are one band; the old navy card becomes the band. */
+body.braini-visual.info-page .wrap:has(> .breadcrumb:only-child):has(+ .page-hero){position:relative;isolation:isolate}
+body.braini-visual.info-page .wrap:has(> .breadcrumb:only-child):has(+ .page-hero)::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
+body.braini-visual.info-page .wrap:has(> .breadcrumb:only-child):has(+ .page-hero) .breadcrumb{color:#c9c5ee}
+body.braini-visual.info-page .wrap:has(> .breadcrumb:only-child):has(+ .page-hero) .breadcrumb a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual.info-page .wrap:has(> .breadcrumb:only-child):has(+ .page-hero) .breadcrumb a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual.info-page .page-hero{padding:16px 0 40px;margin-bottom:12px}
+body.braini-visual.info-page .page-hero .page-hero-card{padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible}
+body.braini-visual.info-page .page-hero .page-hero-card::before{display:none}
+/* Academy courses: the breadcrumb is on the band, and the chapter list and the course card are lifted onto it. */
+body.braini-visual .academy-course{position:relative;isolation:isolate}
+body.braini-visual .academy-course::before{content:"";position:absolute;z-index:-1;top:0;left:50%;width:100vw;height:210px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%) 0 100%/100% 6px no-repeat,radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .academy-course>.breadcrumb{color:#c9c5ee}
+body.braini-visual .academy-course>.breadcrumb a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual .academy-course>.breadcrumb a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .academy-course .academy-hero{background:#3a3591;border:1px solid #ffffff2e;box-shadow:0 30px 60px #0b083066}
+body.braini-visual .academy-course .academy-outline{box-shadow:0 22px 44px #0b083038}
+/* 404: the card sits on the band. */
+body.braini-visual.error-page main.section{position:relative;isolation:isolate}
+body.braini-visual.error-page main.section::before{content:"";position:absolute;z-index:-1;top:0;left:50%;width:100vw;height:190px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%) 0 100%/100% 6px no-repeat,radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual.error-page main.section>div{box-shadow:0 26px 52px #0b083033}
+@media(max-width:600px){
+  body.braini-visual .reason-header{--band-up:20px;padding-bottom:24px}
+  body.braini-visual .topic-index-header{padding:18px 0 26px}
+  body.braini-visual .academy-course::before{height:150px}
 }
