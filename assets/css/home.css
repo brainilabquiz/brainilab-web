@@ -39,7 +39,7 @@
   grid-template-columns: clamp(56px, 10vw, 88px) minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(10px, 2.3vw, 16px);
-  width: min(100%, 490px);
+  width: 100%;
   margin-top: clamp(18px, 2.5vw, 29px);
   padding: 13px clamp(12px, 2.1vw, 18px);
   border: 1px solid transparent;
