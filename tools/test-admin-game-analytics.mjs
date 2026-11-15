@@ -4,7 +4,7 @@ import {JSDOM} from 'jsdom';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const library = read('../games/index.html');
-const migration = read('../supabase/migrations/20261115183000_admin_game_analytics_activity.sql');
+const migration = read('../supabase/migrations/20261115185125_admin_game_analytics_activity.sql');
 const libraryIds = [...library.matchAll(/data-anytime-game="([^"]+)"/g)].map(([, id]) => id);
 const catalog = migration.split('with catalog(game_id, cloud_tracking) as (values')[1].split('),\n  starts_raw')[0];
 const catalogIds = [...catalog.matchAll(/\('([^']+)', (?:true|false)\)/g)].map(([, id]) => id);
