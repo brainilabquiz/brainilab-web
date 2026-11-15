@@ -1,6 +1,6 @@
 
 window.BrainiQuiz = (function(){
-  function loadPack(root,topic,difficulty="easy",setNumber=1){
+  function loadPack(root,topic,difficulty="easy",setNumber=1,{focusOnReady=false}={}){
     const stage=root.querySelector('.challenge-inner');
     let status=root.querySelector('[data-quiz-pack-status]');
     if(!status){
@@ -25,7 +25,7 @@ window.BrainiQuiz = (function(){
           if(!Array.isArray(pack?.questions)||pack.questions.length!==20)throw Error('Incomplete quiz pack');
           ready=true;status.hidden=true;stage.hidden=false;
           root.setAttribute('aria-busy','false');resolve(pack);
-          if(focusAfterRetry)queueMicrotask(()=>{
+          if(focusOnReady||focusAfterRetry)queueMicrotask(()=>{
             if(root.isConnected&&(status.contains(document.activeElement)||document.activeElement===document.body)){
               const question=root.querySelector('[data-q]');question.tabIndex=-1;question.focus();
             }
@@ -35,12 +35,105 @@ window.BrainiQuiz = (function(){
           heading.textContent='Your questions couldn’t load.';
           detail.textContent='Check your connection and try again. Your progress hasn’t changed.';
           retry.hidden=false;retry.disabled=false;
-          if(focusAfterRetry)retry.focus();
+          if(focusOnReady||focusAfterRetry)retry.focus();
         }finally{pending=false;}
       }
       retry.onclick=()=>{focusAfterRetry=document.activeElement===retry;void load();};
       void load();
     });
+  }
+
+  function mountEntry(root,{gameId,name,next}){
+    const entry=root.querySelector('[data-quiz-entry]');
+    const stage=root.querySelector('.challenge-inner');
+    const resultBox=root.querySelector('[data-inline-quiz-result]');
+    const starts=[...entry.querySelectorAll('[data-quiz-start]')];
+    const params=new URLSearchParams(location.search);
+    const difficulty=BrainiContent.normalizeDifficulty(params.get('difficulty')||'easy');
+    const set=Math.max(1,parseInt(params.get('set')||'1',10)||1);
+    const level=difficulty[0].toUpperCase()+difficulty.slice(1);
+    const testMode=params.get('try')==='1';
+    root.querySelector('[data-difficulty-label]').textContent=level;
+    entry.querySelector('[data-quiz-level]').textContent=level;
+    document.querySelectorAll('[data-difficulty]').forEach(link=>{
+      const selected=link.dataset.difficulty===difficulty;
+      link.classList.toggle('active',selected);
+      if(selected)link.setAttribute('aria-current','true');
+      if(testMode){
+        const destination=new URL(link.href);
+        destination.searchParams.set('try','1');
+        link.href=destination.href;
+      }
+    });
+
+    const replay=!!window.BrainiReplay?.storageSuffix();
+    starts.forEach(button=>{
+      const quick=button.dataset.quizStart==='quick';
+      if(quick&&replay){button.hidden=true;return;}
+      button.disabled=false;
+      button.onclick=async()=>{
+        if(entry.hidden)return;
+        entry.hidden=true;
+        const pack=await loadPack(root,gameId,difficulty,set,{focusOnReady:true});
+        const usingCloud=pack.source==='supabase';
+        const round={};
+        if(quick){
+          root.querySelector('[data-difficulty-label]').textContent=`${level} practice`;
+        }
+        if(!quick)root.querySelector('[data-difficulty-label]').textContent=level;
+        if(quick&&!testMode)window.BrainiSiteAnalytics?.gameStart(gameId,round,'practice');
+        const runner=mount(root,quick?pack.questions.slice(0,5):pack.questions,{
+          gameId,
+          practice:quick,
+          recordContentHealth:!quick,
+          checkAnswer:usingCloud?(item,choice,context)=>BrainiContent.checkAnswer(item,choice,context):null,
+          onComplete:async result=>{
+            if(quick){
+              runner.dispose();
+              if(!testMode)window.BrainiSiteAnalytics?.practiceComplete(gameId,round);
+              showQuickResult(resultBox,result,starts.find(start=>start.dataset.quizStart==='full'));
+              stage.hidden=true;
+              resultBox.hidden=false;
+              resultBox.querySelector('h2').focus();
+            }else{
+              BrainiContent.recordAnytimeHistory(pack,result.answerDetails);
+              const saved=await BrainiData.api.submitGameResult(gameId,{
+                score:result.points,correct:result.correct,total:result.total,
+                accuracy:Math.round(result.correct/result.total*100),timeSec:result.timeSec,
+                results:result.results,answerDetails:result.answerDetails,
+                contentSource:pack.source,quizPackId:pack.packId,difficulty,setNumber:set
+              });
+              resultBox.__brainilabResult=saved;
+              if(usingCloud){
+                try{await BrainiContent.verifyQuizResult(saved,pack,result.answerDetails);}
+                catch(err){console.warn('BrainiLab server answer verification pending:',err.message||err);}
+              }
+              stage.hidden=true;
+              resultBox.hidden=false;
+              BrainiPostGame.mount(resultBox,{
+                result:{...saved,answerDetails:result.answerDetails},gameId,name,difficulty,ads:true,next
+              });
+            }
+          }
+        });
+        if(root.isConnected){
+          const question=stage.querySelector('[data-q]');
+          question.tabIndex=-1;
+          question.focus();
+        }
+      };
+    });
+  }
+
+  function showQuickResult(box,result,fullStart){
+    box.innerHTML='<div class="quiz-pack-status"><h2 tabindex="-1"></h2><p>Practice round complete.</p><div class="quiz-entry-actions"><button class="btn" type="button">Play 20 questions</button></div></div>';
+    box.querySelector('h2').textContent=`${result.correct} of ${result.total} correct`;
+    box.querySelector('button').onclick=()=>{
+      box.hidden=true;
+      const entry=fullStart.closest('[data-quiz-entry]');
+      entry.hidden=false;
+      fullStart.click();
+    };
   }
 
   function inferGameId(){
@@ -57,6 +150,7 @@ window.BrainiQuiz = (function(){
 
   function mount(el, questions, opts={}){
     const analyticsRound={};
+    const listeners=new AbortController();
     function trackStart(){
       const params=new URLSearchParams(location.search);
       if(opts.practice||opts.tryFirst||params.has('archive')||params.get('try')==='1')return;
@@ -65,7 +159,7 @@ window.BrainiQuiz = (function(){
     }
     let index=0, correct=0, points=0, locked=false, readyForNext=false, renderToken=0, results=[], answerDetails=[], started=performance.now(), completed=false, questionStarted=performance.now();
     const healthIds=(questions||[]).map(x=>x.questionVersionId||x.questionId).filter(Boolean);
-    const healthTracker=window.BrainiContentHealth&&healthIds.length
+    const healthTracker=opts.recordContentHealth!==false&&window.BrainiContentHealth&&healthIds.length
       ? BrainiContentHealth.create({gameId:opts.gameId||inferGameId(),contentType:"question",contentIds:healthIds,dailyNumber:opts.dailyNumber??null})
       : null;
 
@@ -82,7 +176,7 @@ window.BrainiQuiz = (function(){
     const timer=el.querySelector("[data-timer]");
 
     const pointLabel=el.querySelector('.quiz-tools>span:not([data-timer])');
-    if(pointLabel)pointLabel.textContent='Game points · correct answers';
+    if(pointLabel)pointLabel.textContent=opts.recordContentHealth===false?'Practice points':'Game points · correct answers';
     const scoreDailyNumber=opts.dailyScoreNumber??opts.dailyNumber;
     const practice=opts.practice||opts.tryFirst||new URLSearchParams(location.search).has('archive')||new URLSearchParams(location.search).get('try')==='1';
     if(!practice&&scoreDailyNumber&&(opts.gameId||inferGameId())==='brainmix'&&typeof window.BrainiData?.dailyPointsForResult==='function'){
@@ -97,9 +191,7 @@ window.BrainiQuiz = (function(){
       return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
     };
 
-    if(timer){
-      setInterval(()=>timer.textContent=fmt(performance.now()-started),300);
-    }
+    const timerId=timer?setInterval(()=>timer.textContent=fmt(performance.now()-started),300):null;
 
     function render(){
       renderToken++;
@@ -418,8 +510,9 @@ window.BrainiQuiz = (function(){
       }
     }
 
-    next?.addEventListener("click",advance);
-    skip?.addEventListener("click",doSkip);
+    const listenerOptions={signal:listeners.signal};
+    next?.addEventListener("click",advance,listenerOptions);
+    skip?.addEventListener("click",doSkip,listenerOptions);
 
     document.addEventListener("keydown",e=>{
       // Game shortcuts must not consume typing or navigation elsewhere on the page.
@@ -446,11 +539,15 @@ window.BrainiQuiz = (function(){
           advance();
         }
       }
-    });
+    },listenerOptions);
 
     render();
 
     return {
+      dispose(){
+        listeners.abort();
+        clearInterval(timerId);
+      },
       restart(){
         index=0;
         correct=0;
@@ -465,7 +562,7 @@ window.BrainiQuiz = (function(){
     };
   }
 
-  return {mount,loadPack};
+  return {mount,loadPack,mountEntry};
 })();
 
 window.showToast=function(msg){
