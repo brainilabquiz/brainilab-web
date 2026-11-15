@@ -85,6 +85,8 @@ button{cursor:pointer}
 .admin-table{width:100%;border-collapse:collapse;min-width:780px}
 .admin-table th{position:sticky;top:0;padding:9px 10px;background:#f7f7fa;color:var(--muted);text-align:left;font-size:7px;text-transform:uppercase;letter-spacing:.04em}
 .admin-table td{padding:10px;border-top:1px solid #efeff4;font-size:9px;vertical-align:middle}
+.admin-game-health-table tbody th,.admin-player-activity-table tbody th{position:static;padding:10px;border-top:1px solid #efeff4;background:transparent;font-size:9px;text-transform:none;letter-spacing:normal}
+.admin-table.admin-player-activity-table{min-width:0}
 .admin-table tr.clickable:hover{background:#fafafe;cursor:pointer}
 .admin-table strong{color:var(--ink)}
 .admin-table small{display:block;margin-top:2px;color:var(--muted);font-size:7px}
