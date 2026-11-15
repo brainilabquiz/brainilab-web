@@ -19,14 +19,17 @@ function check(document){
   assert.equal(schema['@type'],'VideoObject');assert.equal(schema.name,card.querySelector('[data-video-title]').textContent);assert.equal(schema.url,poster.href);assert.equal(schema.uploadDate,date.dateTime);assert.equal(schema.thumbnailUrl,poster.querySelector('img').src);
   assert.ok(schema.description);assert.equal(schema.description,card.querySelector('[data-video-description]').textContent);assert.equal(card.querySelector('[data-video-description] b'),null);
   assert.equal(schema.creator.name,index?'BrainiLab Knowledge':'BrainiLab');assert.equal(schema.creator.url,'https://www.youtube.com/@'+(index?'BrainiLabKnowledge':'BrainiLab'));
-  assert.equal(poster.querySelector('img').getAttribute('loading'),'lazy');assert.equal(schema.embedUrl,undefined);
+  const image=poster.querySelector('img');
+  assert.equal(image.getAttribute('loading'),index?'lazy':'eager');
+  assert.equal(image.getAttribute('fetchpriority'),index?null:'high');
+  assert.equal(schema.embedUrl,undefined);
   assert.equal(schema.contentUrl,undefined,'A watch-page URL is not video bytes');assert.equal(schema.dateModified,undefined,'Do not invent modification dates');assert.equal(schema.interactionStatistic,undefined);
   if(index)assert.equal(schema.duration,undefined,'Shorts feed does not provide a verified duration');else assert.ok(schema.duration);
  }
  return cards;
 }
 // The returned HTML has a working YouTube link and matching schema without a player request.
-let dom=new JSDOM(template,{url:'https://brainilabgames.com/'});check(dom.window.document);const baseline=dom.window.document.querySelector('.home-video-grid').outerHTML;dom.window.close();
+let dom=new JSDOM(template,{url:'https://brainilabgames.com/'});check(dom.window.document);assert.equal(dom.window.document.querySelector('.home-article img').getAttribute('loading'),'lazy');const baseline=dom.window.document.querySelector('.home-video-grid').outerHTML;dom.window.close();
 const fresh=renderHomeVideoCards(template,{brainilab:main,knowledge:short});dom=new JSDOM(fresh,{url:'https://brainilabgames.com/'});let cards=check(dom.window.document);assert.equal(cards[0].querySelector('[data-video-title]').textContent,main.title);assert.equal(cards[0].querySelector('[data-video-description]').textContent,main.description);assert.equal(cards[0].querySelector('time').textContent,'30 Oct 2026');assert.equal(cards[0].querySelector('[data-video-duration]').textContent,'10 min 1 sec');assert.equal(dom.window.document.querySelectorAll('script[src="x"]').length,0);dom.window.close();
 assert.equal(renderHomeVideoCards(template,{}),template);
 assert.equal(renderHomeVideoCards(template,{knowledge:{...short,channelId:'wrong'}}),template);
