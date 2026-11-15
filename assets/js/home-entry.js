@@ -1,4 +1,7 @@
 /* Home: load the Daily in advance, but start timing only after an explicit click. */
+const homeStartup=window.BrainiHomeStartup;
+if(homeStartup?.requiresCloud())void window.BrainiPerf.ensureCloud();
+
 document.addEventListener("DOMContentLoaded", async () => {
   const root = document.getElementById("homeQuiz");
   const stage = root?.querySelector(".challenge-inner");
@@ -38,7 +41,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     // neutral first paint until the existing progress service has answered.
     const fallback=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">Open today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`;
     const timer=setTimeout(()=>{if(modernPaintedContext!==context)reveal(fallback);},8000);
-    try{const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true});
+    try{
+      const returning=homeStartup?.requiresCloud();
+      if(returning && !await window.BrainiPerf.ensureCloud())throw new Error('Player status unavailable');
+      if(!current())return;
+      const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true,publicLineup:returning?null:homeStartup?.dailyLineup});
       reveal(status?.games?.[ids[0]]?.completed?`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`:start);
     }catch(error){
       if(modernPaintedContext!==context)reveal(fallback);
@@ -56,6 +63,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const [daily, previousStatus] = await Promise.race([
       (async () => {
+        if(homeStartup){
+          await Promise.all([window.BrainiPerf.ensureCloud(),window.BrainiPerf.loadFeature('home-legacy.bundle.js')]);
+        }
         const daily = await BrainiDaily.loadToday();
         if (!BrainiDaily.validDaily(daily)) throw new Error("Daily payload is not playable.");
         const status = await BrainiDailyHub.resolve(daily.dailyNumber, {forceCloud:true});

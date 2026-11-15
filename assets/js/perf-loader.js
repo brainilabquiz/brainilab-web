@@ -63,7 +63,7 @@ window.BrainiPerf=(function(){
     if(cloudPromise) return cloudPromise;
 
     cloudPromise=(async()=>{
-      await ensureSupabase();
+      await Promise.all([ensureSupabase(), window.BrainiHomeStartup?.ensureAvatar()]);
       await loadFeature('cloud.bundle.js');
       window.dispatchEvent(new CustomEvent("brainilab:cloudready"));
       return true;

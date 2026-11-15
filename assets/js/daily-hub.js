@@ -119,11 +119,18 @@ window.BrainiDailyHub=(function(){
     const daily=BrainiData.daily();
     const games={};
     const date=BrainiData.dateForDailyNumber(dailyNumber);
-    if(window.BrainiDailyRules?.active(date)&&window.BrainiBackendAuth?.getClient?.()){
-      const {data,error}=await bounded(BrainiBackendAuth.getClient().rpc('get_brainilab_daily_lineup',{p_challenge_date:date}));
-      if(error||data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(dailyIds(dailyNumber)))throw new Error('Daily rules could not be checked');
-      daily.bonusChoice=data.bonus_choice||null;
-      BrainiData.setDailyBonusChoice(daily.bonusChoice);
+    if(window.BrainiDailyRules?.active(date)){
+      const client=window.BrainiBackendAuth?.getClient?.();
+      if(client||options.publicLineup){
+        const {data,error}=client
+          ?await bounded(client.rpc('get_brainilab_daily_lineup',{p_challenge_date:date}))
+          :{data:await bounded(options.publicLineup(date))};
+        if(error||data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(dailyIds(dailyNumber)))throw new Error('Daily rules could not be checked');
+        if(client){
+          daily.bonusChoice=data.bonus_choice||null;
+          BrainiData.setDailyBonusChoice(daily.bonusChoice);
+        }
+      }
     }
 
     function build(cloudRows=[]){

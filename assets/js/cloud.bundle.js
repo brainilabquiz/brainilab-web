@@ -1400,7 +1400,7 @@ window.BrainiProgression = (function(){
   ----------------------------------------
   Public, read-only emergency flags. No service role.
 */
-window.BrainiRuntime=(function(){
+window.BrainiRuntime=window.BrainiRuntime||(function(){
   let flags={};
 
   function configured(){
@@ -1514,14 +1514,15 @@ window.BrainiRuntime=(function(){
   }
 
   async function load(){
-    if(!configured()) return flags;
-
     try{
-      const {data,error}=await client().rpc(
-        "get_brainilab_runtime_flags"
-      );
-
-      if(error) throw error;
+      let data;
+      if(configured()){
+        const result=await client().rpc("get_brainilab_runtime_flags");
+        if(result.error) throw result.error;
+        data=result.data;
+      }else if(window.BrainiHomeStartup){
+        data=await BrainiHomeStartup.runtimeFlags();
+      }else return flags;
       flags=data||{};
       apply();
 
