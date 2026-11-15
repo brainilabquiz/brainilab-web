@@ -39,30 +39,39 @@
     }
   </script>
   <script defer src="/assets/js/gta-vi-quiz.js"></script>
+  <script defer src="/assets/js/gta-vi-countdown.js"></script>
 </head>
 <body class="gta-special">
   <a class="gta-skip" href="#main-content">Skip to main content</a>
   <header class="gta-top">
     <div class="gta-wrap gta-top-inner">
-      <a href="/" aria-label="BrainiLab home"><img src="/assets/brand/brainilab-logo-200.webp" alt="BrainiLab" width="200" height="68" decoding="async"></a>
-      <nav aria-label="Main navigation"><a href="/games/">Games</a><a href="/learn/">Learn</a></nav>
+      <a class="gta-logo" href="/" aria-label="BrainiLab home"><img src="/assets/brand/brainilab-logo-200.webp" alt="BrainiLab" width="200" height="68" decoding="async"></a>
+      <nav aria-label="Main navigation"><a href="/games/">Games</a><a class="gta-nav-extra" href="/daily-quiz/">Daily</a><a href="/learn/">Learn</a><a class="gta-top-cta" href="#gta-quiz">Play the quiz</a></nav>
     </div>
   </header>
   <main id="main-content" tabindex="-1">
-    <div class="gta-wrap">
-      <section class="gta-hero" aria-labelledby="gta-title">
-        <img class="gta-hero-art" src="/assets/images/specials/gta-vi-coast.webp" srcset="/assets/images/specials/gta-vi-coast-small.webp 720w, /assets/images/specials/gta-vi-coast.webp 1440w" sizes="(max-width: 1180px) 96vw, 1140px" width="1440" height="900" alt="Illustration of a palm-lined coastal city at dusk" fetchpriority="high" decoding="async">
-        <div class="gta-hero-copy">
-          <p class="gta-kicker">BrainiLab launch special</p>
-          <h1 id="gta-title">GTA VI launch<br>news and quiz</h1>
-          <p>Grand Theft Auto VI is scheduled for <strong>19 November 2026</strong> on PS5 and Xbox Series X|S, with a midnight release in each region.</p>
-          <div class="gta-actions">
-            <a class="gta-button" href="#gta-quiz">Play the GTA quiz <span aria-hidden="true">↘</span></a>
-            <a class="gta-jump" href="#latest">Latest news <span aria-hidden="true">↓</span></a>
-            <a class="gta-jump" href="#gta-reading">Articles <span aria-hidden="true">↓</span></a>
+    <section class="gta-hero" aria-labelledby="gta-title">
+      <img class="gta-hero-art" src="/assets/images/specials/gta-vi-coast.webp" srcset="/assets/images/specials/gta-vi-coast-small.webp 720w, /assets/images/specials/gta-vi-coast.webp 1440w" sizes="100vw" width="1440" height="900" alt="Illustration of a palm-lined coastal city at dusk" fetchpriority="high" decoding="async">
+      <div class="gta-wrap gta-hero-copy">
+        <p class="gta-kicker"><span class="gta-live-dot" aria-hidden="true"></span>BrainiLab launch special</p>
+        <h1 id="gta-title">GTA VI launch<br><span class="gta-grad">news and quiz</span></h1>
+        <p>Grand Theft Auto VI is scheduled for <strong>19 November 2026</strong> on PS5 and Xbox Series X|S, with a midnight release in each region.</p>
+        <div class="gta-countdown" data-gta-countdown>
+          <div class="gta-countdown-tiles" data-countdown-tiles aria-hidden="true" hidden>
+            <div><b data-cd="d">0</b><span>days</span></div>
+            <div><b data-cd="h">00</b><span>hours</span></div>
+            <div><b data-cd="m">00</b><span>min</span></div>
           </div>
+          <p class="gta-countdown-note" data-countdown-note>Out <strong>19 November 2026</strong> at midnight local time</p>
         </div>
-      </section>
+        <div class="gta-actions">
+          <a class="gta-button" href="#gta-quiz">Play the GTA quiz <span aria-hidden="true">↘</span></a>
+          <a class="gta-jump" href="#latest">Latest news <span aria-hidden="true">↓</span></a>
+          <a class="gta-jump" href="#gta-reading">Articles <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+    <div class="gta-wrap">
       <div class="gta-subhead">
         <p>Published <time data-published datetime="2026-11-15">15 Nov 2026</time> <span aria-hidden="true">·</span> Updated <time data-modified datetime="2026-11-15">15 Nov 2026</time></p>
         <a href="https://www.rockstargames.com/VI">Official GTA VI site <span aria-hidden="true">↗</span></a>
@@ -76,6 +85,7 @@
         </dl>
       </section>
       <div class="gta-editorial">
+        <div class="gta-side">
         <section class="gta-quiz-panel" id="gta-quiz" aria-labelledby="quiz-title">
           <div class="gta-quiz-heading">
             <p class="gta-kicker">GTA V &amp; GTA VI</p>
@@ -97,6 +107,7 @@
           </div>
           <noscript><p>Enable JavaScript to play the quiz. You can read all the launch news below.</p></noscript>
         </section>
+        </div>
         <section class="gta-news" id="latest" aria-labelledby="news-title">
           <h2 id="news-title">Latest GTA VI news</h2>
           <p class="gta-section-intro">Confirmed launch updates, from console access to the music and events of Vice City.</p>
@@ -171,16 +182,18 @@
           </ol>
           <p><a href="https://www.rockstargames.com/newswire?tag=722">All GTA VI updates on Rockstar Newswire <span aria-hidden="true">↗</span></a></p>
         </section>
-        <aside class="gta-read" id="gta-reading" aria-labelledby="gta-read-title">
-          <h2 id="gta-read-title">Read more about GTA V and VI</h2>
-          <a href="/learn/gta-6-release-date-preload-explained/"><strong>When does GTA VI unlock?</strong><span>Release times, pre-loading and what to check on your console.</span></a>
-          <a href="/learn/gta-5-in-numbers-gta-6/"><strong>GTA V in numbers</strong><span>How it grew, and what its numbers tell us about the next game.</span></a>
-          <a href="/learn/gta-5-release-dates-by-platform/"><strong>When did GTA V reach each platform?</strong><span>Follow the rollout from the 2013 console release to the later PC and console editions.</span></a>
-          <a href="/learn/gta-5-map-real-life/"><strong>What inspired the GTA V map?</strong><span>Find the real streets and landscapes behind Los Santos and Blaine County.</span></a>
-          <a href="/learn/gta-5-main-characters/"><strong>Meet the three leads of GTA V</strong><span>How Michael, Franklin and Trevor each fit into the story.</span></a>
-          <a href="/learn/gta-online-vs-gta-5/"><strong>How is GTA Online different from GTA V?</strong><span>How the shared multiplayer world relates to the single-player story.</span></a>
-        </aside>
       </div>
+      <aside class="gta-read" id="gta-reading" aria-labelledby="gta-read-title">
+        <h2 id="gta-read-title">Read more about GTA V and VI</h2>
+        <div class="gta-read-grid">
+          <a href="/learn/gta-6-release-date-preload-explained/"><img src="/assets/images/learn/gta-6-release-date-preload-explained-thumb.webp" srcset="/assets/images/learn/gta-6-release-date-preload-explained-thumb.webp 240w, /assets/images/learn/gta-6-release-date-preload-explained-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>When does GTA VI unlock?</strong><span>Release times, pre-loading and what to check on your console.</span></a>
+          <a href="/learn/gta-5-in-numbers-gta-6/"><img src="/assets/images/learn/gta-5-in-numbers-gta-6-thumb.webp" srcset="/assets/images/learn/gta-5-in-numbers-gta-6-thumb.webp 240w, /assets/images/learn/gta-5-in-numbers-gta-6-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>GTA V in numbers</strong><span>How it grew, and what its numbers tell us about the next game.</span></a>
+          <a href="/learn/gta-5-release-dates-by-platform/"><img src="/assets/images/learn/gta-5-release-dates-by-platform-thumb.webp" srcset="/assets/images/learn/gta-5-release-dates-by-platform-thumb.webp 240w, /assets/images/learn/gta-5-release-dates-by-platform-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>When did GTA V reach each platform?</strong><span>Follow the rollout from the 2013 console release to the later PC and console editions.</span></a>
+          <a href="/learn/gta-5-map-real-life/"><img src="/assets/images/learn/gta-5-map-real-life-thumb.webp" srcset="/assets/images/learn/gta-5-map-real-life-thumb.webp 240w, /assets/images/learn/gta-5-map-real-life-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>What inspired the GTA V map?</strong><span>Find the real streets and landscapes behind Los Santos and Blaine County.</span></a>
+          <a href="/learn/gta-5-main-characters/"><img src="/assets/images/learn/gta-5-main-characters-thumb.webp" srcset="/assets/images/learn/gta-5-main-characters-thumb.webp 240w, /assets/images/learn/gta-5-main-characters-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>Meet the three leads of GTA V</strong><span>How Michael, Franklin and Trevor each fit into the story.</span></a>
+          <a href="/learn/gta-online-vs-gta-5/"><img src="/assets/images/learn/gta-online-vs-gta-5-thumb.webp" srcset="/assets/images/learn/gta-online-vs-gta-5-thumb.webp 240w, /assets/images/learn/gta-online-vs-gta-5-small.webp 480w" sizes="(max-width: 720px) 104px, (max-width: 860px) 45vw, 370px" alt="" width="240" height="160" loading="lazy" decoding="async"><strong>How is GTA Online different from GTA V?</strong><span>How the shared multiplayer world relates to the single-player story.</span></a>
+        </div>
+      </aside>
     </div>
   </main>
   <footer class="gta-footer">
