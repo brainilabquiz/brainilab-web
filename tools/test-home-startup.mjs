@@ -53,7 +53,8 @@ function fixture({ path = '/', keys = [], unavailable = false } = {}) {
 }
 
 for (const options of [{keys:[savedPlayerKey]}, {keys:[sessionKey]}, {keys:[claimKey]}, {unavailable:true},
-  {path:'/?code=callback'}, {path:'/#access_token=callback'}, {path:'/#error_description=denied'}, {path:'/?token_hash=confirmation'}]) {
+  {path:'/?code=callback'}, {path:'/#access_token=callback'}, {path:'/#error_description=denied'},
+  {path:'/?token_hash=confirmation'}, {path:'/?friend=welcome'}, {path:'/?invite=welcome'}]) {
   const {w, cloudLoads} = fixture(options);
   try {
     assert.equal(w.BrainiHomeStartup.requiresCloud(),true,JSON.stringify(options));

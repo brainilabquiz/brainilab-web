@@ -155,8 +155,12 @@
 <div class="wrap footer-contact"><a data-contact-link href="/suggestions/">Contact &amp; corrections</a> · <a href="/cookies/" data-manage-privacy>Manage privacy</a></div></footer>
 <div class="toast">Done</div>
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded",async()=>{
   const load=()=>BrainiPerf.loadFeature("social.bundle.js");
+  if(window.BrainiHomeStartup){
+    window.addEventListener("brainilab:cloudready",load,{once:true});
+    if(!BrainiHomeStartup.requiresCloud() || !await BrainiPerf.ensureCloud())return;
+  }
   if("requestIdleCallback" in window){
     requestIdleCallback(load,{timeout:2500});
   }else{

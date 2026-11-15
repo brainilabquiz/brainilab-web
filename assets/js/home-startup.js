@@ -18,6 +18,7 @@ window.BrainiHomeStartup = (() => {
     const search = new URLSearchParams(location.search);
     const hash = new URLSearchParams(location.hash.slice(1));
     if (authParameters.some(key => search.has(key) || hash.has(key))) return true;
+    if (search.has('friend') || search.has('invite')) return true;
     try {
       return localStorage.getItem(sessionKey) !== null || localStorage.getItem(claimKey) !== null;
     } catch {
