@@ -42,7 +42,8 @@ test('passive adapter uses a fixed readonly path; regular edition behavior remai
 });
 test('public status exposes only edition metadata, never story text or operational fields',async()=>{
  globalThis.caches={default:{match:async()=>null,put:async()=>{}}};const urls=[];
- const env={BREAKING_NEWS:{idFromName:()=>1,get:()=>({fetch:async url=>{urls.push(url);return Response.json({...edition,serviceStatus:'fixture-private',ledger:'never expose'});}})}};
+ const current={generatedAt:new Date(Date.now()-60000).toISOString(),stories:[{...item,reportedAt:new Date(Date.now()-120000).toISOString()}]};
+ const env={BREAKING_NEWS:{idFromName:()=>1,get:()=>({fetch:async url=>{urls.push(url);return Response.json({...current,serviceStatus:'fixture-private',ledger:'never expose'});}})}};
  const r=await worker.fetch(new Request('https://brainilabgames.com/api/breaking-news/status'),env,{waitUntil:()=>{}}),data=await r.json();
  assert.equal(r.status,200);assert.equal(r.headers.get('X-Robots-Tag'),'noindex');assert.deepEqual(Object.keys(data).sort(),['generatedAt','revision']);assert.match(data.revision,/^[a-f0-9]{16}$/);assert.match(urls[0],/edition-status$/);
  const n=urls.length,p=await worker.fetch(new Request('https://preview.example.org/api/breaking-news/status'),env,{});
@@ -51,6 +52,33 @@ test('public status exposes only edition metadata, never story text or operation
 });
 test('no initial request, short revisits or background polling',async()=>{
  const h=harness();await flush();assert.equal(h.calls.length,0);h.event('focus');h.advance(299999);h.event('pageshow');await flush();assert.equal(h.calls.length,0);h.dom.window.close();
+});
+test('source filters promote the original story, update the live count and restore edition order without requests',async()=>{
+ const second={...item,title:'Second NASA report',sourceUrl:'https://www.nasa.gov/news/two'};
+ const third={...item,title:'Al Jazeera report',sourceName:'Al Jazeera',sourceUrl:'https://www.aljazeera.com/news/one'};
+ const publishers=[{id:'bbc',name:'BBC News'},{id:'nasa',name:'NASA'},{id:'aljazeera',name:'Al Jazeera'}];
+ const view=renderNews({...edition,stories:[item,second,third]},now,{publishers});
+ const h=harness(view),d=h.w.document;
+ const field=d.querySelector('[data-news-filter]'),lead=d.querySelector('[data-news-lead]');
+ const originals=[...d.querySelectorAll('[data-news-story]')];
+ const chip=id=>field.querySelector('[data-news-filter-value="'+id+'"]');
+ assert.equal(field.hidden,false);
+ assert.equal(chip('bbc').disabled,true);
+ chip('bbc').click();assert.equal(lead.firstElementChild,originals[0]);
+ chip('aljazeera').focus();chip('aljazeera').click();
+ assert.equal(lead.firstElementChild,originals[2]);
+ assert.equal(d.querySelector('[data-news-more]').hidden,true);
+ assert.equal(d.activeElement,chip('aljazeera'));
+ assert.equal(chip('aljazeera').getAttribute('aria-pressed'),'true');
+ assert.equal(field.querySelector('[data-news-filter-status]').textContent,'1 story shown.');
+ chip('nasa').click();
+ assert.equal(lead.firstElementChild,originals[0]);
+ assert.equal(d.querySelector('[data-news-more]').hidden,false);
+ assert.equal(d.querySelector('[data-news-others]').firstElementChild,originals[1]);
+ chip('all').click();
+ assert.deepEqual([...d.querySelectorAll('[data-news-story]')],originals);
+ assert.equal(field.querySelector('[data-news-filter-status]').textContent,'3 stories shown.');
+ await flush();assert.equal(h.calls.length,0);h.dom.window.close();
 });
 test('returning after five minutes checks once, omits credentials and leaves all reading in place',async()=>{
  const h=harness(),before=h.w.document.querySelector('ol').outerHTML;h.advance(300000);h.event('focus');h.event('pageshow');await flush();

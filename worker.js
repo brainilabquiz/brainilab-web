@@ -8,7 +8,8 @@ import {crypticAPI} from './lib/cryptic-api.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from './lib/breaking-news.js';
-import {newsEdition} from './lib/news-refresh.js';
+import {newsEdition,REFRESH_MS} from './lib/news-refresh.js';
+import {PUBLISHERS} from './lib/news-publisher.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/public-page-store.js';
 import {VIDEO_GAMES,cleanVideo} from './lib/video-card.js';
@@ -127,11 +128,13 @@ export default {
       if(request.method==='HEAD')return response;
       const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
       const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');
-      const news=renderNews(edition);
+      const now=Date.now();
+      const display={publishers:PUBLISHERS,nextCheck:new Date((Math.floor(now/REFRESH_MS)+1)*REFRESH_MS)};
+      const news=renderNews(edition,now,display);
       headers.set('Cache-Control',news?'public,max-age=60':'no-store');
       // Indexable only while current stories exist; an empty page stays out of search.
       if(!news)headers.set('X-Robots-Tag','noindex, follow');
-      return new Response(decorateHalloween(newsHead(html,edition).replace('<!-- breaking-news -->',()=>news||renderEmptyNews()),holiday,url.pathname),{status:response.status,headers});
+      return new Response(decorateHalloween(newsHead(html,edition,now).replace('<!-- breaking-news -->',()=>news||renderEmptyNews(display)),holiday,url.pathname),{status:response.status,headers});
     }
     // Consolidate production entry points before rendering or caching HTML.
     // Keep previews and local development on their own origin.

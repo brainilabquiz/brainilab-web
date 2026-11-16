@@ -31,7 +31,8 @@ assert.ok(description.includes('BBC News and NASA')&&description.length<=155,des
 const graph=JSON.parse(html.match(/<script type="application\/ld\+json">([^<]*"ItemList"[^<]*)<\/script>/)[1])['@graph'];
 const list=graph.find(n=>n['@type']==='CollectionPage').mainEntity.itemListElement;
 assert.deepEqual(list.map(i=>i.url),edition.stories.map(s=>s.sourceUrl));
-assert.match(html,/How this page works: twice a day/);
+assert.match(html,/How this page works<\/h2>/);
+assert.match(html,/Twice a day, at 00:00 and 12:00 UTC/);
 
 const head=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/',{method:'HEAD'}),env(true),ctx);
 assert.equal(head.status,200);
