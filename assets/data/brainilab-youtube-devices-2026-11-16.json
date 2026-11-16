@@ -1,0 +1,84 @@
+{
+  "title": "BrainiLab YouTube views and estimated watch time by device",
+  "owner": "BrainiLab",
+  "capturedOn": "2026-11-16",
+  "channel": "https://www.youtube.com/channel/UCy35EdjSpdYufOLJBybevsA",
+  "period": {
+    "startDateInclusive": "2026-10-16",
+    "endDateInclusive": "2026-11-12",
+    "reportingDays": "YouTube Analytics"
+  },
+  "method": "The device table is the BrainiLab channel’s YouTube Analytics deviceType report. The format table includes only the videoOnDemand and shorts rows returned by the separate deviceType and creatorContentType report. The reports can differ slightly due to rounding. Views are counts of views and may include repeats.",
+  "reportedDeviceRows": [
+    {
+      "deviceType": "TV",
+      "views": 6375,
+      "estimatedMinutesWatched": 21792
+    },
+    {
+      "deviceType": "DESKTOP",
+      "views": 3250,
+      "estimatedMinutesWatched": 5649
+    },
+    {
+      "deviceType": "MOBILE",
+      "views": 11446,
+      "estimatedMinutesWatched": 4505
+    },
+    {
+      "deviceType": "TABLET",
+      "views": 1794,
+      "estimatedMinutesWatched": 1712
+    }
+  ],
+  "videoAndShortsRows": [
+    {
+      "deviceType": "TV",
+      "creatorContentType": "videoOnDemand",
+      "views": 5457,
+      "estimatedMinutesWatched": 21680
+    },
+    {
+      "deviceType": "DESKTOP",
+      "creatorContentType": "videoOnDemand",
+      "views": 3043,
+      "estimatedMinutesWatched": 5626
+    },
+    {
+      "deviceType": "MOBILE",
+      "creatorContentType": "videoOnDemand",
+      "views": 3899,
+      "estimatedMinutesWatched": 3754
+    },
+    {
+      "deviceType": "TABLET",
+      "creatorContentType": "videoOnDemand",
+      "views": 643,
+      "estimatedMinutesWatched": 1587
+    },
+    {
+      "deviceType": "MOBILE",
+      "creatorContentType": "shorts",
+      "views": 7527,
+      "estimatedMinutesWatched": 750
+    },
+    {
+      "deviceType": "TABLET",
+      "creatorContentType": "shorts",
+      "views": 1151,
+      "estimatedMinutesWatched": 125
+    },
+    {
+      "deviceType": "TV",
+      "creatorContentType": "shorts",
+      "views": 918,
+      "estimatedMinutesWatched": 112
+    },
+    {
+      "deviceType": "DESKTOP",
+      "creatorContentType": "shorts",
+      "views": 207,
+      "estimatedMinutesWatched": 23
+    }
+  ]
+}
