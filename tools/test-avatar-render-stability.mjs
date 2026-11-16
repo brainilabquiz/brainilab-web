@@ -12,7 +12,7 @@ let player={id:'owner-a',displayName:'Player A',avatarUrl:'https://example.com/p
 let auth={status:'authenticated',user:{id:'owner-a',is_anonymous:false}};
 w.BrainiData={player:()=>player,authState:()=>auth,api:{getAuthState:async()=>auth,getPlayer:async()=>player}};
 w.BrainiBackendAuth={init:async()=>{},isConfigured:()=>false};
-for(const file of ['player-personalities.js','avatar-design.js','progression-ui.js','account-menu.js','profile-rewards-model.js','avatar-studio-ui.js'])w.eval(source(file));
+for(const file of ['player-personalities.js','avatar-design.js','avatar-studio-art.js','progression-ui.js','account-menu.js','profile-rewards-model.js','avatar-studio-ui.js'])w.eval(source(file));
 let style=w.BrainiRewardCatalog.clean({});
 w.BrainiRewardStore={snapshot:()=>({owner:auth.user?.id||'guest',style,cloud:auth.status==='authenticated',loading:false,saving:false,error:'',notice:''}),load:async()=>{}};
 w.eval(source('profile-rewards.js'));
@@ -73,10 +73,11 @@ assert.equal(portraits[0].title,'Player A · account & stats','preserve the exis
 
 // Equipped choices still update immediately and produce stable SVG nodes.
 style=w.BrainiRewardCatalog.clean({mode:'built',glasses:'sun',prop:'icepop',frame:'copper'});
-player={...player,avatarDesign:style};
+player={...player,avatarDesign:style,avatarFrame:'copper'};
 w.dispatchEvent(new w.CustomEvent('brainilab:stylechange'));
 const built=portraits.map(el=>el.firstChild);
-assert.ok(built.every(el=>el.tagName.toLowerCase()==='svg'));
+assert.ok(built[0].matches('img.braini-avatar-thumbnail--framed'));
+assert.ok(built.slice(1).every(el=>el.tagName.toLowerCase()==='svg'));
 assert.equal(portraits[0].dataset.profileFrame,'copper');
 w.dispatchEvent(new w.CustomEvent('brainilab:datachange'));
 w.BrainiProfileRewards.render();
@@ -90,7 +91,7 @@ player={id:'owner-b',displayName:'Player B',avatarUrl:null,level:1,xp:0,score:0}
 w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));
 w.BrainiProfileRewards.render();
 await tick();
-assert.equal(portraits[0].querySelector('svg'),null);assert.match(portraits[0].title,/Player B/);
+assert.equal(portraits[0].querySelector('.braini-avatar-thumbnail'),null);assert.match(portraits[0].title,/Player B/);
 auth={status:'guest',guestUserId:'guest-c'};
 player={...player,id:'guest-c',displayName:'Guest C',avatarUrl:'https://example.com/photo-c.png'};
 w.dispatchEvent(new w.CustomEvent('brainilab:authchange'));

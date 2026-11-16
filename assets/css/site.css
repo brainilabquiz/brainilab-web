@@ -6011,6 +6011,13 @@ main > section.section,
 /* Permanent earned seasonal frame, using the current frame rendering system. */
 [data-profile-frame=midnight],[data-social-frame=midnight]{--player-frame:url("../icons/avatar-frames-v2/cosmetic-orbit.svg");--ring:#2d296e;outline:2px solid #db8b35;outline-offset:5px}
 
+/* Thumbnails share the studio portrait. The new cosmetic frame is drawn only once. */
+.braini-avatar-thumbnail{display:block;width:100%;height:100%;object-fit:contain;position:relative;z-index:1}
+:is(.rank-avatar,.avatar,.social-avatar,.group-player-avatar):has(>.braini-avatar-thumbnail--framed){padding:0;background:transparent}
+:is(.rank-avatar,.avatar,.social-avatar,.group-player-avatar):has(>.braini-avatar-thumbnail--framed)::before,
+:is(.rank-avatar,.avatar,.social-avatar,.group-player-avatar):has(>.braini-avatar-thumbnail--framed)::after{content:none}
+:is(.rank-avatar,.avatar,.social-avatar,.group-player-avatar)>.braini-avatar-thumbnail--framed{border-radius:0}
+
 /* One optional Google source preference, in the existing footer. No SDK. */
 .footer .preferred-source{margin-top:16px;max-width:320px}
 .footer .preferred-source__link{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;box-sizing:border-box;max-width:100%;min-height:44px;padding:11px 14px;border:1px solid #79718f;border-radius:8px;background:#fff;color:var(--navy,#2d296e);font-size:13px;font-weight:700;line-height:1.5;text-decoration:none}

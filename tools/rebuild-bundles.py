@@ -3,7 +3,7 @@ ROOT=Path(__file__).resolve().parents[1]
 JS=ROOT/'assets/js'
 SHELL=[
  'link-policy.js','icon-system.js','build.js','daily-rules.js','player-personalities.js',
- 'profile-achievements-model.js','achievement-display.js','avatar-design.js',
+ 'profile-achievements-model.js','achievement-display.js','avatar-design.js','avatar-studio-art.js',
  'profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-legacy-recovery.js',
  'halloween-entitlements.js','halloween-event-client.js','share.js','friend-challenge.js',
  'friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js',
@@ -16,7 +16,7 @@ HOME_LEGACY={
  'friend-replay.js','game-challenge.js','try-first-runtime.js','daily-choice-guard.js',
  'daily-completion-guard.js','reward-journey.js','post-game.js',
 }
-HOME_AVATAR=['avatar-design.js','profile-rewards-model.js']
+HOME_AVATAR=['avatar-design.js','avatar-studio-art.js','profile-rewards-model.js']
 BUNDLES={
  'consent.bundle.js':['site-analytics.js','meta-pixel.js'],
  'shell.bundle.js':SHELL,
@@ -34,7 +34,7 @@ BUNDLES={
  'social.bundle.js':['supabase-friends.js','supabase-groups.js','social.js'],
  'rankings.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','rankings.js'],
  'profile.bundle.js':['supabase-analytics.js','stats-ui.js','profile-sections.js'],
- 'profile-rewards.bundle.js':['profile-rewards-store.js','profile-achievements-store.js','avatar-studio-art.js','avatar-studio-ui.js','avatar-wardrobe-ui.js','profile-achievements-ui.js','profile-rewards.js','profile-achievements.js'],
+ 'profile-rewards.bundle.js':['profile-rewards-store.js','profile-achievements-store.js','avatar-studio-ui.js','avatar-wardrobe-ui.js','profile-achievements-ui.js','profile-rewards.js','profile-achievements.js'],
  'profile-social.bundle.js':['supabase-friends.js','supabase-groups.js','supabase-rankings.js','groups-view.js','social.js'],
  'suggestions.bundle.js':['supabase-feedback.js','suggestions-ui.js'],
 }

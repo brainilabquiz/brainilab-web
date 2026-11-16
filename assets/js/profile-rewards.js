@@ -22,7 +22,11 @@ window.BrainiProfileRewards=(function(){
     document.body.dataset.profileScene=equipped.scene;
     root.dataset.profileScene=shown.scene;
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
-      if(avatar){frame(avatar,equipped.frame);BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:A.clean(equipped)}));}
+      if(avatar){
+        frame(avatar,equipped.frame);
+        BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(
+          {...player,avatarDesign:A.clean(equipped),avatarFrame:equipped.frame},{compact:avatar.matches('.nav-right .avatar')}));
+      }
     }
     const hero=document.querySelector('.profile-rank-main');
     if(hero){

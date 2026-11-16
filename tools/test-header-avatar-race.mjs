@@ -14,7 +14,7 @@ let holdSnapshots=false;
 const releases=[];
 w.BrainiData={player:()=>structuredClone(player),authState:()=>structuredClone(auth),api:{getAuthState:async()=>structuredClone(auth),getPlayer:async()=>{const snapshot=structuredClone(player);return holdSnapshots?new Promise(resolve=>releases.push(()=>resolve(snapshot))):snapshot;}}};
 w.BrainiBackendAuth={init:async()=>{},isConfigured:()=>false};
-for(const file of ['player-personalities','avatar-design','progression-ui','account-menu','auth'])w.eval(source(file));
+for(const file of ['player-personalities','avatar-design','avatar-studio-art','progression-ui','account-menu','auth'])w.eval(source(file));
 await tick();
 const avatar=d.querySelector('.avatar');
 holdSnapshots=true;
@@ -23,10 +23,10 @@ await tick();
 const built=w.BrainiAvatarDesign.clean({mode:'built',glasses:'sun',prop:'bulb'});
 player={...player,avatarDesign:built};
 w.BrainiAccountMenu.hydrate();w.BrainiAccountMenu.openFor(avatar);
-assert.ok(d.querySelector('.account-menu-avatar svg'),'current menu uses the equipped illustrated avatar');
+assert.ok(d.querySelector('.account-menu-avatar .braini-avatar-thumbnail'),'current menu uses the equipped illustrated avatar');
 for(const release of releases.splice(0))release();
 await oldPhotoHydration;await tick();
-const sameOwnerStyleRetained=!!avatar.querySelector('svg');
+const sameOwnerStyleRetained=!!avatar.querySelector('.braini-avatar-thumbnail');
 w.BrainiAccountMenu.close();
 
 // An old account snapshot finishing after logout must never repaint that account.

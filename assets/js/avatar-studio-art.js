@@ -1,6 +1,6 @@
 /* Layered Avatar Studio artwork from the BrainiLab design handoff. */
 window.BrainiAvatarStudioArt=(()=>{
-  const A=BrainiAvatarDesign,C=BrainiRewardCatalog;
+  const A=BrainiAvatarDesign;
   const glasses={
     round: `<g fill="#FFFFFF" fill-opacity=".18" stroke="#181729" stroke-width="3"><circle cx="84" cy="96" r="13"></circle><circle cx="116" cy="96" r="13"></circle></g><path d="M97 94 Q100 90 103 94 M71 94 L60 92 M129 94 L140 92" stroke="#181729" stroke-width="3" fill="none" stroke-linecap="round"></path>`,
     square: `<g fill="#FFFFFF" fill-opacity=".18" stroke="#2D296E" stroke-width="3.5"><rect x="69" y="86" width="30" height="21" rx="6"></rect><rect x="101" y="86" width="30" height="21" rx="6"></rect></g><path d="M69 92 L60 90 M131 92 L140 90" stroke="#2D296E" stroke-width="3.5" stroke-linecap="round"></path>`,
@@ -29,7 +29,7 @@ window.BrainiAvatarStudioArt=(()=>{
     bulb: `<path d="M161 151 L157 147 M179 151 L183 147 M170 147 V142" stroke="#E6680C" stroke-width="2.5" stroke-linecap="round"></path><circle cx="170" cy="164" r="11" fill="#FFD813" stroke="#E6A100" stroke-width="2"></circle><rect x="164.5" y="173" width="11" height="9" rx="2.5" fill="#737286"></rect><path d="M165 177 H175" stroke="#FFFFFF" stroke-width="1.5"></path>`
   };
   function paletteFor(look){
-    return Object.fromEntries(['skin','hairColor','shirt','background'].map(kind=>[kind,C.item(kind,look[kind]).color]));
+    return Object.fromEntries(['skin','hairColor','shirt','background'].map(kind=>[kind,A.options[kind].find(item=>item.id===look[kind]).color]));
   }
   function markup(look,{instance,level=1,levelPct=0,stickerScale=1}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
@@ -113,7 +113,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.none||''}
     ${glasses[look.glasses]||A.accessory('glasses',look.glasses)}
     </g>
-    ${frames[frame]}
+    ${frames[frame]||''}
     ${hats[look.hat]||A.accessory('hat',look.hat)}
     ${look.prop==='none'?'':`<g transform="${sticker}">
       <circle cx="172" cy="174" r="23" fill="#181729" opacity=".18"></circle>
