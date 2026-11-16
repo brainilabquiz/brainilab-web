@@ -43,7 +43,7 @@ assert.equal(C.next(2700).xp,2750);assert.equal(C.next(2700).id,'heart');assert.
 assert.equal(C.xp(Infinity),0);assert.equal(C.xp(-100),0);assert.equal(C.xp('oops'),0);assert.equal(C.xp('100.7'),100);
 assert.equal(C.clean({frame:'<script>',title:'admin'}).frame,'level');assert.equal(C.clean(null).title,'none');
 assert.match(root.querySelector('[data-next-reward]').textContent,/Specs appeal.*50 XP to go/s);
-assert.equal(root.querySelector('[data-reward-id=gold]').disabled,true);
+assert.equal(root.querySelector('[data-reward-id=gold]').dataset.studioLocked,'true');
 assert.equal(root.querySelector('[data-reward-id=copper]').disabled,false);
 const before=JSON.stringify(guest.player);
 root.querySelector('[data-reward-id=copper]').click();root.querySelector('[data-reward-id=detective]').click();

@@ -19,7 +19,7 @@ await settle();
 const root=w.document.querySelector('[data-profile-rewards]'),S=w.BrainiRewardStore,C=w.BrainiRewardCatalog;
 const item=(kind,id)=>root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`);
 const summary=kind=>root.querySelector(`[data-style-collection="${kind}"]`).textContent;
-root.querySelector('[data-avatar-tab=rewards]').click();
+root.querySelector('[data-avatar-tab=frame]').click();
 assert.equal(summary('frame'),'5 of 6 unlocked');
 assert.equal(summary('title'),'4 of 6 unlocked');
 for(const reward of C.frames){
@@ -54,7 +54,7 @@ const after=plain(D.getState());delete after.player.avatarDesign;assert.deepEqua
 const levels=[0,99,100,249,250,499,500,749,750,1499,1500,1999,2000,2999,3000,4499,4500,5999,6000,9999,10000];
 for(const xp of levels){
  await D.api.syncCloudProgression({progression:{xp,level:99,total_games:9},today:{daily_brain_score:1234},recent_rewards:[]});
- for(const kind of ['frame','title'])for(const reward of C.groups[kind])assert.equal(item(kind,reward.id).disabled,reward.xp>xp,`${kind}/${reward.id} obeys unchanged XP threshold ${reward.xp}`);
+ for(const kind of ['frame','title'])for(const reward of C.groups[kind])assert.equal(item(kind,reward.id).dataset.studioLocked,String(reward.xp>xp),`${kind}/${reward.id} obeys unchanged XP threshold ${reward.xp}`);
 }
 assert.equal(summary('frame'),'6 of 6 unlocked');assert.equal(summary('title'),'6 of 6 unlocked');
 readError=true;await S.load();assert.equal(summary('frame'),'Unavailable');assert.equal(summary('title'),'Unavailable');assert.equal(root.querySelector('[data-style-retry]').hidden,false);
@@ -62,7 +62,7 @@ readError=false;root.querySelector('[data-style-retry]').click();await settle();
 for(const key of Object.keys(metadata))if(key.startsWith('brainilab_'))delete metadata[key];
 owner='frames-other';await D.api.syncExternalAuthUser({id:owner,user_metadata:{}});await settle();
 assert.equal(S.snapshot().style.frame,'level');assert.equal(S.snapshot().style.title,'none');
-assert.equal(root.querySelector('[data-avatar-pane=rewards]').querySelectorAll('.avatar-option-group').length,3,'frame, title and background choices stay expanded');
+for(const pane of ['frame','title','scene'])assert.equal(root.querySelector(`[data-avatar-pane=${pane}]`).querySelectorAll('.avatar-option-group').length,1,'each category keeps its choices');
 assert.equal(root.querySelectorAll('[data-style-save]').length,1);assert.equal(root.querySelectorAll('[data-style-cancel]').length,1);
 assert.equal(writes.length,1);dom.window.close();
 console.log('PASS frames/titles: actual portrait/photo, XP-derived level ring, escaped names, boundary locks, visible collection, stable DOM/focus, preview/cancel/save, minimal metadata, protected scores/XP, read-error recovery and owner isolation.');

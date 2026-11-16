@@ -42,7 +42,7 @@ for(const [kind,id,requirement] of items){
  assert.equal(f.root.querySelector('[data-style-save]').disabled,true);assert.equal(f.writes.length,0);
  await f.release();
  const button=f.root.querySelector(`[data-reward-kind="${kind}"][data-reward-id="${id}"]`);
- assert.equal(f.w.BrainiAvatarStudioUI.activePane(),kind==='frame'?'rewards':'extras');
+ assert.equal(f.w.BrainiAvatarStudioUI.activePane(),kind);
  assert.equal(f.w.document.activeElement,button,'A reward link waits for ownership and then focuses its actual choice');
  button.blur();await new Promise(resolve=>f.w.requestAnimationFrame(()=>f.w.requestAnimationFrame(resolve)));
  assert.equal(f.w.document.activeElement,button,'The initial browser fragment jump cannot hide the requested item');
