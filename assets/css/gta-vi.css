@@ -139,6 +139,16 @@
 .gta-quiz-heading .gta-kicker { margin-bottom: .6rem; color: #ffc7a4; }
 .gta-quiz-heading h2 { font-size: clamp(1.75rem, 3.1vw, 2.6rem); font-weight: 900; letter-spacing: -.04em; }
 .gta-quiz-heading > p:last-child { color: var(--muted); margin: .7rem 0 1.2rem; }
+.gta-quiz-select { display: grid; gap: .6rem; }
+.gta-quiz-select button {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .1rem .85rem;
+  padding: .75rem .9rem; border: 1px solid #ffa9da66; border-radius: .9rem;
+  background: #ff4fa31a; color: var(--bright); font: inherit; text-align: left; cursor: pointer;
+}
+.gta-quiz-select button::after { content: "→" / ""; grid-area: 1 / 2 / span 2; color: var(--peach); }
+.gta-quiz-select button:hover { border-color: var(--pink); background: #ff4fa333; }
+.gta-quiz-select strong { font-weight: 800; line-height: 1.25; }
+.gta-quiz-select button > span { color: var(--muted); font-size: .86rem; }
 .gta-quiz-progress { display: grid; gap: .35rem; margin: 0 0 1rem; color: var(--muted); font-size: .9rem; font-weight: 700; }
 .gta-quiz-progress progress { width: 100%; height: .6rem; border: 0; border-radius: 999px; overflow: hidden; background: #ffffff1a; accent-color: var(--pink); }
 .gta-quiz-progress progress::-webkit-progress-bar { background: #ffffff1a; border-radius: 999px; }
@@ -164,6 +174,8 @@
 .gta-source { display: block; width: fit-content; margin: .45rem 0 .9rem; font-weight: 700; }
 .gta-quiz-result { display: grid; justify-items: start; gap: 1rem; }
 .gta-quiz-result h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.gta-quiz-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; }
+.gta-quiz-switch { min-height: 44px; border: 0; padding: 0; background: transparent; color: var(--peach); font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
 
 /* Reading list: full-width card grid under the news */
 .gta-guides, .gta-read { margin-top: 3.4rem; }
