@@ -1,0 +1,27 @@
+{
+  "title": "BrainiLab General Knowledge Quiz score bands",
+  "owner": "BrainiLab",
+  "capturedOn": "2026-11-16",
+  "period": {
+    "startDateInclusive": "2026-10-19",
+    "endDateInclusive": "2026-11-15",
+    "timezone": "UTC"
+  },
+  "method": "Completed, answer-verified 20-question General Knowledge rounds with a valid correct-answer count. Excludes known BrainiLab administration accounts. The same profile can contribute multiple rounds. Easy, Medium and Hard are pooled. Each band has at least ten distinct profiles.",
+  "rounds": 82,
+  "distinctProfilesAcrossBands": 29,
+  "bands": [
+    {
+      "correctAnswers": "0–14",
+      "rounds": 33
+    },
+    {
+      "correctAnswers": "15–17",
+      "rounds": 21
+    },
+    {
+      "correctAnswers": "18–20",
+      "rounds": 28
+    }
+  ]
+}
