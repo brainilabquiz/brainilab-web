@@ -1,0 +1,28 @@
+{
+  "title": "BrainiLab General Knowledge Quiz elapsed time",
+  "owner": "BrainiLab",
+  "capturedOn": "2026-11-16",
+  "period": {
+    "startDateInclusive": "2026-10-19",
+    "endDateInclusive": "2026-11-15",
+    "timezone": "UTC"
+  },
+  "method": "Elapsed seconds between the server’s game start and accepted completion timestamps for completed, answer-verified 20-question General Knowledge rounds with valid answer totals. Excludes known BrainiLab administration accounts. A profile can appear in several bands. Each band contains at least ten profiles.",
+  "rounds": 82,
+  "profilesAcrossBands": 29,
+  "medianSeconds": 161,
+  "bands": [
+    {
+      "elapsedTime": "Under 2 minutes",
+      "rounds": 20
+    },
+    {
+      "elapsedTime": "2 to under 3 minutes",
+      "rounds": 29
+    },
+    {
+      "elapsedTime": "3 minutes or more",
+      "rounds": 33
+    }
+  ]
+}
