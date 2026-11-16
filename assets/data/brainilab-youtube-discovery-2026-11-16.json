@@ -1,0 +1,45 @@
+{
+  "title": "How viewers reached BrainiLab on YouTube",
+  "owner": "BrainiLab",
+  "capturedOn": "2026-11-16",
+  "channel": "https://www.youtube.com/channel/UCy35EdjSpdYufOLJBybevsA",
+  "period": {
+    "startDateInclusive": "2026-10-16",
+    "endDateInclusive": "2026-11-12",
+    "reportingDays": "YouTube Analytics"
+  },
+  "method": "Channel-level YouTube Analytics insightTrafficSourceType report. The four largest rows by reported views are shown individually. Other combines every additional row returned. Total and shares are calculated from this report only. Views may include repeats and estimated watch time is reported in minutes.",
+  "viewsAcrossReturnedRows": 22908,
+  "estimatedMinutesAcrossReturnedRows": 33768,
+  "sources": [
+    {
+      "source": "Home and subscription features",
+      "sourceCode": "SUBSCRIBER",
+      "views": 8916,
+      "estimatedMinutesWatched": 19755
+    },
+    {
+      "source": "Shorts feed",
+      "sourceCode": "SHORTS",
+      "views": 8735,
+      "estimatedMinutesWatched": 907
+    },
+    {
+      "source": "YouTube search",
+      "sourceCode": "YT_SEARCH",
+      "views": 2178,
+      "estimatedMinutesWatched": 5378
+    },
+    {
+      "source": "Related videos",
+      "sourceCode": "RELATED_VIDEO",
+      "views": 2152,
+      "estimatedMinutesWatched": 6126
+    },
+    {
+      "source": "Other reported sources",
+      "views": 927,
+      "estimatedMinutesWatched": 1602
+    }
+  ]
+}
