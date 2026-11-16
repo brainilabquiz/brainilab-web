@@ -213,4 +213,7 @@
 .article-reading .article-cover{padding:10px;background:var(--reading-tint);border:1px solid color-mix(in srgb,var(--reading-accent) 28%,white);border-radius:18px;box-shadow:inset 0 0 0 3px #ffffffbf,0 8px 28px color-mix(in srgb,var(--reading-accent) 9%,transparent)}
 .article-reading .article-cover img{border-radius:10px}
 .article-reading .article-cover figcaption{padding:0 4px 2px;color:#59544f}
+.article-body .article-reference{margin:24px 0;padding:8px;border:1px solid #ded9d0;border-radius:14px;background:#fff}
+.article-reference img{display:block;width:100%;height:auto;border-radius:8px}
+.article-reference figcaption{margin:8px 4px 2px;font:14px/1.5 Arial,sans-serif;color:#59544f}
 @media(max-width:600px){.article-reading .article-cover{padding:7px;border-radius:14px}.learn-card[data-format=article] .learn-card-art{padding:4px}}
