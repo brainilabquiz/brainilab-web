@@ -475,6 +475,19 @@ window.BrainiAvatarDesign=(function(){
       profileAchievements:window.BrainiAchievementDisplay?.publicChoices(style.achievements)||[]};
   }
   const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
+  const backdropArt=Object.freeze({
+    lilac:['#9a85d0','#fff4ff','<path d="M-15 145 105-14h42L0 181ZM115 214 219 78v46l-68 90Z"/><circle cx="155" cy="60" r="22"/>'],
+    sky:['#5ba9d0','#f4feff','<path d="M-8 72Q20 24 63 48T142 40Q171 20 210 32v24q-25-13-60 7T67 74Q19 57-8 101ZM-10 162q47-29 85-13t137-16v39q-58 45-130 27t-92 12Z"/>'],
+    sage:['#578f70','#f5ffd8','<path d="M26 171C2 130 3 96 21 65q20 43 13 89C39 87 66 55 98 32q-4 64-56 133ZM173 177q-7-56 27-97-1 60-27 97Z"/>'],
+    sunshine:['#e6a840','#fffbea','<path d="m100 102-87-91L0 42ZM100 102l20-110H82ZM100 102l102-47 6-43ZM100 102l34 105h45ZM100 102l-105 23v43Z"/><circle cx="100" cy="102" r="55"/>'],
+    coral:['#dd8478','#fff0de','<path d="M-12 99C38 46 93 81 128 53S168 11 207 21v30c-56-3-47 45-115 50S14 103-12 137ZM-15 166q57-34 100-12t126-30v52q-68 39-136 27t-90 10Z"/>']
+  });
+  function backdrop(id){
+    const [shade,light,pattern]=backdropArt[id]||backdropArt.lilac;
+    return '<rect width="200" height="200" rx="100" fill="'+color('background',Object.hasOwn(backdropArt,id)?id:'lilac')+'"/>'+
+      '<g fill="'+shade+'" opacity=".27">'+pattern+'</g><circle cx="88" cy="81" r="66" fill="'+light+'" opacity=".55"/>'+
+      '<path d="M28 68 32 58l4 10-4 10ZM168 110l4-10 4 10-4 10Z" fill="'+light+'" opacity=".9"/><circle cx="160" cy="44" r="3" fill="'+light+'"/>';
+  }
   function star(cx,cy,r=13){
     return Array.from({length:10},(_,i)=>{const a=(i*36-90)*Math.PI/180,n=i%2?r*.46:r;return `${(cx+Math.cos(a)*n).toFixed(2)},${(cy+Math.sin(a)*n).toFixed(2)}`;}).join(' ');
   }
@@ -599,45 +612,26 @@ window.BrainiAvatarDesign=(function(){
     };
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${finish.backdrop}<g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
   }
-  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory});
+  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory,backdrop});
 })();
 
 /* ===== avatar-studio-art.js ===== */
 
-/* Layered Avatar Studio artwork from the BrainiLab design handoff. */
+/* Shared character portrait for the studio and saved avatar surfaces. */
 window.BrainiAvatarStudioArt=(()=>{
   const A=BrainiAvatarDesign;
-  const glasses={
-    round: `<g fill="#FFFFFF" fill-opacity=".18" stroke="#181729" stroke-width="3"><circle cx="84" cy="96" r="13"></circle><circle cx="116" cy="96" r="13"></circle></g><path d="M97 94 Q100 90 103 94 M71 94 L60 92 M129 94 L140 92" stroke="#181729" stroke-width="3" fill="none" stroke-linecap="round"></path>`,
-    square: `<g fill="#FFFFFF" fill-opacity=".18" stroke="#2D296E" stroke-width="3.5"><rect x="69" y="86" width="30" height="21" rx="6"></rect><rect x="101" y="86" width="30" height="21" rx="6"></rect></g><path d="M69 92 L60 90 M131 92 L140 90" stroke="#2D296E" stroke-width="3.5" stroke-linecap="round"></path>`,
-    heart: `<g fill="#F0607A" fill-opacity=".42" stroke="#E52720" stroke-width="3" stroke-linejoin="round"><path d="M84 109 C71 101 68 92 73 87 C77 83 83 85 84 90 C85 85 91 83 95 87 C100 92 97 101 84 109 Z"></path><path d="M116 109 C103 101 100 92 105 87 C109 83 115 85 116 90 C117 85 123 83 127 87 C132 92 129 101 116 109 Z"></path></g><path d="M96 91 Q100 88 104 91 M70 91 L60 90 M130 91 L140 90" stroke="#E52720" stroke-width="3" fill="none" stroke-linecap="round"></path>`,
-    star: `<g fill="#FFD813" fill-opacity=".5" stroke="#E6680C" stroke-width="2.6" stroke-linejoin="round"><path d="M84 81 L88.1 90.3 L98.3 91.4 L90.7 98.2 L92.8 108.1 L84 103 L75.2 108.1 L77.3 98.2 L69.7 91.4 L79.9 90.3 Z"></path><path d="M116 81 L120.1 90.3 L130.3 91.4 L122.7 98.2 L124.8 108.1 L116 103 L107.2 108.1 L109.3 98.2 L101.7 91.4 L111.9 90.3 Z"></path></g><path d="M98.3 91.4 L101.7 91.4 M69.7 91.4 L60 90 M130.3 91.4 L140 90" stroke="#E6680C" stroke-width="2.6" stroke-linecap="round"></path>`,
-    monocle: `<circle cx="116" cy="96" r="14" fill="#FFFFFF" fill-opacity=".2" stroke="#C79A2B" stroke-width="3.5"></circle><path d="M128 104 Q142 130 128 156" stroke="#C79A2B" stroke-width="2" fill="none" stroke-dasharray="2 3" stroke-linecap="round"></path>`,
-    doughnut: `<g fill="none"><circle cx="84" cy="96" r="12.5" stroke="#D9A06B" stroke-width="8"></circle><circle cx="116" cy="96" r="12.5" stroke="#D9A06B" stroke-width="8"></circle><circle cx="84" cy="96" r="12.5" stroke="#F08BB0" stroke-width="5.5"></circle><circle cx="116" cy="96" r="12.5" stroke="#F08BB0" stroke-width="5.5"></circle></g><g stroke-width="1.8" stroke-linecap="round"><path d="M76 86 L78.5 84.5 M108 86 L110.5 84.5" stroke="#FFD813"></path><path d="M91 85 L93 87 M123 85 L125 87" stroke="#2F7FE0"></path><path d="M72.5 99 L72.5 102 M104.5 99 L104.5 102" stroke="#40AB34"></path><path d="M94 103 L92 105 M126 103 L124 105" stroke="#FFFFFF"></path></g><path d="M96 94 Q100 90 104 94" stroke="#D9A06B" stroke-width="3" fill="none" stroke-linecap="round"></path>`
-  };
-  const hats={
-    beanie: `<path d="M54 72 C54 38 76 24 100 24 C124 24 146 38 146 72 Z" fill="#E52720"></path><path d="M74 34 Q86 28 98 28" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" opacity=".3"></path><rect x="50" y="60" width="100" height="20" rx="10" fill="#B31E19"></rect><path d="M62 62 V78 M74 62 V78 M86 62 V78 M98 62 V78 M110 62 V78 M122 62 V78 M134 62 V78" stroke="#000000" stroke-opacity=".15" stroke-width="2"></path><circle cx="100" cy="22" r="11" fill="#FFF8D2"></circle>`,
-    corn: `<path d="M86 62 C72 48 72 26 80 12 C84 30 90 42 98 52 Z" fill="#40AB34"></path><path d="M114 62 C128 48 128 26 120 12 C116 30 110 42 102 52 Z" fill="#2E8A26"></path><ellipse cx="100" cy="32" rx="15" ry="27" fill="#FFD813" stroke="#E6A100" stroke-width="2"></ellipse><path d="M87 20 H113 M85 30 H115 M86 40 H114 M90 50 H110 M95 7 V58 M105 7 V58" stroke="#E6A100" stroke-width="1.6" opacity=".75"></path><path d="M82 66 C86 54 94 50 100 57 C106 50 114 54 118 66 Z" fill="#7FCB4F"></path>`,
-    cloud: `<path d="M78 46 L75 53 M124 46 L121 53 M88 50 L86 55" stroke="#2F7FE0" stroke-width="2.5" stroke-linecap="round"></path><g fill="#B7B4DE"><circle cx="80" cy="26" r="14"></circle><circle cx="100" cy="18" r="18"></circle><circle cx="122" cy="26" r="14"></circle><rect x="66" y="24" width="70" height="18" rx="9"></rect></g><rect x="66" y="32" width="70" height="10" rx="5" fill="#8C88C9" opacity=".6"></rect><path d="M104 38 L94 56 L102 56 L96 72 L114 50 L105 50 L111 38 Z" fill="#FFD813" stroke="#E6A100" stroke-width="1.5" stroke-linejoin="round"></path>`,
-    coffee: `<path d="M90 20 C86 14 94 10 90 4 M110 20 C106 14 114 10 110 4" stroke="#B9BCC8" stroke-width="2.5" fill="none" stroke-linecap="round"></path><path d="M124 38 C140 38 140 58 124 58" stroke="#DCDAEB" stroke-width="9" fill="none"></path><path d="M124 38 C140 38 140 58 124 58" stroke="#FFFFFF" stroke-width="5" fill="none"></path><path d="M72 30 L128 30 L122 68 L78 68 Z" fill="#FFFFFF" stroke="#DCDAEB" stroke-width="2" stroke-linejoin="round"></path><path d="M75 50 L125 50 L124 57 L76 57 Z" fill="#E6680C"></path><ellipse cx="100" cy="30" rx="28" ry="6" fill="#8A5A3B"></ellipse><path d="M100 34 C96 31 95 28 97 27 C98.5 26 100 27 100 28.5 C100 27 101.5 26 103 27 C105 28 104 31 100 34 Z" fill="#FFF1DD"></path>`,
-    wizard: `<path d="M110 -18 C104 10 92 30 62 62 L138 62 C126 40 118 16 110 -18 Z" fill="#5B55D6"></path><path d="M64 52 L136 52 L139 60 L61 60 Z" fill="#FFD813"></path><ellipse cx="100" cy="63" rx="58" ry="11" fill="#2D296E"></ellipse><path d="M96 22 L97.8 27.2 L103 29 L97.8 30.8 L96 36 L94.2 30.8 L89 29 L94.2 27.2 Z" fill="#FFD813"></path><path d="M112 4 L113.2 7.8 L117 9 L113.2 10.2 L112 14 L110.8 10.2 L107 9 L110.8 7.8 Z" fill="#FFFFFF"></path><circle cx="84" cy="44" r="2.2" fill="#FFFFFF"></circle>`,
-    graduate: `<path d="M62 62 C62 44 138 44 138 62 L138 70 C122 64 78 64 62 70 Z" fill="#181729"></path><path d="M100 20 L164 42 L100 64 L36 42 Z" fill="#2D296E"></path><path d="M100 20 L164 42 L100 52 L36 42 Z" fill="#FFFFFF" opacity=".08"></path><path d="M100 42 L150 48 L150 72" stroke="#FFD813" stroke-width="3" fill="none" stroke-linecap="round"></path><path d="M146 72 L154 72 L156 84 L144 84 Z" fill="#FFD813"></path><circle cx="100" cy="42" r="4.5" fill="#FFD813"></circle>`
-  };
-  const extras={
-    cookie: `<circle cx="170" cy="170" r="14" fill="#D9A06B"></circle><circle cx="170" cy="170" r="14" fill="none" stroke="#A86B45" stroke-width="2"></circle><g fill="#5B3A26"><circle cx="164" cy="164" r="2.6"></circle><circle cx="175" cy="166" r="2.2"></circle><circle cx="167" cy="176" r="2.6"></circle><circle cx="177" cy="176" r="1.8"></circle></g>`,
-    peas: `<path d="M153 177 C157 160 178 155 188 161 C184 176 165 185 153 177 Z" fill="#40AB34"></path><g fill="#9BDB5E"><circle cx="162" cy="173" r="4.6"></circle><circle cx="171" cy="168.5" r="4.6"></circle><circle cx="180" cy="164" r="4.6"></circle></g><path d="M188 161 L192 156" stroke="#2E8A26" stroke-width="2.2" stroke-linecap="round"></path>`,
-    train: `<circle cx="161" cy="151" r="3" fill="#B9BCC8"></circle><circle cx="156" cy="146" r="2.3" fill="#B9BCC8"></circle><rect x="159" y="157" width="5" height="9" rx="1" fill="#181729"></rect><rect x="156" y="165" width="27" height="14" rx="3" fill="#2D296E"></rect><rect x="171" y="155" width="13" height="13" rx="2" fill="#E52720"></rect><rect x="174" y="158" width="7" height="5" rx="1" fill="#D8EEFF"></rect><path d="M156 172 L151 181 L156 181 Z" fill="#FFD813"></path><circle cx="162" cy="181" r="3.6" fill="#181729"></circle><circle cx="177" cy="181" r="3.6" fill="#181729"></circle>`,
-    owl: `<path d="M157 161 L159 152 L165 158 Z M183 161 L181 152 L175 158 Z" fill="#A86B45"></path><ellipse cx="170" cy="172" rx="14" ry="15" fill="#A86B45"></ellipse><ellipse cx="170" cy="178" rx="8.5" ry="8" fill="#F2C29E"></ellipse><circle cx="164" cy="166" r="5.2" fill="#FFFFFF"></circle><circle cx="176" cy="166" r="5.2" fill="#FFFFFF"></circle><circle cx="164.6" cy="166.4" r="2.5" fill="#181729"></circle><circle cx="176.6" cy="166.4" r="2.5" fill="#181729"></circle><path d="M168 171 L172 171 L170 175 Z" fill="#E6680C"></path>`,
-    pencil: `<g transform="rotate(40 170 170)"><rect x="163" y="151" width="14" height="6" rx="2" fill="#F08BB0"></rect><rect x="163" y="156" width="14" height="3.5" fill="#B9BCC8"></rect><rect x="163" y="159" width="14" height="21" fill="#FFD813"></rect><path d="M170 159 V180" stroke="#E6A100" stroke-width="1.5"></path><path d="M163 180 L177 180 L170 191 Z" fill="#F2C29E"></path><path d="M168 187 L172 187 L170 191 Z" fill="#181729"></path></g>`,
-    nacho: `<path d="M170 153 L187 182 L153 182 Z" fill="#FFC23D" stroke="#E6A100" stroke-width="2" stroke-linejoin="round"></path><path d="M160 171 C164 167 176 167 180 171 C178 175 176 173 174 177 C172 173 168 175 166 173 C164 176 162 175 160 171 Z" fill="#FFE36E"></path><g fill="#E6680C"><circle cx="168" cy="163" r="1.5"></circle><circle cx="176" cy="178" r="1.5"></circle><circle cx="162" cy="178" r="1.3"></circle><circle cx="171" cy="179" r="1.1"></circle></g>`,
-    rocket: `<path d="M170 149 C179 155 181 168 176 181 L164 181 C159 168 161 155 170 149 Z" fill="#E52720"></path><circle cx="170" cy="164" r="3.8" fill="#D8EEFF" stroke="#2D296E" stroke-width="1.5"></circle><path d="M164 172 L157 183 L164 181 Z M176 172 L183 183 L176 181 Z" fill="#2D296E"></path><path d="M165 182 Q170 193 175 182 Z" fill="#FFD813"></path>`,
-    book: `<path d="M155 160 L170 164 L185 160 L185 180 L170 184 L155 180 Z" fill="#40AB34"></path><path d="M170 164 V184" stroke="#FFFFFF" stroke-width="2"></path><path d="M159 166 L166 168 M159 171 L166 173 M174 168 L181 166 M174 173 L181 171" stroke="#FFFFFF" stroke-width="1.5" opacity=".7"></path><circle cx="181" cy="157" r="3.5" fill="#7FCB4F"></circle><circle cx="186" cy="154" r="3.5" fill="#7FCB4F"></circle><circle cx="187.5" cy="153" r="1" fill="#181729"></circle>`,
-    bulb: `<path d="M161 151 L157 147 M179 151 L183 147 M170 147 V142" stroke="#E6680C" stroke-width="2.5" stroke-linecap="round"></path><circle cx="170" cy="164" r="11" fill="#FFD813" stroke="#E6A100" stroke-width="2"></circle><rect x="164.5" y="173" width="11" height="9" rx="2.5" fill="#737286"></rect><path d="M165 177 H175" stroke="#FFFFFF" stroke-width="1.5"></path>`
-  };
   function paletteFor(look){
-    return Object.fromEntries(['skin','hairColor','shirt','background'].map(kind=>[kind,A.options[kind].find(item=>item.id===look[kind]).color]));
+    return Object.fromEntries(['skin','hairColor','shirt'].map(kind=>[kind,A.options[kind].find(item=>item.id===look[kind]).color]));
   }
-  function markup(look,{instance,level=1,levelPct=0,stickerScale=1}){
+  const glassRim='<circle cx="100" cy="100" r="105" fill="none" stroke="#fff" stroke-opacity=".64" stroke-width="2" stroke-dasharray="105 555" transform="rotate(190 100 100)"/>';
+  const frameDetails={
+    blue:glassRim+'<path d="m31 173 6 6m124-151 6 4m14 10 4 6" stroke="#d5efff" stroke-width="3" stroke-linecap="round"/>',
+    green:'<path d="M14 65Q7 52 24 42Q42 30 44 21M153 192Q170 190 181 171Q189 157 194 153" fill="none" stroke="#4c7435" stroke-width="1.8" stroke-linecap="round"/>',
+    copper:glassRim+'<path d="m100-18 7 11-7 6-7-6Zm0 236 7-11-7-6-7 6ZM-18 100l11-7 6 7-6 7Zm236 0-11-7-6 7 6 7Z" fill="#d08958" stroke="#6f3825" stroke-width="1.5"/>',
+    gold:glassRim+'<path d="M71 4Q100-9 129 4M71 196Q100 209 129 196" fill="none" stroke="#fff4b2" stroke-width="3" stroke-linecap="round"/><path d="m100-16 10 12-10 10-10-10Zm0 232 8-9-8-9-8 9Z" fill="#ffea8b" stroke="#a07625" stroke-width="1.7"/>',
+    orbit:'<ellipse cx="100" cy="100" rx="117" ry="48" transform="rotate(-33 100 100)" fill="none" stroke="#9b8be0" stroke-width="2.5" stroke-dasharray="240 300" transform-origin="100 100"/><circle cx="198" cy="55" r="4" fill="#e6bd67"/>'
+  };
+  function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
     const backHair={waves:'longBack',bob:'bobBack',braids:'braids',ponytail:'pony',curls:'curlsBack'}[look.hair];
     const frontHair={sweep:'sweep',crop:'crop',curls:'curls',bald:'none',bob:'part',waves:'part',braids:'part',ponytail:'part'}[look.hair];
@@ -659,15 +653,17 @@ window.BrainiAvatarStudioArt=(()=>{
     };
     const sticker='translate(170 170) scale('+stickerScale+') translate(-170 -170)';
     const frame=look.frame==='midnight'?'level':look.frame;
+    const prop=look.prop==='none'?'':A.preview('prop',look.prop);
+    const viewBox=cropHair?'46 42 148 148':'0 0 240 240';
   const frames={
-    level: `<circle cx="100" cy="100" r="104" fill="none" stroke="#2D296E" stroke-width="10"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="#FFD813" stroke-width="10" stroke-linecap="round" pathLength="1000" stroke-dasharray="${arc}" transform="rotate(-90 100 100)"></circle><circle cx="100" cy="206" r="15" fill="#FFD813" stroke="#2D296E" stroke-width="3.5"></circle><text x="100" y="211.5" text-anchor="middle" font-size="15" font-weight="700" fill="#2D296E">${level}</text>`,
+    level: `<circle cx="100" cy="100" r="104" fill="none" stroke="#29244e" stroke-width="10"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="#FFD813" stroke-width="10" stroke-linecap="round" pathLength="1000" stroke-dasharray="${arc}" transform="rotate(-90 100 100)"></circle><circle cx="100" cy="206" r="15" fill="#FFD813" stroke="#2D296E" stroke-width="3.5"></circle><text x="100" y="211.5" text-anchor="middle" font-size="15" font-weight="700" fill="#2D296E">${level}</text>`,
     blue: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-sky)" stroke-width="10"></circle><circle cx="100" cy="100" r="99" fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".8"></circle><g fill="#FFFFFF" stroke="#2F7FE0" stroke-width="2"><path d="M14 52 a9 9 0 0 1 17 -2 a7 7 0 0 1 4 13 h-19 a6 6 0 0 1 -2 -11 z"></path><path d="M172 150 a8 8 0 0 1 15 -2 a6 6 0 0 1 3 11 h-17 a5 5 0 0 1 -1 -9 z"></path></g>`,
     green: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-green)" stroke-width="10"></circle><g fill="#40AB34"><ellipse cx="22" cy="44" rx="11" ry="5.5" transform="rotate(-45 22 44)"></ellipse><ellipse cx="36" cy="28" rx="9" ry="4.5" transform="rotate(-20 36 28)" fill="#7FCB4F"></ellipse><ellipse cx="184" cy="160" rx="11" ry="5.5" transform="rotate(-45 184 160)"></ellipse><ellipse cx="170" cy="178" rx="9" ry="4.5" transform="rotate(-70 170 178)" fill="#7FCB4F"></ellipse></g>`,
     copper: `<circle cx="100" cy="100" r="115" fill="none" stroke="#C8693A" stroke-width="3" stroke-dasharray="1.5 7"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-copper)" stroke-width="11"></circle><circle cx="100" cy="100" r="98.5" fill="none" stroke="#5A260F" stroke-width="1.5" opacity=".5"></circle>`,
     gold: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-gold)" stroke-width="12"></circle><circle cx="100" cy="100" r="98" fill="none" stroke="#FFF6C4" stroke-width="1.5"></circle><g fill="#FFD813" stroke="#D99200" stroke-width="1.5"><path d="M18 40 L21 49 L30 52 L21 55 L18 64 L15 55 L6 52 L15 49 Z"></path><path d="M186 30 L188 36 L194 38 L188 40 L186 46 L184 40 L178 38 L184 36 Z"></path><path d="M190 146 L192.5 153.5 L200 156 L192.5 158.5 L190 166 L187.5 158.5 L180 156 L187.5 153.5 Z"></path></g>`,
     orbit: `<circle cx="100" cy="100" r="104" fill="none" stroke="#2D296E" stroke-width="5"></circle><circle cx="100" cy="100" r="113" fill="none" stroke="#5B55D6" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"></circle><g class="avatar-orbit"><circle cx="100" cy="-13" r="7" fill="#FFD813" stroke="#2D296E" stroke-width="2"></circle><circle cx="2" cy="156" r="5.5" fill="#E6680C" stroke="#2D296E" stroke-width="2"></circle><circle cx="198" cy="156" r="4.5" fill="#40AB34" stroke="#2D296E" stroke-width="2"></circle></g>`
   };
-    return `<svg class="avatar-studio-drawing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" aria-hidden="true" focusable="false">
+    return `<svg class="avatar-studio-drawing" xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" aria-hidden="true" focusable="false">
     <defs>
     <clipPath id="${id}-disc"><circle cx="100" cy="100" r="98"></circle></clipPath>
     <linearGradient id="${id}-g-sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F7FE0"></stop><stop offset="1" stop-color="#9AD6FF"></stop></linearGradient>
@@ -677,10 +673,7 @@ window.BrainiAvatarStudioArt=(()=>{
     </defs>
     <g transform="translate(20 20)">
     <g clip-path="url(#${id}-disc)">
-    <circle cx="100" cy="100" r="98" fill="${palette.background}"></circle>
-    <circle cx="38" cy="46" r="26" fill="#FFFFFF" opacity=".4"></circle>
-    <circle cx="170" cy="58" r="13" fill="#FFFFFF" opacity=".35"></circle>
-    <circle cx="168" cy="150" r="44" fill="#181729" opacity=".04"></circle>
+    ${A.backdrop(look.background)}
 
     ${hair.longBack||''}
     ${hair.bobBack||''}
@@ -692,6 +685,9 @@ window.BrainiAvatarStudioArt=(()=>{
     <path d="M100 148 C88 148 78 150 70 154 L100 182 L130 154 C122 150 112 148 100 148 Z" fill="#000000" opacity=".16"></path>
     <rect x="87" y="118" width="26" height="42" rx="12" fill="${palette.skin}"></rect>
     <path d="M87 128 L113 128 L113 138 Q100 148 87 138 Z" fill="#000000" opacity=".12"></path>
+    <path d="M28 194Q42 172 56 165L51 201H28ZM172 194Q158 172 144 165L149 201H172Z" fill="#17132d" opacity=".18"></path>
+    <path d="M133 179h13l-2 10-5 4-5-4Z" fill="#fff" opacity=".23"></path>
+    <path d="M136 182h7m-3.5-3.5v7" stroke="#fff" stroke-width="1.25" opacity=".72"></path>
     <path d="M80 152 L100 172 L120 152" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"></path>
     <path d="M44 176 C52 166 60 162 66 162" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".18"></path>
 
@@ -710,21 +706,22 @@ window.BrainiAvatarStudioArt=(()=>{
     <ellipse cx="73" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <ellipse cx="127" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <path d="M100 100 Q96 108 101 110" stroke="#000000" stroke-opacity=".22" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
-    <path d="M89 117 Q100 127 111 117" stroke="#181729" stroke-width="3" fill="none" stroke-linecap="round"></path>
+    <path d="M89 117 Q100 127 111 117" stroke="${['umber','ebony'].includes(look.skin)?'#f2c5ad':'#392533'}" stroke-width="3" fill="none" stroke-linecap="round"></path>
 
     ${hair.sweep||''}
     ${hair.crop||''}
     ${hair.part||''}
     ${hair.curls||''}
     ${hair.none||''}
-    ${glasses[look.glasses]||A.accessory('glasses',look.glasses)}
+    ${A.accessory('glasses',look.glasses)}
     </g>
-    ${frames[frame]||''}
-    ${hats[look.hat]||A.accessory('hat',look.hat)}
+    ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')}
+    <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
     ${look.prop==='none'?'':`<g transform="${sticker}">
-      <circle cx="172" cy="174" r="23" fill="#181729" opacity=".18"></circle>
-      <circle cx="170" cy="170" r="23" fill="#fff" stroke="#e7e6f0" stroke-width="2"></circle>
-      ${extras[look.prop]||`<svg x="153" y="150" width="35" height="37" viewBox="105 56 110 141">${A.accessory('prop',look.prop)}</svg>`}
+      <circle cx="171" cy="174" r="24" fill="#181729" opacity=".2"></circle>
+      <circle cx="170" cy="170" r="24" fill="#2d296e"></circle>
+      <circle cx="170" cy="170" r="21.5" fill="#fffaf1" stroke="#e0c082" stroke-width="1.5"></circle>
+      ${prop.replace('width="120" height="120"','x="149" y="149" width="42" height="42"')}
     </g>`}
     </g>
     </svg>`;
@@ -4131,7 +4128,7 @@ window.BrainiRewardJourney=(()=>{
     return milestones().filter(item=>item.xp>before&&item.xp<=after).sort((a,b)=>b.xp-a.xp);
   }
   function art(item,person={}){
-    if(item.kind==='scene')return `<img class="profile-scene-sample" data-profile-scene="${item.id}" src="/assets/profile-scenes/${item.id}.svg" width="56" height="48" alt="">`;
+    if(item.kind==='scene')return `<img class="profile-scene-sample" data-profile-scene="${item.id}" src="/assets/profile-scenes/${item.id}.webp" width="56" height="48" alt="">`;
     if(item.kind==='frame'||item.kind==='rank'){
       const level=item.level||BrainiProgressUI.xpProgress(1,person.xp).level;
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;

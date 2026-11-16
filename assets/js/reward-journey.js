@@ -15,7 +15,7 @@ window.BrainiRewardJourney=(()=>{
     return milestones().filter(item=>item.xp>before&&item.xp<=after).sort((a,b)=>b.xp-a.xp);
   }
   function art(item,person={}){
-    if(item.kind==='scene')return `<img class="profile-scene-sample" data-profile-scene="${item.id}" src="/assets/profile-scenes/${item.id}.svg" width="56" height="48" alt="">`;
+    if(item.kind==='scene')return `<img class="profile-scene-sample" data-profile-scene="${item.id}" src="/assets/profile-scenes/${item.id}.webp" width="56" height="48" alt="">`;
     if(item.kind==='frame'||item.kind==='rank'){
       const level=item.level||BrainiProgressUI.xpProgress(1,person.xp).level;
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;

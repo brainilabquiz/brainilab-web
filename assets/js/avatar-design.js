@@ -85,6 +85,19 @@ window.BrainiAvatarDesign=(function(){
       profileAchievements:window.BrainiAchievementDisplay?.publicChoices(style.achievements)||[]};
   }
   const color=(kind,id)=>options[kind].find(item=>item.id===id).color;
+  const backdropArt=Object.freeze({
+    lilac:['#9a85d0','#fff4ff','<path d="M-15 145 105-14h42L0 181ZM115 214 219 78v46l-68 90Z"/><circle cx="155" cy="60" r="22"/>'],
+    sky:['#5ba9d0','#f4feff','<path d="M-8 72Q20 24 63 48T142 40Q171 20 210 32v24q-25-13-60 7T67 74Q19 57-8 101ZM-10 162q47-29 85-13t137-16v39q-58 45-130 27t-92 12Z"/>'],
+    sage:['#578f70','#f5ffd8','<path d="M26 171C2 130 3 96 21 65q20 43 13 89C39 87 66 55 98 32q-4 64-56 133ZM173 177q-7-56 27-97-1 60-27 97Z"/>'],
+    sunshine:['#e6a840','#fffbea','<path d="m100 102-87-91L0 42ZM100 102l20-110H82ZM100 102l102-47 6-43ZM100 102l34 105h45ZM100 102l-105 23v43Z"/><circle cx="100" cy="102" r="55"/>'],
+    coral:['#dd8478','#fff0de','<path d="M-12 99C38 46 93 81 128 53S168 11 207 21v30c-56-3-47 45-115 50S14 103-12 137ZM-15 166q57-34 100-12t126-30v52q-68 39-136 27t-90 10Z"/>']
+  });
+  function backdrop(id){
+    const [shade,light,pattern]=backdropArt[id]||backdropArt.lilac;
+    return '<rect width="200" height="200" rx="100" fill="'+color('background',Object.hasOwn(backdropArt,id)?id:'lilac')+'"/>'+
+      '<g fill="'+shade+'" opacity=".27">'+pattern+'</g><circle cx="88" cy="81" r="66" fill="'+light+'" opacity=".55"/>'+
+      '<path d="M28 68 32 58l4 10-4 10ZM168 110l4-10 4 10-4 10Z" fill="'+light+'" opacity=".9"/><circle cx="160" cy="44" r="3" fill="'+light+'"/>';
+  }
   function star(cx,cy,r=13){
     return Array.from({length:10},(_,i)=>{const a=(i*36-90)*Math.PI/180,n=i%2?r*.46:r;return `${(cx+Math.cos(a)*n).toFixed(2)},${(cy+Math.sin(a)*n).toFixed(2)}`;}).join(' ');
   }
@@ -209,5 +222,5 @@ window.BrainiAvatarDesign=(function(){
     };
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${finish.backdrop}<g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
   }
-  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory});
+  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory,backdrop});
 })();

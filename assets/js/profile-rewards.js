@@ -49,6 +49,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     const title=C.titles.find(t=>t.id===shown.title),titleRoot=root.querySelector('[data-style-preview-title]');
     titleRoot.textContent=title.id==='none'?'':title.name;titleRoot.hidden=title.id==='none';
+    titleRoot.dataset.titleArt=title.id;
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;

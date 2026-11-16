@@ -135,9 +135,9 @@
 
 /* Personal scenes stay local to the profile workspace and use confirmed header choices. */
 [data-profile-scene=none]{--profile-scene-art:none}
-[data-profile-scene=library]{--profile-scene-art:url("/assets/profile-scenes/library.svg?v=70f701a8555f")}
-[data-profile-scene=lab]{--profile-scene-art:url("/assets/profile-scenes/lab.svg?v=a76fca637349")}
-[data-profile-scene=stars]{--profile-scene-art:url("/assets/profile-scenes/stars.svg?v=c02b394ab506")}
+[data-profile-scene=library]{--profile-scene-art:url("/assets/profile-scenes/library.webp?v=cdeabd1a8a1a")}
+[data-profile-scene=lab]{--profile-scene-art:url("/assets/profile-scenes/lab.webp?v=e3daa20c1968")}
+[data-profile-scene=stars]{--profile-scene-art:url("/assets/profile-scenes/stars.webp?v=5e9dcee4e75b")}
 .profile-page[data-profile-scene]:not([data-profile-scene=none]) .profile-v27-title{position:relative;isolation:isolate}
 .profile-page[data-profile-scene]:not([data-profile-scene=none]) .profile-v27-title::before{content:"";position:absolute;inset:0 0 0 35%;z-index:-1;opacity:.48;background:var(--profile-scene-art) right center/cover no-repeat;mask-image:linear-gradient(90deg,transparent,#000 60%);pointer-events:none}
 [data-profile-rewards][data-profile-scene]:not([data-profile-scene=none]) .avatar-stage-art{isolation:isolate}
