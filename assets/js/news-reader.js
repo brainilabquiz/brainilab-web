@@ -5,6 +5,29 @@
   const label = link?.querySelector('[data-news-refresh-label]');
   const status = root?.querySelector('[data-news-update-status]');
   if (!root || !link || !label || !status) return;
+
+  const filter = root.querySelector('[data-news-filter]');
+  if (filter) {
+    const chips = Array.from(filter.querySelectorAll('[data-news-filter-value]'));
+    const stories = Array.from(root.querySelectorAll('[data-news-story]'));
+    const lead = root.querySelector('[data-news-lead]');
+    const more = root.querySelector('[data-news-more]');
+    const others = root.querySelector('[data-news-others]');
+    const announcement = filter.querySelector('[data-news-filter-status]');
+    filter.addEventListener('click', event => {
+      const chip = event.target.closest('[data-news-filter-value]');
+      if (!chip || chip.disabled || chip.getAttribute('aria-pressed') === 'true') return;
+      const selected = chip.dataset.newsFilterValue;
+      const visible = selected === 'all' ? stories : stories.filter(story => story.dataset.newsStory === selected);
+      lead.replaceChildren(visible[0]);
+      others.replaceChildren(...visible.slice(1));
+      more.hidden = visible.length < 2;
+      chips.forEach(button => button.setAttribute('aria-pressed', String(button === chip)));
+      announcement.textContent = visible.length + (visible.length === 1 ? ' story shown.' : ' stories shown.');
+    });
+    filter.hidden = false;
+  }
+
   const original = root.dataset.newsRevision;
   const originalTime = Date.parse(root.dataset.newsGeneratedAt) || 0;
   let checkedAt = Date.now(), pending = false, announced = '';
