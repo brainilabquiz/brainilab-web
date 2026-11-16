@@ -1,4 +1,4 @@
-const questions = [
+const classicQuestions = [
   {
     prompt: 'Where is most of GTA V set?',
     options: ['Liberty City and Alderney', 'Los Santos and Blaine County', 'Vice City and Leonida', 'San Fierro and Las Venturas'],
@@ -71,8 +71,85 @@ const questions = [
   },
 ];
 
+const characterProfiles = 'https://www.rockstargames.com/VI/only-in-leonida';
+const locationGallery = 'https://www.rockstargames.com/VI/media/screenshots';
+const leonidaQuestions = [
+  {
+    prompt: 'Who runs the boatyard in Rockstar’s character profiles?',
+    options: ['Boobie Ike', 'Raul Bautista', 'Brian Heder', 'Cal Hampton'],
+    correct: 2,
+    explanation: 'Brian still uses the boatyard for his smuggling operation with Lori.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Which city features in Lucia’s family backstory?',
+    options: ['Liberty City', 'Los Santos', 'San Fierro', 'Las Venturas'],
+    correct: 0,
+    explanation: 'Lucia’s mother was already dreaming of a better life back in Liberty City.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Which place has a national park in Rockstar’s gallery?',
+    options: ['Port Gellhorn', 'Ambrosia', 'Grassrivers', 'Mount Kalaga'],
+    correct: 3,
+    explanation: 'Rockstar labels a series of screenshots Mount Kalaga National Park.',
+    source: locationGallery,
+  },
+  {
+    prompt: 'Who is Boobie Ike’s partner at Only Raw Records?',
+    options: ['Cal Hampton', 'Dre’Quan Priest', 'Brian Heder', 'Raul Bautista'],
+    correct: 1,
+    explanation: 'Dre’Quan moved from booking acts at Boobie’s club towards running the label with him.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Where did Jason find work after leaving the Army?',
+    options: ['Ambrosia', 'Port Gellhorn', 'Leonida Keys', 'Liberty City'],
+    correct: 2,
+    explanation: 'Jason went to the Keys, where he began working for local smugglers.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Who performs with Roxy as Real Dimez?',
+    options: ['Bae-Luxe', 'DWNPLY', 'Dre’Quan Priest', 'Boobie Ike'],
+    correct: 0,
+    explanation: 'Bae-Luxe and Roxy have been friends since high school. DWNPLY appeared on one of their early songs.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Whose radio traffic does Cal Hampton listen to?',
+    options: ['Airport control', 'The fire service', 'The highway patrol', 'The Coast Guard'],
+    correct: 3,
+    explanation: 'Rockstar’s profile says Cal likes to listen in on Coast Guard communications from home.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'Which pair of places appears in Rockstar’s Leonida gallery?',
+    options: ['Ambrosia and Grassrivers', 'Port Gellhorn and Blaine County', 'Mount Kalaga and North Yankton', 'Leonida Keys and San Fierro'],
+    correct: 0,
+    explanation: 'Ambrosia and Grassrivers each have their own set of official screenshots.',
+    source: locationGallery,
+  },
+  {
+    prompt: 'What kind of crime does Raul Bautista specialise in?',
+    options: ['Art theft', 'Bank robbery', 'Car theft', 'Smuggling'],
+    correct: 1,
+    explanation: 'Raul is an experienced bank robber who looks for people willing to take big risks.',
+    source: characterProfiles,
+  },
+  {
+    prompt: 'How can Jason and Lucia hear the radio outside a car?',
+    options: ['Portable satellite radios', 'Public street speakers', 'Headphones linked to their phones', 'Car radios operated remotely'],
+    correct: 2,
+    explanation: 'GTA VI lets them listen to stations and on-demand podcasts on foot through headphones or earbuds.',
+    source: 'https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations',
+  },
+];
+
+const questionSets = { classic: classicQuestions, leonida: leonidaQuestions };
 const quiz = document.querySelector('#gta-quiz');
-const start = quiz.querySelector('[data-quiz-start]');
+const selection = quiz.querySelector('[data-quiz-select]');
+const startButtons = Array.from(selection.querySelectorAll('[data-quiz-start]'));
 const round = quiz.querySelector('[data-quiz-round]');
 const count = quiz.querySelector('[data-quiz-count]');
 const progress = quiz.querySelector('[data-quiz-progress]');
@@ -84,11 +161,13 @@ const next = quiz.querySelector('[data-quiz-next]');
 const result = quiz.querySelector('[data-quiz-result]');
 const scoreLabel = quiz.querySelector('[data-quiz-score]');
 const replay = quiz.querySelector('[data-quiz-replay]');
+const switchRound = quiz.querySelector('[data-quiz-switch]');
 
+let activeButton;
+let questions;
 let index = 0;
 let score = 0;
 let answered = false;
-progress.max = questions.length;
 
 function answer(choice) {
   if (answered) return;
@@ -121,7 +200,7 @@ function answer(choice) {
 function showQuestion() {
   answered = false;
   const question = questions[index];
-  count.textContent = 'Question ' + (index + 1) + ' of ' + questions.length;
+  count.textContent = activeButton.querySelector('strong').textContent + ' · Question ' + (index + 1) + ' of ' + questions.length;
   prompt.textContent = question.prompt;
   feedback.textContent = '';
   source.hidden = true;
@@ -139,15 +218,25 @@ function showQuestion() {
 function begin() {
   index = 0;
   score = 0;
+  progress.max = questions.length;
   progress.value = 0;
-  start.hidden = true;
+  selection.hidden = true;
   result.hidden = true;
   round.hidden = false;
   showQuestion();
 }
 
-start.addEventListener('click', begin);
+startButtons.forEach(button => button.addEventListener('click', () => {
+  activeButton = button;
+  questions = questionSets[button.dataset.quizStart];
+  begin();
+}));
 replay.addEventListener('click', begin);
+switchRound.addEventListener('click', () => {
+  result.hidden = true;
+  selection.hidden = false;
+  startButtons.find(button => button !== activeButton).focus();
+});
 next.addEventListener('click', () => {
   if (!answered) return;
   index += 1;
@@ -162,4 +251,4 @@ next.addEventListener('click', () => {
   scoreLabel.textContent = 'You scored ' + score + ' out of ' + questions.length;
   scoreLabel.focus();
 });
-start.hidden = false;
+selection.hidden = false;
