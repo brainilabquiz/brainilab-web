@@ -8,24 +8,31 @@ export const REPO='brainilabquiz/brainilab-web';
 export const PREVIEW_NAME='codex/learn-render-store-oct28';
 export const PREVIEW_ORIGIN='https://codex-learn-render-store-oct28-brainilab-web.brainilabquiz.workers.dev';
 export async function remoteManifest(origin,fetcher=fetch){const r=await fetcher(healthOrigin(origin)+'/_release.json',{redirect:'manual',signal:AbortSignal.timeout(10000)});if(r.status!==200)throw Error('Release manifest unavailable');const m=await publicJSON(r,2048);if(m.schemaVersion!==1||!/^[0-9a-f]{40}$/.test(m.commit)||!/^[0-9a-f]{64}$/.test(m.runtimeHash))throw Error('Invalid release manifest');return m;}
+function previewMismatch(expected, actual) {
+ const revisions=expected.commit
+  ? `Expected preview revision ${expected.commit}, found ${actual.commit}.`
+  : `Found preview revision ${actual.commit}.`;
+ const hashes=actual.runtimeHash!==expected.runtimeHash?' Release content hashes differ.':'';
+ return revisions+hashes;
+}
 export async function verifyRelease(origin,expected,{fetcher=fetch,clock=Date.now,sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),onResult=()=>{},audit=checkLearnCatalogue,onSchema=()=>{}}={}){
  const start=clock(),results=[];
  for(const deadline of [0,65000,RELEASE_WINDOW]){
   const delay=start+deadline-clock();if(delay>0)await sleep(delay);
-  const m=await remoteManifest(origin,fetcher);if(m.runtimeHash!==expected.runtimeHash||expected.commit&&m.commit!==expected.commit)throw Error('Preview build does not match release');
+  const m=await remoteManifest(origin,fetcher);if(m.runtimeHash!==expected.runtimeHash||expected.commit&&m.commit!==expected.commit)throw Error('Preview build does not match release. '+previewMismatch(expected,m));
   const result=await checkPublicPages(origin,{fetcher,now:clock});results.push(result);onResult(result);
   if(!result.ok)throw Error('Public release check failed: '+result.checks.filter(c=>!c.ok).map(c=>c.path+' '+(c.status||c.code)).join(', '));
  }
  if(clock()-start<RELEASE_WINDOW)throw Error('Release check ended too early');
  const schema=await audit(origin,{fetcher,clock});onSchema(schema);
  if(!schema.ok)throw Error('Learn/Academy structured data check failed: '+schema.problems.slice(0,8).map(p=>p.path+' ['+p.field+': '+p.state+']').join(', '));
- const final=await remoteManifest(origin,fetcher);if(final.runtimeHash!==expected.runtimeHash||expected.commit&&final.commit!==expected.commit)throw Error('Preview changed during the schema check');
+ const final=await remoteManifest(origin,fetcher);if(final.runtimeHash!==expected.runtimeHash||expected.commit&&final.commit!==expected.commit)throw Error('Preview changed during the schema check. '+previewMismatch(expected,final));
  return {ok:true,durationMs:clock()-start,results,schema};
 }
 export async function successfulPreview(head,fetcher=fetch){
  if(!/^[0-9a-f]{40}$/.test(head))throw Error('Invalid revision');
  const r=await fetcher('https://api.github.com/repos/'+REPO+'/commits/'+head+'/check-runs',{headers:{Accept:'application/vnd.github+json','User-Agent':'BrainiLabReleaseGate'},signal:AbortSignal.timeout(10000)});
- if(!r.ok)throw Error('Could not verify preview build status');
+ if(!r.ok)throw Error(`Could not verify preview build status. GitHub returned HTTP ${r.status} for revision ${head}.`);
  const checks=await publicJSON(r,1024*1024),run=checks.check_runs?.filter(c=>c.name==='Workers Builds: brainilab-web').sort((a,b)=>b.id-a.id)[0];
  if(run?.status!=='completed'||run.conclusion!=='success')throw Error('A successful current preview build is required');
  const u=new URL(run.details_url),match=u.pathname.match(/^\/e94344c3c4926a4c9031114fc7c36a57\/workers\/services\/view\/brainilab-web\/production\/previews\/([a-z0-9-]+)\/builds\/[a-z0-9-]+$/);

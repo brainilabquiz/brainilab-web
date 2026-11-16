@@ -6,8 +6,13 @@ const fetcher=async url=>{checked.push({url,at:clock});if(url.includes('api.gith
 const options={fetcher,clock:()=>clock,sleep:async ms=>{clock+=ms;},audit:async()=>({ok:true,articles:1,courses:1,checked:2,problems:[]})};
 const result=await verifyRelease(origin,{commit:sha,runtimeHash:hash},options);assert.equal(result.ok,true);assert.equal(result.durationMs,RELEASE_WINDOW);assert.deepEqual(result.results.map(r=>Date.parse(r.checkedAt)),[0,65000,130000]);
 fail=true;clock=0;await assert.rejects(()=>verifyRelease(origin,{commit:sha,runtimeHash:hash},options),/Public release check failed/);assert.equal(clock,0,'Failures stop immediately, without retry masking');fail=false;mismatch=true;
-await assert.rejects(()=>verifyRelease(origin,{runtimeHash:hash},options),/does not match/);mismatch=false;
+await assert.rejects(()=>verifyRelease(origin,{runtimeHash:hash},options),/does not match.*Release content hashes differ/);mismatch=false;
+const older='e'.repeat(40);
+await assert.rejects(()=>verifyRelease(origin,{commit:older,runtimeHash:hash},options),new RegExp(`Expected preview revision ${older}, found ${sha}`));
 assert.equal(await successfulPreview(sha,fetcher),origin);await assert.rejects(()=>successfulPreview(sha,async()=>Response.json({check_runs:[]})),/successful current preview/);
+await assert.rejects(()=>successfulPreview(sha,async()=>new Response('private error details',{status:403})),{
+ message:`Could not verify preview build status. GitHub returned HTTP 403 for revision ${sha}.`
+});
 let verified=0;const read=async()=>JSON.stringify({commit:sha,runtimeHash:hash}),run=()=>`tree ${hash}\nparent ${'d'.repeat(40)}\nparent ${sha}\n\nMerge`;
 await productionPreflight({fetcher,run,read,verify:async(url,expected)=>{verified++;assert.equal(url,origin);assert.equal(expected.commit,sha);assert.equal(expected.runtimeHash,hash);return{ok:true};}});assert.equal(verified,1);
 await assert.rejects(()=>productionPreflight({fetcher,run:()=>`tree ${hash}\nparent ${sha}\n\nDirect`,read}),/reviewed merge/);
