@@ -68,11 +68,11 @@ async function linked(value,xp){
  await tick();assert.deepEqual(errors,[]);return {d,v,root,person};
 }
 let p=await linked('frame:blue',140);
-assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'rewards');assert.equal(p.root.querySelectorAll('.is-reward-target').length,1);assert.match(p.root.querySelector('#linked-reward-note').textContent,/Ready to try on/);
+assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'frame');assert.equal(p.root.querySelectorAll('.is-reward-target').length,1);assert.match(p.root.querySelector('#linked-reward-note').textContent,/Ready to try on/);
 assert.equal(p.person.avatarDesign.mode,'picture','deep links do not equip or save a reward');
 p.v.BrainiAvatarStudioUI.showPane(p.root,'look');p.v.dispatchEvent(new p.v.Event('brainilab:stylechange'));
 assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'look','background refresh must not switch the player’s chosen tab');assert.equal(p.root.querySelectorAll('#linked-reward-note').length,1);p.d.window.close();
-p=await linked('glasses:heart',2700);assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'extras');assert.match(p.root.querySelector('#linked-reward-note').textContent,/50 XP to unlock Specs appeal/);
+p=await linked('glasses:heart',2700);assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'glasses');assert.match(p.root.querySelector('#linked-reward-note').textContent,/50 XP to unlock Specs appeal/);
 p.person.xp=2800;p.v.dispatchEvent(new p.v.Event('brainilab:progressionchange'));assert.match(p.root.querySelector('#linked-reward-note').textContent,/Ready to try on/);p.d.window.close();
 p=await linked('frame:blue<script>',1000);assert.equal(p.root.querySelectorAll('.is-reward-target').length,0);assert.equal(p.v.BrainiAvatarStudioUI.activePane(),'look');p.d.window.close();
 console.log('PASS result unlocks: real thresholds/ties, one reward slot, verified active receipts, hydration/replay/owner/hidden/batch/lesson guards, capped-game bonus, course exclusion, shared art, safe deep links and refresh without tab/equipment changes.');

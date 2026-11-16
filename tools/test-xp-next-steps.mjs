@@ -27,7 +27,7 @@ U.next(root,3815,{...state,activeDays:4});let p=root.querySelector('[data-next-r
 let link=root.querySelector('[data-collection-goal]');link.focus();U.next(root,3815,{...state,activeDays:4});assert.equal(w.document.activeElement,link,'background refresh keeps the actual focused link');
 U.next(root,3815,state);link=root.querySelector('[data-collection-goal]');assert.match(link.textContent,/Daydreamer.*2 of 3 days/s);assert.match(root.querySelector('[data-next-reward]').textContent,/even with breaks/);assert.equal(w.document.activeElement,link);
 U.openGoal(root,link);assert.equal(U.activePane(),'challenges');assert.equal(w.document.activeElement,root.querySelector('[data-day-card="days_daydreamer"]'));assert.equal(writes,0);assert.ok(root.querySelector('[data-reward-id="days_daydreamer"]').disabled,'viewing a target never equips or unlocks it');
-U.next(root,3815,{...state,activeDays:4});U.openGoal(root,root.querySelector('[data-collection-goal]'));assert.equal(U.activePane(),'extras');assert.equal(writes,0);
+U.next(root,3815,{...state,activeDays:4});U.openGoal(root,root.querySelector('[data-collection-goal]'));assert.equal(U.activePane(),'hat');assert.equal(writes,0);
 const UI=w.BrainiProgressUI,rules={base_xp:50,correct_xp:5,per_game_daily_limit:3,full_daily_xp:250};
 assert.deepEqual(plain(UI.xpReceipt(85,{reward_rules:rules})),{finish:50,answers:35});
 assert.deepEqual(plain(UI.xpReceipt(300,{reward_rules:rules})),{finish:50,answers:250});

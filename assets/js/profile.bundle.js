@@ -1448,6 +1448,18 @@ window.BrainiProfileSections=(function(){
     const action=document.querySelector('[data-profile-daily-action]');if(action){action.textContent=state.label+' →';action.href=state.href;}
   }
 
+  function nextGoal(person,progress){
+    return BrainiRewardJourney.nextGoal(person,progress.currentXp);
+  }
+  function earningGuide(){
+    const r=BrainiProgressUI.xpRules(),limit=r.limit===3?'three':String(r.limit),format=n=>n.toLocaleString('en-GB');
+    return `<details class="profile-xp-guide"><summary data-xp-guide-toggle>How to earn XP <span aria-hidden="true">+</span></summary>
+      <dl><div><dt><a href="/games/" data-progress-focus="guide-games">Finish a game</a><b>${format(r.base)} XP + answers</b></dt><dd>Each correct answer adds ${format(r.correct)} XP, up to ${format(r.base+r.correct*50)} XP per round. Your first ${limit} completed rounds of each game can earn XP each day, once their answers are checked.</dd></div>
+      <div><dt><a href="/daily-quiz/" data-progress-focus="guide-daily">Main Daily</a><b>+${format(r.bonus)} XP bonus</b></dt><dd>Once a day, on top of your game XP. The extra game is optional.</dd></div>
+      <div><dt><a href="/learn/paths/" data-progress-focus="guide-academy">Academy lessons</a><b>+40 XP</b></dt><dd>Sign in and finish a new lesson’s quiz. Each lesson earns XP once.</dd></div></dl>
+      <p>XP builds your level and is never spent. Game scores decide your ranking. Practice rounds earn no XP. New XP rounds are available at 00:00 UTC.</p></details>`;
+  }
+
   function hydrateRankHero(){
     const root=document.querySelector("[data-profile-rank-hero]");
     if(!root || !window.BrainiProgressUI) return;
@@ -1456,9 +1468,11 @@ window.BrainiProfileSections=(function(){
     const progress=BrainiProgressUI.xpProgress(p.level||1,p.xp||0);
     const tier=BrainiProgressUI.tier(progress.level);
 
-    const next=BrainiProgressUI.nextTier(progress.level),format=n=>Number(n).toLocaleString('en-GB');
+    const goal=nextGoal(p,progress),format=n=>Number(n).toLocaleString('en-GB');
     const ranksOpen=!!root.querySelector('.profile-ranks[open]');
-    const restoreFocus=root.querySelector('[data-ranks-toggle]')===document.activeElement;
+    const guideOpen=!!root.querySelector('.profile-xp-guide[open]');
+    const focusKey=document.activeElement?.closest('[data-profile-rank-hero]')===root
+      ? document.activeElement.dataset.progressFocus||(['ranks-toggle','xp-guide-toggle'].find(key=>document.activeElement.hasAttribute('data-'+key))) : null;
     root.innerHTML=`
       <span class="rank-avatar profile-progress-avatar ${BrainiProgressUI.avatarClass(progress.level)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span>
       <div class="profile-rank-main"><span>Your level</span><h2>Level ${progress.level} <small>${tier.name}</small></h2>
@@ -1466,9 +1480,13 @@ window.BrainiProfileSections=(function(){
         <div class="profile-rank-progress" role="progressbar" aria-label="Progress to level ${progress.nextLevel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress.percent)}" aria-valuetext="${format(progress.earnedInLevel)} of ${format(progress.neededInLevel)} XP towards level ${progress.nextLevel}"><span style="width:${progress.percent}%"></span></div>
         <div class="profile-level-numbers"><strong>${format(progress.earnedInLevel)} <span>/ ${format(progress.neededInLevel)} XP</span></strong><small>${format(progress.currentXp)} total XP</small></div>
       </div>
-      <div class="profile-next-rank">${next?`<span class="rank-avatar ${BrainiProgressUI.avatarClass(next.min)}" aria-hidden="true">${BrainiProgressUI.avatarImageMarkup(p)}</span><span><small>Next level rank</small><strong>${next.name}</strong><span>Level ${next.min}</span></span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest level rank</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
-      <div class="profile-level-footer">${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link">Your rankings →</a></div>`;
-    if(restoreFocus)root.querySelector('[data-ranks-toggle]')?.focus({preventScroll:true});
+      <div class="profile-next-rank">${goal?`<span class="profile-goal-art" aria-hidden="true">${goal.art}</span><span><small>Next unlock · ${goal.detail}</small><strong>${goal.name}</strong><span>${format(goal.remaining)} XP to go</span>${goal.kind!=='rank'?`<a href="#my-avatar" data-progress-goal-kind="${goal.kind}" data-progress-focus="reward">Take a look →</a>`:''}</span>`:`<span class="profile-top-rank">${BrainiIcons.rankHalo(tier.halo,'brain-rank-halo')}</span><span><small>Highest level rank</small><strong>${tier.name}</strong><span>Keep building your XP</span></span>`}</div>
+      <div class="profile-level-footer">${earningGuide()}${BrainiProgressUI.ranksMarkup(p,{open:ranksOpen})}<a href="/rankings/" class="profile-rank-link" data-progress-focus="rankings">Your rankings →</a><a href="${p.streakSecuredToday?'/learn/paths/':'/daily-quiz/'}" class="profile-earn-action" data-progress-focus="earn">${p.streakSecuredToday?'Explore Academy':'Play today’s Daily'} <span aria-hidden="true">→</span></a></div>`;
+    root.querySelector('.profile-xp-guide').open=guideOpen;
+    if(focusKey){
+      const target=['ranks-toggle','xp-guide-toggle'].includes(focusKey)?`[data-${focusKey}]`:`[data-progress-focus="${focusKey}"]`;
+      root.querySelector(target)?.focus({preventScroll:true});
+    }
     const journey=document.querySelector('[data-profile-milestones]');
     if(journey){
       const best=Math.max(0,Number(p.bestStreak)||0);
@@ -1564,7 +1582,49 @@ window.BrainiProfileSections=(function(){
     );
   }
 
+  let linkedRewardOpened=null;
+  function openLinkedReward({open=false}={}){
+    const item=window.BrainiRewardJourney?.fromLink(new URLSearchParams(location.search).get('reward'));
+    const studio=document.querySelector('[data-profile-rewards]');
+    if(!item||!studio||!window.BrainiAvatarStudioUI||selected()!=='progress')return;
+    const pane=item.kind;
+    const key=item.kind+':'+item.id,state=window.BrainiRewardStore?.snapshot?.();
+    const ready=!!state&&!state.loading&&!state.error;
+    const reveal=ready&&(open||linkedRewardOpened!==key);
+    if(reveal)BrainiAvatarStudioUI.showPane(studio,pane);
+    // Highlight a real catalogue item without changing the saved avatar.
+    const choice=studio.querySelector(`[data-reward-kind="${item.kind}"][data-reward-id="${item.id}"]`);
+    if(choice){choice.classList.add('is-reward-target');choice.setAttribute('aria-describedby','linked-reward-note');
+      let note=studio.querySelector('#linked-reward-note');
+      if(!note){note=document.createElement('p');note.id='linked-reward-note';note.className='linked-reward-note';studio.querySelector('[data-avatar-pane="'+pane+'"]')?.prepend(note);}
+      note.hidden=!ready;
+      note.textContent=BrainiRewardCatalog.unlocked(item,BrainiData.player().xp)?'Ready to try on. Choose it to preview your new look.':item.event?item.requirement+'.':`${Math.max(0,item.xp-BrainiData.player().xp).toLocaleString('en-GB')} XP to unlock ${item.name}.`;
+      if(reveal){
+        linkedRewardOpened=key;
+        const focusTarget=choice.disabled?choice.closest('fieldset'):choice;
+        const revealChoice=()=>{
+          if(!choice.isConnected||selected()!=='progress'||new URLSearchParams(location.search).get('reward')!==key)return;
+          const active=document.activeElement;
+          if(active!==focusTarget&&active!==document.body&&active?.id!=='my-avatar')return;
+          if(focusTarget){if(choice.disabled)focusTarget.tabIndex=-1;focusTarget.focus({preventScroll:true});}
+          choice.scrollIntoView?.({block:'center',behavior:'instant'});
+        };
+        revealChoice();
+        // The browser can apply #my-avatar after DOMContentLoaded. Reveal the
+        // choice after that initial fragment jump, without stealing later focus.
+        const afterLoad=()=>requestAnimationFrame(()=>requestAnimationFrame(revealChoice));
+        if(document.readyState==='complete')afterLoad();else window.addEventListener('load',afterLoad,{once:true});
+      }
+    }
+  }
   function bind(){
+    document.querySelector('[data-profile-rank-hero]')?.addEventListener('click',event=>{
+      const goal=event.target.closest('[data-progress-goal-kind]'),studio=document.querySelector('[data-profile-rewards]');
+      if(!goal||!studio||!window.BrainiAvatarStudioUI)return;
+      const pane=goal.dataset.progressGoalKind;
+      BrainiAvatarStudioUI.showPane(studio,pane);
+      studio.querySelector(`[data-avatar-tab="${pane}"]`)?.focus({preventScroll:true});
+    });
     document.querySelector('[data-profile-activity]')?.addEventListener('toggle',event=>{
       if(event.currentTarget.open){hydrateRankHero();}
     });
@@ -1574,12 +1634,16 @@ window.BrainiProfileSections=(function(){
 
     window.addEventListener("popstate",()=>show(selected()));
     window.addEventListener("brainilab:progressionchange",hydrateRankHero);
+    window.addEventListener("brainilab:stylechange",hydrateRankHero);
+    window.addEventListener("brainilab:stylechange",()=>openLinkedReward());
+    window.addEventListener("brainilab:progressionchange",()=>openLinkedReward());
     window.addEventListener("brainilab:daychange",hydrateRankHero);
     window.addEventListener("brainilab:authchange",()=>{renderSecurity();hydrateRankHero();});
 
     show(selected());
     hydrateRankHero();
     renderSecurity();
+    queueMicrotask(()=>openLinkedReward({open:true}));
   }
 
   document.addEventListener("DOMContentLoaded",bind);

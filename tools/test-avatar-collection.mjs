@@ -15,16 +15,28 @@ for(const [kind,id,xp]of items){
  const svg=A.markup({[kind]:id},xp),parsed=new w.DOMParser().parseFromString(svg,'image/svg+xml');assert.equal(parsed.querySelector('parsererror'),null);assert.doesNotMatch(svg,/<script|<image|\bhref=|\bon\w+=/i);
 }
 assert.equal(C.next(3015).id,'train');assert.equal(C.next(10000),null);
-root.querySelector('[data-avatar-tab=extras]').click();
-const extras=root.querySelector('[data-avatar-pane=extras]');assert.equal(extras.querySelectorAll('fieldset').length,3);assert.equal(extras.querySelectorAll('details').length,0,'all extra categories remain expanded');
+w.eval(readFileSync('assets/js/avatar-studio-art.js','utf8'));
+for(const kind of ['hair','glasses','hat','prop','frame'])for(const item of C.groups[kind]){
+ const svg=w.BrainiAvatarStudioArt.markup({...C.clean(),[kind]:item.id,mode:'built'},{instance:kind+'-'+item.id,level:8,levelPct:.5});
+ const doc=new w.DOMParser().parseFromString(svg,'image/svg+xml'),clipped=doc.querySelector('[clip-path]');
+ assert.equal(doc.querySelector('parsererror'),null);
+ assert(doc.getElementById(clipped.getAttribute('clip-path').slice(5,-1)));
+ assert.doesNotMatch(svg,/<script|<image|\bon\w+=|\bhref=|undefined/i);
+}
+delete w.BrainiAvatarStudioArt;
+for(const kind of ['glasses','hat','prop']){
+ const panel=root.querySelector(`[data-avatar-pane=${kind}]`);
+ root.querySelector(`[data-avatar-tab=${kind}]`).click();
+ assert.equal(panel.hidden,false);assert.equal(panel.querySelectorAll('fieldset').length,1);
+}
 player.xp=10000;w.BrainiProfileRewards.render();root.querySelector('[data-reward-kind=hat][data-reward-id=corn]').click();assert.match(root.querySelector('[data-avatar-note=hat]').textContent,/A-maize-ing/);assert.equal(writes,0);
 root.querySelector('[data-style-cancel]').click();assert.equal(root.querySelector('[data-reward-kind=hat][data-reward-id=none]').getAttribute('aria-pressed'),'true');
 for(const [kind,id,xp] of items.slice(6)){
  const before=JSON.stringify(player);
  player.xp=xp-1;w.BrainiProfileRewards.render();
  let button=root.querySelector(`[data-reward-kind=${kind}][data-reward-id=${id}]`);
- assert.equal(button.disabled,true,id+' stays locked below its exact threshold');
- button.click();assert.equal(writes,0);
+ assert.equal(button.dataset.studioLocked,'true',id+' stays locked below its exact threshold');
+ button.click();assert.equal(writes,0);assert.equal(root.querySelector('[data-style-save]').disabled,true);
  player.xp=xp;w.BrainiProfileRewards.render();
  button=root.querySelector(`[data-reward-kind=${kind}][data-reward-id=${id}]`);
  assert.equal(button.disabled,false,id+' unlocks without spending XP');
@@ -33,8 +45,7 @@ for(const [kind,id,xp] of items.slice(6)){
  assert.equal(writes,0,'trying '+id+' never writes metadata');
  root.querySelector('[data-style-cancel]').click();
  assert.equal(root.querySelector(`[data-reward-kind=${kind}][data-reward-id=none]`).getAttribute('aria-pressed'),'true','cancel restores the prior '+kind);
- assert.equal(root.querySelector('[data-avatar-pane=extras]').querySelectorAll('fieldset').length,3);
- assert.equal(root.querySelector('[data-avatar-pane=extras]').querySelectorAll('details').length,0,'trying and canceling never collapses categories');
+ assert.equal(root.querySelectorAll('[data-avatar-pane] fieldset').length,11);
  assert.equal(player.score,JSON.parse(before).score,'no score changes while trying a new accessory');
 }
 for(const [level,key]of [[1,'rookie'],[5,'elementary'],[10,'highschool'],[15,'college'],[20,'graduate'],[25,'phd'],[30,'researcher'],[40,'professor'],[50,'dean'],[60,'nobel']]){
@@ -42,4 +53,4 @@ for(const [level,key]of [[1,'rookie'],[5,'elementary'],[10,'highschool'],[15,'co
  if(level>1){player.xp--;w.BrainiProfileRewards.render();assert.notEqual(root.querySelector('[data-diploma-tier]').dataset.diplomaTier,key,'upgrade boundary is exact');}
 }
 assert.equal(root.querySelectorAll('[data-diploma-tier]').length,1);assert.equal(writes,0,'all diploma upgrades are automatic presentation only');
-dom.window.close();console.log('PASS twelve original SVG unlocks including six new wordplay extras, exact XP boundaries, safe art, always-expanded categories, locked/try/cancel behavior, and ten automatic diploma tiers with no score/XP/metadata writes.');
+dom.window.close();console.log('PASS twelve original SVG unlocks including six new wordplay extras, exact XP boundaries, safe art, separate locker categories, locked/try/cancel behavior, and ten automatic diploma tiers with no score/XP/metadata writes.');

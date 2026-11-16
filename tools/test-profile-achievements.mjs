@@ -45,7 +45,7 @@ const click=(f,selector)=>{const element=f.root.querySelector(selector);assert.o
 const selectedIn=(f,selector)=>[...f.root.querySelectorAll(selector+' .achievement-slot-art[data-badge]')].map(el=>el.dataset.badge).filter(Boolean);
 try{
  const f=await setup(),{w,root,S}=f,C=w.BrainiAchievementCatalog;
- assert.equal(root.querySelectorAll('[data-avatar-tab]').length,6);
+ assert.equal(root.querySelectorAll('[data-avatar-tab=badges]').length,1);
  assert.equal(root.querySelectorAll('[data-achievement-id]').length,8);
  assert.equal(root.querySelectorAll('.achievement-level-guide li').length,10,'the material guide exposes all ten levels');
  assert.match(root.querySelector('[data-achievement-id=personal_bests_three] [data-achievement-progress]').textContent,/12 of 25 saved games/);
@@ -64,7 +64,7 @@ try{
   if(counter){assert.equal(C.earned(summaryFor('owner-a',{[counter]:badge.target-1}),'owner-a').ids.includes(badge.id),false);assert.equal(C.earned(summaryFor('owner-a',{[counter]:badge.target}),'owner-a').ids.includes(badge.id),true);}
  }
  click(f,'[data-achievement-choose]');assert.equal(w.document.activeElement.dataset.avatarTab,'badges');assert.equal(root.dataset.studioPane,'badges');
- assert.equal(root.querySelector('.profile-style-actions').hidden,true);
+ assert.equal(root.querySelector('.avatar-apply-bar').hidden,true);
  const first=click(f,'[data-achievement-id=first_game]');first.focus();w.BrainiProfileAchievements.render();
  assert.equal(w.document.activeElement,first,'live render retains the actual focused choice node');
  assert.equal(root.querySelector('[data-achievement-id=first_game]'),first);
@@ -72,7 +72,7 @@ try{
  assert.deepEqual(selectedIn(f,'[data-achievement-draft-preview]'),['first_game']);
  click(f,'[data-achievement-id=ten_games]');click(f,'[data-achievement-id=personal_bests_three]');
  assert.equal(root.querySelector('[data-achievement-id=daily_first]').disabled,true,'fourth selection requires removing one');
- click(f,'[data-avatar-tab=look]');assert.equal(root.querySelector('.profile-style-actions').hidden,false);
+ click(f,'[data-avatar-tab=look]');assert.equal(root.querySelector('.avatar-apply-bar').hidden,false);
  click(f,'[data-reward-kind=prop][data-reward-id=bulb]');
  click(f,'[data-avatar-tab=badges]');assert.equal(root.querySelectorAll('[data-achievement-id][aria-pressed=true]').length,3,'badge draft survives another pane');
  click(f,'[data-achievement-save]');await settle();

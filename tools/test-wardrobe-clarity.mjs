@@ -20,15 +20,15 @@ assert.equal(count('frame'),'5 of 6 unlocked');assert.equal(count('glasses'),'7 
 assert.equal(mark('glasses','heart'),'unlocked');assert.equal(mark('glasses','sun'),'equipped');assert.equal(mark('hat','cloud'),'locked');
 assert.match(choice('glasses','heart').getAttribute('aria-label'),/unlocked, Try on/);assert.match(choice('hat','cloud').getAttribute('aria-label'),/locked, unlocks at 4,000 XP/);
 assert.equal(choice('hat','cloud').querySelector('small').textContent,'185 XP to go');assert.equal(choice('hat','days_daydreamer').querySelector('small').textContent,'1 day to go');
-assert.equal(choice('hat','cloud').disabled,true);assert.equal(root.querySelectorAll('[data-wardrobe-category],[data-wardrobe-view]').length,0);
+assert.equal(choice('hat','cloud').dataset.studioLocked,'true');
 for(const kind of ['hair','glasses','hat','prop','frame','title','scene'])for(const item of C.groups[kind]){const node=choice(kind,item.id);assert.ok(node,kind+'/'+item.id+' remains in the collection');assert.equal(node.hidden,false);}
 const protectedState=plain(D.getState());delete protectedState.player.avatarDesign;
-root.querySelector('[data-avatar-tab=extras]').click();choice('glasses','heart').click();
-assert.equal(mark('glasses','heart'),'preview');assert.equal(mark('glasses','sun'),'equipped');assert.equal(writes.length,0);assert.match(root.querySelector('[data-style-status]').textContent,/Preview only/);
+root.querySelector('[data-avatar-tab=glasses]').click();choice('glasses','heart').click();
+assert.equal(mark('glasses','heart'),'preview');assert.equal(mark('glasses','sun'),'equipped');assert.equal(writes.length,0);assert.match(root.querySelector('[data-style-status]').textContent,/Save to use this look/);
 root.querySelector('[data-style-save]').click();await settle();assert.deepEqual(writes,[{brainilab_avatar_glasses_v1:'heart'}]);
 assert.equal(root.querySelector('[data-style-save]').textContent,'Saved');assert.equal(root.querySelector('[data-style-save]').disabled,true);assert.equal(root.querySelector('[data-avatar-mini-label]').textContent,'Look saved');
 assert.equal(mark('glasses','heart'),'equipped');assert.equal(metadata.get(uid).custom,'keep');
-choice('hat','cap').click();assert.ok(S.snapshot().notice,'the store still has its earlier save notice');assert.equal(root.querySelector('[data-style-save]').textContent,'Save look');assert.match(root.querySelector('[data-style-status]').textContent,/Preview only/);assert.doesNotMatch(root.querySelector('[data-style-status]').textContent,/Style saved/);
+choice('hat','cap').click();assert.ok(S.snapshot().notice,'the store still has its earlier save notice');assert.equal(root.querySelector('[data-style-save]').textContent,'Save look');assert.match(root.querySelector('[data-style-status]').textContent,/Save to use this look/);assert.doesNotMatch(root.querySelector('[data-style-status]').textContent,/Style saved/);
 assert.equal(S.snapshot().style.hat,'none');assert.equal(mark('hat','cap'),'preview');root.querySelector('[data-style-cancel]').click();assert.equal(S.snapshot().style.hat,'none');assert.equal(writes.length,1);
 const after=plain(D.getState());delete after.player.avatarDesign;assert.deepEqual(after,protectedState,'no score, XP, streak, level or result fields change');
 const icon=choice('glasses','heart').querySelector('.wardrobe-status-icon');choice('glasses','heart').focus();w.BrainiProfileRewards.render();assert.equal(choice('glasses','heart').querySelector('.wardrobe-status-icon'),icon);assert.equal(w.document.activeElement,choice('glasses','heart'));
@@ -39,7 +39,7 @@ uid='two';await D.api.syncExternalAuthUser({id:uid,user_metadata:{}});await D.ap
 assert.deepEqual(errors,[]);d.window.close();
 
 // A result deep link must not call an unavailable collection ready to equip.
-const linked=new JSDOM('<body><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/?section=progress&reward=glasses%3Aheart#my-avatar',runScripts:'outside-only'}),v=linked.window;let availability={};
+const linked=new JSDOM('<body><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/?section=progress&reward=glasses%3Aheart#my-avatar',runScripts:'outside-only',pretendToBeVisual:true}),v=linked.window;let availability={};
 v.BrainiData={player:()=>({displayName:'Test player',xp:4000,level:15}),authState:()=>({status:'guest',guestUserId:'test'}),recentResults:()=>[]};v.BrainiRewardStore={snapshot:()=>availability};
 for(const n of ['player-personalities','icon-system','avatar-design','profile-rewards-model','progression-ui','reward-journey','avatar-studio-ui','profile-sections'])v.eval(read(n));
 v.document.addEventListener('DOMContentLoaded',()=>{const r=v.document.querySelector('[data-profile-rewards]');v.BrainiAvatarStudioUI.mount(r);v.BrainiAvatarStudioUI.choices(r,v.BrainiRewardCatalog.clean(),4000,false);});await settle();

@@ -25,7 +25,9 @@ for(const [kind,list] of Object.entries(C.groups))for(const item of list){
 }
 assert.equal(A.options.prop.find(p=>p.id==='icepop').xp,800);
 assert.equal(A.options.prop.find(p=>p.id==='icepop').name,'Brain freeze');
-assert.equal(option('prop','icepop').disabled,true);
+assert.equal(option('prop','icepop').dataset.studioLocked,'true');
+option('prop','icepop').click();assert.equal(root.querySelector('[data-style-save]').disabled,true);
+root.querySelector('[data-style-cancel]').click();
 const photo='https://example.test/keep-my-picture.jpg';
 await D.api.syncExternalAuthUser({id:'cosmetic-owner',email:'fixture@example.test',user_metadata:{}});
 await D.api.syncCloudProfile({user_id:'cosmetic-owner',display_name:'Curious Player',avatar_url:photo});
@@ -51,7 +53,7 @@ root.querySelector('[data-style-cancel]').click();
 assert.equal(writes.length,writesBeforeSurprise);assert.equal(root.querySelector('[data-style-save]').disabled,true);
 for(const [kind,id]of Object.entries(savedBeforeSurprise))assert.equal(option(kind,id).getAttribute('aria-pressed'),'true');
 option('mode','built').click();option('skin','cocoa').click();option('hair','curls').click();
-root.querySelector('[data-avatar-tab=extras]').click();option('glasses','round').click();option('hat','cap').click();option('prop','icepop').click();
+root.querySelector('[data-avatar-tab=glasses]').click();option('glasses','round').click();option('hat','cap').click();option('prop','icepop').click();
  option('frame','copper').click();
 assert.ok(root.querySelector('[data-style-preview-avatar] svg'));
  const mini=root.querySelector('[data-avatar-mini]'),savedHeader=w.document.querySelector('.nav-right .avatar'),savedHero=w.document.querySelector('[data-profile-rank-hero] .rank-avatar');
@@ -104,7 +106,7 @@ for(const hair of ['ponytail','waves','braids']){
 for(const kind of ['glasses','hat','prop'])assert.equal(new Set(C.groups[kind].map(x=>x.id)).size,C.groups[kind].length);
 const original=[['glasses','round',150],['glasses','sun',1000],['glasses','star',3500],['hat','beanie',500],['hat','cap',1500],['hat','wizard',6000],['prop','icepop',800],['prop','bulb',2500],['prop','pencil',4500]];
 for(const [kind,id,xp] of original)assert.equal(C.groups[kind].find(x=>x.id===id).xp,xp,'existing unlocks keep their IDs and thresholds');
-root.querySelector('[data-avatar-tab=extras]').click();option('prop','cookie').click();option('glasses','square').click();option('hat','egg').click();
+root.querySelector('[data-avatar-tab=glasses]').click();option('prop','cookie').click();option('glasses','square').click();option('hat','egg').click();
 assert.match(root.querySelector('[data-avatar-note=prop]').textContent,/Smart cookie.*clever little snack/);
 assert.equal(root.querySelector('[data-avatar-note=prop]').hidden,false);
 root.querySelector('[data-style-save]').click();await tick();await tick();await S.load();
@@ -149,7 +151,7 @@ assert.deepEqual(omitDesign(savedState()),before,'new collection saves still pre
  assert.deepEqual(omitDesign(savedState()),before,'rebasing and saving leaves all gameplay and ranking state unchanged');
 // Keyboard tabs follow the WAI-ARIA pattern without removing focus during render.
 const look=root.querySelector('[data-avatar-tab=look]');look.focus();look.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
-assert.equal(w.document.activeElement.dataset.avatarTab,'extras');assert.equal(root.querySelector('[data-avatar-pane=look]').hidden,true);
+assert.equal(w.document.activeElement.dataset.avatarTab,'hair');assert.equal(root.querySelector('[data-avatar-pane=look]').hidden,true);
 w.document.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));assert.equal(w.document.activeElement.dataset.avatarTab,'academy');
 const pageHome=new w.KeyboardEvent('keydown',{key:'Home',ctrlKey:true,bubbles:true,cancelable:true});w.document.activeElement.dispatchEvent(pageHome);
 assert.equal(pageHome.defaultPrevented,false);assert.equal(w.document.activeElement.dataset.avatarTab,'academy','modified page-navigation keys are not captured');

@@ -228,7 +228,7 @@ window.BrainiProfileSections=(function(){
     const item=window.BrainiRewardJourney?.fromLink(new URLSearchParams(location.search).get('reward'));
     const studio=document.querySelector('[data-profile-rewards]');
     if(!item||!studio||!window.BrainiAvatarStudioUI||selected()!=='progress')return;
-    const pane=['glasses','hat','prop'].includes(item.kind)?'extras':'rewards';
+    const pane=item.kind;
     const key=item.kind+':'+item.id,state=window.BrainiRewardStore?.snapshot?.();
     const ready=!!state&&!state.loading&&!state.error;
     const reveal=ready&&(open||linkedRewardOpened!==key);
@@ -262,7 +262,7 @@ window.BrainiProfileSections=(function(){
     document.querySelector('[data-profile-rank-hero]')?.addEventListener('click',event=>{
       const goal=event.target.closest('[data-progress-goal-kind]'),studio=document.querySelector('[data-profile-rewards]');
       if(!goal||!studio||!window.BrainiAvatarStudioUI)return;
-      const pane=['glasses','hat','prop'].includes(goal.dataset.progressGoalKind)?'extras':'rewards';
+      const pane=goal.dataset.progressGoalKind;
       BrainiAvatarStudioUI.showPane(studio,pane);
       studio.querySelector(`[data-avatar-tab="${pane}"]`)?.focus({preventScroll:true});
     });
