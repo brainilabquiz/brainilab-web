@@ -12,7 +12,7 @@ test('HEAD and preview reads never bootstrap paid research',async()=>{const e=en
 test('news outage preserves the functioning homepage',async()=>{const e=environment(true);const r=await worker.fetch(new Request('https://brainilabgames.com/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Keep games/);});
 test('public news API rejects mutations and previews cannot trigger research',async()=>{const e=environment();assert.equal((await worker.fetch(new Request('https://brainilabgames.com/api/breaking-news',{method:'POST'}),e.env,ctx)).status,405);assert.equal((await worker.fetch(new Request('https://preview.example.org/api/breaking-news'),e.env,ctx)).status,503);assert.equal(e.reads(),0);});
 
-test('dedicated news page renders current stories',async()=>{const e=environment();const r=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Breaking News/);assert.equal(e.reads(),1);});
+test('dedicated news page renders current stories and checks for previous editions',async()=>{const e=environment();const r=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Breaking News/);assert.equal(e.reads(),2);});
 
 test('empty news page offers a reading route without stale dates or caching the outage',async()=>{
   const e=environment(true);
