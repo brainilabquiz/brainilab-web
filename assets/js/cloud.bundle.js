@@ -2150,7 +2150,7 @@ window.BrainiAuth = (function(){
 
       const avatar=nav.querySelector(".avatar");
       if(avatar){
-        BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+        BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p,{compact:true}));
       if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
         avatar.title=(p.displayName||"My BrainiLab")+" · account & stats";
       }

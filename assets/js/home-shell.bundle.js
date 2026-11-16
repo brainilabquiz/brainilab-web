@@ -2756,10 +2756,22 @@ window.BrainiProgressUI=(function(){
     return `<img class="default-player-avatar" src="${identity.avatar}" width="48" height="48" alt="" title="Illustration inspired by ${escapeAvatar(identity.name)}">`;
   }
 
-  function avatarImageMarkup(person){
+  function avatarImageMarkup(person,{compact=false}={}){
     person=person||window.BrainiData?.player?.()||{};
     if(person.avatarDesign?.mode==='built'&&window.BrainiAvatarDesign){
-      return BrainiAvatarDesign.markup(person.avatarDesign,person.avatarRenderXp??person.xp,person.avatarEntitlements??window.BrainiHalloweenEntitlements?.snapshot?.().entitlements??[]).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
+      const renderXp=person.avatarRenderXp??person.xp;
+      const entitlements=person.avatarEntitlements??(person.avatarRenderXp==null?window.BrainiHalloweenEntitlements?.snapshot?.().entitlements:[])??[];
+      const art=window.BrainiAvatarStudioArt;
+      if(compact&&art){
+        const design=BrainiAvatarDesign.available(person.avatarDesign,renderXp,entitlements);
+        const frame=person.avatarFrame,cost=BrainiAvatarDesign.frameXp[frame];
+        const framed=frame!=='level'&&Number.isFinite(cost)&&renderXp>=cost;
+        // Each image owns its SVG definitions, so rows can repeat the same look.
+        // The existing level/seasonal halo stays outside the illustration.
+        const drawing=art.markup({...design,frame:framed?frame:null},{instance:'thumbnail',stickerScale:1.45});
+        return `<img class="braini-avatar-thumbnail${framed?' braini-avatar-thumbnail--framed':''}" src="data:image/svg+xml,${encodeURIComponent(drawing)}" width="48" height="48" alt="">`;
+      }
+      return BrainiAvatarDesign.markup(person.avatarDesign,renderXp,entitlements).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
     }
     const identity=BrainiPeople.resolve(person);
     try{
@@ -4869,7 +4881,7 @@ window.BrainiAccountMenu=(function(){
             ? BrainiProgressUI.avatarClass(progress.level)
             : ""
           } account-menu-avatar" ${BrainiProgressUI.avatarFrameAttribute(p)}>
-            ${BrainiProgressUI.avatarImageMarkup(p)}
+            ${BrainiProgressUI.avatarImageMarkup(p,{compact:true})}
           </span>
 
           <div>
@@ -5111,7 +5123,7 @@ window.BrainiAccountMenu=(function(){
         if(avatar.title!==title)avatar.title=title;
       }
 
-      BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+      BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p,{compact:true}));
       if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
     });
   }
@@ -5156,7 +5168,8 @@ window.BrainiAccountMenu=(function(){
     // Replace only artwork: an open menu keeps its links, focus and handlers.
     const portrait=openMenu?.querySelector('.account-menu-avatar');
     if(portrait){
-      const player=BrainiData.player();portrait.innerHTML=BrainiProgressUI.avatarImageMarkup(player);
+      const player=BrainiData.player();
+      BrainiProgressUI.setAvatarMarkup(portrait,BrainiProgressUI.avatarImageMarkup(player,{compact:true}));
       if(BrainiProgressUI.avatarFrameAttribute(player))portrait.dataset.socialFrame=player.avatarFrame;
       else delete portrait.dataset.socialFrame;
     }

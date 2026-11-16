@@ -812,7 +812,7 @@ window.BrainiSocial = (function(){
                 ${g.members.map(m=>`
                   <div class="group-member-real">
                     <span class="social-avatar" ${BrainiProgressUI.avatarFrameAttribute(m)}>
-                      ${BrainiProgressUI.avatarImageMarkup(m)}
+                      ${BrainiProgressUI.avatarImageMarkup(m,{compact:true})}
                     </span>
 
                     <div>

@@ -58,7 +58,7 @@ window.BrainiAccountMenu=(function(){
             ? BrainiProgressUI.avatarClass(progress.level)
             : ""
           } account-menu-avatar" ${BrainiProgressUI.avatarFrameAttribute(p)}>
-            ${BrainiProgressUI.avatarImageMarkup(p)}
+            ${BrainiProgressUI.avatarImageMarkup(p,{compact:true})}
           </span>
 
           <div>
@@ -300,7 +300,7 @@ window.BrainiAccountMenu=(function(){
         if(avatar.title!==title)avatar.title=title;
       }
 
-      BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p));
+      BrainiProgressUI.setAvatarMarkup(avatar,BrainiProgressUI.avatarImageMarkup(p,{compact:true}));
       if(['blue','green','copper','gold','orbit'].includes(p.avatarFrame)||p.avatarFrame==='midnight'&&p.avatarEntitlements?.includes('midnight'))avatar.dataset.socialFrame=p.avatarFrame;else delete avatar.dataset.socialFrame;
     });
   }
@@ -345,7 +345,8 @@ window.BrainiAccountMenu=(function(){
     // Replace only artwork: an open menu keeps its links, focus and handlers.
     const portrait=openMenu?.querySelector('.account-menu-avatar');
     if(portrait){
-      const player=BrainiData.player();portrait.innerHTML=BrainiProgressUI.avatarImageMarkup(player);
+      const player=BrainiData.player();
+      BrainiProgressUI.setAvatarMarkup(portrait,BrainiProgressUI.avatarImageMarkup(player,{compact:true}));
       if(BrainiProgressUI.avatarFrameAttribute(player))portrait.dataset.socialFrame=player.avatarFrame;
       else delete portrait.dataset.socialFrame;
     }
