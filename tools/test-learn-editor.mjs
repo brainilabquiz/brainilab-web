@@ -7,6 +7,14 @@ const articles=readdirSync('content/articles').map(file=>prepareArticle(JSON.par
 const template=readFileSync('learn/index.html','utf8');
 const hostile='<script>alert(1)</script><img src=x onerror=alert(1)><svg onload=alert(1)><a href="jav&#x61;script:alert(1)">Bad</a></svg><div style="background:url(evil)" onclick="evil()">Safe</div><iframe src="https://evil.test"></iframe>';
 assert.ok(!/script:|<script|onerror|onload|onclick|<img|<svg|<iframe|style=/.test(cleanHtml(hostile)));
+const reference='/assets/images/learn/references/early-website.webp';
+const illustration=cleanHtml(`<figure class="article-reference other"><img src="${reference}" alt="September quiz homepage" width="960" height="540" onerror="bad()" srcset="https://evil.test/a.webp"><figcaption>September 2026</figcaption></figure>`);
+assert.match(illustration,/<figure class="article-reference"><img src="\/assets\/images\/learn\/references\/early-website\.webp" alt="September quiz homepage" width="960" height="540" loading="lazy" decoding="async"/);
+assert.doesNotMatch(illustration,/onerror|srcset|evil\.test/);
+for(const src of ['https://other.test/image.webp','//other.test/image.webp',reference+'?id=1',reference.replace('early-website','../cover')]){
+ assert.doesNotMatch(cleanHtml(`<img src="${src}" alt="Test image" width="960" height="540">`),/<img/);
+}
+assert.doesNotMatch(cleanHtml(`<img src="${reference}" alt=" " width="960" height="540">`),/<img/);
 const a=prepareArticle({...articles[0],title:'<img onerror=alert(1)>',sections:[{id:'safe',title:'<script>bad</script>',html:hostile}]});
 const rendered=renderPage(template,articles,a);
 assert.ok(rendered.includes('&lt;img onerror=alert(1)&gt;'));
