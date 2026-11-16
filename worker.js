@@ -8,7 +8,9 @@ import {crypticAPI} from './lib/cryptic-api.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from './lib/breaking-news.js';
-import {newsEdition,REFRESH_MS} from './lib/news-refresh.js';
+import {newsArchive,newsEdition,REFRESH_MS} from './lib/news-refresh.js';
+import {ARCHIVE_PATH,NEWS_PATH,editionInstant,editionPath} from './lib/news-archive.js';
+import {archivedEditionPage,newsArchivePage,newsEditionNav,renderPreviousEditions} from './lib/news-archive-page.js';
 import {PUBLISHERS} from './lib/news-publisher.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/public-page-store.js';
@@ -39,6 +41,47 @@ export function parseFeed(xml){
   return entries[0];
 }
 function json(body,status=200,maxAge=60){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':`public, max-age=${maxAge}`,'X-Content-Type-Options':'nosniff'}});}
+async function serveNews(request,url,env,holiday) {
+  const head=request.method==='HEAD';
+  if(!head&&request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET, HEAD'}});
+  const notFound=()=>new Response(head?null:'Edition not found',{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
+  const path=url.pathname.replace(/\/index\.html$/,'/').replace(/\/?$/,'/');
+  const latest=path===NEWS_PATH,index=path===ARCHIVE_PATH;
+  const id=!latest&&!index&&path.startsWith(ARCHIVE_PATH)?path.slice(ARCHIVE_PATH.length,-1):'';
+  if(!latest&&!index&&!Number.isFinite(editionInstant(id)))return notFound();
+  if(path!==url.pathname){url.pathname=path;return Response.redirect(url,308);}
+  const production=url.hostname==='brainilabgames.com';
+  if(!latest&&!production)return notFound();
+  const before=index?url.searchParams.get('before'):null;
+  if(before&&!Number.isFinite(editionInstant(before)))return notFound();
+  const [template, automated, history]=await Promise.all([
+    env.ASSETS.fetch(new Request(new URL(NEWS_PATH,url))),
+    latest&&production?newsEdition(env,{passive:head}):null,
+    production?newsArchive(env,latest?{recent:'1'}:{before,edition:id}):null
+  ]);
+  if(!template.ok)return new Response(null,{status:template.status,headers:template.headers});
+  if(!latest&&!history)return new Response(head?null:'The news archive is temporarily unavailable.',{status:503,headers:{'Cache-Control':'no-store','Retry-After':'60'}});
+  if(!latest&&(history.missing||(index?!history.items?.length:!history.edition)))return notFound();
+  const html=await template.text(),headers=new Headers(template.headers);
+  for(const name of ['Content-Length','ETag','Last-Modified'])headers.delete(name);
+  headers.set('Content-Security-Policy',PAGE_CONTENT_POLICY);
+  let page;
+  if(latest){
+    const now=Date.now(),edition=selectNewsEdition(automated,now);
+    const current=freshNews(edition,now).length?{...edition,generatedAt:new Date(edition.generatedAt).toISOString()}:null;
+    const previous=(Array.isArray(history?.items)?history.items:[]).filter(item=>!current||item.generatedAt<current.generatedAt).slice(0,2);
+    const display={publishers:PUBLISHERS,nextCheck:new Date((Math.floor(now/REFRESH_MS)+1)*REFRESH_MS),
+      navigation:history?.items?.length?newsEditionNav(current,previous):'',
+      previous:renderPreviousEditions(previous),permalink:current&&history?.items?.some(item=>item.generatedAt===current.generatedAt)?editionPath(current):''};
+    page={head:newsHead(html,current,now),content:renderNews(current,now,display)||renderEmptyNews(display)};
+    headers.set('Cache-Control',current?'public,max-age=60':'no-store');
+    if(!current)headers.set('X-Robots-Tag','noindex, follow');
+  }else{
+    page=index?newsArchivePage(html,history,before):archivedEditionPage(html,history.edition);
+    headers.set('Cache-Control',holiday.active?'no-store':'public,max-age=300');
+  }
+  return new Response(head?null:decorateHalloween(page.head.replace('<!-- breaking-news -->',()=>page.content),holiday,path),{status:200,headers});
+}
 export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
   const url=new URL(request.url),channel=url.pathname==='/api/latest-video'?url.searchParams.get('channel'):null;
   if(channel!==null){
@@ -122,20 +165,6 @@ export default {
       const template=await (await env.ASSETS.fetch(new Request(new URL('/learn/index.html',url)))).text();
       return new Response(request.method==='HEAD'?null:renderHalloweenPage(template,holiday,holiday.status==='closed'?null:match[1]),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':PAGE_CONTENT_POLICY,'X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'strict-origin-when-cross-origin'}});
     }
-    if(['/breaking-news/','/breaking-news/index.html','/breaking-news'].includes(url.pathname)){
-      if(request.method!=='GET'&&request.method!=='HEAD')return new Response('Method not allowed',{status:405});
-      const response=await env.ASSETS.fetch(new Request(new URL('/breaking-news/',url),request));
-      if(request.method==='HEAD')return response;
-      const edition=url.hostname==='brainilabgames.com'?selectNewsEdition(await newsEdition(env)):null;
-      const html=await response.text(),headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');headers.delete('Last-Modified');
-      const now=Date.now();
-      const display={publishers:PUBLISHERS,nextCheck:new Date((Math.floor(now/REFRESH_MS)+1)*REFRESH_MS)};
-      const news=renderNews(edition,now,display);
-      headers.set('Cache-Control',news?'public,max-age=60':'no-store');
-      // Indexable only while current stories exist; an empty page stays out of search.
-      if(!news)headers.set('X-Robots-Tag','noindex, follow');
-      return new Response(decorateHalloween(newsHead(html,edition,now).replace('<!-- breaking-news -->',()=>news||renderEmptyNews(display)),holiday,url.pathname),{status:response.status,headers});
-    }
     // Consolidate production entry points before rendering or caching HTML.
     // Keep previews and local development on their own origin.
     if(['brainilabgames.com','www.brainilabgames.com'].includes(url.hostname)){
@@ -146,6 +175,7 @@ export default {
       canonical.pathname=canonical.pathname.replace(/\/index\.html$/,'/');
       if(canonical.href!==url.href)return Response.redirect(canonical.href,308);
     }
+    if(url.pathname==='/breaking-news'||url.pathname.startsWith(NEWS_PATH))return serveNews(request,url,env,holiday);
     if(url.pathname==='/learn'||url.pathname.startsWith('/learn/')||['/','/index.html','/sitemap.xml','/llms.txt','/about/','/about/index.html','/profile/','/profile/index.html'].includes(url.pathname)){
       let response=await servePublicLearn(request,env,ctx,caches.default);
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
