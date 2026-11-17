@@ -85,7 +85,7 @@ assert.equal(changed.selected.current[0].title,'New BBC story');
 assert.equal(changed.selected.rows[0].title,'Current BBC news');
 assert.equal(lists,6,'A new edition invalidates the index immediately');
 
-const launch=manualNewsArchive.at(-1);
+const launch=manualNewsArchive[1];
 const afterLaunch=Date.parse(launch.generatedAt)+5000;
 const supplement=await (await store.fetch(new Request('https://news.internal/archive?edition='+editionId(new Date(launch.generatedAt).toISOString())),afterLaunch)).json();
 assert.deepEqual(supplement.edition.stories.map(story=>story.sourceName),['Africanews','Mongabay']);
@@ -101,4 +101,16 @@ const repeated=await (await read('&source=mongabay&q=leopard',afterLaunch+2000))
 assert.equal(repeated.selected.count,1);
 assert.equal(repeated.selected.currentCount,1);
 assert.equal(repeated.selected.olderCount,0);
+
+const official=manualNewsArchive.at(-1);
+const afterOfficial=Date.parse(official.generatedAt)+5000;
+const officialEdition=await (await store.fetch(new Request('https://news.internal/archive?edition='+editionId(new Date(official.generatedAt).toISOString())),afterOfficial)).json();
+assert.deepEqual(officialEdition.edition.stories.map(story=>story.sourceName),['UN Geneva','U.S. Geological Survey','G1 Mundo']);
+for(const [id,q] of [['un-geneva','Torture'],['usgs','Tual'],['g1','router']]) {
+  const result=await (await read('&source='+id+'&q='+q,afterOfficial)).json();
+  assert.equal(result.selected.count,1);
+  assert.equal(result.selected.olderCount,1);
+  assert.equal(result.filters.find(filter=>filter.id===id).count,1);
+  assert.equal(result.selected.rows[0].editionId,editionId(officialEdition.edition.generatedAt));
+}
 console.log('PASS Breaking News source history: exact counts, expired editions, duplicates, paging, refreshed counts and read-only storage.');

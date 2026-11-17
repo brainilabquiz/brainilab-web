@@ -80,6 +80,10 @@ const whoURL='https://www.who.int/southeastasia/news/detail/10-10-2026-test-repo
 const nasaURL='https://www.nasa.gov/news-release/test-report/';
 const africanewsURL='https://www.africanews.com/2026/10/11/test-report/';
 const mongabayURL='https://news.mongabay.com/short-article/2026/10/test-report/';
+const genevaURL='https://www.ungeneva.org/en/news-media/meeting-summary/2026/10/test-report';
+const usgsURL='https://earthquake.usgs.gov/earthquakes/eventpage/us123abc';
+const g1URL='https://g1.globo.com/mundo/noticia/2026/10/11/test-report.ghtml';
+const publisherAddresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL,africanewsURL,mongabayURL,genevaURL,usgsURL,g1URL];
 const ld=(address,changes={})=>`<script type="application/ld+json">${JSON.stringify({...metadata,url:undefined,mainEntityOfPage:address,...changes})}</script>`;
 const nasa=(date='Oct 10, 2026',canonical=nasaURL)=>`<link href="${canonical}" rel="canonical"><meta content="A new science mission is scheduled." name="description"><h1>A test NASA release</h1><div class="article-meta"><span class="heading-12 text-uppercase">${date}</span></div><p>Updated Oct 11, 2026</p>`;
 
@@ -108,12 +112,11 @@ test('discovery ignores other hosts, live blogs, category indexes and NASA featu
   assert.equal(publisherLinks('<a href="'+guardianURL+'">Report</a>','https://evil.org/').length,0);
 });
 test('balanced selection represents all available publishers and degrades without padding',()=>{
-  const addresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL,africanewsURL,mongabayURL];
-  const found=PUBLISHERS.flatMap((p,i)=>Array.from({length:4},(_,j)=>({...source,sourceName:p.name,sourceUrl:addresses[i]+'?fixture='+j,reportedAt:new Date(now-j*1000).toISOString()})));
+  const found=PUBLISHERS.flatMap((p,i)=>Array.from({length:4},(_,j)=>({...source,sourceName:p.name,sourceUrl:publisherAddresses[i]+'?fixture='+j,reportedAt:new Date(now-j*1000).toISOString()})));
   const selected=balancedPublisherSources(found);
-  assert.equal(selected.length,7);assert.equal(new Set(selected.map(s=>s.sourceName)).size,7);
+  assert.equal(selected.length,10);assert.equal(new Set(selected.map(s=>s.sourceName)).size,10);
   assert.deepEqual(balancedPublisherSources([...found].reverse()),selected);
-  assert.deepEqual(selected.map(s=>s.id),[1,2,3,4,5,6,7]);
+  assert.deepEqual(selected.map(s=>s.id),[1,2,3,4,5,6,7,8,9,10]);
   const two=balancedPublisherSources(found.filter(s=>['BBC News','Al Jazeera'].includes(s.sourceName)));
   assert.equal(two.length,5);assert.equal(two.filter(s=>s.sourceName==='BBC News').length,3);
   assert.equal(balancedPublisherSources(found.filter(s=>s.sourceName==='NASA')).length,4);
@@ -131,14 +134,15 @@ test('seven publishers share bounded discovery and retain provenance after gener
       rssItem(africanewsURL.replace('test-report','expired'),'Sun, 04 Oct 2026 08:00:00 +0000')+
       rssItem('http://www.africanews.com.evil.org/2026/10/11/fake/'),'application/xhtml+xml');
     if(publisherIndex===6)return rss(rssItem(mongabayURL)+rssItem(mongabayURL.replace('test-report','future'),'Sun, 11 Oct 2026 10:16:00 +0000'));
+    if(publisherIndex>=7)return new Response('',{status:503});
     if(publisherIndex>=0)return htmlResponse(Array.from({length:8},(_,i)=>`<a class="hds-content-item-heading" href="${addresses[publisherIndex]}?variant=${i}"></a>`).join(''));
     return htmlResponse(pages[addresses.indexOf(address)]);
   });
-  assert.equal(calls.length,12);assert.ok(maxActive<=4);assert.equal(new Set(sources.map(s=>s.sourceName)).size,7);
+  assert.equal(calls.length,PUBLISHERS.length+5);assert.ok(maxActive<=4);assert.equal(new Set(sources.map(s=>s.sourceName)).size,7);
   const selected=sources.slice(2);
   const generated=selected.map(s=>({sourceId:s.id,title:'Original report from '+s.sourceName,summary:'An original short summary grounded in this source.',sourceName:'Wrong publisher'}));
   const result=parsePublisherResponse(response(generated),sources,now);
-  assert.deepEqual(result.edition.stories.map(s=>s.sourceName),PUBLISHERS.slice(2).map(p=>p.name));
+  assert.deepEqual(result.edition.stories.map(s=>s.sourceName),PUBLISHERS.slice(2,7).map(p=>p.name));
   assert.deepEqual(result.edition.stories.map(s=>s.sourceUrl),addresses.slice(2));
   assert.deepEqual(result.evidence.slice(-2),[africanewsURL,mongabayURL].map(sourceUrl=>({sourceUrl,reportedAt:metadata.datePublished})));
   assert.ok(sources.slice(-2).every(s=>s.headline==='A new & noteworthy report'));
@@ -147,6 +151,40 @@ test('seven publishers share bounded discovery and retain provenance after gener
     const copied={...generated.at(-1),[field]:feedSource[field==='title'?'headline':'description']};
     assert.throws(()=>parsePublisherResponse(response([copied]),sources,now),error=>error.validationDiagnostic?.rejections['copied-feed-text']===1);
   }
+});
+test('UN Geneva, USGS and G1 verify time and identity and exclude full articles',async()=>{
+  const event={type:'Feature',id:'us123abc',properties:{url:usgsURL,place:'148 km WSW of Tual, Indonesia',mag:6.6,time:now-3000,status:'reviewed',type:'earthquake'}};
+  const other=(id,properties)=>({...event,id,properties:{...event.properties,url:usgsURL.replace('us123abc',id),...properties}});
+  const calls=[];
+  const sources=await collectPublisherSources(now,async(address,options)=>{
+    calls.push(address);
+    const publisher=PUBLISHERS.find(p=>p.index===address);
+    if(publisher?.id==='un-geneva')return rss(rssItem(genevaURL,'Sun, 11 Oct 2026 10:00:00 CEST')+
+      rssItem(genevaURL+'-future','Sun, 11 Oct 2026 12:42:00 CEST'));
+    if(publisher?.id==='usgs') {
+      assert.match(options.headers.Accept,/json/);
+      return Response.json({type:'FeatureCollection',features:[
+        other('usprelim',{status:'automatic'}),other('usexpired',{time:now-3*86400000}),
+        other('usidentity',{url:usgsURL}),other('usexternal',{url:'https://example.org/earthquakes/eventpage/usexternal'}),
+        event,event
+      ]});
+    }
+    if(publisher?.id==='g1')return rss(rssItem(g1URL).replace('</title>','</title><subtitle>G1 reports on a new project site.</subtitle>')+
+      rssItem(g1URL.replace('test-report','missing-subtitle')),'application/xml');
+    return new Response('',{status:503});
+  });
+  assert.deepEqual(calls,PUBLISHERS.map(p=>p.index));
+  assert.deepEqual(sources.map(s=>s.sourceUrl),[genevaURL,usgsURL,g1URL]);
+  assert.equal(sources[0].reportedAt,'2026-10-11T08:00:00.000Z');
+  assert.equal(sources[1].reportedAt,new Date(now-3000).toISOString());
+  assert.match(sources[1].headline,/6\.6 earthquake/);
+  assert.equal(sources[2].description,'G1 reports on a new project site.');
+  const result=parsePublisherResponse(response([
+    {sourceId:sources[0].id,title:'Geneva publishes project announcement',summary:'The United Nations office shared details of a public project site.'},
+    {sourceId:sources[1].id,title:'U.S. Geological Survey records earthquake near Tual',summary:'The U.S. Geological Survey reported a magnitude 6.6 earthquake near Tual in Indonesia.'},
+    {sourceId:sources[2].id,title:'Project could get a new location',summary:'G1 has reported that the project has a new site.'}
+  ]),sources,now);
+  assert.deepEqual(result.edition.stories.map(s=>s.sourceName),['UN Geneva','U.S. Geological Survey','G1 Mundo']);
 });
 test('a blocked BBC cannot prevent a verified article from another newsroom',async()=>{
   const sources=await collectPublisherSources(now,async address=>address===PUBLISHERS[2].index?htmlResponse(`<a href="${aljazeeraURL}"></a>`):address===aljazeeraURL?htmlResponse(ld(aljazeeraURL)):new Response('',{status:403}));
