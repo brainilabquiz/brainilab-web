@@ -78,6 +78,8 @@ const guardianURL='https://www.theguardian.com/world/2026/oct/11/test-report';
 const aljazeeraURL='https://www.aljazeera.com/news/2026/10/11/test-report';
 const whoURL='https://www.who.int/southeastasia/news/detail/10-10-2026-test-report';
 const nasaURL='https://www.nasa.gov/news-release/test-report/';
+const africanewsURL='https://www.africanews.com/2026/10/11/test-report/';
+const mongabayURL='https://news.mongabay.com/short-article/2026/10/test-report/';
 const ld=(address,changes={})=>`<script type="application/ld+json">${JSON.stringify({...metadata,url:undefined,mainEntityOfPage:address,...changes})}</script>`;
 const nasa=(date='Oct 10, 2026',canonical=nasaURL)=>`<link href="${canonical}" rel="canonical"><meta content="A new science mission is scheduled." name="description"><h1>A test NASA release</h1><div class="article-meta"><span class="heading-12 text-uppercase">${date}</span></div><p>Updated Oct 11, 2026</p>`;
 
@@ -105,32 +107,46 @@ test('discovery ignores other hosts, live blogs, category indexes and NASA featu
   assert.deepEqual(publisherLinks(`<a href="${nasaURL}">Featured</a><a class="hds-content-item-heading" href="${nasaURL}">Latest</a>`,PUBLISHERS[4].index),[nasaURL]);
   assert.equal(publisherLinks('<a href="'+guardianURL+'">Report</a>','https://evil.org/').length,0);
 });
-test('balanced selection represents five publishers, is deterministic and degrades without padding',()=>{
-  const addresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL];
+test('balanced selection represents all available publishers and degrades without padding',()=>{
+  const addresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL,africanewsURL,mongabayURL];
   const found=PUBLISHERS.flatMap((p,i)=>Array.from({length:4},(_,j)=>({...source,sourceName:p.name,sourceUrl:addresses[i]+'?fixture='+j,reportedAt:new Date(now-j*1000).toISOString()})));
   const selected=balancedPublisherSources(found);
-  assert.equal(selected.length,5);assert.equal(new Set(selected.map(s=>s.sourceName)).size,5);
+  assert.equal(selected.length,7);assert.equal(new Set(selected.map(s=>s.sourceName)).size,7);
   assert.deepEqual(balancedPublisherSources([...found].reverse()),selected);
-  assert.deepEqual(selected.map(s=>s.id),[1,2,3,4,5]);
+  assert.deepEqual(selected.map(s=>s.id),[1,2,3,4,5,6,7]);
   const two=balancedPublisherSources(found.filter(s=>['BBC News','Al Jazeera'].includes(s.sourceName)));
   assert.equal(two.length,5);assert.equal(two.filter(s=>s.sourceName==='BBC News').length,3);
   assert.equal(balancedPublisherSources(found.filter(s=>s.sourceName==='NASA')).length,4);
   assert.deepEqual(balancedPublisherSources([]),[]);
 });
-test('multiple publishers share bounded discovery and retain immutable provenance after generation',async()=>{
-  const addresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL],calls=[],pages=addresses.map((address,i)=>i===4?nasa():ld(address));
+const rssItem=(link,date='Sun, 11 Oct 2026 08:00:00 +0000')=>`<item><link>${link}</link><title><![CDATA[A new &amp; noteworthy report]]></title><description><![CDATA[<p>The public project announced a new site on Sunday.</p>]]></description><pubDate>${date}</pubDate><content:encoded><![CDATA[Full story excluded from evidence]]></content:encoded></item>`;
+const rss=(content,type='application/rss+xml')=>new Response(`<rss version="2.0"><channel>${content}</channel></rss>`,{headers:{'Content-Type':type}});
+test('seven publishers share bounded discovery and retain provenance after generation',async()=>{
+  const addresses=[url,guardianURL,aljazeeraURL,whoURL,nasaURL,africanewsURL,mongabayURL],calls=[],pages=addresses.map((address,i)=>i===4?nasa():ld(address));
   let active=0,maxActive=0;
   const sources=await collectPublisherSources(now,async address=>{
     calls.push(address);const publisherIndex=PUBLISHERS.findIndex(p=>p.index===address);
-    if(publisherIndex>=0)return htmlResponse(Array.from({length:8},(_,i)=>`<a class="hds-content-item-heading" href="${addresses[publisherIndex]}?variant=${i}"></a>`).join(''));
     active++;maxActive=Math.max(maxActive,active);await new Promise(r=>setTimeout(r,1));active--;
+    if(publisherIndex===5)return rss(rssItem(africanewsURL.replace('https:','http:'))+rssItem(africanewsURL+'?tracking=1')+
+      rssItem(africanewsURL.replace('test-report','expired'),'Sun, 04 Oct 2026 08:00:00 +0000')+
+      rssItem('http://www.africanews.com.evil.org/2026/10/11/fake/'),'application/xhtml+xml');
+    if(publisherIndex===6)return rss(rssItem(mongabayURL)+rssItem(mongabayURL.replace('test-report','future'),'Sun, 11 Oct 2026 10:16:00 +0000'));
+    if(publisherIndex>=0)return htmlResponse(Array.from({length:8},(_,i)=>`<a class="hds-content-item-heading" href="${addresses[publisherIndex]}?variant=${i}"></a>`).join(''));
     return htmlResponse(pages[addresses.indexOf(address)]);
   });
-  assert.equal(calls.length,10);assert.ok(maxActive<=4);assert.equal(new Set(sources.map(s=>s.sourceName)).size,5);
-  const generated=sources.map(s=>({sourceId:s.id,title:'Original report from '+s.sourceName,summary:'An original short summary grounded in this source.',sourceName:'Wrong publisher'}));
+  assert.equal(calls.length,12);assert.ok(maxActive<=4);assert.equal(new Set(sources.map(s=>s.sourceName)).size,7);
+  const selected=sources.slice(2);
+  const generated=selected.map(s=>({sourceId:s.id,title:'Original report from '+s.sourceName,summary:'An original short summary grounded in this source.',sourceName:'Wrong publisher'}));
   const result=parsePublisherResponse(response(generated),sources,now);
-  assert.deepEqual(result.edition.stories.map(s=>s.sourceName),PUBLISHERS.map(p=>p.name));
-  assert.deepEqual(result.edition.stories.map(s=>s.sourceUrl),addresses);
+  assert.deepEqual(result.edition.stories.map(s=>s.sourceName),PUBLISHERS.slice(2).map(p=>p.name));
+  assert.deepEqual(result.edition.stories.map(s=>s.sourceUrl),addresses.slice(2));
+  assert.deepEqual(result.evidence.slice(-2),[africanewsURL,mongabayURL].map(sourceUrl=>({sourceUrl,reportedAt:metadata.datePublished})));
+  assert.ok(sources.slice(-2).every(s=>s.headline==='A new & noteworthy report'));
+  for(const field of ['title','summary']) {
+    const feedSource=sources.at(-1);
+    const copied={...generated.at(-1),[field]:feedSource[field==='title'?'headline':'description']};
+    assert.throws(()=>parsePublisherResponse(response([copied]),sources,now),error=>error.validationDiagnostic?.rejections['copied-feed-text']===1);
+  }
 });
 test('a blocked BBC cannot prevent a verified article from another newsroom',async()=>{
   const sources=await collectPublisherSources(now,async address=>address===PUBLISHERS[2].index?htmlResponse(`<a href="${aljazeeraURL}"></a>`):address===aljazeeraURL?htmlResponse(ld(aljazeeraURL)):new Response('',{status:403}));
