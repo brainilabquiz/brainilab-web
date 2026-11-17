@@ -329,6 +329,14 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   background: white;
   box-shadow: 0 10px 30px #2d296e12;
 }
+.avatar-locker-toolbar {
+  position: sticky;
+  top: 4.5rem;
+  z-index: 3;
+  padding-bottom: .55rem;
+  border-radius: 1.3rem 1.3rem .9rem .9rem;
+  background: #fff;
+}
 .avatar-locker-header {
   display: flex;
   align-items: center;
@@ -337,6 +345,19 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   padding: 1rem 1.25rem .65rem;
 }
 .avatar-locker-header h3 { font-size: 1.65rem; margin: 0; }
+.avatar-locker-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.avatar-locker-actions .avatar-locker-save {
+  min-height: 44px;
+  min-width: 6.3rem;
+  margin: 0;
+  padding: .45rem .72rem;
+  font-size: .8125rem;
+  white-space: nowrap;
+}
 .avatar-locker-header .avatar-play-link {
   display: inline-flex;
   align-items: center;
@@ -349,7 +370,8 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   text-decoration: none;
 }
 .avatar-locker-header .avatar-play-link:hover { text-decoration: underline; }
-.avatar-studio-redesign .avatar-studio-tabs {
+.avatar-studio-redesign .avatar-locker-toolbar .avatar-studio-tabs {
+  position: static;
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
@@ -692,7 +714,11 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
     margin-top: -.55rem;
     border-radius: 1.35rem 1.35rem 0 0;
   }
-  .avatar-locker-header { padding: .35rem .8rem .15rem; }
+  .avatar-locker-toolbar { top: 3.5rem; }
+  .avatar-locker-header { gap: .5rem; padding: .4rem .65rem .3rem; }
+  .avatar-locker-actions { gap: .35rem; }
+  .avatar-locker-actions .avatar-locker-save { min-width: 5.5rem; }
+  .avatar-locker-actions .avatar-play-link { padding-inline: .5rem; white-space: nowrap; }
   .avatar-locker-header h3 { font-size: 1.25rem; }
   .profile-page .avatar-studio-redesign .avatar-studio-tabs { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-inline: .7rem; }
   .avatar-studio-redesign .avatar-next-reward { margin: .55rem .65rem .15rem; padding: .5rem; }
