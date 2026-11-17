@@ -421,7 +421,7 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 .avatar-studio-redesign .avatar-option-group { margin: 0 0 .8rem; }
 .avatar-studio-redesign .avatar-option-group legend { font-size: .95rem; }
 .avatar-studio-redesign .avatar-option-group:has(.reward-choice[data-rarity]) .reward-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
-.avatar-studio-redesign .avatar-option-group:has(.reward-grid-scene) .reward-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.avatar-studio-redesign .avatar-option-group:has(.reward-grid-scene) .reward-grid.reward-grid-scene { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .avatar-studio-redesign .reward-choice[data-rarity] {
   --rarity-ink: #56556a;
   --rarity-wash: #efeff4;
@@ -486,6 +486,14 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   border: 0;
   border-radius: inherit;
   object-fit: cover;
+}
+/* A scene thumbnail fills its own card independently of the equipped scene. */
+.avatar-studio-redesign .reward-choice[data-rarity] .reward-choice-art > img.profile-scene-sample {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  background: none;
 }
 .avatar-studio-redesign .profile-scene-sample[data-profile-scene=none] {
   background:
