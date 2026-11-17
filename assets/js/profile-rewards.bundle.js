@@ -544,7 +544,8 @@ window.BrainiAvatarStudioUI=(function(){
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
         if(!button){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
-          button.innerHTML='<span class="reward-choice-art" aria-hidden="true"></span><strong></strong>'+ (cosmeticPanes.includes(kind)?'<span class="avatar-rarity"></span>':'') +'<small></small>';grid.append(button);
+          const details=cosmeticPanes.includes(kind)?'<span class="reward-choice-details"><span class="avatar-rarity"></span><small></small></span>':'<small></small>';
+          button.innerHTML='<span class="reward-choice-art" aria-hidden="true"></span><strong></strong>'+details;grid.append(button);
         }
         const itemLook={...draft,[kind]:item.id,mode:kind==='frame'?draft.mode:'built'};
         const fittingLook={...itemLook,glasses:'none',hat:'none',prop:'none'};
@@ -656,7 +657,7 @@ window.BrainiAvatarStudioUI=(function(){
     const art=reward?['glasses','hat','prop'].includes(reward.kind)?A.preview(reward.kind,reward.id,player.avatarDesign):window.BrainiRewardJourney?.art(reward,player)||'':'';
     const heading=goal?.type==='days'?'Days played':goal?.type==='discovery'?'Try something new':goal?.type==='academy'?'Learn something new':'Next unlock';
     const detail=!goal?'':goal.type==='xp'?`${number(goal.remaining)} XP to go · ${labels[reward.kind]}`:goal.type==='days'?`${number(goal.value)} of ${number(goal.max)} days played`:goal.type==='discovery'?`${number(goal.value)} of ${number(goal.max)} games tried`:'Finish '+reward.courseTitle;
-    const markup=goal?`<a class="avatar-goal-link" href="#avatar-panel-${goalPane(goal.type,reward.kind)}" data-collection-goal="${goal.type}" data-goal-kind="${reward.kind}" data-goal-id="${reward.id}"><span class="avatar-goal-art" aria-hidden="true">${art}</span><span><span class="reward-kicker">${heading}</span><strong>${escapeCopy(reward.name)}</strong><small>${escapeCopy(detail)}</small></span><span class="avatar-goal-arrow" aria-hidden="true">→</span></a><progress></progress>${goal.type==='days'?'<small class="avatar-goal-note">Days add up, even with breaks.</small>':''}`:'<span class="reward-kicker">YOUR COLLECTION</span><strong>Every XP reward is unlocked</strong>';
+    const markup=goal?`<a class="avatar-goal-link" href="#avatar-panel-${goalPane(goal.type,reward.kind)}" data-collection-goal="${goal.type}" data-goal-kind="${reward.kind}" data-goal-id="${reward.id}"><span class="avatar-goal-art" aria-hidden="true">${art}</span><span class="avatar-goal-copy"><span class="avatar-goal-name"><span class="reward-kicker">${heading}</span><strong>${escapeCopy(reward.name)}</strong></span><small>${escapeCopy(detail)}</small></span><span class="avatar-goal-arrow" aria-hidden="true">→</span></a><progress></progress>${goal.type==='days'?'<small class="avatar-goal-note">Days add up, even with breaks.</small>':''}`:'<span class="reward-kicker">YOUR COLLECTION</span><strong>Every XP reward is unlocked</strong>';
     if(target.dataset.goalMarkup!==markup){target.innerHTML=markup;target.dataset.goalMarkup=markup;if(focus)target.querySelector('a')?.focus({preventScroll:true});}
     const progress=target.querySelector('progress');
     if(progress){progress.max=goal.max;progress.value=goal.value;progress.setAttribute('aria-label',`${reward.name}: ${number(goal.value)} of ${number(goal.max)} ${goal.type==='xp'?'XP since your last avatar extra':goal.type==='days'?'days played':goal.type==='discovery'?'games tried':'course completed'}`);}

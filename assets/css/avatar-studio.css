@@ -422,17 +422,46 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 }
 .avatar-studio-redesign .avatar-next-reward {
   width: auto;
-  margin: .9rem 1.2rem .3rem;
-  padding: .75rem;
-  background: #faf7ee;
-  border: 1px solid #ebe0b8;
+  margin: .65rem 1.2rem 0;
+  padding: .55rem .7rem;
+  background: #f7f5fc;
+  border: 1px solid var(--studio-line);
+  border-radius: .85rem;
 }
-.avatar-studio-redesign .avatar-next-reward progress::-webkit-progress-value { background: #efbf08; }
-.avatar-studio-redesign .avatar-next-reward progress::-moz-progress-bar { background: #efbf08; }
-.avatar-locker-content { min-width: 0; padding: 1rem 1.2rem 1.2rem; }
+.avatar-studio-redesign .avatar-goal-link {
+  grid-template-columns: 40px minmax(0,1fr) 12px;
+  min-height: 44px;
+  margin: 0 0 .35rem;
+}
+.avatar-studio-redesign .avatar-goal-art {
+  width: 40px;
+  height: 40px;
+  border-radius: .6rem;
+  background: #eae5f8;
+}
+.avatar-studio-redesign .avatar-goal-art > :is(img,svg) { width: 36px; height: 36px; }
+.avatar-studio-redesign .avatar-goal-link > .avatar-goal-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .35rem .8rem;
+  flex-wrap: wrap;
+}
+.avatar-studio-redesign .avatar-goal-name { min-width: 0; }
+.avatar-studio-redesign .avatar-goal-name .reward-kicker { margin: 0; }
+.avatar-studio-redesign .avatar-goal-name strong { display: block; }
+.avatar-studio-redesign .avatar-goal-copy small {
+  max-width: 100%;
+  flex: 0 1 auto;
+  overflow-wrap: anywhere;
+}
+.avatar-studio-redesign .avatar-next-reward > progress { height: .25rem; }
+.avatar-studio-redesign .avatar-next-reward progress::-webkit-progress-value { background: #ba8e00; }
+.avatar-studio-redesign .avatar-next-reward progress::-moz-progress-bar { background: #ba8e00; }
+.avatar-locker-content { min-width: 0; padding: .8rem 1.2rem 1.2rem; }
 .avatar-studio-redesign .avatar-mode { margin: 0 0 1rem; }
 .avatar-mode h3 { margin: 0 0 .55rem; font-size: 1rem; }
-.avatar-filter { margin-bottom: .8rem; }
+.avatar-filter { margin-bottom: .6rem; }
 .avatar-filter [role=group] { display: flex; flex-wrap: wrap; gap: .35rem; }
 .avatar-filter button, .avatar-filter-mobile {
   display: inline-flex;
@@ -462,12 +491,21 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   --rarity-wash: #efeff4;
   min-height: 44px;
   position: relative;
+  justify-content: start;
   padding: .45rem;
   text-align: left;
   align-items: start;
   gap: .35rem;
   border-radius: .95rem;
   background: white;
+}
+.avatar-studio-redesign .reward-choice-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .2rem .45rem;
+  margin-block: auto .15rem;
+  min-width: 0;
 }
 .avatar-studio-redesign .reward-choice[data-rarity=common] { --rarity-ink:#2b7323; --rarity-wash:#e8f5e6; }
 .avatar-studio-redesign .reward-choice[data-rarity=rare] { --rarity-ink:#1a5db5; --rarity-wash:#e3eefc; }
@@ -522,6 +560,10 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   border-radius: inherit;
   object-fit: cover;
 }
+.avatar-studio-redesign .reward-choice[data-reward-kind=scene] .reward-choice-art {
+  aspect-ratio: 3 / 2;
+  height: auto;
+}
 /* A scene thumbnail fills its own card independently of the equipped scene. */
 .avatar-studio-redesign .reward-choice[data-rarity] .reward-choice-art > img.profile-scene-sample {
   width: 100%;
@@ -564,14 +606,6 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   background: transparent;
   border-radius: 0;
   padding: 0;
-}
-.avatar-studio-redesign .reward-choice[data-wardrobe-state=equipped][aria-pressed=true] {
-  background: #f1f8ee;
-  outline-color: #36712c;
-}
-.avatar-studio-redesign .reward-choice[data-wardrobe-state=preview][aria-pressed=true] {
-  background: #fff6d8;
-  outline-color: #8d6814;
 }
 .avatar-empty-art {
   display: grid;
@@ -761,15 +795,15 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
     cursor: pointer;
   }
   .avatar-locker-category select:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
-  .avatar-studio-redesign .avatar-next-reward { margin: .55rem .65rem .15rem; padding: .5rem; }
+  .avatar-studio-redesign .avatar-next-reward { margin: .35rem .65rem 0; }
   .avatar-locker-content { padding: .7rem; }
   .avatar-filter [role=group] { display: none; }
   .avatar-filter-mobile { display: inline-flex; }
   .avatar-filter-mobile input { margin: 0; accent-color: var(--navy); }
-  .avatar-studio-redesign .reward-grid { gap: .35rem; }
+  .avatar-studio-redesign .reward-grid { gap: .55rem; }
   .avatar-studio-redesign .reward-choice[data-rarity] { padding: .35rem; }
   .avatar-studio-redesign .avatar-option-group:has(.reward-choice[data-rarity]) .reward-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .avatar-studio-redesign .reward-choice[data-rarity] .reward-choice-art { height: clamp(4.5rem,24vw,6.8rem); }
+  .avatar-studio-redesign .reward-choice[data-rarity]:not([data-reward-kind=scene]) .reward-choice-art { height: clamp(4.5rem,24vw,6.8rem); }
   .avatar-studio-redesign .reward-choice[data-rarity] .reward-choice-art > :is(svg,img) { max-width: clamp(5rem,22vw,8rem); }
   .avatar-studio-redesign .reward-choice[data-rarity] .reward-choice-art > .profile-scene-sample { max-width: none; }
   .avatar-studio-redesign .avatar-apply-bar {
@@ -788,6 +822,14 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 }
 
 @media (max-width: 24rem) {
+  .avatar-studio-redesign .avatar-goal-link > .avatar-goal-copy { gap: .15rem .5rem; }
+  .avatar-studio-redesign .avatar-apply-bar { column-gap: .4rem; }
+  .avatar-apply-bar:not(:has([data-style-retry]:not([hidden]))) .avatar-apply-copy {
+    flex-basis: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .avatar-apply-copy [data-avatar-mini-label] { display: block; line-height: 1.35; }
   .avatar-locker-header { gap: .375rem; padding-inline: .55rem; }
   .avatar-locker-header h3 { font-size: 1.125rem; }
   .avatar-locker-actions { gap: .25rem; }
