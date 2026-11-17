@@ -8,7 +8,7 @@ const C=w.BrainiRewardCatalog,A=w.BrainiAvatarDesign;
 w.BrainiRewardStore={snapshot:()=>({owner:'sample',style:C.available(style,player.xp),cloud:false}),load:async()=>{},save:async()=>{writes++;return false;}};
 w.eval(readFileSync('assets/js/profile-rewards.js','utf8'));await tick();
 const root=w.document.querySelector('[data-profile-rewards]');
-const items=[['glasses','monocle',2250],['glasses','doughnut',6500],['hat','corn',2200],['hat','wave',5500],['prop','train',3200],['prop','roll',7500],['glasses','heart',2750],['glasses','camera',8250],['hat','toast',2800],['hat','coffee',4750],['prop','owl',3800],['prop','nacho',5750]];
+const items=[['glasses','monocle',2250],['glasses','doughnut',6500],['hat','corn',2200],['hat','wave',5500],['prop','train',3200],['prop','roll',7500],['glasses','heart',2750],['glasses','camera',8250],['hat','toast',2800],['hat','coffee',4750],['prop','owl',3800],['prop','nacho',5750],['glasses','aviator',450],['glasses','butterfly',1650],['glasses','spectrum',4200],['hat','bucket',950],['hat','jelly',3300],['hat','astral',7200],['prop','headphones',650],['prop','sprout',1450],['prop','scarf',2850],['prop','drone',5200]];
 for(const [kind,id,xp]of items){
  assert.equal(C.groups[kind].find(x=>x.id===id).xp,xp);assert.equal(C.available({[kind]:id},xp-1)[kind],'none');assert.equal(C.available({[kind]:id},xp)[kind],id);
  assert.equal(A.markup({[kind]:id},xp-1),A.markup({},xp-1));assert.notEqual(A.markup({[kind]:id},xp),A.markup({},xp));
@@ -27,6 +27,7 @@ for(const kind of ['hair','glasses','hat','prop','frame'])for(const item of C.gr
   const sample=new w.DOMParser().parseFromString(A.preview(kind,item.id),'image/svg+xml').documentElement;
   assert.equal(worn.getAttribute('data-cosmetic-id'),item.id,'the preview wears the selected extra');
   assert.equal(worn.innerHTML,sample.innerHTML,'the model and locker share the same drawing');
+  assert.ok(worn.closest('[clip-path]'),'extras sit inside the portrait rather than in a separate sticker');
  }
 }
 const backdropArt=A.options.background.map(item=>new w.DOMParser().parseFromString(

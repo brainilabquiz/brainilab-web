@@ -14,16 +14,24 @@ window.BrainiRewardCatalog=(function(){
   const titles=Object.freeze([
     {id:'none',name:'No title',xp:0},
     {id:'explorer',name:'Explorer',xp:250},
+    {id:'trail',name:'Trailblazer',xp:425},
     {id:'curious',name:'Curious Mind',xp:750},
+    {id:'sparks',name:'Idea Collector',xp:1350},
     {id:'detective',name:'Puzzle Detective',xp:2000},
+    {id:'maker',name:'Pattern Maker',xp:3250},
     {id:'thinker',name:'Deep Thinker',xp:4500},
+    {id:'afterdark',name:'Midnight Mind',xp:5600},
+    {id:'polymath',name:'Curious Polymath',xp:7800},
     {id:'sage',name:'BrainiLab Sage',xp:10000}
   ].map(Object.freeze));
   const scenes=Object.freeze([
     {id:'none',name:'Plain & simple',xp:0,description:'Your usual clean profile.'},
     {id:'library',name:'Booked in',xp:1500,description:'A quiet library corner for a curious mind.'},
     {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
-    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
+    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'},
+    {id:'greenhouse',name:'A Growing Mind',xp:2200,description:'A greenhouse for curious minds and budding botanists.'},
+    {id:'tidepool',name:'Tide and Seek',xp:4700,description:'A tide pool for spotting the small details in marine life.'},
+    {id:'arcade',name:'Bonus Round',xp:6750,description:'A retro arcade for one more round of your favourite game.'}
   ].map(Object.freeze));
   const eventFrame=Object.freeze({id:'midnight',name:'Midnight',xp:0,event:'halloween-2026',description:'A quiet midnight frame, with a little Halloween sparkle.',requirement:'Complete both Halloween games'});
   const groups=Object.freeze({frame:Object.freeze([...frames,eventFrame]),title:titles,...Object.fromEntries(Object.entries(BrainiAvatarDesign.options).map(([key,list])=>[key,Object.freeze([...list,...(BrainiAvatarDesign.eventOptions[key]||[])])])),scene:scenes});

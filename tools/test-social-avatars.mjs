@@ -122,10 +122,15 @@ try{
  await actor(null);
  for(const name of rpcNames.slice(1))await assert.rejects(()=>scalar('select '+name+'()'),'authentication remains required');
  await actor(me);
- // These historical migrations cover XP-based choices. Course, discovery and
- // active-day rewards use later migrations and their dedicated entitlement suites.
+ // This fixture exercises the historical migrations with their original
+ // catalogue. Later entitlement and wardrobe migrations are tested separately.
+ const definition=await scalar("select pg_get_functiondef('brainilab_private.player_avatar(uuid)'::regprocedure)");
+ const historical=JSON.parse(definition.match(/v_catalog constant jsonb := '([^']+)'/)[1]);
+ historical.title=JSON.parse(definition.match(/v_titles constant jsonb := '([^']+)'/)[1]);
  for(const [kind,list] of Object.entries({...A.options,frame:C.frames,title:C.titles}))for(const item of list){
-  if(item.course||item.challenge||item.days)continue;
+  const old=historical[kind].find(([id])=>id===item.id);
+  if(!old)continue;
+  assert.equal(item.xp,old[1],kind+' '+item.id+' preserves its historical XP threshold');
   const meta={brainilab_avatar_mode_v1:'built',[C.metadataKeys[kind]]:item.id};
   await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify(meta),peer]);
   for(const xp of new Set([Math.max(0,item.xp-1),item.xp])){

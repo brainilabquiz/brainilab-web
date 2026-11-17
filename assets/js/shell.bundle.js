@@ -392,14 +392,120 @@ window.BrainiAchievementDisplay=(function(){
 window.BrainiAvatarDesign=(function(){
   const choices={
     mode:[['picture','Your picture'],['built','My avatar']],
-    skin:[['sand','Sand','#f3c4a0'],['peach','Peach','#ffdbc4'],['honey','Honey','#d79d6b'],['cocoa','Cocoa','#a96b47'],['umber','Umber','#744630'],['ebony','Ebony','#4c3028']],
-    hair:[['sweep','Side sweep'],['curls','Curls'],['bob','Soft bob'],['crop','Short crop'],['bald','No hair'],['ponytail','Ponytail'],['waves','Long waves'],['braids','Braids']],
-    hairColor:[['brown','Brown','#644130'],['black','Black','#302c36'],['blond','Blond','#e6bd63'],['auburn','Auburn','#a34e30'],['silver','Silver','#b5b6c2']],
-    shirt:[['navy','Navy','#2d296e'],['green','Green','#397e39'],['orange','Orange','#d86725'],['blue','Blue','#3d86b0'],['berry','Berry','#aa4b77']],
+    skin:[
+      ['sand','Sand','#f3c4a0'],
+      ['peach','Peach','#ffdbc4'],
+      ['honey','Honey','#d79d6b'],
+      ['cocoa','Cocoa','#a96b47'],
+      ['umber','Umber','#744630'],
+      ['ebony','Ebony','#4c3028'],
+      ["porcelain","Porcelain","#ffe8d7"],
+      ["rose-beige","Rose beige","#eabcaa"],
+      ["almond","Almond","#e4ab81"],
+      ["olive","Olive","#b78a5f"],
+      ["toffee","Toffee","#96634b"],
+      ["walnut","Walnut","#65413b"],
+      ["espresso","Espresso","#352126"]],
+    hair:[
+      ['sweep','Side sweep'],
+      ['curls','Curls'],
+      ['bob','Soft bob'],
+      ['crop','Short crop'],
+      ['bald','No hair'],
+      ['ponytail','Ponytail'],
+      ['waves','Long waves'],
+      ['braids','Braids'],
+      ["pixie","Pixie"],
+      ["locs","Locs"],
+      ["buns","Double buns"],
+      ["undercut","Undercut"],
+      ["fro","Coils"],
+      ["quiff","High quiff"],
+      ["pigtails","Pigtails"],
+      ["mohawk","Static Spike"],
+      ["antenna","Wild Hypothesis"]],
+    hairColor:[
+      ['brown','Brown','#644130'],
+      ['black','Black','#302c36'],
+      ['blond','Blond','#e6bd63'],
+      ['auburn','Auburn','#a34e30'],
+      ['silver','Silver','#b5b6c2'],
+      ["chestnut","Chestnut","#7d4b34"],
+      ["ginger","Ginger","#cf7040"],
+      ["platinum","Platinum","#eaddcc"],
+      ["plum","Plum","#624269"],
+      ["lagoon","Lagoon","#1f777b"],
+      ["lavender","Lavender","#8b77bd"],
+      ["rose","Dusty rose","#b3587a"],
+      ["copper-sun","Copper & gold","#9b4931",0,"","#f7b96e"],
+      ["ink-tide","Ink & teal","#282943",0,"","#5fd7c4"],
+      ["berry-frost","Plum & pink","#663678",0,"","#f595c7"],
+      ["comet-white","Silver & lilac","#a4a4c0",0,"","#7654ad"],
+      ["afterglow","Sunset blend","#a84963",0,"","#ffbb84"]],
+    shirt:[
+      ['navy','Navy','#2d296e'],
+      ['green','Green','#397e39'],
+      ['orange','Orange','#d86725'],
+      ['blue','Blue','#3d86b0'],
+      ['berry','Berry','#aa4b77'],
+      ["cream","Cream","#e5d3b1"],
+      ["burgundy","Burgundy","#862d4c"],
+      ["charcoal","Charcoal","#333347"],
+      ["mint","Mint","#5ab59c"],
+      ["yellow","Gold","#c58d35"],
+      ["lavender","Lavender","#8d7ac4"],
+      ["varsity","Navy & gold","#403b83",0,"","#ffd36c"],
+      ["reef","Teal & peach","#257d80",0,"","#ffa88b"],
+      ["orchid","Plum & lilac","#754372",0,"","#d6abed"],
+      ["eclipse","Black & mint","#29293d",0,"","#82ddb5"],
+      ["sherbet","Coral & honey","#b65365",0,"","#f7c578"]],
     background:[['lilac','Lilac','#eae6fa'],['sky','Sky','#dceef8'],['sage','Sage','#e1efdf'],['sunshine','Sunshine','#fff0b3'],['coral','Coral','#fce1d6']],
-    glasses:[['none','No glasses'],['round','Fresh eyes',null,150,'Round glasses. A fresh way to look at things.'],['square','Square roots',null,600,'Square frames with a soft spot for math.'],['sun','Bright mind',null,1000,'Sunglasses for a bright mind.'],['monocle','Eye spy',null,2250,'A little monocle for spotting the smallest clues.'],['heart','Specs appeal',null,2750,'Heart-shaped specs. Love at first sight.'],['star','Star pupil',null,3500,'Star-shaped glasses. A little brilliance.'],['visor','Eye-Q',null,5000,'A futuristic visor with an eye for good ideas.'],['doughnut','Dough-eyed',null,6500,'Doughnut glasses. A sweet way to see the world.'],['camera','Focus mode',null,8250,'Camera glasses. Keep your next idea in focus.']],
-    hat:[['none','No hat'],['beanie','Warm thoughts',null,500,'A cozy beanie for your best ideas.'],['egg','Egghead',null,1200,'A sunny-side-up hat for a well-rounded thinker.'],['cap','Thinking cap',null,1500,'Put your thinking cap on.'],['corn','A-maize-ing',null,2200,'A corn hat for ideas that really pop.'],['toast','Food for thought',null,2800,'A slice of toast. A little food for thought.'],['cloud','Brainstorm',null,4000,'A little cloud with a bright idea brewing.'],['coffee','Cap-puccino',null,4750,'A foamy coffee cap. A cappuccino for your thinking cap.'],['wave','Brain waves',null,5500,'A breaking wave. Go with the flow of a good idea.'],['wizard','Quiz wizard',null,6000,'A starry hat for a little quiz magic.'],['graduate','Top of the class',null,8000,'A graduation cap. Your head is in a class of its own.']],
-    prop:[['none','No extra'],['cookie','Smart cookie',null,300,'A chocolate chip cookie. One clever little snack.'],['icepop','Brain freeze',null,800,'An ice pop to cool off a busy brain.'],['peas','Peas of mind',null,1800,'Peace of mind, one little pea at a time.'],['bulb','Bright idea',null,2500,'A light bulb for your next bright idea.'],['train','Train of thought',null,3200,'A tiny steam engine. All aboard for your next idea.'],['owl','Hoo knew?',null,3800,'A curious little owl. Hoo knew you were so wise?'],['pencil','Sharp thinker',null,4500,'A well-sharpened pencil, ready for a sharp thinker.'],['nacho','Nacho average',null,5750,'A cheesy little chip. Nacho average thinker.'],['rocket','Rocket science',null,7000,'A tiny rocket for ideas that are ready to take off.'],['roll','On a roll',null,7500,'A cinnamon roll for when the ideas keep coming.'],['book','Bookworm',null,9000,'A little worm who always has time for one more page.']]
+    glasses:[
+      ['none','No glasses'],
+      ['round','Fresh eyes',null,150,'Round glasses. A fresh way to look at things.'],
+      ["aviator","Angle of View",null,450,"Amber lenses for a fresh angle on the clues."],
+      ['square','Square roots',null,600,'Square frames with a soft spot for math.'],
+      ['sun','Bright mind',null,1000,'Sunglasses for a bright mind.'],
+      ["butterfly","Butterfly effect",null,1650,"Cat-eye frames with lilac and mint reflections."],
+      ['monocle','Eye spy',null,2250,'A little monocle for spotting the smallest clues.'],
+      ['heart','Specs appeal',null,2750,'Heart-shaped specs. Love at first sight.'],
+      ['star','Star pupil',null,3500,'Star-shaped glasses. A little brilliance.'],
+      ["spectrum","Spectrum specs",null,4200,"Gradient lenses with a colour shift."],
+      ['visor','Eye-Q',null,5000,'A futuristic visor with an eye for good ideas.'],
+      ['doughnut','Dough-eyed',null,6500,'Doughnut glasses. A sweet way to see the world.'],
+      ['camera','Focus mode',null,8250,'Camera glasses. Keep your next idea in focus.']],
+    hat:[
+      ['none','No hat'],
+      ['beanie','Warm thoughts',null,500,'A cozy beanie for your best ideas.'],
+      ["bucket","Field Notes",null,950,"A canvas hat for collecting clues in the field."],
+      ['egg','Egghead',null,1200,'A sunny-side-up hat for a well-rounded thinker.'],
+      ['cap','Thinking cap',null,1500,'Put your thinking cap on.'],
+      ['corn','A-maize-ing',null,2200,'A corn hat for ideas that really pop.'],
+      ['toast','Food for thought',null,2800,'A slice of toast. A little food for thought.'],
+      ["jelly","Current Events",null,3300,"A jellyfish hat that goes with the ocean current."],
+      ['cloud','Brainstorm',null,4000,'A little cloud with a bright idea brewing.'],
+      ['coffee','Cap-puccino',null,4750,'A foamy coffee cap. A cappuccino for your thinking cap.'],
+      ['wave','Brain waves',null,5500,'A breaking wave. Go with the flow of a good idea.'],
+      ['wizard','Quiz wizard',null,6000,'A starry hat for a little quiz magic.'],
+      ["astral","Star Signal",null,7200,"Bobbing star antennas for a little astronomy."],
+      ['graduate','Top of the class',null,8000,'A graduation cap. Your head is in a class of its own.']],
+    prop:[
+      ['none','No extra'],
+      ['cookie','Smart cookie',null,300,'A chocolate chip cookie. One clever little snack.'],
+      ["headphones","Sound Reasoning",null,650,"Headphones for listening closely and thinking clearly."],
+      ['icepop','Brain freeze',null,800,'An ice pop to cool off a busy brain.'],
+      ["sprout","Branch Out",null,1450,"A little sprout for a mind that keeps growing."],
+      ['peas','Peas of mind',null,1800,'Peace of mind, one little pea at a time.'],
+      ['bulb','Bright idea',null,2500,'A light bulb for your next bright idea.'],
+      ["scarf","Colour theory",null,2850,"A two-tone scarf with a moving tail."],
+      ['train','Train of thought',null,3200,'A tiny steam engine. All aboard for your next idea.'],
+      ['owl','Hoo knew?',null,3800,'A curious little owl. Hoo knew you were so wise?'],
+      ['pencil','Sharp thinker',null,4500,'A well-sharpened pencil, ready for a sharp thinker.'],
+      ["drone","Logic Bot",null,5200,"A colour-changing bot for your next logic puzzle."],
+      ['nacho','Nacho average',null,5750,'A cheesy little chip. Nacho average thinker.'],
+      ['rocket','Rocket science',null,7000,'A tiny rocket for ideas that are ready to take off.'],
+      ['roll','On a roll',null,7500,'A cinnamon roll for when the ideas keep coming.'],
+      ['book','Bookworm',null,9000,'A little worm who always has time for one more page.']]
   };
   // These IDs describe artwork, not entitlement claims. The profile checks the
   // account's server-earned collection; public social RPCs check it independently.
@@ -436,7 +542,7 @@ window.BrainiAvatarDesign=(function(){
   ].map(Object.freeze));
   const earnedExtras=[...academyRewards,...discoveryRewards,...dayRewards];
   for(const reward of earnedExtras)choices[reward.kind].push([reward.id,reward.name,null,0,reward.description]);
-  const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description=''])=>Object.freeze({id,name,color,xp,description,...(earnedExtras.find(r=>r.id===id)||{})})))])));
+  const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description='',accent])=>Object.freeze({id,name,color,xp,description,...(accent?{accent}:{}),...(earnedExtras.find(r=>r.id===id)||{})})))])));
   // Seasonal items are earned separately. No amount of XP or editable metadata
   // can grant them; callers must supply the server's sanitized entitlement IDs.
   const eventOptions=Object.freeze({
@@ -462,7 +568,7 @@ window.BrainiAvatarDesign=(function(){
   // Public RPCs supply only sanitized cosmetics and their minimum render threshold,
   // never another player's auth metadata or total XP. Legacy payloads stay valid.
   const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,prism:2500,gold:3000,aurora:4750,orbit:6000,nova:8500});
-  const profileTitles=Object.freeze({explorer:'Explorer',curious:'Curious Mind',detective:'Puzzle Detective',thinker:'Deep Thinker',sage:'BrainiLab Sage'});
+  const profileTitles=Object.freeze({explorer:'Explorer',curious:'Curious Mind',detective:'Puzzle Detective',thinker:'Deep Thinker',sage:'BrainiLab Sage',trail:'Trailblazer',sparks:'Idea Collector',maker:'Pattern Maker',afterdark:'Midnight Mind',polymath:'Curious Polymath'});
   function fromPublicStyle(style){
     if(!style||typeof style!=='object'||Array.isArray(style))return {};
     const value=Number(style.render_xp),renderXp=Number.isFinite(value)?Math.max(0,Math.min(9000,value)):0;
@@ -536,7 +642,7 @@ window.BrainiAvatarDesign=(function(){
       if(id==='academy_moon')return `<path d="M167 104Q132 103 134 137Q136 166 164 165Q181 164 187 149Q153 154 152 128Q151 113 167 104Z" fill="#f1cc71" stroke="#b78c38" stroke-width="2.5"/><path d="M143 136Q147 133 150 136M145 146Q150 151 156 147" fill="none" stroke="#80613b" stroke-width="2" stroke-linecap="round"/><polygon points="${star(174,119,8)}" fill="#9a91c8"/><polygon points="${star(126,101,5)}" fill="#d7b75f"/>`;
       if(id==='academy_pie')return '<g transform="rotate(8 159 142)"><path d="M134 143 168 115 187 150 153 172Z" fill="#f5e0b0" stroke="#a87953" stroke-width="2"/><path d="M134 143 153 155 187 135 168 115Z" fill="#fff0cd" stroke="#a87953" stroke-width="2"/><path d="M153 155V172L187 150V135Z" fill="#e8bb7d"/><path d="M154 162 184 144" stroke="#c85d78" stroke-width="5"/><path d="M135 144 153 155 187 135" fill="none" stroke="#fff9e9" stroke-width="5" stroke-linejoin="round"/><circle cx="163" cy="131" r="6" fill="#c65c70"/><path d="M163 125Q162 118 169 119" fill="none" stroke="#5a875c" stroke-width="2" stroke-linecap="round"/><path d="M161 143 164 142M172 137 175 135M148 142 150 141" stroke="#b396c4" stroke-width="2" stroke-linecap="round"/></g>';
       if(id==='academy_puzzle')return '<g transform="rotate(9 157 140)"><path d="M133 133H144Q136 119 148 117Q159 116 155 130H166V117Q181 111 182 124Q182 132 172 130V144H181V167H164Q170 154 158 154Q148 155 153 167H133V153Q121 159 121 148Q121 136 133 143Z" fill="#82b6b0" stroke="#477b7e" stroke-width="2.5" stroke-linejoin="round"/><path d="M148 120Q148 108 160 109Q172 110 167 122L181 126 165 131H151Z" fill="#f1ca6d" stroke="#b18a3d" stroke-width="2"/><circle cx="160" cy="117" r="2" fill="#463c54"/><path d="M143 147Q151 143 160 147" stroke="#c3e2cf" stroke-width="3" stroke-linecap="round" fill="none"/></g>';
-      if(id==='icepop')return '<g transform="rotate(14 158 151)"><rect x="153" y="148" width="10" height="31" rx="5" fill="#c18d56"/><path d="M139 119Q139 104 158 104T177 119V151Q158 162 139 151Z" fill="#ef7095"/><path d="M139 130H177V144H139Z" fill="#fff4d6"/><path d="M139 144H177V151Q158 162 139 151Z" fill="#6ab9d5"/><path d="M147 116V128" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g><path d="M27 65V79M20 72H34M22 67 32 77M22 77 32 67" stroke="#78b8cb" stroke-width="2" stroke-linecap="round"/>';
+      if(id==='icepop')return '<g transform="rotate(14 158 151)"><rect x="153" y="148" width="10" height="31" rx="5" fill="#c18d56"/><path d="M139 119Q139 104 158 104T177 119V151Q158 162 139 151Z" fill="#ef7095"/><path d="M139 130H177V144H139Z" fill="#fff4d6"/><path d="M139 144H177V151Q158 162 139 151Z" fill="#6ab9d5"/><path d="M147 116V128" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g>';
       if(id==='bulb')return `<g transform="rotate(12 160 135)"><path d="M147 137Q146 130 141 124Q129 103 147 94Q164 84 176 102Q183 116 171 128Q168 132 168 137Z" fill="#ffdc77" stroke="#b88b23" stroke-width="2.5"/><path d="M143 111Q141 102 150 99" fill="none" stroke="#fff3c7" stroke-width="4" stroke-linecap="round"/><path d="M150 136 148 115 154 119 159 114 164 119 166 114 163 136" fill="none" stroke="#b18a36" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M147 137H168V147Q158 154 148 147Z" fill="#b9b5ac" stroke="#746d64" stroke-width="2"/><path d="M150 140H166M150 145H166M155 152H161" fill="none" stroke="#f4ebce" stroke-width="2" stroke-linecap="round"/><path d="M135 86 130 80M158 78V70M180 86 185 80" stroke="#d6a72c" stroke-width="3" stroke-linecap="round"/></g>`;
       if(id==='pencil')return `<g transform="rotate(18 158 144)"><path d="M148 119H168V163L158 183 148 163Z" fill="#f5c75c" stroke="#8d6a31" stroke-width="2" stroke-linejoin="round"/><path d="M149 120H155V163H149Z" fill="#ffe69a"/><path d="M161 120H167V163H161Z" fill="#d8a33e"/><path d="M149 163H167L158 183Z" fill="#e7bf94" stroke="#8d6a31" stroke-width="1.5" stroke-linejoin="round"/><path d="M154 175 158 183 162 175Z" fill="#41384c"/><rect x="147" y="106" width="22" height="14" rx="5" fill="#e98c9e" stroke="#b96e7e" stroke-width="2"/><path d="M151 109H163" stroke="#ffc1c6" stroke-width="2" stroke-linecap="round"/><path d="M148 120H168V128H148Z" fill="#c9c5bb" stroke="#8f8c86" stroke-width="1.5"/><path d="M151 121V126M156 121V126M161 121V126M166 121V126" stroke="#eee9dd" stroke-width="1.2"/><path d="M158 132V159" stroke="#b48b32" stroke-width="1.5" stroke-linecap="round"/></g>`;
       if(id==='cookie')return '<g transform="rotate(12 158 137)"><path d="M174 115Q179 116 181 122Q171 126 182 133Q184 150 170 158Q150 168 138 150Q126 132 140 118Q155 104 174 115Z" fill="#d7a15f" stroke="#a77342" stroke-width="2"/><g fill="#825133"><circle cx="147" cy="119" r="3"/><circle cx="171" cy="144" r="3"/><circle cx="147" cy="148" r="3"/><circle cx="160" cy="155" r="2.5"/></g><g fill="none" stroke="#45394b" stroke-width="2"><circle cx="148" cy="132" r="6"/><circle cx="165" cy="132" r="6"/><path d="M154 132H159M153 143Q158 147 163 143" stroke-linecap="round"/></g><circle cx="148" cy="132" r="1.5" fill="#45394b"/><circle cx="165" cy="132" r="1.5" fill="#45394b"/></g>';
@@ -566,12 +672,52 @@ window.BrainiAvatarDesign=(function(){
     days_daydreamer:{over:'<path d="M62 50Q100 57 141 51" fill="none" stroke="#cfc3e3" stroke-width="4" stroke-linecap="round"/>'},
     cloud:{over:'<path d="M58 59Q70 62 84 63M116 63Q130 62 143 59" fill="none" stroke="#c7d5ea" stroke-width="4.5" stroke-linecap="round"/>'}
   });
+  const editionArt=Object.freeze({
+    aviator:`<g fill="none" stroke="#523b53" stroke-width="3" stroke-linecap="round"><path d="m63 91-12-5m86 5 12-5M94 94q6-4 12 0"/></g>
+      <path d="M64 86q16-6 31 0l-4 15q-4 11-13 10-13-1-14-25Zm41 0q15-6 31 0-1 24-14 25-9 1-13-10Z" fill="#ffcf8f" fill-opacity=".64" stroke="#8b6034" stroke-width="3"/>
+      <path d="M66 90h26m16 0h26M88 82q12-7 24 0" stroke="#ffe8b3" stroke-width="2" fill="none" stroke-linecap="round"/>${glare(80,96)+glare(120,96)}`,
+    butterfly:`<path d="M53 84q20-8 40 2l4 9m50-11q-20-8-40 2l-4 9m-8-1q5-5 10 0" stroke="#513761" stroke-width="3.5" fill="none"/>
+      <path d="M56 83q20 3 39 5 1 20-13 23-17 4-26-28Zm88 0q-20 3-39 5-1 20 13 23 17 4 26-28Z" stroke="#513761" stroke-width="3.5" stroke-linejoin="round" fill="#bc8fdb" fill-opacity=".36"/>
+      <path class="avatar-color-shift" d="m60 86 11 4m68-4-11 4m-54 12 5-6m45 6 5-6" stroke="#d0fff2" stroke-width="2.8" stroke-linecap="round"/>`,
+    spectrum:`<path d="M52 86h13m70 0h13m-55 9q7-5 14 0" fill="none" stroke="#252345" stroke-width="4" stroke-linecap="round"/>
+      <path d="M64 83h28q5 0 5 5l-4 14q-3 8-12 8h-4q-12 0-14-10l-4-11q-1-6 5-6Zm72 0h-28q-5 0-5 5l4 14q3 8 12 8h4q12 0 14-10l4-11q1-6-5-6Z" fill="#281f4b" stroke="#252345" stroke-width="2.5"/>
+      <g class="avatar-color-shift" opacity=".82"><path d="M64 86h29l-3 15-8 5H77l-9-6Zm72 0h-29l3 15 8 5h5l9-6Z" fill="#aa7cf3"/><path d="M66 90h24l-2 7-17 6Zm68 0h-24l2 7 17 6Z" fill="#6ee5dc"/><path d="M69 91h17m28 0h17" stroke="#fff6e6" stroke-width="2" stroke-linecap="round"/></g>`,
+    bucket:`<path d="M54 51 66 17q34-18 68 0l12 34 11 11Q100 76 43 62Z" fill="#526a6a" stroke="#26384d" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M60 43q39 7 80 0l4 10q-44 8-88 0Z" fill="#ed9f6e"/><path d="M48 59q52 9 104 0M76 24q26-10 51 0" fill="none" stroke="#e1ebce" stroke-opacity=".75" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/>
+      <path d="m96 30 4 4 4-4m-8 6 4 4 4-4" fill="none" stroke="#fbe6aa" stroke-width="2" stroke-linecap="round"/>`,
+    jelly:`<g class="avatar-jelly-tentacles" fill="none" stroke-width="4" stroke-linecap="round"><path d="M63 40q-11 7-4 17t-5 10m67-27q-6 9 1 16t-3 9" stroke="#8764c5"/><path d="M79 44q-4 5 2 12t-2 12m24-24q4 8-1 13t0 10m35-27q10 7 3 17t3 7" stroke="#d77cb3"/></g>
+      <path class="avatar-color-shift" d="M49 38C51 11 70 3 99 3s47 13 52 35q-8 15-18 6-12 12-22 4-11 11-22 0-12 10-22-3-11 6-18-7Z" fill="#a88af0" stroke="#574590" stroke-width="3"/>
+      <path d="M63 28Q74 10 100 12" fill="none" stroke="#f8f0ff" stroke-opacity=".85" stroke-width="4" stroke-linecap="round"/>
+      <g fill="#392c65"><circle cx="88" cy="32" r="3"/><circle cx="112" cy="32" r="3"/></g><path d="M97 37q3 4 6 0" stroke="#392c65" fill="none" stroke-width="2" stroke-linecap="round"/>`,
+    astral:`<path d="M53 62Q55 28 100 28t47 34l-6 3q-7-28-41-28T59 65Z" fill="#574677" stroke="#291e46" stroke-width="2"/>
+      <path d="M78 34Q67 20 69 8m53 26q12-19 9-28" fill="none" stroke="#634683" stroke-width="4" stroke-linecap="round"/>
+      <g class="avatar-hat-bob avatar-color-shift"><polygon points="${star(68,5,13)}" fill="#ffa8da" stroke="#6f407d" stroke-width="2" stroke-linejoin="round"/><polygon points="${star(131,1,14)}" fill="#aeead6" stroke="#3b737d" stroke-width="2" stroke-linejoin="round"/></g><g fill="#fff1d9"><circle cx="97" cy="23" r="2"/><circle cx="111" cy="15" r="2.5"/></g>`,
+    headphones:`<path d="M59 148q6 30 42 30 34 0 42-30" fill="none" stroke="#262044" stroke-width="9" stroke-linecap="round"/>
+      <path d="M62 151q8 25 39 25 30 0 39-25" fill="none" stroke="#9481bd" stroke-width="3" stroke-linecap="round"/>
+      <g class="avatar-color-shift" fill="#7cd5bc" stroke="#373056" stroke-width="3"><rect x="61" y="142" width="20" height="29" rx="7" transform="rotate(-24 71 156)"/><rect x="119" y="142" width="20" height="29" rx="7" transform="rotate(24 129 156)"/></g>
+      <path d="m68 147 6 15m58-15-6 15" stroke="#e9ffef" fill="none" stroke-width="2.5" stroke-linecap="round"/>`,
+    sprout:`<path d="M133 149q17-8 35 0l-7 19q-12 7-21-2Z" fill="#eaa476" stroke="#653c3d" stroke-width="2.5"/>
+      <ellipse cx="151" cy="149" rx="17" ry="4" fill="#794843"/><path d="M151 148q2-14-1-27" stroke="#426f4b" stroke-width="3" fill="none"/>
+      <g class="avatar-sprout-sway" fill="#82c787" stroke="#386946" stroke-width="2"><path d="M150 134q-17-1-18-17 16-3 18 17Z"/><path d="M152 139q21-1 23-19-17-2-23 19Z" fill="#b6d77b"/></g><path d="M144 156h13" stroke="#ffedcf" stroke-width="2.5" stroke-linecap="round"/>`,
+    scarf:`<g class="avatar-scarf-tail"><path d="m113 150 18 4 15 28-12 7-18-23Z" fill="#6ecfc1" stroke="#324d65" stroke-width="2.5"/><path d="m129 167 11-4m-7 13 11-5m-10 12 10-5" stroke="#f7dda8" stroke-width="3"/></g>
+      <path d="M79 139q21 8 42 0l6 13q-28 14-54 0Z" fill="#7065ad" stroke="#383456" stroke-width="2.5"/>
+      <path class="avatar-color-shift" d="M76 148q24 11 48 0" fill="none" stroke="#ffd29d" stroke-width="4" stroke-linecap="round"/><circle cx="116" cy="154" r="5" fill="#ffedb4" stroke="#5a537f" stroke-width="2"/>`,
+    drone:`<path d="M130 119h-9m54 0h9m-37-18-4-7m23 7 4-7" stroke="#665288" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <rect class="avatar-color-shift" x="131" y="102" width="44" height="35" rx="14" fill="#86dccc" stroke="#43335f" stroke-width="3"/>
+      <rect x="139" y="109" width="28" height="19" rx="7" fill="#313054"/><g fill="#f9e28a"><circle cx="147" cy="118" r="2.4"/><circle cx="159" cy="118" r="2.4"/></g><path d="M148 140l-2 6m14-6 2 6" stroke="#ad83e4" stroke-width="3" stroke-linecap="round"/>`
+  });
+
   function accessory(kind,id){
-    const art=baseAccessory(kind,id),extra=art&&Object.hasOwn(polish,id)?polish[id]:null;
-    return extra?(extra.under||'')+art+(extra.over||''):art;
+    if(!allOptions[kind]?.some(option=>option.id===id))return '';
+    const art=editionArt[id]||baseAccessory(kind,id),extra=Object.hasOwn(polish,id)?polish[id]:null;
+    if(!art)return '';
+    const drawing=extra?(extra.under||'')+art+(extra.over||''):art;
+    const motion=kind==='glasses'?'lens':kind==='hat'?'hat':airborneProps.has(id)?'float':'prop';
+    const highlight=kind==='glasses'&&id!=='spectrum'?`<path class="avatar-lens-highlight" d="${id==='monocle'?'m110 93 7-5':'m72 93 9-5m31 5 9-5'}" fill="none" stroke="#fff4df" stroke-width="2" stroke-linecap="round" opacity=".38"/>`:'';
+    return `<g class="avatar-cosmetic-effect" data-motion="${motion}">${drawing}${highlight}</g>`;
   }
   // Safe framing measured from the original local SVG geometry; no runtime layout reads.
-  const previewBoxes=Object.freeze({"pumpkin-thinker":"40 -5 120 85","little-bat":"105 95 100 80","round":"40.6 68.6 118.8 54.8","square":"39.7 65.7 129.6 57.6","sun":"40.6 73.1 118.8 49.6","monocle":"91.1 69.1 71.8 100.8","heart":"40.6 69 118.8 55.4","star":"40.6 68.6 118.8 51.9","visor":"39.4 70.4 121.2 56.7","doughnut":"40.6 64.6 118.8 56.8","camera":"40.6 65.6 118.8 58.8","academy_mathspecs":"40.6 69.6 118.8 53.8","discovery_gameface":"39.4 71.6 121.2 53.7","days_sunday":"36.9 57.9 127.2 79.2","beanie":"34.6 -2.4 130.8 77.8","egg":"31.5 -1.1 139.2 77.7","cap":"39.9 -2 138.1 74.2","corn":"40.3 -9.7 122.4 83.8","toast":"56.8 -4.8 86.4 76","cloud":"35.3 1.5 134.4 92.2","coffee":"49.5 -6.5 107.5 81.9","wave":"34.4 -5.1 133.2 87.2","wizard":"32 -9 138 88.3","graduate":"22.3 -6.7 158.4 100.4","academy_calendar":"51.9 -8.1 96.8 84.1","academy_detective":"28.6 3.9 142.8 72.8","academy_rainbow":"20.9 -5.1 163.2 87.2","discovery_paperhat":"28.6 -5.4 142.8 84.8","discovery_crunch":"48.4 -14.2 121.1 87.3","days_daydreamer":"33.5 -3.3 133.3 69.9","cookie":"118.8 96.4 77.5 78.8","icepop":"127.4 89.9 71.3 100.3","peas":"117.9 84.6 78 107.1","bulb":"124.5 53.4 85.2 111.2","train":"118.5 71.5 75.4 114.4","owl":"126.9 99.4 61.7 73.4","pencil":"125.5 93.5 65.7 101.7","nacho":"122.4 95.6 72.4 78","rocket":"126.2 84.4 65.5 110.1","roll":"117.7 106.7 81.2 83.5","book":"124.3 92.3 70.4 98.4","academy_abacus":"119.3 95.5 78.9 92.2","academy_moon":"111.3 86.1 85.6 88.8","academy_pie":"120.7 102.4 79.2 82.6","academy_puzzle":"107.4 98.1 88 82.4","discovery_trailmix":"123.8 95.5 73.1 88.9","discovery_globe":"118.6 91.6 78.8 94.8","days_thyme":"125.3 93.5 64.8 91.6","days_smore":"117.9 92.6 84.3 94.6"});
+  const previewBoxes=Object.freeze({"headphones":"49 126 103 64","scarf":"61 118 91 79","sprout":"120 94 71 87","drone":"116 77 83 77","bucket":"38 -3 125 83","jelly":"35 -12 131 86","astral":"38 -21 124 89","pumpkin-thinker":"40 -5 120 85","little-bat":"105 95 100 80","round":"40.6 68.6 118.8 54.8","square":"39.7 65.7 129.6 57.6","sun":"40.6 73.1 118.8 49.6","monocle":"91.1 69.1 71.8 100.8","heart":"40.6 69 118.8 55.4","star":"40.6 68.6 118.8 51.9","visor":"39.4 70.4 121.2 56.7","doughnut":"40.6 64.6 118.8 56.8","camera":"40.6 65.6 118.8 58.8","academy_mathspecs":"40.6 69.6 118.8 53.8","discovery_gameface":"39.4 71.6 121.2 53.7","days_sunday":"36.9 57.9 127.2 79.2","beanie":"34.6 -2.4 130.8 77.8","egg":"31.5 -1.1 139.2 77.7","cap":"39.9 -2 138.1 74.2","corn":"40.3 -9.7 122.4 83.8","toast":"56.8 -4.8 86.4 76","cloud":"35.3 1.5 134.4 92.2","coffee":"49.5 -6.5 107.5 81.9","wave":"34.4 -5.1 133.2 87.2","wizard":"32 -9 138 88.3","graduate":"22.3 -6.7 158.4 100.4","academy_calendar":"51.9 -8.1 96.8 84.1","academy_detective":"28.6 3.9 142.8 72.8","academy_rainbow":"20.9 -5.1 163.2 87.2","discovery_paperhat":"28.6 -5.4 142.8 84.8","discovery_crunch":"48.4 -14.2 121.1 87.3","days_daydreamer":"33.5 -3.3 133.3 69.9","cookie":"118.8 96.4 77.5 78.8","icepop":"127.4 89.9 71.3 100.3","peas":"117.9 84.6 78 107.1","bulb":"124.5 53.4 85.2 111.2","train":"118.5 71.5 75.4 114.4","owl":"126.9 99.4 61.7 73.4","pencil":"125.5 93.5 65.7 101.7","nacho":"122.4 95.6 72.4 78","rocket":"126.2 84.4 65.5 110.1","roll":"117.7 106.7 81.2 83.5","book":"124.3 92.3 70.4 98.4","academy_abacus":"119.3 95.5 78.9 92.2","academy_moon":"111.3 86.1 85.6 88.8","academy_pie":"120.7 102.4 79.2 82.6","academy_puzzle":"107.4 98.1 88 82.4","discovery_trailmix":"123.8 95.5 73.1 88.9","discovery_globe":"118.6 91.6 78.8 94.8","days_thyme":"125.3 93.5 64.8 91.6","days_smore":"117.9 92.6 84.3 94.6"});
   // Catalogue previews isolate the chosen object; equipped portraits keep the full character.
   function preview(kind,id,draft={}){
     if(!['glasses','hat','prop'].includes(kind))return '';
@@ -579,17 +725,69 @@ window.BrainiAvatarDesign=(function(){
     if(!item)return '';
     if(id==='none')return markup({...draft,mode:'built',glasses:'none',hat:'none',prop:'none'},0);
     const box=previewBoxes[id]||(kind==='glasses'?'40 64 120 104':kind==='hat'?'26 -8 150 100':'112 66 86 124');
-    let drawing=accessory(kind,id);
-    if(id==='icepop')drawing=drawing.slice(0,drawing.lastIndexOf('</g>')+4);
+    const drawing=accessory(kind,id);
     const label=item.name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="120" height="120" role="img" aria-label="${label}" class="braini-cosmetic-preview" data-cosmetic-kind="${kind}" data-cosmetic-id="${id}">${drawing}</svg>`;
   }
+  const darkSkin=new Set(['umber','ebony','walnut','espresso']);
+  const airborneProps=new Set(['bulb','rocket','academy_moon','little-bat','drone']);
+  const wornProps=new Set(['scarf','headphones','sprout']);
+  function integratedProp(id,skin){
+    if(id==='none'||!allOptions.prop.some(item=>item.id===id))return '';
+    if(wornProps.has(id))return `<g class="avatar-worn-prop" data-cosmetic-id="${id}">${accessory('prop',id)}</g>`;
+    const airborne=airborneProps.has(id),perched=id==='owl'||id==='book'||id==='days_thyme';
+    const hand=airborne||perched?'':`<path d="M111 194q4-18 18-27l9-5q7-4 10 2t-4 11l-11 7-6 12Z" fill="${skin}" stroke="#452b32" stroke-opacity=".18" stroke-width="1.6"/>`;
+    const grip=hand?`<path d="M139 174q-5-6-2-11 3-3 8 2l4 7q1 5-5 6Z" fill="${skin}" stroke="#5b352d" stroke-opacity=".23" stroke-width="1.5"/>`:'';
+    return `<g class="avatar-integrated-prop">${hand}<svg x="${airborne?128:116}" y="${airborne?91:113}" width="68" height="69" data-cosmetic-id="${id}" viewBox="${previewBoxes[id]||'112 66 86 124'}" overflow="visible">${accessory('prop',id)}</svg>${grip}</g>`;
+  }
+  function swatch(kind,id){
+    const item=options[kind].find(choice=>choice.id===id);
+    return item.accent?`linear-gradient(135deg,${item.color} 50%,${item.accent} 50%)`:item.color;
+  }
+  function shirtAccent(id){
+    const accent=options.shirt.find(item=>item.id===id)?.accent;
+    return accent?`<path d="M50 161q13-9 27-10l23 24-19-5-22 32H29q3-25 21-41Zm91 13 12-10q13 11 18 38h-14Z" fill="${accent}"/>`:'';
+  }
+  const hairStreaks={
+    sweep:'M69 59q25-24 59-11',curls:'M66 55q11-10 21-5m5-9q13-9 21 1m11 4q10 2 16 13',
+    bob:'M64 65q10-23 28-25m15 2q15 5 26 21',crop:'M66 60q17-17 36-14m8 0q15 1 23 12',
+    ponytail:'M67 62q13-20 31-20m18 4q11 4 19 15',waves:'M63 62q12-18 32-22m11 2q15 5 27 18',
+    braids:'M65 64q16-24 37-23m11 1q14 6 22 18',pixie:'M67 57q20-21 50-19l-13 12',
+    locs:'M65 60q11-12 21-12m12-7q10 0 17 6m9 3q11 4 15 14',buns:'M61 41q0-7 10-9m61 0q7 2 8 9m-69 18q24-15 56 0',
+    undercut:'M74 55q17-17 45-18l-6 12',fro:'M66 47q8-14 18-12m11-8q11-7 21-1m10 5q12 3 15 15',
+    quiff:'M65 51q28-24 61-21m-17 7q14-4 26-1',pigtails:'M50 56q-7 7-8 19m117-19q7 5 9 19M71 58q10-15 27-16',
+    mohawk:'M84 52q3-14 9-23m14 17 10-22',antenna:'M71 61q19-12 33-46m5 23 11-10'
+  };
+  function hairAccent(id,colorId){
+    const accent=options.hairColor.find(item=>item.id===colorId)?.accent,streak=hairStreaks[id];
+    return accent&&streak?`<path d="${streak}" fill="none" stroke="${accent}" stroke-width="5.5" stroke-linecap="round"/>`:'';
+  }
+  function newHair(id,fill){
+    // Each haircut shares both its silhouette and colour accents with the compact portrait.
+    const ink='#241c32',line=`fill="${fill}" stroke="${ink}" stroke-opacity=".18" stroke-width="2" stroke-linejoin="round"`;
+    const loc=(x,y,bend)=>`<path d="M${x} ${y}q${bend} 25 0 51" fill="none" stroke="${fill}" stroke-width="11" stroke-linecap="round"/>`;
+    const part=`<path d="M55 89q-3-48 45-50 44-1 46 50-14-25-34-30l-13 9-13-10Q64 67 55 89Z" ${line}/>`;
+    switch(id){
+      case 'pixie':return {front:`<path d="M55 90q-6-28 9-43l-6 2q20-23 51-18l23-5-10 10q29 1 25 48l-15-14-8 5-6-17-30 15 7-13-26 12Z" ${line}/>`};
+      case 'locs':return {back:`<path d="M52 74q3-36 48-37 42 0 48 36v69q-19 10-42-3H77l-28 3Z" ${line}/>${loc(55,102,-8)}${loc(146,103,8)}`,front:`${part}${loc(61,58,-13)}${loc(74,49,-10)}${loc(143,59,10)}<path d="M56 103v8m90 1v8" stroke="#ffd482" stroke-width="5"/>`};
+      case 'buns':return {back:`<g ${line}><circle cx="61" cy="40" r="18"/><circle cx="139" cy="40" r="18"/><path d="M46 45q6-14 18-14m91 13q-5-14-19-13" fill="none" stroke="#fff" stroke-opacity=".26"/></g>`,front:part};
+      case 'undercut':return {front:`<path d="M55 89V67q0-24 32-31 37-9 58 16l-2 36-15-20-2-11Q94 75 70 69l-8 23Z" ${line}/><path d="m57 75 14-9m-13 15 9-4" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="2" stroke-linecap="round"/>`};
+      case 'fro':return {back:`<path d="M43 97Q26 75 43 58q-7-18 14-30 8-17 28-12 13-13 30 0 24-7 33 13 21 7 14 30 21 13-1 39l-15 20H52Z" ${line}/>`,front:`<path d="M52 87q-6-25 14-35-2-13 15-16 10-13 24-7 15-4 24 7 15 5 19 24l-4 29-13-20-17 1-11-12-15 8-18-1Z" ${line}/><path d="M66 44q5-7 12-1m12-11q7-6 14 0m18 5q10 0 12 8" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="3.5" stroke-linecap="round"/>`};
+      case 'quiff':return {front:`<path d="M55 86Q50 49 72 39Q94 20 119 26q15 2 24-8-1 15-10 22l15-4q-4 18-14 23l6 30-13-20q-39 11-56-3Z" ${line}/>`};
+      case 'pigtails':return {back:`<path d="M59 55q-25-19-28 18-3 32 16 60l16-27-9-16Zm83 0q24-19 29 18 4 32-15 60l-17-27 8-16Z" ${line}/><path d="m36 57 17 7m94 0 17-7" stroke="#ffc77d" stroke-width="5.5" stroke-linecap="round"/>`,front:part};
+      case 'mohawk':return {front:`<path d="M56 88V76q3-15 20-26l5-25 8 12 11-20 3 19 15-17 3 20 11-9 4 19q12 12 8 38l-12-18-19 3-16-6-15 7-12-1Z" ${line}/><path d="m56 78 11-5m-9 11 7-3m73-9 6 6" fill="none" stroke="#fff" stroke-opacity=".37" stroke-width="2" stroke-linecap="round"/>`};
+      case 'antenna':return {front:`<path d="M57 92q-14-27 10-40l9-12 5 7q15-16 17-35 11 8 8 25l20-14-5 18q23 3 27 21l-6 28-13-20q-11 7-19-7l-11 9-14-4-15 8Z" ${line}/><path d="M52 53q-12-7-11-15m105 5q10-8 7-15" fill="none" stroke="${fill}" stroke-width="4" stroke-linecap="round"/>`};
+      default:return {};
+    }
+  }
+
   function markup(value,xp=0,entitlements=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]){
     const v=available(value,xp,entitlements),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt);
-    const dark=v.skin==='umber'||v.skin==='ebony',mouth=dark?'#efbdab':'#673d3c',nose=dark?'#f4d0b0':'#302c46';
+    const dark=darkSkin.has(v.skin),mouth=dark?'#efbdab':'#673d3c',nose=dark?'#f4d0b0':'#302c46';
+    const haircut=newHair(v.hair,hair);
     const back={bob:`<path d="M53 87Q46 39 101 38Q154 36 148 98L150 139Q99 158 49 138Z" fill="${hair}"/>`,
       ponytail:`<ellipse cx="145" cy="108" rx="22" ry="42" fill="${hair}"/><path d="M131 75Q144 65 157 77" fill="none" stroke="#e9bd5e" stroke-opacity="1" stroke-width="5"/>`,
-      waves:`<path d="M52 81Q46 36 101 35Q155 35 148 84Q167 105 152 122Q171 144 151 159Q142 173 126 159H75Q57 175 44 157Q29 143 47 121Q31 101 52 81Z" fill="${hair}"/>`}[v.hair]||'';
+      waves:`<path d="M52 81Q46 36 101 35Q155 35 148 84Q167 105 152 122Q171 144 151 159Q142 173 126 159H75Q57 175 44 157Q29 143 47 121Q31 101 52 81Z" fill="${hair}"/>`}[v.hair]||haircut.back||'';
     const hairFront={
       sweep:`<path d="M58 91Q45 36 104 36Q150 35 143 86L131 71Q97 84 77 62Q67 78 58 91Z" fill="${hair}"/>`,
       curls:`<g fill="${hair}"><circle cx="68" cy="64" r="18"/><circle cx="82" cy="48" r="18"/><circle cx="105" cy="46" r="19"/><circle cx="126" cy="53" r="18"/><circle cx="139" cy="69" r="15"/></g>`,
@@ -598,20 +796,20 @@ window.BrainiAvatarDesign=(function(){
       ponytail:`<path d="M57 88Q47 38 101 36Q150 37 143 87L132 71Q104 80 81 62Q71 79 57 88Z" fill="${hair}"/>`,
       waves:`<path d="M54 89Q49 37 101 35Q152 37 147 88Q133 93 131 70Q112 82 92 61Q80 83 65 79L62 115Q48 111 54 89Z" fill="${hair}"/>`,
       braids:`<path d="M57 86Q49 37 100 36Q152 37 143 86L131 69Q100 78 76 65L66 84Z" fill="${hair}"/><g fill="${hair}"><path d="M57 78Q44 89 52 99Q42 108 51 118Q42 130 50 139Q44 149 55 154Q68 149 61 138Q70 127 61 117Q70 107 61 98Q70 87 57 78Z"/><path d="M57 78Q44 89 52 99Q42 108 51 118Q42 130 50 139Q44 149 55 154Q68 149 61 138Q70 127 61 117Q70 107 61 98Q70 87 57 78Z" transform="translate(200 0) scale(-1 1)"/></g><path d="M50 147H61M139 147H150" stroke="#e9bd5e" stroke-opacity="1" stroke-width="4" stroke-linecap="round"/>`
-    }[v.hair];
+    }[v.hair]??haircut.front??'';
     // Finish layers: soft light and shade drawn with opacity only (no gradient IDs), so
     // every portrait stays deterministic and the accessory geometry above is unchanged.
     const line='stroke="#241c2e" stroke-opacity=".16" stroke-width="1.6" stroke-linejoin="round"';
     const shine={sweep:'M84 47Q104 40 124 46',bob:'M80 48Q100 42 122 48',crop:'M80 47Q100 42 121 47',ponytail:'M82 46Q102 40 124 46',waves:'M80 45Q101 39 124 45',braids:'M80 46Q100 41 122 46',curls:'M61 59Q64 52 71 51M98 40Q104 36 111 40M121 47Q127 44 132 49'}[v.hair];
-    const hairShine=v.hair==='bald'?'<ellipse cx="86" cy="58" rx="11" ry="5" fill="#fff" opacity=".22" transform="rotate(-14 86 58)"/>':`<path d="${shine}" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="${v.hair==='curls'?3:4.5}" stroke-linecap="round"/>`;
+    const hairShine=!shine&&v.hair!=='bald'?'':v.hair==='bald'?'<ellipse cx="86" cy="58" rx="11" ry="5" fill="#fff" opacity=".22" transform="rotate(-14 86 58)"/>':`<path d="${shine}" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="${v.hair==='curls'?3:4.5}" stroke-linecap="round"/>`;
     const finish={
       shirt:'<path d="M29 201Q30 166 54 156Q43 178 45 201Z M171 201Q170 166 146 156Q157 178 155 201Z" fill="#000" opacity=".13"/><path d="M70 153Q100 181 130 153" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="6" stroke-linecap="round"/><path d="M57 172Q64 162 75 159" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="4" stroke-linecap="round"/>',
       face:`<path d="M141 88V108Q139 141 100 147Q127 137 132 109Q135 96 141 88Z" fill="#5a2e1e" opacity=".1"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z" fill="none" ${line}/><path d="M57 95Q53 101 57 107M143 95Q147 101 143 107" fill="none" stroke="#5a2e1e" stroke-opacity=".24" stroke-width="2" stroke-linecap="round"/>`,
       eyes:'<path d="M75.4 92.4Q81 88.6 86.6 92.4M113.4 92.4Q119 88.6 124.6 92.4" fill="none" stroke="#302c46" stroke-width="1.7" stroke-linecap="round"/><g fill="#fff"><circle cx="82.6" cy="94.6" r="1.5"/><circle cx="120.6" cy="94.6" r="1.5"/></g>'
     };
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><g style="clip-path:circle(50%)">${backdrop(v.background)}</g><g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><g style="clip-path:circle(50%)">${backdrop(v.background)}</g><g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${shirtAccent(v.shirt)}${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}${hairAccent(v.hair,v.hairColor)}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${integratedProp(v.prop,skin)}</svg>`;
   }
-  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory,backdrop});
+  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory,backdrop,newHair,hairAccent,shirtAccent,integratedProp,darkSkin:id=>darkSkin.has(id),swatch});
 })();
 
 /* ===== avatar-studio-art.js ===== */
@@ -619,7 +817,7 @@ window.BrainiAvatarDesign=(function(){
 /* Shared character portrait for the studio and saved avatar surfaces. */
 window.BrainiAvatarStudioArt=(()=>{
   const A=BrainiAvatarDesign;
-  const sceneVersions={library:'bc2e29e50a79',lab:'c24336b91bc0',stars:'9236b09fa514'};
+  const sceneVersions={library:'bc2e29e50a79',lab:'c24336b91bc0',stars:'9236b09fa514',greenhouse:'ab8cc622242b',tidepool:'8e5f8804c652',arcade:'eb6e9dc004cb'};
   function sceneSource(scene){
     return typeof scene==='string'&&Object.hasOwn(sceneVersions,scene)?
       '/assets/profile-scenes/'+scene+'-avatar.webp?v='+sceneVersions[scene]:'';
@@ -640,19 +838,18 @@ window.BrainiAvatarStudioArt=(()=>{
     `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${stroke}" stroke-width="${width}" ${attrs}/>`;
   const glide=(r,stroke,width,dash,kind='')=>
     `<g class="avatar-frame-spin ${kind}">${ring(r,stroke,width,`pathLength="100" stroke-dasharray="${dash}" stroke-linecap="round" transform="rotate(-132 100 100)"`)}</g>`;
+  const frameMotif=(name,positions,art)=>`<g class="avatar-frame-spin avatar-frame-motifs avatar-frame-${name}">${positions.map(a=>`<g transform="rotate(${a} 100 100)">${art}</g>`).join('')}</g>`;
   const frameEffects=Object.freeze({
-    level:glide(108,'#fff0a2',1.6,'9 91','avatar-frame-glint'),
-    blue:glide(104,'#e7fbff',3.8,'15 85','avatar-frame-tide')+
-      glide(110,'#a9dfff',1.2,'5 95','avatar-frame-reverse'),
-    green:'<g class="avatar-frame-canopy" fill="#dbfa91"><ellipse cx="22" cy="44" rx="8" ry="3.5" transform="rotate(-45 22 44)"/><ellipse cx="184" cy="160" rx="8" ry="3.5" transform="rotate(-45 184 160)"/><circle cx="166" cy="183" r="2.6"/></g>'+
-      glide(105,'#c9f78d',2.4,'12 88','avatar-frame-tide'),
-    copper:glide(113,'#ffc494',2.6,'1 2 1 4 1 91','avatar-frame-etch')+
-      glide(104,'#ffe0bb',2.1,'9 91','avatar-frame-glint'),
-    gold:glide(105,'#fff9cb',4,'9 91','avatar-frame-glint')+
-      '<g class="avatar-frame-starlight" fill="#fff8d4"><path d="m16 55 1.6 4.4 4.4 1.6-4.4 1.6L16 67l-1.6-4.4L10 61l4.4-1.6Z"/><circle cx="185" cy="36" r="2.8"/><circle cx="180" cy="160" r="2.3"/></g>',
+    level:frameMotif('progress',[12,27,42],'<rect x="97.5" y="-13" width="5" height="6" rx="2" fill="#fff0a2" stroke="#54456b" stroke-width="1.2"/>'),
+    blue:glide(104,'#e7fbff',2.2,'15 85','avatar-frame-tide')+
+      frameMotif('bubbles',[3,126,244],'<g class="avatar-frame-bubbles"><circle cx="100" cy="-10" r="5" fill="#c0f0ff" stroke="#376fb0" stroke-width="1.4"/><circle cx="102" cy="-12" r="1.8" fill="#fff"/><circle cx="110" cy="-12" r="2" fill="#dcf6ff"/></g>'),
+    green:frameMotif('leaves',[12,125,248],'<g class="avatar-frame-leaf"><path d="M88-5q6-13 18-12-1 13-18 12Zm9-4q14-8 21-2-6 9-21 2Z" fill="#a1e467" stroke="#487a43" stroke-width="1.6"/><path d="m92-7 10-7m-2 6 13-3" stroke="#e9ffb7" stroke-width="1.3" stroke-linecap="round"/></g>'),
+    copper:frameMotif('gears',[16,112,209,302],'<g class="avatar-frame-cog" transform="translate(100 -10)"><path d="M-3-8h6l1 3 3 1 2 5-3 2-1 4-5 2-2-3-4-1-2-5 3-2Z" fill="#f5b688" stroke="#754530" stroke-width="1.4"/><circle r="2.4" fill="#754530"/></g>')+
+      glide(113,'#ffc494',2,'3 10 4 16 9 58','avatar-frame-reverse'),
+    gold:frameMotif('comets',[15,133,245],'<g class="avatar-frame-spark"><path d="m100-19 2.7 6 6 2.7-6 2.7-2.7 6-2.7-6-6-2.7 6-2.7Z" fill="#fff2af" stroke="#b47c3a" stroke-width="1.4"/><circle cx="112" cy="-10" r="2.5" fill="#ffdd71"/><circle cx="119" cy="-8" r="1.6" fill="#fff3c6"/></g>'),
     orbit:glide(109,'#b7abff',2.4,'15 20 9 56','avatar-frame-reverse')+
       '<g class="avatar-frame-spin avatar-orbit"><path d="M68-8a113 113 0 0 1 32-5M-10 125a113 113 0 0 0 12 31M210 124a113 113 0 0 1-12 32" fill="none" stroke="#9d8ffa" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="-13" r="7" fill="#ffd813" stroke="#2d296e" stroke-width="2"/><circle cx="98" cy="-15" r="2.1" fill="#fff7c8"/><circle cx="2" cy="156" r="5.5" fill="#f09b65" stroke="#2d296e" stroke-width="2"/><circle cx="198" cy="156" r="5" fill="#76d68a" stroke="#2d296e" stroke-width="2"/></g>',
-    midnight:glide(110,'#ffd089',2,'7 93','avatar-frame-glint'),
+    midnight:frameMotif('bats',[20,190],'<path d="M89-10q6-4 10 1l1-5 2 4q5-3 11-1l-5 7-5-2-3 4-3-4-4 1Z" fill="#d6b8fb" stroke="#5c467c" stroke-width="1.6" stroke-linejoin="round"/>'),
     prism:ring(104,'#2e2459',14)+
       `<g class="avatar-frame-spectrum">${spectrum.map((color,i)=>ring(104,color,10,`pathLength="12" stroke-dasharray="1.06 10.94" stroke-dashoffset="${-i}"`)).join('')}</g>`+
       ring(98,'#fff7ff',1.4,'opacity=".9"')+
@@ -672,7 +869,7 @@ window.BrainiAvatarStudioArt=(()=>{
     const complete=completeFrames.includes(frame)?' data-complete-frame':'';
     return `<svg class="avatar-frame-overlay"${complete} viewBox="0 0 240 240" aria-hidden="true" focusable="false"><g transform="translate(20 20)">${frameEffects[frame]}</g></svg>`;
   }
-  function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false,scene,transparentBackdrop=false}){
+  function markup(look,{instance,level=1,levelPct=0,cropHair=false,scene,transparentBackdrop=false}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
     const sceneUrl=cropHair||transparentBackdrop?'':sceneSource(scene);
     const backHair={waves:'longBack',bob:'bobBack',braids:'braids',ponytail:'pony',curls:'curlsBack'}[look.hair];
@@ -693,10 +890,9 @@ window.BrainiAvatarStudioArt=(()=>{
       [backHair]:hairArt[backHair],
       [frontHair]:hairArt[frontHair]
     };
-    const sticker='translate(170 170) scale('+stickerScale+') translate(-170 -170)';
+    const newHair=A.newHair(look.hair,palette.hairColor);
     const frame=look.frame==='midnight'?'level':look.frame;
-    const prop=look.prop==='none'?'':A.preview('prop',look.prop);
-    const viewBox=cropHair?'46 42 148 148':'0 0 240 240';
+    const viewBox=cropHair?'37 27 166 166':'0 0 240 240';
   const frames={
     level: `<circle cx="100" cy="100" r="104" fill="none" stroke="#29244e" stroke-width="10"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="#FFD813" stroke-width="10" stroke-linecap="round" pathLength="1000" stroke-dasharray="${arc}" transform="rotate(-90 100 100)"></circle><circle cx="100" cy="206" r="15" fill="#FFD813" stroke="#2D296E" stroke-width="3.5"></circle><text x="100" y="211.5" text-anchor="middle" font-size="15" font-weight="700" fill="#2D296E">${level}</text>`,
     blue: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-sky)" stroke-width="10"></circle><circle cx="100" cy="100" r="99" fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".8"></circle><g fill="#FFFFFF" stroke="#2F7FE0" stroke-width="2"><path d="M14 52 a9 9 0 0 1 17 -2 a7 7 0 0 1 4 13 h-19 a6 6 0 0 1 -2 -11 z"></path><path d="M172 150 a8 8 0 0 1 15 -2 a6 6 0 0 1 3 11 h-17 a5 5 0 0 1 -1 -9 z"></path></g>`,
@@ -718,6 +914,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${transparentBackdrop?'':A.backdrop(look.background)}
     ${sceneUrl?`<image class="avatar-scene-art" href="${sceneUrl}" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>`:''}
 
+    ${newHair.back||''}
     ${hair.longBack||''}
     ${hair.bobBack||''}
     ${hair.braids||''}
@@ -725,6 +922,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.curlsBack||''}
 
     <path d="M28 206 C30 166 60 148 100 148 C140 148 170 166 172 206 Z" fill="${palette.shirt}"></path>
+    ${A.shirtAccent(look.shirt)}
     <path d="M100 148 C88 148 78 150 70 154 L100 182 L130 154 C122 150 112 148 100 148 Z" fill="#000000" opacity=".16"></path>
     <rect x="87" y="118" width="26" height="42" rx="12" fill="${palette.skin}"></rect>
     <path d="M87 128 L113 128 L113 138 Q100 148 87 138 Z" fill="#000000" opacity=".12"></path>
@@ -738,7 +936,7 @@ window.BrainiAvatarStudioArt=(()=>{
     <circle cx="142" cy="98" r="10" fill="${palette.skin}"></circle>
     <circle cx="58" cy="98" r="4.5" fill="#000000" opacity=".1"></circle>
     <circle cx="142" cy="98" r="4.5" fill="#000000" opacity=".1"></circle>
-    <ellipse cx="100" cy="92" rx="42" ry="46" fill="${palette.skin}"></ellipse>
+    <ellipse cx="100" cy="92" rx="42" ry="46" fill="${palette.skin}" stroke="${A.darkSkin(look.skin)?'#e7ad92':'#613f41'}" stroke-opacity="${A.darkSkin(look.skin)?'.36':'.13'}" stroke-width="1.6" paint-order="stroke fill"></ellipse>
     <path d="M62 104 C66 126 82 138 100 138 C118 138 134 126 138 104 C132 122 118 132 100 132 C82 132 68 122 62 104 Z" fill="#000000" opacity=".07"></path>
     <path d="M76 84 Q84 79 92 83" stroke="${palette.hairColor}" stroke-width="3.5" fill="none" stroke-linecap="round"></path>
     <path d="M108 83 Q116 79 124 84" stroke="${palette.hairColor}" stroke-width="3.5" fill="none" stroke-linecap="round"></path>
@@ -749,23 +947,20 @@ window.BrainiAvatarStudioArt=(()=>{
     <ellipse cx="73" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <ellipse cx="127" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <path d="M100 100 Q96 108 101 110" stroke="#000000" stroke-opacity=".22" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
-    <path d="M89 117 Q100 127 111 117" stroke="${['umber','ebony'].includes(look.skin)?'#f2c5ad':'#392533'}" stroke-width="3" fill="none" stroke-linecap="round"></path>
+    <path d="M89 117 Q100 127 111 117" stroke="${A.darkSkin(look.skin)?'#f2c5ad':'#392533'}" stroke-width="3" fill="none" stroke-linecap="round"></path>
 
     ${hair.sweep||''}
     ${hair.crop||''}
     ${hair.part||''}
     ${hair.curls||''}
     ${hair.none||''}
+    ${newHair.front||''}
+    ${!look.hat||look.hat==='none'?A.hairAccent(look.hair,look.hairColor):''}
     ${A.accessory('glasses',look.glasses)}
+    ${A.integratedProp(look.prop,palette.skin)}
     </g>
     ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')+(frameEffects[look.frame]||'')}
     <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
-    ${look.prop==='none'?'':`<g transform="${sticker}">
-      <circle cx="171" cy="174" r="24" fill="#181729" opacity=".2"></circle>
-      <circle cx="170" cy="170" r="24" fill="#2d296e"></circle>
-      <circle cx="170" cy="170" r="21.5" fill="#fffaf1" stroke="#e0c082" stroke-width="1.5"></circle>
-      ${prop.replace('width="120" height="120"','x="149" y="149" width="42" height="42"')}
-    </g>`}
     </g>
     </svg>`;
   }
@@ -790,16 +985,24 @@ window.BrainiRewardCatalog=(function(){
   const titles=Object.freeze([
     {id:'none',name:'No title',xp:0},
     {id:'explorer',name:'Explorer',xp:250},
+    {id:'trail',name:'Trailblazer',xp:425},
     {id:'curious',name:'Curious Mind',xp:750},
+    {id:'sparks',name:'Idea Collector',xp:1350},
     {id:'detective',name:'Puzzle Detective',xp:2000},
+    {id:'maker',name:'Pattern Maker',xp:3250},
     {id:'thinker',name:'Deep Thinker',xp:4500},
+    {id:'afterdark',name:'Midnight Mind',xp:5600},
+    {id:'polymath',name:'Curious Polymath',xp:7800},
     {id:'sage',name:'BrainiLab Sage',xp:10000}
   ].map(Object.freeze));
   const scenes=Object.freeze([
     {id:'none',name:'Plain & simple',xp:0,description:'Your usual clean profile.'},
     {id:'library',name:'Booked in',xp:1500,description:'A quiet library corner for a curious mind.'},
     {id:'lab',name:'In your element',xp:3500,description:'A little laboratory for your bright ideas.'},
-    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'}
+    {id:'stars',name:'Night thinker',xp:6000,description:'A calm sky full of possibilities.'},
+    {id:'greenhouse',name:'A Growing Mind',xp:2200,description:'A greenhouse for curious minds and budding botanists.'},
+    {id:'tidepool',name:'Tide and Seek',xp:4700,description:'A tide pool for spotting the small details in marine life.'},
+    {id:'arcade',name:'Bonus Round',xp:6750,description:'A retro arcade for one more round of your favourite game.'}
   ].map(Object.freeze));
   const eventFrame=Object.freeze({id:'midnight',name:'Midnight',xp:0,event:'halloween-2026',description:'A quiet midnight frame, with a little Halloween sparkle.',requirement:'Complete both Halloween games'});
   const groups=Object.freeze({frame:Object.freeze([...frames,eventFrame]),title:titles,...Object.fromEntries(Object.entries(BrainiAvatarDesign.options).map(([key,list])=>[key,Object.freeze([...list,...(BrainiAvatarDesign.eventOptions[key]||[])])])),scene:scenes});
@@ -3971,7 +4174,7 @@ window.BrainiProgressUI=(function(){
         const framed=frame!=='level'&&Number.isFinite(cost)&&renderXp>=cost;
         // Each image owns its SVG definitions, so rows can repeat the same look.
         // The existing level/seasonal halo stays outside the illustration.
-        const drawing=art.markup({...design,frame:framed?frame:null},{instance:'thumbnail',stickerScale:1.45});
+        const drawing=art.markup({...design,frame:framed?frame:null},{instance:'thumbnail'});
         return `<img class="braini-avatar-thumbnail${framed?' braini-avatar-thumbnail--framed':''}" src="data:image/svg+xml,${encodeURIComponent(drawing)}" width="48" height="48" alt="">`;
       }
       return BrainiAvatarDesign.markup(person.avatarDesign,renderXp,entitlements).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
@@ -4020,6 +4223,11 @@ window.BrainiProgressUI=(function(){
     curious:'<path d="M4 11.5h15m-7.5-7.5v15M6 6l11 11M17 6 6 17"/>',
     detective:'<circle cx="10" cy="10" r="5.5"/><path d="m14 14 5 5M8 10l2 2 2-3"/>',
     thinker:'<path d="M3 6c4-1 6 0 8.5 2 2.5-2 4.5-3 8.5-2v11c-4-1-6 0-8.5 2C9 17 7 16 3 17V6Zm8.5 2v11"/>',
+    trail:'<path d="M4 17 9 7l4 6 2-3 4 7ZM9 7V4l6 1-6 3"/>',
+    sparks:'<path d="m12 3 2 7 6 2-6 2-2 6-2-6-7-2 7-2ZM19 4v5m-2.5-2.5h5"/>',
+    maker:'<path d="m11.5 3 4 4-4 4-4-4Zm-5 5 4 4-4 4-4-4Zm10 0 4 4-4 4-4-4Zm-5 5 4 4-4 4-4-4Z"/>',
+    afterdark:'<path d="M16 5a8 8 0 1 0 3 13A8 8 0 0 1 16 5ZM19 4v5m-2.5-2.5h5"/>',
+    polymath:'<path d="M11.5 3 20 8v7l-8.5 5L3 15V8ZM3 8l8.5 5L20 8M11.5 13v7"/>',
     sage:'<path d="m11.5 3 2.4 5.5 6 .5-4.5 4 1.4 6-5.3-3.2-5.3 3.2 1.4-6-4.5-4 6-.5 2.4-5.5Z"/>'
   };
   function profileTitleArt(id,{symbolOnly=false,announce=false}={}){
