@@ -13,6 +13,7 @@
   gap: clamp(1rem, 2.4vw, 1.85rem);
 }
 .avatar-studio-sidebar, .avatar-studio-redesign .avatar-studio-controls { min-width: 0; }
+body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 .avatar-studio-redesign .avatar-studio-stage {
   position: relative;
   inset: auto;
@@ -196,8 +197,6 @@
   .avatar-frame-spin { transform-box: view-box; transform-origin: 100px 100px; }
   .avatar-frame-reverse { --frame-duration: 24s; --frame-direction: reverse; }
   .avatar-frame-tide { --frame-duration: 14s; }
-  .avatar-frame-etch { --frame-duration: 26s; }
-  .avatar-frame-glint { --frame-duration: 12s; }
   .avatar-orbit { --frame-duration: 18s; }
   .avatar-frame-prism { --frame-duration: 16s; }
   .avatar-frame-aurora { --frame-duration: 21s; }
@@ -211,16 +210,54 @@
   .avatar-studio-redesign .avatar-studio-portrait .avatar-frame-aurora circle {
     animation: avatar-frame-aurora-light 9s ease-in-out infinite alternate;
   }
-  .avatar-studio-redesign .avatar-studio-portrait :is(.avatar-frame-canopy,.avatar-frame-starlight) {
-    animation: avatar-frame-breathe 6s ease-in-out infinite alternate;
+  .avatar-frame-progress { --frame-duration: 22s; }
+  .avatar-frame-bubbles { --frame-duration: 24s; }
+  .avatar-frame-leaves { --frame-duration: 28s; --frame-direction: reverse; }
+  .avatar-frame-gears { --frame-duration: 31s; }
+  .avatar-frame-comets { --frame-duration: 20s; }
+  .avatar-frame-bats { --frame-duration: 26s; --frame-direction: reverse; }
+
+  .avatar-studio-redesign .avatar-studio-portrait :is(.avatar-frame-leaf,.avatar-frame-spark,.avatar-frame-bubbles > g > g) {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: avatar-motif-breathe 4s ease-in-out infinite alternate;
   }
-  .avatar-studio-redesign[data-frame-motion-paused] :is(.avatar-frame-spin,.avatar-frame-spectrum,.avatar-frame-aurora circle,.avatar-frame-canopy,.avatar-frame-starlight) {
+  .avatar-studio-redesign .avatar-studio-portrait .avatar-frame-cog > :first-child {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: avatar-frame-turn 7s linear infinite reverse;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) .avatar-cosmetic-effect[data-motion=float] {
+    animation: avatar-companion-hover 3.8s ease-in-out infinite alternate;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) :is(.avatar-hat-bob,.avatar-jelly-tentacles,.avatar-sprout-sway,.avatar-scarf-tail) {
+    transform-box: fill-box;
+    transform-origin: top center;
+    animation: avatar-fabric-sway 3.6s ease-in-out infinite alternate;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) .avatar-cosmetic-effect[data-motion=hat] {
+    animation: avatar-hat-breathe 4.2s ease-in-out infinite alternate;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) .avatar-lens-highlight {
+    animation: avatar-lens-reflect 3.6s ease-in-out infinite alternate;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) .avatar-color-shift {
+    animation: avatar-frame-hue 12s linear infinite;
+  }
+  .avatar-studio-redesign :is(.avatar-studio-portrait,.reward-choice:is(:hover,:focus-visible)) .avatar-hat-bob {
+    animation: avatar-fabric-sway 3.6s ease-in-out infinite alternate, avatar-frame-hue 12s linear infinite;
+  }
+  .avatar-studio-redesign[data-avatar-motion-paused] :is(.avatar-frame-overlay *,.avatar-frame-spin,.avatar-frame-spin *,.avatar-frame-spectrum,.avatar-cosmetic-effect,.avatar-cosmetic-effect *) {
     animation-play-state: paused !important;
   }
   @keyframes avatar-frame-turn { to { transform: rotate(1turn); } }
   @keyframes avatar-frame-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
   @keyframes avatar-frame-aurora-light { from { stroke: #60e2b0; } to { stroke: #b998ff; } }
-  @keyframes avatar-frame-breathe { from { opacity: .46; } to { opacity: .97; } }
+  @keyframes avatar-motif-breathe { from { opacity: .70; transform: scale(.78); } to { opacity: 1; transform: scale(1.05); } }
+  @keyframes avatar-companion-hover { from { transform: translate(0,3px); } to { transform: translate(-3px,-6px); } }
+  @keyframes avatar-fabric-sway { from { transform: rotate(-5deg); } to { transform: rotate(8deg); } }
+  @keyframes avatar-lens-reflect { from { opacity: .23; } to { opacity: .88; } }
+  @keyframes avatar-hat-breathe { from { transform: translateY(0); } to { transform: translateY(-2.5px); } }
 }
 .avatar-equipped {
   grid-column: 1/-1;
@@ -511,7 +548,7 @@
 }
 .avatar-studio-redesign [data-style-preview-title]:not([hidden]) {
   width: fit-content;
-  margin: .2rem auto;
+  margin: .25rem 0;
 }
 .avatar-studio-redesign .reward-grid-hair .reward-choice-art {
   width: 100%;
@@ -596,62 +633,49 @@
 .avatar-road-art { display: grid; place-items: center; width: min(100%, 5rem); }
 .avatar-road-art .reward-frame-sample.rank-avatar { width: 3rem; height: 3rem; }
 .avatar-road-art .player-profile-title { padding: .25rem .3rem; font-size: .63rem; text-align: left; }
-@media (min-width: 47.51rem) and (min-height: 53rem) {
+@media (width > 47.5rem) {
   .avatar-studio-sidebar { position: sticky; top: 5rem; }
 }
 @media (max-width: 47.5rem) {
   .avatar-studio-redesign .avatar-studio-layout { grid-template-columns: minmax(0,1fr); gap: 0; align-items: stretch; }
   .avatar-studio-sidebar { display: contents; }
   .avatar-studio-redesign .avatar-studio-stage { grid-row: 1; padding: .8rem .8rem 1.1rem; border-radius: 1.35rem 1.35rem 0 0; }
-  .avatar-studio-redesign .avatar-stage-art { grid-template-columns: 44px minmax(0,1fr) 44px; gap: .3rem; align-items: start; padding: .5rem; margin-block: .6rem; }
-  .avatar-studio-redesign .avatar-stage-art > .avatar-surprise { grid-column: 1; grid-row: 1; padding: 0; width: 44px; justify-content: center; border-radius: 50%; }
+  .avatar-studio-redesign .avatar-stage-art {
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: .3rem;
+    align-items: start;
+    padding: .5rem;
+    margin-block: .6rem;
+  }
+  .avatar-studio-redesign .avatar-stage-art > .avatar-surprise {
+    grid-column: 1;
+    grid-row: 1;
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
   .avatar-studio-redesign .avatar-stage-art > .avatar-surprise span,
   .avatar-studio-redesign .avatar-equipped button > span { display: none; }
-  .avatar-studio-redesign .avatar-preview-label { grid-column: 1/-1; grid-row: 2; justify-self: center; margin-top: .25rem; }
+  .avatar-studio-redesign .avatar-preview-label { grid-column: 2; grid-row: 1; justify-self: end; }
   .profile-page .avatar-studio-redesign .avatar-studio-portrait {
-    grid-column: 2;
-    grid-row: 1;
-    width: min(100%, 12.25rem);
-    align-self: center;
-  }
-  .profile-page .avatar-studio-redesign .avatar-studio-portrait:not(:has(.avatar-studio-drawing)) { width: min(90%, 10.5rem); }
-  .avatar-equipped { grid-column: 3; grid-row: 1; grid-template-columns: 44px; gap: .3rem; justify-content: end; }
-  .avatar-equipped button { justify-content: center; width: 44px; min-height: 44px; padding: 0; border-radius: .75rem; }
-  .avatar-equipped .is-locked-preview::after { content:""; position:absolute; right:4px; top:4px; width:7px; height:7px; border-radius:50%; background:#ffd813; }
-  .avatar-studio-redesign .avatar-stage-art:has(> .avatar-stage-scene:not([hidden])) { grid-template-columns: minmax(0,1fr) auto; }
-  .avatar-stage-art:has(> .avatar-stage-scene:not([hidden])) > .avatar-preview-label {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-  }
-  .profile-page .avatar-studio-redesign .avatar-stage-art:has(> .avatar-stage-scene:not([hidden])) > .avatar-studio-portrait {
     grid-column: 1/-1;
     grid-row: 2;
     width: min(100%, 12.25rem);
+    align-self: center;
   }
-  .profile-page .avatar-studio-redesign .avatar-stage-art:has(> .avatar-stage-scene:not([hidden])) > .avatar-studio-portrait:not(:has(.avatar-studio-drawing)) {
-    width: min(82%, 11.25rem);
-  }
-  .avatar-stage-art:has(> .avatar-stage-scene:not([hidden])) > .avatar-equipped {
+  .profile-page .avatar-studio-redesign .avatar-studio-portrait:not(:has(.avatar-studio-drawing)) { width: min(82%, 11.25rem); }
+  .avatar-equipped {
     grid-column: 1/-1;
     grid-row: 3;
     grid-template-columns: repeat(4,44px);
+    gap: .3rem;
     justify-content: center;
   }
-  .avatar-studio-redesign .avatar-stage-identity[data-diploma-tier] {
-    --diploma-ink:#f3cd90;
-    --diploma-name:#fff;
-    --diploma-copy:#e6e3ff;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    padding: .15rem .4rem;
-    margin: 0;
-  }
-  .avatar-studio-redesign .avatar-stage-identity::before,
-  .avatar-studio-redesign .avatar-stage-identity::after,
-  .avatar-studio-redesign .avatar-diploma-ornament { display: none; }
-  .avatar-studio-redesign [data-featured-achievements] { display: none; }
+  .avatar-equipped button { justify-content: center; width: 44px; min-height: 44px; padding: 0; border-radius: .75rem; }
+  .avatar-equipped .is-locked-preview::after { content:""; position:absolute; right:4px; top:4px; width:7px; height:7px; border-radius:50%; background:#ffd813; }
+  .avatar-studio-redesign .avatar-stage-identity[data-diploma-tier] { margin: 0; }
+  .avatar-studio-redesign [data-featured-achievements] { margin: 0; }
   .avatar-studio-redesign .avatar-help { margin: .2rem 0 0; padding: 0; border: 0; }
   .avatar-studio-redesign .avatar-help summary { min-height: 44px; padding-block: .5rem; }
   .avatar-studio-redesign .avatar-studio-controls {
@@ -687,4 +711,109 @@
   .avatar-studio-redesign .profile-style-actions button { flex: 0 0 auto; padding: .4rem .65rem; min-width: 44px; }
   .avatar-studio-redesign [data-style-cancel] span { display: none; }
   .avatar-unlock-road { margin-top: .85rem; padding: .75rem; }
+}
+
+.avatar-studio-redesign .avatar-stage-identity[data-diploma-tier] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  text-align: left;
+  padding: .85rem;
+  gap: .85rem;
+  width: 100%;
+  color: #fcf5eb;
+  background: linear-gradient(118deg, #322d66, #282450 70%);
+  border: 1px solid #7770ad;
+  border-radius: .85rem;
+}
+.avatar-diploma-seal {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  color: var(--diploma-ink,#f4d785);
+  background: linear-gradient(155deg, #fff2, #19142c78);
+  box-shadow: inset 0 0 0 1px #fff2;
+  border-radius: 1rem;
+}
+.avatar-diploma-seal svg { display: block; width: 68%; height: 68%; }
+.avatar-diploma-copy { min-width: 0; }
+.avatar-diploma-copy > strong {
+  display: block;
+  color: #fffaf2;
+  font-size: clamp(1.12rem,3.6vw,1.5rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.avatar-diploma-tier {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--diploma-ink,#f4d785);
+  font-size: .6875rem;
+  font-weight: 750;
+  letter-spacing: .075em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+.avatar-diploma-copy > small { display: block; color: #ded9f4; margin-top: .2rem; font-size: .7rem; }
+.avatar-diploma-copy [data-style-preview-title] { font-size: .75rem; }
+.avatar-diploma-copy [data-style-preview-title][hidden] { display: none; }
+.avatar-stage-identity[data-diploma-tier=rookie] { --diploma-ink: #f7d7a4; }
+.avatar-stage-identity[data-diploma-tier=elementary] { --diploma-ink: #a6e6be; }
+.avatar-stage-identity[data-diploma-tier=highschool] { --diploma-ink: #f7b991; }
+.avatar-stage-identity[data-diploma-tier=college] { --diploma-ink: #bdd7ff; }
+.avatar-stage-identity[data-diploma-tier=graduate] { --diploma-ink: #ffe390; }
+.avatar-stage-identity[data-diploma-tier=phd] { --diploma-ink: #dfc2ff; }
+.avatar-stage-identity[data-diploma-tier=researcher] { --diploma-ink: #90e7d8; }
+.avatar-stage-identity[data-diploma-tier=professor] { --diploma-ink: #f5d881; }
+.avatar-stage-identity[data-diploma-tier=dean] { --diploma-ink: #d3f49e; }
+.avatar-stage-identity[data-diploma-tier=nobel] { --diploma-ink: #ffebb1; }
+
+.avatar-studio-redesign :is(.achievement-choice-art,.achievement-slot-art) .achievement-emblem {
+  --badge-highlight: #fff6e4;
+  --badge-metal: color-mix(in srgb, var(--badge-ink), white 77%);
+  border-radius: 31%;
+  background: linear-gradient(148deg,var(--badge-highlight) 15%,var(--badge-metal) 63%,var(--badge-highlight) 100%);
+  border: 1px solid color-mix(in srgb,var(--badge-ink),white 46%);
+  box-shadow: inset 0 0 0 2px #fff8, 0 .2rem .4rem #24214f21;
+}
+.avatar-studio-redesign :is(.achievement-choice-art,.achievement-slot-art) .achievement-emblem::before {
+  inset: 13%;
+  border: 1px solid color-mix(in srgb,var(--badge-ink),transparent 68%);
+  border-radius: 22%;
+  background: #fff6;
+}
+.avatar-studio-redesign .achievement-emblem[data-tier]:is([data-tier="6"],[data-tier="7"],[data-tier="8"],[data-tier="9"],[data-tier="10"]) {
+  --badge-highlight: #fff9f1;
+  --badge-metal: color-mix(in srgb,var(--badge-ink),white 58%);
+}
+.avatar-studio-redesign .achievement-emblem[data-tier="10"] { --badge-highlight: #fff1c2; }
+.avatar-studio-redesign .achievement-emblem > img { width: 50%; height: 50%; }
+.avatar-studio-redesign .achievement-emblem-level {
+  right: -.2rem;
+  bottom: -.14rem;
+  border-radius: 50%;
+  box-shadow: 0 .0625rem .125rem #19153140;
+}
+.avatar-studio-redesign .achievement-choice:is([data-state=locked],[data-state=unknown]) .achievement-emblem {
+  opacity: 1;
+  filter: none;
+}
+.avatar-studio-redesign .achievement-choice[data-state=earned] { border-color: #a8c7b2; }
+.avatar-studio-redesign .achievement-choice[data-state=selected] { background: #f2edfa; border-color: #7466a5; }
+.avatar-studio-redesign .achievement-slot.is-empty .achievement-slot-art { border-radius: .7rem; }
+.avatar-studio-redesign .achievement-featured-heading > strong { font-size: .8125rem; }
+.avatar-studio-redesign .achievement-featured-heading > button { text-underline-offset: .18em; }
+
+@media (width > 47.5rem) and (max-height: 790px) {
+  .profile-page .avatar-studio-redesign .avatar-studio-portrait:has(.avatar-studio-drawing) { width: min(100%, 15rem); }
+}
+@media (max-width: 47.5rem) {
+  .avatar-studio-redesign .avatar-apply-bar button[data-avatar-mini] {
+    height: 44px;
+    width: 44px;
+    padding: 0;
+    cursor: pointer;
+  }
+  .avatar-studio-redesign button[data-avatar-mini]:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
 }

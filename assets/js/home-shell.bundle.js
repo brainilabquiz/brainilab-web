@@ -2768,7 +2768,7 @@ window.BrainiProgressUI=(function(){
         const framed=frame!=='level'&&Number.isFinite(cost)&&renderXp>=cost;
         // Each image owns its SVG definitions, so rows can repeat the same look.
         // The existing level/seasonal halo stays outside the illustration.
-        const drawing=art.markup({...design,frame:framed?frame:null},{instance:'thumbnail',stickerScale:1.45});
+        const drawing=art.markup({...design,frame:framed?frame:null},{instance:'thumbnail'});
         return `<img class="braini-avatar-thumbnail${framed?' braini-avatar-thumbnail--framed':''}" src="data:image/svg+xml,${encodeURIComponent(drawing)}" width="48" height="48" alt="">`;
       }
       return BrainiAvatarDesign.markup(person.avatarDesign,renderXp,entitlements).replace('Your illustrated BrainiLab avatar','Illustrated BrainiLab avatar');
@@ -2817,6 +2817,11 @@ window.BrainiProgressUI=(function(){
     curious:'<path d="M4 11.5h15m-7.5-7.5v15M6 6l11 11M17 6 6 17"/>',
     detective:'<circle cx="10" cy="10" r="5.5"/><path d="m14 14 5 5M8 10l2 2 2-3"/>',
     thinker:'<path d="M3 6c4-1 6 0 8.5 2 2.5-2 4.5-3 8.5-2v11c-4-1-6 0-8.5 2C9 17 7 16 3 17V6Zm8.5 2v11"/>',
+    trail:'<path d="M4 17 9 7l4 6 2-3 4 7ZM9 7V4l6 1-6 3"/>',
+    sparks:'<path d="m12 3 2 7 6 2-6 2-2 6-2-6-7-2 7-2ZM19 4v5m-2.5-2.5h5"/>',
+    maker:'<path d="m11.5 3 4 4-4 4-4-4Zm-5 5 4 4-4 4-4-4Zm10 0 4 4-4 4-4-4Zm-5 5 4 4-4 4-4-4Z"/>',
+    afterdark:'<path d="M16 5a8 8 0 1 0 3 13A8 8 0 0 1 16 5ZM19 4v5m-2.5-2.5h5"/>',
+    polymath:'<path d="M11.5 3 20 8v7l-8.5 5L3 15V8ZM3 8l8.5 5L20 8M11.5 13v7"/>',
     sage:'<path d="m11.5 3 2.4 5.5 6 .5-4.5 4 1.4 6-5.3-3.2-5.3 3.2 1.4-6-4.5-4 6-.5 2.4-5.5Z"/>'
   };
   function profileTitleArt(id,{symbolOnly=false,announce=false}={}){
