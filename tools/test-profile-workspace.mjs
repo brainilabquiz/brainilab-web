@@ -52,6 +52,8 @@ assert.ok(account.querySelector('[data-profile-account-avatar] svg'));
 assert.equal(account.querySelector('[data-profile-account-avatar]').dataset.profileFrame,'copper');
 assert.equal(account.querySelector('[data-profile-account-title]').textContent,'Explorer');
 assert.equal(account.querySelector('[data-profile-account-title]').hidden,false);
+assert.equal(account.querySelector('[data-profile-account-title] [data-title-art]').dataset.titleArt,'explorer');
+assert.equal(account.querySelector('.profile-studio-entry a').getAttribute('href'),'?section=progress#my-avatar');
 assert.equal(account.querySelector('.profile-photo-preview img').src,'https://example.test/photo.webp','photo upload preview retains the original photo');
 assert.equal(account.querySelector('label[for=profile-display-name]').control,account.querySelector('[name=displayName]'));
 assert.equal(account.querySelector('label[for=profile-country]').control,account.querySelector('[name=countryCode]'));

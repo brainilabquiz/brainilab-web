@@ -870,7 +870,7 @@ window.BrainiSocial = (function(){
 
       <div class="crest-preview" aria-label="Your team preview">
         <div data-crest-preview></div>
-        <div><span class="crest-preview-kicker">Your team</span><strong data-crest-name></strong><span data-crest-description></span></div>
+        <div><strong data-crest-name></strong><span data-crest-description></span></div>
       </div>
       <div class="crest-name-fields"><div>
       <label class="social-label" for="groupName">Group name</label>
@@ -894,7 +894,7 @@ window.BrainiSocial = (function(){
             type="button"
             class="social-icon-choice ${i===(group?.crest?.icon||"⚡")?"active":""}"
             data-group-icon="${i}" aria-label="${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}" aria-pressed="${i===(group?.crest?.icon||"⚡")}"
-          >${BrainiIcons.groupSymbol(i,"social-choice-symbol")}<span>${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}</span></button>`).join("")}
+          >${BrainiIcons.groupCrest({icon:i,color:group?.crest?.color},"social-choice-symbol")}<span>${["Lightning","Brain","Globe","Flag","Trophy","Lightbulb","Puzzle","Star"][icons.indexOf(i)]}</span></button>`).join("")}
       </div>
 
       </fieldset><fieldset class="crest-fieldset"><legend>Pick a colour <span data-crest-colour-name></span></legend>
@@ -973,6 +973,13 @@ window.BrainiSocial = (function(){
       m.querySelector('[data-crest-name]').textContent=m.querySelector('[data-group-name]').value.trim()||'Your team name';
       m.querySelector('[data-crest-description]').textContent=symbolName+' · '+colourName;
       m.querySelector('[data-crest-colour-name]').textContent=colourName;
+      const symbolGrid=m.querySelector('.crest-symbol-grid');
+      if(symbolGrid.dataset.previewColour!==color){
+        for(const choice of symbolGrid.querySelectorAll('[data-group-icon]')){
+          choice.querySelector('.social-choice-symbol').outerHTML=BrainiIcons.groupCrest({icon:choice.dataset.groupIcon,color},'social-choice-symbol');
+        }
+        symbolGrid.dataset.previewColour=color;
+      }
     }
     m.querySelector('[data-group-name]').addEventListener('input',previewCrest);
     previewCrest();

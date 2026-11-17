@@ -185,7 +185,11 @@ try{
  assert.equal(unsafe.avatarFrame,'level');assert.equal(unsafe.avatarDesign.prop,'none');
  assert.equal(publicPeer.profileTitle,'explorer');
  assert.equal(w.BrainiProgressUI.profileTitleMarkup(publicPeer),w.BrainiProgressUI.profileTitleMarkup(friends.friends[0]));
- assert.match(w.BrainiProgressUI.profileTitleMarkup(publicPeer),/Profile title: <\/span>Explorer/);
+ const equippedTitle=w.document.createElement('div');
+ equippedTitle.innerHTML=w.BrainiProgressUI.profileTitleMarkup(publicPeer);
+ assert.equal(equippedTitle.textContent,'Profile title: Explorer');
+ assert.equal(equippedTitle.querySelector('.player-profile-title').dataset.titleArt,'explorer');
+ assert.equal(equippedTitle.querySelector('svg').getAttribute('aria-hidden'),'true');
  for(const invalid of ['none','<script>','__proto__',undefined,['explorer'],{}]){
   assert.equal(w.BrainiProgressUI.profileTitleMarkup({profileTitle:invalid}),'');
   assert.equal(A.fromPublicStyle({title:invalid}).profileTitle,'none');

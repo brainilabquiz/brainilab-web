@@ -297,6 +297,14 @@ window.BrainiAvatarStudioUI=(function(){
     prop:'<path d="m12 3 2.7 5.7 6.3.8-4.6 4.5 1.1 6.3-5.5-3-5.5 3 1.1-6.3L3 9.5l6.3-.8z"/>',
     frame:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.5"/>',
     dice:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 8h.01m4 4h.01m4 4h.01" stroke-width="3"/>',
+    look:'<circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/>',
+    hair:'<path d="M4 15V11a8 8 0 1 1 16 0v4M4 12c5 0 8-4 9-7 1 4 4 6 7 6"/>',
+    title:'<rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7 11h10m-10 3h6"/>',
+    scene:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1"/>',
+    challenges:'<path d="M13 2 4 14h7l-1 8 10-12h-7l1-8Z"/>',
+    academy:'<path d="M3 5c4-1 7 0 9 2 2-2 5-3 9-2v14c-4-1-7 0-9 2-2-2-5-3-9-2ZM12 7v14"/>',
+    badges:'<circle cx="12" cy="8" r="5"/><path d="m8 12-2 9 6-3 6 3-2-9"/>',
+    empty:'<circle cx="12" cy="12" r="8"/><path d="m6.5 17.5 11-11"/>',
     reset:'<path d="M3 11a9 9 0 1 1 2 7M3 5v6h6"/>'
   };
   function icon(name){
@@ -353,8 +361,8 @@ window.BrainiAvatarStudioUI=(function(){
         </div>
       </div>
       <section class="avatar-studio-controls" aria-label="Locker">
-        <div class="avatar-locker-header"><h3>Locker</h3><a class="avatar-play-link" href="/games/">Play for more XP →</a></div>
-        <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${p.label}${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
+        <div class="avatar-locker-header"><h3>Locker</h3><a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a></div>
+        <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span>${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
         <div class="avatar-next-reward" data-next-reward></div>
         <div class="avatar-locker-content">
           <div class="avatar-filter" data-studio-filters hidden>
@@ -432,21 +440,26 @@ window.BrainiAvatarStudioUI=(function(){
       button.classList.toggle('is-locked-preview',blocked);
     }
   }
-  function portrait(look,player,total,instance,stickerScale=1){
+  function portrait(look,player,total,instance,stickerScale=1,cropHair=false){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     return look.mode==='built'?
-      window.BrainiAvatarStudioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale})||A.markup(look,total):
+      window.BrainiAvatarStudioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair})||A.markup(look,total):
       BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
   }
   function sample(kind,item,draft,total){
-    if(['glasses','hat','prop'].includes(kind))return A.preview(kind,item.id,draft);
+    if(['glasses','hat','prop'].includes(kind))return item.id==='none'?
+      '<span class="avatar-empty-art">'+icon('empty')+'</span>':A.preview(kind,item.id,draft);
     if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
-    if(kind==='title')return `<span class="reward-title-name">${escapeCopy(BrainiData.player().displayName||'Your name')}</span>`;
-    if(item.color)return `<span class="avatar-swatch" style="--swatch:${item.color}"></span>`;
+    if(kind==='title'){
+      if(item.id==='none')return '<span class="avatar-empty-art">'+icon('empty')+'</span>';
+      return BrainiProgressUI.profileTitleArt?.(item.id)??escapeCopy(item.name);
+    }
+    if(kind==='background')return '<svg class="avatar-backdrop-sample" viewBox="0 0 200 200" aria-hidden="true">'+A.backdrop(item.id)+'</svg>';
+    if(item.color)return '<span class="avatar-swatch" style="--swatch:'+item.color+'"></span>';
     if(kind==='mode'&&item.id==='picture')return BrainiProgressUI.avatarImageMarkup({...BrainiData.player(),avatarDesign:null});
     if(kind==='frame'){
       const player=BrainiData.player(),level=BrainiProgressUI.xpProgress?.(player.level,total)?.level||player.level||1;
-      const portrait=draft.mode==='built'?A.markup(draft,total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+      const portrait=draft.mode==='built'?A.markup({...draft,hat:'none',prop:'none'},total):BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
       return `<span class="rank-avatar reward-frame-sample ${BrainiProgressUI.avatarClass(level)}"${item.id==='level'?'':` data-profile-frame="${item.id}"`}>${portrait}</span>`;
     }
     return A.markup({...draft,mode:'built',[kind]:item.id},Number.MAX_SAFE_INTEGER);
@@ -473,9 +486,12 @@ window.BrainiAvatarStudioUI=(function(){
           button=document.createElement('button');button.type='button';button.className='reward-choice';button.dataset.rewardKind=kind;button.dataset.rewardId=item.id;
           button.innerHTML='<span class="reward-choice-art" aria-hidden="true"></span><strong></strong>'+ (cosmeticPanes.includes(kind)?'<span class="avatar-rarity"></span>':'') +'<small></small>';grid.append(button);
         }
-        const usePortrait=window.BrainiAvatarStudioArt&&['hair','glasses','hat','prop','frame'].includes(kind);
         const itemLook={...draft,[kind]:item.id,mode:kind==='frame'?draft.mode:'built'};
-        const art=usePortrait?portrait(itemLook,player,total,`card-${kind}-${item.id}`,kind==='prop'?1.55:1):sample(kind,item,draft,total);
+        const fittingLook={...itemLook,glasses:'none',hat:'none',prop:'none'};
+        const usePortrait=window.BrainiAvatarStudioArt&&
+          (kind==='hair'||(kind==='frame'&&draft.mode==='built'&&item.id!=='midnight'));
+        const art=usePortrait?portrait(fittingLook,player,total,'card-'+kind+'-'+item.id,1,kind==='hair'):
+          sample(kind,item,draft,total);
         const artRoot=button.querySelector('.reward-choice-art');
         BrainiProgressUI.setAvatarMarkup(artRoot,art);
         artRoot.hidden=!art;
@@ -520,7 +536,7 @@ window.BrainiAvatarStudioUI=(function(){
     dayChoices(root,draft,total,busy,options.activeDays);
     window.BrainiWardrobeUI?.render(root,{draft,equipped,total,busy,academy,discovery,...options});
     applyFilter(root);
-    renderRoad(root,draft,total,player);
+    renderRoad(root,draft,total);
     choiceViews.set(root,signature);
   }
   function challengeChoices(root,draft,total,busy,discovery){
@@ -572,7 +588,7 @@ window.BrainiAvatarStudioUI=(function(){
     const labels={frame:'avatar frame',title:'profile title',glasses:'glasses',hat:'hat',prop:'little extra',scene:'profile background'};
     const focus=target.contains(document.activeElement),player=BrainiData.player();
     const art=reward?['glasses','hat','prop'].includes(reward.kind)?A.preview(reward.kind,reward.id,player.avatarDesign):window.BrainiRewardJourney?.art(reward,player)||'':'';
-    const heading=goal?.type==='days'?'Days played':goal?.type==='discovery'?'Try something new':goal?.type==='academy'?'Learn something new':'Next avatar extra';
+    const heading=goal?.type==='days'?'Days played':goal?.type==='discovery'?'Try something new':goal?.type==='academy'?'Learn something new':'Next unlock';
     const detail=!goal?'':goal.type==='xp'?`${number(goal.remaining)} XP to go · ${labels[reward.kind]}`:goal.type==='days'?`${number(goal.value)} of ${number(goal.max)} days played`:goal.type==='discovery'?`${number(goal.value)} of ${number(goal.max)} games tried`:'Finish '+reward.courseTitle;
     const markup=goal?`<a class="avatar-goal-link" href="#avatar-panel-${goalPane(goal.type,reward.kind)}" data-collection-goal="${goal.type}" data-goal-kind="${reward.kind}" data-goal-id="${reward.id}"><span class="avatar-goal-art" aria-hidden="true">${art}</span><span><span class="reward-kicker">${heading}</span><strong>${escapeCopy(reward.name)}</strong><small>${escapeCopy(detail)}</small></span><span class="avatar-goal-arrow" aria-hidden="true">→</span></a><progress></progress>${goal.type==='days'?'<small class="avatar-goal-note">Days add up, even with breaks.</small>':''}`:'<span class="reward-kicker">YOUR COLLECTION</span><strong>Every XP reward is unlocked</strong>';
     if(target.dataset.goalMarkup!==markup){target.innerHTML=markup;target.dataset.goalMarkup=markup;if(focus)target.querySelector('a')?.focus({preventScroll:true});}
@@ -596,16 +612,16 @@ window.BrainiAvatarStudioUI=(function(){
     const card=type==='days'?root.querySelector(`[data-day-card="${id}"]`):type==='discovery'?root.querySelector(`[data-discovery-card="${id}"]`):choice?.closest('.avatar-option-group,.avatar-academy-card');
     const target=card||root.querySelector(`[data-avatar-pane="${pane}"]`);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView?.({block:'nearest'});}
   }
-  function renderRoad(root,draft,total,player){
+  function renderRoad(root,draft,total){
     const road=root.querySelector('[data-studio-road]');
-    const items=['glasses','hat','prop','frame'].flatMap(kind=>C.groups[kind]
+    const items=cosmeticPanes.flatMap(kind=>C.groups[kind]
       .filter(item=>item.xp>total).map(item=>({...item,kind}))).sort((a,b)=>a.xp-b.xp).slice(0,6);
     road.hidden=!items.length;
     if(!items.length)return;
-    const markup=`<h3>Unlock road</h3><div class="avatar-road-track">
+    const markup=`<h3>Coming up</h3><div class="avatar-road-track">
       <div class="avatar-road-current"><strong>You are here</strong><small>${number(total)} XP</small></div>
       ${items.map(item=>`<a href="#avatar-panel-${item.kind}" data-collection-goal="xp" data-goal-kind="${item.kind}" data-goal-id="${item.id}">
-        <span class="avatar-road-art" aria-hidden="true">${portrait({...draft,mode:'built',[item.kind]:item.id},player,total,'road-'+item.id,1.45)}</span>
+        <span class="avatar-road-art" aria-hidden="true">${sample(item.kind,item,draft,total)}</span>
         <strong>${escapeCopy(item.name)}</strong><small>${number(item.xp)} XP</small></a>`).join('')}
       </div>`;
     if(road.dataset.markup!==markup){road.innerHTML=markup;road.dataset.markup=markup;}
@@ -807,6 +823,15 @@ window.BrainiProfileRewards=(function(){
   const C=BrainiRewardCatalog,S=BrainiRewardStore,A=BrainiAvatarDesign,U=BrainiAvatarStudioUI;
   let root,draft=C.clean(),baseline=C.clean(),owner=null,dirty=false,editing=false,lockedPreview=null;
   function frame(el,id){if(el){if(id==='level')delete el.dataset.profileFrame;else el.dataset.profileFrame=id;}}
+  function showTitle(el,id){
+    if(!el)return;
+    const markup=BrainiProgressUI.profileTitleArt?.(id)??(A.profileTitles[id]||'');
+    if(el.dataset.paintedTitle!==id){
+      el.innerHTML=markup;
+      el.dataset.paintedTitle=id;
+    }
+    el.hidden=!markup;
+  }
   function render(){
     root=root||document.querySelector('[data-profile-rewards]');if(!root?.querySelector('[data-style-status]'))return;
     const state=S.snapshot(),player=BrainiData.player(),total=C.xp(player.xp);
@@ -837,10 +862,10 @@ window.BrainiProfileRewards=(function(){
     if(hero){
       let title=hero.querySelector('[data-equipped-title]');
       if(!title){title=document.createElement('p');title.dataset.equippedTitle='';hero.querySelector('h2')?.after(title);}
-      title.hidden=equipped.title==='none';title.textContent=C.titles.find(t=>t.id===equipped.title).name;
+      showTitle(title,equipped.title);
     }
     const accountTitle=document.querySelector('[data-profile-account-title]');
-    if(accountTitle){accountTitle.hidden=equipped.title==='none';accountTitle.textContent=C.titles.find(t=>t.id===equipped.title).name;}
+    showTitle(accountTitle,equipped.title);
     const preview=root.querySelector('[data-style-preview-avatar]');
     preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(level);frame(preview,shown.frame);
     BrainiProgressUI.setAvatarMarkup(preview,U.portrait(shown,player,total,'stage'));
@@ -852,8 +877,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-avatar-mini-label]').textContent=lockedPreview?'Locked item':dirty?`Preview · ${changeCount} ${changeCount===1?'change':'changes'}`:confirmed?'Look saved':'Your saved look';
     root.querySelector('[data-style-preview-label]').textContent=lockedPreview?'Preview only':dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
-    const title=C.titles.find(t=>t.id===shown.title),titleRoot=root.querySelector('[data-style-preview-title]');
-    titleRoot.textContent=title.id==='none'?'':title.name;titleRoot.hidden=title.id==='none';
+    showTitle(root.querySelector('[data-style-preview-title]'),shown.title);
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;

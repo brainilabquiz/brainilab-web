@@ -25,7 +25,7 @@ const thumbnail=root.querySelector('.ranking-identity img.braini-avatar-thumbnai
 assert.ok(thumbnail);
 const diagram=decodeURIComponent(thumbnail.getAttribute('src').split(',')[1]);
 assert.match(diagram,/avatar-studio-drawing/);assert.match(diagram,/avatar-art-thumbnail-g-copper/);
-assert.match(diagram,/viewBox="105 56 110 141"/,'the saved Academy extra is rendered');
+assert.match(diagram,/data-cosmetic-kind="prop" data-cosmetic-id="academy_pie"/,'the saved Academy extra is rendered');
 assert.doesNotMatch(diagram,/<text|<script|undefined/,'compact artwork contains no inferred private level');
 Object.assign(data.rows[0],w.BrainiAvatarDesign.fromPublicStyle({...cosmetic,render_xp:0,design:{mode:'built',hat:'pumpkin-thinker',glasses:'star',skin:'<script>'}}));
 w.BrainiHalloweenEntitlements={snapshot:()=>({entitlements:['pumpkin-thinker','midnight']})};

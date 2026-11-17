@@ -126,10 +126,22 @@ window.BrainiProgressUI=(function(){
     return `data-default-palette="${(seed>>>0)%8}"`;
   }
 
+  const titleMarks={
+    explorer:'<path d="m8 15 2-5 5-2-2 5-5 2Z"/><circle cx="11.5" cy="11.5" r="8.5"/>',
+    curious:'<path d="M4 11.5h15m-7.5-7.5v15M6 6l11 11M17 6 6 17"/>',
+    detective:'<circle cx="10" cy="10" r="5.5"/><path d="m14 14 5 5M8 10l2 2 2-3"/>',
+    thinker:'<path d="M3 6c4-1 6 0 8.5 2 2.5-2 4.5-3 8.5-2v11c-4-1-6 0-8.5 2C9 17 7 16 3 17V6Zm8.5 2v11"/>',
+    sage:'<path d="m11.5 3 2.4 5.5 6 .5-4.5 4 1.4 6-5.3-3.2-5.3 3.2 1.4-6-4.5-4 6-.5 2.4-5.5Z"/>'
+  };
+  function profileTitleArt(id,{symbolOnly=false,announce=false}={}){
+    const titles=window.BrainiAvatarDesign?.profileTitles;
+    if(typeof id!=='string'||!titles||!Object.hasOwn(titleMarks,id)||!Object.hasOwn(titles,id))return '';
+    const symbol=`<svg viewBox="0 0 23 23" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${titleMarks[id]}</svg>`;
+    const prefix=announce?'<span class="profile-title-context">Profile title: </span>':'';
+    return `<span class="player-profile-title${symbolOnly?' profile-title-token':''}" data-title-art="${id}">${prefix}${symbol}${symbolOnly?'':`<span>${titles[id]}</span>`}</span>`;
+  }
   function profileTitleMarkup(person){
-    const titles=window.BrainiAvatarDesign?.profileTitles,id=person?.profileTitle;
-    const label=titles&&typeof id==='string'&&Object.hasOwn(titles,id)?titles[id]:'';
-    return label?`<span class="player-profile-title"><span class="profile-title-context">Profile title: </span>${label}</span>`:'';
+    return profileTitleArt(person?.profileTitle,{announce:true});
   }
 
   function profileAchievementsMarkup(person,options){
@@ -264,6 +276,6 @@ window.BrainiProgressUI=(function(){
   }
   return {
     resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,xpRules,xpReceipt,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleArt,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();

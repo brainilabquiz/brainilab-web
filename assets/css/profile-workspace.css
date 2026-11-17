@@ -48,9 +48,21 @@
 .profile-page .profile-photo-preview{width:72px;height:72px;flex-shrink:0;border-radius:50%;overflow:hidden}
 .profile-page .profile-photo-preview>img{width:100%;height:100%;object-fit:cover}
 .profile-page .profile-photo-copy{min-width:0}
-.profile-page .profile-photo-copy label{font-size:11px;line-height:1.6}
+.profile-page .profile-photo-copy .profile-photo-label{font-size:.75rem;line-height:1.6;font-weight:750;margin:0}
 .profile-page .profile-photo-copy>strong{font-size:18px;line-height:1.4}
 .profile-page .profile-photo-copy>span{font-size:13px;line-height:1.65;font-weight:500;margin-top:6px}
+.profile-appearance{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+.profile-appearance-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem;margin:0 0 .75rem}
+.profile-appearance-header h3{margin:0;font-size:1.3rem}
+.profile-appearance-header>span{font-size:.75rem;font-weight:700;color:var(--navy);background:var(--soft-navy);padding:.35rem .65rem;border-radius:.5rem}
+.profile-appearance-options{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:.8rem}
+.profile-studio-entry{display:flex;align-items:center;min-width:0;padding:1.15rem;border-radius:.85rem;color:white;background:linear-gradient(130deg,#4b407d,#2d296e)}
+.profile-studio-entry strong{font-family:Pally,Montserrat,system-ui,sans-serif;font-size:1.25rem}
+.profile-studio-entry p{margin:.4rem 0 .65rem;color:#f1edfe;font-size:.81rem;line-height:1.5}
+.profile-page .profile-studio-entry .profile-avatar-edit-link{margin:0;padding:.35rem .7rem;border-radius:.55rem;background:var(--yellow);color:var(--navy);gap:.45rem;text-decoration:none}
+.profile-page .profile-studio-entry .profile-avatar-edit-link:hover{text-decoration:underline}
+.profile-page .profile-appearance-options .profile-photo-editor{margin:0;border:1px solid #e5e0ed;background:#f5f2fa}
+@media(max-width:720px){.profile-appearance-options{grid-template-columns:minmax(0,1fr)}}
 .profile-page .profile-photo-actions{gap:10px;flex-wrap:wrap;margin-top:14px}
 .profile-page .profile-photo-actions button{font-size:13px;min-height:44px;padding:10px 16px;border-radius:10px}
 .profile-page .profile-backend-warning strong,.profile-page .profile-backend-warning span{font-size:13px;line-height:1.7}
