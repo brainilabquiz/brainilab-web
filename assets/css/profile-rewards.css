@@ -140,8 +140,6 @@
 [data-profile-scene=stars]{--profile-scene-art:url("/assets/profile-scenes/stars.webp?v=5e9dcee4e75b")}
 .profile-page[data-profile-scene]:not([data-profile-scene=none]) .profile-v27-title{position:relative;isolation:isolate}
 .profile-page[data-profile-scene]:not([data-profile-scene=none]) .profile-v27-title::before{content:"";position:absolute;inset:0 0 0 35%;z-index:-1;opacity:.48;background:var(--profile-scene-art) right center/cover no-repeat;mask-image:linear-gradient(90deg,transparent,#000 60%);pointer-events:none}
-[data-profile-rewards][data-profile-scene]:not([data-profile-scene=none]) .avatar-stage-art{isolation:isolate}
-[data-profile-rewards][data-profile-scene]:not([data-profile-scene=none]) .avatar-stage-art::before{content:"";position:absolute;inset:-.25rem -.5rem .5rem;z-index:-1;border-radius:1rem;opacity:.35;background:var(--profile-scene-art) right center/cover no-repeat;pointer-events:none}
 .reward-grid-scene{grid-template-columns:repeat(2,minmax(0,1fr))}
 /* Course extras share the existing choice cards, with a separate course link. */
 .avatar-academy-count{font-size:.75rem;color:var(--muted);margin:0 0 1rem}

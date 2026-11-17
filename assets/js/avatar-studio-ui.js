@@ -8,7 +8,7 @@ window.BrainiAvatarStudioUI=(function(){
     prop:{label:'Extras',groups:{prop:'Extras'}},
     frame:{label:'Frames',groups:{frame:'Avatar frame'}},
     title:{label:'Titles',groups:{title:'Profile title'}},
-    scene:{label:'Backgrounds',groups:{scene:'Profile background'}},
+    scene:{label:'Backgrounds',groups:{scene:'Avatar scene'}},
     challenges:{label:'Challenges',groups:{}},academy:{label:'Academy',groups:{}}
   };
   const cosmeticPanes=['glasses','hat','prop','frame','title','scene'];
@@ -164,14 +164,21 @@ window.BrainiAvatarStudioUI=(function(){
   }
   function portrait(look,player,total,instance,stickerScale=1,cropHair=false){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
-    return look.mode==='built'?
-      window.BrainiAvatarStudioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair})||A.markup(look,total):
-      BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    const studioArt=window.BrainiAvatarStudioArt;
+    if(look.mode==='built'){
+      return studioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair,scene:look.scene})||A.markup(look,total);
+    }
+    const photo=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null}),sceneUrl=studioArt?.sceneSource?.(look.scene);
+    return sceneUrl?`<span class="avatar-scene-picture"><img class="avatar-scene-picture-art" src="${sceneUrl}" width="512" height="512" alt=""><span class="avatar-scene-photo">${photo}</span></span>`:photo;
   }
   function sample(kind,item,draft,total){
     if(['glasses','hat','prop'].includes(kind))return item.id==='none'?
       '<span class="avatar-empty-art">'+icon('empty')+'</span>':A.preview(kind,item.id,draft);
-    if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
+    if(kind==='scene'){
+      const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(item.id);
+      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="512" alt="">`:
+        `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
+    }
     if(kind==='title'){
       if(item.id==='none')return '<span class="avatar-empty-art">'+icon('empty')+'</span>';
       return BrainiProgressUI.profileTitleArt?.(item.id)??escapeCopy(item.name);
@@ -231,7 +238,13 @@ window.BrainiAvatarStudioUI=(function(){
         button.setAttribute('aria-label',`${item.name}, ${locked?item.event?item.requirement:(selected?'preview only, ':'try on only, ')+'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
       }
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
-      if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}
+      if(note){
+        const sceneCoversColour=kind==='background'&&window.BrainiAvatarStudioArt?.sceneSource?.(draft.scene);
+        const text=sceneCoversColour?'This colour shows when you choose Plain & simple in Backgrounds.':
+          chosen?.description?`${chosen.name}. ${chosen.description}`:'';
+        if(note.textContent!==text)note.textContent=text;
+        note.hidden=!text;
+      }
     }
     const grid=root.querySelector('[data-academy-rewards]');
     for(const item of C.academyRewards){
