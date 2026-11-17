@@ -139,7 +139,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.curls||''}
     ${hair.none||''}
     ${newHair.front||''}
-    ${!look.hat||look.hat==='none'?A.hairAccent(look.hair,look.hairColor):''}
+    ${A.hairAccent(look.hair,look.hairColor)}
     ${A.fittedGlasses(look.glasses)}
     ${A.integratedProp(look.prop,palette.skin)}
     </g>

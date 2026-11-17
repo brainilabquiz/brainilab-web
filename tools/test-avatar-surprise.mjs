@@ -16,7 +16,11 @@ let calls=0;
 const rolls=[.125,.2,.4,.6,.64,.65,.999];
 const result=C.surprise(source,player.xp,()=>rolls[calls++]);
 assert.equal(calls,7,'one deterministic draw per randomized category');
-assert.deepEqual(plain(result),{...plain(source),mode:'built',hair:'bob',hairColor:'auburn',shirt:'burgundy',background:'sunshine',glasses:'none',hat:'beanie',prop:'icepop'});
+const appearance=Object.fromEntries(randomKinds.slice(0,3).map((kind,i)=>{
+ const choices=C.groups[kind];
+ return [kind,choices[Math.floor(rolls[i]*choices.length)].id];
+}));
+assert.deepEqual(plain(result),{...plain(source),mode:'built',...appearance,background:'sunshine',glasses:'none',hat:'beanie',prop:'icepop'});
 assert.notEqual(result,source);assert.equal(result.skin,'cocoa');assert.equal(result.frame,'green');assert.equal(result.title,'curious');
 assert.deepEqual(plain({player,source}),before,'input and player identity, XP and score are unchanged');
 
