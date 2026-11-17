@@ -70,10 +70,14 @@ window.BrainiProfileRewards=(function(){
     U.next(root,total,state);U.choices(root,shown,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error,activeDays:state.activeDays,locked:lockedPreview});
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
-    const save=root.querySelector('[data-style-save]');
-    save.disabled=!dirty||!!lockedPreview||state.loading||state.saving||!!state.error;
-    save.textContent=state.saving?'Saving…':confirmed?'Saved':'Save look';
-    save.dataset.saveState=state.saving?'saving':confirmed?'saved':dirty?'preview':'idle';
+    const saveDisabled=!dirty||!!lockedPreview||state.loading||state.saving||!!state.error;
+    const saveLabel=state.saving?'Saving…':confirmed?'Saved':'Save look';
+    const saveState=state.saving?'saving':confirmed?'saved':dirty?'preview':'idle';
+    for(const save of root.querySelectorAll('[data-style-save]')){
+      save.disabled=saveDisabled;
+      save.textContent=saveLabel;
+      save.dataset.saveState=saveState;
+    }
     root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=(!dirty&&!lockedPreview)||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;

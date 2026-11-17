@@ -366,8 +366,16 @@ window.BrainiAvatarStudioUI=(function(){
         </div>
       </div>
       <section class="avatar-studio-controls" aria-label="Locker">
-        <div class="avatar-locker-header"><h3>Locker</h3><a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a></div>
-        <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span>${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
+        <div class="avatar-locker-toolbar">
+          <div class="avatar-locker-header">
+            <h3>Locker</h3>
+            <div class="avatar-locker-actions">
+              <button class="btn avatar-locker-save" type="button" data-style-save>Save look</button>
+              <a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span>${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
+        </div>
         <div class="avatar-next-reward" data-next-reward></div>
         <div class="avatar-locker-content">
           <div class="avatar-filter" data-studio-filters hidden>
@@ -926,10 +934,14 @@ window.BrainiProfileRewards=(function(){
     U.next(root,total,state);U.choices(root,shown,total,state.loading||state.saving||!!state.error,state.academy,state.discovery,equipped,{loading:state.loading,error:state.error,activeDays:state.activeDays,locked:lockedPreview});
     root.querySelector('[data-style-storage]').textContent=state.cloud?'Saved with your account. XP are never spent.':'Saved on this browser. Sign in to sync. XP are never spent.';
     root.querySelector('[data-style-sharing]').textContent=state.cloud?'Your saved look and title appear with friends and groups, and in public rankings when you choose to be visible.':'Try things on here. Guest choices stay on this browser.';
-    const save=root.querySelector('[data-style-save]');
-    save.disabled=!dirty||!!lockedPreview||state.loading||state.saving||!!state.error;
-    save.textContent=state.saving?'Saving…':confirmed?'Saved':'Save look';
-    save.dataset.saveState=state.saving?'saving':confirmed?'saved':dirty?'preview':'idle';
+    const saveDisabled=!dirty||!!lockedPreview||state.loading||state.saving||!!state.error;
+    const saveLabel=state.saving?'Saving…':confirmed?'Saved':'Save look';
+    const saveState=state.saving?'saving':confirmed?'saved':dirty?'preview':'idle';
+    for(const save of root.querySelectorAll('[data-style-save]')){
+      save.disabled=saveDisabled;
+      save.textContent=saveLabel;
+      save.dataset.saveState=saveState;
+    }
     root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
     root.querySelector('[data-style-cancel]').disabled=(!dirty&&!lockedPreview)||state.saving;
     root.querySelector('[data-style-retry]').hidden=!state.error;
