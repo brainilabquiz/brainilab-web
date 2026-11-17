@@ -226,6 +226,12 @@
 .gta-timeline article a:hover, .gta-news > p > a:hover { border-color: var(--pink); background: #ff4fa31f; }
 .gta-timeline article a span, .gta-news > p > a span { color: var(--peach); }
 
+.gta-weather-gallery { margin: 1rem 0; }
+.gta-weather-gallery > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+.gta-timeline .gta-weather-gallery a { display: block; min-height: 0; padding: 0; border-radius: .55rem; overflow: hidden; }
+.gta-weather-gallery img { display: block; width: 100%; height: auto; }
+.gta-weather-gallery figcaption { margin-top: .55rem; color: var(--muted); font-size: .85rem; }
+
 .gta-footer { margin-top: 4rem; padding-block: 1.6rem 2.2rem; border-top: 1px solid #ff4fa333; color: var(--muted); font-size: .9rem; background: var(--night-2); }
 .gta-footer p { margin: 0 0 .3rem; }
 .gta-footer nav { display: flex; gap: .25rem 1.2rem; flex-wrap: wrap; }
