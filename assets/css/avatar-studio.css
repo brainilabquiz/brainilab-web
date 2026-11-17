@@ -350,6 +350,16 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   align-items: center;
   gap: .5rem;
 }
+.avatar-locker-actions [data-style-cancel] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: .45rem .6rem;
+  font-size: .8125rem;
+}
 .avatar-locker-actions .avatar-locker-save {
   min-height: 44px;
   min-width: 6.3rem;
@@ -745,6 +755,16 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   .avatar-studio-redesign .profile-style-actions button { flex: 0 0 auto; padding: .4rem .65rem; min-width: 44px; }
   .avatar-studio-redesign [data-style-cancel] span { display: none; }
   .avatar-unlock-road { margin-top: .85rem; padding: .75rem; }
+}
+
+@media (max-width: 24rem) {
+  .avatar-locker-header { gap: .375rem; padding-inline: .55rem; }
+  .avatar-locker-header h3 { font-size: 1.125rem; }
+  .avatar-locker-actions { gap: .25rem; }
+  .avatar-locker-actions [data-style-cancel] { padding-inline: 0; }
+  .avatar-locker-actions .avatar-locker-save { min-width: 0; padding-inline: .55rem; }
+  .avatar-locker-actions .avatar-play-link { padding-inline: .42rem; }
+  .avatar-locker-actions .avatar-play-link > span { display: none; }
 }
 
 .avatar-studio-redesign .avatar-stage-identity[data-diploma-tier] {
