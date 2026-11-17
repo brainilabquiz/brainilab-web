@@ -806,3 +806,85 @@ body.braini-visual.error-page main.section>div{box-shadow:0 26px 52px #0b083033}
   body.braini-visual .topic-index-header{padding:18px 0 26px}
   body.braini-visual .academy-course::before{height:150px}
 }
+
+/* ===== Avatar studio (Nov 2026): same language as the rest of the site — navy band, yellow pills, chunky vivid cards ===== */
+body.profile-page.braini-visual .profile-rewards{border:0;border-radius:26px;box-shadow:0 18px 40px #2d296e1f}
+body.profile-page.braini-visual .avatar-studio-heading{position:relative;isolation:isolate;border:0;color:#fff;background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.profile-page.braini-visual .avatar-studio-heading::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.profile-page.braini-visual .avatar-studio-heading h2{color:#fff}
+body.profile-page.braini-visual .avatar-studio-heading :is(p,span:not(.reward-kicker)){color:#d9d6f2}
+body.profile-page.braini-visual .avatar-studio-heading .reward-kicker{color:var(--yellow,#ffd813)}
+body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-weight:800;text-decoration:none;box-shadow:0 4px 0 #c9a700}
+body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link:hover{filter:brightness(1.04);transform:translateY(-1px)}
+
+/* Left: the avatar on a lavender stage; the next reward is a navy goal card. */
+body.profile-page.braini-visual .avatar-studio-stage{background:linear-gradient(180deg,#f6f3ff,#fff 70%)}
+body.profile-page.braini-visual .avatar-studio-controls{border-left-color:#ece9f6}
+body.profile-page.braini-visual .avatar-next-reward{border:0;border-radius:18px;background:var(--navy,#2d296e);color:#fff;box-shadow:0 6px 0 #17143f}
+body.profile-page.braini-visual .avatar-next-reward :is(strong,a,span){color:#fff}
+body.profile-page.braini-visual .avatar-next-reward :is(p,small,.avatar-goal-note){color:#d9d6f2}
+body.profile-page.braini-visual .avatar-next-reward progress{height:8px;background:#ffffff26}
+body.profile-page.braini-visual .avatar-next-reward progress::-webkit-progress-bar{background:#ffffff26}
+body.profile-page.braini-visual .avatar-next-reward progress::-webkit-progress-value{background:var(--yellow,#ffd813)}
+body.profile-page.braini-visual .avatar-next-reward progress::-moz-progress-bar{background:var(--yellow,#ffd813)}
+
+/* Saved-look bar: a soft pill that stays on top while you browse. */
+body.profile-page.braini-visual .avatar-apply-bar{padding:10px 12px;border:0;border-radius:18px;background:#f3f1fb;box-shadow:0 -10px 0 var(--card,#fff),0 6px 18px #2d296e14}
+body.profile-page.braini-visual .avatar-apply-bar .profile-style-actions [data-style-save]{border-radius:999px;box-shadow:0 4px 0 #c9a700}
+body.profile-page.braini-visual .avatar-apply-bar .profile-style-actions [data-style-save]:disabled{box-shadow:none}
+body.profile-page.braini-visual .avatar-apply-bar .profile-style-actions :is([data-style-cancel],[data-style-retry]){border-radius:999px}
+
+/* Picture or avatar: the chosen one turns navy. */
+body.profile-page.braini-visual .reward-mode-grid .reward-choice{border:2px solid #ebe8f5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #e6e2f3}
+body.profile-page.braini-visual .reward-mode-grid .reward-choice strong{font-size:15px;font-weight:800;color:var(--navy,#2d296e)}
+body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=true]{outline:0;border-color:var(--navy,#2d296e);background:var(--navy,#2d296e);box-shadow:0 4px 0 #17143f}
+body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=true] strong{color:#fff}
+body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=true]::after{content:"✓";top:50%;right:14px;transform:translateY(-50%);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-size:14px;font-weight:900}
+
+/* Studio tabs: the same navy bar with a yellow active pill as the My BrainiLab tabs. */
+body.profile-page.braini-visual .avatar-studio-tabs{gap:6px;padding:6px;border:0;border-radius:18px;background:var(--navy,#2d296e);box-shadow:0 6px 18px #2d296e29}
+body.profile-page.braini-visual .avatar-studio-tabs button{border-radius:13px;color:#fff;font-weight:700}
+body.profile-page.braini-visual .avatar-studio-tabs button:hover{background:#ffffff1f}
+body.profile-page.braini-visual .avatar-studio-tabs button[aria-selected=true]{background:var(--yellow,#ffd813);color:var(--navy,#2d296e);box-shadow:0 3px 0 #c9a700;outline:0}
+body.profile-page.braini-visual .avatar-studio-tabs button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* Section headings with a coloured marker and the unlock count as a pill. */
+body.profile-page.braini-visual .avatar-studio-controls .avatar-option-group legend{font-size:17px;font-weight:900;color:var(--navy,#2d296e)}
+body.profile-page.braini-visual .avatar-option-heading>span:first-child{display:inline-flex;align-items:center;gap:9px}
+body.profile-page.braini-visual .avatar-option-heading>span:first-child::before{content:"";width:12px;height:12px;border-radius:4px;background:var(--group-accent,#6a64c9)}
+body.profile-page.braini-visual .avatar-option-heading>.avatar-collection-summary{padding:2px 10px;border-radius:999px;background:#f1effa;color:#4a4670;font-weight:700}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-glasses){--group-accent:#2f7fd8}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-hat){--group-accent:#ef7d23}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-prop){--group-accent:#2f9b4a}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-hair){--group-accent:#8a5a2b}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-frame){--group-accent:#c9a227}
+body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-title){--group-accent:#d23d64}
+
+/* Item cards: chunky collectibles on a coloured stage. */
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice{border:2px solid #ebe8f5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #e6e2f3}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice:not(:disabled):hover{border-color:#cdc6ea;box-shadow:0 6px 0 #dcd6f0,0 12px 24px #2d296e1a}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice strong{color:var(--navy,#2d296e);font-weight:800}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid-glasses .reward-choice-art{background:radial-gradient(circle at 50% 40%,#fff 0 32%,#dcebff 100%);box-shadow:inset 0 0 0 1px #cfe0fa}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid-hat .reward-choice-art{background:radial-gradient(circle at 50% 40%,#fff 0 32%,#ffe6cc 100%);box-shadow:inset 0 0 0 1px #f7d6b3}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid-prop .reward-choice-art{background:radial-gradient(circle at 50% 40%,#fff 0 32%,#dcf3df 100%);box-shadow:inset 0 0 0 1px #c3e6c8}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice .wardrobe-choice-status{background:#f1effa;color:#3d3962}
+/* Chosen (in use or saved): yellow ring, warm card and a navy check badge. */
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[aria-pressed=true]{outline:0;border-color:#f2c200;background:#fffaea;box-shadow:0 4px 0 #e0b400}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[aria-pressed=true]::after{content:"✓";top:8px;right:8px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy,#2d296e);color:#fff;font-size:13px;font-weight:900}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[aria-pressed=true] .wardrobe-choice-status{background:var(--navy,#2d296e);color:#fff}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[aria-pressed=true] .wardrobe-status-icon{color:var(--yellow,#ffd813)}
+/* Trying on (not saved yet): dashed yellow ring. */
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-wardrobe-state=preview]{outline:0;border:2px dashed #e0a800;background:#fff7d6;box-shadow:0 4px 0 #ecd27a}
+/* Locked: flatter card, muted stage. */
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-wardrobe-unlocked=false]{background:#faf9fd;box-shadow:0 4px 0 #ecebf2;border-style:dashed}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-wardrobe-unlocked=false] strong{color:#56526f}
+/* Colour swatches stay compact. */
+body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background) .reward-choice{border-radius:14px;box-shadow:0 3px 0 #e6e2f3}
+body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background) .reward-choice[aria-pressed=true]::after{width:18px;height:18px;top:4px;right:4px;font-size:10px}
+@media(max-width:700px){
+  body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link{display:none}
+  body.profile-page.braini-visual .avatar-studio-tabs{overflow-x:auto;scrollbar-width:none}
+  body.profile-page.braini-visual .avatar-studio-tabs button{flex:0 0 auto}
+  body.profile-page.braini-visual .profile-rewards{border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link:hover{transform:none}}
