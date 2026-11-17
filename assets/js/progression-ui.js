@@ -115,7 +115,9 @@ window.BrainiProgressUI=(function(){
 
   function avatarFrameAttribute(person){
     const frame=person?.avatarFrame;
-    if(['blue','green','copper','gold','orbit'].includes(frame)||frame==='midnight'&&person.avatarEntitlements?.includes('midnight'))return `data-social-frame="${frame}"`;
+    const frameXp=window.BrainiAvatarDesign?.frameXp;
+    if((frameXp&&frame!=='level'&&Object.hasOwn(frameXp,frame))||
+      (frame==='midnight'&&person.avatarEntitlements?.includes('midnight')))return `data-social-frame="${frame}"`;
     // Automatic nicknames keep one recognizable palette everywhere. This is
     // default portrait decoration, never an equipped reward or a profile write.
     const raw=String(person?.identityName||person?.name||person?.displayName||'').trim();

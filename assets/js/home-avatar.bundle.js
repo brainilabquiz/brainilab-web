@@ -73,7 +73,7 @@ window.BrainiAvatarDesign=(function(){
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
   // Public RPCs supply only sanitized cosmetics and their minimum render threshold,
   // never another player's auth metadata or total XP. Legacy payloads stay valid.
-  const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,gold:3000,orbit:6000});
+  const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,prism:2500,gold:3000,aurora:4750,orbit:6000,nova:8500});
   const profileTitles=Object.freeze({explorer:'Explorer',curious:'Curious Mind',detective:'Puzzle Detective',thinker:'Deep Thinker',sage:'BrainiLab Sage'});
   function fromPublicStyle(style){
     if(!style||typeof style!=='object'||Array.isArray(style))return {};
@@ -244,9 +244,46 @@ window.BrainiAvatarStudioArt=(()=>{
     blue:glassRim+'<path d="m31 173 6 6m124-151 6 4m14 10 4 6" stroke="#d5efff" stroke-width="3" stroke-linecap="round"/>',
     green:'<path d="M14 65Q7 52 24 42Q42 30 44 21M153 192Q170 190 181 171Q189 157 194 153" fill="none" stroke="#4c7435" stroke-width="1.8" stroke-linecap="round"/>',
     copper:glassRim+'<path d="m100-18 7 11-7 6-7-6Zm0 236 7-11-7-6-7 6ZM-18 100l11-7 6 7-6 7Zm236 0-11-7-6 7 6 7Z" fill="#d08958" stroke="#6f3825" stroke-width="1.5"/>',
-    gold:glassRim+'<path d="M71 4Q100-9 129 4M71 196Q100 209 129 196" fill="none" stroke="#fff4b2" stroke-width="3" stroke-linecap="round"/><path d="m100-16 10 12-10 10-10-10Zm0 232 8-9-8-9-8 9Z" fill="#ffea8b" stroke="#a07625" stroke-width="1.7"/>',
-    orbit:'<ellipse cx="100" cy="100" rx="117" ry="48" transform="rotate(-33 100 100)" fill="none" stroke="#9b8be0" stroke-width="2.5" stroke-dasharray="240 300" transform-origin="100 100"/><circle cx="198" cy="55" r="4" fill="#e6bd67"/>'
+    gold:glassRim+'<path d="M71 4Q100-9 129 4M71 196Q100 209 129 196" fill="none" stroke="#fff4b2" stroke-width="3" stroke-linecap="round"/><path d="m100-16 10 12-10 10-10-10Zm0 232 8-9-8-9-8 9Z" fill="#ffea8b" stroke="#a07625" stroke-width="1.7"/>'
   };
+  const spectrum=['#ff7894','#ffa271','#ffc962','#fae77d','#a5de78','#69d5a6',
+    '#67ded4','#74c9fa','#879ff9','#a48bfc','#cd92f8','#f690c7'];
+  const ring=(r,stroke,width,attrs='')=>
+    `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${stroke}" stroke-width="${width}" ${attrs}/>`;
+  const glide=(r,stroke,width,dash,kind='')=>
+    `<g class="avatar-frame-spin ${kind}">${ring(r,stroke,width,`pathLength="100" stroke-dasharray="${dash}" stroke-linecap="round" transform="rotate(-132 100 100)"`)}</g>`;
+  const frameEffects=Object.freeze({
+    level:glide(108,'#fff0a2',1.6,'9 91','avatar-frame-glint'),
+    blue:glide(104,'#e7fbff',3.8,'15 85','avatar-frame-tide')+
+      glide(110,'#a9dfff',1.2,'5 95','avatar-frame-reverse'),
+    green:'<g class="avatar-frame-canopy" fill="#dbfa91"><ellipse cx="22" cy="44" rx="8" ry="3.5" transform="rotate(-45 22 44)"/><ellipse cx="184" cy="160" rx="8" ry="3.5" transform="rotate(-45 184 160)"/><circle cx="166" cy="183" r="2.6"/></g>'+
+      glide(105,'#c9f78d',2.4,'12 88','avatar-frame-tide'),
+    copper:glide(113,'#ffc494',2.6,'1 2 1 4 1 91','avatar-frame-etch')+
+      glide(104,'#ffe0bb',2.1,'9 91','avatar-frame-glint'),
+    gold:glide(105,'#fff9cb',4,'9 91','avatar-frame-glint')+
+      '<g class="avatar-frame-starlight" fill="#fff8d4"><path d="m16 55 1.6 4.4 4.4 1.6-4.4 1.6L16 67l-1.6-4.4L10 61l4.4-1.6Z"/><circle cx="185" cy="36" r="2.8"/><circle cx="180" cy="160" r="2.3"/></g>',
+    orbit:glide(109,'#b7abff',2.4,'15 20 9 56','avatar-frame-reverse')+
+      '<g class="avatar-frame-spin avatar-orbit"><path d="M68-8a113 113 0 0 1 32-5M-10 125a113 113 0 0 0 12 31M210 124a113 113 0 0 1-12 32" fill="none" stroke="#9d8ffa" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="-13" r="7" fill="#ffd813" stroke="#2d296e" stroke-width="2"/><circle cx="98" cy="-15" r="2.1" fill="#fff7c8"/><circle cx="2" cy="156" r="5.5" fill="#f09b65" stroke="#2d296e" stroke-width="2"/><circle cx="198" cy="156" r="5" fill="#76d68a" stroke="#2d296e" stroke-width="2"/></g>',
+    midnight:glide(110,'#ffd089',2,'7 93','avatar-frame-glint'),
+    prism:ring(104,'#2e2459',14)+
+      `<g class="avatar-frame-spectrum">${spectrum.map((color,i)=>ring(104,color,10,`pathLength="12" stroke-dasharray="1.06 10.94" stroke-dashoffset="${-i}"`)).join('')}</g>`+
+      ring(98,'#fff7ff',1.4,'opacity=".9"')+
+      glide(104,'#fff',2.8,'12 20 6 62','avatar-frame-prism'),
+    aurora:ring(104,'#21455e',13)+ring(99,'#b0ede7',1.6)+
+      glide(104,'#60e2b0',7,'25 14 9 14 11 27','avatar-frame-aurora')+
+      glide(109,'#bda8ff',2.4,'13 29 12 46','avatar-frame-reverse')+
+      '<path d="m20 30 1.4 4.6 4.6 1.4-4.6 1.4-1.4 4.6-1.4-4.6L14 36l4.6-1.4Z" fill="#c9fcec"/><circle cx="186" cy="170" r="3" fill="#c0aafa"/>',
+    nova:ring(104,'#522847',14)+ring(99,'#f6d0a2',1.4)+
+      ring(104,'#ed9299',7,'pathLength="100" stroke-dasharray="26 5 16 6 35 12"')+
+      glide(111,'#ffc787',2.2,'13 41 5 41','avatar-frame-reverse')+
+      '<g class="avatar-frame-spin avatar-frame-nova"><path d="m100-19 3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5Z" fill="#fff1c0" stroke="#a85473" stroke-width="1.6"/><circle cx="211" cy="94" r="4.2" fill="#ffc48c" stroke="#6d3659" stroke-width="1.4"/><circle cx="43" cy="194" r="3" fill="#ffaba7"/></g>'
+  });
+  const completeFrames=Object.freeze(['prism','aurora','nova']);
+  function frameOverlay(frame){
+    if(!Object.hasOwn(frameEffects,frame))return '';
+    const complete=completeFrames.includes(frame)?' data-complete-frame':'';
+    return `<svg class="avatar-frame-overlay"${complete} viewBox="0 0 240 240" aria-hidden="true" focusable="false"><g transform="translate(20 20)">${frameEffects[frame]}</g></svg>`;
+  }
   function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false,scene,transparentBackdrop=false}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
     const sceneUrl=cropHair||transparentBackdrop?'':sceneSource(scene);
@@ -278,7 +315,7 @@ window.BrainiAvatarStudioArt=(()=>{
     green: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-green)" stroke-width="10"></circle><g fill="#40AB34"><ellipse cx="22" cy="44" rx="11" ry="5.5" transform="rotate(-45 22 44)"></ellipse><ellipse cx="36" cy="28" rx="9" ry="4.5" transform="rotate(-20 36 28)" fill="#7FCB4F"></ellipse><ellipse cx="184" cy="160" rx="11" ry="5.5" transform="rotate(-45 184 160)"></ellipse><ellipse cx="170" cy="178" rx="9" ry="4.5" transform="rotate(-70 170 178)" fill="#7FCB4F"></ellipse></g>`,
     copper: `<circle cx="100" cy="100" r="115" fill="none" stroke="#C8693A" stroke-width="3" stroke-dasharray="1.5 7"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-copper)" stroke-width="11"></circle><circle cx="100" cy="100" r="98.5" fill="none" stroke="#5A260F" stroke-width="1.5" opacity=".5"></circle>`,
     gold: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-gold)" stroke-width="12"></circle><circle cx="100" cy="100" r="98" fill="none" stroke="#FFF6C4" stroke-width="1.5"></circle><g fill="#FFD813" stroke="#D99200" stroke-width="1.5"><path d="M18 40 L21 49 L30 52 L21 55 L18 64 L15 55 L6 52 L15 49 Z"></path><path d="M186 30 L188 36 L194 38 L188 40 L186 46 L184 40 L178 38 L184 36 Z"></path><path d="M190 146 L192.5 153.5 L200 156 L192.5 158.5 L190 166 L187.5 158.5 L180 156 L187.5 153.5 Z"></path></g>`,
-    orbit: `<circle cx="100" cy="100" r="104" fill="none" stroke="#2D296E" stroke-width="5"></circle><circle cx="100" cy="100" r="113" fill="none" stroke="#5B55D6" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"></circle><g class="avatar-orbit"><circle cx="100" cy="-13" r="7" fill="#FFD813" stroke="#2D296E" stroke-width="2"></circle><circle cx="2" cy="156" r="5.5" fill="#E6680C" stroke="#2D296E" stroke-width="2"></circle><circle cx="198" cy="156" r="4.5" fill="#40AB34" stroke="#2D296E" stroke-width="2"></circle></g>`
+    orbit: ring(104,'#302a65',8)+ring(100,'#c7bff4',1.4)+ring(113,'#9a8bea',1.5,'stroke-dasharray="3 5" opacity=".75"')
   };
     return `<svg class="avatar-studio-drawing" xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" aria-hidden="true" focusable="false">
     <defs>
@@ -333,7 +370,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.none||''}
     ${A.accessory('glasses',look.glasses)}
     </g>
-    ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')}
+    ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')+(frameEffects[look.frame]||'')}
     <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
     ${look.prop==='none'?'':`<g transform="${sticker}">
       <circle cx="171" cy="174" r="24" fill="#181729" opacity=".2"></circle>
@@ -344,7 +381,7 @@ window.BrainiAvatarStudioArt=(()=>{
     </g>
     </svg>`;
   }
-  return Object.freeze({markup,sceneSource});
+  return Object.freeze({markup,sceneSource,frameOverlay});
 })();
 
 /* ===== profile-rewards-model.js ===== */
@@ -352,13 +389,16 @@ window.BrainiAvatarStudioArt=(()=>{
 /* Cosmetic rewards only. Never used for scores, permissions or XP awards. */
 window.BrainiRewardCatalog=(function(){
   const frames=Object.freeze([
-    {id:'level',name:'Your level',xp:0},
-    {id:'blue',name:'Blue sky',xp:100},
-    {id:'green',name:'Fresh green',xp:500},
-    {id:'copper',name:'Copper glow',xp:1500},
-    {id:'gold',name:'Golden hour',xp:3000},
-    {id:'orbit',name:'Orbit',xp:6000}
-  ].map(Object.freeze));
+    ['level','Your level'],
+    ['blue','Blue sky'],
+    ['green','Fresh green'],
+    ['copper','Copper glow'],
+    ['prism','Prism'],
+    ['gold','Golden hour'],
+    ['aurora','Aurora'],
+    ['orbit','Orbit'],
+    ['nova','Supernova']
+  ].map(([id,name])=>Object.freeze({id,name,xp:BrainiAvatarDesign.frameXp[id]})));
   const titles=Object.freeze([
     {id:'none',name:'No title',xp:0},
     {id:'explorer',name:'Explorer',xp:250},

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#32244e" stroke-width="6"/>
+  <g fill="none" stroke-width="4" stroke-dasharray="1.04 5.96" transform="rotate(-90 50 50)">
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#fd86a1"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#ffb366" stroke-dashoffset="-1"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#fde776" stroke-dashoffset="-2"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#8ee2a5" stroke-dashoffset="-3"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#71d9f4" stroke-dashoffset="-4"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#a59dfa" stroke-dashoffset="-5"/>
+    <circle cx="50" cy="50" r="44" pathLength="7" stroke="#da9bec" stroke-dashoffset="-6"/>
+  </g>
+  <circle cx="50" cy="50" r="41" fill="none" stroke="#fff2f8" stroke-width="1"/>
+  <path d="M32 9a44 44 0 0 1 22-3M76 86a44 44 0 0 1-17 7" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/>
+</svg>
