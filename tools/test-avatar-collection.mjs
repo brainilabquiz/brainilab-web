@@ -22,7 +22,17 @@ for(const kind of ['hair','glasses','hat','prop','frame'])for(const item of C.gr
  assert.equal(doc.querySelector('parsererror'),null);
  assert(doc.getElementById(clipped.getAttribute('clip-path').slice(5,-1)));
  assert.doesNotMatch(svg,/<script|<image|\bon\w+=|\bhref=|undefined/i);
+ if(kind==='prop'&&item.id!=='none'){
+  const worn=doc.querySelector('[data-cosmetic-id]');
+  const sample=new w.DOMParser().parseFromString(A.preview(kind,item.id),'image/svg+xml').documentElement;
+  assert.equal(worn.getAttribute('data-cosmetic-id'),item.id,'the preview wears the selected extra');
+  assert.equal(worn.innerHTML,sample.innerHTML,'the model and locker share the same drawing');
+ }
 }
+const backdropArt=A.options.background.map(item=>new w.DOMParser().parseFromString(
+  w.BrainiAvatarStudioArt.markup({...C.clean(),background:item.id,mode:'built'},{instance:'background-'+item.id}),
+  'image/svg+xml').querySelector('[clip-path] > g').innerHTML);
+assert.equal(new Set(backdropArt).size,A.options.background.length,'each avatar backdrop has its own pattern');
 delete w.BrainiAvatarStudioArt;
 for(const kind of ['glasses','hat','prop']){
  const panel=root.querySelector(`[data-avatar-pane=${kind}]`);
