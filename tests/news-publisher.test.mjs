@@ -169,7 +169,7 @@ test('UN Geneva, USGS and G1 verify time and identity and exclude full articles'
         event,event
       ]});
     }
-    if(publisher?.id==='g1')return rss(rssItem(g1URL).replace('</title>','</title><subtitle>G1 reports on a new project site.</subtitle>')+
+    if(publisher?.id==='g1')return rss(rssItem(g1URL).replace('</title>','</title><atom:subtitle>G1 reports on a new project site.</atom:subtitle>')+
       rssItem(g1URL.replace('test-report','missing-subtitle')),'application/xml');
     return new Response('',{status:503});
   });

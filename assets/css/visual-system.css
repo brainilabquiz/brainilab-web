@@ -817,16 +817,9 @@ body.profile-page.braini-visual .avatar-studio-heading .reward-kicker{color:var(
 body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-weight:800;text-decoration:none;box-shadow:0 4px 0 #c9a700}
 body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link:hover{filter:brightness(1.04);transform:translateY(-1px)}
 
-/* Left: the avatar on a lavender stage; the next reward is a navy goal card. */
+/* The avatar is the focal point. The next reward sits just below the Locker navigation. */
 body.profile-page.braini-visual .avatar-studio-stage{background:linear-gradient(180deg,#f6f3ff,#fff 70%)}
 body.profile-page.braini-visual .avatar-studio-controls{border-left-color:#ece9f6}
-body.profile-page.braini-visual .avatar-next-reward{border:0;border-radius:18px;background:var(--navy,#2d296e);color:#fff;box-shadow:0 6px 0 #17143f}
-body.profile-page.braini-visual .avatar-next-reward :is(strong,a,span){color:#fff}
-body.profile-page.braini-visual .avatar-next-reward :is(p,small,.avatar-goal-note){color:#d9d6f2}
-body.profile-page.braini-visual .avatar-next-reward progress{height:8px;background:#ffffff26}
-body.profile-page.braini-visual .avatar-next-reward progress::-webkit-progress-bar{background:#ffffff26}
-body.profile-page.braini-visual .avatar-next-reward progress::-webkit-progress-value{background:var(--yellow,#ffd813)}
-body.profile-page.braini-visual .avatar-next-reward progress::-moz-progress-bar{background:var(--yellow,#ffd813)}
 
 /* Saved-look bar: a soft pill that stays on top while you browse. */
 body.profile-page.braini-visual .avatar-apply-bar{padding:10px 12px;border:0;border-radius:18px;background:#f3f1fb;box-shadow:0 -10px 0 var(--card,#fff),0 6px 18px #2d296e14}
@@ -846,6 +839,7 @@ body.profile-page.braini-visual .avatar-studio-tabs{gap:6px;padding:6px;border:0
 body.profile-page.braini-visual .avatar-studio-tabs button{border-radius:13px;color:#fff;font-weight:700}
 body.profile-page.braini-visual .avatar-studio-tabs button:hover{background:#ffffff1f}
 body.profile-page.braini-visual .avatar-studio-tabs button[aria-selected=true]{background:var(--yellow,#ffd813);color:var(--navy,#2d296e);box-shadow:0 3px 0 #c9a700;outline:0}
+body.profile-page.braini-visual .avatar-studio-tabs button[aria-selected=true] svg{color:currentColor}
 body.profile-page.braini-visual .avatar-studio-tabs button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
 /* Section headings with a coloured marker and the unlock count as a pill. */
@@ -860,7 +854,7 @@ body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-hair){--gr
 body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-frame){--group-accent:#c9a227}
 body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-title){--group-accent:#d23d64}
 
-/* Item cards: chunky collectibles on a coloured stage. */
+/* Item cards and their category-specific art. */
 body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice{border:2px solid #ebe8f5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #e6e2f3}
 body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice:not(:disabled):hover{border-color:#cdc6ea;box-shadow:0 6px 0 #dcd6f0,0 12px 24px #2d296e1a}
 body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice strong{color:var(--navy,#2d296e);font-weight:800}
@@ -878,6 +872,43 @@ body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-cho
 /* Locked: flatter card, muted stage. */
 body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-wardrobe-unlocked=false]{background:#faf9fd;box-shadow:0 4px 0 #ecebf2;border-style:dashed}
 body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-wardrobe-unlocked=false] strong{color:#56526f}
+/* Cosmetic cards use a single state cue so the artwork stays clear. */
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity]{
+  border:1px solid #ded9eb;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:none;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity]:not(:disabled):hover{
+  border-color:#8c81b5;
+  box-shadow:0 3px 10px #2d296e12;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][data-wardrobe-unlocked=false]{
+  background:#faf9fd;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][aria-pressed=true]{
+  border-color:#a77d05;
+  background:#fff9e8;
+  box-shadow:inset 0 0 0 1px #a77d05;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][data-wardrobe-state=preview]{
+  border:1px dashed #5e53a2;
+  background:#f3effe;
+  box-shadow:none;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][aria-pressed=true]::after{content:none}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity] .wardrobe-choice-status{
+  background:transparent;
+  color:#4a4565;
+  font-weight:700;
+}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][data-wardrobe-state=equipped] .wardrobe-choice-status{color:#2f602d}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][data-wardrobe-state=preview] .wardrobe-choice-status{color:#4b3a91}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity][aria-pressed=true] .wardrobe-status-icon{color:inherit}
+body.profile-page.braini-visual .avatar-studio-controls .reward-grid .reward-choice[data-rarity]:focus-visible{
+  outline:3px solid #af4c10;
+  outline-offset:2px;
+}
 /* Colour swatches stay compact. */
 body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background) .reward-choice{border-radius:14px;box-shadow:0 3px 0 #e6e2f3}
 body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background) .reward-choice[aria-pressed=true]::after{width:18px;height:18px;top:4px;right:4px;font-size:10px}
