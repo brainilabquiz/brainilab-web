@@ -121,23 +121,23 @@ window.BrainiIcons=(function(){
     'academic-cap':'<path d="m24 3 6 13 14 2-10 10 3 15-13-7-13 7 3-15L4 18l14-2Z"/>'
   };
   function groupArt(value){
-    const key=GROUP_SYMBOLS[value]||value;
-    return GROUP_ART[key]||GROUP_ART.bolt;
+    const key=Object.hasOwn(GROUP_SYMBOLS,value)?GROUP_SYMBOLS[value]:value;
+    return Object.hasOwn(GROUP_ART,key)?GROUP_ART[key]:GROUP_ART.bolt;
   }
   function groupSymbol(value,className="braini-group-symbol",alt=""){
     return `<svg class="${esc(className)}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" ${alt?`role="img" aria-label="${esc(alt)}"`:'aria-hidden="true"'}>${groupArt(value)}</svg>`;
   }
   function groupCrest(crest={},className=""){
     const color=/^#[0-9a-f]{6}$/i.test(crest.color||'')?crest.color:'#FFD813';
-    const hex=color.slice(1),channels=[0,2,4].map(i=>parseInt(hex.slice(i,i+2),16));
-    const dark=(channels[0]*299+channels[1]*587+channels[2]*114)/1000<100;
-    const ink=dark?'#fffdf4':'#2D296E';
     return `<span class="braini-group-crest ${esc(className)}" aria-hidden="true"><svg class="group-crest-art" viewBox="0 0 100 116" fill="none">
-      <path d="M50 3 93 17v37c0 27-19 45-43 59C26 99 7 81 7 54V17Z" fill="${color}" stroke="#2D296E" stroke-width="3" stroke-linejoin="round"/>
-      <path d="m50 10 36 12v32c0 23-16 39-36 52-20-13-36-29-36-52V22Z" stroke="${ink}" stroke-opacity=".55" stroke-width="1.5"/>
-      <path d="M12 23 50 10l38 13v10L50 20 12 33Z" fill="white" fill-opacity=".16"/>
-      <path d="m34 89 16 11 16-11" stroke="${ink}" stroke-opacity=".55" stroke-width="2.5" stroke-linecap="round"/>
-      <g transform="translate(26 31)" stroke="${ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${groupArt(crest.icon||'⚡')}</g>
+      <path d="M50 4 92 19v35c0 25-18 44-42 58C26 98 8 79 8 54V19Z" fill="${color}" stroke="#24204c" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M50 11 85 24v30c0 22-14 38-35 50-21-12-35-28-35-50V24Z" stroke="#fff7d9" stroke-width="1.8" opacity=".8"/>
+      <path d="M50 99Q24 82 18 59v12q7 20 32 33 25-13 32-33V59Q76 82 50 99Z" fill="#241d3e" opacity=".26"/>
+      <circle cx="50" cy="53" r="30" fill="#27234c" opacity=".28" transform="translate(0 3)"/>
+      <circle cx="50" cy="53" r="29" fill="#fff7df" stroke="#27234c" stroke-width="2.8"/>
+      <circle cx="50" cy="53" r="24.5" stroke="${color}" stroke-width="1.8"/>
+      <g transform="translate(32 35) scale(.75)" stroke="#282353" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">${groupArt(crest.icon||'⚡')}</g>
+      <path d="m50 89 4 4-4 4-4-4Z" fill="#fff7df"/>
     </svg></span>`;
   }
 
@@ -585,7 +585,7 @@ window.BrainiAvatarDesign=(function(){
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="120" height="120" role="img" aria-label="${label}" class="braini-cosmetic-preview" data-cosmetic-kind="${kind}" data-cosmetic-id="${id}">${drawing}</svg>`;
   }
   function markup(value,xp=0,entitlements=window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]){
-    const v=available(value,xp,entitlements),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt),bg=color('background',v.background);
+    const v=available(value,xp,entitlements),skin=color('skin',v.skin),hair=color('hairColor',v.hairColor),shirt=color('shirt',v.shirt);
     const dark=v.skin==='umber'||v.skin==='ebony',mouth=dark?'#efbdab':'#673d3c',nose=dark?'#f4d0b0':'#302c46';
     const back={bob:`<path d="M53 87Q46 39 101 38Q154 36 148 98L150 139Q99 158 49 138Z" fill="${hair}"/>`,
       ponytail:`<ellipse cx="145" cy="108" rx="22" ry="42" fill="${hair}"/><path d="M131 75Q144 65 157 77" fill="none" stroke="#e9bd5e" stroke-opacity="1" stroke-width="5"/>`,
@@ -605,12 +605,11 @@ window.BrainiAvatarDesign=(function(){
     const shine={sweep:'M84 47Q104 40 124 46',bob:'M80 48Q100 42 122 48',crop:'M80 47Q100 42 121 47',ponytail:'M82 46Q102 40 124 46',waves:'M80 45Q101 39 124 45',braids:'M80 46Q100 41 122 46',curls:'M61 59Q64 52 71 51M98 40Q104 36 111 40M121 47Q127 44 132 49'}[v.hair];
     const hairShine=v.hair==='bald'?'<ellipse cx="86" cy="58" rx="11" ry="5" fill="#fff" opacity=".22" transform="rotate(-14 86 58)"/>':`<path d="${shine}" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="${v.hair==='curls'?3:4.5}" stroke-linecap="round"/>`;
     const finish={
-      backdrop:'<circle cx="100" cy="84" r="76" fill="#fff" opacity=".34"/>',
       shirt:'<path d="M29 201Q30 166 54 156Q43 178 45 201Z M171 201Q170 166 146 156Q157 178 155 201Z" fill="#000" opacity=".13"/><path d="M70 153Q100 181 130 153" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="6" stroke-linecap="round"/><path d="M57 172Q64 162 75 159" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="4" stroke-linecap="round"/>',
       face:`<path d="M141 88V108Q139 141 100 147Q127 137 132 109Q135 96 141 88Z" fill="#5a2e1e" opacity=".1"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z" fill="none" ${line}/><path d="M57 95Q53 101 57 107M143 95Q147 101 143 107" fill="none" stroke="#5a2e1e" stroke-opacity=".24" stroke-width="2" stroke-linecap="round"/>`,
       eyes:'<path d="M75.4 92.4Q81 88.6 86.6 92.4M113.4 92.4Q119 88.6 124.6 92.4" fill="none" stroke="#302c46" stroke-width="1.7" stroke-linecap="round"/><g fill="#fff"><circle cx="82.6" cy="94.6" r="1.5"/><circle cx="120.6" cy="94.6" r="1.5"/></g>'
     };
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><rect width="200" height="200" rx="100" fill="${bg}"/>${finish.backdrop}<g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><g style="clip-path:circle(50%)">${backdrop(v.background)}</g><g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${accessory('glasses',v.glasses)}${accessory('hat',v.hat)}${accessory('prop',v.prop)}</svg>`;
   }
   return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,accessory,backdrop});
 })();
@@ -3967,10 +3966,22 @@ window.BrainiProgressUI=(function(){
     return `data-default-palette="${(seed>>>0)%8}"`;
   }
 
+  const titleMarks={
+    explorer:'<path d="m8 15 2-5 5-2-2 5-5 2Z"/><circle cx="11.5" cy="11.5" r="8.5"/>',
+    curious:'<path d="M4 11.5h15m-7.5-7.5v15M6 6l11 11M17 6 6 17"/>',
+    detective:'<circle cx="10" cy="10" r="5.5"/><path d="m14 14 5 5M8 10l2 2 2-3"/>',
+    thinker:'<path d="M3 6c4-1 6 0 8.5 2 2.5-2 4.5-3 8.5-2v11c-4-1-6 0-8.5 2C9 17 7 16 3 17V6Zm8.5 2v11"/>',
+    sage:'<path d="m11.5 3 2.4 5.5 6 .5-4.5 4 1.4 6-5.3-3.2-5.3 3.2 1.4-6-4.5-4 6-.5 2.4-5.5Z"/>'
+  };
+  function profileTitleArt(id,{symbolOnly=false,announce=false}={}){
+    const titles=window.BrainiAvatarDesign?.profileTitles;
+    if(typeof id!=='string'||!titles||!Object.hasOwn(titleMarks,id)||!Object.hasOwn(titles,id))return '';
+    const symbol=`<svg viewBox="0 0 23 23" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${titleMarks[id]}</svg>`;
+    const prefix=announce?'<span class="profile-title-context">Profile title: </span>':'';
+    return `<span class="player-profile-title${symbolOnly?' profile-title-token':''}" data-title-art="${id}">${prefix}${symbol}${symbolOnly?'':`<span>${titles[id]}</span>`}</span>`;
+  }
   function profileTitleMarkup(person){
-    const titles=window.BrainiAvatarDesign?.profileTitles,id=person?.profileTitle;
-    const label=titles&&typeof id==='string'&&Object.hasOwn(titles,id)?titles[id]:'';
-    return label?`<span class="player-profile-title"><span class="profile-title-context">Profile title: </span>${label}</span>`:'';
+    return profileTitleArt(person?.profileTitle,{announce:true});
   }
 
   function profileAchievementsMarkup(person,options){
@@ -4105,7 +4116,7 @@ window.BrainiProgressUI=(function(){
   }
   return {
     resultProgress,TIERS,tier,nextTier,xpForLevel,xpProgress,xpRules,xpReceipt,
-    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
+    avatarClass,avatarMarkup,defaultAvatarMarkup,avatarImageMarkup,setAvatarMarkup,avatarFrameAttribute,profileTitleArt,profileTitleMarkup,profileAchievementsMarkup,ranksMarkup,badgeMarkup,xpEarned,
   };
 })();
 
@@ -4134,6 +4145,7 @@ window.BrainiRewardJourney=(()=>{
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;
     }
     if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.preview(item.kind,item.id,person.avatarDesign);
+    if(item.kind==='title'&&BrainiProgressUI.profileTitleArt)return BrainiProgressUI.profileTitleArt(item.id,{symbolOnly:true});
     return '<span class="profile-goal-letter">Aa</span>';
   }
   function nextGoal(person,earned){
@@ -4164,7 +4176,7 @@ window.BrainiRewardJourney=(()=>{
     const unlocked=earned.length>0,remaining=item.xp-xp;
     const detail=unlocked?`${item.detail} · ${item.kind==='rank'?'View progress':'Try it on'}`:`${remaining.toLocaleString('en-GB')} XP to go`;
     const heading=unlocked?item.kind==='rank'?'New diploma':'Unlocked!':item.kind==='rank'?'Next diploma':'Next avatar extra';
-    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+    return `<span class="post-unlock ${unlocked?'is-unlocked':''}" data-reward-art="${esc(item.kind)}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
   }
   function moreMarkup(person,xp,change){
     const {earned}=resultGoal(xp,change),more=earned.slice(1);if(!more.length)return '';

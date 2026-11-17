@@ -99,23 +99,23 @@ window.BrainiIcons=(function(){
     'academic-cap':'<path d="m24 3 6 13 14 2-10 10 3 15-13-7-13 7 3-15L4 18l14-2Z"/>'
   };
   function groupArt(value){
-    const key=GROUP_SYMBOLS[value]||value;
-    return GROUP_ART[key]||GROUP_ART.bolt;
+    const key=Object.hasOwn(GROUP_SYMBOLS,value)?GROUP_SYMBOLS[value]:value;
+    return Object.hasOwn(GROUP_ART,key)?GROUP_ART[key]:GROUP_ART.bolt;
   }
   function groupSymbol(value,className="braini-group-symbol",alt=""){
     return `<svg class="${esc(className)}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" ${alt?`role="img" aria-label="${esc(alt)}"`:'aria-hidden="true"'}>${groupArt(value)}</svg>`;
   }
   function groupCrest(crest={},className=""){
     const color=/^#[0-9a-f]{6}$/i.test(crest.color||'')?crest.color:'#FFD813';
-    const hex=color.slice(1),channels=[0,2,4].map(i=>parseInt(hex.slice(i,i+2),16));
-    const dark=(channels[0]*299+channels[1]*587+channels[2]*114)/1000<100;
-    const ink=dark?'#fffdf4':'#2D296E';
     return `<span class="braini-group-crest ${esc(className)}" aria-hidden="true"><svg class="group-crest-art" viewBox="0 0 100 116" fill="none">
-      <path d="M50 3 93 17v37c0 27-19 45-43 59C26 99 7 81 7 54V17Z" fill="${color}" stroke="#2D296E" stroke-width="3" stroke-linejoin="round"/>
-      <path d="m50 10 36 12v32c0 23-16 39-36 52-20-13-36-29-36-52V22Z" stroke="${ink}" stroke-opacity=".55" stroke-width="1.5"/>
-      <path d="M12 23 50 10l38 13v10L50 20 12 33Z" fill="white" fill-opacity=".16"/>
-      <path d="m34 89 16 11 16-11" stroke="${ink}" stroke-opacity=".55" stroke-width="2.5" stroke-linecap="round"/>
-      <g transform="translate(26 31)" stroke="${ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${groupArt(crest.icon||'⚡')}</g>
+      <path d="M50 4 92 19v35c0 25-18 44-42 58C26 98 8 79 8 54V19Z" fill="${color}" stroke="#24204c" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M50 11 85 24v30c0 22-14 38-35 50-21-12-35-28-35-50V24Z" stroke="#fff7d9" stroke-width="1.8" opacity=".8"/>
+      <path d="M50 99Q24 82 18 59v12q7 20 32 33 25-13 32-33V59Q76 82 50 99Z" fill="#241d3e" opacity=".26"/>
+      <circle cx="50" cy="53" r="30" fill="#27234c" opacity=".28" transform="translate(0 3)"/>
+      <circle cx="50" cy="53" r="29" fill="#fff7df" stroke="#27234c" stroke-width="2.8"/>
+      <circle cx="50" cy="53" r="24.5" stroke="${color}" stroke-width="1.8"/>
+      <g transform="translate(32 35) scale(.75)" stroke="#282353" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">${groupArt(crest.icon||'⚡')}</g>
+      <path d="m50 89 4 4-4 4-4-4Z" fill="#fff7df"/>
     </svg></span>`;
   }
 

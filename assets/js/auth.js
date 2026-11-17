@@ -440,7 +440,7 @@ window.BrainiAuth = (function(){
             <div>
               <div class="auth-kicker">Edit Profile</div>
               <h2>${String(p.displayName).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</h2>
-              <span class="player-profile-title" data-profile-account-title hidden></span>
+              <span data-profile-account-title hidden></span>
               <p>${window.BrainiProgressUI
                 ? `${BrainiProgressUI.tier(p.level||1).name} · Level ${p.level||1}`
                 : `Level ${p.level||1}`
@@ -484,46 +484,57 @@ window.BrainiAuth = (function(){
           </div>
         </div>
 
-        <a class="profile-avatar-edit-link" href="?section=progress">Change avatar, frame &amp; title →</a>
-        <div class="profile-photo-editor">
-          <div class="profile-photo-preview ${
-            window.BrainiProgressUI
-              ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
-              : ""
-          }">
-            ${BrainiProgressUI.avatarImageMarkup({...p,avatarDesign:null})}
-          </div>
-
-          <div class="profile-photo-copy">
-            <label>Profile photo</label>
-            <strong>${p.avatarUrl ? "Change your photo" : "Add a profile photo"}</strong>
-            <span>
-              Choose a JPG, PNG or WebP image. Use it with “Your picture” in My Avatar.
-            </span>
-
-            ${realAccount && cloud ? `
-              <input
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                data-profile-avatar-file
-                hidden
-              >
-              <div class="profile-photo-actions">
-                <button type="button" data-profile-avatar-change>
-                  ${p.avatarUrl ? "Change photo" : "Upload photo"}
-                </button>
-                ${p.avatarUrl
-                  ? `<button type="button" class="secondary" data-profile-avatar-remove>Remove</button>`
-                  : ""
-                }
+        <section class="profile-appearance" aria-labelledby="profile-appearance-title">
+          <div class="profile-appearance-header"><h3 id="profile-appearance-title">Your look</h3><span>${p.avatarDesign?.mode==='built'?'My avatar':'Your picture'} in use</span></div>
+          <div class="profile-appearance-options">
+            <div class="profile-studio-entry">
+              <div class="profile-studio-entry-copy">
+                <strong>Avatar studio</strong>
+                <p>Try on accessories, frames, titles and backgrounds.</p>
+                <a class="profile-avatar-edit-link" href="?section=progress#my-avatar">Open avatar studio <span aria-hidden="true">→</span></a>
               </div>
-            ` : `
-              <small class="profile-field-help">
-                Sign in with a synced BrainiLab account to upload a custom photo.
-              </small>
-            `}
+            </div>
+            <div class="profile-photo-editor">
+              <div class="profile-photo-preview ${
+                window.BrainiProgressUI
+                  ? `rank-ring rank-${BrainiProgressUI.tier(p.level||1).key}`
+                  : ""
+              }">
+                ${BrainiProgressUI.avatarImageMarkup({...p,avatarDesign:null})}
+              </div>
+
+              <div class="profile-photo-copy">
+                <span class="profile-photo-label">Profile photo</span>
+                <strong>${p.avatarUrl ? "Change your photo" : "Add a profile photo"}</strong>
+                <span>
+                  Choose a JPG, PNG or WebP image for “Your picture”.
+                </span>
+
+                ${realAccount && cloud ? `
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    data-profile-avatar-file
+                    hidden
+                  >
+                  <div class="profile-photo-actions">
+                    <button type="button" data-profile-avatar-change>
+                      ${p.avatarUrl ? "Change photo" : "Upload photo"}
+                    </button>
+                    ${p.avatarUrl
+                      ? `<button type="button" class="secondary" data-profile-avatar-remove>Remove</button>`
+                      : ""
+                    }
+                  </div>
+                ` : `
+                  <small class="profile-field-help">
+                    Sign in with a synced BrainiLab account to upload a custom photo.
+                  </small>
+                `}
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </section>`;
   }
 

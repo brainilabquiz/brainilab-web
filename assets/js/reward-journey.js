@@ -21,6 +21,7 @@ window.BrainiRewardJourney=(()=>{
       return `<span class="rank-avatar ${BrainiProgressUI.avatarClass(level)}" ${item.kind==='frame'?`data-profile-frame="${item.id}" data-social-frame="${item.id}"`:''}>${BrainiProgressUI.avatarImageMarkup(person)}</span>`;
     }
     if(['glasses','hat','prop'].includes(item.kind))return BrainiAvatarDesign.preview(item.kind,item.id,person.avatarDesign);
+    if(item.kind==='title'&&BrainiProgressUI.profileTitleArt)return BrainiProgressUI.profileTitleArt(item.id,{symbolOnly:true});
     return '<span class="profile-goal-letter">Aa</span>';
   }
   function nextGoal(person,earned){
@@ -51,7 +52,7 @@ window.BrainiRewardJourney=(()=>{
     const unlocked=earned.length>0,remaining=item.xp-xp;
     const detail=unlocked?`${item.detail} · ${item.kind==='rank'?'View progress':'Try it on'}`:`${remaining.toLocaleString('en-GB')} XP to go`;
     const heading=unlocked?item.kind==='rank'?'New diploma':'Unlocked!':item.kind==='rank'?'Next diploma':'Next avatar extra';
-    return `<span class="post-unlock ${unlocked?'is-unlocked':''}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
+    return `<span class="post-unlock ${unlocked?'is-unlocked':''}" data-reward-art="${esc(item.kind)}"><span class="post-unlock-art" aria-hidden="true">${art(item,person)}</span><span class="post-unlock-copy"><span>${heading}</span><strong>${esc(item.name)}</strong><small>${esc(detail)}</small></span><span class="post-unlock-arrow" aria-hidden="true">→</span></span>`;
   }
   function moreMarkup(person,xp,change){
     const {earned}=resultGoal(xp,change),more=earned.slice(1);if(!more.length)return '';

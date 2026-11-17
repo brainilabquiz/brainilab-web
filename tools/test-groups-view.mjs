@@ -20,6 +20,7 @@ const create=root.querySelector('[data-create-group]');create.focus();create.cli
 const dialog=w.document.querySelector('[role=dialog]');let name=dialog.querySelector('[data-group-name]'),save=dialog.querySelector('[data-group-save]');
 assert.equal(w.document.activeElement,name);assert.equal(dialog.getAttribute('aria-modal'),'true');
 assert.equal(dialog.querySelectorAll('[data-group-icon][aria-label]').length,8);assert.equal(dialog.querySelector('[data-group-color]').getAttribute('aria-label'),'Yellow');
+assert.equal(dialog.querySelectorAll('[data-group-icon] .group-crest-art').length,8,'each symbol shows the complete crest');
 await save.onclick();assert.equal(calls,0);assert.match(dialog.textContent,/Give your group a name/);
 name.value='Quiz Friends';name.dispatchEvent(new w.Event('input'));
 assert.equal(dialog.querySelector('[data-crest-name]').textContent,'Quiz Friends');
@@ -27,7 +28,9 @@ assert.ok(!dialog.querySelector('.crest-invites').open);
 const preview=dialog.querySelector('[data-crest-preview]');const firstArt=preview.innerHTML;
 dialog.querySelector('[aria-label="Brain"]').click();assert.notEqual(preview.innerHTML,firstArt);
 assert.equal(dialog.querySelector('[data-crest-description]').textContent,'Brain · Yellow');
-dialog.querySelector('[data-group-color="#2D296E"]').click();assert.match(preview.innerHTML,/#fffdf4/);
+dialog.querySelector('[data-group-color="#2D296E"]').click();
+assert.equal(preview.querySelector('.group-crest-art>path').getAttribute('fill'),'#2D296E');
+assert.ok([...dialog.querySelectorAll('[data-group-icon] .group-crest-art>path:first-child')].every(shape=>shape.getAttribute('fill')==='#2D296E'));
 assert.equal(dialog.querySelector('[data-crest-description]').textContent,'Brain · Navy');
 const saving=save.onclick();assert.ok(save.disabled);await save.onclick();assert.equal(calls,1,'no duplicate creation while saving');assert.equal(lastPayload.icon,'🧠');assert.equal(lastPayload.color,'#2D296E');assert.deepEqual(Array.from(lastPayload.friendIds),[]);resolveSave();await saving;
 assert.ok(!w.document.querySelector('.social-modal').classList.contains('show'));

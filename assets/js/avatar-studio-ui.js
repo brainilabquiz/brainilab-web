@@ -174,8 +174,7 @@ window.BrainiAvatarStudioUI=(function(){
     if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     if(kind==='title'){
       if(item.id==='none')return '<span class="avatar-empty-art">'+icon('empty')+'</span>';
-      const marks={explorer:'scene',curious:'prop',detective:'glasses',thinker:'academy',sage:'badges'};
-      return '<span class="avatar-title-sample" data-title-art="'+item.id+'">'+icon(marks[item.id])+'<span>'+escapeCopy(item.name)+'</span></span>';
+      return BrainiProgressUI.profileTitleArt?.(item.id)??escapeCopy(item.name);
     }
     if(kind==='background')return '<svg class="avatar-backdrop-sample" viewBox="0 0 200 200" aria-hidden="true">'+A.backdrop(item.id)+'</svg>';
     if(item.color)return '<span class="avatar-swatch" style="--swatch:'+item.color+'"></span>';

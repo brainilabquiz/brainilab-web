@@ -452,8 +452,7 @@ window.BrainiAvatarStudioUI=(function(){
     if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     if(kind==='title'){
       if(item.id==='none')return '<span class="avatar-empty-art">'+icon('empty')+'</span>';
-      const marks={explorer:'scene',curious:'prop',detective:'glasses',thinker:'academy',sage:'badges'};
-      return '<span class="avatar-title-sample" data-title-art="'+item.id+'">'+icon(marks[item.id])+'<span>'+escapeCopy(item.name)+'</span></span>';
+      return BrainiProgressUI.profileTitleArt?.(item.id)??escapeCopy(item.name);
     }
     if(kind==='background')return '<svg class="avatar-backdrop-sample" viewBox="0 0 200 200" aria-hidden="true">'+A.backdrop(item.id)+'</svg>';
     if(item.color)return '<span class="avatar-swatch" style="--swatch:'+item.color+'"></span>';
@@ -824,6 +823,15 @@ window.BrainiProfileRewards=(function(){
   const C=BrainiRewardCatalog,S=BrainiRewardStore,A=BrainiAvatarDesign,U=BrainiAvatarStudioUI;
   let root,draft=C.clean(),baseline=C.clean(),owner=null,dirty=false,editing=false,lockedPreview=null;
   function frame(el,id){if(el){if(id==='level')delete el.dataset.profileFrame;else el.dataset.profileFrame=id;}}
+  function showTitle(el,id){
+    if(!el)return;
+    const markup=BrainiProgressUI.profileTitleArt?.(id)??(A.profileTitles[id]||'');
+    if(el.dataset.paintedTitle!==id){
+      el.innerHTML=markup;
+      el.dataset.paintedTitle=id;
+    }
+    el.hidden=!markup;
+  }
   function render(){
     root=root||document.querySelector('[data-profile-rewards]');if(!root?.querySelector('[data-style-status]'))return;
     const state=S.snapshot(),player=BrainiData.player(),total=C.xp(player.xp);
@@ -854,10 +862,10 @@ window.BrainiProfileRewards=(function(){
     if(hero){
       let title=hero.querySelector('[data-equipped-title]');
       if(!title){title=document.createElement('p');title.dataset.equippedTitle='';hero.querySelector('h2')?.after(title);}
-      title.hidden=equipped.title==='none';title.textContent=C.titles.find(t=>t.id===equipped.title).name;
+      showTitle(title,equipped.title);
     }
     const accountTitle=document.querySelector('[data-profile-account-title]');
-    if(accountTitle){accountTitle.hidden=equipped.title==='none';accountTitle.textContent=C.titles.find(t=>t.id===equipped.title).name;}
+    showTitle(accountTitle,equipped.title);
     const preview=root.querySelector('[data-style-preview-avatar]');
     preview.className='rank-avatar avatar-studio-portrait '+BrainiProgressUI.avatarClass(level);frame(preview,shown.frame);
     BrainiProgressUI.setAvatarMarkup(preview,U.portrait(shown,player,total,'stage'));
@@ -869,9 +877,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-avatar-mini-label]').textContent=lockedPreview?'Locked item':dirty?`Preview · ${changeCount} ${changeCount===1?'change':'changes'}`:confirmed?'Look saved':'Your saved look';
     root.querySelector('[data-style-preview-label]').textContent=lockedPreview?'Preview only':dirty?'Preview · not saved':'Your avatar';
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
-    const title=C.titles.find(t=>t.id===shown.title),titleRoot=root.querySelector('[data-style-preview-title]');
-    titleRoot.textContent=title.id==='none'?'':title.name;titleRoot.hidden=title.id==='none';
-    titleRoot.dataset.titleArt=title.id;
+    showTitle(root.querySelector('[data-style-preview-title]'),shown.title);
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;

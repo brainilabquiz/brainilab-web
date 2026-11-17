@@ -402,48 +402,16 @@
   border-radius: 50%;
   color: #51476b;
 }
-.avatar-title-sample {
-  --title-ink: #2b255d;
-  --title-paper: #fff5cb;
-  --title-rim: #d7a444;
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
+.avatar-studio-redesign .reward-choice-art .player-profile-title {
   max-width: calc(100% - .8rem);
-  padding: .42rem .6rem;
-  border: 1px solid var(--title-rim);
-  border-radius: .35rem;
-  outline: 1px solid var(--title-rim);
-  outline-offset: 2px;
+  padding: .42rem .5rem;
+  margin: 0;
   box-shadow: 0 .25rem .5rem #2d296e25;
-  background: var(--title-paper);
-  color: var(--title-ink);
-  font-size: .72rem;
-  font-weight: 800;
-  font-family: var(--font-display,inherit);
-  line-height: 1.25;
 }
-.avatar-title-sample svg { flex: none; width: 1rem; height: 1rem; }
-.avatar-title-sample[data-title-art=explorer] { --title-paper:#dfefec; --title-rim:#569087; }
-.avatar-title-sample[data-title-art=curious] { --title-paper:#fff0c7; --title-rim:#c28c37; }
-.avatar-title-sample[data-title-art=detective] { --title-paper:#ead7c1; --title-rim:#a17b53; }
-.avatar-title-sample[data-title-art=thinker] { --title-paper:#e7dff7; --title-rim:#8a6aab; }
-.avatar-title-sample[data-title-art=sage] { --title-paper:#262251; --title-rim:#bfa357; --title-ink:#fff2b3; }
 .avatar-studio-redesign [data-style-preview-title]:not([hidden]) {
   width: fit-content;
   margin: .2rem auto;
-  padding: .2rem .48rem;
-  border: 1px solid #c2a266;
-  border-radius: .28rem;
-  background: #fff5cb;
-  color: #332557;
-  font-weight: 750;
-  line-height: 1.25;
 }
-.avatar-studio-redesign [data-style-preview-title][data-title-art=explorer] { background: #dfefec; border-color: #569087; }
-.avatar-studio-redesign [data-style-preview-title][data-title-art=detective] { background: #ead7c1; border-color: #a17b53; }
-.avatar-studio-redesign [data-style-preview-title][data-title-art=thinker] { background: #e7dff7; border-color: #8a6aab; }
-.avatar-studio-redesign [data-style-preview-title][data-title-art=sage] { background: #262251; border-color: #bfa357; color: #fff2b3; }
 .avatar-studio-redesign .reward-grid-hair .reward-choice-art {
   width: 100%;
   height: 6.25rem;
@@ -526,7 +494,7 @@
 .avatar-road-art > svg { width: 100%; height: 100%; }
 .avatar-road-art { display: grid; place-items: center; width: min(100%, 5rem); }
 .avatar-road-art .reward-frame-sample.rank-avatar { width: 3rem; height: 3rem; }
-.avatar-road-art .avatar-title-sample { padding: .25rem .3rem; font-size: .56rem; text-align: left; }
+.avatar-road-art .player-profile-title { padding: .25rem .3rem; font-size: .63rem; text-align: left; }
 @media (min-width: 47.51rem) and (min-height: 53rem) {
   .avatar-studio-sidebar { position: sticky; top: 5rem; }
 }

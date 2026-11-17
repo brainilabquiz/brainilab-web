@@ -111,7 +111,7 @@
 .reward-grid-title .reward-choice{min-height:4rem;padding:.75rem .5rem}
 .reward-frame-sample{flex-shrink:0}
 /* Equipped frames use the same transparent SVGs as rankings and the header. */
-.profile-page .profile-rank-main [data-equipped-title]{display:inline-block;background:var(--soft-navy);color:var(--navy);border-radius:.5rem;padding:.25rem .5rem;font-size:.8125rem;font-weight:700;margin:0 0 .5rem}
+.profile-page .profile-rank-main [data-equipped-title]{display:block;margin:0 0 .5rem}
 .profile-page .profile-rank-main [data-equipped-title][hidden]{display:none}
 .profile-quick-links{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;padding:.5rem 0 1.5rem}
 .profile-quick-links a{font-size:.875rem;font-weight:700;color:var(--navy);display:inline-flex;min-height:2.75rem;align-items:center}
