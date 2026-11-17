@@ -14,6 +14,7 @@ const ledger = new Map();
 for (let i = 1; i <= 130; i++) {
   const time = latest - i*REFRESH_MS;
   const stories = [story('BBC story '+i,'BBC News',bbcURL+'archive'+i,time)];
+  if (i === 130) stories[0].summary = 'Drought resilience in São Tomé and Príncipe.';
   if (i === 1) stories.push(story('Current report in a previous edition','BBC News',bbcURL+'current?utm_source=old',time));
   ledger.set('audit:'+Math.floor(time/REFRESH_MS),{edition:edition(time,stories),evidence:['private detail']});
 }
@@ -56,6 +57,19 @@ assert.equal((await read('&source=bad')).status,404);
 assert.equal((await read('&page=3')).status,404);
 assert.equal((await (await read('&source=who')).json()).selected.count,0);
 assert.equal((await (await read()).json()).selected,undefined);
+const search = await (await read('&q=SAO+drou')).json();
+assert.equal(search.selected.id,'all');
+assert.equal(search.selected.count,1);
+assert.equal(search.filters.find(filter=>filter.id==='bbc').count,1);
+assert.equal(search.selected.rows[0].title,'BBC story 130');
+assert.equal(search.selected.rows[0].words,undefined);
+assert.equal((await (await read('&source=guardian&q=SAO+drou')).json()).selected.count,0);
+assert.equal((await (await read('&q=Current+BBC')).json()).selected.current[0].title,'Current BBC news');
+const searchPage = await (await read('&q=BBC+story&page=2')).json();
+assert.equal(searchPage.selected.rows.length,25);
+assert.equal(searchPage.selected.current.length,0);
+assert.equal(searchPage.selected.hasOlder,true);
+assert.equal((await read('&q='+('a'.repeat(121)))).status,404);
 const withoutFresh=await (await read('&source=bbc',now+5*REFRESH_MS)).json();
 assert.equal(withoutFresh.edition,null);
 assert.equal(withoutFresh.selected.currentCount,0);
