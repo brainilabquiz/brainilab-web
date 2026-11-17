@@ -286,7 +286,7 @@ window.BrainiAvatarStudioUI=(function(){
     prop:{label:'Extras',groups:{prop:'Extras'}},
     frame:{label:'Frames',groups:{frame:'Avatar frame'}},
     title:{label:'Titles',groups:{title:'Profile title'}},
-    scene:{label:'Backgrounds',groups:{scene:'Profile background'}},
+    scene:{label:'Backgrounds',groups:{scene:'Avatar scene'}},
     challenges:{label:'Challenges',groups:{}},academy:{label:'Academy',groups:{}}
   };
   const cosmeticPanes=['glasses','hat','prop','frame','title','scene'];
@@ -339,6 +339,7 @@ window.BrainiAvatarStudioUI=(function(){
         <section class="avatar-studio-stage" aria-label="Avatar preview">
           <div class="avatar-stage-heading"><h2>Avatar studio</h2><span data-avatar-level></span></div>
           <div class="avatar-stage-art">
+            <img class="avatar-stage-scene" data-avatar-stage-scene width="512" height="768" alt="" hidden>
             <button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Surprise me with unlocked avatar items">${icon('dice')}<span>Surprise me</span></button>
             <span class="avatar-preview-label" data-style-preview-label>Your avatar</span>
             <span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span>
@@ -440,16 +441,39 @@ window.BrainiAvatarStudioUI=(function(){
       button.classList.toggle('is-locked-preview',blocked);
     }
   }
+  function sceneForeground(player){
+    const people=window.BrainiPeople;
+    if(!people)return '';
+    let person=people.resolve(player);
+    if(player.avatarUrl){
+      try{
+        const url=new URL(player.avatarUrl,location.origin);
+        if(url.origin!==location.origin&&url.origin!=='https://brainilabgames.com')return '';
+        person=people.PEOPLE.find(entry=>entry.avatar===url.pathname);
+      }catch{return '';}
+    }
+    return person?`<img class="avatar-scene-foreground" src="/assets/avatars/knowledge-foreground/${person.id}.svg" width="128" height="128" alt="" title="Illustration inspired by ${escapeCopy(person.name)}">`:'';
+  }
   function portrait(look,player,total,instance,stickerScale=1,cropHair=false){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
-    return look.mode==='built'?
-      window.BrainiAvatarStudioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair})||A.markup(look,total):
-      BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    const studioArt=window.BrainiAvatarStudioArt;
+    const sceneUrl=studioArt?.sceneSource?.(look.scene),inStage=instance==='stage';
+    if(look.mode==='built'){
+      return studioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair,
+        scene:look.scene,transparentBackdrop:inStage&&!!sceneUrl})||A.markup(look,total);
+    }
+    const foreground=sceneUrl&&sceneForeground(player);
+    if(!foreground)return BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    return inStage?foreground:`<span class="avatar-scene-picture"><img class="avatar-scene-picture-art" src="${sceneUrl}" width="512" height="768" alt="">${foreground}</span>`;
   }
   function sample(kind,item,draft,total){
     if(['glasses','hat','prop'].includes(kind))return item.id==='none'?
       '<span class="avatar-empty-art">'+icon('empty')+'</span>':A.preview(kind,item.id,draft);
-    if(kind==='scene')return `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
+    if(kind==='scene'){
+      const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(item.id);
+      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="768" loading="lazy" decoding="async" alt="">`:
+        `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
+    }
     if(kind==='title'){
       if(item.id==='none')return '<span class="avatar-empty-art">'+icon('empty')+'</span>';
       return BrainiProgressUI.profileTitleArt?.(item.id)??escapeCopy(item.name);
@@ -509,7 +533,13 @@ window.BrainiAvatarStudioUI=(function(){
         button.setAttribute('aria-label',`${item.name}, ${locked?item.event?item.requirement:(selected?'preview only, ':'try on only, ')+'unlocks at '+number(item.xp)+' XP':selected?'selected':item.xp?'unlocked':'available'}${item.description?'. '+item.description:''}`);
       }
       const chosen=items.find(item=>item.id===draft[kind]),note=root.querySelector(`[data-avatar-note="${kind}"]`);
-      if(note){const text=chosen?.description?`${chosen.name}. ${chosen.description}`:'';if(note.textContent!==text)note.textContent=text;note.hidden=!text;}
+      if(note){
+        const sceneCoversColour=kind==='background'&&window.BrainiAvatarStudioArt?.sceneSource?.(draft.scene);
+        const text=sceneCoversColour?'This colour shows when you choose Plain & simple in Backgrounds.':
+          chosen?.description?`${chosen.name}. ${chosen.description}`:'';
+        if(note.textContent!==text)note.textContent=text;
+        note.hidden=!text;
+      }
     }
     const grid=root.querySelector('[data-academy-rewards]');
     for(const item of C.academyRewards){
@@ -851,6 +881,11 @@ window.BrainiProfileRewards=(function(){
     // Header uses the confirmed choice. Only the studio artwork previews drafts.
     document.body.dataset.profileScene=equipped.scene;
     root.dataset.profileScene=shown.scene;
+    const stageScene=root.querySelector('[data-avatar-stage-scene]');
+    const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(shown.scene);
+    stageScene.hidden=!sceneUrl;
+    if(sceneUrl&&stageScene.getAttribute('src')!==sceneUrl)stageScene.src=sceneUrl;
+    if(!sceneUrl)stageScene.removeAttribute('src');
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){
         frame(avatar,equipped.frame);
