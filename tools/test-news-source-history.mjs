@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { BreakingNewsStore, REFRESH_MS } from '../lib/news-refresh.js';
 import { editionId } from '../lib/news-archive.js';
+import { manualNewsArchive } from '../lib/news-first-edition.js';
 
 const now = Date.parse('2026-11-17T18:00:00Z');
 const latest = now - 60_000;
@@ -83,4 +84,21 @@ assert.equal(changed.selected.count,134);
 assert.equal(changed.selected.current[0].title,'New BBC story');
 assert.equal(changed.selected.rows[0].title,'Current BBC news');
 assert.equal(lists,6,'A new edition invalidates the index immediately');
+
+const launch=manualNewsArchive.at(-1);
+const afterLaunch=Date.parse(launch.generatedAt)+5000;
+const supplement=await (await store.fetch(new Request('https://news.internal/archive?edition='+editionId(new Date(launch.generatedAt).toISOString())),afterLaunch)).json();
+assert.deepEqual(supplement.edition.stories.map(story=>story.sourceName),['Africanews','Mongabay']);
+for(const [id,q] of [['africanews','afrobeat'],['mongabay','Sri+Lanka']]) {
+  const result=await (await read('&source='+id+'&q='+q,afterLaunch)).json();
+  assert.equal(result.selected.count,1);
+  assert.equal(result.selected.olderCount,1);
+  assert.equal(result.filters.find(filter=>filter.id===id).count,1);
+  assert.equal(result.selected.rows[0].editionId,editionId(supplement.edition.generatedAt));
+}
+ledger.set('edition',edition(afterLaunch+1000,launch.stories.map(story=>({...story,sourceUrl:story.sourceUrl+'?utm_source=duplicate'}))));
+const repeated=await (await read('&source=mongabay&q=leopard',afterLaunch+2000)).json();
+assert.equal(repeated.selected.count,1);
+assert.equal(repeated.selected.currentCount,1);
+assert.equal(repeated.selected.olderCount,0);
 console.log('PASS Breaking News source history: exact counts, expired editions, duplicates, paging, refreshed counts and read-only storage.');
