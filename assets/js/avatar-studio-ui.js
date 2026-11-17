@@ -56,6 +56,7 @@ window.BrainiAvatarStudioUI=(function(){
     choiceViews.delete(root);
     active='look';filter='all';
     root.classList.add('avatar-studio-redesign');
+    const resetLook=`<button class="btn-light" type="button" data-style-cancel aria-label="Reset to saved look" title="Reset to saved look">${icon('reset')}<span>Reset</span></button>`;
     root.innerHTML=`<div class="avatar-studio-layout">
       <div class="avatar-studio-sidebar">
         <section class="avatar-studio-stage" aria-label="Avatar preview">
@@ -81,7 +82,7 @@ window.BrainiAvatarStudioUI=(function(){
           <button type="button" data-avatar-mini aria-label="See your avatar preview"></button>
           <div class="avatar-apply-copy"><span data-avatar-mini-label></span><p class="profile-style-status" role="status" aria-live="polite" data-style-status></p></div>
           <div class="profile-style-actions">
-            <button class="btn-light" type="button" data-style-cancel aria-label="Reset to saved look">${icon('reset')}<span>Reset</span></button>
+            ${resetLook}
             <button class="btn" type="button" data-style-save>Save look</button>
             <button class="btn-light" type="button" data-style-retry hidden>Try again</button>
           </div>
@@ -92,6 +93,7 @@ window.BrainiAvatarStudioUI=(function(){
           <div class="avatar-locker-header">
             <h3>Locker</h3>
             <div class="avatar-locker-actions">
+              ${resetLook}
               <button class="btn avatar-locker-save" type="button" data-style-save>Save look</button>
               <a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a>
             </div>

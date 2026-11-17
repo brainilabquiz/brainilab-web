@@ -79,7 +79,8 @@ window.BrainiProfileRewards=(function(){
       save.dataset.saveState=saveState;
     }
     root.querySelector('[data-avatar-surprise]').disabled=state.loading||state.saving||!!state.error;
-    root.querySelector('[data-style-cancel]').disabled=(!dirty&&!lockedPreview)||state.saving;
+    const resetDisabled=(!dirty&&!lockedPreview)||state.saving;
+    for(const reset of root.querySelectorAll('[data-style-cancel]'))reset.disabled=resetDisabled;
     root.querySelector('[data-style-retry]').hidden=!state.error;
     root.querySelector('[data-style-status]').textContent=state.loading?'Checking your saved avatar…':state.saving?'Saving your avatar…':
       state.error||(lockedPreview?`${lockedItem.name} unlocks at ${lockedItem.xp.toLocaleString('en-GB')} XP.`:dirty?'Save to use this look.':state.notice||'');
