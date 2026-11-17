@@ -140,11 +140,11 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.none||''}
     ${newHair.front||''}
     ${!look.hat||look.hat==='none'?A.hairAccent(look.hair,look.hairColor):''}
-    ${A.accessory('glasses',look.glasses)}
+    ${A.fittedGlasses(look.glasses)}
     ${A.integratedProp(look.prop,palette.skin)}
     </g>
     ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')+(frameEffects[look.frame]||'')}
-    <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
+    ${A.fittedHat(look.hat,look.hair)}
     </g>
     </svg>`;
   }

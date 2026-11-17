@@ -327,10 +327,11 @@ window.BrainiAvatarStudioUI=(function(){
       const available=items.filter(item=>C.isUnlocked(item,total)).length;
       summary.textContent=options.loading?'Checking…':options.error?'Unavailable':`${available} of ${items.length} unlocked`;
       const count=options.loading||options.error?'':`${available}/${items.length}`;
-      root.querySelector(`[data-avatar-tab="${kind}"] [data-studio-tab-count]`).textContent=count;
       const option=root.querySelector(`[data-avatar-category] option[value="${kind}"]`),label=panes[kind].label;
+      const accessibleName=count?`${label}, ${available} of ${items.length} unlocked`:label;
       option.textContent=count?`${label} · ${count}`:label;
-      option.setAttribute('aria-label',count?`${label}, ${available} of ${items.length} unlocked`:label);
+      option.setAttribute('aria-label',accessibleName);
+      root.querySelector(`[data-avatar-tab="${kind}"]`).setAttribute('aria-label',accessibleName);
     }
   }
   function mount(root){
@@ -385,7 +386,7 @@ window.BrainiAvatarStudioUI=(function(){
               ${Object.entries(panes).map(([key,p])=>`<option value="${key}">${p.label}</option>`).join('')}
             </select>
           </label>
-          <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span>${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
+          <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span></button>`).join('')}</div>
         </div>
         <div class="avatar-next-reward" data-next-reward></div>
         <div class="avatar-locker-content">
