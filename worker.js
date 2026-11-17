@@ -10,7 +10,7 @@ import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from './lib/breaking-news.js';
 import {newsArchive,newsEdition,REFRESH_MS} from './lib/news-refresh.js';
 import {ARCHIVE_PATH,NEWS_PATH,editionInstant,editionPath} from './lib/news-archive.js';
-import {archivedEditionPage,newsArchivePage,newsEditionNav,renderPreviousEditions} from './lib/news-archive-page.js';
+import {archivedEditionPage,newsArchivePage,newsEditionNav,newsPastStories,renderPreviousEditions} from './lib/news-archive-page.js';
 import {PUBLISHERS} from './lib/news-publisher.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/public-page-store.js';
@@ -72,6 +72,7 @@ async function serveNews(request,url,env,holiday) {
     const previous=(Array.isArray(history?.items)?history.items:[]).filter(item=>!current||item.generatedAt<current.generatedAt).slice(0,2);
     const display={publishers:PUBLISHERS,nextCheck:new Date((Math.floor(now/REFRESH_MS)+1)*REFRESH_MS),
       navigation:history?.items?.length?newsEditionNav(current,previous):'',
+      pastStories:production?newsPastStories(previous):'',
       previous:renderPreviousEditions(previous),permalink:current&&history?.items?.some(item=>item.generatedAt===current.generatedAt)?editionPath(current):''};
     page={head:newsHead(html,current,now),content:renderNews(current,now,display)||renderEmptyNews(display)};
     headers.set('Cache-Control',current?'public,max-age=60':'no-store');
