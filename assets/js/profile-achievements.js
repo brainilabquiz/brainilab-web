@@ -18,8 +18,7 @@ window.BrainiProfileAchievements=(function(){
   }
   function open(){
     if(!root)return;
-    BrainiAvatarStudioUI.showPane(root,'badges');
-    root.querySelector('[data-avatar-tab="badges"]')?.focus();
+    BrainiAvatarStudioUI.showPane(root,'badges',{reveal:true,focus:true});
   }
   function bind(){
     root=document.querySelector('[data-profile-rewards]');

@@ -326,8 +326,11 @@ window.BrainiAvatarStudioUI=(function(){
       const kind=summary.dataset.styleCollection,items=C.groups[kind].filter(item=>!item.course&&!item.challenge&&!item.days);
       const available=items.filter(item=>C.isUnlocked(item,total)).length;
       summary.textContent=options.loading?'Checking…':options.error?'Unavailable':`${available} of ${items.length} unlocked`;
-      const count=root.querySelector(`[data-avatar-tab="${kind}"] [data-studio-tab-count]`);
-      count.textContent=options.loading||options.error?'':`${available}/${items.length}`;
+      const count=options.loading||options.error?'':`${available}/${items.length}`;
+      root.querySelector(`[data-avatar-tab="${kind}"] [data-studio-tab-count]`).textContent=count;
+      const option=root.querySelector(`[data-avatar-category] option[value="${kind}"]`),label=panes[kind].label;
+      option.textContent=count?`${label} · ${count}`:label;
+      option.setAttribute('aria-label',count?`${label}, ${available} of ${items.length} unlocked`:label);
     }
   }
   function mount(root){
@@ -376,6 +379,12 @@ window.BrainiAvatarStudioUI=(function(){
               <a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a>
             </div>
           </div>
+          <label class="avatar-locker-category">
+            <span>Category</span>
+            <select data-avatar-category>
+              ${Object.entries(panes).map(([key,p])=>`<option value="${key}">${p.label}</option>`).join('')}
+            </select>
+          </label>
           <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span>${cosmeticPanes.includes(key)?'<span data-studio-tab-count></span>':''}</button>`).join('')}</div>
         </div>
         <div class="avatar-next-reward" data-next-reward></div>
@@ -390,13 +399,16 @@ window.BrainiAvatarStudioUI=(function(){
       </section></div>
       <section class="avatar-unlock-road" aria-label="Unlock road" data-studio-road hidden></section>`;
     showPane(root,active);
+    root.querySelector('[data-avatar-category]').addEventListener('change',event=>{
+      showPane(root,event.currentTarget.value,{reveal:true});
+    });
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{
-      tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab));
+      tab.addEventListener('click',()=>showPane(root,tab.dataset.avatarTab,{reveal:true}));
       tab.addEventListener('keydown',event=>{
         if(event.altKey||event.ctrlKey||event.metaKey)return;
         const keys=Object.keys(panes),index=keys.indexOf(tab.dataset.avatarTab);
         const next=event.key==='ArrowRight'?keys[(index+1)%keys.length]:event.key==='ArrowLeft'?keys[(index+keys.length-1)%keys.length]:event.key==='Home'?keys[0]:event.key==='End'?keys.at(-1):null;
-        if(next){event.preventDefault();showPane(root,next);root.querySelector(`[data-avatar-tab="${next}"]`).focus();}
+        if(next){event.preventDefault();showPane(root,next,{reveal:true,focus:true});}
       });
     });
     root.querySelectorAll('[data-studio-filter]').forEach(button=>button.addEventListener('click',()=>{
@@ -408,8 +420,7 @@ window.BrainiAvatarStudioUI=(function(){
       applyFilter(root);
     });
     root.querySelectorAll('[data-studio-slot]').forEach(button=>button.addEventListener('click',()=>{
-      showPane(root,button.dataset.studioSlot);
-      root.querySelector(`[data-avatar-tab="${active}"]`).focus();
+      showPane(root,button.dataset.studioSlot,{reveal:true,focus:true});
     }));
   }
   function applyFilter(root){
@@ -429,20 +440,30 @@ window.BrainiAvatarStudioUI=(function(){
     group.querySelector('[data-studio-unlocked]').checked=filter==='unlocked';
     for(const card of cards){
       card.hidden=filter!=='all'&&card.dataset.studioLocked!==String(filter==='locked');
-      if(card.hidden&&card===document.activeElement)root.querySelector(`[data-avatar-tab="${active}"]`).focus();
+      if(card.hidden&&card===document.activeElement)focusCategory(root);
     }
     empty.hidden=counts[filter]>0;
   }
-  function showPane(root,key){
+  function focusCategory(root){
+    const picker=root.querySelector('[data-avatar-category]');
+    const control=picker.getClientRects().length?picker:root.querySelector(`[data-avatar-tab="${active}"]`);
+    control.focus({preventScroll:true});
+  }
+  function showPane(root,key,{reveal=false,focus=false}={}){
     const next=Object.hasOwn(panes,key)?key:'look';
     if(next!==active)filter='all';
     active=next;
     root.dataset.studioPane=active;
+    const picker=root.querySelector('[data-avatar-category]');
+    picker.value=active;
+    picker.setAttribute('aria-controls',`avatar-panel-${active}`);
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{const selected=tab.dataset.avatarTab===active;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1;});
     root.querySelectorAll('[data-avatar-pane]').forEach(panel=>panel.hidden=panel.dataset.avatarPane!==active);
     root.querySelector('.avatar-apply-bar').hidden=active==='badges';
     for(const button of root.querySelectorAll('[data-studio-slot]'))button.classList.toggle('is-current',button.dataset.studioSlot===active);
     applyFilter(root);
+    if(reveal)root.querySelector('.avatar-studio-controls').scrollIntoView?.({block:'start',behavior:'instant'});
+    if(focus)focusCategory(root);
     root.dispatchEvent(new CustomEvent('brainilab:avatarpanechange',{detail:{pane:active}}));
   }
   function equippedSlots(root,look,locked){
@@ -1032,8 +1053,7 @@ window.BrainiProfileAchievements=(function(){
   }
   function open(){
     if(!root)return;
-    BrainiAvatarStudioUI.showPane(root,'badges');
-    root.querySelector('[data-avatar-tab="badges"]')?.focus();
+    BrainiAvatarStudioUI.showPane(root,'badges',{reveal:true,focus:true});
   }
   function bind(){
     root=document.querySelector('[data-profile-rewards]');
