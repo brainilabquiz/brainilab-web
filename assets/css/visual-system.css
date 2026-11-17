@@ -834,14 +834,6 @@ body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=tr
 body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=true] strong{color:#fff}
 body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=true]::after{content:"✓";top:50%;right:14px;transform:translateY(-50%);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-size:14px;font-weight:900}
 
-/* Studio tabs: the same navy bar with a yellow active pill as the My BrainiLab tabs. */
-body.profile-page.braini-visual .avatar-studio-tabs{gap:6px;padding:6px;border:0;border-radius:18px;background:var(--navy,#2d296e);box-shadow:0 6px 18px #2d296e29}
-body.profile-page.braini-visual .avatar-studio-tabs button{border-radius:13px;color:#fff;font-weight:700}
-body.profile-page.braini-visual .avatar-studio-tabs button:hover{background:#ffffff1f}
-body.profile-page.braini-visual .avatar-studio-tabs button[aria-selected=true]{background:var(--yellow,#ffd813);color:var(--navy,#2d296e);box-shadow:0 3px 0 #c9a700;outline:0}
-body.profile-page.braini-visual .avatar-studio-tabs button[aria-selected=true] svg{color:currentColor}
-body.profile-page.braini-visual .avatar-studio-tabs button:focus-visible{outline:3px solid #fff;outline-offset:2px}
-
 /* Section headings with a coloured marker and the unlock count as a pill. */
 body.profile-page.braini-visual .avatar-studio-controls .avatar-option-group legend{font-size:17px;font-weight:900;color:var(--navy,#2d296e)}
 body.profile-page.braini-visual .avatar-option-heading>span:first-child{display:inline-flex;align-items:center;gap:9px}
@@ -914,8 +906,6 @@ body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.r
 body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.reward-grid-hairColor,.reward-grid-shirt,.reward-grid-background) .reward-choice[aria-pressed=true]::after{width:18px;height:18px;top:4px;right:4px;font-size:10px}
 @media(max-width:700px){
   body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link{display:none}
-  body.profile-page.braini-visual .avatar-studio-tabs{overflow-x:auto;scrollbar-width:none}
-  body.profile-page.braini-visual .avatar-studio-tabs button{flex:0 0 auto}
   body.profile-page.braini-visual .profile-rewards{border-radius:20px}
 }
 @media(prefers-reduced-motion:reduce){body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link:hover{transform:none}}
