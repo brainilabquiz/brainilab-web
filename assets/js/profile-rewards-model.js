@@ -1,13 +1,16 @@
 /* Cosmetic rewards only. Never used for scores, permissions or XP awards. */
 window.BrainiRewardCatalog=(function(){
   const frames=Object.freeze([
-    {id:'level',name:'Your level',xp:0},
-    {id:'blue',name:'Blue sky',xp:100},
-    {id:'green',name:'Fresh green',xp:500},
-    {id:'copper',name:'Copper glow',xp:1500},
-    {id:'gold',name:'Golden hour',xp:3000},
-    {id:'orbit',name:'Orbit',xp:6000}
-  ].map(Object.freeze));
+    ['level','Your level'],
+    ['blue','Blue sky'],
+    ['green','Fresh green'],
+    ['copper','Copper glow'],
+    ['prism','Prism'],
+    ['gold','Golden hour'],
+    ['aurora','Aurora'],
+    ['orbit','Orbit'],
+    ['nova','Supernova']
+  ].map(([id,name])=>Object.freeze({id,name,xp:BrainiAvatarDesign.frameXp[id]})));
   const titles=Object.freeze([
     {id:'none',name:'No title',xp:0},
     {id:'explorer',name:'Explorer',xp:250},

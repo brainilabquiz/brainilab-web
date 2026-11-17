@@ -71,7 +71,7 @@ window.BrainiAvatarDesign=(function(){
   function fromMetadata(meta={}){return clean(Object.fromEntries(Object.entries(metadataKeys).map(([key,name])=>[key,meta?.[name]])));}
   // Public RPCs supply only sanitized cosmetics and their minimum render threshold,
   // never another player's auth metadata or total XP. Legacy payloads stay valid.
-  const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,gold:3000,orbit:6000});
+  const frameXp=Object.freeze({level:0,blue:100,green:500,copper:1500,prism:2500,gold:3000,aurora:4750,orbit:6000,nova:8500});
   const profileTitles=Object.freeze({explorer:'Explorer',curious:'Curious Mind',detective:'Puzzle Detective',thinker:'Deep Thinker',sage:'BrainiLab Sage'});
   function fromPublicStyle(style){
     if(!style||typeof style!=='object'||Array.isArray(style))return {};

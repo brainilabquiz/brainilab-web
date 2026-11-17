@@ -90,6 +90,12 @@ window.BrainiProfileRewards=(function(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
       if(event.target.closest('[data-halloween-recover]')){await window.BrainiHalloweenEntitlements?.load?.();render();return;}
+      const motion=event.target.closest('[data-avatar-motion]');
+      if(motion){
+        const paused=root.toggleAttribute('data-frame-motion-paused');
+        motion.setAttribute('aria-pressed',String(paused));
+        return;
+      }
       const goal=event.target.closest('[data-collection-goal]');
       if(goal){event.preventDefault();U.openGoal(root,goal);return;}
       const surprise=event.target.closest('[data-avatar-surprise]');
