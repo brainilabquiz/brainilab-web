@@ -339,6 +339,7 @@ window.BrainiAvatarStudioUI=(function(){
         <section class="avatar-studio-stage" aria-label="Avatar preview">
           <div class="avatar-stage-heading"><h2>Avatar studio</h2><span data-avatar-level></span></div>
           <div class="avatar-stage-art">
+            <img class="avatar-stage-scene" data-avatar-stage-scene width="512" height="768" alt="" hidden>
             <button type="button" class="avatar-surprise" data-avatar-surprise aria-label="Surprise me with unlocked avatar items" title="Surprise me with unlocked avatar items">${icon('dice')}<span>Surprise me</span></button>
             <span class="avatar-preview-label" data-style-preview-label>Your avatar</span>
             <span class="rank-avatar avatar-studio-portrait" data-style-preview-avatar aria-hidden="true"></span>
@@ -440,21 +441,37 @@ window.BrainiAvatarStudioUI=(function(){
       button.classList.toggle('is-locked-preview',blocked);
     }
   }
+  function sceneForeground(player){
+    const people=window.BrainiPeople;
+    if(!people)return '';
+    let person=people.resolve(player);
+    if(player.avatarUrl){
+      try{
+        const url=new URL(player.avatarUrl,location.origin);
+        if(url.origin!==location.origin&&url.origin!=='https://brainilabgames.com')return '';
+        person=people.PEOPLE.find(entry=>entry.avatar===url.pathname);
+      }catch{return '';}
+    }
+    return person?`<img class="avatar-scene-foreground" src="/assets/avatars/knowledge-foreground/${person.id}.svg" width="128" height="128" alt="" title="Illustration inspired by ${escapeCopy(person.name)}">`:'';
+  }
   function portrait(look,player,total,instance,stickerScale=1,cropHair=false){
     const progress=BrainiProgressUI.xpProgress?.(player.level,total);
     const studioArt=window.BrainiAvatarStudioArt;
+    const sceneUrl=studioArt?.sceneSource?.(look.scene),inStage=instance==='stage';
     if(look.mode==='built'){
-      return studioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair,scene:look.scene})||A.markup(look,total);
+      return studioArt?.markup(look,{instance,level:progress?.level||player.level||1,levelPct:(progress?.percent||0)/100,stickerScale,cropHair,
+        scene:look.scene,transparentBackdrop:inStage&&!!sceneUrl})||A.markup(look,total);
     }
-    const photo=BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null}),sceneUrl=studioArt?.sceneSource?.(look.scene);
-    return sceneUrl?`<span class="avatar-scene-picture"><img class="avatar-scene-picture-art" src="${sceneUrl}" width="512" height="512" alt=""><span class="avatar-scene-photo">${photo}</span></span>`:photo;
+    const foreground=sceneUrl&&sceneForeground(player);
+    if(!foreground)return BrainiProgressUI.avatarImageMarkup({...player,avatarDesign:null});
+    return inStage?foreground:`<span class="avatar-scene-picture"><img class="avatar-scene-picture-art" src="${sceneUrl}" width="512" height="768" alt="">${foreground}</span>`;
   }
   function sample(kind,item,draft,total){
     if(['glasses','hat','prop'].includes(kind))return item.id==='none'?
       '<span class="avatar-empty-art">'+icon('empty')+'</span>':A.preview(kind,item.id,draft);
     if(kind==='scene'){
       const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(item.id);
-      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="512" loading="lazy" decoding="async" alt="">`:
+      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="768" loading="lazy" decoding="async" alt="">`:
         `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     }
     if(kind==='title'){
@@ -864,6 +881,11 @@ window.BrainiProfileRewards=(function(){
     // Header uses the confirmed choice. Only the studio artwork previews drafts.
     document.body.dataset.profileScene=equipped.scene;
     root.dataset.profileScene=shown.scene;
+    const stageScene=root.querySelector('[data-avatar-stage-scene]');
+    const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(shown.scene);
+    stageScene.hidden=!sceneUrl;
+    if(sceneUrl&&stageScene.getAttribute('src')!==sceneUrl)stageScene.src=sceneUrl;
+    if(!sceneUrl)stageScene.removeAttribute('src');
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){
         frame(avatar,equipped.frame);

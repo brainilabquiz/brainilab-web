@@ -30,6 +30,11 @@ window.BrainiProfileRewards=(function(){
     // Header uses the confirmed choice. Only the studio artwork previews drafts.
     document.body.dataset.profileScene=equipped.scene;
     root.dataset.profileScene=shown.scene;
+    const stageScene=root.querySelector('[data-avatar-stage-scene]');
+    const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(shown.scene);
+    stageScene.hidden=!sceneUrl;
+    if(sceneUrl&&stageScene.getAttribute('src')!==sceneUrl)stageScene.src=sceneUrl;
+    if(!sceneUrl)stageScene.removeAttribute('src');
     for(const avatar of [document.querySelector('[data-profile-rank-hero] .rank-avatar'),document.querySelector('.nav-right .avatar'),document.querySelector('[data-profile-account-avatar]')]){
       if(avatar){
         frame(avatar,equipped.frame);

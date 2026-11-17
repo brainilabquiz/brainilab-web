@@ -3,16 +3,17 @@ import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const sourceRoot=process.env.AVATAR_SOURCE_ROOT||'.';
-const files=['avatar-design.js','avatar-studio-art.js','profile-rewards-model.js','profile-rewards-store.js','avatar-studio-ui.js','profile-rewards.js'];
+const files=['player-personalities.js','avatar-design.js','avatar-studio-art.js','profile-rewards-model.js','profile-rewards-store.js','avatar-studio-ui.js','profile-rewards.js'];
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
-function setup({signed=false,xp=2700,metadata={},storage=true}={}){
+function setup({signed=false,xp=2700,metadata={},storage=true,avatarUrl}={}){
   const dom=new JSDOM('<body class="profile-page"><div class="nav-right"><a class="avatar"></a></div><div data-profile-rank-hero><span class="rank-avatar"></span><div class="profile-rank-main"><h2>Level 12</h2></div></div><section data-profile-rewards></section></body>',{url:'https://brainilabgames.com/profile/',runScripts:'outside-only'});
   const w=dom.window;
   let auth=signed?{status:'authenticated',user:{id:'owner-a'}}:{status:'guest',anonymousPlayerId:'local-guest'};
-  let player={displayName:'Curious Player',xp,level:12,score:1234};
+  let player={displayName:'Curious Player',xp,level:12,score:1234,avatarUrl};
   let meta={...metadata},readError=false,writeError=false,holdRead=null,writes=[];
   w.BrainiData={authState:()=>auth,player:()=>structuredClone(player)};
-  w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarClass:()=> 'rank-highschool',avatarImageMarkup:()=>'<img src="/assets/avatars/knowledge/einstein.svg" alt="">'};
+  w.BrainiProgressUI={setAvatarMarkup:(element,markup)=>{element.innerHTML=markup;},avatarClass:()=> 'rank-highschool',
+    avatarImageMarkup:person=>'<img src="'+(person?.avatarUrl||'/assets/avatars/knowledge/einstein.svg')+'" alt="">'};
   w.BrainiBackendAuth={getClient:()=>({rpc:async()=>({data:{owner:auth.user?.id,games:[],activeDays:0},error:null}),from:()=>({select:()=>({eq:async()=>({data:[],error:null})})}),auth:{
     getUser:async()=>{
       if(holdRead)await holdRead;
@@ -94,23 +95,34 @@ const scene=make({signed:true,xp:6000,metadata:{full_name:'Preserved',brainilab_
 const sceneRoot=scene.w.document.querySelector('[data-profile-rewards]'),sceneStore=scene.w.BrainiRewardStore;
 const scenePlayer=JSON.stringify(scene.player);
 const stage=sceneRoot.querySelector('[data-style-preview-avatar]'),miniScene=sceneRoot.querySelector('[data-avatar-mini]');
+const stageScene=sceneRoot.querySelector('[data-avatar-stage-scene]');
 const sceneArt=scene.w.BrainiAvatarStudioArt;
 const libraryCard=sceneRoot.querySelector('[data-reward-kind=scene][data-reward-id=library] img');
 assert.equal(libraryCard.getAttribute('src'),sceneArt.sceneSource('library'));
 assert.equal(libraryCard.getAttribute('loading'),'lazy','background choices can wait until their gallery is opened');
 assert.equal(scene.w.document.body.dataset.profileScene,'library');
-assert.equal(stage.querySelector('.avatar-scene-picture-art').getAttribute('src'),sceneArt.sceneSource('library'));
-assert.match(stage.querySelector('.avatar-scene-photo img').src,/einstein\.svg$/,'the smaller circle retains the original picture');
+assert.equal(stageScene.getAttribute('src'),sceneArt.sceneSource('library'));
+const defaultId=scene.w.BrainiPeople.resolve(scene.player).id;
+assert.equal(stage.querySelector(':scope > .avatar-scene-foreground').getAttribute('src'),'/assets/avatars/knowledge-foreground/'+defaultId+'.svg');
+for(const {id,avatar} of scene.w.BrainiPeople.PEOPLE){
+ const original=readFileSync(sourceRoot+avatar,'utf8');
+ const transparent=readFileSync(sourceRoot+'/assets/avatars/knowledge-foreground/'+id+'.svg','utf8');
+ assert.notEqual(transparent,original,'the stock portrait background is removed');
+ assert.equal(transparent,original.replace(/<path fill="[^"]+" d="M0 0h128v128H0z"\/><circle cx="103" cy="23" r="18" fill="#fff" opacity="\.45"\/>/,''),'the portrait artwork fills the same viewport');
+}
 sceneRoot.querySelector('[data-reward-kind=scene][data-reward-id=stars]').click();
 assert.equal(sceneRoot.dataset.profileScene,'stars','studio previews the draft');
 assert.equal(scene.w.document.body.dataset.profileScene,'library','header stays confirmed until save');
 assert.equal(miniScene.querySelector('.avatar-scene-picture-art').getAttribute('src'),sceneArt.sceneSource('stars'));
-assert.ok(stage.querySelector('.avatar-scene-photo img'),'scene does not force an illustrated avatar');
+assert.equal(stageScene.getAttribute('src'),sceneArt.sceneSource('stars'));
+assert.ok(stage.querySelector(':scope > img'),'the original type of portrait remains full-size in the stage');
 sceneRoot.querySelector('[data-reward-kind=mode][data-reward-id=built]').click();
-const illustrated=stage.querySelector('.avatar-scene-art');
-assert.equal(illustrated.getAttribute('href'),sceneArt.sceneSource('stars'));
-assert.match(illustrated.parentElement.getAttribute('clip-path'),/#avatar-art-stage-disc/);
-assert.ok(illustrated.nextElementSibling.matches('g[transform]'),'character artwork is layered above the scene inside the circle');
+assert.match(stage.querySelector('[clip-path]').getAttribute('clip-path'),/#avatar-art-stage-disc/);
+assert.equal(stage.querySelector('.avatar-scene-art'),null,'the full-size desktop avatar lets the same continuous stage scene show through');
+const illustratedMini=miniScene.querySelector('.avatar-scene-art');
+assert.equal(illustratedMini.getAttribute('href'),sceneArt.sceneSource('stars'));
+assert.match(illustratedMini.parentElement.getAttribute('clip-path'),/#avatar-art-mini-disc/);
+assert.doesNotMatch(stage.innerHTML,/scale\(\.87\)/,'a scene does not scale down the illustrated portrait');
 assert.equal(sceneArt.sceneSource(['stars']),'','unknown or non-string scene IDs cannot supply an image URL');
 sceneRoot.querySelector('[data-style-cancel]').click();assert.equal(sceneRoot.dataset.profileScene,'library');
 assert.equal(scene.w.BrainiRewardCatalog.surprise({scene:'stars'},6000,()=>.5).scene,'stars','surprise preserves the chosen scene');
@@ -126,5 +138,9 @@ await sceneStore.load();assert.equal(scene.w.document.body.dataset.profileScene,
 scene.setWriteError(true);assert.equal(await sceneStore.save({...sceneStore.snapshot().style,scene:'none'}),false);
 assert.equal(scene.w.document.body.dataset.profileScene,'lab','failed save keeps confirmed scene');
 assert.equal(JSON.stringify(scene.player),scenePlayer,'scene operations never change XP, score or level');
+const photoUrl='https://example.test/full-size-photo.webp';
+const photo=make({signed:true,xp:6000,avatarUrl:photoUrl,metadata:{brainilab_avatar_mode_v1:'picture',brainilab_profile_scene_v1:'lab'}});await tick();
+assert.equal(photo.w.document.querySelector('[data-style-preview-avatar] > img').src,photoUrl);
+assert.equal(photo.w.document.querySelector('[data-avatar-stage-scene]').hidden,false,'photo keeps its size and uses the lateral scene');
 for(const item of fixtures)item.dom.window.close();
 console.log('PASS reward thresholds, retroactive XP, next/all rewards, preview/save/cancel, guest reload/storage failure, owner isolation, concurrent metadata fields, offline retry, locked metadata and unchanged scores/XP/levels.');

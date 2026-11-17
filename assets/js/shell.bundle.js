@@ -619,7 +619,7 @@ window.BrainiAvatarDesign=(function(){
 /* Shared character portrait for the studio and saved avatar surfaces. */
 window.BrainiAvatarStudioArt=(()=>{
   const A=BrainiAvatarDesign;
-  const sceneVersions={library:'f44b2026f8df',lab:'a900332adf79',stars:'d945583020ac'};
+  const sceneVersions={library:'bc2e29e50a79',lab:'c24336b91bc0',stars:'9236b09fa514'};
   function sceneSource(scene){
     return typeof scene==='string'&&Object.hasOwn(sceneVersions,scene)?
       '/assets/profile-scenes/'+scene+'-avatar.webp?v='+sceneVersions[scene]:'';
@@ -635,11 +635,9 @@ window.BrainiAvatarStudioArt=(()=>{
     gold:glassRim+'<path d="M71 4Q100-9 129 4M71 196Q100 209 129 196" fill="none" stroke="#fff4b2" stroke-width="3" stroke-linecap="round"/><path d="m100-16 10 12-10 10-10-10Zm0 232 8-9-8-9-8 9Z" fill="#ffea8b" stroke="#a07625" stroke-width="1.7"/>',
     orbit:'<ellipse cx="100" cy="100" rx="117" ry="48" transform="rotate(-33 100 100)" fill="none" stroke="#9b8be0" stroke-width="2.5" stroke-dasharray="240 300" transform-origin="100 100"/><circle cx="198" cy="55" r="4" fill="#e6bd67"/>'
   };
-  function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false,scene}){
+  function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false,scene,transparentBackdrop=false}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
-    const sceneUrl=cropHair?'':sceneSource(scene);
-    // Leave room for scene details above and beside the character.
-    const characterTransform=sceneUrl?'translate(13 26) scale(.87)':'';
+    const sceneUrl=cropHair||transparentBackdrop?'':sceneSource(scene);
     const backHair={waves:'longBack',bob:'bobBack',braids:'braids',ponytail:'pony',curls:'curlsBack'}[look.hair];
     const frontHair={sweep:'sweep',crop:'crop',curls:'curls',bald:'none',bob:'part',waves:'part',braids:'part',ponytail:'part'}[look.hair];
     const hairArt={
@@ -680,9 +678,8 @@ window.BrainiAvatarStudioArt=(()=>{
     </defs>
     <g transform="translate(20 20)">
     <g clip-path="url(#${id}-disc)">
-    ${A.backdrop(look.background)}
-    ${sceneUrl?`<image class="avatar-scene-art" href="${sceneUrl}" width="200" height="200"/>`:''}
-    <g transform="${characterTransform}">
+    ${transparentBackdrop?'':A.backdrop(look.background)}
+    ${sceneUrl?`<image class="avatar-scene-art" href="${sceneUrl}" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>`:''}
 
     ${hair.longBack||''}
     ${hair.bobBack||''}
@@ -724,9 +721,8 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.none||''}
     ${A.accessory('glasses',look.glasses)}
     </g>
-    </g>
     ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')}
-    <g transform="${characterTransform} translate(0 11)">${A.accessory('hat',look.hat)}</g>
+    <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
     ${look.prop==='none'?'':`<g transform="${sticker}">
       <circle cx="171" cy="174" r="24" fill="#181729" opacity=".2"></circle>
       <circle cx="170" cy="170" r="24" fill="#2d296e"></circle>
