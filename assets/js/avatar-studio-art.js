@@ -1,7 +1,7 @@
 /* Shared character portrait for the studio and saved avatar surfaces. */
 window.BrainiAvatarStudioArt=(()=>{
   const A=BrainiAvatarDesign;
-  const sceneVersions={library:'bc2e29e50a79',lab:'c24336b91bc0',stars:'9236b09fa514'};
+  const sceneVersions={library:'bc2e29e50a79',lab:'c24336b91bc0',stars:'9236b09fa514',greenhouse:'ab8cc622242b',tidepool:'8e5f8804c652',arcade:'eb6e9dc004cb'};
   function sceneSource(scene){
     return typeof scene==='string'&&Object.hasOwn(sceneVersions,scene)?
       '/assets/profile-scenes/'+scene+'-avatar.webp?v='+sceneVersions[scene]:'';
@@ -22,19 +22,18 @@ window.BrainiAvatarStudioArt=(()=>{
     `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${stroke}" stroke-width="${width}" ${attrs}/>`;
   const glide=(r,stroke,width,dash,kind='')=>
     `<g class="avatar-frame-spin ${kind}">${ring(r,stroke,width,`pathLength="100" stroke-dasharray="${dash}" stroke-linecap="round" transform="rotate(-132 100 100)"`)}</g>`;
+  const frameMotif=(name,positions,art)=>`<g class="avatar-frame-spin avatar-frame-motifs avatar-frame-${name}">${positions.map(a=>`<g transform="rotate(${a} 100 100)">${art}</g>`).join('')}</g>`;
   const frameEffects=Object.freeze({
-    level:glide(108,'#fff0a2',1.6,'9 91','avatar-frame-glint'),
-    blue:glide(104,'#e7fbff',3.8,'15 85','avatar-frame-tide')+
-      glide(110,'#a9dfff',1.2,'5 95','avatar-frame-reverse'),
-    green:'<g class="avatar-frame-canopy" fill="#dbfa91"><ellipse cx="22" cy="44" rx="8" ry="3.5" transform="rotate(-45 22 44)"/><ellipse cx="184" cy="160" rx="8" ry="3.5" transform="rotate(-45 184 160)"/><circle cx="166" cy="183" r="2.6"/></g>'+
-      glide(105,'#c9f78d',2.4,'12 88','avatar-frame-tide'),
-    copper:glide(113,'#ffc494',2.6,'1 2 1 4 1 91','avatar-frame-etch')+
-      glide(104,'#ffe0bb',2.1,'9 91','avatar-frame-glint'),
-    gold:glide(105,'#fff9cb',4,'9 91','avatar-frame-glint')+
-      '<g class="avatar-frame-starlight" fill="#fff8d4"><path d="m16 55 1.6 4.4 4.4 1.6-4.4 1.6L16 67l-1.6-4.4L10 61l4.4-1.6Z"/><circle cx="185" cy="36" r="2.8"/><circle cx="180" cy="160" r="2.3"/></g>',
+    level:frameMotif('progress',[12,27,42],'<rect x="97.5" y="-13" width="5" height="6" rx="2" fill="#fff0a2" stroke="#54456b" stroke-width="1.2"/>'),
+    blue:glide(104,'#e7fbff',2.2,'15 85','avatar-frame-tide')+
+      frameMotif('bubbles',[3,126,244],'<g class="avatar-frame-bubbles"><circle cx="100" cy="-10" r="5" fill="#c0f0ff" stroke="#376fb0" stroke-width="1.4"/><circle cx="102" cy="-12" r="1.8" fill="#fff"/><circle cx="110" cy="-12" r="2" fill="#dcf6ff"/></g>'),
+    green:frameMotif('leaves',[12,125,248],'<g class="avatar-frame-leaf"><path d="M88-5q6-13 18-12-1 13-18 12Zm9-4q14-8 21-2-6 9-21 2Z" fill="#a1e467" stroke="#487a43" stroke-width="1.6"/><path d="m92-7 10-7m-2 6 13-3" stroke="#e9ffb7" stroke-width="1.3" stroke-linecap="round"/></g>'),
+    copper:frameMotif('gears',[16,112,209,302],'<g class="avatar-frame-cog" transform="translate(100 -10)"><path d="M-3-8h6l1 3 3 1 2 5-3 2-1 4-5 2-2-3-4-1-2-5 3-2Z" fill="#f5b688" stroke="#754530" stroke-width="1.4"/><circle r="2.4" fill="#754530"/></g>')+
+      glide(113,'#ffc494',2,'3 10 4 16 9 58','avatar-frame-reverse'),
+    gold:frameMotif('comets',[15,133,245],'<g class="avatar-frame-spark"><path d="m100-19 2.7 6 6 2.7-6 2.7-2.7 6-2.7-6-6-2.7 6-2.7Z" fill="#fff2af" stroke="#b47c3a" stroke-width="1.4"/><circle cx="112" cy="-10" r="2.5" fill="#ffdd71"/><circle cx="119" cy="-8" r="1.6" fill="#fff3c6"/></g>'),
     orbit:glide(109,'#b7abff',2.4,'15 20 9 56','avatar-frame-reverse')+
       '<g class="avatar-frame-spin avatar-orbit"><path d="M68-8a113 113 0 0 1 32-5M-10 125a113 113 0 0 0 12 31M210 124a113 113 0 0 1-12 32" fill="none" stroke="#9d8ffa" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="-13" r="7" fill="#ffd813" stroke="#2d296e" stroke-width="2"/><circle cx="98" cy="-15" r="2.1" fill="#fff7c8"/><circle cx="2" cy="156" r="5.5" fill="#f09b65" stroke="#2d296e" stroke-width="2"/><circle cx="198" cy="156" r="5" fill="#76d68a" stroke="#2d296e" stroke-width="2"/></g>',
-    midnight:glide(110,'#ffd089',2,'7 93','avatar-frame-glint'),
+    midnight:frameMotif('bats',[20,190],'<path d="M89-10q6-4 10 1l1-5 2 4q5-3 11-1l-5 7-5-2-3 4-3-4-4 1Z" fill="#d6b8fb" stroke="#5c467c" stroke-width="1.6" stroke-linejoin="round"/>'),
     prism:ring(104,'#2e2459',14)+
       `<g class="avatar-frame-spectrum">${spectrum.map((color,i)=>ring(104,color,10,`pathLength="12" stroke-dasharray="1.06 10.94" stroke-dashoffset="${-i}"`)).join('')}</g>`+
       ring(98,'#fff7ff',1.4,'opacity=".9"')+
@@ -54,7 +53,7 @@ window.BrainiAvatarStudioArt=(()=>{
     const complete=completeFrames.includes(frame)?' data-complete-frame':'';
     return `<svg class="avatar-frame-overlay"${complete} viewBox="0 0 240 240" aria-hidden="true" focusable="false"><g transform="translate(20 20)">${frameEffects[frame]}</g></svg>`;
   }
-  function markup(look,{instance,level=1,levelPct=0,stickerScale=1,cropHair=false,scene,transparentBackdrop=false}){
+  function markup(look,{instance,level=1,levelPct=0,cropHair=false,scene,transparentBackdrop=false}){
     const id='avatar-art-'+instance,palette=paletteFor(look),arc=Math.round(1000*levelPct)+' 1000';
     const sceneUrl=cropHair||transparentBackdrop?'':sceneSource(scene);
     const backHair={waves:'longBack',bob:'bobBack',braids:'braids',ponytail:'pony',curls:'curlsBack'}[look.hair];
@@ -75,10 +74,9 @@ window.BrainiAvatarStudioArt=(()=>{
       [backHair]:hairArt[backHair],
       [frontHair]:hairArt[frontHair]
     };
-    const sticker='translate(170 170) scale('+stickerScale+') translate(-170 -170)';
+    const newHair=A.newHair(look.hair,palette.hairColor);
     const frame=look.frame==='midnight'?'level':look.frame;
-    const prop=look.prop==='none'?'':A.preview('prop',look.prop);
-    const viewBox=cropHair?'46 42 148 148':'0 0 240 240';
+    const viewBox=cropHair?'37 27 166 166':'0 0 240 240';
   const frames={
     level: `<circle cx="100" cy="100" r="104" fill="none" stroke="#29244e" stroke-width="10"></circle><circle cx="100" cy="100" r="104" fill="none" stroke="#FFD813" stroke-width="10" stroke-linecap="round" pathLength="1000" stroke-dasharray="${arc}" transform="rotate(-90 100 100)"></circle><circle cx="100" cy="206" r="15" fill="#FFD813" stroke="#2D296E" stroke-width="3.5"></circle><text x="100" y="211.5" text-anchor="middle" font-size="15" font-weight="700" fill="#2D296E">${level}</text>`,
     blue: `<circle cx="100" cy="100" r="104" fill="none" stroke="url(#${id}-g-sky)" stroke-width="10"></circle><circle cx="100" cy="100" r="99" fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".8"></circle><g fill="#FFFFFF" stroke="#2F7FE0" stroke-width="2"><path d="M14 52 a9 9 0 0 1 17 -2 a7 7 0 0 1 4 13 h-19 a6 6 0 0 1 -2 -11 z"></path><path d="M172 150 a8 8 0 0 1 15 -2 a6 6 0 0 1 3 11 h-17 a5 5 0 0 1 -1 -9 z"></path></g>`,
@@ -100,6 +98,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${transparentBackdrop?'':A.backdrop(look.background)}
     ${sceneUrl?`<image class="avatar-scene-art" href="${sceneUrl}" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>`:''}
 
+    ${newHair.back||''}
     ${hair.longBack||''}
     ${hair.bobBack||''}
     ${hair.braids||''}
@@ -107,6 +106,7 @@ window.BrainiAvatarStudioArt=(()=>{
     ${hair.curlsBack||''}
 
     <path d="M28 206 C30 166 60 148 100 148 C140 148 170 166 172 206 Z" fill="${palette.shirt}"></path>
+    ${A.shirtAccent(look.shirt)}
     <path d="M100 148 C88 148 78 150 70 154 L100 182 L130 154 C122 150 112 148 100 148 Z" fill="#000000" opacity=".16"></path>
     <rect x="87" y="118" width="26" height="42" rx="12" fill="${palette.skin}"></rect>
     <path d="M87 128 L113 128 L113 138 Q100 148 87 138 Z" fill="#000000" opacity=".12"></path>
@@ -120,7 +120,7 @@ window.BrainiAvatarStudioArt=(()=>{
     <circle cx="142" cy="98" r="10" fill="${palette.skin}"></circle>
     <circle cx="58" cy="98" r="4.5" fill="#000000" opacity=".1"></circle>
     <circle cx="142" cy="98" r="4.5" fill="#000000" opacity=".1"></circle>
-    <ellipse cx="100" cy="92" rx="42" ry="46" fill="${palette.skin}"></ellipse>
+    <ellipse cx="100" cy="92" rx="42" ry="46" fill="${palette.skin}" stroke="${A.darkSkin(look.skin)?'#e7ad92':'#613f41'}" stroke-opacity="${A.darkSkin(look.skin)?'.36':'.13'}" stroke-width="1.6" paint-order="stroke fill"></ellipse>
     <path d="M62 104 C66 126 82 138 100 138 C118 138 134 126 138 104 C132 122 118 132 100 132 C82 132 68 122 62 104 Z" fill="#000000" opacity=".07"></path>
     <path d="M76 84 Q84 79 92 83" stroke="${palette.hairColor}" stroke-width="3.5" fill="none" stroke-linecap="round"></path>
     <path d="M108 83 Q116 79 124 84" stroke="${palette.hairColor}" stroke-width="3.5" fill="none" stroke-linecap="round"></path>
@@ -131,23 +131,20 @@ window.BrainiAvatarStudioArt=(()=>{
     <ellipse cx="73" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <ellipse cx="127" cy="110" rx="7" ry="4.5" fill="#F0607A" opacity=".24"></ellipse>
     <path d="M100 100 Q96 108 101 110" stroke="#000000" stroke-opacity=".22" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
-    <path d="M89 117 Q100 127 111 117" stroke="${['umber','ebony'].includes(look.skin)?'#f2c5ad':'#392533'}" stroke-width="3" fill="none" stroke-linecap="round"></path>
+    <path d="M89 117 Q100 127 111 117" stroke="${A.darkSkin(look.skin)?'#f2c5ad':'#392533'}" stroke-width="3" fill="none" stroke-linecap="round"></path>
 
     ${hair.sweep||''}
     ${hair.crop||''}
     ${hair.part||''}
     ${hair.curls||''}
     ${hair.none||''}
+    ${newHair.front||''}
+    ${!look.hat||look.hat==='none'?A.hairAccent(look.hair,look.hairColor):''}
     ${A.accessory('glasses',look.glasses)}
+    ${A.integratedProp(look.prop,palette.skin)}
     </g>
     ${cropHair?'':(frames[frame]||'')+(frameDetails[frame]||'')+(frameEffects[look.frame]||'')}
     <g transform="translate(0 11)">${A.accessory('hat',look.hat)}</g>
-    ${look.prop==='none'?'':`<g transform="${sticker}">
-      <circle cx="171" cy="174" r="24" fill="#181729" opacity=".2"></circle>
-      <circle cx="170" cy="170" r="24" fill="#2d296e"></circle>
-      <circle cx="170" cy="170" r="21.5" fill="#fffaf1" stroke="#e0c082" stroke-width="1.5"></circle>
-      ${prop.replace('width="120" height="120"','x="149" y="149" width="42" height="42"')}
-    </g>`}
     </g>
     </svg>`;
   }

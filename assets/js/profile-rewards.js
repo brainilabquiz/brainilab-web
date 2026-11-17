@@ -63,6 +63,7 @@ window.BrainiProfileRewards=(function(){
     root.querySelector('[data-style-preview-name]').textContent=player.displayName;
     showTitle(root.querySelector('[data-style-preview-title]'),shown.title);
     root.querySelector('.avatar-stage-identity').dataset.diplomaTier=tier?.key||'rookie';
+    root.querySelector('[data-avatar-diploma-tier]').textContent=tier?.name||'Rookie';
     root.querySelector('[data-avatar-diploma-next]').textContent=nextTier?`Next diploma · Level ${nextTier.min}`:'Top diploma unlocked';
     root.querySelector('[data-avatar-level]').textContent=`Level ${level} · ${total.toLocaleString('en-GB')} XP`;
     U.equippedSlots(root,shown,lockedPreview);
@@ -90,9 +91,14 @@ window.BrainiProfileRewards=(function(){
     root=document.querySelector('[data-profile-rewards]');if(!root)return;U.mount(root);
     root.addEventListener('click',async event=>{
       if(event.target.closest('[data-halloween-recover]')){await window.BrainiHalloweenEntitlements?.load?.();render();return;}
+      if(event.target.closest('[data-avatar-mini]')){
+        root.querySelector('.avatar-studio-stage').scrollIntoView({block:'start',behavior:'instant'});
+        root.querySelector('[data-avatar-preview-heading]').focus({preventScroll:true});
+        return;
+      }
       const motion=event.target.closest('[data-avatar-motion]');
       if(motion){
-        const paused=root.toggleAttribute('data-frame-motion-paused');
+        const paused=root.toggleAttribute('data-avatar-motion-paused');
         motion.setAttribute('aria-pressed',String(paused));
         return;
       }
