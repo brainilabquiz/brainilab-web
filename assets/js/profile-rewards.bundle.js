@@ -454,7 +454,7 @@ window.BrainiAvatarStudioUI=(function(){
       '<span class="avatar-empty-art">'+icon('empty')+'</span>':A.preview(kind,item.id,draft);
     if(kind==='scene'){
       const sceneUrl=window.BrainiAvatarStudioArt?.sceneSource?.(item.id);
-      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="512" alt="">`:
+      return sceneUrl?`<img class="profile-scene-sample" src="${sceneUrl}" width="512" height="512" loading="lazy" decoding="async" alt="">`:
         `<span class="profile-scene-sample" data-profile-scene="${item.id}"></span>`;
     }
     if(kind==='title'){

@@ -95,6 +95,9 @@ const sceneRoot=scene.w.document.querySelector('[data-profile-rewards]'),sceneSt
 const scenePlayer=JSON.stringify(scene.player);
 const stage=sceneRoot.querySelector('[data-style-preview-avatar]'),miniScene=sceneRoot.querySelector('[data-avatar-mini]');
 const sceneArt=scene.w.BrainiAvatarStudioArt;
+const libraryCard=sceneRoot.querySelector('[data-reward-kind=scene][data-reward-id=library] img');
+assert.equal(libraryCard.getAttribute('src'),sceneArt.sceneSource('library'));
+assert.equal(libraryCard.getAttribute('loading'),'lazy','background choices can wait until their gallery is opened');
 assert.equal(scene.w.document.body.dataset.profileScene,'library');
 assert.equal(stage.querySelector('.avatar-scene-picture-art').getAttribute('src'),sceneArt.sceneSource('library'));
 assert.match(stage.querySelector('.avatar-scene-photo img').src,/einstein\.svg$/,'the smaller circle retains the original picture');
