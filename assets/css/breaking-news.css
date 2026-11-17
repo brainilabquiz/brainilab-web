@@ -129,11 +129,16 @@
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
+  text-decoration: none;
 }
 .bn-chip:hover:not(:disabled) { border-color: var(--navy); }
 .bn-chip span { opacity: .8; font-weight: 600; }
-.bn-chip[aria-pressed="true"] { border-color: var(--navy); background: var(--navy); color: var(--card); }
-.bn-chip:disabled { border-style: dashed; background: var(--page); color: var(--bn-muted); cursor: default; }
+.bn-chip[aria-pressed="true"], .bn-chip[aria-current="page"] { border-color: var(--navy); background: var(--navy); color: var(--card); }
+.bn-chip:disabled, .bn-chip.bn-chip-empty { border-style: dashed; background: var(--page); color: var(--bn-muted); cursor: default; }
+.bn-filter { scroll-margin-top: 88px; }
+.bn-source-results h2 { margin: 0; color: var(--navy); }
+.bn-source-results p { margin: 6px 0 0; color: var(--bn-muted); }
+.bn-source-history time { display: block; color: var(--bn-muted); font-size: 12px; }
 .bn-past-stories { flex: none; margin-inline-start: auto; }
 .bn-past-stories > summary { cursor: pointer; }
 .bn-past-stories > summary::-webkit-details-marker { display: none; }

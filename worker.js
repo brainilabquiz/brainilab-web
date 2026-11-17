@@ -9,8 +9,8 @@ import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHal
 import {decorateHalloween,renderHalloweenPage} from './lib/halloween-render.js';
 import {renderNews,renderEmptyNews,freshNews,newsEditionRevision,newsHead} from './lib/breaking-news.js';
 import {newsArchive,newsEdition,REFRESH_MS} from './lib/news-refresh.js';
-import {ARCHIVE_PATH,NEWS_PATH,editionInstant,editionPath} from './lib/news-archive.js';
-import {archivedEditionPage,newsArchivePage,newsEditionNav,newsPastStories,renderPreviousEditions} from './lib/news-archive-page.js';
+import {ARCHIVE_PATH,NEWS_PATH,editionInstant,editionPath,sourceArchiveQuery} from './lib/news-archive.js';
+import {archivedEditionPage,newsArchivePage,newsEditionNav,newsPastStories,newsSourceFilters,newsSourceResults,renderPreviousEditions} from './lib/news-archive-page.js';
 import {PUBLISHERS} from './lib/news-publisher.js';
 import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/public-page-store.js';
@@ -44,7 +44,7 @@ function json(body,status=200,maxAge=60){return new Response(JSON.stringify(body
 async function serveNews(request,url,env,holiday) {
   const head=request.method==='HEAD';
   if(!head&&request.method!=='GET')return new Response('Method not allowed',{status:405,headers:{Allow:'GET, HEAD'}});
-  const notFound=()=>new Response(head?null:'Edition not found',{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
+  const notFound=(message='Edition not found')=>new Response(head?null:message,{status:404,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
   const path=url.pathname.replace(/\/index\.html$/,'/').replace(/\/?$/,'/');
   const latest=path===NEWS_PATH,index=path===ARCHIVE_PATH;
   const id=!latest&&!index&&path.startsWith(ARCHIVE_PATH)?path.slice(ARCHIVE_PATH.length,-1):'';
@@ -54,29 +54,37 @@ async function serveNews(request,url,env,holiday) {
   if(!latest&&!production)return notFound();
   const before=index?url.searchParams.get('before'):null;
   if(before&&!Number.isFinite(editionInstant(before)))return notFound();
-  const [template, automated, history]=await Promise.all([
+  const sourceQuery=latest?sourceArchiveQuery(url.searchParams):null;
+  if(latest&&(!sourceQuery||(!production&&sourceQuery.source)))return notFound('Source page not found');
+  const selectedSource=sourceQuery?.source;
+  const [template, automated, history, bySource]=await Promise.all([
     env.ASSETS.fetch(new Request(new URL(NEWS_PATH,url))),
-    latest&&production?newsEdition(env,{passive:head}):null,
-    production?newsArchive(env,latest?{recent:'1'}:{before,edition:id}):null
+    latest&&production&&!selectedSource?newsEdition(env,{passive:head}):null,
+    production?newsArchive(env,latest?{recent:'1'}:{before,edition:id}):null,
+    latest&&production?newsArchive(env,{sources:'1',source:selectedSource,page:selectedSource?String(sourceQuery.page):null}):null
   ]);
   if(!template.ok)return new Response(null,{status:template.status,headers:template.headers});
-  if(!latest&&!history)return new Response(head?null:'The news archive is temporarily unavailable.',{status:503,headers:{'Cache-Control':'no-store','Retry-After':'60'}});
+  if((!latest&&!history)||(selectedSource&&!bySource))return new Response(head?null:'The news archive is temporarily unavailable.',{status:503,headers:{'Cache-Control':'no-store','Retry-After':'60'}});
   if(!latest&&(history.missing||(index?!history.items?.length:!history.edition)))return notFound();
+  if(selectedSource&&!bySource.selected)return notFound('Source page not found');
   const html=await template.text(),headers=new Headers(template.headers);
   for(const name of ['Content-Length','ETag','Last-Modified'])headers.delete(name);
   headers.set('Content-Security-Policy',PAGE_CONTENT_POLICY);
   let page;
   if(latest){
-    const now=Date.now(),edition=selectNewsEdition(automated,now);
+    const now=Date.now(),edition=bySource?.filters?bySource.edition:selectNewsEdition(automated,now);
     const current=freshNews(edition,now).length?{...edition,generatedAt:new Date(edition.generatedAt).toISOString()}:null;
     const previous=(Array.isArray(history?.items)?history.items:[]).filter(item=>!current||item.generatedAt<current.generatedAt).slice(0,2);
+    const selected=bySource?.selected;
     const display={publishers:PUBLISHERS,nextCheck:new Date((Math.floor(now/REFRESH_MS)+1)*REFRESH_MS),
       navigation:history?.items?.length?newsEditionNav(current,previous):'',
-      pastStories:production?newsPastStories(previous):'',
-      previous:renderPreviousEditions(previous),permalink:current&&history?.items?.some(item=>item.generatedAt===current.generatedAt)?editionPath(current):''};
-    page={head:newsHead(html,current,now),content:renderNews(current,now,display)||renderEmptyNews(display)};
-    headers.set('Cache-Control',current?'public,max-age=60':'no-store');
-    if(!current)headers.set('X-Robots-Tag','noindex, follow');
+      pastStories:production?newsPastStories(selected?[]:previous):'',
+      previous:selected?'':renderPreviousEditions(previous),permalink:current&&history?.items?.some(item=>item.generatedAt===current.generatedAt)?editionPath(current):'',
+      sourceFilters:bySource?.filters?newsSourceFilters(bySource.filters,selectedSource):'',
+      sourceResults:selected?{...newsSourceResults(selected),current:current?selected.current:[]}:null};
+    page={head:newsHead(html,selected?null:current,now),content:renderNews(current,now,display)||renderEmptyNews(display)};
+    headers.set('Cache-Control',current||selected?'public,max-age=60':'no-store');
+    if(!current||selected)headers.set('X-Robots-Tag','noindex, follow');
   }else{
     page=index?newsArchivePage(html,history,before):archivedEditionPage(html,history.edition);
     headers.set('Cache-Control',holiday.active?'no-store':'public,max-age=300');
