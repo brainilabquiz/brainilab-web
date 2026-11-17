@@ -6,6 +6,15 @@
   const status = root?.querySelector('[data-news-update-status]');
   if (!root || !link || !label || !status) return;
 
+  const activeSource = root.querySelector('[data-news-source][aria-current="page"]');
+  if (activeSource) {
+    const options = activeSource.parentElement;
+    const {left,right} = options.getBoundingClientRect();
+    const selected = activeSource.getBoundingClientRect();
+    if (selected.right > right) options.scrollLeft += selected.right - right + 6;
+    if (selected.left < left) options.scrollLeft += selected.left - left - 6;
+  }
+
   const filter = root.querySelector('[data-news-filter]');
   if (filter) {
     const chips = Array.from(filter.querySelectorAll('[data-news-filter-value]'));
