@@ -1055,3 +1055,63 @@ body.profile-page.braini-visual .avatar-studio-controls :is(.reward-grid-skin,.r
   body.profile-page.braini-visual .profile-rewards{border-radius:20px}
 }
 @media(prefers-reduced-motion:reduce){body.profile-page.braini-visual .avatar-studio-heading .avatar-play-link:hover{transform:none}}
+
+/* ===== Frosted surfaces, continued (18 Nov 2026): rankings, groups, about, contact, topic hubs and game panels.
+   Same recipe as the game and reading cards: light from the top-left, a soft shade, an inner rim. ===== */
+body.braini-visual :is(.ranking-board,.ranking-progress,.ranking-rules,.group-welcome,.group-room,.group-invite-banner,.about-people>article,.suggestions-card){
+  background:
+    radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffd6),transparent 68%),
+    linear-gradient(145deg,transparent 38%,var(--glass-shade,#665a9e1f)),
+    var(--glass-surface,#efedf8);
+  border-color:var(--glass-border,#c6c1dc);
+  box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 8px 24px #2d296e1c;
+}
+body.braini-visual :is(.ranking-rules,.suggestions-card){border:1px solid var(--glass-border,#c6c1dc);border-radius:18px}
+body.braini-visual .about-people>article{border-top-color:#40ab34}
+body.braini-visual .group-welcome{--glass-surface:#e6f2e2;--glass-border:#b9d7b0;--glass-shade:#2f7a2a1a}
+
+/* Rankings: the top three read as gold, silver and bronze glass. */
+body.braini-visual .ranking-row:is(.place-1,.place-2,.place-3){
+  position:relative;
+  background:radial-gradient(ellipse at 8% 0%,#ffffffb3,transparent 70%),var(--podium,#fff3c4);
+  box-shadow:inset 4px 0 0 var(--podium-edge,#e3b100);
+}
+body.braini-visual .ranking-row.place-1{--podium:#ffefb3;--podium-edge:#e3b100}
+body.braini-visual .ranking-row.place-2{--podium:#eceef6;--podium-edge:#9aa3bd}
+body.braini-visual .ranking-row.place-3{--podium:#f8e1cf;--podium-edge:#c98345}
+body.braini-visual .ranking-row:is(.place-1,.place-2,.place-3) .ranking-row-score{font-weight:900}
+body.braini-visual .ranking-row:not(.place-1,.place-2,.place-3):hover{background:#ffffff8c}
+body.braini-visual .ranking-board .ranking-list-head{background:#ffffff73}
+
+/* Topic hubs: the level cards keep their colour and gain the glass light. */
+body.braini-visual :is(.topic-level,.geo-choice),body.braini-visual.topic-page .card{
+  background:
+    radial-gradient(ellipse at 12% 0%,#ffffff47,transparent 62%),
+    linear-gradient(145deg,transparent 42%,#0d092c33),
+    var(--hub-fill)!important;
+  box-shadow:inset 0 1px 1px #ffffffa6,inset 0 0 0 1px #ffffff26,0 10px 26px #2d296e2e;
+}
+body.braini-visual :is(.topic-level-medium,.geo-europe),body.braini-visual.topic-page .card.accent-yellow{
+  background:radial-gradient(ellipse at 12% 0%,#fffbe0b3,transparent 62%),linear-gradient(145deg,transparent 42%,#c0812533),var(--hub-fill)!important;
+}
+
+/* Game panels on the navy band: the same frosted glass as the home Daily panel. */
+body.braini-visual :is(.labgame-shell,.connections-shell,.daily-mechanic-shell){
+  background:linear-gradient(145deg,#a39bff46,transparent 55%,#17143b4d),#312c7ae0!important;
+  border-color:#e0dcff58!important;
+  box-shadow:inset 0 1px 1px #f3edff48,inset 0 -1px 1px #17143b66,0 24px 54px #0b083066!important;
+}
+@supports ((backdrop-filter:blur(7px)) or (-webkit-backdrop-filter:blur(7px))){
+  body.braini-visual :is(.labgame-shell,.connections-shell,.daily-mechanic-shell){
+    background:linear-gradient(145deg,#a39bff46,transparent 55%,#17143b4d),#312c7ac9!important;
+    -webkit-backdrop-filter:blur(7px) saturate(1.18);backdrop-filter:blur(7px) saturate(1.18);
+  }
+}
+@media (prefers-reduced-transparency:reduce),(forced-colors:active){
+  body.braini-visual :is(.labgame-shell,.connections-shell,.daily-mechanic-shell){
+    background:linear-gradient(145deg,#49449a,#2a265f)!important;-webkit-backdrop-filter:none;backdrop-filter:none;
+  }
+  body.braini-visual :is(.ranking-board,.ranking-progress,.ranking-rules,.group-welcome,.group-room,.group-invite-banner,.about-people>article,.suggestions-card){
+    background:var(--glass-surface,#efedf8);
+  }
+}
