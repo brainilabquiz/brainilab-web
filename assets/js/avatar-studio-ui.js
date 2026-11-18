@@ -42,6 +42,17 @@ window.BrainiAvatarStudioUI=(function(){
     const summary=cosmeticPanes.includes(kind)?`<small class="avatar-collection-summary" data-style-collection="${kind}"></small>`:'';
     return `<fieldset class="avatar-option-group"><legend><span class="avatar-option-heading"><span>${name}</span>${summary}</span></legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
   }
+  function colourPairChoices(){
+    return `<fieldset class="avatar-option-group avatar-colour-pairs"><legend>Colour combinations</legend><div class="avatar-colour-pair-grid">${A.colourPairs.map(pair=>{
+      const hair=C.item('hairColor',pair.hairColor),shirt=C.item('shirt',pair.shirt);
+      const label=escapeCopy(`${pair.name}: ${hair.name} hair and ${shirt.name} shirt`);
+      return `<button type="button" data-avatar-colour-pair="${pair.id}" aria-label="${label}" aria-pressed="false"><span class="avatar-colour-pair-swatches" aria-hidden="true"><span class="avatar-swatch" style="--swatch:${A.swatch('hairColor',pair.hairColor)}"></span><span class="avatar-swatch" style="--swatch:${A.swatch('shirt',pair.shirt)}"></span></span><strong>${pair.name}</strong></button>`;
+    }).join('')}</div></fieldset>`;
+  }
+  function skinBrightness({color}){
+    const [red,green,blue]=color.slice(1).match(/../g).map(channel=>parseInt(channel,16));
+    return .2126*red+.7152*green+.0722*blue;
+  }
   const escapeCopy=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   function collectionSummary(root,total,options){
     for(const summary of root.querySelectorAll('[data-style-collection]')){
@@ -117,7 +128,7 @@ window.BrainiAvatarStudioUI=(function(){
             <label class="avatar-filter-mobile"><input type="checkbox" data-studio-unlocked> Unlocked only</label>
           </div>
           <p class="avatar-filter-empty" data-studio-empty hidden>No items match this filter.</p>
-      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<section class="avatar-day-collection" aria-labelledby="avatar-days-title"><h3 id="avatar-days-title" class="avatar-collection-heading">Days played</h3><p class="avatar-pane-note">A little time to play, whenever it suits you. Finish a saved game on different days to unlock these extras. Breaks never reset your progress. Earlier qualifying games count. Each date counts once, using UTC.</p><p class="avatar-academy-count" data-active-days-count></p><div class="avatar-challenge-grid" data-day-rewards></div></section><p class="avatar-pane-note">Try different games to earn a little extra. Completed rounds saved to your account count.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">Complete all lesson quizzes in a course while signed in. Earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='look'?'<div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><h3 id="avatar-start-label">Start with</h3><div class="reward-mode-grid" data-style-modes></div></div>':''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}
+      ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<section class="avatar-day-collection" aria-labelledby="avatar-days-title"><h3 id="avatar-days-title" class="avatar-collection-heading">Days played</h3><p class="avatar-pane-note">A little time to play, whenever it suits you. Finish a saved game on different days to unlock these extras. Breaks never reset your progress. Earlier qualifying games count. Each date counts once, using UTC.</p><p class="avatar-academy-count" data-active-days-count></p><div class="avatar-challenge-grid" data-day-rewards></div></section><p class="avatar-pane-note">Try different games to earn a little extra. Completed rounds saved to your account count.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">Complete all lesson quizzes in a course while signed in. Earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='look'?'<div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><h3 id="avatar-start-label">Start with</h3><div class="reward-mode-grid" data-style-modes></div></div>'+colourPairChoices():''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}
         </div>
       </section></div>
       <section class="avatar-unlock-road" aria-label="Unlock road" data-studio-road hidden></section>`;
@@ -258,11 +269,17 @@ window.BrainiAvatarStudioUI=(function(){
       window.BrainiHalloweenEntitlements?.snapshot?.().entitlements||[]]);
     if(choiceViews.get(root)===signature)return;
     collectionSummary(root,total,options);
+    for(const button of root.querySelectorAll('[data-avatar-colour-pair]')){
+      const pair=A.colourPairs.find(item=>item.id===button.dataset.avatarColourPair);
+      button.disabled=busy;
+      button.setAttribute('aria-pressed',String(draft.mode==='built'&&draft.hairColor===pair.hairColor&&draft.shirt===pair.shirt));
+    }
     for(const [kind,items] of Object.entries(groups)){
       const grid=root.querySelector(`[data-style-${kind}s]`);if(!grid)continue;
       const visible=new Set(items.filter(item=>!item.course&&!item.challenge&&!item.days).map(item=>item.id));
       for(const button of grid.querySelectorAll('[data-reward-id]'))if(!visible.has(button.dataset.rewardId))button.remove();
-      for(const item of items){
+      const displayItems=kind==='skin'?[...items].sort((a,b)=>skinBrightness(b)-skinBrightness(a)):items;
+      for(const item of displayItems){
         if(item.course||item.challenge||item.days)continue;
         let button=grid.querySelector(`[data-reward-id="${item.id}"]`);
         if(!button){

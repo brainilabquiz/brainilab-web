@@ -15,7 +15,13 @@ window.BrainiAvatarDesign=(function(){
       ["olive","Olive","#b78a5f"],
       ["toffee","Toffee","#96634b"],
       ["walnut","Walnut","#65413b"],
-      ["espresso","Espresso","#352126"]],
+      ["espresso","Espresso","#352126"],
+      ['ivory-peach','Ivory peach','#fbd2bf'],
+      ['golden-beige','Golden beige','#e8b989'],
+      ['neutral-tan','Neutral tan','#c99572'],
+      ['copper-brown','Copper brown','#b16e58'],
+      ['deep-mocha','Deep mocha','#815046'],
+      ['cool-mahogany','Cool mahogany','#55353b']],
     hair:[
       ['sweep','Side sweep'],
       ['curls','Curls'],
@@ -33,7 +39,14 @@ window.BrainiAvatarDesign=(function(){
       ["quiff","High quiff"],
       ["pigtails","Pigtails"],
       ["mohawk","Static Spike"],
-      ["antenna","Wild Hypothesis"]],
+      ["antenna","Wild Hypothesis"],
+      ['buzz','Clean slate'],
+      ['curtain','Split decision'],
+      ['side-braid','Side braid'],
+      ['twists','Rope twists'],
+      ['stacked-bob','Stacked bob'],
+      ['topknot','Top knot'],
+      ['spiral','Spiral notebook']],
     hairColor:[
       ['brown','Brown','#644130'],
       ['black','Black','#302c36'],
@@ -51,7 +64,15 @@ window.BrainiAvatarDesign=(function(){
       ["ink-tide","Ink & teal","#282943",0,"","#5fd7c4"],
       ["berry-frost","Plum & pink","#663678",0,"","#f595c7"],
       ["comet-white","Silver & lilac","#a4a4c0",0,"","#7654ad"],
-      ["afterglow","Sunset blend","#a84963",0,"","#ffbb84"]],
+      ["afterglow","Sunset blend","#a84963",0,"","#ffbb84"],
+      ['dark-ash','Dark ash','#49434b'],
+      ['moss-brown','Moss brown','#544739'],
+      ['strawberry-blond','Strawberry blond','#d89068'],
+      ['warm-grey','Warm grey','#87858b'],
+      ['molten-copper','Chestnut & copper','#6f302d',0,'','#e79258'],
+      ['midnight-violet','Midnight & violet','#353047',0,'','#ad8be3'],
+      ['marine-ink','Ink & sea glass','#263e57',0,'','#80d5d0'],
+      ['rosewood-gold','Rosewood & gold','#693f51',0,'','#edb66b']],
     shirt:[
       ['navy','Navy','#2d296e'],
       ['green','Green','#397e39'],
@@ -68,7 +89,15 @@ window.BrainiAvatarDesign=(function(){
       ["reef","Teal & peach","#257d80",0,"","#ffa88b"],
       ["orchid","Plum & lilac","#754372",0,"","#d6abed"],
       ["eclipse","Black & mint","#29293d",0,"","#82ddb5"],
-      ["sherbet","Coral & honey","#b65365",0,"","#f7c578"]],
+      ["sherbet","Coral & honey","#b65365",0,"","#f7c578"],
+      ['forest','Forest','#2e654c'],
+      ['lilac-mist','Lilac mist','#bca7d9'],
+      ['peacock','Peacock','#176d77'],
+      ['brick','Brick','#ad5650'],
+      ['forest-sand','Forest & sand','#2b6859',0,'','#ead7a1'],
+      ['indigo-ice','Indigo & ice','#43437e',0,'','#95d1e2'],
+      ['wine-rose','Wine & rose','#793750',0,'','#e99aab'],
+      ['graphite-citrus','Graphite & citrus','#34364b',0,'','#e4bd58']],
     background:[['lilac','Lilac','#eae6fa'],['sky','Sky','#dceef8'],['sage','Sage','#e1efdf'],['sunshine','Sunshine','#fff0b3'],['coral','Coral','#fce1d6']],
     glasses:[
       ['none','No glasses'],
@@ -153,6 +182,12 @@ window.BrainiAvatarDesign=(function(){
   const earnedExtras=[...academyRewards,...discoveryRewards,...dayRewards];
   for(const reward of earnedExtras)choices[reward.kind].push([reward.id,reward.name,null,0,reward.description]);
   const options=Object.freeze(Object.fromEntries(Object.entries(choices).map(([key,list])=>[key,Object.freeze(list.map(([id,name,color,xp=0,description='',accent])=>Object.freeze({id,name,color,xp,description,...(accent?{accent}:{}),...(earnedExtras.find(r=>r.id===id)||{})})))])));
+  const colourPairs=Object.freeze([
+    {id:'field-journal',name:'Field journal',hairColor:'molten-copper',shirt:'forest-sand'},
+    {id:'after-class',name:'After class',hairColor:'rosewood-gold',shirt:'wine-rose'},
+    {id:'signal-boost',name:'Signal boost',hairColor:'marine-ink',shirt:'graphite-citrus'},
+    {id:'night-study',name:'Night study',hairColor:'midnight-violet',shirt:'indigo-ice'}
+  ].map(Object.freeze));
   // Seasonal items are earned separately. No amount of XP or editable metadata
   // can grant them; callers must supply the server's sanitized entitlement IDs.
   const eventOptions=Object.freeze({
@@ -333,7 +368,8 @@ window.BrainiAvatarDesign=(function(){
     corn:60,egg:58,graduate:58,jelly:47,toast:57,wave:64,wizard:61,
     academy_calendar:56,academy_detective:56,academy_rainbow:58,days_daydreamer:50,
     discovery_crunch:55,discovery_paperhat:61,'pumpkin-thinker':61});
-  const crownHeight=Object.freeze({bald:58,curls:47,buns:45,fro:43,quiff:44,mohawk:44,antenna:46,undercut:46});
+  const crownHeight=Object.freeze({bald:58,curls:47,buns:45,fro:43,quiff:44,mohawk:44,antenna:46,undercut:46,
+    buzz:53, curtain:49, 'side-braid':51, twists:48, 'stacked-bob':49, topknot:44, spiral:44});
   function fittedHat(id,hair){
     const drawing=accessory('hat',id);
     if(!drawing)return '';
@@ -358,7 +394,7 @@ window.BrainiAvatarDesign=(function(){
     const label=item.name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="120" height="120" role="img" aria-label="${label}" class="braini-cosmetic-preview" data-cosmetic-kind="${kind}" data-cosmetic-id="${id}">${drawing}</svg>`;
   }
-  const darkSkin=new Set(['umber','ebony','walnut','espresso']);
+  const darkSkin=new Set(['umber','ebony','walnut','espresso','deep-mocha','cool-mahogany']);
   const airborneProps=new Set(['bulb','rocket','academy_moon','little-bat','drone']);
   const wornProps=new Set(['scarf','headphones']);
   function integratedProp(id,skin){
@@ -387,11 +423,19 @@ window.BrainiAvatarDesign=(function(){
     locs:'M65 60q11-12 21-12m12-7q10 0 17 6m9 3q11 4 15 14',buns:'M61 41q0-7 10-9m61 0q7 2 8 9m-69 18q24-15 56 0',
     undercut:'M74 55q17-17 45-18l-6 12',fro:'M66 47q8-14 18-12m11-8q11-7 21-1m10 5q12 3 15 15',
     quiff:'M65 51q28-24 61-21m-17 7q14-4 26-1',pigtails:'M50 56q-7 7-8 19m117-19q7 5 9 19M71 58q10-15 27-16',
-    mohawk:'M84 52q3-14 9-23m14 17 10-22',antenna:'M71 61q19-12 33-46m5 23 11-10'
+    mohawk:'M84 52q3-14 9-23m14 17 10-22',antenna:'M71 61q19-12 33-46m5 23 11-10',
+    buzz:'M65 58q12-14 30-16m15 0q13 2 22 11',
+    curtain:'M94 44Q77 53 69 72M106 44q18 10 26 28',
+    'side-braid':'M128 49q12 11 14 28m3 34 11 8m-12 14 10 7',
+    twists:'M71 48q15-10 24-6m25 3q14 10 17 24m7 12q-6 10 1 21',
+    'stacked-bob':'M67 65q11-20 34-24m12 0q17 5 23 22M57 94q3 15 0 28',
+    topknot:'M91 26q8-11 17-5M66 61q12-17 28-18m16-1 16 7',
+    spiral:'M91 53q-16-5-8-19 8-13 24-8 15 4 16 18'
   };
   function hairAccent(id,colorId){
     const accent=options.hairColor.find(item=>item.id===colorId)?.accent,streak=hairStreaks[id];
-    return accent&&streak?`<path d="${streak}" fill="none" stroke="${accent}" stroke-width="5.5" stroke-linecap="round"/>`:'';
+    if(!streak)return '';
+    return `<path d="${streak}" fill="none" stroke="${accent||'#fff'}" stroke-opacity="${accent?'.9':'.19'}" stroke-width="${accent?5.5:2.75}" stroke-linecap="round"/>`;
   }
   function newHair(id,fill){
     // Each haircut shares both its silhouette and colour accents with the compact portrait.
@@ -408,6 +452,16 @@ window.BrainiAvatarDesign=(function(){
       case 'pigtails':return {back:`<path d="M59 55q-25-19-28 18-3 32 16 60l16-27-9-16Zm83 0q24-19 29 18 4 32-15 60l-17-27 8-16Z" ${line}/><path d="m36 57 17 7m94 0 17-7" stroke="#ffc77d" stroke-width="5.5" stroke-linecap="round"/>`,front:part};
       case 'mohawk':return {front:`<path d="M56 88V76q3-15 20-26l5-25 8 12 11-20 3 19 15-17 3 20 11-9 4 19q12 12 8 38l-12-18-19 3-16-6-15 7-12-1Z" ${line}/><path d="m56 78 11-5m-9 11 7-3m73-9 6 6" fill="none" stroke="#fff" stroke-opacity=".37" stroke-width="2" stroke-linecap="round"/>`};
       case 'antenna':return {front:`<path d="M57 92q-14-27 10-40l9-12 5 7q15-16 17-35 11 8 8 25l20-14-5 18q23 3 27 21l-6 28-13-20q-11 7-19-7l-11 9-14-4-15 8Z" ${line}/><path d="M52 53q-12-7-11-15m105 5q10-8 7-15" fill="none" stroke="${fill}" stroke-width="4" stroke-linecap="round"/>`};
+      case 'buzz':return {front:`<path d="M58 79q0-39 42-41 42 2 42 41l-8-11q-15-12-34-12-19 0-34 12Z" ${line}/><path d="m66 59 3-3m5-5 4-2m6-3 4-1m22 0 5 2m7 3 4 3m4 4 3 4" fill="none" stroke="#fff" stroke-opacity=".27" stroke-width="2.2" stroke-linecap="round"/>`};
+      case 'curtain':return {front:`<path d="M55 94Q48 48 78 37q17-7 23 2 9-9 25-1 24 12 19 56l-9-15q-18-5-36-32-11 26-36 32Z" ${line}/><path d="M64 71q15-7 26-20m20-3q13 15 25 21" fill="none" stroke="#241c32" stroke-opacity=".25" stroke-width="2.2" stroke-linecap="round"/>`};
+      case 'side-braid':return {front:`<path d="M57 87q-4-52 40-51 48-4 48 51-16-22-33-28Q86 77 62 72Z" ${line}/><path d="M144 82q14 6 8 16 13 6 6 18 16 5 8 17 12 8 4 18 6 8-3 18-13-2-13-13-12-4-6-16-13-5-7-16-10-6-5-16-11-10 8-26Z" ${line}/><path d="M145 99q6 7 14 7m-12 14q7 7 16 7m-10 14 12 5" fill="none" stroke="#241c32" stroke-opacity=".36" stroke-width="2.6" stroke-linecap="round"/><path d="m156 157 13 2" stroke="#e5b56a" stroke-width="4.4" stroke-linecap="round"/>`};
+      case 'twists':return {back:`<path d="M55 66q0-30 45-30t46 31l7 68-17 13-21-17H84l-29 17-9-17Z" ${line}/>`,
+        front:`${part}<g ${line}><path d="M64 54q-18 10-13 31l3 14-5 23 8 9 9-8-3-18 7-17-4-12 10-15Z"/><path d="M82 49q-16 9-11 22 7 5 12-2l11-17Z"/><path d="M126 49l11 4q17 12 10 24l7 16-5 12 7 16-8 9-8-8 1-17-6-12 2-12-9-16Z"/></g><path d="m56 91 9-6m-11 23 9-7m80-35 7 7m-8 22 9 7m-8 13 9 8" fill="none" stroke="#fff" stroke-opacity=".29" stroke-width="2.5" stroke-linecap="round"/>`};
+      case 'stacked-bob':return {back:`<path d="M48 83Q47 36 100 34q52 2 53 48l4 44-16 13-12-6-18 9H82l-13-8-13 5-11-12Z" ${line}/>`,
+        front:`<path d="M54 88q-4-49 43-52 54 0 48 53l-13-15q-31 5-45-17-12 21-28 22l3 52-10-5Z" ${line}/><path d="M53 111l12 5m-11 6 9 4m78-10 11 4m-10 7 9 3" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2.5" stroke-linecap="round"/>`};
+      case 'topknot':return {back:`<path d="M87 39q-12-8-4-19 9-10 23-6 14 5 13 15-2 8-11 12Z" ${line}/><path d="M89 34q12 6 22 0" fill="none" stroke="#e7b979" stroke-width="4" stroke-linecap="round"/>`,
+        front:`<path d="M58 89q-7-40 28-50 41-12 58 22l-2 25-12-14q-22-3-30-21-15 21-35 25Z" ${line}/><path d="M68 67q19-15 24-22m17 2q11 12 21 15" fill="none" stroke="#241c32" stroke-opacity=".18" stroke-width="2.5" stroke-linecap="round"/>`};
+      case 'spiral':return {front:`<path d="M56 86q-9-28 19-41-8-14 4-26 11-12 28-6 20 6 24 25 19 8 15 44l-17-14-16 4-15-14-19 10-14-2Z" ${line}/><path d="M112 47q-8 8-19 3-11-5-7-14 4-8 12-5 7 2 5 8-3 5-7 1" fill="none" stroke="#241c32" stroke-opacity=".38" stroke-width="3.2" stroke-linecap="round"/><path d="M67 60q3-10 12-13m59 18q-1-9-9-14" fill="none" stroke="#fff" stroke-opacity=".23" stroke-width="3" stroke-linecap="round"/>`};
       default:return {};
     }
   }
@@ -440,5 +494,5 @@ window.BrainiAvatarDesign=(function(){
     };
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Your illustrated BrainiLab avatar" class="braini-built-avatar"><g style="clip-path:circle(50%)">${backdrop(v.background)}</g><g ${line}>${back}</g><path d="M29 201Q30 153 71 151H129Q169 153 171 201Z" fill="${shirt}"/>${shirtAccent(v.shirt)}${finish.shirt}<path d="M81 130H119V159Q100 176 81 159Z" fill="${skin}"/><path d="M81 136Q100 149 119 136V148Q100 161 81 148Z" fill="#302c46" opacity=".1"/><g fill="${skin}"><ellipse cx="59" cy="101" rx="9" ry="12"/><ellipse cx="141" cy="101" rx="9" ry="12"/><path d="M59 78Q60 48 100 48Q140 48 141 78V108Q139 141 100 147Q62 141 59 108Z"/></g>${finish.face}<g ${line}>${hairFront}</g>${hairShine}${hairAccent(v.hair,v.hairColor)}<path d="M73 84Q81 80 89 84M111 84Q119 80 127 84" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff8ed"><ellipse cx="81" cy="97" rx="5.4" ry="6.5"/><ellipse cx="119" cy="97" rx="5.4" ry="6.5"/></g><g fill="#302c46"><ellipse cx="81" cy="97" rx="3.7" ry="5"/><ellipse cx="119" cy="97" rx="3.7" ry="5"/></g>${finish.eyes}<path d="M100 100 96 113H103" fill="none" stroke="${nose}" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M87 123Q100 136 113 123" fill="none" stroke="${mouth}" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/><ellipse cx="126" cy="114" rx="7" ry="3" fill="#d77971" opacity=".24"/>${fittedGlasses(v.glasses)}${fittedHat(v.hat,v.hair)}${integratedProp(v.prop,skin)}</svg>`;
   }
-  return Object.freeze({options,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,backdrop,newHair,hairAccent,shirtAccent,fittedHat,fittedGlasses,integratedProp,darkSkin:id=>darkSkin.has(id),swatch});
+  return Object.freeze({options,colourPairs,eventOptions,eventIds,earnedIds,academyRewards,discoveryGames,discoveryRewards,dayRewards,metadataKeys,clean,available,fromMetadata,fromPublicStyle,frameXp,profileTitles,markup,preview,backdrop,newHair,hairAccent,shirtAccent,fittedHat,fittedGlasses,integratedProp,darkSkin:id=>darkSkin.has(id),swatch});
 })();

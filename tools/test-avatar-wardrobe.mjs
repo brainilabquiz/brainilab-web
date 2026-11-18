@@ -32,7 +32,7 @@ const topReset=root.querySelector('.avatar-locker-header [data-style-cancel]');
 const bottomReset=root.querySelector('.avatar-apply-bar [data-style-cancel]');
 assert.deepEqual(resets,[bottomReset,topReset]);
 assert(resets.every(button=>button.disabled));
-assert.equal(visibleGroups('look').length,4);
+assert.equal(visibleGroups('look').length,5);
 for(const key of ['hair','glasses','hat','prop','frame','title','scene'])assert.equal(visibleGroups(key).length,1);
 for(const key of ['look','hair','glasses','hat','prop','frame','title','scene'])for(const button of pane(key).querySelectorAll('[data-reward-kind]'))assert.equal(button.hidden,false,'every free, unlocked and locked choice stays visible');
 tab('glasses');assert.equal(label('sun'),'In use');assert.equal(item('sun').getAttribute('aria-pressed'),'true');
@@ -99,5 +99,30 @@ root.querySelector('[data-studio-slot="prop"]').click();
 assert.equal(category.value,'prop');assert.equal(w.document.activeElement,category);
 assert.deepEqual(reveals,['start','start']);
 assert.equal(writes.length,2);
+tab('look');
+const pair=root.querySelector('[data-avatar-colour-pair="field-journal"]');
+const ownerTwoOriginal=plain(S.snapshot().style);
+pair.click();
+assert.equal(pair.getAttribute('aria-pressed'),'true');
+assert.equal(writes.length,2,'trying a colour pair does not write');
+assert.deepEqual(plain(S.snapshot().style),ownerTwoOriginal);
+topReset.click();
+assert.equal(pair.getAttribute('aria-pressed'),'false');
+await D.api.syncCloudProgression({progression:{xp:400,level:3,total_games:2},today:{daily_brain_score:0},recent_rewards:[]});
+item('neutral-tan').click();
+tab('hair');item('side-braid').click();
+tab('prop');item('cookie').click();
+tab('look');
+pair.click();topSave.click();await settle();
+assert.deepEqual(writes[2],{
+  brainilab_avatar_mode_v1:'built',brainilab_avatar_skin_v1:'neutral-tan',
+  brainilab_avatar_hair_v1:'side-braid',brainilab_avatar_hair_color_v1:'molten-copper',
+  brainilab_avatar_shirt_v1:'forest-sand',brainilab_avatar_prop_v1:'cookie'
+});
+await S.load();
+assert.equal(pair.getAttribute('aria-pressed'),'true');
+assert.equal(S.snapshot().style.skin,'neutral-tan');
+assert.equal(S.snapshot().style.hair,'side-braid');
+assert.equal(S.snapshot().style.prop,'cookie');
 assert.deepEqual(errors,[]);dom.window.close();
 console.log('PASS wardrobe: all choice groups and locked/unlocked cosmetics stay visible, saved vs preview, synchronised header and footer saves, synchronised resets, minimal patches, protected XP/scores, locked clicks, canonical Academy/discovery, focus retention, retry, owner isolation and keyboard tabs.');

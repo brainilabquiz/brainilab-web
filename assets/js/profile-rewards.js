@@ -116,6 +116,15 @@ window.BrainiProfileRewards=(function(){
         dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
         return;
       }
+      const colourPair=event.target.closest('[data-avatar-colour-pair]');
+      if(colourPair&&!colourPair.disabled){
+        const pair=A.colourPairs.find(item=>item.id===colourPair.dataset.avatarColourPair);
+        if(!pair)return;
+        lockedPreview=null;
+        draft={...draft,mode:'built',hairColor:pair.hairColor,shirt:pair.shirt};
+        dirty=Object.keys(C.groups).some(key=>draft[key]!==S.snapshot().style[key]);render();
+        return;
+      }
       const button=event.target.closest('[data-reward-kind]');
       if(button&&!button.disabled){
         const {rewardKind:kind,rewardId:id}=button.dataset,state=S.snapshot(),item=C.item(kind,id);
