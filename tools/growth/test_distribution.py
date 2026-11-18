@@ -41,6 +41,22 @@ class DistributionTest(unittest.TestCase):
         published['placementVerifiedAt'] = None
         self.assertNotEqual(build({'forms': [published]}, self.catalog, [])['directories'][0]['state'], 'published')
 
+    def test_verified_powerful_websites_listing_accepts_domain_slug(self):
+        f = self.registry['forms'][0]
+        f.update(domain='powerfulwebsites.io', status='published_verified',
+                 placementVerified=True, placementVerifiedAt=STAMP)
+        listing = 'https://powerfulwebsites.io/site/brainilabgames.com'
+        f['listingUrl'] = listing + '?private=value#fragment'
+        [row] = validate(self.snapshot())['directories']
+        self.assertEqual(row['state'], 'published')
+        self.assertEqual(row['listingUrl'], listing)
+        for path in ('/site/private@example.com', '/site/../example.com', '/private/example.com'):
+            with self.subTest(path=path):
+                f['listingUrl'] = 'https://powerfulwebsites.io' + path
+                [row] = validate(self.snapshot())['directories']
+                self.assertIsNone(row['listingUrl'])
+                self.assertEqual(row['state'], 'pending')
+
     def test_unknown_receipt_never_becomes_publication(self):
         self.registry['forms'][0]['status'] = 'send_uncertain'
         self.assertEqual(self.snapshot()['directories'][0]['state'], 'uncertain')
