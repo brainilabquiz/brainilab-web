@@ -71,12 +71,37 @@ Collect additional sources once per valid day/period with:
 python tools/growth/seo_explorer.py --private PRIVATE --search-sources
 ```
 
-Google Images uses type=image and byProperty aggregation; Web query/page uses
+Google Images uses type=image and byProperty aggregation; Web text query/page uses
 type=web and byPage. Both request final data for 90 complete days ending three
 UTC days ago, reuse the existing readonly token, with bounded pagination and
 private-format filtering. Their counts and overlapping windows must never be
 added. The dated searchSources snapshot has independent CAS, history, daily cache
 and newest-observation attachment, so old/failed local sources cannot erase it.
+
+## Search Console breakdown
+
+For a dated read of the property using the [November 2026 Search Analytics API
+options](https://developers.google.com/search/blog/2026/11/search-analytics-api-update):
+
+```text
+python tools/growth/seo_explorer.py --private PRIVATE --search-breakdown
+```
+
+The command reads four separate sources for 28 final Pacific-calendar days
+ending three UTC days ago. Web text and Web multimodal are property totals. The
+branded classification uses Google's own categories when the property returns
+them. The country/device rows cover Spain, the UK and the US on desktop and
+mobile. Report those rows with their filters. Keep empty and unavailable results
+distinct from a returned zero. The output includes counts and allowlisted
+dimension labels, using the established readonly connection.
+
+GA4 source/medium counts sessions. Google's [Search traffic
+identification guide](https://developers.google.com/search/docs/monitor-debug/identify-google-search-traffic)
+explains that the referring origin can be shared across Google surfaces and may
+be absent. Use Search Console for reported clicks, impressions and search
+types. Keep manual observations from the dedicated generative AI report dated
+and labelled as impressions. Neither traffic sources nor search impressions
+identify unique readers or completed games.
 
 Visits from links reuses the existing validated GA4 acquisition snapshot, without
 an extra API request or new tracking. One row per source host shows only referral

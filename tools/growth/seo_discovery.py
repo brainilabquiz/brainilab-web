@@ -6,12 +6,82 @@ import math
 import os
 from pathlib import Path
 import re
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 import gsc_sync as api
 from seo_keywords import safe_query
 
 SOURCES = {'images': ('image', ['query'], 'byProperty'),
            'webPages': ('web', ['query', 'page'], 'byPage')}
+
+
+def collect_breakdown(now=None, transport=api.request_json, token=None):
+    """Read final property counts using the November 2026 Search Console options."""
+    now = now or datetime.now(timezone.utc)
+    end = now.date() - timedelta(days=3)
+    start = end - timedelta(days=27)
+    countries = ('ESP', 'GBR', 'USA')
+    devices = ('DESKTOP', 'MOBILE')
+    brands = {('BRANDED',), ('NON_BRANDED',)}
+    market_devices = {(country.lower(), device) for country in countries for device in devices}
+    common = {'startDate': str(start), 'endDate': str(end), 'dataState': 'final',
+              'aggregationType': 'byProperty', 'rowLimit': 20}
+    requests = {
+        'webText': ({'type': 'web'}, {()}),
+        'webMultimodal': ({'type': 'webMultimodal'}, {()}),
+        'brandedClassification': ({'type': 'web', 'dimensions': ['brandedClassification']}, brands),
+        'marketsAndDevices': ({
+            'type': 'web', 'dimensions': ['country', 'device'],
+            'dimensionFilterGroups': [{'groupType': 'and', 'filterLists': [
+                {'dimension': 'country', 'expressions': list(countries)},
+                {'dimension': 'device', 'expressions': list(devices)},
+            ]}],
+        }, market_devices),
+    }
+    token = token or api.access_token()
+    endpoint = 'https://www.googleapis.com/webmasters/v3/sites/' + quote(api.PROPERTY, safe='') + '/searchAnalytics/query'
+    sources = {}
+    for name, (spec, allowed_keys) in requests.items():
+        source = {'searchType': spec['type'], 'aggregation': 'byProperty', 'rows': []}
+        try:
+            response = transport(endpoint, {**common, **spec}, token)
+            source['rows'] = breakdown_rows(response, allowed_keys)
+            source['status'] = 'observed' if source['rows'] else 'no_rows'
+        except (KeyError, TypeError, ValueError, RuntimeError):
+            source['status'] = 'unavailable'
+        sources[name] = source
+    return {
+        'schemaVersion': 1, 'property': api.PROPERTY, 'observedAt': now.isoformat(),
+        'source': 'google_search_console_api', 'dataState': 'final', 'timezone': 'America/Los_Angeles',
+        'period': {'start': str(start), 'end': str(end)},
+        'marketFilter': {'countries': list(countries), 'devices': list(devices)},
+        'sources': sources,
+    }
+
+
+def breakdown_rows(response, allowed_keys):
+    if not isinstance(response, dict) or response.get('responseAggregationType') != 'byProperty':
+        raise ValueError('Unexpected Google aggregation')
+    rows = response.get('rows', [])
+    if not isinstance(rows, list) or len(rows) > len(allowed_keys):
+        raise ValueError('Unexpected Google rows')
+    clean = []
+    seen = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError('Unexpected Google row')
+        keys = row.get('keys', [])
+        if not isinstance(keys, list) or any(not isinstance(value, str) for value in keys):
+            raise ValueError('Unexpected Google dimension keys')
+        key = tuple(keys)
+        clicks, impressions = row['clicks'], row['impressions']
+        if key not in allowed_keys or key in seen:
+            raise ValueError('Unexpected Google dimension keys')
+        if any(type(count) not in (int, float) or not math.isfinite(count) or count != int(count)
+               for count in (clicks, impressions)) or not 0 <= clicks <= impressions:
+            raise ValueError('Invalid Google metric range')
+        seen.add(key)
+        clean.append({'group': list(key), 'clicks': int(clicks), 'impressions': int(impressions)})
+    return sorted(clean, key=lambda row: row['group'])
 
 
 def page_path(value):
@@ -51,7 +121,7 @@ def validate(value):
         if len(rows)>50000: raise ValueError('Discovery row cap exceeded')
         clean[key]={'searchType':kind,'aggregation':aggregation,'rows':rows,'rowsWithheld':item['rowsWithheld']}
     clean['limitations']=[
-        'Google Images and Web Search are separate result types. Never add their counts.',
+        'Google Images and Web text Search are separate result types. Never add their counts.',
         'Query/page impressions are not query-only property impressions. The 90-day window overlaps the current 28-day window.',
         'Visible top rows only, all markets and no language filter. Google may hide queries; missing evidence is not zero demand.',
         'Historical average position is not a live rank, search volume, keyword difficulty or a forecast.',

@@ -16,6 +16,8 @@ Use the writing workflow's optional contribution and question-coverage notes to 
 
 Open and check reliable primary sources for factual claims, including the exact detail being cited. Cite the appropriate page, not a search-results page. Check calculations, word examples, answer keys and uncertainty. Keep a dated research and source record outside the public article body. Do not claim a blocked page was read successfully.
 
+Apply [Google's generative AI guidance](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content) to assisted text, images and metadata. Check accuracy, relevance and original value in the finished piece. Give clear production context where readers would reasonably expect it, and retain accurate cover credits and authorship.
+
 Make each article comfortable to read: short paragraphs, a few meaningful headings, no duplicated introduction, large resource widgets or mandatory exercises. Quizzes and answers, when useful, remain optional and folded. Every article needs its own relevant original cover, truthful credit, meaningful alternative text and lightweight 960/480/240 WebP derivatives. Inspect the art, counts, lettering and thumbnail crops.
 
 Give every piece a clear place in Learn and, where relevant, Academy. Preserve existing lesson order, identifiers and quiz versions when extending a course. Add contextual internal links, an appropriate game and a restrained invitation to play. Do not add a forced account wall to reading. Use the existing renderer for author, Article schema, canonical URL, social metadata, RSS and sitemap; check the generated and live result rather than assuming content JSON publishes it.
