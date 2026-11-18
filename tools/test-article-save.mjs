@@ -7,7 +7,7 @@ const tick=()=>new Promise(resolve=>setTimeout(resolve,15));
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return{promise,resolve,reject};};
 const sample={slug:'private-save-example',title:'A private save example',description:'An example for editor tests.',authorId:'biel-sarda',topic:'Learning',order:1,sections:[{id:'answer',title:'An answer',html:'<p>Keep this paragraph.</p>'}],sources:[{name:'Example source',url:'https://example.org/source'}],related:[],cover:{src:'/assets/images/learn/example.webp',alt:'An example',credit:'Test fixture'},game:{name:'Connections',url:'/games/connections/'},hub:{name:'Games',url:'/games/'},practice:'Find a connection.'};
 
-async function fixture({fresh=false}={}){
+async function fixture({fresh=false,withAuthor=false}={}){
  const dom=new JSDOM('<section id="root"></section>',{url:'https://brainilabgames.com/admin/',runScripts:'outside-only'}),w=dom.window;
  w.structuredClone=structuredClone;w.confirm=()=>false;w.HTMLElement.prototype.scrollIntoView=()=>{};
  const root=w.document.querySelector('#root'),find=selector=>root.querySelector(selector),calls=[];
@@ -15,7 +15,7 @@ async function fixture({fresh=false}={}){
  const rpc=async(name,args)=>{
   calls.push({name,args:structuredClone(args)});
   if(name==='admin_list_learn_articles'){if(listGate)await listGate.promise;if(listFailure)throw Error('List unavailable');return structuredClone(rows);}
-  if(name==='admin_list_learning_entities')return[];
+  if(name==='admin_list_learning_entities')return withAuthor?[{slug:sample.authorId,document:{slug:sample.authorId,name:'Test author'}}]:[];
   if(name==='admin_learn_article_history')return[];
   if(name!=='admin_save_learn_article')throw Error(name);
   if(saveGate)await saveGate.promise;
@@ -119,4 +119,15 @@ async function fixture({fresh=false}={}){
 {
  const f=await fixture(),gate=f.holdSave();f.input('#article-title','Late save');f.find('[data-save=draft]').click();f.w.BrainiArticles.reset();f.root.innerHTML='<p>Another admin view</p>';gate.resolve();await tick();assert.equal(f.root.innerHTML,'<p>Another admin view</p>');assert.equal(f.w.BrainiArticles.canLeave(),true);f.dom.window.close();
 }
-console.log('PASS article saves: retained focus/caret, in-flight edits, refresh errors, revision conflicts, first-save URL and late-response isolation.');
+{
+ const f=await fixture({withAuthor:true});
+ f.input('#article-kind','opinion');
+ f.find('[data-save=draft]').click();await tick();
+ assert.equal(f.saves()[0].args.p_document.articleKind,'opinion');
+ f.input('#article-kind','explainer');
+ f.find('[data-save=draft]').click();await tick();
+ assert.equal(Object.hasOwn(f.saves()[1].args.p_document,'articleKind'),false);
+ assert.equal(f.saves()[1].args.p_document.authorId,sample.authorId);
+ f.dom.window.close();
+}
+console.log('PASS article saves: retained focus/caret, opinion classification, in-flight edits, refresh errors, revision conflicts, first-save URL and late-response isolation.');

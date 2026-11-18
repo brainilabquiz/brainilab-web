@@ -3,6 +3,7 @@
   const grid=document.querySelector('#learn-articles');
   if(!grid)return;
   const cards=[...grid.querySelectorAll('.learn-card')];
+  const opinion=grid.dataset.catalog==='opinion';
   const surprise=document.querySelector('[data-random-article]');
   const articlePaths=[...new Set(cards.filter(card=>card.dataset.format!=='academy').map(card=>card.querySelector('h3 a')?.getAttribute('href'))
     .filter(path=>/^\/learn\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(path||'')))];
@@ -83,25 +84,25 @@
   function render(){
     const terms=normalize(input.value).split(/\s+/).filter(Boolean);
     const matches=cards.filter((card,i)=>{
-      const inTopic=topic==='__latest'?(format==='academy'||terms.length>0||card.hasAttribute('data-latest-topic')):(!topic||card.dataset.topic===topic);
+      const inTopic=topic==='__latest'?(opinion||format==='academy'||terms.length>0||card.hasAttribute('data-latest-topic')):(!topic||card.dataset.topic===topic);
       return inTopic&&card.dataset.format===format&&terms.every(term=>texts[i].includes(term));
     });
     const shown=matches.slice(0,limit),active=new Set(shown);
     cards.forEach(card=>{card.hidden=!active.has(card);});
     grid.dataset.view=format;
-    const overview=format==='article'&&topic==='__latest'&&!terms.length;
+    const overview=!opinion&&format==='article'&&topic==='__latest'&&!terms.length;
     grid.classList.toggle('is-topic-overview',overview);
     grid.classList.toggle('is-specific-topic',Boolean(topic&&topic!=='__latest'));
     topicButtons.forEach(button=>{button.hidden=!overview;});
     const available=new Set(cards.filter(c=>c.dataset.format===format).map(c=>c.dataset.topic));
     topicOptions.forEach(option=>{
       option.hidden=option.disabled=Boolean(option.value&&option.value!=='__latest'&&!available.has(option.value));
-      if(option.value==='__latest')option.textContent=format==='academy'?'All courses':'Latest picks';
+      if(option.value==='__latest')option.textContent=opinion?'All opinion pieces':format==='academy'?'All courses':'Latest picks';
       if(option.value==='')option.hidden=option.disabled=format==='academy';
     });
     select.value=topic;
-    input.placeholder=format==='academy'?'Search courses or lessons…':'Search a topic or a question…';
-    if(searchLabel)searchLabel.textContent=format==='academy'?'Search Academy':'Search articles';
+    input.placeholder=opinion?'Search opinion pieces…':format==='academy'?'Search courses or lessons…':'Search a topic or a question…';
+    if(searchLabel)searchLabel.textContent=opinion?'Search Opinion':format==='academy'?'Search Academy':'Search articles';
     cards.forEach((card,i)=>{
       const match=card.querySelector('[data-matched-lesson]');
       if(!match)return;
@@ -111,14 +112,15 @@
       else{match.textContent='';match.removeAttribute('href');}
     });
     clearSearch.hidden=!input.value;
-    const noun=format==='academy'?'course':'article';
+    const noun=opinion?'opinion piece':format==='academy'?'course':'article';
     count.textContent=overview?`${matches.length} topics · ${articlePaths.length} articles`:`${shown.length} of ${matches.length} ${noun}${matches.length===1?'':'s'}`;
-    heading.textContent=terms.length?'Search results':format==='academy'?(topic&&topic!=='__latest'?topic+' courses':'BrainiLab Academy'):(topic==='__latest'?'Latest by topic':topic||'All articles');
+    heading.textContent=terms.length?'Search results':opinion?'Opinion pieces':format==='academy'?(topic&&topic!=='__latest'?topic+' courses':'BrainiLab Academy'):(topic==='__latest'?'Latest by topic':topic||'All articles');
     formatButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.formatFilter===format)));
     empty.hidden=matches.length!==0;
     more.parentElement.hidden=shown.length>=matches.length;
     more.textContent=`Show more ${noun}s`;
-    emptyReset.textContent=format==='academy'?'Show all courses':'Show all articles';
+    emptyReset.textContent=opinion?'Show all opinion pieces':format==='academy'?'Show all courses':'Show all articles';
+    emptyReset.hidden=opinion&&!articlePaths.length;
   }
   function reset(replace=false){limit=12;render();save(replace);}
   input.closest('.learn-search').hidden=false;

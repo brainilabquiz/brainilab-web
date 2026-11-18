@@ -19,6 +19,7 @@ if(readyPaths(paths,articles).length!==paths.length)throw Error('Every published
 const template=await readFile('learn/index.html','utf8');
 await writeFile('learn/index.html',renderPage(template,articles,null,paths));
 await mkdir('learn/topics',{recursive:true});await writeFile('learn/topics/index.html',renderPage(template,articles,null,paths,{view:'topics'}));
+await mkdir('learn/opinion',{recursive:true});await writeFile('learn/opinion/index.html',renderPage(template,articles,null,[],{view:'opinion'}));
 await writeFile('learn/feed.xml',learnFeed(articles));
 for(const a of articles)await writeFile(`learn/${a.slug}/index.html`,renderPage(template,articles,a,paths));
 await mkdir('learn/paths',{recursive:true});await writeFile('learn/paths/index.html',renderLearningPage(template,{articles,paths,authors}));
