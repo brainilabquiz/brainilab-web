@@ -44,6 +44,14 @@
 </head>
 <body class="home-page braini-visual">
 <a class="home-skip-link" href="#main-content">Skip to main content</a>
+<svg class="home-glass-definitions" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="home-glass-refraction" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".014 .028" numOctaves="2" seed="8" result="glass-noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="glass-noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 <header class="topbar">
 <div class="wrap nav">
 <a aria-label="BrainiLab home" class="brand" href="index.html">
