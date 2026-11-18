@@ -6,7 +6,11 @@
   const poster=card.querySelector('[data-video-play]');
   if(!poster)continue;
   const schemaElement=card.querySelector('[data-video-schema]');
-  fetch('/api/latest-video?channel='+source+(short?'&format=short':''),{signal:AbortSignal.timeout(9000),credentials:'omit'})
+  let refreshing=false;
+  function refresh(){
+   if(refreshing)return;
+   refreshing=true;
+   fetch('/api/latest-video?channel='+source+(short?'&format=short':''),{signal:AbortSignal.timeout(9000),credentials:'omit'})
    .then(response=>{if(!response.ok)throw Error('Unavailable');return response.json();})
    .then(video=>{
     const validFormat=short?video.format==='short'&&video.source==='youtube-shorts-feed'&&video.shortsPlaylistId==='UUSHcqUq1aWcDoKyGT9QYCPqIA'&&video.url==='https://www.youtube.com/shorts/'+video.id:video.format!=='short'&&Number.isFinite(video.durationSeconds)&&video.durationSeconds>180;
@@ -33,6 +37,13 @@
     if(card.dataset.videoId!==video.id)poster.querySelector('img').src=thumbnail;
     card.dataset.videoPublished=video.published;card.dataset.videoId=video.id;
     schemaElement.textContent=JSON.stringify(schema).replace(/</g,'\\u003c');
-   }).catch(()=>{}); // Each source retains its own video card and schema.
+   }).catch(()=>{}).finally(()=>{refreshing=false;}); // Keep the last displayed card on failure.
+  }
+  refresh();
+  if(source==='brainilab'){
+   const refreshWhileVisible=()=>{if(!document.hidden)refresh();};
+   setInterval(refreshWhileVisible,5*60_000);
+   document.addEventListener('visibilitychange',refreshWhileVisible);
+  }
  }
 })();

@@ -1,8 +1,9 @@
 import {channelVideo} from './lib/youtube-channel.js';
 import {knowledgeShortsVideo} from './lib/youtube-shorts.js';
 import {cachedHomeVideos,renderHomeVideoCards} from './lib/home-video-cards.js';
+import {readHomeFeaturedVideo,refreshHomeFeaturedVideo} from './lib/home-featured-video.js';
 import {servePublicLearn,learnRelatedVideo} from './lib/learn-store.js';
-import {HEALTH_CRON,scheduledHealth,healthStatus} from './lib/site-health.js';
+import {HEALTH_CRON,scheduledHealth,healthStatus,PRODUCTION_ORIGIN} from './lib/site-health.js';
 import {productionRequest} from './lib/production-origin.js';
 import {crypticAPI} from './lib/cryptic-api.js';
 import {HALLOWEEN,halloweenState,halloweenPublicConfig,isHalloweenPath,hiddenHalloweenArticle} from './lib/halloween-event.js';
@@ -132,7 +133,11 @@ export async function latestVideo(request,ctx,cache,fetcher=fetch,apiKey=''){
 }
 export default {
   async scheduled(event,env,ctx){
-    if(event.cron===HEALTH_CRON){ctx.waitUntil(scheduledHealth(env));return;}
+    if(event.cron===HEALTH_CRON){
+      ctx.waitUntil(scheduledHealth(env));
+      if(env.LEARN_PAGES&&env.YOUTUBE_API_KEY)ctx.waitUntil(refreshHomeFeaturedVideo(env,new URL(PRODUCTION_ORIGIN).hostname));
+      return;
+    }
     if(event.cron!=='0 */12 * * *')return;
     if(!env.BREAKING_NEWS)return;
     const store=env.BREAKING_NEWS.get(env.BREAKING_NEWS.idFromName('world-news-v1'));
@@ -192,8 +197,11 @@ export default {
       if(request.method==='GET'&&['/','/index.html'].includes(url.pathname)&&response.ok&&response.headers.get('Content-Type')?.includes('text/html')){
         const html=await response.text(),news='';
         const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('ETag');
-        const videos=await cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'',['brainilab','knowledge'],{knowledge:'short'});
-        response=new Response(renderHomeVideoCards(html,videos).replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
+        const [brainilab,videos]=await Promise.all([
+          readHomeFeaturedVideo(request,env,ctx,caches.default),
+          cachedHomeVideos(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'',['knowledge'],{knowledge:'short'})
+        ]);
+        response=new Response(renderHomeVideoCards(html,{...videos,brainilab}).replace('<!-- breaking-news -->',()=>news),{status:response.status,headers});
       }
       const secured=new Response(response.body,response);
       secured.headers.set('X-Content-Type-Options','nosniff');
@@ -223,7 +231,14 @@ export default {
         const stories=freshNews(edition);
         return json({generatedAt:edition?.generatedAt||null,stories,serviceStatus:edition?.serviceStatus||'unavailable',...(edition?.automationStatus?{automationStatus:edition.automationStatus}:{})},stories.length?200:503,15);
       }
-      if(url.pathname==='/api/latest-video')return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
+      if(url.pathname==='/api/latest-video'){
+        const homeVideo=url.searchParams.get('channel')==='brainilab'&&['long',null,''].includes(url.searchParams.get('format'));
+        if(homeVideo&&env.LEARN_PAGES){
+          const video=await readHomeFeaturedVideo(request,env,ctx,caches.default);
+          return video?json(video,200,60):json({unavailable:true},503,0);
+        }
+        return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
+      }
       if(url.pathname==='/api/admin/video-info')return adminVideoInfo(request,env.YOUTUBE_API_KEY||'');
       if(url.pathname==='/api/related-video'){
         const game=url.searchParams.get('game');
