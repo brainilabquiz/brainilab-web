@@ -882,7 +882,11 @@ body.profile-page.braini-visual .reward-mode-grid .reward-choice[aria-pressed=tr
 body.profile-page.braini-visual .avatar-studio-controls .avatar-option-group legend{font-size:17px;font-weight:900;color:var(--navy,#2d296e)}
 body.profile-page.braini-visual .avatar-option-heading>span:first-child{display:inline-flex;align-items:center;gap:9px}
 body.profile-page.braini-visual .avatar-option-heading>span:first-child::before{content:"";width:12px;height:12px;border-radius:4px;background:var(--group-accent,#6a64c9)}
-body.profile-page.braini-visual .avatar-option-heading>.avatar-collection-summary{padding:2px 10px;border-radius:999px;background:#f1effa;color:#4a4670;font-weight:700}
+body.profile-page.braini-visual .avatar-option-heading>.avatar-collection-summary{
+  display:inline-flex;align-items:center;gap:8px;padding:0;color:#4a4670;font-weight:700
+}
+.avatar-collection-meter{width:34px;height:4px;border-radius:999px;background:#e4dfee;overflow:hidden}
+.avatar-collection-meter::before{content:"";display:block;width:var(--collection-fill,0%);height:100%;border-radius:inherit;background:#397347}
 body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-glasses){--group-accent:#2f7fd8}
 body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-hat){--group-accent:#ef7d23}
 body.profile-page.braini-visual .avatar-option-group:has(.reward-grid-prop){--group-accent:#2f9b4a}

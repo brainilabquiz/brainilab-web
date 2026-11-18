@@ -317,7 +317,7 @@ window.BrainiAvatarStudioUI=(function(){
   const rarity=xp=>xp>=6000?'Legendary':xp>=3000?'Epic':xp>=1000?'Rare':xp>0?'Common':'Starter';
   function initialStatus(button,copy){if(!window.BrainiWardrobeUI)button.querySelector('small').textContent=copy;}
   function group(kind,name){
-    const summary=cosmeticPanes.includes(kind)?`<small class="avatar-collection-summary" data-style-collection="${kind}"></small>`:'';
+    const summary=cosmeticPanes.includes(kind)?`<small class="avatar-collection-summary" data-style-collection="${kind}"><span class="avatar-collection-meter" aria-hidden="true" hidden></span><span></span></small>`:'';
     return `<fieldset class="avatar-option-group"><legend><span class="avatar-option-heading"><span>${name}</span>${summary}</span></legend><div class="reward-grid reward-grid-${kind}" data-style-${kind}s></div><p class="avatar-item-note" data-avatar-note="${kind}" hidden></p></fieldset>`;
   }
   function colourPairChoices(){
@@ -336,13 +336,10 @@ window.BrainiAvatarStudioUI=(function(){
     for(const summary of root.querySelectorAll('[data-style-collection]')){
       const kind=summary.dataset.styleCollection,items=C.groups[kind].filter(item=>!item.course&&!item.challenge&&!item.days);
       const available=items.filter(item=>C.isUnlocked(item,total)).length;
-      summary.textContent=options.loading?'Checking…':options.error?'Unavailable':`${available} of ${items.length} unlocked`;
-      const count=options.loading||options.error?'':`${available}/${items.length}`;
-      const option=root.querySelector(`[data-avatar-category] option[value="${kind}"]`),label=panes[kind].label;
-      const accessibleName=count?`${label}, ${available} of ${items.length} unlocked`:label;
-      option.textContent=count?`${label} · ${count}`:label;
-      option.setAttribute('aria-label',accessibleName);
-      root.querySelector(`[data-avatar-tab="${kind}"]`).setAttribute('aria-label',accessibleName);
+      const meter=summary.firstElementChild;
+      meter.hidden=!!options.loading||!!options.error||!items.length;
+      if(!meter.hidden)meter.style.setProperty('--collection-fill',`${100*available/items.length}%`);
+      summary.lastElementChild.textContent=options.loading?'Checking…':options.error?'Unavailable':`${available} of ${items.length} unlocked`;
     }
   }
   function mount(root){
@@ -391,20 +388,21 @@ window.BrainiAvatarStudioUI=(function(){
               <a class="avatar-play-link" href="/games/">Earn XP <span aria-hidden="true">→</span></a>
             </div>
           </div>
-          <label class="avatar-locker-category">
-            <span>Category</span>
-            <select data-avatar-category>
-              ${Object.entries(panes).map(([key,p])=>`<option value="${key}">${p.label}</option>`).join('')}
-            </select>
-          </label>
           <div class="avatar-studio-tabs" role="tablist" aria-label="Locker categories">${Object.entries(panes).map(([key,p])=>`<button id="avatar-tab-${key}" role="tab" aria-controls="avatar-panel-${key}" data-avatar-tab="${key}" type="button">${icon(key)}<span class="avatar-tab-label">${p.label}</span></button>`).join('')}</div>
+          <div class="avatar-locker-tools">
+            <label class="avatar-locker-category">
+              <span class="avatar-category-icon" data-avatar-category-icon aria-hidden="true"></span>
+              <select data-avatar-category aria-label="Category">
+                ${Object.entries(panes).map(([key,p])=>`<option value="${key}">${p.label}</option>`).join('')}
+              </select>
+            </label>
+            <div class="avatar-filter" role="group" aria-label="Filter items" data-studio-filters hidden>
+              ${[['all','All'],['unlocked','Unlocked'],['locked','Locked']].map(([key,label])=>`<button type="button" data-studio-filter="${key}">${label}</button>`).join('')}
+            </div>
+          </div>
         </div>
         <div class="avatar-next-reward" data-next-reward></div>
         <div class="avatar-locker-content">
-          <div class="avatar-filter" data-studio-filters hidden>
-            <div role="group" aria-label="Filter items">${[['all','All'],['unlocked','Unlocked'],['locked','Locked']].map(([key,label])=>`<button type="button" data-studio-filter="${key}">${label} <span></span></button>`).join('')}</div>
-            <label class="avatar-filter-mobile"><input type="checkbox" data-studio-unlocked> Unlocked only</label>
-          </div>
           <p class="avatar-filter-empty" data-studio-empty hidden>No items match this filter.</p>
       ${Object.entries(panes).map(([key,p])=>`<div id="avatar-panel-${key}" role="tabpanel" aria-labelledby="avatar-tab-${key}" data-avatar-pane="${key}" ${key==='look'?'':'hidden'}>${key==='badges'?'<div data-achievements-panel></div>':''}${key==='challenges'?'<section class="avatar-day-collection" aria-labelledby="avatar-days-title"><h3 id="avatar-days-title" class="avatar-collection-heading">Days played</h3><p class="avatar-pane-note">A little time to play, whenever it suits you. Finish a saved game on different days to unlock these extras. Breaks never reset your progress. Earlier qualifying games count. Each date counts once, using UTC.</p><p class="avatar-academy-count" data-active-days-count></p><div class="avatar-challenge-grid" data-day-rewards></div></section><p class="avatar-pane-note">Try different games to earn a little extra. Completed rounds saved to your account count.</p><div class="avatar-challenge-grid" data-discovery-rewards></div>':''}${key==='academy'?'<p class="avatar-pane-note">Complete all lesson quizzes in a course while signed in. Earned extras stay yours.</p><p class="avatar-academy-count" data-academy-count></p><div class="avatar-academy-grid" data-academy-rewards></div>':''}${key==='look'?'<div class="avatar-mode" role="group" aria-labelledby="avatar-start-label"><h3 id="avatar-start-label">Start with</h3><div class="reward-mode-grid" data-style-modes></div></div>'+colourPairChoices():''}${Object.entries(p.groups).map(([kind,name])=>group(kind,name)).join('')}</div>`).join('')}
         </div>
@@ -427,10 +425,6 @@ window.BrainiAvatarStudioUI=(function(){
       filter=button.dataset.studioFilter;
       applyFilter(root);
     }));
-    root.querySelector('[data-studio-unlocked]').addEventListener('change',event=>{
-      filter=event.target.checked?'unlocked':'all';
-      applyFilter(root);
-    });
     root.querySelectorAll('[data-studio-slot]').forEach(button=>button.addEventListener('click',()=>{
       showPane(root,button.dataset.studioSlot,{reveal:true,focus:true});
     }));
@@ -441,20 +435,16 @@ window.BrainiAvatarStudioUI=(function(){
     group.hidden=!enabled;
     empty.hidden=true;
     if(!enabled)return;
-    const cards=[...panel.querySelectorAll('[data-studio-locked]')];
-    const locked=cards.filter(card=>card.dataset.studioLocked==='true').length;
-    const counts={all:cards.length,unlocked:cards.length-locked,locked};
     for(const button of group.querySelectorAll('[data-studio-filter]')){
-      const key=button.dataset.studioFilter;
-      button.setAttribute('aria-pressed',String(key===filter));
-      button.querySelector('span').textContent=counts[key];
+      button.setAttribute('aria-pressed',String(button.dataset.studioFilter===filter));
     }
-    group.querySelector('[data-studio-unlocked]').checked=filter==='unlocked';
-    for(const card of cards){
+    let hasResults=false;
+    for(const card of panel.querySelectorAll('[data-studio-locked]')){
       card.hidden=filter!=='all'&&card.dataset.studioLocked!==String(filter==='locked');
+      hasResults||=!card.hidden;
       if(card.hidden&&card===document.activeElement)focusCategory(root);
     }
-    empty.hidden=counts[filter]>0;
+    empty.hidden=hasResults;
   }
   function focusCategory(root){
     const picker=root.querySelector('[data-avatar-category]');
@@ -469,6 +459,11 @@ window.BrainiAvatarStudioUI=(function(){
     const picker=root.querySelector('[data-avatar-category]');
     picker.value=active;
     picker.setAttribute('aria-controls',`avatar-panel-${active}`);
+    const categoryIcon=root.querySelector('[data-avatar-category-icon]');
+    if(categoryIcon.dataset.pane!==active){
+      categoryIcon.innerHTML=icon(active);
+      categoryIcon.dataset.pane=active;
+    }
     root.querySelectorAll('[data-avatar-tab]').forEach(tab=>{const selected=tab.dataset.avatarTab===active;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1;});
     root.querySelectorAll('[data-avatar-pane]').forEach(panel=>panel.hidden=panel.dataset.avatarPane!==active);
     root.querySelector('.avatar-apply-bar').hidden=active==='badges';

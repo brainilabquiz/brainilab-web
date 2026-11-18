@@ -417,33 +417,70 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   text-decoration: none;
 }
 .avatar-locker-header .avatar-play-link:hover { text-decoration: underline; }
+.avatar-locker-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .45rem;
+  margin: .45rem .8rem 0;
+}
 .avatar-locker-category {
   display: none;
-  grid-template-columns: auto minmax(0,1fr);
+  flex: 1 1 10rem;
+  position: relative;
+  grid-template-columns: minmax(0,1fr);
   align-items: center;
-  gap: .6rem;
-  margin: .2rem .8rem 0;
-  padding: .25rem .35rem .25rem .65rem;
-  border: 1px solid var(--studio-line);
-  border-radius: .85rem;
-  background: #f5f3fa;
   color: var(--navy);
-  font-size: .76rem;
-  font-weight: 750;
+}
+.avatar-category-icon {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  inset-inline-start: .4rem;
+  width: 30px;
+  height: 30px;
+  border-radius: .48rem;
+  background: #ece7f7;
+  pointer-events: none;
+}
+.avatar-category-icon svg { width: 17px; height: 17px; }
+.avatar-category-icon[data-pane=glasses] { background: #e4effb; color: #24568d; }
+.avatar-category-icon[data-pane=hat] { background: #faead7; color: #8b4c19; }
+.avatar-category-icon[data-pane=prop] { background: #e2f2e6; color: #2d6340; }
+.avatar-category-icon[data-pane=title] { background: #f8e4ec; color: #963458; }
+.avatar-locker-category::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: .8rem;
+  width: .42rem;
+  height: .42rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  pointer-events: none;
 }
 .avatar-locker-category select {
+  appearance: none;
   width: 100%;
   min-width: 0;
-  min-height: 44px;
-  padding: .45rem .5rem;
-  border: 1px solid #ded9ec;
-  border-radius: .6rem;
-  background: white;
+  min-height: 48px;
+  padding: .55rem 1.85rem .55rem 2.75rem;
+  border: 1px solid #dbd4eb;
+  border-radius: .75rem;
+  background: #fcfbff;
   color: var(--navy);
   font: inherit;
+  font-size: .875rem;
+  font-weight: 750;
+  line-height: 1.25;
   cursor: pointer;
 }
-.avatar-locker-category select:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
+.avatar-locker-category select:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
+@media (forced-colors: active) {
+  .avatar-locker-category select { appearance: auto; }
+  .avatar-locker-category::after { display: none; }
+}
 .avatar-studio-redesign .avatar-locker-toolbar .avatar-studio-tabs {
   position: static;
   display: grid;
@@ -481,6 +518,14 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 @container locker-toolbar (max-width: 39rem) {
   .avatar-studio-redesign .avatar-locker-toolbar .avatar-studio-tabs { display: none; }
   .avatar-locker-category { display: grid; }
+}
+@media (width > 47.5rem) {
+  @container locker-toolbar (width > 39rem) {
+    .avatar-locker-tools:has(> .avatar-filter[hidden]) { display: none; }
+  }
+}
+@container locker-toolbar (max-width: 27rem) {
+  .avatar-locker-tools > :is(.avatar-locker-category,.avatar-filter) { flex-basis: 100%; }
 }
 .avatar-studio-redesign .avatar-next-reward {
   width: auto;
@@ -523,26 +568,33 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
 .avatar-locker-content { min-width: 0; padding: .8rem 1.2rem 1.2rem; }
 .avatar-studio-redesign .avatar-mode { margin: 0 0 1rem; }
 .avatar-mode h3 { margin: 0 0 .55rem; font-size: 1rem; }
-.avatar-filter { margin-bottom: .6rem; }
-.avatar-filter [role=group] { display: flex; flex-wrap: wrap; gap: .35rem; }
-.avatar-filter button, .avatar-filter-mobile {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
+.avatar-filter {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  flex: 0 0 13.5rem;
+  min-width: 0;
+  gap: .125rem;
+  padding: .15rem;
+  border: 1px solid #e5dff0;
+  border-radius: .75rem;
+  background: #f1eef8;
+}
+.avatar-filter button {
+  min-width: 0;
   min-height: 44px;
-  padding: .35rem .65rem;
-  background: white;
-  border: 1px solid var(--studio-line);
-  border-radius: 2rem;
+  padding: .25rem .3rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: .55rem;
   color: var(--navy);
   cursor: pointer;
   font-family: inherit;
-  font-size: .78rem;
-  font-weight: 700;
+  font-size: .75rem;
+  font-weight: 750;
 }
-.avatar-filter button[aria-pressed=true] { background: #f0effa; border-color: #7c73a5; }
-.avatar-filter button span { color: var(--studio-muted); font-size: .7rem; }
-.avatar-filter-mobile { display: none; }
+.avatar-filter button:hover { background: #e9e3f3; }
+.avatar-filter button[aria-pressed=true] { background: var(--navy); color: #fff; }
+.avatar-filter button:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
 .avatar-filter-empty { color: var(--studio-muted); margin: 0 0 .8rem; }
 .avatar-studio-redesign .avatar-option-group { margin: 0 0 .8rem; }
 .avatar-studio-redesign .avatar-option-group legend { font-size: .95rem; }
@@ -860,12 +912,10 @@ body.profile-page.braini-visual .avatar-studio-redesign .avatar-studio-stage,
   .avatar-locker-actions .avatar-play-link { padding-inline: .5rem; white-space: nowrap; }
   .avatar-locker-header h3 { font-size: 1.25rem; }
   .avatar-studio-redesign .avatar-locker-toolbar .avatar-studio-tabs { display: none; }
-  .avatar-locker-category { display: grid; margin-inline: .65rem; }
+  .avatar-locker-category { display: grid; }
+  .avatar-locker-tools { margin: .2rem .65rem 0; }
   .avatar-studio-redesign .avatar-next-reward { margin: .35rem .65rem 0; }
   .avatar-locker-content { padding: .7rem; }
-  .avatar-filter [role=group] { display: none; }
-  .avatar-filter-mobile { display: inline-flex; }
-  .avatar-filter-mobile input { margin: 0; accent-color: var(--navy); }
   .avatar-studio-redesign .reward-grid { gap: .55rem; }
   .avatar-studio-redesign .reward-choice[data-rarity] { padding: .35rem; }
   .avatar-studio-redesign .avatar-option-group:has(.reward-choice[data-rarity]) .reward-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
