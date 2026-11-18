@@ -20,6 +20,7 @@ import './test-learn-runtime.mjs';
 import './test-learn-store.mjs';
 import './test-site-health.mjs';
 import './test-news-source-history.mjs';
+execFileSync(process.execPath,['--test','tests/breaking-news.test.mjs','tests/news-*.test.mjs'],{stdio:'inherit'});
 import './test-release-check.mjs';
 import './test-release-schema.mjs';
 import './test-visible-article-dates.mjs';
