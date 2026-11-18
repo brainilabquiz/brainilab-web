@@ -263,7 +263,7 @@ body.braini-visual{
   border-top:4px solid var(--reading-accent);border-radius:18px;
   box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 8%,transparent);
 }
-.braini-visual.editorial-page .learn-catalog .learn-card:is(:hover,:focus-within){
+.braini-visual.editorial-page .learn-catalog .learn-card:where(:not(.academy-card)):is(:hover,:focus-within){
   border-color:var(--reading-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 18%,transparent);
 }
 .braini-visual .learn-catalog .learn-topic-heading{margin-bottom:18px;border-bottom-color:color-mix(in srgb,var(--reading-accent) 18%,#dedce9)}
@@ -280,9 +280,11 @@ body.braini-visual{
 .braini-visual .learn-catalog .learn-card-art img{border-radius:6px}
 .braini-visual .learn-catalog .library-grid[data-view=academy] .academy-card{
   grid-template-columns:160px minmax(0,1fr);gap:20px;min-height:0;padding:20px;
-  border-radius:18px;box-shadow:0 4px 0 color-mix(in srgb,var(--reading-accent) 8%,transparent);
+  border-radius:18px;
 }
-.braini-visual .learn-catalog .library-grid[data-view=academy] .eyebrow{color:var(--reading-accent);line-height:1.6}
+.braini-visual .learn-catalog .library-grid[data-view=academy] .eyebrow{
+  color:color-mix(in srgb,var(--reading-accent) 75%,#1a172b);line-height:1.6;
+}
 .braini-visual .learn-catalog .library-grid[data-view=academy] .path-continue{
   margin-top:12px;padding:8px 12px;min-height:44px;box-sizing:border-box;border-radius:10px;
   color:var(--navy);background:var(--reading-tint);text-decoration:underline;text-underline-offset:4px;
@@ -676,8 +678,13 @@ body.home-page.braini-visual .home-game-card:nth-child(8n+3){--card:#c4540a}
 body.home-page.braini-visual .home-game-card:nth-child(8n+4){--card:#23801c}
 body.home-page.braini-visual .home-game-card:nth-child(8n+5){--card:#c62d27}
 
-/* Frosted surfaces for the public game and reading cards. */
-body.braini-visual :is(.home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,.learn-catalog .learn-card[data-format=article]){
+/* Opaque by default. Supported browsers can add blur below. */
+body.braini-visual :is(
+  .home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,
+  .learn-catalog .learn-card:is([data-format=article],.academy-card),
+  .learning-paths .path-card,.academy-course .path-lessons>li,
+  .breaking-news :is(.bn-lead .breaking-news__story,.bn-more ol>li,.bn-card:not(.bn-past-panel))
+){
   background:
     radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffce),transparent 68%),
     linear-gradient(145deg,transparent 38%,var(--glass-shade,#77709924)),
@@ -714,13 +721,31 @@ body.braini-visual .anytime-game-card.accent-yellow .anytime-game-head{
   background:linear-gradient(155deg,#fff8d49c,transparent 54%),var(--head);
 }
 body.braini-visual .anytime-game-card .anytime-game-head p{opacity:1}
-body.braini-visual .learn-catalog .learn-card[data-format=article]{
+body.braini-visual .learn-catalog .learn-card:is([data-format=article],.academy-card){
   --glass-surface:color-mix(in srgb,var(--reading-tint) 88%,var(--reading-accent));
   --glass-shade:color-mix(in srgb,var(--reading-accent) 14%,transparent);
   --glass-border:color-mix(in srgb,var(--reading-accent) 36%,#dedce9);
   border-top-color:var(--reading-accent);
 }
 body.braini-visual .learn-catalog .learn-card[data-format=article] :is(.learn-card-description,.learn-read-time,.learn-topic-heading button){color:#4f4b66}
+body.braini-visual .learn-catalog .academy-card:is(:hover,:focus-within){--glass-border:var(--reading-accent)}
+body.braini-visual .learn-catalog .academy-card :is(.learn-card-copy>p:not(.eyebrow,.learn-format-label),.path-progress span){
+  color:#4f4b66;
+}
+body.braini-visual :is(.learning-paths .path-card,.academy-course .path-lessons>li){
+  --glass-surface:#eeedf8;
+  --glass-border:#c8c4da;
+}
+body.braini-visual .academy-course .path-lessons>li{border-inline-start-color:var(--lesson-accent,#fdd81c)}
+body.braini-visual .breaking-news{
+  --glass-surface:#efedf8;
+  --glass-shade:#665a9e1f;
+  --glass-border:#c6c1dc;
+}
+body.braini-visual .breaking-news .bn-lead .breaking-news__story{
+  --glass-surface:#e7e4f7;
+  --glass-border:#b8afd7;
+}
 body.braini-visual .home-article{
   --glass-surface:#dcebd7;
   --glass-shade:#578c3826;
@@ -737,7 +762,12 @@ body.braini-visual .daily-play-panel .daily-choice-extras .daily-choice-card.is-
 }
 @supports ((backdrop-filter:blur(8px)) or (-webkit-backdrop-filter:blur(8px))){
   @media (prefers-reduced-transparency:no-preference) and (forced-colors:none){
-    body.braini-visual :is(.home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,.learn-catalog .learn-card[data-format=article]){
+    body.braini-visual :is(
+      .home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,
+      .learn-catalog .learn-card:is([data-format=article],.academy-card),
+      .learning-paths .path-card,.academy-course .path-lessons>li,
+      .breaking-news :is(.bn-lead .breaking-news__story,.bn-more ol>li,.bn-card:not(.bn-past-panel))
+    ){
       background-color:color-mix(in srgb,var(--glass-surface,#e9e6f6) 92%,transparent);
       -webkit-backdrop-filter:blur(8px) saturate(1.15);
       backdrop-filter:blur(8px) saturate(1.15);
