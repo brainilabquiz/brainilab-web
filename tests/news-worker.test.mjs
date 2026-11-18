@@ -5,14 +5,42 @@ const edition={generatedAt:new Date().toISOString(),stories:[{title:'Test headli
 const cache={match:async()=>null,put:async()=>{}};
 globalThis.caches={default:cache};
 globalThis.fetch=async()=>Response.json([]);
-function environment(failure=false){let reads=0;return {env:{ASSETS:{fetch:async()=>new Response('<html><body><!-- breaking-news --><p>Keep games</p></body></html>',{headers:{'Content-Type':'text/html','ETag':'old','Content-Length':'100'}})},BREAKING_NEWS:{idFromName:()=>1,get:()=>({fetch:async()=>{reads++;if(failure)throw new Error('unavailable');return Response.json(edition);}})}},reads:()=>reads};}
+function environment(failure=false){
+  const calls=[];
+  return {
+    env:{
+      ASSETS:{fetch:async()=>new Response('<html><body><!-- breaking-news --><p>Keep games</p></body></html>',{headers:{'Content-Type':'text/html','ETag':'old','Content-Length':'100'}})},
+      BREAKING_NEWS:{idFromName:()=>1,get:()=>({fetch:async address=>{
+        const url=new URL(address);
+        calls.push(url.pathname+url.search);
+        if(failure)throw new Error('unavailable');
+        if(url.pathname==='/edition')return Response.json(edition);
+        if(url.pathname==='/archive'&&url.searchParams.has('recent'))return Response.json({items:[edition],older:null});
+        assert.equal(url.pathname,'/archive');
+        assert.equal(url.searchParams.get('sources'),'1');
+        return Response.json({edition,filters:[{id:'all',name:'All',count:1}]});
+      }})}
+    },
+    reads:()=>calls.length,
+    calls
+  };
+}
 const ctx={waitUntil:()=>{}};
 test('homepage keeps games without the news block',async()=>{const e=environment();const r=await worker.fetch(new Request('https://brainilabgames.com/'),e.env,ctx);const body=await r.text();assert.doesNotMatch(body,/Breaking News/);assert.equal(e.reads(),0);assert.match(body,/Keep games/);assert.equal(r.headers.get('ETag'),null);assert.equal(r.headers.get('X-Frame-Options'),'DENY');});
 test('HEAD and preview reads never bootstrap paid research',async()=>{const e=environment();const head=await worker.fetch(new Request('https://brainilabgames.com/',{method:'HEAD'}),e.env,ctx);assert.equal(await head.text(),'');const preview=await worker.fetch(new Request('https://preview.example.org/'),e.env,ctx);assert.doesNotMatch(await preview.text(),/Breaking News/);assert.equal(e.reads(),0);});
 test('news outage preserves the functioning homepage',async()=>{const e=environment(true);const r=await worker.fetch(new Request('https://brainilabgames.com/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Keep games/);});
 test('public news API rejects mutations and previews cannot trigger research',async()=>{const e=environment();assert.equal((await worker.fetch(new Request('https://brainilabgames.com/api/breaking-news',{method:'POST'}),e.env,ctx)).status,405);assert.equal((await worker.fetch(new Request('https://preview.example.org/api/breaking-news'),e.env,ctx)).status,503);assert.equal(e.reads(),0);});
 
-test('dedicated news page renders current stories and checks for previous editions',async()=>{const e=environment();const r=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/'),e.env,ctx);assert.equal(r.status,200);assert.match(await r.text(),/Breaking News/);assert.equal(e.reads(),2);});
+test('dedicated news page reads the current edition, previous editions and source-search index',async()=>{
+  const e=environment();
+  const r=await worker.fetch(new Request('https://brainilabgames.com/breaking-news/'),e.env,ctx);
+  const html=await r.text();
+  assert.equal(r.status,200);
+  assert.match(html,/Test headline/);
+  assert.match(html,/aria-label="Search Breaking News"/);
+  assert.match(html,/data-news-source="all"/);
+  assert.deepEqual(e.calls,['/edition','/archive?recent=1','/archive?sources=1']);
+});
 
 test('empty news page offers a reading route without stale dates or caching the outage',async()=>{
   const e=environment(true);
