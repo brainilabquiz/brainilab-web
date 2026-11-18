@@ -17,6 +17,7 @@ import './test-asset-versions.mjs';
 import './test-learning-cache.mjs';
 execFileSync(process.execPath,['tools/test-learn-source.mjs'],{stdio:'inherit'});
 import './test-learn-runtime.mjs';
+import './test-learn-opinion.mjs';
 import './test-learn-store.mjs';
 import './test-site-health.mjs';
 import './test-news-source-history.mjs';
