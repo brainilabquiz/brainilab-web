@@ -9,7 +9,7 @@ import re
 import gsc_sync as api
 import outreach_summary
 
-PRODUCER_VERSION = 5
+PRODUCER_VERSION = 6
 
 
 def domain(value):
@@ -36,7 +36,10 @@ def public_url(value):
             return None
         # Drop arbitrary query strings and fragments, which can contain personal data.
         if not re.fullmatch(r'/[a-zA-Z0-9/_-]*', u.path or '/'):
-            return None
+            listing_domain = u.path.removeprefix('/site/')
+            if (u.hostname != 'powerfulwebsites.io' or not u.path.startswith('/site/')
+                    or not listing_domain or domain(listing_domain) != listing_domain):
+                return None
         return f'https://{u.hostname}{u.path or "/"}'
     except ValueError:
         return None
