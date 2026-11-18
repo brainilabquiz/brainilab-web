@@ -99,6 +99,19 @@ The folded **Measured landings & recorded starts** section reuses the validated 
 
 For AEO/GEO, retain a clear early answer and attributable claims. Google documents that its AI search features need no special additional optimisation or schema. For links, use readable, contextual anchors and ordinary crawlable links. Do not buy, swap or automatically create backlinks. See [Google’s AI-feature guidance](https://developers.google.com/search/docs/appearance/ai-features), [link guidance](https://developers.google.com/search/docs/crawling-indexing/links-crawlable) and [link-spam policy](https://developers.google.com/search/docs/essentials/spam-policies#link-spam).
 
+Review AI-assisted material for original reader value, accuracy and clear
+attribution. Verify the claims against the underlying sources and disclose
+meaningful automation where readers would reasonably expect to know how the
+material was made. Keep truthful cover credits and use the existing author
+record. Follow [Google’s current guidance on generative AI content](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content).
+
+When investigating a suspected core-update effect, record the official start
+and completion dates, then wait a full week after completion. Compare the
+following complete week with a matched week before rollout, keeping search
+types separate. Use the affected pages and their actual queries to choose
+changes. Treat small changes on useful pages as observations and preserve the
+baseline. Follow [Google’s core-update troubleshooting guide](https://developers.google.com/search/docs/appearance/core-updates).
+
 Click an excerpt-based suggestion to select its text in the section. Only the first three suggestions are expanded initially; open the remaining ones when useful. Search appearance is a folded illustration of the current title, URL and description, not a promise of Google’s snippet. Check library crops shows the actual selected small and thumbnail assets at wide and square ratios. These controls do not dirty or rewrite a draft. Saving an unchanged existing draft creates no duplicate revision.
 
 Saving keeps the writing field, cursor, native undo history and open panels in place. You can continue writing while a save is pending. The acknowledgement applies to the submitted snapshot only: newer edits remain in the editor with **Newer changes are not saved** until you save again. A confirmed save still counts if refreshing the article list fails; the warning explains that separate failure. Further saves use the acknowledged revision, so another editor’s later changes still trigger the existing conflict check. The URL of a new draft stays fixed while its first save is pending and becomes editable again if that request fails. These behaviours add no automatic saves or publications.

@@ -523,6 +523,7 @@ if __name__ == '__main__':
     parser.add_argument('--ledger',type=Path,help='Private campaign ledger: allowlisted published listing URLs only')
     parser.add_argument('--keywords',action='store_true',help='Refresh two query-only final Search Console windows using the existing readonly authorization')
     parser.add_argument('--search-sources',action='store_true',help='Refresh separate Google Images queries and 90-day Web query/page evidence')
+    parser.add_argument('--search-breakdown',action='store_true',help='Read final Web text, multimodal, brand and selected market totals')
     parser.add_argument('--reputation-input',type=Path,help='Record dated observed Search Console UI evidence; never a synthetic authority score')
     parser.add_argument('--expected-reputation-sha256',help='Exact prior private reputation hash, or missing')
     args=parser.parse_args();api.PRIVATE=args.private.resolve()
@@ -532,7 +533,11 @@ if __name__ == '__main__':
             print(json.dumps(seo_reputation.record(api.PRIVATE,json.loads(args.reputation_input.read_text(encoding='utf-8')),args.expected_reputation_sha256)))
         elif args.keywords: print(json.dumps(seo_keywords.refresh(api.PRIVATE)))
         elif args.search_sources: print(json.dumps(seo_discovery.refresh(api.PRIVATE)))
+        elif args.search_breakdown: print(json.dumps(seo_discovery.collect_breakdown()))
         else: print(json.dumps(refresh(api.PRIVATE,force=args.force,sources_path=args.sources,ledger_path=args.ledger)))
     except (OSError,ValueError,RuntimeError,KeyError,TypeError):
-        print('SEO crawl failed. Preserve the last dated snapshot; do not infer lost backlinks or zero trust.')
+        if args.search_breakdown:
+            print('Search Console breakdown unavailable. Check the existing readonly connection.')
+        else:
+            print('SEO crawl failed. Preserve the last dated snapshot; do not infer lost backlinks or zero trust.')
         raise SystemExit(1)
