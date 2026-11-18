@@ -551,10 +551,10 @@ body.home-page.braini-visual .home-hero .challenge{background:#3a3591;border:1px
   }
 }
 @media (prefers-reduced-transparency:reduce),(forced-colors:active){
-  .braini-visual .topbar{background:#fff}
+  .braini-visual .topbar{background:linear-gradient(180deg,#fff,#efedf8);box-shadow:inset 0 -1px #d6d2e9,0 4px 14px #2d296e16}
   .braini-visual .topbar::before{content:none}
   body.home-page.braini-visual .home-hero .challenge:has(> .home-start .home-start-actions){
-    background:#3a3591;-webkit-backdrop-filter:none;backdrop-filter:none;
+    background:linear-gradient(145deg,#49449a,#2a265f);-webkit-backdrop-filter:none;backdrop-filter:none;
   }
 }
 body.home-page.braini-visual .home-hero .challenge-wrap::before,
@@ -566,7 +566,6 @@ body.home-page.braini-visual .home-hero:is(:has(.answers .answer),:has(.home-dai
 /* Find a game: saturated colour cards with the illustration on a white tile. */
 body.home-page.braini-visual .home-featured .section-heading h2{font-size:clamp(28px,3.4vw,38px);font-weight:900}
 body.home-page.braini-visual .home-game-card{--card:#2f9d27;position:relative;overflow:hidden;border:0;border-radius:26px;background:var(--card);color:#fff;min-height:250px;box-shadow:0 14px 30px #2d296e26}
-body.home-page.braini-visual .home-game-card::after{content:"";position:absolute;right:-42px;top:-42px;width:160px;height:160px;border-radius:50%;background:#ffffff1f;pointer-events:none}
 body.home-page.braini-visual .home-game-card:nth-child(8n+1){--card:#1f86a8}
 body.home-page.braini-visual .home-game-card:nth-child(8n+2){--card:#5b55c8}
 body.home-page.braini-visual .home-game-card:nth-child(8n+3){--card:#e6680c}
@@ -577,7 +576,7 @@ body.home-page.braini-visual .home-game-card:nth-child(8n+7){--card:#b8457a}
 body.home-page.braini-visual .home-game-card:nth-child(8n+8){--card:#2d296e}
 body.home-page.braini-visual .home-game-card img{box-sizing:border-box;width:92px;height:92px;padding:12px;border-radius:24px;background:#fff;box-shadow:0 10px 20px #00000029}
 body.home-page.braini-visual .home-game-card h3{color:inherit;font-weight:900;margin:22px 0 6px}
-body.home-page.braini-visual .home-game-card p{color:inherit;opacity:.92;margin:0 0 18px}
+body.home-page.braini-visual .home-game-card p{color:inherit;margin:0 0 18px}
 body.home-page.braini-visual .home-game-card>span{align-self:flex-start;padding:9px 15px;border-radius:12px;background:#fff;color:var(--navy,#2d296e)}
 body.home-page.braini-visual .home-game-card:hover{transform:translateY(-4px);box-shadow:0 20px 36px #2d296e33}
 /* Avatar band: a warm full-width strip that shows what XP unlocks. */
@@ -676,6 +675,75 @@ body.home-page.braini-visual .home-game-card:nth-child(8n+1){--card:#1a7593}
 body.home-page.braini-visual .home-game-card:nth-child(8n+3){--card:#c4540a}
 body.home-page.braini-visual .home-game-card:nth-child(8n+4){--card:#23801c}
 body.home-page.braini-visual .home-game-card:nth-child(8n+5){--card:#c62d27}
+
+/* Frosted surfaces for the public game and reading cards. */
+body.braini-visual :is(.home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,.learn-catalog .learn-card[data-format=article]){
+  background:
+    radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffce),transparent 68%),
+    linear-gradient(145deg,transparent 38%,var(--glass-shade,#77709924)),
+    var(--glass-surface,#e9e6f6);
+  border-color:var(--glass-border,#aca6c7);
+  box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 5px 18px #2d296e20;
+}
+body.home-page.braini-visual .home-game-card,
+body.braini-visual .daily-play-panel .daily-choice-card.is-primary{
+  --glass-surface:color-mix(in srgb,var(--card-tone,var(--card)) 58%,#1d1938);
+  --glass-light:#ffffff26;
+  --glass-shade:#0d092c40;
+  --glass-border:#302950;
+  --glass-rim:#ffffff80;
+  color:#fff;
+}
+body.braini-visual .daily-play-panel .daily-choice-card.is-primary{--card-tone:#4e479d}
+body.home-page.braini-visual .home-game-card:nth-child(8n+6){
+  --glass-surface:#f6d16b;
+  --glass-light:#fff5caad;
+  --glass-shade:#c081252e;
+  --glass-border:#ca9f42;
+  color:var(--navy);
+}
+@media (max-width:600px){
+  body.home-page.braini-visual .home-game-card{display:flex;flex-direction:column;align-items:flex-start}
+  body.home-page.braini-visual .home-game-card h3{overflow-wrap:anywhere}
+}
+body.braini-visual .anytime-game-card .anytime-game-head{
+  background:linear-gradient(155deg,#ffffff24,transparent 54%),color-mix(in srgb,var(--head) 78%,#1d1938);
+  box-shadow:inset 0 1px 1px #ffffff80;
+}
+body.braini-visual .anytime-game-card.accent-yellow .anytime-game-head{
+  background:linear-gradient(155deg,#fff8d49c,transparent 54%),var(--head);
+}
+body.braini-visual .anytime-game-card .anytime-game-head p{opacity:1}
+body.braini-visual .learn-catalog .learn-card[data-format=article]{
+  --glass-surface:color-mix(in srgb,var(--reading-tint) 88%,var(--reading-accent));
+  --glass-shade:color-mix(in srgb,var(--reading-accent) 14%,transparent);
+  --glass-border:color-mix(in srgb,var(--reading-accent) 36%,#dedce9);
+  border-top-color:var(--reading-accent);
+}
+body.braini-visual .learn-catalog .learn-card[data-format=article] :is(.learn-card-description,.learn-read-time,.learn-topic-heading button){color:#4f4b66}
+body.braini-visual .home-article{
+  --glass-surface:#dcebd7;
+  --glass-shade:#578c3826;
+  --glass-border:#9db596;
+  border-left-color:var(--green);
+}
+body.braini-visual .daily-play-panel .daily-choice-extras .daily-choice-card{
+  --glass-surface:var(--extra-tint,#fff6e5);
+  border-left-color:var(--extra-accent,var(--orange));
+}
+body.braini-visual .daily-play-panel .daily-choice-extras .daily-choice-card.is-complete{
+  --glass-surface:#e3f1db;
+  border-left-color:var(--green);
+}
+@supports ((backdrop-filter:blur(8px)) or (-webkit-backdrop-filter:blur(8px))){
+  @media (prefers-reduced-transparency:no-preference) and (forced-colors:none){
+    body.braini-visual :is(.home-game-card,.anytime-game-card,.daily-play-panel .daily-choice-card,.home-article,.learn-catalog .learn-card[data-format=article]){
+      background-color:color-mix(in srgb,var(--glass-surface,#e9e6f6) 92%,transparent);
+      -webkit-backdrop-filter:blur(8px) saturate(1.15);
+      backdrop-filter:blur(8px) saturate(1.15);
+    }
+  }
+}
 
 /* ===== My BrainiLab ===== */
 body.profile-page.braini-visual .profile-v27-head{padding:36px 0 30px}
