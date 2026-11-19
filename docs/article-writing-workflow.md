@@ -36,6 +36,10 @@ The current brief is version 2. Complete `demand.intentMatch` with `status: "rev
 
 English and cover reviews each need `status: "reviewed"`, meaningful `notes` and an `evidence` list. Reference the actual review record or inspected image/crop evidence. The CLI checks those hashes too; a reviewed label alone is insufficient. Existing version-1 briefs are preserved: add the missing fields after actually reviewing them rather than regenerating or overwriting their records.
 
+### Explicit owner exceptions for signed opinions
+
+An owner can expressly waive measured search demand for named signed editorials. Preserve the unavailable demand record and attach a private `demandException` reference to the brief. The approval must bind the release ID, each exact document hash and its author. The management publisher also requires the matching private registered approval. Use the truthful `owner-opinion-exception` type; do not mark missing metrics as measured evidence. This exception does not waive sources, originality, English, image, schema, link, device, revision or publication-date checks, and does not apply to other articles.
+
 ## 3. Write one enjoyable answer
 
 Give the answer near the start, then a concrete example or small surprise. Use original, everyday British English, short paragraphs and a few headings that help the reader. Use the relevant search words naturally; do not add unrelated trends, repeated definitions, artificial FAQs, exaggerated promises or internal acquisition goals.

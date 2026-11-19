@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {prepare,sha256,webpWidth,snapshotSql,publishSql} from './editorial-publish.mjs';
+import {opinionExceptionType,validOpinionException} from './editorial-demand-exception.mjs';
 const stamp=new Date().toISOString(),now=Date.now();
 function webp(width){const b=Buffer.alloc(30);b.write('RIFF');b.writeUInt32LE(22,4);b.write('WEBP',8);b.write('VP8X',12);b.writeUInt32LE(10,16);b.writeUIntLE(width-1,24,3);b.writeUIntLE(639,27,3);return b;}
 async function fixture(t){
@@ -29,6 +30,18 @@ test('binds proof bytes, verifies live dimensions, strips private paths and gene
 test('rejects changed proof',async t=>{const f=await fixture(t);await fs.writeFile(path.join(f.root,'proof.txt'),'edited');await assert.rejects(prepare(f.plan,f.snapshot,f.root,f.fetcher,now),/Changed .* evidence/);});
 test('rejects changed document after review',async t=>{const f=await fixture(t);await fs.appendFile(path.join(f.root,'document.json'),' ');await assert.rejects(prepare(f.plan,f.snapshot,f.root,f.fetcher,now),/Review not bound/);});
 test('requires actual demand proof rather than a generic reviewed flag',async t=>{const f=await fixture(t);delete f.review.demand;await fs.writeFile(path.join(f.root,'review.json'),JSON.stringify(f.review));await assert.rejects(prepare(f.plan,f.snapshot,f.root,f.fetcher,now),/Missing demand/);});
+test('an explicit opinion exception binds release, author and exact document without asserting measured demand',async t=>{
+ const f=await fixture(t);Object.assign(f.document,{articleKind:'opinion',authorId:'test-author'});
+ const bytes=Buffer.from(JSON.stringify(f.document));await fs.writeFile(path.join(f.root,'document.json'),bytes);f.review.documentSha256=sha256(bytes);
+ const approval={version:1,type:opinionExceptionType,id:f.plan.id,approved:true,recordedAt:stamp,approvalText:'Synthetic owner instruction for this test only',entries:[{slug:f.document.slug,authorId:f.document.authorId,documentSha256:sha256(bytes)}]};
+ const proof=Buffer.from(JSON.stringify(approval));await fs.writeFile(path.join(f.root,'approval.json'),proof);
+ f.review.demand={status:'verified',type:opinionExceptionType,authorizationId:f.plan.id,checkedAt:stamp,proofFile:'approval.json',proofSha256:sha256(proof)};
+ await fs.writeFile(path.join(f.root,'review.json'),JSON.stringify(f.review));
+ const packet=await prepare(f.plan,f.snapshot,f.root,f.fetcher,now);assert.equal(packet.entries[0].review.demand.type,opinionExceptionType);assert.equal(packet.entries[0].review.demand.query,undefined);assert.equal(packet.entries[0].review.demand.proofFile,undefined);
+ for(const bad of [{...approval,approved:false},{...approval,id:'other-release'},{...approval,entries:[]},{...approval,entries:[{...approval.entries[0],authorId:'another-author'}]},{...approval,entries:[{...approval.entries[0],documentSha256:'a'.repeat(64)}]}])assert.equal(validOpinionException(bad,f.document,sha256(bytes),f.plan.id,now),false);
+ assert.equal(validOpinionException(approval,{...f.document,articleKind:'explainer'},sha256(bytes),f.plan.id,now),false);
+ f.review.demand.authorizationId='another-release';await fs.writeFile(path.join(f.root,'review.json'),JSON.stringify(f.review));await assert.rejects(prepare(f.plan,f.snapshot,f.root,f.fetcher,now),/does not match/);
+});
 test('rejects wrong responsive dimensions',async t=>{const f=await fixture(t);await assert.rejects(prepare(f.plan,f.snapshot,f.root,async()=>({type:'image/webp',bytes:webp(960)}),now),/Incorrect 480px/);});
 test('rejects HTML returned as an image',async t=>{const f=await fixture(t);await assert.rejects(prepare(f.plan,f.snapshot,f.root,async()=>({type:'text/html',bytes:Buffer.from('<html>')}),now),/Incorrect 960px/);});
 test('requires explicit missing row and fresh snapshot',async t=>{const f=await fixture(t);await assert.rejects(prepare(f.plan,Buffer.from(JSON.stringify({capturedAt:stamp,entries:[]})),f.root,f.fetcher,now),/Explicit fresh snapshot/);await assert.rejects(prepare(f.plan,Buffer.from('{"capturedAt":"2000-01-01","entries":[]}'),f.root,f.fetcher,now),/Fresh backup/);});
