@@ -23,6 +23,7 @@ import './test-site-health.mjs';
 import './test-news-source-history.mjs';
 execFileSync(process.execPath,['--test','tests/breaking-news.test.mjs','tests/news-*.test.mjs'],{stdio:'inherit'});
 import './test-release-check.mjs';
+import './test-preview-propagation.mjs';
 import './test-release-schema.mjs';
 import './test-visible-article-dates.mjs';
 import './test-game-page-dates.mjs';
