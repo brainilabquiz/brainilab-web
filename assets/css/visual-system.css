@@ -1155,3 +1155,47 @@ body.home-page.braini-visual .home-hero .challenge-wrap::after{z-index:1;top:-40
   body.home-page.braini-visual .home-video-grid .video-label{font-size:10px}
   body.home-page.braini-visual .home-video-grid .video-play{padding:5px 9px;font-size:11px}
 }
+
+/* ===== Frosted reading surfaces (19 Nov 2026): Learn articles, topic-hub reading and questions, game guides. ===== */
+body.braini-visual :is(
+  .article-reading .article-fold,
+  .article-reading .article-next li>a,
+  .topic-reading>a,
+  .game-reading>div>a,
+  .play-guide>.seo-copy,
+  .game-faq>.wrap,
+  .topic-faq,.geo-faq
+){
+  background:
+    radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffd6),transparent 68%),
+    linear-gradient(145deg,transparent 38%,var(--glass-shade,#665a9e1f)),
+    var(--glass-surface,#efedf8);
+  border:1px solid var(--glass-border,#c6c1dc);
+  box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 6px 20px #2d296e1a;
+}
+/* Learn articles keep their warm reading tone. */
+body.braini-visual .article-reading :is(.article-fold,.article-next li>a){--glass-surface:#f3efe4;--glass-border:#d9d1bd;--glass-shade:#8a6d2a17;border-radius:14px}
+body.braini-visual .article-reading .article-next li>a:is(:hover,:focus-visible){--glass-border:#2d296e66;transform:translateY(-2px)}
+body.braini-visual .article-reading .article-back{border-radius:999px;background:radial-gradient(ellipse at 20% 0%,#ffffffd6,transparent 70%),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 4px 12px #2d296e1a}
+/* The game link at the end of an article: navy glass, like the home Daily panel. */
+body.braini-visual .article-reading .article-game-link{
+  background:linear-gradient(145deg,#a39bff46,transparent 55%,#17143b4d),#312c7a;
+  border-color:#e0dcff58;
+  box-shadow:inset 0 1px 1px #f3edff48,inset 0 -1px 1px #17143b66,0 14px 30px #0b08303d;
+}
+/* Topic hubs: the questions become one glass panel; the reading links become glass cards. */
+body.braini-visual :is(.topic-faq,.geo-faq){padding:24px 28px;border-radius:20px}
+body.braini-visual :is(.topic-faq,.geo-faq) details{border-color:#ffffff80}
+body.braini-visual .topic-reading>a{border-radius:14px}
+body.braini-visual .topic-reading>a.topic-reading-index{--glass-surface:#e4e1f6}
+body.braini-visual :is(.topic-reading>a,.game-reading>div>a):is(:hover,:focus-visible){--glass-border:#8f88c8;transform:translateY(-2px)}
+/* Game pages: the shortcut cards warm up; guide and questions sit on glass. */
+body.braini-visual .game-reading>div>a{--glass-surface:#f6f1e3;--glass-border:#ddd2b6;--glass-shade:#8a6d2a17;border-radius:14px}
+body.braini-visual :is(.play-guide>.seo-copy,.game-faq>.wrap){border-radius:20px}
+@media (prefers-reduced-motion:no-preference){
+  body.braini-visual :is(.article-reading .article-next li>a,.topic-reading>a,.game-reading>div>a){transition:transform .15s ease,border-color .15s ease}
+}
+@media (max-width:600px){body.braini-visual :is(.topic-faq,.geo-faq){padding:16px 18px}}
+@media (prefers-reduced-transparency:reduce),(forced-colors:active){
+  body.braini-visual :is(.article-reading .article-fold,.article-reading .article-next li>a,.topic-reading>a,.game-reading>div>a,.play-guide>.seo-copy,.game-faq>.wrap,.topic-faq,.geo-faq){background:var(--glass-surface,#efedf8)}
+}
