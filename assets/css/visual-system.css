@@ -1199,3 +1199,42 @@ body.braini-visual :is(.play-guide>.seo-copy,.game-faq>.wrap){border-radius:20px
 @media (prefers-reduced-transparency:reduce),(forced-colors:active){
   body.braini-visual :is(.article-reading .article-fold,.article-reading .article-next li>a,.topic-reading>a,.game-reading>div>a,.play-guide>.seo-copy,.game-faq>.wrap,.topic-faq,.geo-faq){background:var(--glass-surface,#efedf8)}
 }
+
+/* ===== The Daily streak card and the topic tiles (Nov 2026) ===== */
+/* The streak card: a warm card, the flame and count on a white badge, the week as day pills (done days orange), and
+   the next step as a yellow button. */
+body.braini-visual .continuity-card{border:0!important;border-radius:22px;background:linear-gradient(135deg,#fff6d6 0%,#ffe6c7 100%)!important;box-shadow:0 14px 32px #c4540a1f;color:var(--navy,#2d296e)}
+body.braini-visual .continuity-card.is-secured{background:linear-gradient(135deg,#effbe8 0%,#d9f3cf 100%)!important;box-shadow:0 14px 32px #23801c1f}
+body.braini-visual .continuity-count{gap:6px;padding:8px 14px 8px 10px;border-radius:18px;background:#fff;box-shadow:0 6px 16px #c4540a26}
+body.braini-visual .continuity-count b{font-size:34px;font-weight:900;line-height:1;color:#c4540a}
+body.braini-visual .continuity-flame{width:30px;height:36px}
+body.braini-visual .continuity-main h2{font-weight:900}
+body.braini-visual .continuity-main :is(p,small){color:#6b5232}
+body.braini-visual .continuity-week li{color:#8a6a3c;font-weight:700}
+body.braini-visual .continuity-week b{box-sizing:border-box;background:#fff;border:2px solid #f3d6a6;color:#c9a46a}
+body.braini-visual .continuity-week .complete b{background:#e6680c;border-color:#e6680c;color:#fff}
+body.braini-visual .continuity-week .today b{outline:3px solid var(--navy,#2d296e);outline-offset:2px}
+body.braini-visual .continuity-action{justify-self:start;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:10px 18px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e)!important;font-weight:800;box-shadow:0 3px 0 #c9a700}
+body.braini-visual .continuity-action:hover{filter:brightness(1.04)}
+body.braini-visual .continuity-action:focus-visible{outline:3px solid var(--navy,#2d296e);outline-offset:3px}
+body.braini-visual .continuity-timezone{color:#8a6a3c}
+/* Home, wide screens: one row - count and title, the week, then the button over the reset time. */
+@media(min-width:701px){
+  body.home-page.braini-visual .continuity-card.is-compact{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"main week action" "main week zone";align-items:center;gap:6px 32px;min-height:116px;padding:18px 26px}
+  body.home-page.braini-visual .continuity-card.is-compact>.continuity-main{grid-area:main}
+  body.home-page.braini-visual .continuity-card.is-compact>.continuity-week{grid-area:week}
+  body.home-page.braini-visual .continuity-card.is-compact>.continuity-action{grid-area:action;align-self:end;justify-self:center}
+  body.home-page.braini-visual .continuity-card.is-compact>.continuity-timezone{grid-area:zone;align-self:start;justify-self:center;text-align:center}
+}
+/* Phones: the button and the reset time share the last row. */
+@media(max-width:700px){
+  body.braini-visual .continuity-card{grid-template-columns:minmax(0,1fr) auto;gap:14px 12px}
+  body.braini-visual .continuity-card>:is(.continuity-main,.continuity-week){grid-column:1/-1}
+  body.braini-visual .continuity-card>.continuity-timezone{margin-top:0;text-align:right;align-self:center}
+}
+/* Phones: the topic tiles become compact rows (icon beside the name), half as tall. */
+@media(max-width:540px){
+  body.home-page.braini-visual .seo-copy .inline-links{gap:8px}
+  body.home-page.braini-visual .seo-copy .inline-links a{flex-direction:row;justify-content:flex-start;gap:8px;min-height:62px;padding:9px 8px;font-size:13px;line-height:1.25;text-align:left;overflow-wrap:anywhere}
+  body.home-page.braini-visual .seo-copy .inline-links a::before{width:40px;height:40px;background-size:30px 30px;border-radius:12px}
+}
