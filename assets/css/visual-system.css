@@ -1238,3 +1238,15 @@ body.braini-visual .continuity-timezone{color:#8a6a3c}
   body.home-page.braini-visual .seo-copy .inline-links a{flex-direction:row;justify-content:flex-start;gap:8px;min-height:62px;padding:9px 8px;font-size:13px;line-height:1.25;text-align:left;overflow-wrap:anywhere}
   body.home-page.braini-visual .seo-copy .inline-links a::before{width:40px;height:40px;background-size:30px 30px;border-radius:12px}
 }
+
+/* ===== Typography & details (21 Nov 2026): the small things that make the site feel finished.
+   Zero-specificity :where() so any existing component rule still wins. ===== */
+body.braini-visual{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
+:where(body.braini-visual) :where(h1,h2,h3){text-wrap:balance}
+:where(body.braini-visual) :where(p,li,dd,figcaption,blockquote){text-wrap:pretty}
+:where(body.braini-visual) :where(a){text-underline-offset:.2em;text-decoration-thickness:max(1px,.07em)}
+/* Arrows after a link label ("Quick read →") are not underlined with the words. */
+:where(body.braini-visual a>span[aria-hidden="true"]:not([class])){display:inline-block;text-decoration:none}
+/* Scores, ranks, counts and dates keep their width as the digits change. */
+:where(body.braini-visual) :where(.ranking-row-score,.ranking-position b,.score-big,.profile-level-numbers,.continuity-week,.gta-countdown-tiles b,time,progress+span){font-variant-numeric:tabular-nums}
+body.braini-visual ::selection{background:#ffd81380}
