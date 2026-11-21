@@ -1,3 +1,5 @@
+/* Brand text font, self-hosted (SIL Open Font License, assets/fonts/montserrat-ofl.txt). */
+@font-face{font-family:Montserrat;src:url("/assets/fonts/montserrat-latin.woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
 /* GTA VI launch special — "Vice City at dusk" neon design (Nov 2026). */
 .gta-special {
   --night: #110a1d;

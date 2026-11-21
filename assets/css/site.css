@@ -1,3 +1,5 @@
+/* Brand text font, self-hosted (SIL Open Font License, assets/fonts/montserrat-ofl.txt). */
+@font-face{font-family:Montserrat;src:url("/assets/fonts/montserrat-latin.woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
 :root{
   --orange:#E6680C; --yellow:#FFD813; --red:#E52720; --green:#40AB34; --navy:#2D296E;
   --ink:#181729; --muted:#737286; --page:#F7F7FB; --card:#fff; --line:#E7E6F0;
