@@ -1250,3 +1250,213 @@ body.braini-visual{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:gr
 /* Scores, ranks, counts and dates keep their width as the digits change. */
 :where(body.braini-visual) :where(.ranking-row-score,.ranking-position b,.score-big,.profile-level-numbers,.continuity-week,.gta-countdown-tiles b,time,progress+span){font-variant-numeric:tabular-nums}
 body.braini-visual ::selection{background:#ffd81380}
+
+/* ===== Learn › All topics (21 Nov 2026): navy header band, colour-coded topics, readable article rows ===== */
+body.braini-visual .topic-index{--ti-accent:#2d296e}
+body.braini-visual .topic-index>.breadcrumb:has(+ .topic-index-header){position:relative;isolation:isolate;margin:0!important;padding-top:22px;color:#c9c5ee}
+body.braini-visual .topic-index>.breadcrumb:has(+ .topic-index-header)::before,
+body.braini-visual .topic-index-header::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .topic-index>.breadcrumb:has(+ .topic-index-header) a{color:#fff}
+body.braini-visual .topic-index-header{position:relative;isolation:isolate;margin:0 0 28px!important;padding:18px 0 40px;color:#fff}
+body.braini-visual .topic-index-header::before{bottom:0}
+body.braini-visual .topic-index-header::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual .topic-index-header h1{color:#fff!important;font-weight:900;font-size:clamp(32px,4.4vw,48px)}
+body.braini-visual .topic-index-header p{color:#d9d6f2!important}
+body.braini-visual .topic-index-header>a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e)!important;font-weight:800;text-decoration:none;box-shadow:0 4px 0 #c9a700}
+
+/* Topic colours, in the same order as the jump links and the sections. */
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+1){--ti-accent:#2d296e}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+2){--ti-accent:#23801c}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+3){--ti-accent:#c4540a}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+4){--ti-accent:#1a7593}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+5){--ti-accent:#c62d27}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+6){--ti-accent:#6a4fc9}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+7){--ti-accent:#a8740b}
+
+/* Jump links: colour pills with the article count as a badge. */
+body.braini-visual .topic-index-nav{gap:10px;padding:0 0 30px;border-bottom:0}
+body.braini-visual .topic-index-nav a{gap:10px;padding:8px 8px 8px 16px;border:1px solid color-mix(in srgb,var(--ti-accent) 30%,#fff);border-radius:999px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 70%),color-mix(in srgb,var(--ti-accent) 9%,#fff);color:var(--ti-accent);font-weight:800;text-decoration:none;box-shadow:inset 0 1px 1px #ffffffd9,0 3px 10px #2d296e14;transition:transform .15s ease,box-shadow .15s ease}
+body.braini-visual .topic-index-nav a:hover{transform:translateY(-2px);box-shadow:inset 0 1px 1px #ffffffd9,0 8px 18px #2d296e22}
+body.braini-visual .topic-index-nav a>span:last-child{display:grid;place-items:center;min-width:30px;height:26px;padding:0 8px;border-radius:999px;background:var(--ti-accent);color:#fff;font-size:12px;font-weight:800}
+
+/* Each topic is a glass panel with a coloured top edge. */
+body.braini-visual .topic-index-section{margin-top:22px;padding:24px 28px 28px;border:1px solid #d9d4c6;border-top:5px solid var(--ti-accent);border-radius:20px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#8a6d2a12),#f6f2e8;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 24px #2d296e14}
+body.braini-visual .topic-index-section:target{border-top:5px solid var(--ti-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ti-accent) 35%,transparent),0 8px 24px #2d296e14}
+body.braini-visual .topic-index-section h2{display:flex;align-items:center;gap:12px;margin:0;font-size:clamp(22px,2.6vw,28px);font-weight:900;color:var(--navy,#2d296e)}
+body.braini-visual .topic-index-section h2::before{content:"";width:14px;height:14px;border-radius:5px;background:var(--ti-accent)}
+body.braini-visual .topic-index-section>header{margin-bottom:6px}
+body.braini-visual .topic-index-section>header>a{padding:0 12px;border-radius:999px;background:#ffffffb3;color:var(--navy,#2d296e);font-weight:700;text-decoration:none}
+/* Subtopic shortcuts as small pills. */
+body.braini-visual .topic-index-group-nav ul{gap:8px}
+body.braini-visual .topic-index-group-nav a{display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:0 12px;border-radius:999px;background:#ffffffc7;border:1px solid #e3dccb;color:var(--navy,#2d296e);font-size:13px;font-weight:700;text-decoration:none}
+body.braini-visual .topic-index-group-nav a:hover{border-color:var(--ti-accent)}
+body.braini-visual .topic-index-group-nav a span{color:#6d6880;font-weight:600}
+body.braini-visual .topic-index-group h3{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:var(--ti-accent)}
+/* Article rows: two columns of light cards, the reading time as a pill. */
+body.braini-visual .topic-index-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;padding:0;margin:0;list-style:none}
+body.braini-visual .topic-index-list>li{margin:0;border:0;padding:0}
+body.braini-visual .topic-index-list a{display:flex;align-items:center;justify-content:space-between;gap:12px;height:100%;min-height:52px;padding:10px 12px 10px 14px;border:1px solid #e6dfcf;border-left:3px solid var(--ti-accent);border-radius:12px;background:#fffdf9;color:var(--navy,#2d296e);font-weight:700;line-height:1.35;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+body.braini-visual .topic-index-list a:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--ti-accent) 45%,#e6dfcf);box-shadow:0 8px 18px #2d296e17}
+body.braini-visual .topic-index-list a>small{flex:none;display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--ti-accent) 10%,#fff);color:var(--ti-accent);font-size:12px;font-weight:700;white-space:nowrap}
+body.braini-visual .topic-index-explore{margin-top:18px}
+@media(max-width:700px){
+  body.braini-visual .topic-index-section{padding:18px 16px 20px;border-radius:16px}
+  body.braini-visual .topic-index-list{grid-template-columns:1fr}
+  body.braini-visual .topic-index-header{padding:14px 0 30px}
+}
+@media(prefers-reduced-motion:reduce){body.braini-visual :is(.topic-index-nav a,.topic-index-list a){transition:none}}
+
+/* ===== Academy course outline (21 Nov 2026): a glass panel with a numbered stepper ===== */
+body.braini-visual .academy-outline{padding:18px 18px 14px;border:1px solid #d9d4c6;border-top:5px solid var(--green,#40ab34);border-radius:18px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#8a6d2a12),#f6f2e8;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 22px #2d296e14}
+body.braini-visual .academy-outline .outline-title{display:block;margin-bottom:6px;color:var(--navy,#2d296e);font:800 15px/1.35 var(--display,"Pally","Montserrat",sans-serif);text-decoration:none}
+body.braini-visual .academy-outline summary{display:flex;align-items:center;min-height:36px;padding:0 12px;margin:6px 0 4px;border-radius:999px;background:#ffffffb8;color:var(--navy,#2d296e);font-size:13px}
+body.braini-visual .academy-outline ol{position:relative;margin:10px 0 0}
+body.braini-visual .academy-outline li{position:relative;padding:6px 0 10px;border-top:0}
+body.braini-visual .academy-outline li+li::before{content:"";position:absolute;left:17px;top:-12px;height:20px;width:2px;border-radius:2px;background:#d8d1c0}
+body.braini-visual .academy-outline li>a{grid-template-columns:36px 1fr;gap:10px;align-items:center;padding:6px 8px 6px 4px;border-radius:12px;color:var(--navy,#2d296e);font-weight:650;font-size:14px}
+body.braini-visual .academy-outline li>a:hover{background:#ffffffb3}
+body.braini-visual .academy-outline .lesson-number{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--navy,#2d296e);font-size:14px;font-weight:800;box-shadow:inset 0 0 0 2px #d8d1c0}
+body.braini-visual .academy-outline .is-complete .lesson-number{background:var(--green,#40ab34);color:#fff;box-shadow:none}
+body.braini-visual .academy-outline .is-complete+li::before,body.braini-visual .academy-outline li.is-complete::before{background:var(--green,#40ab34)}
+body.braini-visual .academy-outline li>a[aria-current=page]{background:#fff3c4;font-weight:800;box-shadow:inset 0 0 0 1px #f2d66b}
+body.braini-visual .academy-outline li>a[aria-current=page] .lesson-number{background:var(--navy,#2d296e);color:#fff;box-shadow:0 0 0 3px #ffd81399}
+body.braini-visual .academy-outline .outline-status{margin:2px 0 0 50px;color:#6d6880;font-weight:600}
+body.braini-visual .academy-outline .is-complete .outline-status{color:#2f7a2a}
+
+/* ===== Page heroes (21 Nov 2026): .page-hero (Flags hub, Privacy, Cookies) is the same full-width band as every other page ===== */
+body.braini-visual .page-hero{position:relative;isolation:isolate;padding:0;margin-bottom:28px;color:#fff}
+body.braini-visual .page-hero::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .page-hero::after{content:"";position:absolute;z-index:-1;bottom:0;left:50%;width:100vw;height:6px;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%)}
+body.braini-visual .page-hero-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:32px 0 40px!important;overflow:visible}
+body.braini-visual .page-hero-card::before{content:none!important}
+body.braini-visual .page-hero h1{color:#fff;font-weight:900;font-size:clamp(34px,5vw,56px)}
+body.braini-visual .page-hero p{color:#d9d6f2}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ .page-hero){position:relative;isolation:isolate}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ .page-hero)::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ .page-hero) .breadcrumb{color:#c9c5ee}
+body.braini-visual .wrap:has(> .breadcrumb:only-child):has(+ .page-hero) .breadcrumb a{color:#fff}
+@media(max-width:600px){body.braini-visual .page-hero-card{padding:24px 0 30px!important}}
+
+/* Reasoning challenge: the card sits on the same glass as the other game panels. */
+body.braini-visual .reason-card{border:1px solid #c6c1dc;border-top:6px solid var(--yellow,#ffd813);border-radius:24px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#665a9e1f),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 14px 34px #2d296e1f}
+
+/* ===== BrainiLab+ (21 Nov 2026): the hero is the full-width band with a "+" badge; benefits and plans on glass ===== */
+body.braini-visual .plus-page{padding-bottom:64px}
+body.braini-visual .plus-page>.wrap>.breadcrumb{position:relative;isolation:isolate;color:#c9c5ee}
+body.braini-visual .plus-page>.wrap>.breadcrumb::before{content:"";position:absolute;z-index:-1;top:0;bottom:-1px;left:50%;width:100vw;transform:translateX(-50%);background:radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .plus-page>.wrap>.breadcrumb a{color:#fff;text-decoration-color:#ffffff66}
+body.braini-visual .plus-page>.wrap>.breadcrumb a:focus-visible{outline:2px solid var(--yellow,#ffd23f);outline-offset:3px;border-radius:4px}
+body.braini-visual .plus-page [data-plus-page-root]{margin-top:0}
+body.braini-visual .plus-hero{isolation:isolate;overflow:visible;margin-bottom:30px;padding:26px 260px 52px 0;border-radius:0;background:transparent;box-shadow:none}
+body.braini-visual .plus-hero::before{inset:0 auto 0 50%;z-index:-1;width:100vw;height:auto;transform:translateX(-50%);background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%) 0 100%/100% 6px no-repeat,radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .plus-hero::after{content:"+";position:absolute;top:50%;right:24px;display:grid;place-items:center;width:188px;height:188px;padding-bottom:22px;box-sizing:border-box;border-radius:50%;overflow:hidden;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font:700 250px/1 "Pally","Montserrat",sans-serif;box-shadow:0 10px 0 #c9a700,0 30px 50px #0b083066;transform:translateY(-54%) rotate(-8deg)}
+body.braini-visual .plus-hero>span{display:inline-flex;align-items:center;min-height:30px;padding:0 14px;border:1px solid #ffffff2e;border-radius:999px;background:#ffffff14;color:var(--yellow,#ffd813);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+body.braini-visual .plus-hero h1{max-width:14ch;margin:14px 0 12px;color:#fff;font-weight:700;font-size:clamp(40px,6vw,68px);line-height:1}
+body.braini-visual .plus-hero p{max-width:640px;color:#d9d6f2;font-size:17px;font-weight:500;line-height:1.6}
+/* "Before you subscribe": a clear note, not grey small print. */
+body.braini-visual .plus-fineprint:first-of-type{justify-content:flex-start;align-items:center;gap:14px;margin:0 0 18px;padding:14px 18px;border:1px solid #f1d877;border-radius:16px;background:#fff8d9;color:#4a4560;font-size:14px;line-height:1.5;font-weight:500}
+body.braini-visual .plus-fineprint:first-of-type strong{display:inline-flex;align-items:center;gap:8px;flex:none;font-size:14px;font-weight:800}
+body.braini-visual .plus-fineprint:first-of-type strong::before{content:"i";display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--navy,#2d296e);color:#fff;font:800 13px/1 Georgia,serif}
+/* Benefits: three glass cards with a coloured check. */
+body.braini-visual .plus-benefits{gap:16px;margin-top:0}
+body.braini-visual .plus-benefits article{--acc:#23801c;padding:24px 24px 26px;border:1px solid #c6c1dc;border-top:5px solid var(--acc);border-radius:22px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#665a9e1f),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 24px #2d296e1c}
+body.braini-visual .plus-benefits article:nth-child(2){--acc:#c4540a}
+body.braini-visual .plus-benefits article:nth-child(3){--acc:#2d296e}
+body.braini-visual .plus-benefits strong{display:block;color:var(--navy,#2d296e);font-size:19px;font-weight:800;line-height:1.3}
+body.braini-visual .plus-benefits strong::before{content:"";display:block;width:42px;height:42px;margin-bottom:14px;border-radius:13px;background:var(--acc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/22px no-repeat;box-shadow:0 6px 14px color-mix(in srgb,var(--acc) 35%,transparent)}
+body.braini-visual .plus-benefits p{margin-top:8px;color:#4a4560;font-size:14px;font-weight:500;line-height:1.6}
+/* Plans: equal cards, the button always at the bottom; the annual plan is the navy card. */
+body.braini-visual .plus-pricing-grid{gap:18px;margin-top:22px;align-items:stretch}
+body.braini-visual .plus-price-card{display:flex;flex-direction:column;padding:30px;border:1px solid #c6c1dc;border-radius:26px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#665a9e1f),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 24px #2d296e1c}
+body.braini-visual .plus-price-card>span{align-self:flex-start;padding:5px 12px;border-radius:999px;background:#2d296e14;color:var(--navy,#2d296e);font-size:12px;font-weight:800;letter-spacing:.06em}
+body.braini-visual .plus-price-card h2{margin:16px 0 0;font-size:clamp(48px,5vw,60px);font-weight:700}
+body.braini-visual .plus-price-card p{min-height:0;margin:8px 0 26px;color:#4a4560;font-size:15px;font-weight:600}
+body.braini-visual .plus-price-card button{margin-top:auto;min-height:52px;font-size:16px}
+body.braini-visual .plus-price-card.featured{border:2px solid var(--yellow,#ffd813);background:radial-gradient(ellipse at 85% 0%,#ffd81326,transparent 60%),linear-gradient(145deg,#a39bff46,transparent 55%,#17143b4d),#312c7a;color:#fff;box-shadow:0 26px 50px #2d296e40}
+body.braini-visual .plus-price-card.featured>span{background:var(--yellow,#ffd813);color:var(--navy,#2d296e)}
+body.braini-visual .plus-price-card.featured h2{color:#fff}
+body.braini-visual .plus-price-card.featured p{color:#d9d6f2}
+body.braini-visual .plus-current-card{padding:28px;border:1px solid #f1d877;border-top:5px solid var(--yellow,#ffd813);border-radius:24px;background:#fff8d9}
+body.braini-visual .plus-current-card p{font-size:14px;font-weight:500}
+body.braini-visual .plus-pricing-grid~.plus-fineprint{margin-top:18px;padding:14px 18px;border:1px solid #d8d3ea;border-radius:16px;background:#efedf8;color:#4a4560;font-size:13px;font-weight:500;line-height:1.5}
+@media(max-width:900px){
+  body.braini-visual .plus-hero{padding-right:0}
+  body.braini-visual .plus-hero::after{display:none}
+}
+@media(max-width:760px){
+  body.braini-visual .plus-hero{padding:20px 0 40px}
+  body.braini-visual .plus-hero p{font-size:16px}
+  body.braini-visual .plus-fineprint:first-of-type{align-items:flex-start}
+  body.braini-visual .plus-price-card{padding:24px}
+}
+
+/* ===== Contact (21 Nov 2026): three short tips under the form ===== */
+body.braini-visual .suggestions-tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+body.braini-visual .suggestions-tips>div{--acc:#23801c;padding:18px 18px 20px;border:1px solid #c6c1dc;border-radius:18px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#665a9e1f),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 22px #2d296e17}
+body.braini-visual .suggestions-tips>div:nth-child(2){--acc:#c4540a}
+body.braini-visual .suggestions-tips>div:nth-child(3){--acc:#2d296e}
+body.braini-visual .suggestions-tips strong{display:flex;align-items:flex-start;gap:8px;color:var(--navy,#2d296e);font-size:16px;font-weight:800;line-height:1.3}
+body.braini-visual .suggestions-tips strong::before{content:"";flex:none;width:10px;height:10px;margin-top:5px;border-radius:3px;background:var(--acc)}
+body.braini-visual .suggestions-main{min-height:0;padding-bottom:56px}
+body.braini-visual .suggestions-tips p{margin:8px 0 0;color:#4a4560;font-size:14px;line-height:1.55}
+body.braini-visual .suggestions-tips a{color:var(--navy,#2d296e);font-weight:700}
+body.braini-visual .suggestions-wrap:has(> .feedback-context:not([hidden])) .suggestions-tips{display:none}
+@media(max-width:700px){body.braini-visual .suggestions-tips{grid-template-columns:1fr}}
+
+/* ===== Reset password and 404 (21 Nov 2026): on the band, like every other page ===== */
+body.braini-visual .reset-password-main{position:relative;isolation:isolate;display:block;min-height:0;padding:56px 0 96px}
+body.braini-visual .reset-password-main::before{content:"";position:absolute;z-index:-1;top:0;left:0;right:0;height:210px;background:linear-gradient(90deg,var(--orange) 0 20%,var(--yellow) 20% 40%,var(--red) 40% 60%,var(--green) 60% 80%,#6a64c9 80%) 0 100%/100% 6px no-repeat,radial-gradient(#ffffff17 1.5px,transparent 1.7px) 0 0/26px 26px,var(--navy,#2d296e)}
+body.braini-visual .reset-password-card{padding:34px;border:1px solid #c6c1dc;border-top:5px solid var(--green,#3fab34);border-radius:26px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#665a9e1f),#efedf8;box-shadow:inset 0 1px 1px #ffffffd9,0 26px 52px #0b083033}
+body.braini-visual .reset-password-card p{font-size:15px;font-weight:500;color:#4a4560}
+body.braini-visual .reset-password-form label{margin-top:6px;color:var(--navy,#2d296e);font-size:14px;font-weight:700}
+body.braini-visual .reset-password-form .auth-primary{min-height:52px;margin-top:14px;font-size:16px}
+body.braini-visual.error-page main.section .auth-kicker{display:block;margin:0 0 10px;color:var(--navy,#2d296e);font:700 clamp(88px,14vw,150px)/.9 "Pally","Montserrat",sans-serif;letter-spacing:0;text-shadow:6px 6px 0 var(--yellow,#ffd813)}
+@media(max-width:760px){
+  body.braini-visual .reset-password-main{padding:28px 0 48px}
+  body.braini-visual .reset-password-main::before{height:150px}
+  body.braini-visual .reset-password-card{padding:24px 18px}
+}
+
+/* ===== Privacy and cookies (21 Nov 2026): readable sections on warm glass ===== */
+body.braini-visual.info-page .legal-copy{padding:clamp(22px,4vw,44px);border:1px solid #d9d4c6;border-radius:24px;background:radial-gradient(ellipse at 12% 0%,#ffffffd6,transparent 68%),linear-gradient(145deg,transparent 38%,#8a6d2a12),#f9f6ee;box-shadow:inset 0 1px 1px #ffffffd9,0 8px 24px #2d296e14}
+body.braini-visual.info-page .legal-copy h2{display:flex;align-items:center;gap:12px;padding-top:26px;border-top:1px solid #e6dfcf}
+body.braini-visual.info-page .legal-copy h2:first-child{padding-top:0;border-top:0}
+body.braini-visual.info-page .legal-copy h2::before{content:"";flex:none;width:8px;height:24px;border-radius:4px;background:var(--yellow,#ffd813);box-shadow:0 2px 0 #c9a700}
+body.braini-visual.info-page .legal-copy p{max-width:72ch;color:#3f3a52}
+
+/* ===== Game and quiz guides (21 Nov 2026): the worked example is a highlighted box; info cards on glass ===== */
+/* "About this quiz" and "How <game> works" use the same glass as the guide below them. */
+body.braini-visual :is(.section>.wrap.quiz-page.seo-copy,.game-rules-summary>.seo-copy){border:1px solid var(--glass-border,#c6c1dc);border-radius:20px;background:radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffd6),transparent 68%),linear-gradient(145deg,transparent 38%,var(--glass-shade,#665a9e1f)),var(--glass-surface,#efedf8);box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 6px 20px #2d296e1a}
+/* When a guide has two sub-headings, the first one (a worked example or practice round) and the text under it form one box. */
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type),
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~:not(h3):not(h3:last-of-type~*){max-width:none;margin:0;padding-inline:22px;border-inline:1px solid #f1d877;background:#fff8d9}
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type){display:flex;align-items:center;gap:12px;margin-top:24px;padding-top:18px;padding-bottom:4px;border-top:1px solid #f1d877;border-radius:16px 16px 0 0}
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)::before{content:"";flex:none;width:32px;height:32px;border-radius:10px;background:var(--yellow,#ffd813) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232d296e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z'/%3E%3C/svg%3E") center/19px no-repeat;box-shadow:0 3px 0 #c9a700}
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~:not(h3):not(h3:last-of-type~*){padding-top:8px;color:#3f3a52}
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~ol:not(h3:last-of-type~*){padding-left:46px}
+body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~:has(+ h3:last-of-type){padding-bottom:18px;border-bottom:1px solid #f1d877;border-radius:0 0 16px 16px}
+/* The tips heading after it gets a small green marker. */
+body.braini-visual .play-guide>.seo-copy>h3:last-of-type{display:flex;align-items:center;gap:10px;margin-top:26px}
+body.braini-visual .play-guide>.seo-copy>h3:last-of-type:not(:first-of-type)::before,
+body.braini-visual .play-guide>.seo-copy>h3:only-of-type::before{content:"";flex:none;width:10px;height:22px;border-radius:4px;background:var(--green,#3fab34)}
+/* The related-reading note lines up with the guide column. */
+body.braini-visual aside.wrap[aria-label="Related reading"]{max-width:860px}
+body.braini-visual aside.wrap[aria-label="Related reading"]>p{border:1px solid #f1d877!important;border-radius:16px!important;background:#fff8d9!important;color:#3f3a52;font-weight:600}
+@media(max-width:600px){
+  body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type),
+  body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~:not(h3):not(h3:last-of-type~*){padding-inline:16px}
+  body.braini-visual .play-guide>.seo-copy>h3:first-of-type:not(:last-of-type)~ol:not(h3:last-of-type~*){padding-left:38px}
+}
+/* Quick facts under the rules: small pills instead of a bullet list. */
+body.braini-visual .game-rules-summary .seo-facts{display:flex;flex-wrap:wrap;gap:8px;max-width:none;margin:16px 0 0;padding:0;list-style:none}
+body.braini-visual .game-rules-summary .seo-facts>li{display:inline-flex;align-items:center;gap:8px;max-width:none;margin:0;padding:7px 14px;border:1px solid #d8d3ea;border-radius:999px;background:#ffffffb8;color:var(--navy,#2d296e);font-size:14px;font-weight:700;line-height:1.3}
+body.braini-visual .game-rules-summary .seo-facts>li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--green,#3fab34)}
+/* The remaining white text cards (game pages, the Flags hub, Games) share the same glass. Zero extra specificity, so the
+   reading, legal and guide rules above keep their own tones; the home page keeps its own layout. */
+:where(body.braini-visual:not(.home-page)) .seo-copy,:where(body.braini-visual:not(.home-page)) .content-grid>.panel{border:1px solid var(--glass-border,#c6c1dc);background:radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffd6),transparent 68%),linear-gradient(145deg,transparent 38%,var(--glass-shade,#665a9e1f)),var(--glass-surface,#efedf8);box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 6px 20px #2d296e1a}
+:where(body.braini-visual:not(.home-page)) .content-grid>.panel{border-radius:20px}
+/* Connections: the reading cards sit on the page, like on every other game, not inside a panel. */
+body.braini-visual .discovery-example>.seo-copy{padding-inline:0;border:0;background:none;box-shadow:none}
+@media (prefers-reduced-transparency:reduce),(forced-colors:active){
+  :where(body.braini-visual:not(.home-page)) .seo-copy,:where(body.braini-visual:not(.home-page)) .content-grid>.panel{background:var(--glass-surface,#efedf8)}
+}
