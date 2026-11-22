@@ -1505,3 +1505,163 @@ body.braini-visual .game-topic-directory>p>a:is(:hover,:focus-visible){border-co
 body.braini-visual :is(.cryptic-card,.cryptic-help){border-color:var(--glass-border,#c6c1dc);background:radial-gradient(ellipse at 12% 0%,var(--glass-light,#ffffffd6),transparent 68%),linear-gradient(145deg,transparent 38%,var(--glass-shade,#665a9e1f)),var(--glass-surface,#efedf8);box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),inset 0 0 0 1px #ffffff4d,0 8px 24px #2d296e1a}
 body.braini-visual .cryptic-card{border-top:5px solid var(--yellow,#ffd813);box-shadow:inset 0 1px 1px var(--glass-rim,#ffffffd9),0 16px 36px #2d296e24}
 @media (prefers-reduced-transparency:reduce),(forced-colors:active){body.braini-visual :is(.cryptic-card,.cryptic-help){background:var(--glass-surface,#efedf8)}}
+/* ===== Game worlds (22 Nov 2026): every game keeps one colour world on its page, its cards and the Daily ===== */
+/* Tokens: --world (main), --world-deep (always readable with white text), --world-ink (text on the main colour), --world-dot, --world-art. */
+body.braini-visual[data-world=connections],
+body.braini-visual [data-world=connections],
+body.braini-visual .anytime-game-card:has(a[href*="/games/connections/"],img[src*="/connections."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/connections/"],img[src*="/connections."]){--world:#6a4fc9;--world-deep:#4b34a6;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/connections.svg)}
+body.braini-visual[data-world=odd-one-out],
+body.braini-visual [data-world=odd-one-out],
+body.braini-visual .anytime-game-card:has(a[href*="/games/odd-one-out/"],img[src*="/odd-one-out."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/odd-one-out/"],img[src*="/odd-one-out."]){--world:#c62d27;--world-deep:#9b1f1a;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/odd-one-out.svg)}
+body.braini-visual[data-world=higher-lower],
+body.braini-visual [data-world=higher-lower],
+body.braini-visual .anytime-game-card:has(a[href*="/games/higher-lower/"],img[src*="/higher-lower."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/higher-lower/"],img[src*="/higher-lower."]){--world:#1f6fc4;--world-deep:#15539a;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/higher-lower.svg)}
+body.braini-visual[data-world=math-rush],
+body.braini-visual [data-world=math-rush],
+body.braini-visual .anytime-game-card:has(a[href*="/games/math-rush/"],img[src*="/math-rush."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/math-rush/"],img[src*="/math-rush."]){--world:#c4540a;--world-deep:#9a3f05;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/math-rush.svg)}
+body.braini-visual[data-world=number-route],
+body.braini-visual [data-world=number-route],
+body.braini-visual .anytime-game-card:has(a[href*="/games/number-route/"],img[src*="/number-route."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/number-route/"],img[src*="/number-route."]){--world:#1a7593;--world-deep:#125a72;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/number-route.svg)}
+body.braini-visual[data-world=sequence],
+body.braini-visual [data-world=sequence],
+body.braini-visual .anytime-game-card:has(a[href*="/games/sequence/"],img[src*="/sequence."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/sequence/"],img[src*="/sequence."]){--world:#b02d72;--world-deep:#862055;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/sequence.svg)}
+body.braini-visual[data-world=brainiword],
+body.braini-visual [data-world=brainiword],
+body.braini-visual .anytime-game-card:has(a[href*="/games/brainiword/"],img[src*="/brainiword."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/brainiword/"],img[src*="/brainiword."]){--world:#ffc928;--world-deep:#7a5900;--world-ink:#2d296e;--world-dot:#2d296e1c;--world-art:url(/assets/illustrations/games/brainiword.svg)}
+body.braini-visual[data-world=survival],
+body.braini-visual [data-world=survival],
+body.braini-visual .anytime-game-card:has(a[href*="/games/survival/"],img[src*="/survival."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/survival/"],img[src*="/survival."]){--world:#c22a52;--world-deep:#921a3b;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/survival.svg)}
+body.braini-visual[data-world=order-up],
+body.braini-visual [data-world=order-up],
+body.braini-visual .anytime-game-card:has(a[href*="/games/order-up/"],img[src*="/order-up."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/order-up/"],img[src*="/order-up."]){--world:#0f7a5c;--world-deep:#0a5a43;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/order-up.svg)}
+body.braini-visual[data-world=topic-rush],
+body.braini-visual [data-world=topic-rush],
+body.braini-visual .anytime-game-card:has(a[href*="/games/topic-rush/"],img[src*="/topic-rush."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/topic-rush/"],img[src*="/topic-rush."]){--world:#9ad13b;--world-deep:#3f6212;--world-ink:#2d296e;--world-dot:#2d296e1c;--world-art:url(/assets/illustrations/games/topic-rush.svg)}
+body.braini-visual[data-world=cryptic],
+body.braini-visual [data-world=cryptic],
+body.braini-visual .anytime-game-card:has(a[href*="/games/cryptic/"],img[src*="/cryptic."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/cryptic/"],img[src*="/cryptic."]){--world:#7b3aa8;--world-deep:#5b2681;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/cryptic.svg)}
+body.braini-visual[data-world=brain-mix],
+body.braini-visual [data-world=brain-mix],
+body.braini-visual .anytime-game-card:has(a[href*="/games/brain-mix/"],img[src*="/brain-mix."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/brain-mix/"],img[src*="/brain-mix."]){--world:#4338ca;--world-deep:#2d2a80;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/brain-mix.svg)}
+body.braini-visual[data-world=try-first],
+body.braini-visual [data-world=try-first],
+body.braini-visual .anytime-game-card:has(a[href*="/games/try-first/"]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/games/try-first/"]){--world:#2d296e;--world-deep:#1f1b55;--world-ink:#fff;--world-dot:#ffffff2b}
+body.braini-visual[data-world=world-flags],
+body.braini-visual [data-world=world-flags],
+body.braini-visual .anytime-game-card:has(a[href*="/geography/world-flags-quiz/"],img[src*="/world-flags."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/geography/world-flags-quiz/"],img[src*="/world-flags."]){--world:#23801c;--world-deep:#185f13;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/world-flags.svg)}
+body.braini-visual[data-world=general-knowledge],
+body.braini-visual [data-world=general-knowledge],
+body.braini-visual .anytime-game-card:has(a[href*="/general-knowledge/general-knowledge-quiz/"],img[src*="/mixed-general-knowledge."]),
+body.braini-visual .daily-play-panel .daily-choice-card:has(a[href*="/general-knowledge/general-knowledge-quiz/"],img[src*="/mixed-general-knowledge."]){--world:#2d296e;--world-deep:#1f1b55;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/mixed-general-knowledge.svg)}
+
+/* --- Game pages: the band takes the world colour, the game panel its deep tone --- */
+body.braini-visual[data-world] :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.cryptic-heading,.game-entry-heading)::before,
+body.braini-visual[data-world] .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page,.topic-intro,.geo-intro,.science-intro,.game-entry-heading))::before,
+body.braini-visual[data-world] .breadcrumb:has(+ .cryptic-heading)::before{background:radial-gradient(var(--world-dot) 1.5px,transparent 1.7px) 0 100%/26px 26px,var(--world)}
+body.braini-visual[data-world] .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page)) .breadcrumb,
+body.braini-visual[data-world] .wrap:has(> .breadcrumb:only-child):has(+ :is(.labgame-page,.connections-page,.daily-mechanic-page,.brainiword-page)) .breadcrumb a,
+body.braini-visual[data-world] .breadcrumb:has(+ .cryptic-heading),
+body.braini-visual[data-world] .breadcrumb:has(+ .cryptic-heading) a{color:var(--world-ink)}
+body.braini-visual[data-world] :is(.labgame-shell,.connections-shell,.daily-mechanic-shell){
+  background-color:var(--world-deep)!important;
+  background-image:linear-gradient(145deg,var(--world-deep),color-mix(in srgb,var(--world-deep) 66%,#000))!important;
+  border-color:#ffffff38!important;
+  box-shadow:0 30px 60px color-mix(in srgb,var(--world-deep) 45%,#0b0830)!important;
+}
+/* Lighter secondary text on every deep tone (the old lavender was tuned for navy only). */
+body.braini-visual[data-world] :is(.labgame-shell,.connections-shell,.daily-mechanic-shell) :is(.labgame-top p,.connections-top p,.labgame-intro p,.connections-intro p,.daily-mechanic-top p,.topic-rush-intro p,.labgame-stats span,.connections-intro-stats span){color:#f3f1fb}
+body.braini-visual[data-world] :is(.labgame-feedback,.connections-feedback,.topic-rush-feedback) strong[style*="ff9b96"]{color:#ffe0dd!important}
+/* The game art sits on a white tile, slightly tilted, like the home cards. */
+body.braini-visual[data-world] :is(.connections-top,.labgame-top) .discovery-art{box-sizing:border-box;padding:8px;border-radius:22px;background:#fff;transform:rotate(-4deg);box-shadow:0 12px 24px #0b083047}
+/* BrainiWord: a yellow world keeps navy text on the band. */
+body.braini-visual[data-world=brainiword] .wrap:has(> .breadcrumb:only-child):has(+ .brainiword-page) .breadcrumb a{text-decoration-color:#2d296e66}
+
+/* --- Games library and Daily "play anytime" cards: the head is the game's world --- */
+body.braini-visual .anytime-game-card[class] .anytime-game-head{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(var(--world-dot,#ffffff24) 1.5px,transparent 1.7px) 0 0/18px 18px,var(--world,var(--head));box-shadow:inset 0 1px 1px #ffffff66}
+body.braini-visual .anytime-game-card[class] .anytime-game-head::after{content:"";position:absolute;z-index:-1;top:-26px;right:-30px;width:140px;height:140px;background:var(--world-art,none) center/contain no-repeat;opacity:.17;transform:rotate(12deg);pointer-events:none}
+body.braini-visual .anytime-game-card[class] .anytime-game-head :is(h2,h3,p){color:var(--world-ink,var(--head-ink))!important}
+body.braini-visual .anytime-game-card[class] .anytime-category-icon{transform:rotate(-4deg);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+body.braini-visual .anytime-game-card[class]:nth-child(even) .anytime-category-icon{transform:rotate(4deg)}
+body.braini-visual .anytime-game-card[class]:is(:hover,:focus-within) .anytime-category-icon{transform:rotate(0) scale(1.05)}
+body.braini-visual .anytime-game-card[class]:hover{border-color:var(--world,var(--head))}
+body.braini-visual .anytime-game-card[class] .difficulty-actions.single-action a{border-color:var(--world-deep,var(--navy));background:var(--world-deep,var(--navy));box-shadow:0 3px 0 color-mix(in srgb,var(--world-deep,#2d296e) 62%,#000)}
+body.braini-visual .anytime-game-card[class] .difficulty-actions.single-action a:hover{border-color:color-mix(in srgb,var(--world-deep,#2d296e) 84%,#fff);background:color-mix(in srgb,var(--world-deep,#2d296e) 84%,#fff)}
+body.braini-visual .anytime-game-card[class] .difficulty-actions:not(.single-action) a:hover{border-color:var(--world-deep,var(--navy));background:var(--world-deep,var(--navy))}
+
+/* --- Home "Find a game": vivid world cards with dots and a large ghost of the game art --- */
+body.home-page.braini-visual .home-game-card[data-world]{--card:var(--world);isolation:isolate;border:0;background:radial-gradient(var(--world-dot) 1.5px,transparent 1.7px) 0 0/20px 20px,var(--world);color:var(--world-ink);transition:transform .22s cubic-bezier(.2,1.2,.4,1),box-shadow .22s ease}
+body.home-page.braini-visual .home-game-card[data-world]::after{content:"";position:absolute;z-index:-1;top:-34px;right:-40px;width:190px;height:190px;background:var(--world-art,none) center/contain no-repeat;opacity:.16;transform:rotate(12deg);pointer-events:none}
+body.home-page.braini-visual .home-game-card[data-world] img{margin:2px 0 0;transform:rotate(-5deg);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+body.home-page.braini-visual .home-game-card[data-world]:nth-child(even) img{transform:rotate(4deg)}
+body.home-page.braini-visual .home-game-card[data-world]:is(:hover,:focus-visible) img{transform:rotate(0) scale(1.06)}
+body.home-page.braini-visual .home-game-card[data-world]>span{background:#fff;color:var(--world-deep);font-weight:800;box-shadow:0 3px 0 #0000002e}
+body.home-page.braini-visual .home-game-card[data-world]:hover{transform:translateY(-6px);box-shadow:0 22px 40px color-mix(in srgb,var(--world) 38%,#2d296e33)}
+@media(max-width:600px){
+  body.home-page.braini-visual .home-game-card[data-world]::after{top:-24px;right:-30px;width:130px;height:130px}
+}
+
+/* --- Daily: today's main game and the extras wear their world --- */
+body.braini-visual .daily-play-panel .daily-choice-card.is-primary:is(.daily-choice-card:has(a[href*="/games/connections/"],img[src*="/connections."]),.daily-choice-card:has(a[href*="/games/odd-one-out/"],img[src*="/odd-one-out."]),.daily-choice-card:has(a[href*="/games/higher-lower/"],img[src*="/higher-lower."]),.daily-choice-card:has(a[href*="/games/math-rush/"],img[src*="/math-rush."]),.daily-choice-card:has(a[href*="/games/number-route/"],img[src*="/number-route."]),.daily-choice-card:has(a[href*="/games/sequence/"],img[src*="/sequence."]),.daily-choice-card:has(a[href*="/games/brainiword/"],img[src*="/brainiword."]),.daily-choice-card:has(a[href*="/games/survival/"],img[src*="/survival."]),.daily-choice-card:has(a[href*="/games/order-up/"],img[src*="/order-up."]),.daily-choice-card:has(a[href*="/games/topic-rush/"],img[src*="/topic-rush."]),.daily-choice-card:has(a[href*="/games/cryptic/"],img[src*="/cryptic."]),.daily-choice-card:has(a[href*="/games/brain-mix/"],img[src*="/brain-mix."]),.daily-choice-card:has(a[href*="/games/try-first/"]),.daily-choice-card:has(a[href*="/geography/world-flags-quiz/"],img[src*="/world-flags."]),.daily-choice-card:has(a[href*="/general-knowledge/general-knowledge-quiz/"],img[src*="/mixed-general-knowledge."])){
+  --glass-surface:color-mix(in srgb,var(--world-deep) 88%,#1d1938);
+  background-image:radial-gradient(#ffffff1f 1.5px,transparent 1.7px),radial-gradient(ellipse at 12% 0%,#ffffff26,transparent 68%)!important;
+  background-size:20px 20px,auto!important;
+}
+body.braini-visual .daily-play-panel .daily-choice-extras .daily-choice-card:is(.daily-choice-card:has(a[href*="/games/connections/"],img[src*="/connections."]),.daily-choice-card:has(a[href*="/games/odd-one-out/"],img[src*="/odd-one-out."]),.daily-choice-card:has(a[href*="/games/higher-lower/"],img[src*="/higher-lower."]),.daily-choice-card:has(a[href*="/games/math-rush/"],img[src*="/math-rush."]),.daily-choice-card:has(a[href*="/games/number-route/"],img[src*="/number-route."]),.daily-choice-card:has(a[href*="/games/sequence/"],img[src*="/sequence."]),.daily-choice-card:has(a[href*="/games/brainiword/"],img[src*="/brainiword."]),.daily-choice-card:has(a[href*="/games/survival/"],img[src*="/survival."]),.daily-choice-card:has(a[href*="/games/order-up/"],img[src*="/order-up."]),.daily-choice-card:has(a[href*="/games/topic-rush/"],img[src*="/topic-rush."]),.daily-choice-card:has(a[href*="/games/cryptic/"],img[src*="/cryptic."]),.daily-choice-card:has(a[href*="/games/brain-mix/"],img[src*="/brain-mix."]),.daily-choice-card:has(a[href*="/games/try-first/"]),.daily-choice-card:has(a[href*="/geography/world-flags-quiz/"],img[src*="/world-flags."]),.daily-choice-card:has(a[href*="/general-knowledge/general-knowledge-quiz/"],img[src*="/mixed-general-knowledge."])):not(.is-complete){
+  --glass-surface:color-mix(in srgb,var(--world) 12%,#fff);
+  border-left-color:var(--world-deep);
+}
+
+/* --- Motion: buttons press down, right answers pop, wrong answers shake --- */
+@keyframes bl-pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes bl-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes bl-rise{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:none}}
+@keyframes bl-burst{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r))}}
+@keyframes bl-float{0%{opacity:0;transform:translate(-50%,6px) scale(.7)}18%{opacity:1;transform:translate(-50%,-8px) scale(1.12)}100%{opacity:0;transform:translate(-50%,-58px) scale(1)}}
+@media (prefers-reduced-motion:no-preference){
+  body.braini-visual :is(.answer,.labgame-answer,.connections-choice,.number-route-op,.labgame-start,.connections-start,.topic-rush-start,.labgame-next,.connections-next,.next,.btn,.home-game-card>span){transition:transform .09s ease,box-shadow .09s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease}
+  body.braini-visual :is(.answer,.labgame-answer,.connections-choice,.number-route-op):not(:disabled):active{transform:translateY(2px) scale(.985)}
+  body.braini-visual :is(.labgame-start,.connections-start,.topic-rush-start,.labgame-next,.connections-next,.next,.btn):not(:disabled):active{transform:translateY(2px)}
+  body.braini-visual :is(.answer,.labgame-answer,.connections-choice).correct{animation:bl-pop .5s cubic-bezier(.2,1.6,.4,1)}
+  body.braini-visual :is(.answer,.labgame-answer,.connections-choice).wrong{animation:bl-shake .42s ease}
+  body.braini-visual .bl-feedback-in{animation:bl-rise .34s cubic-bezier(.2,.8,.2,1)}
+  body.braini-visual .bl-nudge{animation:bl-shake .42s ease}
+  body.braini-visual :is([data-progress],[data-bar],[data-connections-progress]){transition:width .5s cubic-bezier(.2,.8,.2,1)}
+}
+/* Celebration layer drawn by play-feedback.js (only when motion is allowed). */
+.bl-fx{position:fixed;inset:0;z-index:2147483000;pointer-events:none;overflow:hidden}
+.bl-confetti{position:absolute;width:9px;height:14px;border-radius:3px;animation:bl-burst 1s cubic-bezier(.15,.75,.25,1) forwards}
+.bl-float{position:absolute;padding:4px 12px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font:900 18px/1.2 var(--display,"Pally","Montserrat",sans-serif);white-space:nowrap;box-shadow:0 6px 14px #0b083040;animation:bl-float 1.15s ease-out forwards}
+.bl-float.is-streak{background:#fff;font-size:15px}
+@media (prefers-reduced-motion:reduce){.bl-fx{display:none}}
+/* --- Home: the Daily card wears the world of today's main game --- */
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/connections."]){--world:#6a4fc9;--world-deep:#4b34a6;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/connections.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/odd-one-out."]){--world:#c62d27;--world-deep:#9b1f1a;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/odd-one-out.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/higher-lower."]){--world:#1f6fc4;--world-deep:#15539a;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/higher-lower.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/math-rush."]){--world:#c4540a;--world-deep:#9a3f05;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/math-rush.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/number-route."]){--world:#1a7593;--world-deep:#125a72;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/number-route.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/sequence."]){--world:#b02d72;--world-deep:#862055;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/sequence.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/brainiword."]){--world:#ffc928;--world-deep:#7a5900;--world-ink:#2d296e;--world-dot:#2d296e1c;--world-art:url(/assets/illustrations/games/brainiword.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/survival."]){--world:#c22a52;--world-deep:#921a3b;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/survival.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/order-up."]){--world:#0f7a5c;--world-deep:#0a5a43;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/order-up.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/topic-rush."]){--world:#9ad13b;--world-deep:#3f6212;--world-ink:#2d296e;--world-dot:#2d296e1c;--world-art:url(/assets/illustrations/games/topic-rush.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/cryptic."]){--world:#7b3aa8;--world-deep:#5b2681;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/cryptic.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/brain-mix."]){--world:#4338ca;--world-deep:#2d2a80;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/brain-mix.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/world-flags."]){--world:#23801c;--world-deep:#185f13;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/world-flags.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon[src*="/mixed-general-knowledge."]){--world:#2d296e;--world-deep:#1f1b55;--world-ink:#fff;--world-dot:#ffffff2b;--world-art:url(/assets/illustrations/games/mixed-general-knowledge.svg)}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon:is([src*="/connections."],[src*="/odd-one-out."],[src*="/higher-lower."],[src*="/math-rush."],[src*="/number-route."],[src*="/sequence."],[src*="/brainiword."],[src*="/survival."],[src*="/order-up."],[src*="/topic-rush."],[src*="/cryptic."],[src*="/brain-mix."],[src*="/world-flags."],[src*="/mixed-general-knowledge."])){background-image:linear-gradient(145deg,var(--world-deep),color-mix(in srgb,var(--world-deep) 66%,#000));border-color:#ffffff38}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon:is([src*="/connections."],[src*="/odd-one-out."],[src*="/higher-lower."],[src*="/math-rush."],[src*="/number-route."],[src*="/sequence."],[src*="/brainiword."],[src*="/survival."],[src*="/order-up."],[src*="/topic-rush."],[src*="/cryptic."],[src*="/brain-mix."],[src*="/world-flags."],[src*="/mixed-general-knowledge."])) .home-daily-icon{transform:rotate(-4deg);box-shadow:0 0 0 6px color-mix(in srgb,var(--world) 60%,transparent),0 12px 24px #0b083047}
+body.home-page.braini-visual #homeQuiz:has(.home-daily-icon:is([src*="/connections."],[src*="/odd-one-out."],[src*="/higher-lower."],[src*="/math-rush."],[src*="/number-route."],[src*="/sequence."],[src*="/brainiword."],[src*="/survival."],[src*="/order-up."],[src*="/topic-rush."],[src*="/cryptic."],[src*="/brain-mix."],[src*="/world-flags."],[src*="/mixed-general-knowledge."])) .challenge-pill{background:var(--world);color:var(--world-ink)}
