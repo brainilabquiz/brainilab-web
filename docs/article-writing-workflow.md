@@ -40,6 +40,12 @@ English and cover reviews each need `status: "reviewed"`, meaningful `notes` and
 
 An owner can expressly waive measured search demand for named signed editorials. Preserve the unavailable demand record and attach a private `demandException` reference to the brief. The approval must bind the release ID, each exact document hash and its author. The management publisher also requires the matching private registered approval. Use the truthful `owner-opinion-exception` type; do not mark missing metrics as measured evidence. This exception does not waive sources, originality, English, image, schema, link, device, revision or publication-date checks, and does not apply to other articles.
 
+### The approved first-party data hub update of 22 November
+
+The owner separately approved publishing the reviewed expansion of `brainilab-quiz-data` without measured search demand. This is limited to release `own-data-hub-refresh-2026-11-22`, the exact approved document hash and Biel Sardà, updating published revision 3 while retaining the original 10 November publication date. The private, RLS-enabled `first_party_demand_exceptions` table registers that one approval; public, authenticated and service roles receive no access. It is separate from the three signed-opinion approvals.
+
+The CLI and management publisher validate the same explicit scope. Keep the unavailable demand record and the hash-bound owner approval rather than marking it as measured research. All source, calculation, image, device, schema, link, revision, author, history and original-date checks still apply. The exception does not cover another page, a future hub revision or any change to player data. Normal articles retain the existing demand requirement.
+
 ## 3. Write one enjoyable answer
 
 Give the answer near the start, then a concrete example or small surprise. Use original, everyday British English, short paragraphs and a few headings that help the reader. Use the relevant search words naturally; do not add unrelated trends, repeated definitions, artificial FAQs, exaggerated promises or internal acquisition goals.
