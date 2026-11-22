@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {pathToFileURL} from 'node:url';
-import {opinionExceptionType,validOpinionException} from './editorial-demand-exception.mjs';
+import {opinionExceptionType,validOpinionException,firstPartyExceptionType,validFirstPartyException} from './editorial-demand-exception.mjs';
 export const origin='https://brainilabgames.com';
 export const sha256=x=>crypto.createHash('sha256').update(x).digest('hex');
 const gates=['intent','novelty','sources','examples','english','metadata','links','mobile','desktop','validators'];
@@ -51,9 +51,10 @@ export async function prepare(plan,snapshotBytes,root,fetcher=getPublic,now=Date
   }
   const demand=r.demand;
   if(item.kind!=='links'){
-   if(demand.type===opinionExceptionType){
+   if([opinionExceptionType,firstPartyExceptionType].includes(demand.type)){
     const approval=JSON.parse(await localFile(root,demand.proofFile));
-    if(item.kind!=='article'||!validOpinionException(approval,d,documentSha256,plan.id,now)||demand.authorizationId!==plan.id||!fresh(demand.checkedAt,1,now))fail('Owner opinion exception does not match this exact document and release');
+    const valid=demand.type===opinionExceptionType?item.kind==='article'&&validOpinionException(approval,d,documentSha256,plan.id,now):item.kind==='hub'&&validFirstPartyException(approval,d,documentSha256,plan.id,now);
+    if(!valid||demand.authorizationId!==plan.id||!fresh(demand.checkedAt,1,now))fail('Owner exception does not match this exact document and release');
    }else if(!['search-console','external-estimate'].includes(demand.type)||!demand.query?.trim()||!demand.market?.trim()||demand.language!=='en'||!fresh(demand.checkedAt,30,now))fail('Specific dated English demand evidence required');
   }
   const old=(snapshot.entries||[]).find(e=>e.kind===(item.kind==='path'?'path':'article')&&e.slug===d.slug);

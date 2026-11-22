@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {firstPartyExceptionType,firstPartyReleaseId,validFirstPartyException,validOwnerDemandException,validOpinionException} from './editorial-demand-exception.mjs';
+const now=Date.parse('2026-11-22T19:25:00Z'),hash='a'.repeat(64);
+const d={slug:'brainilab-quiz-data',authorId:'biel-sarda',publishedAt:'2026-11-10T17:50:55.861352+00:00'};
+const approval={version:1,type:firstPartyExceptionType,approved:true,id:firstPartyReleaseId,recordedAt:new Date(now).toISOString(),approvalText:'Explicit owner approval for this exact research hub update.',entries:[{slug:d.slug,authorId:d.authorId,documentSha256:hash,expectedRevision:3,expectedPublishedRevision:3}]};
+assert(validFirstPartyException(approval,d,hash,firstPartyReleaseId,now));assert(validOwnerDemandException(approval,d,hash,firstPartyReleaseId,now));assert(!validOpinionException(approval,d,hash,firstPartyReleaseId,now));
+for(const mutate of [a=>a.approved=false,a=>a.id='another-release',a=>a.type='external-estimate',a=>a.approvalText='',a=>a.recordedAt='invalid',a=>a.recordedAt=new Date(now-86400001).toISOString(),a=>a.recordedAt=new Date(now+300001).toISOString(),a=>a.entries.push({...a.entries[0]}),a=>a.entries[0].slug='another-hub',a=>a.entries[0].authorId='another-author',a=>a.entries[0].documentSha256='b'.repeat(64),a=>a.entries[0].expectedRevision=4,a=>a.entries[0].expectedPublishedRevision=4]){const a=structuredClone(approval);mutate(a);assert(!validFirstPartyException(a,d,hash,firstPartyReleaseId,now));}
+for(const doc of [{...d,slug:'another-hub'},{...d,authorId:'another-author'},{...d,publishedAt:'2026-11-22T00:00:00Z'},{...d,articleKind:'opinion'}])assert(!validFirstPartyException(approval,doc,hash,firstPartyReleaseId,now));
+assert(!validFirstPartyException(approval,d,'b'.repeat(64),firstPartyReleaseId,now));assert(!validFirstPartyException(approval,d,hash,'another-release',now));
+console.log('PASS exact first-party hub exception: approved hash and original date; reject altered release, document, author, revision, kind, scope and stale approval.');

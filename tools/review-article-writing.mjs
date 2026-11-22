@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {inspectArticle} from '../lib/article-writing.js';
 import {nearbyArticleTitles} from '../lib/article-discovery.js';
 import {articleEvidence,articleEvidenceHTML} from '../editor/article-evidence.js';
-import {validOpinionException} from './editorial-demand-exception.mjs';
+import {validOwnerDemandException} from './editorial-demand-exception.mjs';
 const digest=b=>createHash('sha256').update(b).digest('hex');
 const parse=s=>JSON.parse(s.replace(/^\uFEFF/,''));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -13,7 +13,7 @@ const editorialNotes=entry=>({contribution:entry?.contributionReview||null,cover
 const editorialNotesHTML=entry=>{
  const {contribution:c,coverage:q,demandException:exception}=editorialNotes(entry);
  if(!c&&!q&&!exception)return '';
- const exceptionNote=exception?'<p><strong>Search demand waived by an explicit owner exception for this exact signed editorial.</strong> No measured search demand is asserted. Approval reference: '+esc(exception.file)+'. The management publisher separately requires a matching registered approval.</p>':'';
+ const exceptionNote=exception?'<p><strong>Search demand waived by an explicit owner exception for this exact publication.</strong> No measured search demand is asserted. Approval reference: '+esc(exception.file)+'. The management publisher separately requires a matching registered approval.</p>':'';
  const contribution=c?`<h3>What this reading contributes</h3><p>${esc(c.status)} · ${esc(c.kind)}</p><p>${esc(c.adds)}</p><p>Location: ${esc(c.location)}<br>Basis: ${esc(c.basis)}<br>Limits: ${esc(c.limits)}</p>`:'';
  const questions=Array.isArray(q?.questions)?q.questions:[];
  const coverage=q?`<h3>Related reader questions</h3><p>${esc(q.status)} · ${esc(q.notes)}</p>${questions.length?'<ul>'+questions.map(x=>`<li>${esc(x.question)} — ${esc(x.destination)} (${esc(x.basis)})</li>`).join('')+'</ul>':'<p>No question map recorded.</p>'}`:'';
@@ -110,8 +110,8 @@ async function main(){
    if(!b.readerQuestion?.trim()||!b.intent?.trim()||!b.whyThisAddsSomethingNew?.trim())manual.push(label+': record intent and why this reading adds something new.');
    const demand=b.demand||{};
    if(b.demandException){
-    try{const approval=parse((await evidenceFile(b.demandException)).toString('utf8'));if(!validOpinionException(approval,d,hashes.get(d.slug),b.demandException.releaseId))throw Error('scope mismatch');}
-    catch{manual.push(label+': owner demand exception is missing, changed or does not match this exact signed opinion.');}
+    try{const approval=parse((await evidenceFile(b.demandException)).toString('utf8'));if(!validOwnerDemandException(approval,d,hashes.get(d.slug),b.demandException.releaseId))throw Error('scope mismatch');}
+    catch{manual.push(label+': owner demand exception is missing, changed or does not match this exact publication.');}
    }else{
     if(demand.status!=='reviewed'||!demand.query?.trim()||!demand.market?.trim()||!demand.language?.trim()||!demand.provider?.trim()||!dateOK(demand.observedAt))manual.push(label+': add dated, relevant demand research from the last 30 days.');
     await evidence(demand.evidence,label+' demand');
