@@ -9,7 +9,7 @@ SHELL=[
  'friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js',
  'try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js',
  'progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js',
- 'monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js','play-feedback.js',
+ 'monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js','play-feedback.js','tab-bar.js',
 ]
 HOME_LEGACY={
  'share.js','friend-challenge.js','friend-replay-contract.js','game-challenge-model.js',
@@ -22,7 +22,7 @@ BUNDLES={
  'shell.bundle.js':SHELL,
  'home-shell.bundle.js':['supabase-config.js','home-startup.js',
   *[part for part in SHELL if part not in HOME_AVATAR and part not in HOME_LEGACY],
-  'supabase-runtime.js'],
+  'home-worlds.js','supabase-runtime.js'],
  'home-avatar.bundle.js':HOME_AVATAR,
  'home-legacy.bundle.js':[*[part for part in SHELL if part in HOME_LEGACY],'home-daily.js','quiz.js'],
  'cloud.bundle.js':['supabase-config.js','supabase-auth.js','guest-style-bridge.js','growth-conversions.js','supabase-profile.js','supabase-games.js','result-recovery.js','supabase-progression.js','supabase-runtime.js','supabase-monetization.js','auth.js'],
