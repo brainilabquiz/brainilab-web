@@ -9,7 +9,7 @@ SHELL=[
  'friend-replay-contract.js','game-challenge-model.js','friend-replay.js','game-challenge.js',
  'try-first-runtime.js','daily-choice-guard.js','daily-completion-guard.js','ui.js',
  'progression-ui.js','reward-journey.js','continuity.js','post-game.js','perf-loader.js',
- 'monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js',
+ 'monetization-config.js','monetization.js','ads.js','account-menu.js','mobile-ui.js','avatar-announcement.js','play-feedback.js',
 ]
 HOME_LEGACY={
  'share.js','friend-challenge.js','friend-replay-contract.js','game-challenge-model.js',
