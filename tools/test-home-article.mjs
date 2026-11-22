@@ -9,7 +9,9 @@ assert.equal(latestArticle([older,newest]).slug,'newest');
 const env={ASSETS:{fetch:async()=>new Response(template)}},ctx={waitUntil(){}},cache={match:async()=>null,put:async()=>{}};
 async function home(rows,fail=false){return (await serveLearn(new Request('https://brainilabgames.com/'),env,ctx,cache,async()=>{if(fail)throw Error('offline');return new Response(JSON.stringify(rows.map(document=>({document}))));})).text();}
 let html=await home([older,newest]);
-assert.match(html,/href="\/learn\/newest\/"/);assert.ok(!html.includes('/learn/older/'));
+// Home v2: the newest article is featured; the next ones are listed under it as "more reads".
+const featured=html.match(/<!-- learn-preview:start -->[\s\S]*?<!-- learn-preview:end -->/)[0],more=html.match(/<!-- learn-more:start -->[\s\S]*?<!-- learn-more:end -->/)[0];
+assert.match(featured,/href="\/learn\/newest\/"/);assert.ok(!featured.includes('/learn/older/'));assert.match(more,/href="\/learn\/older\/"/);assert.ok(!more.includes('/learn/newest/'));
 assert.match(html,/Newest &lt;test&gt;/);assert.match(html,/object-position:center 20%/);
 assert.match(html,/<aside class="home-reading" aria-label="Latest from Learn">\s*<!-- learn-preview:start -->\s*<a class="home-article"/);
 assert.ok(html.indexOf('class="home-reading"')>html.indexOf('class="challenge-wrap"'));

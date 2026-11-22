@@ -1944,12 +1944,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     const day=BrainiData.todayKey(),ids=BrainiDailyRules.lineup(day),meta=BrainiDailyJourney.META[ids[0]];
     const href=BrainiDailyJourney.gameHref(ids[0],day);
     const context=day+':'+owner;
-    const start=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="${href}">Play today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div><p class="home-ready">Up to 2,500 points · No account needed</p>`;
+    // Home v2 (Nov 2026): the card's head wears today's game world, a ring shows the day's
+    // points, and the body lists the optional extras and the next Daily countdown.
+    const fmt=n=>Math.max(0,Number(n)||0).toLocaleString('en-GB');
+    const maxFor=id=>{const v=Number(window.BrainiDailyRules?.max?.(id,day));return Number.isFinite(v)&&v>0?v:null;};
+    const ring=status=>{
+      const max=Number(status?.model?.maxScore)||0,score=Math.max(0,Number(status?.brainScore)||0);
+      if(!max)return '';
+      const pct=Math.min(100,Math.round(score/max*100));
+      return `<div class="home-daily-ring" role="img" aria-label="${fmt(score)} of ${fmt(max)} Daily points today"><svg viewBox="0 0 110 110" aria-hidden="true" focusable="false"><circle class="home-ring-track" cx="55" cy="55" r="48"/><circle class="home-ring-fill" cx="55" cy="55" r="48" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pct}"/></svg><span class="home-ring-value" aria-hidden="true"><strong>${fmt(score)}</strong><span>of ${fmt(max)}</span></span></div>`;
+    };
+    const head=(status,pill,title,copy)=>`<div class="home-daily-head">${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<div class="home-daily-title"><span class="challenge-pill">${pill}</span><h2>${title}</h2><p>${copy}</p></div>${ring(status)}</div>`;
+    const dailyLabel=status=>`Today’s Daily${status?.dailyNumber?` · #${Number(status.dailyNumber)}`:''}`;
+    const extras=()=>{
+      const items=ids.slice(1).map(id=>{const m=BrainiDailyJourney.META[id];return m?`<li>${BrainiIcons.game(id,"standard","home-extra-icon","")}<span><strong>${m.name}</strong>${maxFor(id)?`<span>Up to ${fmt(maxFor(id))} points</span>`:''}</span></li>`:'';}).join('');
+      return items?`<div class="home-daily-extras"><p>Fancy one more? After the main game, pick an optional extra.</p><ul>${items}</ul></div>`:'';
+    };
+    const nextDaily=`<p class="home-daily-next" data-home-countdown></p>`;
+    const start=status=>`${head(status,dailyLabel(status),meta.name,dailyDescriptions[ids[0]])}<div class="home-daily-body"><div class="home-start-actions"><a class="btn" data-home-action="daily" href="${href}">Play today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div><p class="home-ready">Up to ${fmt(maxFor(ids[0])??2500)} points · No account needed</p>${extras()}${nextDaily}</div>`;
+    const completed=status=>`${head(status,'Daily complete ✓','Nicely done.',`${fmt(status.games[ids[0]].points)} points in today’s ${meta.name}.`)}<div class="home-daily-body"><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>${status.bonusChoice?'':extras()}${nextDaily}</div>`;
     const current=()=>request===modernRequest&&day===BrainiData.todayKey()&&owner===currentOwner()&&stage.isConnected;
     const reveal=markup=>{
       if(!current())return;
       paintModern(markup);modernPaintedContext=context;
       root.removeAttribute('data-home-loading');root.setAttribute('aria-busy','false');
+      const countdown=stage.querySelector?.('[data-home-countdown]');
+      if(countdown&&!countdown.childElementCount)window.BrainiDailyCountdown?.mount(countdown);
     };
     if(context!==modernContext){
       // Never leave another account's or yesterday's completed result in the DOM.
@@ -1960,14 +1980,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     // An unchecked result is neither a new game nor a completed game. Keep the
     // neutral first paint until the existing progress service has answered.
-    const fallback=`${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<span class="challenge-pill">Today’s Daily</span><h2>${meta.name}</h2><p>${dailyDescriptions[ids[0]]}</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">Open today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`;
+    const fallback=`${head(null,'Today’s Daily',meta.name,dailyDescriptions[ids[0]])}<div class="home-daily-body"><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">Open today’s Daily</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>${nextDaily}</div>`;
     const timer=setTimeout(()=>{if(modernPaintedContext!==context)reveal(fallback);},8000);
     try{
       const returning=homeStartup?.requiresCloud();
       if(returning && !await window.BrainiPerf.ensureCloud())throw new Error('Player status unavailable');
       if(!current())return;
       const status=await BrainiDailyHub.resolve(undefined,{forceCloud:true,publicLineup:returning?null:homeStartup?.dailyLineup});
-      reveal(status?.games?.[ids[0]]?.completed?`<span class="challenge-pill">Daily complete ✓</span><h2>Nicely done.</h2><p>${Number(status.games[ids[0]].points).toLocaleString()} points in today’s ${meta.name}.</p><div class="home-start-actions"><a class="btn" data-home-action="daily" href="/daily-quiz/">${status.bonusChoice?'See today’s progress':'Fancy an extra?'}</a><a class="btn-light" data-home-action="games" href="/games/">Explore all games</a></div>`:start);
+      reveal(status?.games?.[ids[0]]?.completed?completed(status):start(status));
     }catch(error){
       if(modernPaintedContext!==context)reveal(fallback);
       console.warn('Daily status unavailable',error);
