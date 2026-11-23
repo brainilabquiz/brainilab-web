@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       const pct=Math.min(100,Math.round(score/max*100));
       return `<div class="home-daily-ring" role="img" aria-label="${fmt(score)} of ${fmt(max)} Daily points today"><svg viewBox="0 0 110 110" aria-hidden="true" focusable="false"><circle class="home-ring-track" cx="55" cy="55" r="48"/><circle class="home-ring-fill" cx="55" cy="55" r="48" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pct}"/></svg><span class="home-ring-value" aria-hidden="true"><strong>${fmt(score)}</strong><span>of ${fmt(max)}</span></span></div>`;
     };
-    const head=(status,pill,title,copy)=>`<div class="home-daily-head">${BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<div class="home-daily-title"><span class="challenge-pill">${pill}</span><h2>${title}</h2><p>${copy}</p></div>${ring(status)}</div>`;
+    const head=(status,pill,title,copy)=>`<div class="home-daily-head">${BrainiIcons.world?.(ids[0],"home-daily-icon is-world-art")||BrainiIcons.game(ids[0],"standard","home-daily-icon","")}<div class="home-daily-title"><span class="challenge-pill">${pill}</span><h2>${title}</h2><p>${copy}</p></div>${ring(status)}</div>`;
     const dailyLabel=status=>`Today’s Daily${status?.dailyNumber?` · #${Number(status.dailyNumber)}`:''}`;
     const extras=()=>{
-      const items=ids.slice(1).map(id=>{const m=BrainiDailyJourney.META[id];return m?`<li>${BrainiIcons.game(id,"standard","home-extra-icon","")}<span><strong>${m.name}</strong>${maxFor(id)?`<span>Up to ${fmt(maxFor(id))} points</span>`:''}</span></li>`:'';}).join('');
+      const items=ids.slice(1).map(id=>{const m=BrainiDailyJourney.META[id];return m?`<li>${BrainiIcons.world?.(id,"home-extra-icon is-world-art")||BrainiIcons.game(id,"standard","home-extra-icon","")}<span><strong>${m.name}</strong>${maxFor(id)?`<span>Up to ${fmt(maxFor(id))} points</span>`:''}</span></li>`:'';}).join('');
       return items?`<div class="home-daily-extras"><p>Fancy one more? After the main game, pick an optional extra.</p><ul>${items}</ul></div>`:'';
     };
     const nextDaily=`<p class="home-daily-next" data-home-countdown></p>`;

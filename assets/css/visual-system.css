@@ -1944,3 +1944,50 @@ body.home-page.braini-visual .home-daily-body .home-start-actions :is(.btn,.btn-
   body.home-page.braini-visual .home-daily-body .home-start-actions{grid-template-columns:minmax(0,1fr)}
   body.home-page.braini-visual .home-daily-body .home-start-actions .btn{font-size:16px}
 }
+
+/* ===== Soft-clay world art (22 Nov 2026): one illustration per game and topic ===== */
+/* Home world cards: the art sits large in the top-right corner, without a white tile. */
+body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art){justify-content:flex-end;min-height:300px}
+body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art)::after{display:none}
+body.home-page.braini-visual .home-game-card[data-world] img.home-world-art{position:absolute;top:-4px;right:-6px;width:172px!important;height:172px!important;margin:0!important;padding:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;transform:none!important;object-fit:contain;filter:drop-shadow(0 12px 16px #00000033);transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
+body.home-page.braini-visual .home-game-card[data-world]:is(:hover,:focus-visible) img.home-world-art{transform:scale(1.06) rotate(-3deg)!important}
+body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art) h3{margin-top:0}
+/* Home topic tiles. */
+body.home-page.braini-visual .home-topic-art{width:76px;height:76px;background:none;box-shadow:none;border-radius:0}
+body.home-page.braini-visual .home-topic-art img{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 6px 10px #2d296e33)}
+/* Home Daily card head and extras. */
+body.home-page.braini-visual .home-daily-head:has(.is-world-art)::after{display:none}
+body.home-page.braini-visual .home-daily-head .home-daily-icon.is-world-art{width:100px;height:100px;padding:0;border-radius:0;background:none;box-shadow:none;transform:none;object-fit:contain;filter:drop-shadow(0 10px 16px #00000040)}
+body.home-page.braini-visual .home-extra-icon.is-world-art{padding:0;border-radius:0;background:none;box-shadow:none;object-fit:contain}
+/* Games library, Daily "play anytime" and Daily choice cards. */
+body.braini-visual .anytime-game-card[class] .anytime-category-icon:has(.is-world-art){border:0;background:transparent;box-shadow:none;transform:none}
+body.braini-visual .anytime-game-card[class] .anytime-category-icon .is-world-art{width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 8px 12px #0000003d);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+body.braini-visual .anytime-game-card[class]:is(:hover,:focus-within) .anytime-category-icon .is-world-art{transform:scale(1.07) rotate(-3deg)}
+body.braini-visual .anytime-game-card[class] .anytime-game-head:has(.is-world-art)::after{display:none}
+body.braini-visual .daily-choice-art:has(.is-world-art){border:0;background:transparent;box-shadow:none}
+body.braini-visual .daily-choice-art .is-world-art{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 8px 12px #00000033)}
+/* Game pages: the art beside the title on the world band's panel. */
+body.braini-visual[data-world] :is(.labgame-top,.connections-top):has(.world-art,.discovery-art,.math-entry-art){display:flex;align-items:center;gap:16px}
+body.braini-visual[data-world] :is(.labgame-top,.connections-top)>div:first-child{flex:1 1 auto;min-width:0}
+body.braini-visual[data-world] :is(.labgame-top,.connections-top) :is(.world-art,.discovery-art,.math-entry-art){flex:none;width:150px;height:150px;margin:-10px 0 -10px auto;padding:0;border-radius:0;background:none;box-shadow:none;transform:none;object-fit:contain;filter:drop-shadow(0 14px 18px #00000040)}
+body.braini-visual[data-world] .labgame-top:has(.world-art) .labgame-back{align-self:flex-start}
+body.braini-visual[data-world] .cryptic-heading img[src*="/worlds/"]{width:104px;height:104px;padding:0;border-radius:0;background:none;box-shadow:none;object-fit:contain;filter:drop-shadow(0 10px 16px #00000040)}
+body.braini-visual[data-world] .game-entry-heading img[src*="/worlds/"]{width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 12px 16px #00000040)}
+@media(max-width:600px){
+  body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art){min-height:226px}
+  body.home-page.braini-visual .home-game-card[data-world] img.home-world-art{top:-2px;right:-4px;width:108px!important;height:108px!important}
+  body.home-page.braini-visual .home-topic-art,body.home-page.braini-visual .home-topic-art img{width:60px;height:60px}
+  body.home-page.braini-visual .home-daily-head .home-daily-icon.is-world-art{width:72px;height:72px}
+  body.braini-visual .anytime-game-card[class] .anytime-category-icon .is-world-art{width:70px;height:70px}
+  body.braini-visual[data-world] :is(.labgame-top,.connections-top) :is(.world-art,.discovery-art,.math-entry-art){width:88px;height:88px;margin:-6px 0 -6px auto}
+  body.braini-visual[data-world] .cryptic-heading img[src*="/worlds/"]{width:76px;height:76px}
+  body.braini-visual[data-world] .game-entry-heading img[src*="/worlds/"]{width:88px;height:88px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.braini-visual :is(.home-world-art,.anytime-category-icon .is-world-art){transition:none!important;transform:none!important}
+}
+body.braini-visual .daily-play-panel .daily-choice-extras .daily-choice-art .is-world-art{width:52px;height:52px}
+body.home-page.braini-visual .home-game-card[data-world] img.home-world-art{border:0!important;outline:0}
+body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art) h3{margin-top:auto}
+body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art)>span{margin-top:6px}
+@media(min-width:601px){body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art){min-height:322px}}

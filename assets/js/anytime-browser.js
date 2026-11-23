@@ -78,7 +78,7 @@ window.BrainiAnytimeBrowser=(function(){
       return `
         <article class="anytime-game-card ${game.accent}">
           <div class="anytime-game-head">
-            <span class="anytime-category-icon"><img class="braini-category-icon" loading="lazy" decoding="async" src="${siteUrl(`assets/icons/games/standard/${game.gameIcon}.svg`)}" alt="" aria-hidden="true"></span>
+            <span class="anytime-category-icon">${BrainiIcons.world?.(game.id,"braini-category-icon is-world-art")||`<img class="braini-category-icon" loading="lazy" decoding="async" src="${siteUrl(`assets/icons/games/standard/${game.gameIcon}.svg`)}" alt="" aria-hidden="true">`}</span>
             <div><h3>${game.name}</h3><p>${game.copy}</p></div>
           </div>
           <div class="anytime-status">${bestLabel(game.id)}</div>
@@ -94,7 +94,7 @@ window.BrainiAnytimeBrowser=(function(){
     return `
       <article class="anytime-game-card ${game.accent}">
         <div class="anytime-game-head">
-          <span class="anytime-category-icon">${BrainiIcons.category(game.icon)}</span>
+          <span class="anytime-category-icon">${BrainiIcons.world?.(game.id,"braini-category-icon is-world-art")||BrainiIcons.category(game.icon)}</span>
           <div>
             <h3>${game.name}</h3>
             <p>${game.copy}</p>
