@@ -1164,6 +1164,7 @@ button{cursor:pointer}
 .friend-code button{border:0;background:var(--soft-navy);color:var(--navy);border-radius:8px;padding:6px 7px;font-size:8px;font-weight:900}
 .add-friend-row{display:flex;gap:8px}
 .add-friend-row input,.social-input{min-width:0;width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none}
+.add-friend-row input:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
 .add-friend-row button{border:0;background:var(--navy);color:#fff;border-radius:12px;padding:0 13px;font-weight:900;white-space:nowrap}
 .social-subtitle{margin:16px 0 7px;color:var(--muted);font-size:9px;font-weight:950;text-transform:uppercase}
 .friend-list{display:grid;gap:7px}

@@ -1034,7 +1034,7 @@ window.BrainiAdmin=(function(){
       state.questionPage=0;return loadQuestionTable();
     });
     $("#qHealthSort").onchange=safeAction(e=>{state.questionHealthSort=e.target.value;return loadQuestionTable();});
-    $("#qSearch").onkeydown=e=>{if(e.key==="Enter")filter();};
+    $("#qSearch").onkeydown=e=>{if(e.key==="Enter"&&!e.isComposing&&e.keyCode!==229){e.preventDefault();filter();}};
     ['qStatus','qDifficulty','qTopic'].forEach(id=>$("#"+id).onchange=filter);
     $("#adminContent").querySelectorAll('.admin-field').forEach(field=>{
       const label=field.querySelector('label'),control=field.querySelector('input[id],select[id]');
@@ -2036,7 +2036,7 @@ window.BrainiAdmin=(function(){
 
     $("#loadPackCandidates").onclick=loadCandidates;
     $("#packCandidateSearch").onkeydown=e=>{
-      if(e.key==="Enter") loadCandidates();
+      if(e.key==="Enter"&&!e.isComposing&&e.keyCode!==229){e.preventDefault();loadCandidates();}
     };
 
     await loadCandidates();
