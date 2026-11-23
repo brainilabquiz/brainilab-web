@@ -2077,3 +2077,28 @@ body.home-page.braini-visual .home-game-card[data-world] img.home-world-art{bord
 body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art) h3{margin-top:auto}
 body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art)>span{margin-top:6px}
 @media(min-width:601px){body.home-page.braini-visual .home-game-card[data-world]:has(.home-world-art){min-height:322px}}
+/* ===== Daily page ring (23 Nov 2026): "Your day so far" shows the day's points as a ring, like the home Daily card ===== */
+body.braini-visual .daily-score-summary{text-align:center}
+body.braini-visual .daily-score-summary>h2{margin:0 0 14px}
+body.braini-visual .daily-score-ring{position:relative;width:150px;height:150px;margin:0 auto 12px}
+body.braini-visual .daily-score-ring svg{display:block;width:100%;height:100%;transform:rotate(-90deg)}
+body.braini-visual .daily-ring-track{fill:none;stroke:#ecebf5;stroke-width:9}
+body.braini-visual .daily-ring-fill{fill:none;stroke:var(--green,#40ab34);stroke-width:9;stroke-linecap:round}
+body.braini-visual .daily-score-ring .daily-score-value{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0;white-space:nowrap;line-height:1}
+body.braini-visual .daily-score-ring .daily-score-value strong{font:900 36px/1 Pally,Montserrat,system-ui,sans-serif;letter-spacing:-.5px;color:var(--navy,#2d296e)}
+body.braini-visual .daily-score-ring .daily-score-value span{margin-top:6px;font-size:13px;font-weight:700;color:#53506a}
+body.braini-visual .daily-score-summary .daily-score-label{margin:0;font-size:13px;color:#53506a}
+@media(max-width:760px){
+  body.braini-visual .daily-score-ring{width:124px;height:124px}
+  body.braini-visual .daily-score-ring .daily-score-value strong{font-size:28px}
+  body.braini-visual .daily-score-ring .daily-score-value span{font-size:12px}
+}
+@media(max-width:440px){
+  body.braini-visual .daily-score-summary{display:grid;grid-template-columns:112px minmax(0,1fr);column-gap:18px;align-content:start;align-items:center;min-height:0;text-align:left}
+  body.braini-visual .daily-score-summary>h2{grid-column:1/-1}
+  body.braini-visual .daily-score-ring{grid-column:1;grid-row:2/span 3;width:112px;height:112px;margin:0}
+  body.braini-visual .daily-score-summary .daily-completion{justify-self:start;margin:8px 0}
+}
+@media(prefers-reduced-motion:no-preference){
+  body.braini-visual .daily-ring-fill{animation:bl-ring 1.3s cubic-bezier(.2,.8,.2,1) both .2s}
+}
