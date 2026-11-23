@@ -1,0 +1,251 @@
+{
+  "steps": {
+    "patched": [
+      {
+        "argv": [
+          "python3",
+          "tools/build-editorial.py"
+        ],
+        "id": "editorial-build",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "python3",
+          "tools/rebuild-bundles.py"
+        ],
+        "id": "bundle-build",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/build.mjs"
+        ],
+        "id": "full-build",
+        "timeout": 600
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-learn-editor.mjs"
+        ],
+        "id": "learn-editor",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-game-integrity.mjs"
+        ],
+        "id": "game-integrity",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-game-challenge-engines.mjs"
+        ],
+        "id": "game-challenge-engines",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-auth-form.mjs"
+        ],
+        "id": "auth-form",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-guest-auth.mjs"
+        ],
+        "id": "guest-auth",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-social-session-ownership.mjs"
+        ],
+        "id": "social-session-ownership",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-progression-sync.mjs"
+        ],
+        "id": "progression-sync",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-result-cross-device.mjs"
+        ],
+        "id": "result-cross-device",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-post-game-progress.mjs"
+        ],
+        "id": "post-game-progress",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-learning-level-award.mjs"
+        ],
+        "id": "learning-level-award",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-academy-catalog-progress.mjs"
+        ],
+        "id": "academy-catalog-progress",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "/harness/dependency-smoke.mjs",
+          "/scratch/app"
+        ],
+        "id": "patched-dependency-regressions",
+        "timeout": 120
+      }
+    ],
+    "baseline": [
+      {
+        "argv": [
+          "python3",
+          "tools/build-editorial.py"
+        ],
+        "id": "editorial-build",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "python3",
+          "tools/rebuild-bundles.py"
+        ],
+        "id": "bundle-build",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/build.mjs"
+        ],
+        "id": "full-build",
+        "timeout": 600
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-learn-editor.mjs"
+        ],
+        "id": "learn-editor",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-game-integrity.mjs"
+        ],
+        "id": "game-integrity",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-game-challenge-engines.mjs"
+        ],
+        "id": "game-challenge-engines",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-auth-form.mjs"
+        ],
+        "id": "auth-form",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-guest-auth.mjs"
+        ],
+        "id": "guest-auth",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-social-session-ownership.mjs"
+        ],
+        "id": "social-session-ownership",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-progression-sync.mjs"
+        ],
+        "id": "progression-sync",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-result-cross-device.mjs"
+        ],
+        "id": "result-cross-device",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-post-game-progress.mjs"
+        ],
+        "id": "post-game-progress",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-learning-level-award.mjs"
+        ],
+        "id": "learning-level-award",
+        "timeout": 120
+      },
+      {
+        "argv": [
+          "node",
+          "tools/test-academy-catalog-progress.mjs"
+        ],
+        "id": "academy-catalog-progress",
+        "timeout": 120
+      }
+    ]
+  },
+  "harnessFiles": {
+    "toolchain.Dockerfile": "c839e5549d1604a552ef0c92ca1e20baff4990c4d97f54597e8e343794c00303",
+    "runner.py": "8108c60036a742c2fd17434f9e67ec2bdce82375aed31acad320a2696c1cf5b9",
+    "bootstrap.py": "b1aa9f29b8458cafa4e302106a2ccb9fe48cba84443b7cda7fced96618e79568",
+    "dependency-smoke.mjs": "d5ff9c420eebff7d4e071e29edf4efe82a5d974443b73379ec88b3c17e0ef82d"
+  },
+  "patchedCommit": "HEAD",
+  "baselineCommit": "1df5df401488038d5d51db8aed4ad60ded44ba26",
+  "schemaVersion": 1,
+  "nodeImage": "docker.io/library/node@sha256:aca79828f8a4afc627f189387c965625bcc419233946210a3b9522d90a59b5c6"
+}
