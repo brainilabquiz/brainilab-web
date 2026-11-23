@@ -114,6 +114,14 @@
         "timeout": 120
       },
       {
+        "timeout": 120,
+        "argv": [
+          "node",
+          "tools/test-results-ring.mjs"
+        ],
+        "id": "results-ring"
+      },
+      {
         "argv": [
           "node",
           "/harness/dependency-smoke.mjs",
@@ -235,6 +243,14 @@
         ],
         "id": "academy-catalog-progress",
         "timeout": 120
+      },
+      {
+        "timeout": 120,
+        "argv": [
+          "node",
+          "tools/test-results-ring.mjs"
+        ],
+        "id": "results-ring"
       }
     ]
   },
@@ -246,7 +262,7 @@
     "game-challenge-smoke.mjs": "0a81c1495842efd0348b1274f4cc0aca00bb12e2b71bedd8e679836e7acece8f"
   },
   "patchedCommit": "HEAD",
-  "baselineCommit": "1df5df401488038d5d51db8aed4ad60ded44ba26",
+  "baselineCommit": "37b5f85b3d78d1800d2cb28c31ed9993d533f216",
   "schemaVersion": 1,
   "nodeImage": "docker.io/library/node@sha256:aca79828f8a4afc627f189387c965625bcc419233946210a3b9522d90a59b5c6"
 }
