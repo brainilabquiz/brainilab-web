@@ -1,0 +1,10 @@
+{
+  "name": "brainilab-private-web-audit",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Owner-run audit dependencies, excluded from the public build",
+  "dependencies": {
+    "broken-link-checker": "0.7.8",
+    "robots-parser": "3.0.1"
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ryze",
+    "sourceDirectory": "upstream-ryze",
+    "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd"
+  },
+  {
+    "name": "kit-audit-web",
+    "sourceDirectory": "upstream-audit",
+    "commit": "14282f559d190393fd3c0aeeed482342ae248e1e"
+  },
+  {
+    "name": "broken-link-checker",
+    "sourceDirectory": "upstream-links",
+    "commit": "9294d22f2466bea7046927280bc7f77b4e8a002a"
+  },
+  {
+    "name": "open-higgsfield",
+    "sourceDirectory": "upstream-higgsfield",
+    "commit": "b16a0efe4d7e2707b56f8ccb02387fd2a9d2eddf"
+  },
+  {
+    "name": "VoiceStudio",
+    "sourceDirectory": "upstream-voice",
+    "commit": "87fe27d5a02fda77e1348aa4cf1a45e333b7e2a9"
+  },
+  {
+    "name": "OpenSEO",
+    "sourceDirectory": "upstream-open-seo",
+    "commit": "af3f995fe3ebbe21298df152465a5436842354ee"
+  }
+]

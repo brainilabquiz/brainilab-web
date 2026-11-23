@@ -23,3 +23,12 @@ Use the established build, preview and protected production release process.
 Keep private audit captures and reports outside public source directories.
 Describe the actual scope and limits of native, automated and field checks;
 none alone establishes full accessibility conformance or Google indexing.
+
+For owner-requested SEO analysis, use the namespaced `.agents/skills/ryze-*`
+workflows with real available connectors and read `docs/web-toolkit.md`.
+Run `pnpm tools:status` to find the installed private applications. Audit tools
+and their independently locked dependencies are development-only; never copy
+them or their reports into the public website. Preserve the user's standby
+decision for OpenHiggsfield. Do not activate model downloads, new Google
+connections, paid schedules or legacy crawler transports without applicable
+user authorization. Review automated findings against actual page evidence.

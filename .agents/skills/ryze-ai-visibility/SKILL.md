@@ -1,0 +1,16 @@
+---
+name: ryze-ai-visibility
+description: BrainiLab adaptation of the Ryze ai-visibility workflow using authorized available data sources. Use for an explicit matching SEO task.
+---
+
+# BrainiLab: ai-visibility
+
+Report GA4 AI-referral traffic as visits. Referral landing pages are not proof of every AI citation; zero referrals do not prove zero citations. Use direct dated answer/source observations to make citation claims.
+
+## Connected data
+
+Discover actual available tools and read project context first. The existing OpenSEO Growth project is for brainilabgames.com; verify its current ID with list_projects rather than assuming an account. Reuse authorized GA4 and Search Console read access. Provider tool names in references/upstream.md are examples for Ryze, not proof those tools exist here.
+
+The original MIT-licensed workflow is retained in references/upstream.md. This project adaptation controls transport, authority and evidence claims. Installing this skill does not connect the remote Ryze service or grant a new provider access to Google data. If a source is unavailable, report the specific coverage gap and continue independent work; never fabricate it.
+
+Use focused on-demand requests. Do not enable schedules, broaden OAuth permissions, export credentials, or send messages from this workflow. Respect Google request quotas and the existing accepted-request ledger. URL inspection reads the index; it does not request Google indexing. Follow the current user authorization for any resulting website change, preserve original publication dates and player data, and use the established release gates.
