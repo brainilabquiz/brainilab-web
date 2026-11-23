@@ -3,6 +3,7 @@ name: Isolated dependency validation
 on:
   push:
     branches: [codex/security-deps-isolation-nov23]
+    paths: [package.json, pnpm-lock.yaml, 'tools/security-dependency-isolation/**']
   workflow_dispatch:
 
 permissions:
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
-          fetch-depth: 3
+          fetch-depth: 20
           submodules: false
           lfs: false
 
