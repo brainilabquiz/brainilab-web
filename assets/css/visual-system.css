@@ -2102,3 +2102,18 @@ body.braini-visual .daily-score-summary .daily-score-label{margin:0;font-size:13
 @media(prefers-reduced-motion:no-preference){
   body.braini-visual .daily-ring-fill{animation:bl-ring 1.3s cubic-bezier(.2,.8,.2,1) both .2s}
 }
+/* ===== Daily-only game pages (23 Nov 2026): Order Up, Topic Rush and BrainiWord wear their clay art too ===== */
+body.braini-visual[data-world] .daily-mechanic-top:has(.world-art){display:flex;align-items:center;gap:16px}
+body.braini-visual[data-world] .daily-mechanic-top:has(.world-art)>div:first-child{flex:1 1 auto;min-width:0}
+body.braini-visual[data-world] .daily-mechanic-top .world-art{flex:none;width:150px;height:150px;margin:-10px 0 -10px auto;object-fit:contain;filter:drop-shadow(0 14px 18px #00000040)}
+body.braini-visual[data-world] .daily-mechanic-top:has(.world-art) .daily-mechanic-back{align-self:flex-start}
+body.braini-visual[data-world] .brainiword-title:has(.world-art){display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;column-gap:12px;text-align:left}
+body.braini-visual[data-world] .brainiword-title .world-art{grid-row:1/span 2;width:64px;height:64px;margin:-12px 0;object-fit:contain;filter:drop-shadow(0 8px 12px #00000033)}
+@media(max-width:600px){
+  body.braini-visual[data-world] .daily-mechanic-top:has(.world-art){display:grid;grid-template-columns:minmax(0,1fr) 88px;column-gap:12px;align-items:start}
+  body.braini-visual[data-world] .daily-mechanic-top .world-art{grid-column:2;grid-row:1;align-self:center;width:88px;height:88px;margin:-6px 0 0}
+  body.braini-visual[data-world] .daily-mechanic-top:has(.world-art) .daily-mechanic-back{grid-column:1;grid-row:1;justify-self:start;align-self:center}
+  body.braini-visual[data-world] .daily-mechanic-top:has(.world-art)>div:first-child{grid-column:1/-1;grid-row:2}
+  body.braini-visual[data-world] .brainiword-title:has(.world-art){justify-content:end;column-gap:8px}
+  body.braini-visual[data-world] .brainiword-title .world-art{width:44px;height:44px;margin:-6px 0}
+}
