@@ -3,7 +3,7 @@
   "upstreamSkill": "https://github.com/GoogleChrome/modern-web-guidance/blob/main/skills/modern-web-guidance/SKILL.md",
   "upstreamSkillGitBlob": "7483c781ee0045cea7558cff21513ae0ef468669",
   "upstreamSkillSha256": "1292f0ce14794a5bc49af58e99d5f6d4edf10acd9472cade94ab0c5590892716",
-  "projectSkillSha256": "00c9f435541de26e533ad0acdf296da5f6f6baf4eb8561bd2a5243f1e9f6f8ce",
+  "projectSkillSha256": "1ee1d327ac72560a96de6a50d94ee8673d5c5f90630f2d25366f98065ecf5816",
   "adaptation": "CLI examples use the project-pinned pnpm exec modern-web-guidance rather than @latest. The upstream workflow and licence are retained.",
   "package": {
     "name": "modern-web-guidance",
