@@ -23,7 +23,7 @@ const refs=page=>[...lf(readFileSync(page,'utf8')).matchAll(/illustrations\/worl
 const home=refs('index.html');
 assert.equal(home.length,19,'14 world cards and 5 topic tiles on the home page');
 assert.equal(refs('games/index.html').length,16,'every game and topic quiz card in the library that has a world');
-for(const page of ['connections','number-route','math-rush','cryptic','brain-mix','odd-one-out','higher-lower','sequence','survival']){
+for(const page of ['connections','number-route','math-rush','cryptic','brain-mix','odd-one-out','higher-lower','sequence','survival','brainiword','order-up','topic-rush']){
   assert.deepEqual(refs(`games/${page}/index.html`),[page],`${page} page header`);
 }
 for(const name of [...home,...refs('games/index.html')])assert.ok(files.has(name),`${name} is a known world`);
