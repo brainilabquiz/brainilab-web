@@ -9,11 +9,14 @@
     "bundle": "python3 tools/rebuild-bundles.py",
     "deploy:checked": "node tools/deploy-verified.mjs",
     "editorial": "python3 tools/build-editorial.py",
-    "test:review": "node tools/review-core.mjs --release-phase=launched"
+    "test:review": "node tools/review-core.mjs --release-phase=launched",
+    "web:guidance": "modern-web-guidance",
+    "web:scan": "modern-web-guidance legacy-scan . --json"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
     "jsdom": "30.1.1",
+    "modern-web-guidance": "1.0.1",
     "postcss": "8.5.28"
   },
   "dependencies": {

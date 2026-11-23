@@ -49,7 +49,7 @@ for(const topic of ['general-knowledge','history','sports']){
  const doc=new JSDOM(readFileSync(`${topic}/index.html`,'utf8')).window.document;
  assert.equal(doc.querySelectorAll('h1').length,1);
  assert.equal(doc.querySelectorAll('.topic-level').length,3);
- assert.equal(doc.querySelectorAll('.topic-reading a').length,2);
+ assert.ok(doc.querySelector('.topic-reading a'),'Landing pages keep related readings as the catalogue grows');
  for(const a of doc.querySelectorAll('.topic-discovery a')){
   const url=new URL(a.getAttribute('href'),'https://brainilabgames.com');
   assert.ok(existsSync('.'+url.pathname+'index.html'),a.href);

@@ -1,0 +1,17 @@
+{
+  "source": "https://github.com/GoogleChrome/modern-web-guidance",
+  "upstreamSkill": "https://github.com/GoogleChrome/modern-web-guidance/blob/main/skills/modern-web-guidance/SKILL.md",
+  "upstreamSkillGitBlob": "7483c781ee0045cea7558cff21513ae0ef468669",
+  "upstreamSkillSha256": "1292f0ce14794a5bc49af58e99d5f6d4edf10acd9472cade94ab0c5590892716",
+  "projectSkillSha256": "00c9f435541de26e533ad0acdf296da5f6f6baf4eb8561bd2a5243f1e9f6f8ce",
+  "adaptation": "CLI examples use the project-pinned pnpm exec modern-web-guidance rather than @latest. The upstream workflow and licence are retained.",
+  "package": {
+    "name": "modern-web-guidance",
+    "version": "1.0.1",
+    "integrity": "sha512-5ztUh5F1p2PewnSkA6EhsGUXqomaZY9qe6iWJCU4JbIQxHTky7s5lMJcPE4EbD1uhbQZIhl0HROH0+s6fIiGzg=="
+  },
+  "license": "Apache-2.0; LICENSE retained in this directory",
+  "installedOn": "2026-11-22",
+  "scope": "Project-local development guidance; no public runtime dependency, collector, experimental feature opt-in or additional access.",
+  "projectSkillHashEncoding": "UTF-8 with LF line endings"
+}
