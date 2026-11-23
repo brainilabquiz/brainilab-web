@@ -356,6 +356,10 @@ body.home-page.braini-visual main .home-jump-bar a:focus-visible {
   body.home-page.braini-visual main .home-jump-bar a:hover .home-jump-icon { transform: rotate(-7deg); }
 }
 @media (prefers-reduced-motion:reduce) {
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world] > img.home-world-art {
+    transition: none !important;
+    transform: none !important;
+  }
   body.home-page.braini-visual main :is(.home-featured .home-game-card[data-world],.home-jump-bar a,.home-read-row) {
     transition: none;
     transform: none;
