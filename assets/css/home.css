@@ -267,3 +267,111 @@ body.braini-visual.home-page .home-hero:has(:is(.answers .answer,.home-daily-sta
     margin: 2px 0 0;
   }
 }
+
+/* Tactile actions and world cards: original BrainiLab details, informed by
+   VengeanceUI/Uiverse interaction patterns. No framework or pointer tracking. */
+body.home-page.braini-visual main :is(.home-hero-primary,.home-worlds-more a) {
+  box-shadow: inset 0 1px 0 #ffffffb3, 0 4px 0 #b49a08, 0 8px 18px #100d3033;
+  text-decoration: none;
+}
+body.home-page.braini-visual main .home-hero-primary > span {
+  display: inline-block;
+}
+body.home-page.braini-visual main .home-worlds-more a {
+  box-shadow: inset 0 1px 0 #ffffff38, 0 4px 0 #17143f, 0 8px 18px #2d296e24;
+}
+body.home-page.braini-visual main :is(.home-hero-primary,.home-worlds-more a):active {
+  box-shadow: inset 0 1px 0 #ffffff80, 0 1px 0 #17143f;
+}
+body.home-page.braini-visual main .home-hero-secondary {
+  background: #ffffff08;
+  box-shadow: inset 0 1px 0 #ffffff26;
+}
+body.home-page.braini-visual main .home-featured .home-world-filter {
+  background: #eeecf7;
+  border-color: #dcd8ed;
+  box-shadow: inset 0 1px 2px #2d296e0a;
+}
+body.home-page.braini-visual main .home-featured .home-world-filter button {
+  position: relative;
+  border: 1px solid transparent;
+}
+body.home-page.braini-visual main .home-featured .home-world-filter button[aria-pressed=true] {
+  border-color: #201c59;
+  box-shadow: inset 0 1px 0 #ffffff3b, 0 2px 4px #2d296e26;
+}
+body.home-page.braini-visual main .home-featured .home-world-filter button:focus-visible {
+  outline-color: #a74600;
+  outline-offset: 3px;
+}
+body.home-page.braini-visual main .home-featured .home-game-card[data-world] {
+  box-shadow: inset 0 1px 0 #ffffff73, 0 7px 0 #2d296e12, 0 12px 24px #2d296e14;
+}
+body.home-page.braini-visual main .home-featured .home-game-card[data-world] > img:not(.home-world-art) {
+  box-shadow: inset 0 0 0 1px #ffffffa6, 0 4px 10px #1511361a;
+}
+body.home-page.braini-visual main .home-featured .home-game-card[data-world] > span {
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+body.home-page.braini-visual main .home-featured .home-game-card[data-world]:focus-visible > span {
+  text-decoration-line: underline;
+}
+body.home-page.braini-visual main .home-jump-bar a {
+  box-shadow: inset 0 1px 0 #fff, 0 2px 0 #e3e0ee;
+}
+body.home-page.braini-visual main .home-jump-bar a:focus-visible {
+  background: #f5f3fc;
+}
+@media (hover:hover) and (pointer:fine) {
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world]:hover {
+    box-shadow: inset 0 1px 0 #ffffff8c, 0 10px 0 #2d296e0f, 0 18px 28px #2d296e24;
+  }
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world]:hover > span {
+    text-decoration-line: underline;
+  }
+}
+@media (prefers-reduced-motion:no-preference) {
+  body.home-page.braini-visual main :is(.home-hero-primary,.home-hero-secondary,.home-worlds-more a) {
+    transition: transform 160ms cubic-bezier(.2,.8,.2,1);
+  }
+  body.home-page.braini-visual main .home-hero-primary > span,
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world] > img:not(.home-world-art),
+  body.home-page.braini-visual main .home-jump-icon {
+    transition: transform 180ms cubic-bezier(.2,.8,.2,1);
+  }
+  body.home-page.braini-visual main :is(.home-hero-primary,.home-worlds-more a):active {
+    transform: translateY(3px);
+  }
+  body.home-page.braini-visual main .home-hero-secondary:active {
+    transform: translateY(1px);
+  }
+  body.home-page.braini-visual main .home-hero-primary:focus-visible > span {
+    transform: translateX(3px);
+  }
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  body.home-page.braini-visual main .home-hero-primary:hover > span { transform: translateX(3px); }
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world]:hover > img:not(.home-world-art) { transform: translateY(-3px) rotate(-2deg); }
+  body.home-page.braini-visual main .home-jump-bar a:hover .home-jump-icon { transform: rotate(-7deg); }
+}
+@media (prefers-reduced-motion:reduce) {
+  body.home-page.braini-visual main .home-featured .home-game-card[data-world] > img.home-world-art {
+    transition: none !important;
+    transform: none !important;
+  }
+  body.home-page.braini-visual main :is(.home-featured .home-game-card[data-world],.home-jump-bar a,.home-read-row) {
+    transition: none;
+    transform: none;
+  }
+  body.home-page.braini-visual main :is(.home-featured .home-game-card[data-world],.home-jump-bar a,.home-read-row):hover {
+    transform: none;
+  }
+}
+@media (forced-colors:active) {
+  body.home-page.braini-visual main .home-featured .home-world-filter button[aria-pressed=true] {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+}
