@@ -1,0 +1,39 @@
+{
+  "installedOn": "2026-11-23",
+  "source": "https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills",
+  "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+  "skills": {
+    "seo-audit": {
+      "upstreamSha256": "d0361e667b639b8972582ad723fa14743bec96136a5fad4ac400b8c9f46d927f",
+      "adaptedSha256": "e34e8b57317574d69ab9ff7c0ae47efcab4ade317994027cb019b234cdb2a808"
+    },
+    "keyword-research": {
+      "upstreamSha256": "b7686d9a5b468e86ea37fcb5477c4888d3c9ff6900fe1853457ac38063911b35",
+      "adaptedSha256": "c4ab46a32d5e917db81f2584b3d8f13b926a73abe25ebbb4acd3ec884c5002be"
+    },
+    "rank-tracking": {
+      "upstreamSha256": "da742b96d7b054ba036c8e392de1a7b8065714f520366d3694e8fb39d807cc7b",
+      "adaptedSha256": "66079e01851ff0c5efcf93fa368fbb288ae3e664b9aeb4d6db723288d1113235"
+    },
+    "competitor-gap": {
+      "upstreamSha256": "e2c5e5c531c8036f00a28b42bcb303213d090002a12777d577b39b4d14d155cc",
+      "adaptedSha256": "8590d27a752514df52a5f8e3608d8714ea3918acf5c8ca2695af2c5406a1ce3b"
+    },
+    "backlink-check": {
+      "upstreamSha256": "bf8b68a041b7ae7f3f39ffd054d4da964378762b8c680f356c1cc368f1c0c128",
+      "adaptedSha256": "de1845324fb8b750e5f8241344de64a369710f838e1b3b7af0c819177f04ee49"
+    },
+    "ai-visibility": {
+      "upstreamSha256": "0dbc6eb9cbd0fa2dacc31a767b86b9fa12644bcfa75aa068999c290be3302185",
+      "adaptedSha256": "44de3d2c4721452f24c200717e7af34d06f379f0a6821793519ef59e2383435e"
+    },
+    "content-brief": {
+      "upstreamSha256": "26874c7da45b8b421f415bb019631a0210abefa5986be651f200eff87d019379",
+      "adaptedSha256": "b3a95d50d37072f0b5dc22716ccb19c4491528c8cd4d1e02fdc7d383a394e638"
+    },
+    "seo-vs-ads": {
+      "upstreamSha256": "883b461d76654180dcd5cc4f8569bac6a8744b896f7b9e632bf1051bbb3e4599",
+      "adaptedSha256": "90bedb61ef8f66dd6a221bfcb5cae1a0642b919c8ac4147a85c68f1c65e7b849"
+    }
+  }
+}

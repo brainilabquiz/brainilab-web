@@ -1,0 +1,654 @@
+# SPDX-FileCopyrightText: 2026 SIM32 (EURL SERVICES INFORMATIQUES MIELAN 32) <https://sim32.fr>
+# Sous licence EUPL v. 1.2 — dépôt d'origine : https://github.com/MathBach32/kit-audit-web
+# SPDX-License-Identifier: EUPL-1.2
+"""Exploration du site et contrôles SEO avec advertools (Scrapy).
+
+  python3 -m seo_advertools URL DOSSIER [MAX_PAGES]
+
+Le crawl suit les liens depuis l'accueil (respect de robots.txt, débit modéré), puis les pages du
+sitemap qu'aucun lien n'atteint sont téléchargées à leur tour (orphelines). Les redirections ne sont
+pas suivies en silence : chacune est enregistrée (code, destination), puis sa destination explorée.
+Chaque constat porte un code du catalogue config/problemes.csv (libellé, catégorie, gravité,
+explication, correction).
+
+Le balisage sémantique de chaque page est relevé dans le HTML envoyé par le serveur : langue,
+viewport, Open Graph, données structurées (JSON-LD, microdonnées, RDFa) et repères de structure
+(en-tête, navigation, contenu principal, pied de page).
+
+Les résultats ne dépendent pas de l'ordre d'arrivée des pages : deux explorations d'un site inchangé
+donnent les mêmes fichiers, aux temps de réponse près (et donc au constat « réponse lente »).
+
+Sorties dans DOSSIER : crawl*.jsonl (une par passe), robots.csv, sitemap.csv, redirections.csv,
+pages.csv (une ligne par page), semantique.csv (balisage de chaque page en 200 et champs manquants),
+liens.csv (liens internes), problemes.csv (une ligne par constat), resume.json ; et ../urls_html.txt : pages HTML en 200, l'accueil d'abord puis par profondeur,
+liste réutilisée par les autres commandes du kit.
+"""
+import hashlib
+import json
+import re
+import sys
+import urllib.parse
+import zlib
+from collections import Counter, defaultdict, deque
+from itertools import zip_longest
+from pathlib import Path
+
+import advertools as adv
+import numpy as np
+import pandas as pd
+from w3lib.url import canonicalize_url
+
+from entetes_resume import SECURITE
+from kit import UA, est_page, largeur_px, lire_catalogue, lire_liste, meme_site, recuperer
+
+RACINE = Path(__file__).resolve().parents[1]
+SEP = "@@"
+TITRE = (30, 65)                 # caractères
+TITRE_PX = 561                   # largeur affichée par Google (Arial 20 px)
+DESCRIPTION = (70, 160)
+DESCRIPTION_PX = 985             # Arial 14 px
+MOTS_MIN = 250
+MOTS_H2 = 300                    # au-delà, un texte sans intertitre est signalé
+PROFONDEUR_MAX = 3
+LENTEUR_S = 1.5
+ADRESSE_MAX = 115
+PROCHE = 0.9                     # similarité (Jaccard sur des groupes de 5 mots) des contenus presque identiques
+SOFT_404 = re.compile(r"\berreur\s*404\b|^\W*404\b|\bpage\s+(est\s+)?(introuvable|non\s+trouv|inexistante)"
+                      r"|cette page n[’']existe (plus|pas)|\b(page\s+)?not\s+found\b", re.I)
+XPATH = {
+    "meta_robots": "//meta[translate(@name,'ROBTS','robts')='robots']/@content",
+    "meta_refresh": "//meta[translate(@http-equiv,'REFSH','refsh')='refresh']/@content",
+    # canonical et meta_desc d'advertools sont sensibles à la casse (rel="Canonical", name="Description")
+    "canonique": "//link[translate(@rel,'CANOIL','canoil')='canonical']/@href",
+    "description": "//meta[translate(@name,'DESCRIPTON','descripton')='description']/@content",
+    "titres_avant_h2": "count((//h2)[1]/preceding::*[self::h3 or self::h4 or self::h5 or self::h6])",
+    "liens_sans_texte": "count(//a[@href][not(normalize-space(string(.)))][not(.//img[normalize-space(@alt)])]"
+                        "[not(normalize-space(@aria-label))][not(normalize-space(@title))])",
+    "images_sans_alt": "count(//img[not(@alt)])",
+    # adresses commençant par // ; les indications de connexion (dns-prefetch, preconnect) n'en chargent rien
+    "sans_protocole": "count(//*[starts-with(normalize-space(@href),'//') or starts-with(normalize-space(@src),'//')]"
+                      "[not(self::link[contains(concat(' ',translate(normalize-space(@rel),'DNSPRFTCO','dnsprftco'),' '),' dns-prefetch ')"
+                      " or contains(concat(' ',translate(normalize-space(@rel),'DNSPRFTCO','dnsprftco'),' '),' preconnect ')])])",
+    "texte_principal": "normalize-space(string((//main|//article|//*[@role='main'])[1]))",
+    # Balisage sémantique
+    "lang": "normalize-space((/html/@lang|/html/@xml:lang)[1])",
+    "meta_viewport": "count(//meta[translate(@name,'VIEWPORT','viewport')='viewport'][normalize-space(@content)])",
+    **{f"og_{p}": f"count(//meta[@property='og:{p}' or @name='og:{p}'][normalize-space(@content)])"
+       for p in ("title", "description", "image")},
+    "twitter_card": "count(//meta[@name='twitter:card' or @property='twitter:card'][normalize-space(@content)])",
+    "jsonld": "//script[translate(normalize-space(@type),'APLICTONJSD','aplictonjsd')='application/ld+json']/text()",
+    "microdonnees": "//*[@itemtype]/@itemtype|//*[@typeof]/@typeof",   # types des microdonnées et du RDFa
+    # repères : un header ou un footer dans article, aside, main, nav ou section n'en est pas un
+    "repere_entete": "count(//header[not(ancestor::article|ancestor::aside|ancestor::main|ancestor::nav|ancestor::section)]"
+                     "|//*[@role='banner'])",
+    "repere_navigation": "count(//nav|//*[@role='navigation'])",
+    "repere_principal": "count(//main|//*[@role='main'])",
+    "repere_pied": "count(//footer[not(ancestor::article|ancestor::aside|ancestor::main|ancestor::nav|ancestor::section)]"
+                   "|//*[@role='contentinfo'])",
+}
+REPERES = {"repere_entete": "en-tête (header)", "repere_navigation": "navigation (nav)",
+           "repere_principal": "contenu principal (main)", "repere_pied": "pied de page (footer)"}
+
+
+def normaliser(u):
+    """Clé de comparaison des adresses, celle de Scrapy : échappements uniformisés (é, %c3%a9 et
+    %C3%A9 ; virgule et %2C), paramètres triés, sans fragment, chemin « / » par défaut."""
+    return canonicalize_url(str(u).strip())
+
+
+def morceaux(v):
+    return [] if v is None or (not isinstance(v, str) and pd.isna(v)) or v == "" else str(v).split(SEP)
+
+
+def premier(v):
+    m = morceaux(v)
+    return m[0].strip() if m else ""
+
+
+def nombre(v):
+    try:
+        return int(float(premier(v) or 0))
+    except ValueError:
+        return 0
+
+
+def entier(v):
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return 0
+
+
+def directives(*valeurs):
+    """Mots des directives robots (balise meta et en-tête X-Robots-Tag), en minuscules."""
+    return {m for v in valeurs for m in re.split(r"[\s,]+", str(v or "").lower()) if m}
+
+
+def colonne(df, nom):
+    """Colonne insensible à la casse (en-têtes de réponse), ou série vide."""
+    for c in df.columns:
+        if c.lower() == nom.lower():
+            return df[c]
+    return pd.Series([None] * len(df), index=df.index, dtype=object)
+
+
+def domaines_autorises(url):
+    """Hôte sans port (Scrapy compare les noms d'hôte), avec et sans www."""
+    hote = urllib.parse.urlsplit(url).hostname or ""
+    racine = hote[4:] if hote.startswith("www.") else hote
+    return sorted({hote, racine, "www." + racine})
+
+
+def hotes_du_site(url):
+    """Expression des liens à suivre : l'hôte avec ou sans www (Scrapy admet aussi tous les
+    sous-domaines des domaines autorisés : blog., boutique.…, qui sont d'autres sites)."""
+    hote = urllib.parse.urlsplit(url).hostname or ""
+    racine = hote[4:] if hote.startswith("www.") else hote
+    return r"(?i)^https?://(?:www\.)?" + re.escape(racine) + r"(?::\d+)?(?:[/?#]|$)"
+
+
+def exclusions():
+    """Expression des adresses à ne pas traiter comme des pages (config/exclusions_pages.txt)."""
+    return "|".join(lire_liste(RACINE / "config/exclusions_pages.txt"))
+
+
+def cible_refresh(contenu, page):
+    """Adresse vers laquelle une balise meta refresh redirige, ou "" pour un simple rechargement."""
+    m = re.match(r"\s*[\d.]*\s*[;,]?\s*(?:url\s*=\s*)?(['\"]?)(.*?)\1\s*$", contenu or "", re.I | re.S)
+    brut = m.group(2).strip() if m else ""
+    if not brut:
+        return ""
+    cible = normaliser(urllib.parse.urljoin(page, brut))
+    return "" if cible == normaliser(page) else cible
+
+
+def crawler(urls, sortie, dossier, max_pages, suivre):
+    sortie.unlink(missing_ok=True)
+    # advertools passe les adresses à Scrapy jointes par des virgules puis les redécoupe : encoder les virgules
+    adv.crawl([u.replace(",", "%2C") for u in urls], str(sortie), follow_links=suivre, allowed_domains=domaines_autorises(urls[0]),
+              include_url_regex=hotes_du_site(urls[0]),
+              exclude_url_regex=exclusions() or None, xpath_selectors=XPATH, custom_settings={
+                  "USER_AGENT": UA, "ROBOTSTXT_OBEY": True, "CLOSESPIDER_PAGECOUNT": max_pages,
+                  "AUTOTHROTTLE_ENABLED": True, "AUTOTHROTTLE_TARGET_CONCURRENCY": 2.0,
+                  "CONCURRENT_REQUESTS_PER_DOMAIN": 4, "DOWNLOAD_DELAY": 0.25,
+                  "REDIRECT_ENABLED": False, "METAREFRESH_ENABLED": False,
+                  "LOG_FILE": str(dossier / "scrapy.log"), "LOG_LEVEL": "INFO",
+              })
+    if not sortie.exists() or sortie.stat().st_size == 0:
+        return pd.DataFrame()
+    c = pd.read_json(sortie, lines=True)
+    # une passe faite seulement d'erreurs réseau (connexion coupée, DNS) n'a pas de colonne status
+    return c if "status" in c else c.assign(status=np.nan)
+
+
+def sitemap_et_robots(racine, depart, d):
+    try:
+        adv.robotstxt_to_df(racine + "/robots.txt").to_csv(d / "robots.csv", index=False)
+    except Exception as e:  # noqa: BLE001 — robots.txt absent ou illisible
+        print(f"robots.txt : {e}", file=sys.stderr)
+    from sitemap import trouver_sitemaps
+    cadres = []
+    for s in trouver_sitemaps(depart):
+        try:
+            cadres.append(adv.sitemap_to_df(s))
+        except Exception as e:  # noqa: BLE001
+            print(f"sitemap {s} : {e}", file=sys.stderr)
+    sitemap = pd.concat(cadres, ignore_index=True) if cadres else pd.DataFrame(columns=["loc"])
+    sitemap.to_csv(d / "sitemap.csv", index=False)
+    locs = [u for u in sitemap.get("loc", []) if isinstance(u, str) and est_page(u) and meme_site(u, depart)]
+    return list(dict.fromkeys(normaliser(u) for u in locs))
+
+
+def bardeaux(texte):
+    """Groupes de 5 mots, hachés par CRC32 : hash() de Python change à chaque processus."""
+    mots = re.findall(r"\w+", texte.lower())
+    return {zlib.crc32(" ".join(mots[i:i + 5]).encode()) & 0x7FFFFFFF for i in range(max(len(mots) - 4, 0))}
+
+
+def types_jsonld(valeur):
+    """(types schema.org trouvés, nombre de blocs JSON-LD illisibles). valeur : textes des balises
+    script JSON-LD de la page, joints par SEP."""
+    types, invalides = set(), 0
+
+    def parcourir(x):
+        if isinstance(x, dict):
+            t = x.get("@type")
+            types.update([t] if isinstance(t, str) else [v for v in t if isinstance(v, str)] if isinstance(t, list) else [])
+            for v in x.values():
+                parcourir(v)
+        elif isinstance(x, list):
+            for v in x:
+                parcourir(v)
+
+    for bloc in morceaux(valeur):
+        if not bloc.strip():
+            continue
+        try:
+            parcourir(json.loads(bloc))
+        except ValueError:
+            invalides += 1
+    return sorted(t.rsplit("/", 1)[-1] for t in types), invalides
+
+
+def contenus_proches(textes, seuil=PROCHE):
+    """Paires de pages au contenu presque identique : MinHash (64 valeurs) et LSH (8 bandes de 8, seuil
+    implicite vers 0,77 : un gabarit commun à J ≈ 0,6 ne produit plus de candidats en masse),
+    puis similarité de Jaccard exacte des candidats. textes : url → texte. Renvoie {(u, v): similarité}."""
+    p, rng = (1 << 31) - 1, np.random.default_rng(32)
+    a, b = rng.integers(1, p, 64, dtype=np.uint64), rng.integers(0, p, 64, dtype=np.uint64)
+    ensembles, seaux = {}, defaultdict(set)
+    for u, texte in textes.items():
+        s = bardeaux(texte)
+        if len(s) < 20:  # trop peu de texte pour comparer utilement
+            continue
+        ensembles[u] = s
+        x = np.fromiter(s, dtype=np.uint64)
+        signature = ((a[:, None] * x[None, :] + b[:, None]) % p).min(axis=1)
+        for bande in range(8):
+            seaux[(bande, signature[bande * 8:(bande + 1) * 8].tobytes())].add(u)
+    paires = {}
+    for groupe in seaux.values():
+        groupe = sorted(groupe)
+        for i, u in enumerate(groupe):
+            for v in groupe[i + 1:]:
+                if (u, v) not in paires:
+                    su, sv = ensembles[u], ensembles[v]
+                    paires[(u, v)] = len(su & sv) / len(su | sv)
+    return {k: j for k, j in paires.items() if j >= seuil}
+
+
+def canonique_de(ligne):
+    """Canonique déclarée dans la page, sinon dans l'en-tête HTTP Link."""
+    c = premier(ligne.get("canonique")) or premier(ligne.get("canonical"))
+    if not c:
+        lien = ligne.get("_entete_link") or ""
+        m = re.search(r'<([^>]+)>\s*;[^,]*rel="?canonical', str(lien), re.I)
+        c = m.group(1) if m else ""
+    return c
+
+
+def principal(url, dossier, max_pages=2000):
+    d = Path(dossier)
+    d.mkdir(parents=True, exist_ok=True)
+    catalogue = lire_catalogue()
+    resume = {"site": url}
+
+    def terminer(erreur):
+        resume["erreur"] = erreur
+        for f in ("pages.csv", "liens.csv", "problemes.csv"):
+            (d / f).write_text("", encoding="utf-8")
+        (d / "resume.json").write_text(json.dumps(resume, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"ERREUR : {erreur}", file=sys.stderr)
+        return 1
+
+    # Adresse de départ réelle (l'accueil peut rediriger vers www, https ou un autre domaine)
+    statut, finale, _, _ = recuperer(url)
+    if not statut:
+        return terminer(f"le site ne répond pas ({url}).")
+    depart = normaliser(finale)
+    if depart != normaliser(url):
+        resume["redirection_depart"] = depart
+        print(f"l'accueil redirige vers {depart} : exploration depuis cette adresse")
+    accueil = depart
+    racine = "{0.scheme}://{0.netloc}".format(urllib.parse.urlsplit(depart))
+    urls_sitemap = sitemap_et_robots(racine, depart, d)
+    dans_sitemap = set(urls_sitemap)
+
+    # Passe 1 : liens depuis l'accueil ; puis destinations des redirections (en suivant leurs
+    # liens) ; enfin pages du sitemap qu'aucun lien n'atteint
+    cadres, vus, non_explorees = [], set(), {}
+    # advertools n'applique les exclusions qu'aux liens suivis, pas aux adresses de départ d'une passe
+    exclue = re.compile(exclusions() or r"(?!)")
+
+    def passe(urls, nom, source, suivre):
+        budget = max(max_pages - sum(len(c) for c in cadres), 0)
+        urls = [u for u in urls if u not in vus and (u == depart or not exclue.search(u))]
+        if len(urls) > budget:  # budget épuisé ou insuffisant : les adresses écartées sont comptées
+            non_explorees[source] = non_explorees.get(source, 0) + len(urls) - budget
+        urls = urls[:budget]
+        if not urls:
+            return False
+        vus.update(urls)  # jamais redemandées, même si la réponse porte une autre adresse
+        c = crawler(urls, d / f"{nom}.jsonl", d, budget, suivre)
+        if c.empty:
+            return False
+        c["source"], c["url_n"] = source, c["url"].map(normaliser)
+        cadres.append(c)
+        vus.update(c["url_n"])
+        return True
+
+    passe([depart], "crawl", "liens", True)
+    if not cadres:
+        return terminer("aucune page explorée : vérifier l'adresse, robots.txt (Disallow) et le journal seo/scrapy.log.")
+    redirige, issues = {}, []  # issues : passes ouvertes par des redirections
+
+    def suivre_redirections(source):
+        """Destinations des redirections puis, tour après tour, liens nouveaux des pages ainsi
+        trouvées, sans suivi par Scrapy : une passe qui suit les liens ignore ce que les passes
+        précédentes ont vu et retélécharge tout le site depuis la destination."""
+        for _ in range(30):
+            a_voir = []
+            for c in cadres:
+                for un, code, cible in zip(c["url_n"], c["status"], colonne(c, "resp_headers_Location")):
+                    if 300 <= entier(code) < 400 and isinstance(cible, str) and cible:
+                        redirige[un] = normaliser(urllib.parse.urljoin(un, cible))
+                        a_voir.append(redirige[un])
+                for un, m in zip(c["url_n"], colonne(c, "meta_refresh")):  # cibles des meta refresh
+                    a_voir.append(cible_refresh(premier(m), un))
+            a_voir += [normaliser(x) for c in issues for v in colonne(c, "links_url") for x in morceaux(v)]
+            a_voir = [u for u in dict.fromkeys(a_voir) if meme_site(u, depart) and est_page(u)]
+            if not passe(a_voir, f"crawl_redirections_{len(issues) + 1}", source, False):
+                return
+            issues.append(cadres[-1])
+
+    suivre_redirections("liens")
+    passe(urls_sitemap, "crawl_sitemap", "sitemap", False)
+    suivre_redirections("sitemap")  # redirections rencontrées dans la passe sitemap
+    # triées par adresse : la suite (constats, ordre de urls_html.txt) ne dépend plus de l'ordre d'arrivée
+    df = pd.concat(cadres, ignore_index=True).drop_duplicates("url_n").sort_values("url_n", kind="stable").reset_index(drop=True)
+    resume["plafond_atteint"] = sum(len(c) for c in cadres) >= max_pages or bool(non_explorees)
+    if non_explorees.get("sitemap"):
+        resume["sitemap_non_explorees"] = non_explorees["sitemap"]
+    df["_entete_link"] = colonne(df, "resp_headers_Link")
+
+    # Redirections (chaînes résolues) et statut de chaque adresse connue
+    def finale_de(u):
+        etapes = 0
+        while u in redirige and etapes < 10:
+            u, etapes = redirige[u], etapes + 1
+        return u
+    statuts = dict(zip(df["url_n"], df["status"].fillna(0).astype(int)))
+    redirections = [{"adresse": u, "code": statuts.get(u, ""), "vers": v, "destination_finale": finale_de(u),
+                     "code_final": statuts.get(finale_de(u), "")} for u, v in redirige.items()]
+    pd.DataFrame(redirections, columns=["adresse", "code", "vers", "destination_finale", "code_final"]).to_csv(
+        d / "redirections.csv", index=False)
+    type_contenu = colonne(df, "resp_headers_Content-Type").fillna("").astype(str)
+    est_redirection = df["status"].fillna(0).astype(int).between(300, 399)
+    en_erreur = df["status"].fillna(0).astype(int) >= 400  # même servie en texte ou en XML (stockage objet)
+    html = df[~est_redirection & (type_contenu.str.contains("html") | colonne(df, "title").notna() | en_erreur)].copy()
+    if html.empty:
+        return terminer("aucune page HTML parmi les adresses explorées.")
+
+    # Graphe des liens internes (pages en 200), sans les liens d'une page vers elle-même
+    liens, sortants, nofollow, vers_redirection = [], {}, Counter(), Counter()
+    for _, l in html.iterrows():
+        if entier(l.get("status")) != 200:
+            continue
+        cibles = set()
+        for cible, texte, nf in zip_longest(morceaux(l.get("links_url")), morceaux(l.get("links_text")),
+                                            morceaux(l.get("links_nofollow")), fillvalue=""):
+            if not cible or not meme_site(cible, depart) or not est_page(cible):
+                continue
+            c = normaliser(cible)
+            if c in redirige:
+                vers_redirection[l["url_n"]] += 1
+            c = finale_de(c)
+            if c == l["url_n"]:
+                continue
+            nofollow[l["url_n"]] += nf == "True"
+            cibles.add(c)
+            liens.append({"source": l["url"], "cible": c, "texte": texte.strip(), "nofollow": nf == "True"})
+        sortants[l["url_n"]] = cibles
+    entrants = Counter(c for cibles in sortants.values() for c in cibles)
+    profondeur, file = {accueil: 0}, deque([accueil])
+    while file:
+        u = file.popleft()
+        for c in sortants.get(u, ()):
+            if c not in profondeur:
+                profondeur[c] = profondeur[u] + 1
+                file.append(c)
+
+    entetes = {nom: colonne(html, "resp_headers_" + nom).fillna("").astype(str) for nom in [*SECURITE, "x-robots-tag"]}
+    pages, problemes, semantique = [], [], []
+
+    def ajouter(u, code, detail=""):
+        e = catalogue[code]
+        problemes.append({"url": u, "code": code, "probleme": e["libelle"], "detail": detail,
+                          "categorie": e["categorie"], "gravite": e["gravite"]})
+
+    for ordre, (_, l) in enumerate(html.iterrows()):
+        u, un = l["url"], l["url_n"]
+        statut = entier(l.get("status"))
+        titre, desc = premier(l.get("title")), premier(l.get("description")) or premier(l.get("meta_desc"))
+        h1 = [h.strip() for h in morceaux(l.get("h1")) if h.strip()]
+        h2 = [h.strip() for h in morceaux(l.get("h2")) if h.strip()]
+        texte = "" if pd.isna(l.get("body_text")) else str(l.get("body_text"))
+        mots = len(re.findall(r"\w+", texte))
+        robots = directives(*morceaux(l.get("meta_robots")), entetes["x-robots-tag"][l.name])  # toutes les balises
+        noindex, refresh = bool(robots & {"noindex", "none"}), cible_refresh(premier(l.get("meta_refresh")), u)
+        canonique = canonique_de(l)
+        canonique_n = normaliser(urllib.parse.urljoin(u, canonique)) if canonique else ""
+        canonique_ailleurs = bool(canonique_n) and canonique_n != un
+        indexable = statut == 200 and not noindex and not refresh and not canonique_ailleurs
+        raison = ("" if indexable else f"code {statut}" if statut != 200 else "noindex" if noindex
+                  else "meta refresh" if refresh else "canonique ailleurs")
+        latence = float(l.get("download_latency") or 0)
+        page = {"url": u, "source": l["source"], "statut": statut, "indexable": indexable, "raison_non_indexable": raison,
+                "profondeur": profondeur.get(un, ""), "title": titre, "longueur_title": len(titre),
+                "largeur_title_px": largeur_px(titre, 20), "meta_description": desc, "longueur_description": len(desc),
+                "largeur_description_px": largeur_px(desc, 14), "nb_h1": len(h1), "h1": h1[0] if h1 else "",
+                "nb_h2": len(h2), "canonique": canonique, "noindex": noindex, "mots": mots,
+                "images": len(morceaux(l.get("img_src"))), "images_sans_alt": nombre(l.get("images_sans_alt")),
+                "liens_entrants": entrants.get(un, 0), "liens_internes_sortants": len(sortants.get(un, ())),
+                "dans_sitemap": un in dans_sitemap, "temps_reponse_s": round(latence, 2),
+                "taille_ko": round(float(l.get("size") or 0) / 1024, 1), "_ordre": ordre, "_n": un,
+                "_texte": premier(l.get("texte_principal")) or texte}
+        pages.append(page)
+
+        if statut >= 400:
+            ajouter(u, "erreur-5xx" if statut >= 500 else "erreur-4xx", f"code {statut}")
+            continue
+        if statut != 200:
+            continue
+        if refresh:  # page de redirection : les autres contrôles n'ont pas de sens
+            ajouter(u, "meta-refresh", f"vers {refresh} ({premier(l.get('meta_refresh'))})")
+            continue
+        if SOFT_404.search(titre) or (h1 and SOFT_404.search(h1[0])):
+            ajouter(u, "soft-404", titre or h1[0])
+        if latence > LENTEUR_S:
+            ajouter(u, "reponse-lente", f"{latence:.2f} s".replace(".", ","))
+        if noindex:
+            ajouter(u, "noindex", ", ".join(sorted(robots)))
+        if robots & {"nofollow", "none"}:
+            ajouter(u, "nofollow-meta", ", ".join(sorted(robots)))
+        if not canonique and not noindex:
+            ajouter(u, "canonique-absente")
+        elif canonique_ailleurs:
+            if canonique_n not in statuts and meme_site(canonique_n, depart):
+                # cible jamais téléchargée (aucun lien) : son code et sa redirection éventuelle
+                code_c, finale_c, _, _ = recuperer(canonique_n, methode="HEAD")
+                if code_c in (403, 405, 501):  # HEAD refusé : redemander en GET
+                    code_c, finale_c, _, _ = recuperer(canonique_n)
+                if code_c:  # 0 = pas de réponse : ne rien conclure
+                    statuts[canonique_n] = code_c
+                    if normaliser(finale_c) != canonique_n:
+                        redirige[canonique_n] = normaliser(finale_c)
+            if canonique_n in redirige or statuts.get(canonique_n, 200) != 200:
+                ajouter(u, "canonique-cassee", canonique)
+            else:
+                ajouter(u, "canonique-autre", canonique)
+        if not titre:
+            ajouter(u, "title-absent")
+        elif page["largeur_title_px"] > TITRE_PX:  # la largeur décide de la coupure ; la longueur n'est qu'un repère
+            ajouter(u, "title-pixels", f"{page['largeur_title_px']} px, {len(titre)} caractères")
+        elif len(titre) < TITRE[0]:
+            ajouter(u, "title-court", f"{len(titre)} caractères")
+        elif len(titre) > TITRE[1]:
+            ajouter(u, "title-long", f"{len(titre)} caractères")
+        if not desc:
+            ajouter(u, "description-absente")
+        elif page["largeur_description_px"] > DESCRIPTION_PX:
+            ajouter(u, "description-pixels", f"{page['largeur_description_px']} px, {len(desc)} caractères")
+        elif len(desc) < DESCRIPTION[0]:
+            ajouter(u, "description-courte", f"{len(desc)} caractères")
+        elif len(desc) > DESCRIPTION[1]:
+            ajouter(u, "description-longue", f"{len(desc)} caractères")
+        if not h1:
+            ajouter(u, "h1-absent")
+        elif len(h1) > 1:
+            ajouter(u, "h1-multiple", f"{len(h1)} H1")
+        if not h2 and mots >= MOTS_H2:
+            ajouter(u, "h2-absent", f"{mots} mots")
+        if h2 and nombre(l.get("titres_avant_h2")):
+            ajouter(u, "h2-desordre", f"{nombre(l.get('titres_avant_h2'))} intertitre(s) avant le premier H2")
+        if mots < MOTS_MIN:
+            ajouter(u, "peu-de-texte", f"{mots} mots")
+        if page["images_sans_alt"]:
+            ajouter(u, "images-sans-alt", f"{page['images_sans_alt']} image(s)")
+        if nombre(l.get("liens_sans_texte")):
+            ajouter(u, "liens-sans-texte", f"{nombre(l.get('liens_sans_texte'))} lien(s)")
+        if nofollow[un]:
+            ajouter(u, "liens-nofollow", f"{nofollow[un]} lien(s)")
+        if vers_redirection[un]:
+            ajouter(u, "liens-redirection", f"{vers_redirection[un]} lien(s)")
+        if nombre(l.get("sans_protocole")):
+            ajouter(u, "liens-sans-protocole", f"{nombre(l.get('sans_protocole'))} adresse(s)")
+        if un != accueil and not isinstance(page["profondeur"], int):  # aucun chemin de liens depuis l'accueil
+            ajouter(u, "orpheline", (f"liée seulement depuis d'autres pages orphelines ({entrants[un]} lien(s))" if entrants.get(un)
+                                     else "aucun lien interne") + (", trouvée par le sitemap" if l["source"] == "sitemap" else ""))
+        elif isinstance(page["profondeur"], int) and page["profondeur"] > PROFONDEUR_MAX:
+            ajouter(u, "profonde", f"{page['profondeur']} clics depuis l'accueil")
+        if urls_sitemap and indexable and un not in dans_sitemap:
+            ajouter(u, "absente-sitemap")
+        absents = [nom for nom in SECURITE if not entetes[nom][l.name].strip()
+                   and not (nom == "strict-transport-security" and not u.startswith("https://"))]
+        if "frame-ancestors" in entetes["content-security-policy"][l.name] and "x-frame-options" in absents:
+            absents.remove("x-frame-options")
+        if absents:
+            ajouter(u, "entetes-securite", ", ".join(absents))
+        # Balisage sémantique. Open Graph et données structurées ne servent qu'aux pages indexables
+        # (partage, résultats enrichis) ; langue, viewport et repères valent pour toutes.
+        lang = premier(l.get("lang"))
+        og = {p: nombre(l.get(f"og_{p}")) > 0 for p in ("title", "description", "image")}
+        types, invalides = types_jsonld(l.get("jsonld"))
+        micro = sorted({t.rstrip("/").rsplit("/", 1)[-1] for v in morceaux(l.get("microdonnees")) for t in v.split() if t.strip()})
+        reperes = {cle: nombre(l.get(cle)) > 0 for cle in REPERES}
+        structurees = bool(types or micro)
+        if not lang:
+            ajouter(u, "lang-absent")
+        if not nombre(l.get("meta_viewport")):
+            ajouter(u, "viewport-absent")
+        if invalides:
+            ajouter(u, "donnees-structurees-invalides", f"{invalides} bloc(s) JSON-LD illisible(s)")
+        if indexable and not all(og.values()):
+            ajouter(u, "opengraph-incomplet", ", ".join(f"og:{p}" for p, ok in og.items() if not ok))
+        if indexable and not structurees:
+            ajouter(u, "donnees-structurees-absentes")
+        if not all(reperes.values()):
+            ajouter(u, "reperes-absents", ", ".join(REPERES[c] for c, ok in reperes.items() if not ok))
+        manquants = ([n for n, ok in (("title", titre), ("meta description", desc), ("H1", h1), ("lang", lang),
+                                      ("viewport", nombre(l.get("meta_viewport")))) if not ok]
+                     + (["canonique"] if not canonique and not noindex else [])
+                     + ([f"og:{p}" for p, ok in og.items() if not ok] + ([] if structurees else ["données structurées"])
+                        if indexable else [])
+                     + [REPERES[c].split(" (")[1].rstrip(")") for c, ok in reperes.items() if not ok])
+        semantique.append({"url": u, "_n": un, "indexable": indexable, "title": bool(titre), "meta_description": bool(desc),
+                           "h1": len(h1), "lang": lang, "viewport": bool(nombre(l.get("meta_viewport"))), "canonique": bool(canonique),
+                           **{f"og_{p}": ok for p, ok in og.items()}, "twitter_card": nombre(l.get("twitter_card")) > 0,
+                           "donnees_structurees": ", ".join(types + [f"{t} (microdonnées)" for t in micro]),
+                           "jsonld_illisibles": invalides,
+                           **{c.replace("repere_", ""): ok for c, ok in reperes.items()},
+                           "manquants": ", ".join(manquants)})
+        chemin = urllib.parse.unquote(urllib.parse.urlsplit(u).path)
+        if "_" in chemin:
+            ajouter(u, "adresse-soulignement", chemin)
+        if chemin != chemin.lower():
+            ajouter(u, "adresse-majuscules", chemin)
+        if urllib.parse.urlsplit(u).query:
+            ajouter(u, "adresse-parametres", urllib.parse.urlsplit(u).query)
+        if len(u) > ADRESSE_MAX:
+            ajouter(u, "adresse-longue", f"{len(u)} caractères")
+
+    # Doublons entre pages indexables
+    indexables = [p for p in pages if p["indexable"]]
+    for champ, code in (("title", "title-double"), ("meta_description", "description-double"), ("h1", "h1-double")):
+        groupes = defaultdict(list)
+        for p in indexables:
+            if p[champ]:
+                groupes[p[champ].casefold()].append(p)
+        for groupe in groupes.values():
+            if len(groupe) > 1:
+                for p in groupe:
+                    ajouter(p["url"], code, f"{len(groupe)} pages : « {p[champ][:80]} »")
+    empreintes = defaultdict(list)
+    for p in indexables:
+        normal = " ".join(re.findall(r"\w+", p["_texte"].lower()))
+        if len(normal.split()) >= 50:
+            empreintes[hashlib.md5(normal.encode()).hexdigest()].append(p)
+    identiques = set()
+    for groupe in empreintes.values():
+        if len(groupe) > 1:
+            for p in groupe:
+                identiques.add(p["_n"])
+                autre = next(q for q in groupe if q is not p)
+                ajouter(p["url"], "contenu-double", f"comme {autre['url']}" + (f" et {len(groupe) - 2} autre(s)" if len(groupe) > 2 else ""))
+    meilleur = {}
+    textes = {p["_n"]: p["_texte"] for p in indexables if p["_n"] not in identiques}
+    for (a, b), j in contenus_proches(textes).items():
+        for x, y in ((a, b), (b, a)):
+            if j > meilleur.get(x, (0, ""))[0]:
+                meilleur[x] = (j, y)
+    par_n = {p["_n"]: p for p in pages}
+    for x, (j, y) in meilleur.items():
+        ajouter(par_n[x]["url"], "contenu-proche", f"{round(j * 100)} % commun avec {par_n[y]['url']}")
+
+    # Hygiène du sitemap
+    for un in urls_sitemap:
+        if un in redirige:
+            ajouter(un, "sitemap-erreur", f"redirigée ({statuts.get(un, '3xx')}) vers {finale_de(un)}")
+        elif un in statuts and statuts[un] != 200:
+            ajouter(un, "sitemap-erreur", f"code {statuts[un]}")
+        elif un in par_n and par_n[un]["statut"] == 200 and not par_n[un]["indexable"]:
+            ajouter(un, "sitemap-non-indexable", par_n[un]["raison_non_indexable"])
+
+    # Sorties
+    rang = lambda p: (p["profondeur"] if isinstance(p["profondeur"], int) else 10**6, p["_ordre"])
+    pages.sort(key=rang)
+    pages_df = pd.DataFrame(pages).drop(columns=["_ordre", "_n", "_texte"])
+    pages_df.to_csv(d / "pages.csv", index=False)
+    ordre_pages = {p["_n"]: i for i, p in enumerate(pages)}
+    semantique.sort(key=lambda s: ordre_pages[s["_n"]])
+    colonnes_sem = ["url", "indexable", "title", "meta_description", "h1", "lang", "viewport", "canonique", "og_title",
+                    "og_description", "og_image", "twitter_card", "donnees_structurees", "jsonld_illisibles",
+                    "entete", "navigation", "principal", "pied", "manquants"]
+    pd.DataFrame(semantique, columns=colonnes_sem).to_csv(d / "semantique.csv", index=False)
+    pd.DataFrame(liens, columns=["source", "cible", "texte", "nofollow"]).to_csv(d / "liens.csv", index=False)
+    cols = ["url", "code", "probleme", "detail", "categorie", "gravite"]
+    pd.DataFrame(problemes, columns=cols).to_csv(d / "problemes.csv", index=False)
+    en_200 = [p["url"] for p in pages if p["statut"] == 200]
+    (d.parent / "urls_html.txt").write_text("".join(u + "\n" for u in en_200), encoding="utf-8")  # vide si aucune
+    pages_par_code = defaultdict(set)
+    for pb in problemes:
+        pages_par_code[pb["code"]].add(normaliser(pb["url"]))
+    profondeurs = [p["profondeur"] for p in pages if isinstance(p["profondeur"], int)]
+    par_gravite = defaultdict(set)
+    for pb in problemes:
+        par_gravite[pb["gravite"]].add(normaliser(pb["url"]))
+    resume.update({
+        "site": depart, "pages_html": len(pages), "pages_explorees": sum(p["source"] == "liens" for p in pages),
+        "pages_sitemap_seules": sum(p["source"] == "sitemap" for p in pages),
+        "pages_indexables": len(indexables), "codes": dict(Counter(str(p["statut"]) for p in pages)),
+        "redirections": len(redirige),
+        "sitemap": len(urls_sitemap), "orphelines": len(pages_par_code.get("orpheline", ())),
+        "mots_median": int(pages_df["mots"].median()), "profondeur_max": max(profondeurs, default=0),
+        "problemes": {c: len(v) for c, v in sorted(pages_par_code.items(), key=lambda kv: -len(kv[1]))},
+        "pages_par_gravite": {g: len(par_gravite.get(g, ())) for g in ("haute", "moyenne", "basse")},
+        "constats": len(problemes), "liens_internes": len(liens),
+        "semantique": {"pages": len(semantique), "completes": sum(not s["manquants"] for s in semantique),
+                       "manquants": dict(Counter(m for s in semantique for m in s["manquants"].split(", ") if m).most_common()),
+                       "types_donnees_structurees": dict(Counter(t for s in semantique for t in s["donnees_structurees"].split(", ")
+                                                                 if t).most_common())},
+    })
+    (d / "resume.json").write_text(json.dumps(resume, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"{resume['pages_html']} page(s) HTML ({resume['pages_sitemap_seules']} trouvée(s) seulement par le sitemap), "
+          f"{resume['pages_indexables']} indexable(s), {len(urls_sitemap)} dans le sitemap, {len(problemes)} constat(s)")
+    for code, n in list(resume["problemes"].items())[:15]:
+        print(f"  {n:>4}  {catalogue[code]['libelle']}")
+    return 0
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print(__doc__, file=sys.stderr)
+        sys.exit(2)
+    sys.exit(principal(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 2000))

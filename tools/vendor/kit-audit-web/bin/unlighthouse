@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 SIM32 (EURL SERVICES INFORMATIQUES MIELAN 32) <https://sim32.fr>
+# Sous licence EUPL v. 1.2 — dépôt d'origine : https://github.com/MathBach32/kit-audit-web
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Lighthouse sur toutes les pages avec Unlighthouse (mobile, bridage comparable à PageSpeed Insights).
+#
+# Usage : bin/unlighthouse URL [--pages FICHIER] [--max N] [--dossier DOSSIER]
+#   --pages  pages à mesurer (défaut : pages HTML trouvées par bin/seo, sinon le sitemap ;
+#            sans liste, Unlighthouse explore lui-même le site)
+#   --max    nombre maximal de pages (défaut 500)
+#
+# Sortie : unlighthouse/rapport/ (ci-result.json et rapport consultable, à ouvrir via un petit
+# serveur : python3 -m http.server -d unlighthouse/rapport) et unlighthouse/resume.csv
+. "$(dirname "$(readlink -f "$0")")/../lib/commun.sh"
+OPTIONS="--pages --max"
+lire_arguments "$@"
+exiger unlighthouse-ci
+exiger_node
+exiger_navigateur
+preparer_sortie unlighthouse
+export UNLIGHTHOUSE_MAX_ROUTES="${OPTS[--max]:-500}"
+options=()
+pages="$(pages_a_auditer)"
+if [ "$(wc -l < "$pages")" -gt 1 ]; then
+  # chemins relatifs des pages du même site, séparés par des virgules (désactive l'exploration)
+  chemins="$("$PYTHON" - "$SITE_URL" "$pages" <<'EOF'
+import sys, urllib.parse
+from kit import lire_liste, meme_site
+site, fichier = sys.argv[1], sys.argv[2]
+chemins = []
+for u in lire_liste(fichier):
+    if meme_site(u, site):
+        p = urllib.parse.urlsplit(u)
+        chemins.append(p.path + ("?" + p.query if p.query else ""))
+print(",".join(dict.fromkeys(chemins)))
+EOF
+)"
+  options+=(--urls "$chemins")
+fi
+# Unlighthouse laisse un navigateur sans tête en partant, et puppeteer lance chaque navigateur dans sa
+# propre session, hors du groupe d'unlighthouse-ci. Celui-ci tourne donc dans son propre groupe de
+# processus (setsid), avec les profils de ses navigateurs dans un dossier temporaire qui lui est propre
+# (PUPPETEER_TMP_DIR) ; nettoyer arrête ce qui reste, à la fin comme sur interruption.
+TEMPORAIRE="$(mktemp -d -t kit-unlighthouse.XXXXXX)" || echec "dossier temporaire impossible à créer"
+GROUPE=""
+# nettoyer : arrête les processus restants du groupe d'unlighthouse-ci et les navigateurs dont le profil
+# est dans $TEMPORAIRE (reconnu à son suffixe aléatoire) : SIGTERM, puis SIGKILL après 3 s ; supprime
+# ensuite $TEMPORAIRE.
+nettoyer() {
+  local essai restants
+  for essai in 1 2 3 4 5 6 7 8 9 10 11; do
+    mapfile -t restants < <([ -n "$GROUPE" ] && pgrep -g "$GROUPE"; pgrep -f -- "/kit-unlighthouse\\.${TEMPORAIRE##*.}/puppeteer_dev_")
+    [ "${#restants[@]}" -gt 0 ] || break
+    kill -s "$([ "$essai" -le 10 ] && echo TERM || echo KILL)" "${restants[@]}" 2> /dev/null
+    sleep 0.3
+  done
+  rm -rf -- "$TEMPORAIRE"
+}
+trap 'nettoyer; exit 130' INT
+trap 'nettoyer; exit 143' TERM HUP
+attendre_acces
+# Unlighthouse exige un dossier de sortie qui lui soit propre ; il écrit aussi dans le dossier courant
+(cd "$SORTIE" && PUPPETEER_TMP_DIR="$TEMPORAIRE" exec setsid unlighthouse-ci --site "$SITE_URL" \
+  --config-file "$KIT_RACINE/config/unlighthouse.config.mjs" --output-path "$SORTIE/rapport" --no-cache \
+  "${options[@]}") < /dev/null > "$SORTIE/journal.txt" 2>&1 &
+GROUPE=$!
+wait "$GROUPE"
+code=$?
+nettoyer
+trap - INT TERM HUP
+[ -s "$SORTIE/rapport/ci-result.json" ] || echec "Unlighthouse a échoué (code $code, voir journal.txt)"
+"$PYTHON" -m unlighthouse_resume "$SORTIE" || echec "résumé d'Unlighthouse impossible"
+# Pages écartées par Unlighthouse (erreur, page refusée ou interstitielle) : consignées par le résumé
+[ -s "$SORTIE/non_mesurees.txt" ] && journal "attention : $(wc -l < "$SORTIE/non_mesurees.txt") page(s) non mesurée(s) (voir unlighthouse/non_mesurees.txt)"
+exit 0

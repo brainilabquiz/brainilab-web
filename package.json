@@ -11,7 +11,17 @@
     "editorial": "python3 tools/build-editorial.py",
     "test:review": "node tools/review-core.mjs --release-phase=launched",
     "web:guidance": "modern-web-guidance",
-    "web:scan": "modern-web-guidance legacy-scan . --json"
+    "web:scan": "modern-web-guidance legacy-scan . --json",
+    "tools:status": "node tools/brainilab-toolkit.mjs status",
+    "audit:install": "pnpm --dir tools/web-audit install --frozen-lockfile --ignore-scripts",
+    "audit:all": "node tools/web-audit/run.mjs all",
+    "audit:kit": "node tools/web-audit/run.mjs kit",
+    "audit:links": "node tools/web-audit/run.mjs links",
+    "audit:test": "node tools/web-audit/test.mjs",
+    "studio:seo": "node tools/brainilab-toolkit.mjs seo",
+    "studio:images": "node tools/brainilab-toolkit.mjs images",
+    "studio:voice": "node tools/brainilab-toolkit.mjs voice-server",
+    "voice": "node tools/brainilab-toolkit.mjs voice"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
