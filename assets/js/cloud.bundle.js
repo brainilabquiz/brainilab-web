@@ -39,10 +39,49 @@ window.BrainiBackendAuth = (function(){
   let claimPromise=null;
   let claimOwner=null;
   let analyticsAccountRevision=0;
+  // References change on identity transitions, including signing back into the same account.
+  let sessionScope=Object.freeze({userId:null});
+  function observeSession(session){
+    const userId=session?.user?.id||null;
+    if(userId!==sessionScope.userId) sessionScope=Object.freeze({userId});
+    return sessionScope;
+  }
+
+  function isCurrentPlayer(scope){
+    if(!scope?.userId || scope!==sessionScope) return false;
+    const local=BrainiData.authState();
+    return scope.userId===(local?.user?.id||local?.guestUserId);
+  }
+
   const guestClaimKey="brainilab_guest_claim_v1";
+  const guestRecipientKey="brainilab_guest_claim_recipient_v1";
 
   function readGuestClaim(){
     try{return JSON.parse(localStorage.getItem(guestClaimKey)||"null");}catch{return null;}
+  }
+
+  async function claimDigest(value){
+    const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));
+    return Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function bindGuestRecipient(claim,scope){
+    if(!globalThis.crypto?.subtle) return false;
+    // Scope both fingerprints to this one transfer. The marker cannot redeem a claim.
+    const [claimTag,ownerTag]=await Promise.all([claimDigest(claim.token),claimDigest(claim.token+'\0'+scope.userId)]);
+    const marker=claimTag+':'+ownerTag;
+    const bind=async()=>{
+      const current=await getClient().auth.getSession();
+      if(current.error) throw current.error;
+      const pending=readGuestClaim();
+      if(scope!==sessionScope || current.data?.session?.user?.id!==scope.userId || pending?.token!==claim.token) return false;
+      if(pending.recipientId && pending.recipientId!==scope.userId) return false;
+      const saved=localStorage.getItem(guestRecipientKey);
+      if(saved?.startsWith(claimTag+':')) return saved===marker;
+      localStorage.setItem(guestRecipientKey,marker);
+      return true;
+    };
+    return globalThis.navigator?.locks?.request ? navigator.locks.request(guestRecipientKey,bind) : bind();
   }
 
   async function prepareGuestClaim(){
@@ -65,24 +104,38 @@ window.BrainiBackendAuth = (function(){
     if(result.error) throw result.error;
   }
 
-  async function claimGuestProgress(session){
-    if(!session?.user || session.user.is_anonymous || !readGuestClaim()) return;
-    if(claimPromise){if(claimOwner!==session.user.id)throw Error('Account changed during guest transfer.');return claimPromise;}
-    claimOwner=session.user.id;
+  async function claimGuestProgress(session,scope){
+    const claim=readGuestClaim();
+    if(!session?.user || session.user.is_anonymous || !claim) return;
+    if(claim.recipientId && claim.recipientId!==session.user.id) return;
+    if(claimPromise) return claimOwner===scope ? claimPromise : undefined;
+    claimOwner=scope;
     claimPromise=(async()=>{
-      const claim=readGuestClaim();
+      if(!await bindGuestRecipient(claim,scope) || scope!==sessionScope) return;
       const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
       if(error) throw error;
       const check=await getClient().auth.getSession();
-      if(check.error||check.data?.session?.user?.id!==session.user.id)throw Error('Account changed during guest transfer.');
+      if(scope!==sessionScope||check.error||check.data?.session?.user?.id!==session.user.id)throw Error('Account changed during guest transfer.');
       await BrainiData.api.completeGuestClaim?.({...data,fromUserId:claim.guestId,toUserId:session.user.id});
       let user=session.user;
+      let appearanceComplete=false;
       try{
+        if(scope!==sessionScope) return;
         await window.BrainiHalloweenLegacy?.recover?.(session.user,claim.halloween);
+        if(scope!==sessionScope) return;
         user=await window.BrainiGuestStyle?.restore?.(session.user,claim.style)||user;
+        appearanceComplete=true;
       }
-      catch(error){console.warn('BrainiLab appearance transfer pending:',error.message||error);return user;}
-      localStorage.removeItem(guestClaimKey);
+      catch(error){console.warn('BrainiLab appearance transfer pending:',error.message||error);}
+      if(scope!==sessionScope) return;
+      const current=await getClient().auth.getSession();
+      if(scope!==sessionScope || current.error || current.data?.session?.user?.id!==session.user.id){
+        throw Error('Account changed during guest transfer.');
+      }
+      if(appearanceComplete && readGuestClaim()?.token===claim.token){
+        localStorage.removeItem(guestRecipientKey);
+        localStorage.removeItem(guestClaimKey);
+      }
       return user;
     })();
     try{return await claimPromise;}finally{claimPromise=null;claimOwner=null;}
@@ -93,9 +146,10 @@ window.BrainiBackendAuth = (function(){
     const create=async()=>{
       const existing=await getSession();
       if(existing?.user) return existing;
+      const startingScope=sessionScope;
       const {data,error}=await getClient().auth.signInAnonymously();
       if(error) throw error;
-      await syncSession(data?.session);
+      if(!await syncActionSession(data?.session,startingScope)) throw Error('Account changed while starting guest play.');
       return data?.session||null;
     };
     // Two tabs completing a first game must share one guest identity.
@@ -225,14 +279,16 @@ window.BrainiBackendAuth = (function(){
     }
   }
 
-  async function syncSession(session){
+  async function syncSession(session,scope=observeSession(session)){
+    if(scope!==sessionScope) return false;
     // Privacy reads must not delay or change player/profile/progress sync.
     void syncAnalyticsAccount(session);
     if(session?.user?.is_anonymous){
       window.BrainiGuestStyle?.bindGuest?.(BrainiData.authState(),session.user.id);
       await BrainiData.api.syncExternalGuestUser(session.user);
     }else if(session?.user){
-      const user=await claimGuestProgress(session)||session.user;
+      const user=await claimGuestProgress(session,scope)||session.user;
+      if(scope!==sessionScope) return false;
       await BrainiData.api.syncExternalAuthUser(user,providerFromUser(user));
     }else{
       const local=BrainiData.authState();
@@ -240,6 +296,18 @@ window.BrainiBackendAuth = (function(){
         await BrainiData.api.clearExternalAuthUser();
       }
     }
+    return scope===sessionScope;
+  }
+
+  // Auth events can arrive before their originating SDK calls resolve.
+  async function syncActionSession(session,startingScope){
+    if(sessionScope===startingScope) return syncSession(session);
+    const scope=sessionScope;
+    if(!session?.user || session.user.id!==scope.userId) return false;
+    const current=await getClient().auth.getSession();
+    if(current.error) throw current.error;
+    if(scope!==sessionScope || current.data?.session?.user?.id!==scope.userId) return false;
+    return syncSession(current.data.session,scope);
   }
 
   async function init(){
@@ -248,22 +316,38 @@ window.BrainiBackendAuth = (function(){
     if(!isConfigured()) return {configured:false,client:null};
 
     const sb=getClient();
-    const {data,error}=await sb.auth.getSession();
-    if(error) console.warn("BrainiLab Supabase getSession:",error.message);
-    await syncSession(data?.session||null);
-
+    const initialScope=sessionScope;
+    const initialRead=sb.auth.getSession();
+    let initializing=true;
+    let latestEvent=null;
     const listener=sb.auth.onAuthStateChange((event,session)=>{
-      setTimeout(async()=>{
+      const scope=observeSession(session);
+      const done=new Promise(resolve=>setTimeout(resolve,0)).then(async()=>{
         try{
-          await syncSession(session);
+          if(!await syncSession(session,scope)) return;
           window.dispatchEvent(new CustomEvent("brainilab:backend-auth",{detail:{event,session}}));
         }catch(err){
           console.error("BrainiLab auth sync:",err);
         }
-      },0);
+      });
+      if(initializing) latestEvent={scope,session,done};
     });
     listenerSubscription=listener?.data?.subscription||null;
-    return {configured:true,client:sb,session:data?.session||null};
+    const {data,error}=await initialRead;
+    if(error) console.warn("BrainiLab Supabase getSession:",error.message);
+    let active=null;
+    if(!latestEvent && sessionScope===initialScope){
+      if(await syncSession(data?.session||null)) active=data?.session||null;
+    }
+    // Finish the latest boot event before consumers read the player store.
+    while(latestEvent){
+      const current=latestEvent;
+      latestEvent=null;
+      await current.done;
+      active=current.scope===sessionScope?current.session:null;
+    }
+    initializing=false;
+    return {configured:true,client:sb,session:active};
   }
 
   async function signInWithGoogle(){
@@ -295,13 +379,14 @@ window.BrainiBackendAuth = (function(){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
     await prepareGuestClaim();
+    const startingScope=sessionScope;
     const {data,error}=await sb.auth.signUp({
       email:(email||"").trim().toLowerCase(),
       password,
       options:{emailRedirectTo:profileRedirectUrl()}
     });
     if(error) throw error;
-    if(data?.session) await syncSession(data.session);
+    if(data?.session && !await syncActionSession(data.session,startingScope)) throw Error('Account changed during sign-up.');
     return data;
   }
 
@@ -309,12 +394,13 @@ window.BrainiBackendAuth = (function(){
     const sb=getClient();
     if(!sb) throw new Error("Supabase is not configured yet.");
     await prepareGuestClaim();
+    const startingScope=sessionScope;
     const {data,error}=await sb.auth.signInWithPassword({
       email:(email||"").trim().toLowerCase(),
       password
     });
     if(error) throw error;
-    if(data?.session) await syncSession(data.session);
+    if(data?.session && !await syncActionSession(data.session,startingScope)) throw Error('Account changed during sign-in.');
     return data;
   }
 
@@ -338,14 +424,19 @@ window.BrainiBackendAuth = (function(){
   }
 
   async function signOut(){
+    const startingScope=sessionScope;
     const sb=getClient();
     if(!sb){
+      observeSession(null);
       await BrainiData.api.clearExternalAuthUser();
       return;
     }
     // The profile action says "This browser"; keep phone and other sessions.
     const {error}=await sb.auth.signOut({scope:'local'});
     if(error) throw error;
+    if(sessionScope!==startingScope && sessionScope.userId) return;
+    observeSession(null);
+    localStorage.removeItem(guestRecipientKey);
     localStorage.removeItem(guestClaimKey);
     await BrainiData.api.clearExternalAuthUser();
   }
@@ -353,13 +444,18 @@ window.BrainiBackendAuth = (function(){
   async function getSession(){
     const sb=getClient();
     if(!sb) return null;
+    const startingScope=sessionScope;
     const {data,error}=await sb.auth.getSession();
     if(error) throw error;
-    await claimGuestProgress(data?.session);
+    if(startingScope!==sessionScope && sessionScope.userId!==(data?.session?.user?.id||null)) throw Error("Account changed while reading the session.");
+    const scope=observeSession(data?.session);
+    await claimGuestProgress(data?.session,scope);
+    if(scope!==sessionScope) throw Error("Account changed while reading the session.");
     return data?.session||null;
   }
 
   function destroy(){
+    sessionScope=Object.freeze({userId:null});
     analyticsAccountRevision++;
     listenerSubscription?.unsubscribe?.();
     listenerSubscription=null;
@@ -369,6 +465,7 @@ window.BrainiBackendAuth = (function(){
 
   return {
     init,isConfigured,getClient,getSession,ensurePlayerSession,hasPlayerSession,
+    currentScope:()=>sessionScope,isCurrentPlayer,
     signInWithGoogle,signUpWithEmail,signInWithEmail,
     requestPasswordReset,updatePassword,signOut,
     profileRedirectUrl,passwordResetRedirectUrl,destroy

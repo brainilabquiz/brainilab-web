@@ -6,6 +6,9 @@ import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../assets/js');
 const scripts=await Promise.all(['avatar-design.js','profile-rewards-model.js','data.js','halloween-guest-model.js','halloween-legacy-recovery.js','supabase-auth.js','guest-style-bridge.js','supabase-games.js'].map(f=>readFile(path.join(root,f),'utf8')));
+const claimKey='brainilab_guest_claim_v1';
+const recipientKey='brainilab_guest_claim_recipient_v1';
+const secondAccountId='40000000-0000-4000-8000-000000000004';
 let checks=0;
 function check(value,name){assert.ok(value,name);checks++;console.log('PASS',name);}
 function harness(){
@@ -43,7 +46,7 @@ function harness(){
     }
     return {data:{prepared:true}};
   }};
-  const context=vm.createContext({console:{warn(...args){calls.push(args.join(' '));},error(){}},crypto:webcrypto,URL,URLSearchParams,Date,Math,JSON,Uint8Array,
+  const context=vm.createContext({console:{warn(...args){calls.push(args.join(' '));},error(){}},crypto:webcrypto,URL,URLSearchParams,Date,Math,JSON,Uint8Array,TextEncoder,
     localStorage:store,sessionStorage:store,setTimeout,clearTimeout,AbortController,
     addEventListener(){},removeEventListener(){},
     location:{search:'',origin:'https://brainilab.example',href:'https://brainilab.example/',hostname:'brainilab.example',protocol:'https:',host:'brainilab.example'},
@@ -55,7 +58,7 @@ function harness(){
   scripts.forEach(s=>vm.runInContext(s,context));
   return {context,storage,calls,events,guest,account,
     get count(){return anonymousCount;},set failSave(v){failSave=v;},set failAnonymous(v){failAnonymous=v;},set failClaim(v){failClaim=v;},set failStyle(v){failStyle=v;},set failLegacy(v){failLegacy=v;},
-    async googleReturn(){session={user:account};context.BrainiBackendAuth.destroy();return context.BrainiBackendAuth.init();},
+    async googleReturn(user=account){session={user};context.BrainiBackendAuth.destroy();return context.BrainiBackendAuth.init();},
     reloadAuth:()=>{context.BrainiBackendAuth.destroy();return context.BrainiBackendAuth.init();}};
 }
 {
@@ -97,10 +100,42 @@ function harness(){
   check(sync.synced===1 && c.BrainiData.recentResults()[0].cloudSyncStatus==='synced','pending guest game retries successfully');
   h.failClaim=true;
   await assert.rejects(()=>c.BrainiBackendAuth.signInWithEmail('private@example.test','test-placeholder'));
-  check(h.storage.has('brainilab_guest_claim_v1'),'failed merge keeps its secure retry token');
+  const pending=h.storage.get(claimKey);
+  const claim=JSON.parse(pending);
+  const marker=h.storage.get(recipientKey);
+  check(claim.token && !claim.recipientId,'an interrupted transfer retains its retry token without adding a raw recipient ID');
+  check(marker && !marker.includes(h.account.id) && !marker.includes(claim.token),'the separate recipient marker contains neither the account ID nor the transfer token');
   h.failClaim=false;
-  await h.reloadAuth();
-  check(!h.storage.has('brainilab_guest_claim_v1') && c.BrainiData.isAuthenticated(),'reload recovers an interrupted guest-to-account merge');
+  const previousAttempts=h.calls.filter(name=>name==='claim_brainilab_guest_results').length;
+  await h.googleReturn({...h.account,id:secondAccountId});
+  check(h.calls.filter(name=>name==='claim_brainilab_guest_results').length===previousAttempts && h.storage.get(claimKey)===pending && h.storage.get(recipientKey)===marker,'another account leaves the interrupted transfer available to its recipient');
+  await h.googleReturn();
+  check(!h.storage.has(claimKey) && !h.storage.has(recipientKey) && c.BrainiData.isAuthenticated(),'the original account resumes the transfer after a reload and clears both records');
+}
+
+{
+  const h=harness();
+  const legacy=JSON.stringify({guestId:h.guest.id,token:'01'.repeat(32),recipientId:h.account.id});
+  h.storage.set(claimKey,legacy);
+  await h.googleReturn({...h.account,id:secondAccountId});
+  check(!h.calls.includes('claim_brainilab_guest_results') && h.storage.get(claimKey)===legacy,'an older claim with a recipient ID remains bound to the original account');
+  await h.googleReturn();
+  check(h.calls.includes('claim_brainilab_guest_results') && !h.storage.has(claimKey),'the original recipient can complete an older pending claim');
+}
+
+{
+  const h=harness(),c=h.context;
+  const original={guestId:h.guest.id,token:'12'.repeat(32)};
+  const replacement=JSON.stringify({...original,token:'34'.repeat(32)});
+  h.storage.set(claimKey,JSON.stringify(original));
+  // A different tab replaces the pending transfer while the Web Crypto operation is in flight.
+  c.crypto={subtle:{async digest(...args){
+    const digest=await webcrypto.subtle.digest(...args);
+    h.storage.set(claimKey,replacement);
+    return digest;
+  }}};
+  await h.googleReturn();
+  check(!h.calls.includes('claim_brainilab_guest_results') && !h.storage.has(recipientKey) && h.storage.get(claimKey)===replacement,'an obsolete digest cannot bind or spend a replacement transfer');
 }
 
 // Exercise the real Google entry/return methods, including explicit guest cosmetics.
