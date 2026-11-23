@@ -54,9 +54,34 @@ window.BrainiBackendAuth = (function(){
   }
 
   const guestClaimKey="brainilab_guest_claim_v1";
+  const guestRecipientKey="brainilab_guest_claim_recipient_v1";
 
   function readGuestClaim(){
     try{return JSON.parse(localStorage.getItem(guestClaimKey)||"null");}catch{return null;}
+  }
+
+  async function claimDigest(value){
+    const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));
+    return Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function bindGuestRecipient(claim,scope){
+    if(!globalThis.crypto?.subtle) return false;
+    // Scope both fingerprints to this one transfer. The marker cannot redeem a claim.
+    const [claimTag,ownerTag]=await Promise.all([claimDigest(claim.token),claimDigest(claim.token+'\0'+scope.userId)]);
+    const marker=claimTag+':'+ownerTag;
+    const bind=async()=>{
+      const current=await getClient().auth.getSession();
+      if(current.error) throw current.error;
+      const pending=readGuestClaim();
+      if(scope!==sessionScope || current.data?.session?.user?.id!==scope.userId || pending?.token!==claim.token) return false;
+      if(pending.recipientId && pending.recipientId!==scope.userId) return false;
+      const saved=localStorage.getItem(guestRecipientKey);
+      if(saved?.startsWith(claimTag+':')) return saved===marker;
+      localStorage.setItem(guestRecipientKey,marker);
+      return true;
+    };
+    return globalThis.navigator?.locks?.request ? navigator.locks.request(guestRecipientKey,bind) : bind();
   }
 
   async function prepareGuestClaim(){
@@ -84,12 +109,9 @@ window.BrainiBackendAuth = (function(){
     if(!session?.user || session.user.is_anonymous || !claim) return;
     if(claim.recipientId && claim.recipientId!==session.user.id) return;
     if(claimPromise) return claimOwner===scope ? claimPromise : undefined;
-    if(!claim.recipientId){
-      claim.recipientId=session.user.id;
-      localStorage.setItem(guestClaimKey,JSON.stringify(claim));
-    }
     claimOwner=scope;
     claimPromise=(async()=>{
+      if(!await bindGuestRecipient(claim,scope) || scope!==sessionScope) return;
       const {data,error}=await getClient().rpc("claim_brainilab_guest_results",{p_token:claim.token});
       if(error) throw error;
       const check=await getClient().auth.getSession();
@@ -110,7 +132,10 @@ window.BrainiBackendAuth = (function(){
       if(scope!==sessionScope || current.error || current.data?.session?.user?.id!==session.user.id){
         throw Error('Account changed during guest transfer.');
       }
-      if(appearanceComplete && readGuestClaim()?.token===claim.token) localStorage.removeItem(guestClaimKey);
+      if(appearanceComplete && readGuestClaim()?.token===claim.token){
+        localStorage.removeItem(guestRecipientKey);
+        localStorage.removeItem(guestClaimKey);
+      }
       return user;
     })();
     try{return await claimPromise;}finally{claimPromise=null;claimOwner=null;}
@@ -411,6 +436,7 @@ window.BrainiBackendAuth = (function(){
     if(error) throw error;
     if(sessionScope!==startingScope && sessionScope.userId) return;
     observeSession(null);
+    localStorage.removeItem(guestRecipientKey);
     localStorage.removeItem(guestClaimKey);
     await BrainiData.api.clearExternalAuthUser();
   }
