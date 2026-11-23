@@ -1,0 +1,51 @@
+name: Isolated dependency validation
+
+on:
+  push:
+    branches: [codex/security-deps-isolation-nov23]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brainilab-security-deps-isolation-nov23
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.repository == 'brainilabquiz/brainilab-web' && github.ref == 'refs/heads/codex/security-deps-isolation-nov23'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      # Official actions/checkout v4.3.1, verified from the official repository.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 3
+          submodules: false
+          lfs: false
+
+      # This is the independently reviewed controller, not an application build.
+      # Only its Docker children may execute application source or dependencies.
+      - name: Enforce isolation and validate both dependency graphs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I tools/security-dependency-isolation/runner.py \
+            --source "${GITHUB_WORKSPACE}" \
+            --harness "${GITHUB_WORKSPACE}/tools/security-dependency-isolation" \
+            --output "${RUNNER_TEMP}/brainilab-security-isolation"
+
+      # Official actions/upload-artifact v4.6.2. Only the host-generated fixed
+      # schema summary is retained; no dist, logs, browser state, or target files.
+      - name: Retain bounded validation summary
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: isolated-dependency-validation-summary
+          path: ${{ runner.temp }}/brainilab-security-isolation/summary.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 9
+
