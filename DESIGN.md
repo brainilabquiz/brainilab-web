@@ -114,3 +114,28 @@ This pass adds only scoped CSS. No new fonts, images, scripts or dependencies.
 Verify the library in both modes, search/empty states, long titles, keyboard
 focus and narrow layouts at 320, 390, 768, 1024 and 1280px. Other page families
 retain their existing presentation.
+
+## Avatar and discovery interaction details, 23 November 2026
+
+Preserving redesign, variance 6, motion 3, density 5. VengeanceUI, Animate UI
+and Uiverse informed the review of selected states, tactile actions and short
+navigation underlines. These are original native CSS implementations; the site
+does not import their React components or install Animate UI/Motion.
+
+- Locker selection is navy; saving remains yellow. Existing saved/preview
+  labels get green/amber surfaces, and locked choices have a dashed border.
+  Text and the real unlock/save state remain authoritative.
+- Desktop navigation reveals a short underline on hover, keyboard focus,
+  current page or an open Community disclosure. Phone navigation retains its
+  existing targets and adds a small current-location indicator.
+- Home actions have a restrained pressed depth, filters have a recessed track,
+  and game artwork responds briefly to deliberate hover. No idle motion loop,
+  pointer tracking, new assets or gameplay changes are introduced.
+- Motion uses short transform/opacity transitions and respects reduced motion.
+  Native links, buttons, details and the existing keyboard model stay intact;
+  colour is not the only state cue. Forced-colour selection remains outlined.
+
+References: https://github.com/Ashutoshx7/VengeanceUI,
+https://animate-ui.com/docs/installation and https://uiverse.io/elements.
+Review references in their current context rather than transplanting demo code
+or assuming that a component demo provides every accessibility interaction.
