@@ -224,6 +224,25 @@ window.BrainiIcons=(function(){
     </svg></span>`;
   }
 
+  // Soft-clay world illustrations (Nov 2026): one per game and topic, used on cards and the Daily.
+  const WORLD_ART={
+    brainmix:"brain-mix",brainiword:"brainiword",orderup:"order-up",topicrush:"topic-rush",
+    connections:"connections",oddoneout:"odd-one-out",higherlower:"higher-lower",mathrush:"math-rush",
+    numberroute:"number-route",sequence:"sequence",survival:"survival",cryptic:"cryptic",
+    worldflags:"world-flags",generalknowledge:"general-knowledge",geography:"geography",
+    science:"science",history:"history",sports:"sports"
+  };
+
+  function worldPath(id){
+    const file=WORLD_ART[id];
+    return file?asset(`illustrations/worlds/${file}.webp`):"";
+  }
+
+  function world(id,className="braini-world-art",alt=""){
+    const src=worldPath(id);
+    return src?img(src,className,alt):"";
+  }
+
   function rankHalo(name,className="brain-rank-halo",alt=""){
     return img(`${ROOT}/rank-halos/${name}.svg`,className,alt);
   }
@@ -254,7 +273,10 @@ window.BrainiIcons=(function(){
     groupCrest,
     rankHalo,
     gamePath,
-    categoryPath
+    categoryPath,
+    WORLD_ART,
+    worldPath,
+    world
   };
 })();
 
