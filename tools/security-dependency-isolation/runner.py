@@ -436,9 +436,17 @@ class Controller:
                                                   cwd='/scratch/app', announce=True)
                 record['steps'].append({'id': step['id'], **result})
                 emit('step-end', {'case': case, 'id': step['id'], **result})
-                require(result['exitCode'] == 0 and not result['timedOut']
-                        and not result['outputLimitExceeded'], 'Target validation step failed')
-            record['passed'] = True
+                # Ordinary test failures remain recorded and make this case
+                # fail, while later tests and the other graph can still provide
+                # diagnostics. Resource/output/deadline failures abort at once.
+                require(result['exitCode'] >= 0 and not result['timedOut']
+                        and not result['outputLimitExceeded'],
+                        'Target validation terminated outside normal exit bounds')
+            record['passed'] = bool(record['steps']) and all(
+                step_result['exitCode'] == 0 and not step_result['timedOut']
+                and not step_result['outputLimitExceeded']
+                for step_result in record['steps']
+            )
         finally:
             self.stop_container(name)
 
