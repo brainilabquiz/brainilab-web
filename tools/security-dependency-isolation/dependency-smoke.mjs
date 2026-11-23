@@ -43,7 +43,11 @@ const flat=()=>({version:3,sources:['fixture.js'],sourcesContent:['x'],names:[],
 const indexed=(line,column=0,map=flat())=>({version:3,sections:[{offset:{line,column},map}]});
 for(const invalid of [-1,0.5,NaN,Infinity,-Infinity,Number.MAX_SAFE_INTEGER+1,'1',null,undefined,{}]){
   assert.throws(()=>new SourceMapConsumer(indexed(invalid)),/non-negative integers/);
-  assert.throws(()=>new SourceMapConsumer(indexed(0,invalid)),/non-negative integers/);
+  // Assign explicitly: indexed(0, undefined) would use its valid zero default.
+  const invalidColumn=indexed(0);
+  invalidColumn.sections[0].offset.column=invalid;
+  assert.throws(()=>new SourceMapConsumer(invalidColumn),/non-negative integers/,
+    'Reject column '+String(invalid));
 }
 assert.throws(()=>new SourceMapConsumer(indexed(10000001)),/must not exceed/);
 assert.throws(()=>new SourceMapConsumer(indexed(5000000,0,indexed(5000000,0,indexed(5000000)))),/including offsets of nested sections/);

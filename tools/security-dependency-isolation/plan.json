@@ -242,7 +242,7 @@
     "toolchain.Dockerfile": "e69ca5a741cab10feff14c45e2dac021d23bc707bf58a83664d191dad3f99a48",
     "runner.py": "51644696708c26a172a2b2cfdb07592eeb76890af5220a6624e5f8e9c43f18de",
     "bootstrap.py": "b1aa9f29b8458cafa4e302106a2ccb9fe48cba84443b7cda7fced96618e79568",
-    "dependency-smoke.mjs": "d5ff9c420eebff7d4e071e29edf4efe82a5d974443b73379ec88b3c17e0ef82d",
+    "dependency-smoke.mjs": "4b8f0e2bcc1acbf35c3f35337a6b8103b7922012c4a3031f4dc880451126b1bc",
     "game-challenge-smoke.mjs": "0a81c1495842efd0348b1274f4cc0aca00bb12e2b71bedd8e679836e7acece8f"
   },
   "patchedCommit": "HEAD",
