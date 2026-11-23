@@ -415,7 +415,7 @@ class Controller:
             record['enforcedLimits'] = self.inspect_container(name, image, source, harness)
             for mode in (['probe'], ['prepare', revision]):
                 result, raw = self.container_command(
-                    name, ['/usr/bin/python3', '-I', '/harness/bootstrap.py', *mode], timeout=90)
+                    name, ['/usr/local/bin/python3', '-I', '/harness/bootstrap.py', *mode], timeout=90)
                 if result['exitCode'] != 0 or result['timedOut'] or result['outputLimitExceeded']:
                     emit('setup-failed', {'case': case, 'mode': mode[0], **result,
                                           'text': raw.decode('utf-8', errors='replace')})

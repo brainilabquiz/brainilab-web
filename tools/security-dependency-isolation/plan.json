@@ -239,8 +239,8 @@
     ]
   },
   "harnessFiles": {
-    "toolchain.Dockerfile": "c839e5549d1604a552ef0c92ca1e20baff4990c4d97f54597e8e343794c00303",
-    "runner.py": "8108c60036a742c2fd17434f9e67ec2bdce82375aed31acad320a2696c1cf5b9",
+    "toolchain.Dockerfile": "e69ca5a741cab10feff14c45e2dac021d23bc707bf58a83664d191dad3f99a48",
+    "runner.py": "b614bf151f0b20569e58324ceb119fed585830875c590be660396b3fc404754a",
     "bootstrap.py": "b1aa9f29b8458cafa4e302106a2ccb9fe48cba84443b7cda7fced96618e79568",
     "dependency-smoke.mjs": "d5ff9c420eebff7d4e071e29edf4efe82a5d974443b73379ec88b3c17e0ef82d"
   },
