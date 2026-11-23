@@ -6,7 +6,9 @@
 window.BrainiFriends=(function(){
   let cached=null;
   let lastError=null;
-  let syncing=false;
+  let pendingScope=null;
+  let cachedScope=null;
+  let errorScope=null;
 
   function configured(){
     return !!window.BrainiBackendAuth?.isConfigured?.();
@@ -77,30 +79,36 @@ window.BrainiFriends=(function(){
   }
 
   async function refresh(){
-    if(syncing) return cached;
-    if(!(await ready())) return null;
-
-    syncing=true;
+    const owner=await session();
+    const scope=window.BrainiBackendAuth?.currentScope?.();
+    if(!owner?.user || owner.user.id!==scope?.userId) return null;
+    if(pendingScope===scope) return getCached();
+    pendingScope=scope;
     lastError=null;
+    errorScope=scope;
 
     try{
       const {data,error}=await client().rpc("get_my_brainilab_friends");
+      if(!BrainiBackendAuth.isCurrentPlayer(scope)) return null;
       if(error) throw error;
 
+      cachedScope=scope;
       cached=normalizeSnapshot(data||{});
       await BrainiData.api.syncCloudFriends(cached);
 
+      if(!BrainiBackendAuth.isCurrentPlayer(scope)) return null;
       window.dispatchEvent(new CustomEvent("brainilab:friendschange",{
         detail:{snapshot:cached}
       }));
 
       return cached;
     }catch(err){
+      if(!BrainiBackendAuth.isCurrentPlayer(scope)) return null;
       lastError=err;
       console.warn("BrainiLab friends sync:",err.message||err);
       return null;
     }finally{
-      syncing=false;
+      if(pendingScope===scope) pendingScope=null;
     }
   }
 
@@ -227,11 +235,11 @@ window.BrainiFriends=(function(){
   }
 
   function getCached(){
-    return cached ? JSON.parse(JSON.stringify(cached)) : null;
+    return cached && window.BrainiBackendAuth?.isCurrentPlayer?.(cachedScope) ? JSON.parse(JSON.stringify(cached)) : null;
   }
 
   function getLastError(){
-    return lastError;
+    return window.BrainiBackendAuth?.isCurrentPlayer?.(errorScope) ? lastError : null;
   }
 
   return {
