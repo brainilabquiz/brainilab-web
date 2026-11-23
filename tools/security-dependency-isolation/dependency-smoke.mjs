@@ -55,8 +55,17 @@ const positive=new SourceMapConsumer(indexed(2,0,indexed(2,0,indexed(2))));
 const lines=[];positive.eachMapping(mapping=>lines.push(mapping.generatedLine));
 assert.deepEqual(lines,[7]);
 assert.deepEqual(positive.sources,['fixture.js']);
-const serial=SourceMapGenerator.fromSourceMap(positive).toJSON();
+// Indexed consumers do not expose sourceRoot for fromSourceMap in this library.
+// Use its public mapping API to serialize these seven bounded generated lines.
+const generator=new SourceMapGenerator({file:'fixture.out.js'});
+positive.eachMapping(mapping=>generator.addMapping({
+  generated:{line:mapping.generatedLine,column:mapping.generatedColumn},
+  original:{line:mapping.originalLine,column:mapping.originalColumn},
+  source:mapping.source,
+}));
+const serial=generator.toJSON();
 assert.equal((serial.mappings.match(/;/g)||[]).length,6);
+assert.equal(SourceMapGenerator.fromSourceMap(new SourceMapConsumer(flat())).toJSON().mappings,'AAAA');
 assert.equal(SourceNode.fromStringWithSourceMap('x',new SourceMapConsumer(indexed(8))).toString(),'x');
 
 // Bounded nesting verifies getter reuse without a depth/time exhaustion probe.
