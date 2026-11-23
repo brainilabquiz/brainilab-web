@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import {articlePreviews,articlePreviewImage} from '../lib/article-preview-images.js';
 import {prepareArticle,renderPage,articleBody} from '../lib/learn-content.js';
 import {coverImage} from '../lib/cover-images.js';
+import {webpWidth} from './editorial-publish.mjs';
 const template=readFileSync('learn/index.html','utf8');
 const articles=readdirSync('content/articles').filter(f=>f.endsWith('.json')).map(f=>prepareArticle(JSON.parse(readFileSync('content/articles/'+f,'utf8'))));
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -56,3 +57,25 @@ for(const src of [undefined,'__proto__','constructor','/assets/images/learn/miss
 const fallback=articles.find(a=>!articlePreviewImage(a.cover));
 assert.equal(meta(renderPage(template,articles,fallback),'og:image'),new URL(fallback.cover.src,'https://brainilabgames.com').href);
 console.log(`PASS: ${urls.size} original preview identities, dimensions/hashes, metadata/schema agreement, rerender/replacement fallback and unchanged on-page image requests.`);
+
+function heroImage(cover) {
+ const body=articleBody({...fallback,cover});
+ return body.match(/<figure class="article-cover"><img\b[^>]*>/)[0];
+}
+for(const slug of ['what-is-irony','what-is-a-tsunami']){
+ const src=`/assets/images/learn/${slug}.webp`,small=`/assets/images/learn/${slug}-small.webp`;
+ assert.equal(webpWidth(readFileSync('.'+src)),960);
+ assert.equal(webpWidth(readFileSync('.'+small)),480);
+ const cover={...fallback.cover,src,small};
+ const hero=heroImage(cover);
+ assert.ok(hero.includes(`src="${src}"`));
+ assert.ok(hero.includes(`srcset="${small} 480w, ${src} 960w"`));
+ assert.ok(hero.includes('sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 788px) calc(100vw - 48px), 740px"'));
+ assert.ok(hero.includes('fetchpriority="high"'));
+ for(const other of [{...cover,small:undefined},{...cover,small:'/assets/images/learn/other-small.webp'},{...cover,src:'/assets/images/learn/new-cover.webp'}]){
+  const previous=heroImage(other);
+  assert.ok(previous.includes(`src="${other.src}"`));
+  assert.doesNotMatch(previous,/\b(?:sizes|srcset)=/);
+ }
+}
+console.log('PASS: responsive article covers, asset widths and replacement fallbacks.');

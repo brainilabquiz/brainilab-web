@@ -375,3 +375,28 @@ body.home-page.braini-visual main .home-jump-bar a:focus-visible {
     outline-offset: -3px;
   }
 }
+
+/* Keep the desktop headline on the same lines while Pally loads on Windows. */
+@font-face {
+  font-family: "BrainiLab home title fallback";
+  src: local("Segoe UI Bold");
+  font-weight: 900;
+  size-adjust: 87.5%;
+}
+body.home-page #home-title {
+  font-family: Pally, "BrainiLab home title fallback", Montserrat, system-ui, sans-serif;
+}
+
+/* The loading card has only the actions row. Allow space for the summary and
+   countdown while the available Daily options are being resolved. */
+@media (scripting: enabled) {
+  #homeQuiz[data-home-loading] .home-daily-body:has([data-home-start]:disabled)::after {
+    content: "";
+    block-size: 5rem;
+  }
+}
+@media (scripting: enabled) and (max-width: 700px) {
+  #homeQuiz[data-home-loading] .home-daily-body:has([data-home-start]:disabled)::after {
+    block-size: 4rem;
+  }
+}
