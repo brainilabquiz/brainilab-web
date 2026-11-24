@@ -4676,36 +4676,49 @@ window.BrainiPostGame=(()=>{
  const number=value=>Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
  const localHref=(href,fallback='/games/')=>typeof href==='string'&&/^\/(?!\/)/.test(href)&&!/[\\<>]/.test(href)?href:fallback;
  const mounted=new Map();
+ const pendingReadingLinks=new Map();
  let readingDirectory;
  const readingPath=()=>location.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/');
  function readingContext(){
   const match=/^#learn-([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(location.hash),slug=match?.[1];
   return slug&&slug.length<=100?{slug,hash:location.hash,path:readingPath()}:null;
  }
- function getReadingDirectory(){
+ async function refreshReadingLinks(){
+  for(const link of pendingReadingLinks.keys())if(!link.isConnected)pendingReadingLinks.delete(link);
+  if(!pendingReadingLinks.size||!readingContext())return;
   if(!readingDirectory)readingDirectory=(async()=>{
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4000);
    try{
     const response=await fetch('/assets/data/learn-game-links.json',{credentials:'omit',cache:'no-cache',signal:controller.signal});
-    if(!response.ok)return [];
+    if(!response.ok)throw Error('Reading directory unavailable');
     const data=await response.json();return data?.version===1&&Array.isArray(data.articles)&&data.articles.length<=1000?data.articles:[];
-   }catch{return [];}finally{clearTimeout(timer);}
-  })();
-  return readingDirectory;
+   }finally{clearTimeout(timer);}
+  })().catch(()=>{readingDirectory=null;return null;});
+  const articles=await readingDirectory;
+  if(!articles)return;
+  // The breadcrumb and result can be waiting on the same read. A newer render
+  // replaces the callback for its link before a late response can update it.
+  for(const [link,apply] of pendingReadingLinks){
+   pendingReadingLinks.delete(link);
+   if(link.isConnected)apply(articles);
+  }
  }
  const findReading=(directory,context,gameId)=>directory.find(a=>a&&a.slug===context.slug&&(!gameId||a.gameId===gameId)&&a.gamePath===context.path&&typeof a.title==='string'&&a.title.trim()&&a.title.length<=220);
  async function returnToReading(container,options){
   const context=readingContext();if(!context)return;
   const link=container.querySelector('[data-post-action="guide"]');
   const title=link?.querySelector('strong,[data-reading-title]');if(!title)return;
-  const readingOwner=owner(),directory=await getReadingDirectory();
-  if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner()||location.hash!==context.hash||readingPath()!==context.path)return;
-  const article=findReading(directory,context,options.gameId);
-  if(!article)return;
-  link.setAttribute('href','/learn/'+context.slug+'/');
-  const kind=link.querySelector('[data-reading-kind],:scope>span:not([data-reading-title])');
-  if(kind)kind.textContent='Back to your reading';
-  title.textContent=article.title+' →';
+  const readingOwner=owner();
+  pendingReadingLinks.set(link,directory=>{
+   if(!container.isConnected||!container.contains(link)||!link.isConnected||readingOwner!==owner()||location.hash!==context.hash||readingPath()!==context.path)return;
+   const article=findReading(directory,context,options.gameId);
+   if(!article)return;
+   link.setAttribute('href','/learn/'+context.slug+'/');
+   const kind=link.querySelector('[data-reading-kind],:scope>span:not([data-reading-title])');
+   if(kind)kind.textContent='Back to your reading';
+   title.textContent=article.title+' →';
+  });
+  await refreshReadingLinks();
  }
  let readingNavigation,navigationVersion=0;
  function resetReadingNavigation(){
@@ -4725,18 +4738,21 @@ window.BrainiPostGame=(()=>{
   if(!context||!document.querySelector('main [data-game-guides]'))return;
   const nav=document.querySelector('main .breadcrumb,main .reason-header'),link=nav?.querySelector(':scope>a[href]');
   if(!link)return;
-  const article=findReading(await getReadingDirectory(),context);
-  if(!article||version!==navigationVersion||location.hash!==context.hash||readingPath()!==context.path||!nav.isConnected||!link.isConnected||!nav.contains(link))return;
-  if(nav.contains(document.activeElement)&&document.activeElement!==link)return;
-  const difficulties=[...document.querySelectorAll('.quiz-difficulty-tabs a[data-difficulty][href]')].map(tab=>[tab,tab.getAttribute('href')]);
-  const navChildren=nav.matches('.breadcrumb')?[...nav.childNodes]:null;
-  readingNavigation={nav,link,children:[...link.childNodes],navChildren,attributes:['href','aria-label','title','class'].map(name=>[name,link.getAttribute(name)]),difficulties};
-  link.setAttribute('href','/learn/'+context.slug+'/');link.setAttribute('aria-label','Back to article: '+article.title);link.setAttribute('title',article.title);
-  link.textContent='← Back to article';link.classList.add('reading-return-link');nav.setAttribute('data-reading-context','');
-  if(navChildren)nav.replaceChildren(link);
-  for(const [tab,href]of difficulties){
-   try{const url=new URL(href,location.href);if(url.origin===location.origin&&url.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/')===context.path&&!href.includes('#'))tab.setAttribute('href',href+context.hash);}catch{}
-  }
+  pendingReadingLinks.set(link,directory=>{
+   const article=findReading(directory,context);
+   if(!article||version!==navigationVersion||location.hash!==context.hash||readingPath()!==context.path||!nav.isConnected||!link.isConnected||!nav.contains(link))return;
+   if(nav.contains(document.activeElement)&&document.activeElement!==link)return;
+   const difficulties=[...document.querySelectorAll('.quiz-difficulty-tabs a[data-difficulty][href]')].map(tab=>[tab,tab.getAttribute('href')]);
+   const navChildren=nav.matches('.breadcrumb')?[...nav.childNodes]:null;
+   readingNavigation={nav,link,children:[...link.childNodes],navChildren,attributes:['href','aria-label','title','class'].map(name=>[name,link.getAttribute(name)]),difficulties};
+   link.setAttribute('href','/learn/'+context.slug+'/');link.setAttribute('aria-label','Back to article: '+article.title);link.setAttribute('title',article.title);
+   link.textContent='← Back to article';link.classList.add('reading-return-link');nav.setAttribute('data-reading-context','');
+   if(navChildren)nav.replaceChildren(link);
+   for(const [tab,href]of difficulties){
+    try{const url=new URL(href,location.href);if(url.origin===location.origin&&url.pathname.replace(/index\.html$/,'').replace(/\/?$/,'/')===context.path&&!href.includes('#'))tab.setAttribute('href',href+context.hash);}catch{}
+   }
+  });
+  await refreshReadingLinks();
  }
  const invitations=new Map(),dismissed=new WeakSet(),dismissKey='brainilab_account_invite_dismissed_v1';
  let visitDismissed=false;
@@ -4970,6 +4986,7 @@ window.BrainiPostGame=(()=>{
  }
  function confirm(container,result){const options=mounted.get(container);if(!options||options.owner!==owner())return;Object.assign(options.result,result);options.challengeReady=true;updatePresentation(container,options);actionMarkup(container,options);}
  document.addEventListener('DOMContentLoaded',readingNavigationReady);
+ window.addEventListener('online',refreshReadingLinks);
  window.addEventListener('pageshow',readingNavigationReady);window.addEventListener('hashchange',readingNavigationReady);
  if(document.readyState!=='loading')readingNavigationReady();
  return {mount,complete,confirm,review,nextDaily,localStatus,refresh,inviteAccount,returnToReading};
