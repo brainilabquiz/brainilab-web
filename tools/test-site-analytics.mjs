@@ -16,6 +16,40 @@ w.dispatchEvent(new w.CustomEvent('brainilab:datachange',{detail:{type:'game_res
 assert.equal(events().filter(x=>x[1]==='game_complete').length,1);assert.ok(!JSON.stringify(w.dataLayer).includes('secret@example.com'));assert.ok(!JSON.stringify(w.dataLayer).includes('dedupe-local-only'));
 w.BrainiSiteAnalytics.setConsent(false);assert.equal(w['ga-disable-G-97WN37VLHV'],true);const n=events().length;w.document.querySelector('a').dispatchEvent(new w.MouseEvent('click',{bubbles:true}));assert.equal(events().length,n);w.close();
 for(const url of ['https://brainilabgames.com/admin/','https://brainilabgames.com/auth/','https://brainilabgames.com/?code=secret','http://localhost:8000/']){w=page(url,{allowed:true,at:Date.now()});assert.equal(w.document.scripts.length,0);w.close();}
+// Use the deployed head template in tests; its contents must stay inert before consent.
+const exampleTag='<template id="ahrefs-pageview"><script async src="https://analytics.ahrefs.com/analytics.js" data-key="test-property"></script></template>';
+for(const url of ['https://brainilabgames.com/learn/maps/?utm_term=private#fragment','https://brainilabgames.com/?code=secret','https://preview.example/learn/maps/']){
+  const dom=new JSDOM('<head><title>Public title</title>'+exampleTag+'</head><body><form></form></body>',{
+    url,referrer:'https://example.org/reader?private=value',runScripts:'outside-only'
+  });
+  const win=dom.window,doc=win.document;
+  win.eval(source);
+  const stats=win.BrainiSiteAnalytics;
+  assert.equal(doc.querySelector('iframe,script[src*="ahrefs.com"]'),null);
+  stats.setAccountState('pending');stats.setConsent(true);
+  assert.equal(doc.querySelector('iframe'),null);
+  stats.setAccountState('included');
+  if(url.includes('/learn/maps/')&&url.startsWith('https://brainilabgames.com/')){
+    const frame=doc.querySelector('iframe');
+    assert.ok(frame);
+    assert.equal(frame.getAttribute('sandbox'),'allow-scripts');
+    assert.equal(frame.referrerPolicy,'no-referrer');
+    const isolated=new JSDOM(frame.srcdoc);
+    const script=isolated.window.document.head.querySelector('script[async][data-key="test-property"]');
+    assert.equal(script.getAttribute('data-page-location'),'https://brainilabgames.com/learn/maps/');
+    assert.equal(script.getAttribute('data-prop-referrer_origin'),'https://example.org');
+    assert.doesNotMatch(frame.srcdoc,/private|fragment|<form/);
+    stats.setAccountState('included');
+    assert.equal(doc.querySelectorAll('iframe').length,1);
+    frame.dispatchEvent(new win.Event('load'));
+    stats.setConsent(false);
+    assert.equal(doc.querySelector('iframe'),null);
+    stats.setConsent(true);
+    assert.equal(doc.querySelector('iframe'),null);
+    isolated.window.close();
+  }else assert.equal(doc.querySelector('iframe'),null);
+  win.close();
+}
 w=page('https://brainilabgames.com/');w.eval(meta);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));assert.ok(w.document.querySelector('[data-statistics-choice]'));w.document.querySelector('[data-statistics-choice]').checked=true;w.document.querySelector('[data-ad-choice]').checked=false;w.document.querySelector('[data-save-cookie-choices]').click();assert.equal(w.BrainiSiteAnalytics.isAllowed(),true);assert.equal(w.fbq,undefined);w.close();
 const socialQuery='?utm_source=youtube&utm_medium=social&utm_campaign=learn_discovery&utm_content=flags_video';
 w=page('https://brainilabgames.com/learn/moon/'+socialQuery);

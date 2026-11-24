@@ -80,8 +80,34 @@ window.BrainiSiteAnalytics=(()=>{
   function tag(){window.dataLayer.push(arguments);}
   function send(name,params={}){if(!allowed()||!loaded)return;const context=entryContext();tag('event',name,{send_to:id,page_location:location.origin+path(),page_title:document.title,page_referrer:referrer(),growth_entry_channel:context.channel,growth_entry_path:context.path,...params});}
   function referrer(){try{return document.referrer?new URL(document.referrer).origin:'';}catch{return '';}}
+  let ahrefsFrame=null,ahrefsViewed=false;
+  function startAhrefs(){
+    if(ahrefsViewed||ahrefsFrame||!allowed()||window.top!==window.self)return;
+    const template=document.getElementById('ahrefs-pageview');
+    const tag=template?.content?.querySelector('script[data-key]');
+    if(!tag)return;
+    if(!document.body){document.addEventListener('DOMContentLoaded',startAhrefs,{once:true});return;}
+    // The vendor observes links and forms in its document. Give it only a public page view.
+    const frame=document.createElement('iframe');
+    if(!('srcdoc' in frame))return;
+    const head=document.createElement('head'),title=document.createElement('title'),tracker=tag.cloneNode(false);
+    title.textContent=location.search||location.hash?'BrainiLab':document.title;
+    tracker.setAttribute('data-page-location',location.origin+path());
+    const arrival=referrer();
+    if(/^https?:\/\//.test(arrival)&&arrival!==location.origin)tracker.setAttribute('data-prop-referrer_origin',arrival);
+    head.append(title,tracker);
+    frame.hidden=true;
+    frame.title='Usage statistics';
+    frame.setAttribute('sandbox','allow-scripts');
+    frame.referrerPolicy='no-referrer';
+    frame.srcdoc='<!doctype html><html>'+head.outerHTML+'<body></body></html>';
+    frame.addEventListener('load',()=>{if(ahrefsFrame===frame)ahrefsViewed=true;},{once:true});
+    ahrefsFrame=frame;
+    document.body.appendChild(frame);
+  }
   function activate(){
     if(!allowed())return;
+    startAhrefs();
     window['ga-disable-'+id]=false;
     if(!loaded){
       window.dataLayer=window.dataLayer||[];window.gtag=tag;
@@ -93,6 +119,7 @@ window.BrainiSiteAnalytics=(()=>{
     if(!viewed){send('page_view');if(path()==='/games/number-route/'&&new URLSearchParams(location.search).get('from')==='number-break')send('resource_arrival',{resource_id:'five_number_puzzles'});if(path()==='/daily-quiz/'&&new URLSearchParams(location.search).getAll('friend').length===1&&new URLSearchParams(location.search).get('friend')===new Date().toISOString().slice(0,10))send('friend_challenge_open');viewed=true;if(/^\/learn\/[^/]+\/$/.test(path()))send('article_view',{article_slug:path().split('/')[2]});}
   }
   function revoke(clearContext=true){
+    if(ahrefsFrame){ahrefsFrame.remove();ahrefsFrame=null;}
     if(clearContext){entry=null;try{localStorage.removeItem(entryKey);localStorage.removeItem('brainilab_registration_arrival_v1');}catch{}}
     window['ga-disable-'+id]=true;
     if(loaded){window.dataLayer=window.dataLayer.filter(item=>item[0]!=='event');tag('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});}

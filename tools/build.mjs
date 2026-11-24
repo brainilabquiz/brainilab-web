@@ -147,6 +147,10 @@ await import('./test-halloween-asset-cache.mjs');
 const pageStyleBundles=[];
 for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   let html=skipToContent(gamePageDates(newTabLinks(brandPage(await readFile(path.join(root,file),'utf8'))),'/'+file.replace(/index\.html$/,'')));
+  // A template keeps the vendor tag discoverable in the head without fetching it before consent.
+  if(html.includes('assets/js/consent.bundle.js')&&file!=='404.html'&&!/^(?:admin|auth|profile|groups|rankings|leaderboards|plus|suggestions|infra)\//.test(file)){
+    html=html.replace('</head>','<template id="ahrefs-pageview"><script src="https://analytics.ahrefs.com/analytics.js" data-key="uo0B4rCai/0TMCB1dX6RUQ" async></script></template>\n</head>');
+  }
   if(file==='index.html')html=homeConsent(html,await readFile('assets/js/meta-pixel.js','utf8'));
   const styles=pageStyles(html,file);
   if(styles){

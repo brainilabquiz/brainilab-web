@@ -80,7 +80,7 @@ window.BrainiMarketing = (function(){
     panel.hidden=false;
     panel.className="marketing-consent";
     panel.setAttribute("aria-label","Optional cookie choices");
-    if(!reuse)panel.innerHTML='<div><strong>Your cookie choices</strong><p>Optional cookies help us understand which articles and games people enjoy (Google Analytics) and measure visits from our ads (Meta). You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
+    if(!reuse)panel.innerHTML='<div><strong>Your cookie choices</strong><p>With your permission, Google Analytics measures visits and game activity, and Ahrefs Web Analytics counts visits to public pages without cookies. Meta measures visits from our ads if you choose ad measurement. You can play either way. <a href="/cookies/#privacy-choices">Cookie details</a></p><details class="cookie-settings"><summary>Choose by purpose</summary><label><input type="checkbox" data-statistics-choice/> Usage statistics · Google Analytics and Ahrefs Web Analytics</label><label><input type="checkbox" data-ad-choice/> Ad measurement · Meta</label><button type="button" data-save-cookie-choices>Save my choices</button></details></div><div class="marketing-consent-actions"><button type="button" data-marketing-reject>Reject optional cookies</button><button type="button" data-marketing-accept>Accept optional cookies</button></div>';
     if(reuse)panel.querySelectorAll('button,input').forEach(control=>{control.disabled=false;});
     updateStatisticsChoice();
     panel.querySelector('[data-ad-choice]').checked=choice===true;
@@ -99,7 +99,7 @@ window.BrainiMarketing = (function(){
     let status=panel.querySelector('[data-account-statistics-status]');
     if(!status){status=document.createElement('p');status.dataset.accountStatisticsStatus='';status.setAttribute('role','status');control.closest('label').after(status);}
     status.hidden=state==='included';
-    status.textContent=state==='excluded'?'Google Analytics is off for your signed-in account on every device.':state==='pending'?'Usage statistics are paused while your account privacy preference is checked.':'';
+    status.textContent=state==='excluded'?'Usage statistics are off for your signed-in account on every device.':state==='pending'?'Usage statistics are paused while your account privacy preference is checked.':'';
   }
   window.addEventListener('brainilab:analytics-account',updateStatisticsChoice);
 
