@@ -148,8 +148,8 @@ window.BrainiAuth = (function(){
       <div class="auth-kicker">${reset?"Password reset":"Verify email"}</div>
       <h2 id="authTitle">Check your email</h2>
       <p class="auth-lead">${reset
-        ? `If an account exists for <strong>${pendingEmail}</strong>, we’ll send a password-reset email.`
-        : `We sent a confirmation link to <strong>${pendingEmail}</strong>. Open it to activate your BrainiLab account.`
+        ? 'If an account exists for <strong data-confirmation-email></strong>, we’ll send a password-reset email.'
+        : 'We sent a confirmation link to <strong data-confirmation-email></strong>. Open it to activate your BrainiLab account.'
       }</p>
       <button type="button" class="auth-primary" data-back-options>Back to sign in</button>
     `;
@@ -179,8 +179,10 @@ window.BrainiAuth = (function(){
     const m=ensureModal();
     const view=m.querySelector("[data-auth-view]");
 
-    if(currentStep==="emailConfirm" || currentStep==="resetSent") view.innerHTML=emailSentView();
-    else if(currentStep==="success") view.innerHTML=successView();
+    if(currentStep==="emailConfirm" || currentStep==="resetSent"){
+      view.innerHTML=emailSentView();
+      view.querySelector('[data-confirmation-email]').textContent=pendingEmail;
+    }else if(currentStep==="success") view.innerHTML=successView();
     else view.innerHTML=optionsView();
 
     if(currentStep==="options"){
