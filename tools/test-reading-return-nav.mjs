@@ -24,6 +24,32 @@ h.w.dispatchEvent(new h.w.Event('pageshow'));await tick();assert.equal(h.calls()
 const start=h.game.querySelector('[data-start]');start.focus();await h.setHash('#learn-mental-math-round-and-adjust');assert.equal(h.d.activeElement,start);assert.match(h.nav.querySelector('a').href,/mental-math-round-and-adjust/);
 await h.setHash('');assert.equal(h.nav.outerHTML,h.before,'Original breadcrumb nodes/labels restored');h.close();
 h=await setup();const result=h.d.createElement('div');h.d.querySelector('main').append(result);h.w.BrainiPostGame.mount(result,{gameId:'mathrush',result:{correct:5,total:10,score:500},focus:false});await tick();assert.equal(h.calls(),1,'Arrival and result share one metadata request');assert.equal(result.querySelector('.post-guide>span').textContent,'Back to your reading');assert.equal(result.querySelector('.post-guide').getAttribute('href'),'/learn/multiply-by-11-in-your-head/');h.close();
+// An outage at arrival or when the result appears must not cache a false empty directory.
+for(const retry of ['result','online','pageshow']){
+ const slug='mental-math-round-and-adjust',href='/learn/'+slug+'/';
+ h=await setup({query:'#learn-'+slug,directory:new Error('offline')});
+ const panel=h.d.createElement('div');h.d.querySelector('main').append(panel);
+ let reads=0,finish;
+ h.w.fetch=async()=>{reads++;await new Promise(resolve=>{finish=resolve;});return {ok:true,json:async()=>({version:1,articles})};};
+ if(retry!=='result'){
+  const recover=h.w.fetch;h.w.fetch=async()=>({ok:false,status:503});
+  h.w.BrainiPostGame.mount(panel,{gameId:'mathrush',result:{correct:5,total:10,score:500},focus:false});
+  await tick();assert.notEqual(panel.querySelector('.post-guide').getAttribute('href'),href);
+  h.w.fetch=recover;h.w.dispatchEvent(new h.w.Event(retry));
+ }else{
+  h.w.BrainiPostGame.mount(panel,{gameId:'mathrush',result:{correct:5,total:10,score:500},focus:false});
+ }
+ h.w.dispatchEvent(new h.w.Event('online'));await tick();
+ assert.equal(reads,1,retry+' starts one shared recovery read');finish();await tick();
+ assert.equal(h.nav.querySelector('a').getAttribute('href'),href,retry+' restores the article breadcrumb');
+ assert.equal(panel.querySelector('.post-guide').getAttribute('href'),href,retry+' restores the article on the result');
+ h.w.dispatchEvent(new h.w.Event('online'));await tick();assert.equal(reads,1,'Successful metadata stays cached');h.close();
+}
+h=await setup({directory:{version:1,articles:[]}});h.w.dispatchEvent(new h.w.Event('online'));h.w.dispatchEvent(new h.w.Event('pageshow'));await tick();
+assert.equal(h.calls(),1,'A valid empty directory remains cached');assert.equal(h.nav.outerHTML,h.before);h.close();
+h=await setup({directory:new Error('offline')});await h.setHash('#other');
+h.w.dispatchEvent(new h.w.Event('online'));await tick();
+assert.equal(h.calls(),1,'Reconnection after leaving the article context makes no request');assert.equal(h.nav.outerHTML,h.before);h.close();
 h=await setup({path:'/geography/world-flags-quiz/',query:'?difficulty=easy&set=1#learn-how-to-learn-world-flags'});
 for(const [i,tab]of [...h.d.querySelectorAll('.quiz-difficulty-tabs a')].entries()){
  assert.equal(tab.getAttribute('href'),h.originalTabs[i]+'#learn-how-to-learn-world-flags');

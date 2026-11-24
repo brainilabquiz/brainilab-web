@@ -62,7 +62,10 @@ function heroImage(cover) {
  const body=articleBody({...fallback,cover});
  return body.match(/<figure class="article-cover"><img\b[^>]*>/)[0];
 }
-for(const slug of ['what-is-irony','what-is-a-tsunami']){
+for(const slug of [
+ 'what-is-irony','what-is-a-tsunami','how-long-is-a-basketball-game',
+ 'what-is-archaeology','what-is-a-peninsula','why-was-the-berlin-wall-built'
+]){
  const src=`/assets/images/learn/${slug}.webp`,small=`/assets/images/learn/${slug}-small.webp`;
  assert.equal(webpWidth(readFileSync('.'+src)),960);
  assert.equal(webpWidth(readFileSync('.'+small)),480);
