@@ -30,6 +30,6 @@
     "postcss": "8.5.28"
   },
   "dependencies": {
-    "sanitize-html": "2.18.0"
+    "sanitize-html": "2.18.2"
   }
 }
