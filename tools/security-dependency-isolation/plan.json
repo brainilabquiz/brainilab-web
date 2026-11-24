@@ -122,6 +122,14 @@
         "id": "results-ring"
       },
       {
+        "id": "page-transitions",
+        "timeout": 120,
+        "argv": [
+          "node",
+          "tools/test-page-transitions.mjs"
+        ]
+      },
+      {
         "argv": [
           "node",
           "/harness/dependency-smoke.mjs",
@@ -251,6 +259,14 @@
           "tools/test-results-ring.mjs"
         ],
         "id": "results-ring"
+      },
+      {
+        "id": "page-transitions",
+        "timeout": 120,
+        "argv": [
+          "node",
+          "tools/test-page-transitions.mjs"
+        ]
       }
     ]
   },
@@ -260,10 +276,10 @@
     "bootstrap.py": "b1aa9f29b8458cafa4e302106a2ccb9fe48cba84443b7cda7fced96618e79568",
     "dependency-smoke.mjs": "84b745e8c44c0515ca4204b856b05af20592c3a6b6236a1f09bfb6d1027a6195",
     "game-challenge-smoke.mjs": "0a81c1495842efd0348b1274f4cc0aca00bb12e2b71bedd8e679836e7acece8f",
-    "metadata-patch.json": "ab17a5f7052c02931dd7031a22f8babc6b0b876f0b7d6a121b591f9174aec182"
+    "metadata-patch.json": "7e1d3aa31a5a921e290590f32b1bed93b8c5a53bde9dd22be37204c6a5b280a4"
   },
   "patchedCommit": "HEAD",
-  "baselineCommit": "310c2fd2980dff17d1d39d5ed1887e9f1a797772",
+  "baselineCommit": "4d93d0d3f8d725b6f828754bf88ee97c2a21b13c",
   "schemaVersion": 1,
   "nodeImage": "docker.io/library/node@sha256:aca79828f8a4afc627f189387c965625bcc419233946210a3b9522d90a59b5c6",
   "metadataPatch": "metadata-patch.json"
