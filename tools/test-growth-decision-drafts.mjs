@@ -17,7 +17,7 @@ const setup=async(mode='normal')=>{
  GrowthAdmin.reset();let saved=new Map(),calls=[],reads=0;
  await GrowthAdmin.render({root,rpc:async(name,args)=>{
   if(name==='admin_get_growth_workspace'){
-   reads++;if(mode==='reload-fails'&&saved.size)throw Error('Local reload unavailable');
+   reads++;if(saved.size&&(mode==='reload-fails'||(mode==='retry-once'&&reads===2)))throw Error('Local reload unavailable');
    const loaded=structuredClone(data);
    for(const o of loaded.opportunities)if(saved.has(o.id)){o.revision++;o.state=saved.get(o.id).p_state;}
    if(saved.size&&mode==='concurrent'){loaded.opportunities[1].revision++;loaded.opportunities[1].state='dismissed';}
@@ -50,12 +50,39 @@ for(const mode of ['save-fails','reload-fails']){
  assert.equal(run.calls.length,1);assert.match(root.querySelector('[data-growth-status]').textContent,mode==='save-fails'?/revision conflict/:/Saved, but/);
 }
 for(const mode of ['concurrent','removed']){
- run=await setup(mode);await submit(form(1));assert.equal(form(2),run.other);assert.equal(form(2).elements.note.value,'Second unsaved local note');
+ run=await setup(mode);
+ const filter=root.querySelector('[data-growth-filter]');
+ filter.value='published';filter.dispatchEvent(new dom.window.Event('change'));
+ await submit(form(1));assert.equal(form(2),run.other);assert.equal(form(2).elements.note.value,'Second unsaved local note');
  assert.equal(form(2).dataset.growthRevision,'7');assert.ok(root.querySelector('[data-growth-draft-warning]'));assert.equal(GrowthAdmin.canLeave(),false);
+ assert.equal(root.querySelector('[data-growth-filter]').value,'published');
+ assert.equal(form(2).closest('article').hidden,false,'A conflicted draft remains available to recover');
  await submit(form(2));assert.equal(run.calls.length,1,'A kept draft cannot submit against another revision or recreate a missing record');assert.match(root.querySelector('[data-growth-status]').textContent,/draft is preserved/);
  if(mode==='concurrent')assert.equal(root.querySelector('[data-opportunity="2"] [data-state]').dataset.state,'dismissed');
 }
+for(const mode of ['normal','retry-once']){
+ run=await setup(mode);
+ const filter=root.querySelector('[data-growth-filter]');
+ filter.value='pending';filter.dispatchEvent(new dom.window.Event('change'));
+ const firstDraft=form(1);
+ await submit(form(2));
+ if(mode==='retry-once'){
+  assert.equal(root.querySelector('[data-growth-filter]'),filter);
+  await root.querySelector('[data-growth-reload]').onclick();
+ }
+ assert.equal(root.querySelector('[data-growth-filter]').value,'pending');
+ assert.equal(root.querySelectorAll('[data-opportunity]:not([hidden])').length,0,'The last pending decision left the queue');
+ assert.equal(root.querySelector('[data-growth-empty]').hidden,false);
+ assert.equal(document.activeElement,root.querySelector('[data-growth-status]'));
+ assert.match(document.activeElement.textContent,/Decision saved/);
+ assert.equal(run.calls.length,1);
+ const restored=root.querySelector('[data-growth-filter]');
+ restored.value='published';restored.dispatchEvent(new dom.window.Event('change'));
+ assert.equal(form(1),firstDraft);assert.equal(firstDraft.closest('article').hidden,false);
+ assert.equal(firstDraft.elements.note.value,'First reviewed local note');
+}
 GrowthAdmin.reset();await GrowthAdmin.render({root,rpc:async()=>({report:null,reports:[],opportunities:[],events:[]})});
+assert.equal(root.querySelector('[data-growth-filter]').value,'all','Opening Growth starts a fresh queue');
 assert.equal(root.querySelector('[data-growth-form]'),null);assert.equal(GrowthAdmin.canLeave(),true);assert.equal(network,0);assert.equal(JSON.stringify(data),original);assert.equal(dom.window.location.hash,'#growth');assert.ok(prompts>=5);
 GrowthAdmin.reset();dom.window.close();
 console.log('PASS decision drafts: another acknowledged save retains mounted fields, selection and leave/import guards; failures preserve drafts; concurrent or missing records cannot adopt or submit an old revision; reset isolates sessions and no network or fixture mutation occurs.');

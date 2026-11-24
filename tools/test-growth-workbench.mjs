@@ -13,6 +13,27 @@ const privateRef=structuredClone(workspace);privateRef.opportunities[0].change_r
 const dom=new JSDOM('<main id="root"></main>',{url:'https://brainilabgames.com/admin/'}),d=dom.window.document,root=d.getElementById('root');let writes=0;globalThis.fetch=()=>{writes++;throw Error('No requests');};
 root.innerHTML=workbenchHTML()+'<select data-growth-filter><option value="all">All</option><option value="pending">Pending</option></select>'+workspace.opportunities.map(o=>'<article data-opportunity="'+o.id+'" tabindex="-1"><details><summary>Decision</summary><textarea>Unsaved note</textarea></details><details><summary>History</summary></details></article>').join('');
 bindWorkbench(root,workspace,now);assert.equal(root.querySelectorAll('.growth-workbench-list>li').length,5);assert.match(root.querySelector('[data-workbench-status]').textContent,/7 pages/);
+function sourceSummary(document){
+ const panel=d.createElement('section');panel.innerHTML=workbenchHTML();
+ bindWorkbench(panel,{report:{importedAt:'2026-11-24T18:00:00Z',document},opportunities:[],reports:[]},now);
+ const entries=[...panel.querySelectorAll('.growth-source-dates > div')];
+ return Object.fromEntries(entries.map(entry=>[entry.querySelector('dt').textContent,entry.querySelector('dd').textContent]));
+}
+const datedSources={
+ property:'sc-domain:brainilabgames.com',
+ availablePeriod:{start:'2026-10-13',end:'2026-11-12',timezone:'America/Los_Angeles'},
+ measurement:{schemaVersion:2,mode:'api_snapshot',source:'GA4 Data API',property:'555562532',period:{start:'2026-10-17',end:'2026-11-13'},timezone:'Europe/Madrid'},
+ distribution:{schemaVersion:1,observedAt:'2026-11-22T23:30:00-02:00',catalogCollectedAt:'2026-11-20T12:00:00Z',resources:[],directories:[],contactedDomains:[]}
+};
+assert.deepEqual(sourceSummary(datedSources),{
+ 'Search Console period':'2026-10-13 to 2026-11-12 · America/Los_Angeles',
+ 'GA4 acquisition period':'2026-10-17 to 2026-11-13 · Europe/Madrid',
+ 'Distribution snapshot captured':'2026-11-23 01:30 UTC'
+});
+assert.deepEqual(sourceSummary({}),{'Search Console period':'Period unavailable','GA4 acquisition period':'Period unavailable','Distribution snapshot captured':'Capture unavailable'});
+assert.equal(sourceSummary({...datedSources,availablePeriod:{start:'2026-02-30',end:'2026-03-05'}})['Search Console period'],'Period unavailable');
+assert.equal(sourceSummary({...datedSources,measurement:{...datedSources.measurement,property:'another property'}})['GA4 acquisition period'],'Period unavailable');
+assert.equal(sourceSummary({measurement:{mode:'manual_snapshot',source:'GA4 traffic acquisition UI',period:{start:'2026-10-01',end:'2026-10-07'}}})['GA4 acquisition period (manual)'],'2026-10-01 to 2026-10-07');
 const waitingRoot=d.createElement('section');waitingRoot.innerHTML=workbenchHTML();bindWorkbench(waitingRoot,workspace,Date.parse('2026-10-28T18:00:00Z'));const waitingFilter=waitingRoot.querySelector('[data-workbench-state]');waitingFilter.value='waiting';waitingFilter.dispatchEvent(new dom.window.Event('change'));assert.match(waitingRoot.textContent,/Original baseline counts/);assert.match(waitingRoot.textContent,/Not comparable yet/);assert.match(waitingRoot.querySelector('tbody tr').textContent,/clicks0Not comparable yet/);
 const filter=root.querySelector('[data-growth-filter]');filter.value='pending';root.querySelector('[data-opportunity="2"]').hidden=true;root.querySelector('[data-workbench-open="2"]').click();assert.equal(filter.value,'all');assert.equal(d.activeElement,root.querySelector('[data-opportunity="2"]'));assert.equal(root.querySelector('[data-opportunity="2"] details').open,true);assert.equal(root.querySelector('textarea').value,'Unsaved note');
 root.querySelector('[data-workbench-open="1"]').click();assert.equal(root.querySelector('[data-opportunity="1"] details:last-child').open,true);

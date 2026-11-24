@@ -2,6 +2,7 @@ import {comparison} from './growth-followup.js';
 import {currentDecisions} from './growth-seo-actions.js';
 import {pagePlayEvidence} from './growth-page-play.js';
 import {csvCell} from './growth-search.js';
+import {snapshot as distributionSnapshot} from './distribution-tools.js';
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const scopes={all:'All next moves',approved:'Resume approved work',pending:'Review pending proposals',ready:'Review comparable results',needs_data:'Needs matching evidence',waiting:'Waiting for full days',conflict:'Reconcile records'};
@@ -37,8 +38,31 @@ function detail(r){
 
 export function workbenchHTML(){return `<section class="growth-workbench" aria-labelledby="growth-workbench-title"><header><p class="admin-eyebrow">From evidence to a next move</p><h2 id="growth-workbench-title">What needs your attention?</h2><p>Resume approved work first. Review published changes only when the original baseline and a full matching period can be compared.</p></header><div class="growth-workbench-controls"><label>Find a page<input type="search" data-workbench-search placeholder="e.g. number-route or learn"/></label><label>Next move<select data-workbench-state>${Object.entries(scopes).map(([k,v])=>'<option value="'+k+'">'+v+'</option>').join('')}</select></label><button type="button" class="admin-button" data-workbench-export>Download this worklist</button></div><p data-workbench-status class="growth-small" role="status" aria-live="polite"></p><div data-workbench-results></div><p class="growth-small">Uses the current loaded decisions and saved report. Reopen Growth before acting if records may have changed. Priority reflects recorded work and measurement readiness, with no opportunity score or traffic forecast. Baselines, published work and set-aside decisions are preserved.</p></section>`;}
 
+function observedPeriod(period, timezone){
+ const isDay=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&
+  Number.isFinite(Date.parse(value))&&new Date(value).toISOString().slice(0,10)===value;
+ if(!isDay(period?.start)||!isDay(period?.end)||period.end<period.start)return 'Period unavailable';
+ return [period.start===period.end?period.start:`${period.start} to ${period.end}`,timezone].filter(Boolean).join(' · ');
+}
+
+function sourceDates(report){
+ const search=report?.property==='sc-domain:brainilabgames.com'?report.availablePeriod:null;
+ const measurement=report?.measurement;
+ const manual=measurement?.mode==='manual_snapshot'&&measurement.source==='GA4 traffic acquisition UI';
+ const api=measurement?.schemaVersion===2&&measurement.mode==='api_snapshot'&&measurement.source==='GA4 Data API'&&measurement.property==='555562532';
+ const distribution=distributionSnapshot(report);
+ const captured=distribution?new Date(distribution.observedAt).toISOString().slice(0,16).replace('T',' ')+' UTC':'Capture unavailable';
+ const sources=[
+  ['Search Console period',observedPeriod(search,search?.timezone)],
+  [manual?'GA4 acquisition period (manual)':'GA4 acquisition period',observedPeriod(api||manual?measurement.period:null,api?measurement.timezone:null)],
+  ['Distribution snapshot captured',captured]
+ ];
+ return '<dl class="growth-source-dates" aria-label="Source dates">'+sources.map(([label,value])=>`<div><dt>${label}</dt><dd>${esc(value)}</dd></div>`).join('')+'</dl>';
+}
+
 export function bindWorkbench(root,workspace,now=Date.now()){
  const panel=root.querySelector('.growth-workbench');if(!panel)return;
+ panel.querySelector('header').insertAdjacentHTML('afterend',sourceDates(workspace.report?.document));
  const rows=workbenchRows(workspace,now),search=panel.querySelector('[data-workbench-search]'),select=panel.querySelector('[data-workbench-state]'),results=panel.querySelector('[data-workbench-results]'),status=panel.querySelector('[data-workbench-status]'),button=panel.querySelector('[data-workbench-export]');let selected=[],page=0;
  results.insertAdjacentHTML('afterend','<div class="growth-workbench-pages"><button type="button" class="admin-button" data-workbench-prev>Previous</button><span data-workbench-page></span><button type="button" class="admin-button" data-workbench-next>Next</button></div>');
  const draw=()=>{
