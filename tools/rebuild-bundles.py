@@ -18,7 +18,7 @@ HOME_LEGACY={
 }
 HOME_AVATAR=['avatar-design.js','avatar-studio-art.js','profile-rewards-model.js']
 BUNDLES={
- 'consent.bundle.js':['site-analytics.js','meta-pixel.js'],
+ 'consent.bundle.js':['growth-withdrawals.js','site-analytics.js','meta-pixel.js'],
  'shell.bundle.js':SHELL,
  'home-shell.bundle.js':['supabase-config.js','home-startup.js',
   *[part for part in SHELL if part not in HOME_AVATAR and part not in HOME_LEGACY],

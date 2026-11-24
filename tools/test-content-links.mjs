@@ -14,8 +14,13 @@ const cases=[
  ['/geography/world-flags-quiz/index.html?difficulty=easy&amp;set=2','/geography/world-flags-quiz/?difficulty=easy&amp;set=2'],
  ['/learn/paths/word-detective/index.html#lesson-2','/learn/paths/word-detective/#lesson-2'],
  ['https://brainilabgames.com/learn/how-to-read-a-tennis-score/index.html#sources','https://brainilabgames.com/learn/how-to-read-a-tennis-score/#sources'],
- ['/profile/index.html?section=progress','/profile/index.html?section=progress'],
- ['/admin/index.html','/admin/index.html'], ['/rankings/index.html','/rankings/index.html'],
+ ['../../about/index.html','../../about/'], ['../../cookies/index.html#privacy-choices','../../cookies/#privacy-choices'],
+ ['/privacy/index.html','/privacy/'], ['/rankings/index.html?game=cryptic','/rankings/?game=cryptic'],
+ ['../../groups/index.html','../../groups/'], ['/suggestions/index.html','/suggestions/'],
+ ['/profile/index.html','/profile/'], ['/profile/index.html?section=progress','/profile/?section=progress'],
+ ['/profile/index.html?code=callback','/profile/index.html?code=callback'],
+ ['/profile/index.html#access_token=test','/profile/index.html#access_token=test'],
+ ['/admin/index.html','/admin/index.html'],
  ['/auth/index.html?next=/games/index.html','/auth/index.html?next=/games/index.html'],
  ['/assets/docs/index.html','/assets/docs/index.html'], ['/unknown/index.html','/unknown/index.html'],
  ['https://example.org/games/index.html','https://example.org/games/index.html'],
@@ -40,6 +45,13 @@ assert.equal(canonicalContentLinks(head+protectedHTML+download),head+protectedHT
 assert.equal(canonicalContentLinks(head+'<a data-href="/games/index.html">No href</a>'),head+'<a data-href="/games/index.html">No href</a>');
 assert.match(newTabLinks(head+'<a href="../index.html">Games</a>'),/<a href="\.\.\/">Games<\/a>/,'shared build and CMS policy applies it');
 
+const indirectNavigation=/<a\b[^>]*\shref=["'][^"']*\/(?:about|cookies|privacy|rankings|groups|suggestions)\/index\.html(?:[?#"'])/i;
+for(const file of ['index.html','games/cryptic/index.html','learn/index.html']){
+ const html=newTabLinks(readFileSync(file,'utf8'));
+ assert.doesNotMatch(html,indirectNavigation,file+' links straight to shared navigation destinations');
+ assert.match(html,/href=["'][^"']*cookies\/#privacy-choices["']/i,file+' keeps the privacy choices link');
+}
+
 let pages=0,changed=0;
 for(const file of execFileSync('git',['ls-files','-z','*.html'],{encoding:'utf8'}).split('\0').filter(Boolean)){
  const html=readFileSync(file,'utf8'),next=canonicalContentLinks(html);
@@ -53,6 +65,7 @@ const template=readFileSync('learn/index.html','utf8');
 const articles=readdirSync('content/articles').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(readFileSync('content/articles/'+f,'utf8'))).filter(a=>a.status==='published').map(prepareArticle);
 for(const a of articles){
  const html=renderPage(template,articles,a);
+ assert.doesNotMatch(html,indirectNavigation,a.slug+' uses direct shared navigation');
  assert.ok(!/<a\b[^>]*\shref="\/games\/index\.html"/.test(html),a.slug+' CMS shell uses direct Games link');
  assert.equal(canonicalContentLinks(html),html,a.slug+' CMS final output');
 }
