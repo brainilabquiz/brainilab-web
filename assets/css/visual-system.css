@@ -2152,3 +2152,19 @@ body.braini-visual .post-burst{position:absolute;top:50%;left:50%;width:10px;hei
 @keyframes bl-score-pop{from{transform:scale(.6)}}
 @keyframes bl-art-pop{from{transform:translateY(10px) scale(.7) rotate(-8deg)}}
 @keyframes bl-burst{0%{opacity:0;transform:scale(.35)}25%{opacity:1}100%{opacity:0;transform:scale(1.25)}}
+/* ===== Page transitions (23 Nov 2026): moving between pages fades softly instead of flashing. Cross-document view
+   transitions are a progressive enhancement: browsers without them navigate as before. The header and the phone tab
+   bar keep their place; only the page content fades and lifts a little. Nothing moves with reduced motion. ===== */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  body.braini-visual .topbar{view-transition-name:braini-topbar}
+  body.braini-visual .braini-tabbar{view-transition-name:braini-tabbar}
+  ::view-transition-old(root){animation:150ms ease-in both bl-page-out}
+  ::view-transition-new(root){animation:260ms cubic-bezier(.2,.8,.2,1) both bl-page-in}
+  ::view-transition-group(braini-topbar),::view-transition-group(braini-tabbar){animation-duration:260ms}
+}
+@media (prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+}
+@keyframes bl-page-out{to{opacity:0}}
+@keyframes bl-page-in{from{opacity:0;transform:translateY(12px)}}
