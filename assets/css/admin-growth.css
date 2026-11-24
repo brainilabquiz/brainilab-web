@@ -71,4 +71,13 @@
 .growth-area-heading p{max-width:75ch;margin:.5rem 0 0;line-height:1.55;color:#565568;font-size:.9rem}
 .growth-area-panel>.growth-workbench,.growth-area-panel>.growth-search,.growth-area-panel>.growth-content,.growth-area-panel>.growth-distribution,.growth-area-panel>.growth-research,.growth-area-panel>.growth-openseo{margin-top:0}
 .growth-area-panel .growth-tools-grid{grid-template-columns:minmax(0,1fr)}
+.growth-workbench .growth-source-dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: .75rem 1.25rem;
+  padding-block: .75rem;
+  border-block: 1px solid var(--growth-line);
+  font-size: .85rem;
+}
+.growth-source-dates dd { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 @media(max-width:650px){.growth-area-nav{padding:.75rem}.growth-area-nav>.admin-button{display:none}.growth-area-nav .growth-area-picker{display:grid}.growth-area-heading h2{font-size:1.2rem}}

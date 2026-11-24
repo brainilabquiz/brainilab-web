@@ -485,44 +485,58 @@ window.BrainiAdmin=(function(){
   // ==========================================================
 
   async function renderDashboard(){
+    const checkedDay=new Date().toISOString().slice(0,10);
     const overview=await BrainiAdminOperations.load(rpc);
+    drawDashboard(overview,checkedDay);
+  }
+
+  function drawDashboard(overview,checkedDay,previous=null){
     const d=overview.dashboard||{},system=overview.system||{},rotationHealth=overview.daily||{};
     const verifiedPct=BrainiAdminOperations.verifiedRate(overview.operations);
     const poolRows=BrainiAdminOperations.poolRows(overview.operations);
-
+    const count=BrainiAdminOperations.count;
+    const eligibleGroups=count(d.eligible_groups),futureDays=count(d.future_daily_coverage);
+    const published=count(d.question_bank?.published_versions);
+    const questions=count(d.question_bank?.questions),drafts=count(d.question_bank?.draft_versions);
+    const sourceLabels={dashboard:"dashboard totals",daily:"Daily health",system:"system health",operations:"saved results and content pools"};
+    const unavailable=Object.keys(overview.errors).map(key=>sourceLabels[key]);
     const daily=d.daily||{};
-    const dailyHealthy=rotationHealth?.healthy===true;
+    const dailyChecked=typeof rotationHealth.healthy==="boolean";
 
     const cron=(system.cron||[])[0]||null;
 
-    $("#adminContent").innerHTML=`
+    const root=$("#adminContent"),template=document.createElement("template");
+    template.innerHTML=`
+      ${unavailable.length?`<div class="admin-note warning" role="status"><span></span> <button class="admin-button" type="button" data-retry-dashboard>Retry dashboard checks</button></div>`:""}
       <div class="admin-grid metrics">
-        ${metric("Cloud users",d.cloud_users,"Synced BrainiLab accounts")}
-        ${metric("Synced results today",d.synced_results_today,"Authenticated cloud results")}
-        ${metric("Daily players today",d.cloud_daily_players_today,"Cloud players with ≥1 Daily")}
-        ${metric("Daily completed today",d.full_dailies_today,"Main Daily verified")}
+        ${metric("Cloud users",count(d.cloud_users),"Synced BrainiLab accounts")}
+        ${metric("Synced results today",count(d.synced_results_today),"Authenticated cloud results · UTC")}
+        ${metric("Daily players today",count(d.cloud_daily_players_today),"Cloud players who completed a Daily game · UTC")}
+        ${metric("Daily completed today",count(d.full_dailies_today),"Main Daily verified · UTC")}
         ${metric("Ranked results verified",verifiedPct,"Practice and local results excluded","%")}
-        ${metric("Public ranking profiles",d.public_ranking_profiles,"Explicit ranking opt-ins")}
-        ${metric("Active groups",d.active_groups,`${num(d.eligible_groups)} ranking-eligible`)}
-        ${metric("New suggestions",d.new_suggestions,"Feedback inbox")}
+        ${metric("Public ranking profiles",count(d.public_ranking_profiles),"Explicit ranking opt-ins")}
+        ${metric("Active groups",count(d.active_groups),eligibleGroups===null?"Ranking eligibility unavailable":`${num(eligibleGroups)} ranking-eligible`)}
+        ${metric("New suggestions",count(d.new_suggestions),"Feedback inbox")}
       </div>
 
       ${BrainiAdminOperations.resultHTML(overview.operations,GAME_LABELS)}
       <div class="admin-panels">
         <section class="admin-panel">
-          <div class="admin-panel-head">
-            <div>
-              <h2>Daily health</h2>
-              <p>${esc(daily.date||d.date||"Today")} · Daily #${esc(daily.daily_number||"—")}</p>
+          <div data-dashboard-daily>
+            <div class="admin-panel-head">
+              <div>
+                <h2>Daily health</h2>
+                <p>${esc(daily.date||rotationHealth.date||d.date||"Today")}${daily.daily_number!=null?` · Daily #${esc(daily.daily_number)}`:""}</p>
+              </div>
+              ${!dailyChecked?badge("Check unavailable","warn"):rotationHealth.healthy?badge("Healthy","ok"):badge("Needs attention","bad")}
             </div>
-            ${overview.errors.daily?badge("Check unavailable","warn"):dailyHealthy?badge("Healthy","ok"):badge("Needs attention","bad")}
-          </div>
 
-          ${overview.errors.daily?'<p class="admin-note">The Daily check could not be loaded. Refresh before changing content.</p>':dailyHealthExplanation(rotationHealth)}
-          <div class="admin-daily-score">
-            ${(rotationHealth.game_health||[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected,g.ready)).join('')}
-          </div>
+            ${dailyChecked?dailyHealthExplanation(rotationHealth):'<p class="admin-note">The Daily readiness check is unavailable.</p>'}
+            <div class="admin-daily-score">
+              ${(Array.isArray(rotationHealth.game_health)?rotationHealth.game_health:[]).map(g=>dailyGameCard((GAME_LABELS[g.game_id]||g.game_id)+(g.role?' · '+g.role:''),g.count,g.expected,g.ready)).join('')}
+            </div>
 
+          </div>
           <div class="admin-toolbar">
             <button class="admin-button primary" data-open-daily>Open Daily Operations</button>
             ${canOperateDaily()?`<button class="admin-button" data-run-maintenance>Run maintenance</button>`:""}
@@ -538,15 +552,15 @@ window.BrainiAdmin=(function(){
           </div>
 
           <div class="admin-health-list">
-            ${healthRow("Future Daily coverage",`${num(d.future_daily_coverage)} ready days`,Number(d.future_daily_coverage)>=7)}
+            ${healthRow("Future Daily coverage",futureDays===null?"Count unavailable":`${num(futureDays)} ready days`,futureDays===null?null:futureDays>=7)}
             ${healthRow(
               "Cron",
-              cron
+              typeof cron?.active==="boolean"
                 ? `${esc(cron.schedule||"—")} · ${cron.active?"active":"inactive"}${cron.last_status?` · last ${esc(cron.last_status)}`:""}`
                 : "Not available",
-              overview.errors.system?null:!!cron?.active && (!cron?.last_status || cron.last_status==="succeeded")
+              typeof cron?.active==="boolean"?cron.active && (!cron.last_status || cron.last_status==="succeeded"):null
             )}
-            ${healthRow("Question Bank",`${num(d.question_bank?.published_versions)} published`,Number(d.question_bank?.published_versions)>0)}
+            ${healthRow("Question Bank",published===null?"Count unavailable":`${num(published)} published`,published===null?null:published>0)}
             ${poolRows.map(pool=>healthRow(pool.name+' pool',pool.count===null?'Could not be checked':`${num(pool.count)} active`,pool.ready)).join('')}
             ${healthRow("Math Rush generator","Generated on demand",true)}
           </div>
@@ -562,13 +576,52 @@ window.BrainiAdmin=(function(){
         <div class="admin-panel-head">
           <div>
             <h2>Question Bank</h2>
-            <p>${num(d.question_bank?.questions)} active questions · ${num(d.question_bank?.draft_versions)} drafts/review</p>
+            <p data-dashboard-question-totals>${questions===null && drafts===null?"Question totals unavailable":`${questions===null?"-":num(questions)} active questions · ${drafts===null?"-":num(drafts)} drafts/review`}</p>
           </div>
           ${canEditContent()?`<button class="admin-button primary" data-new-question>+ New question</button>`:""}
         </div>
       </section>
     `;
 
+    const recovered=key=>previous?.errors[key]&&!overview.errors[key];
+    if(previous){
+      // Replace only the readings affected by recovery. Keep the active controls and open result details mounted.
+      const update=selector=>root.querySelector(selector).replaceWith(template.content.querySelector(selector));
+      if(recovered("dashboard")||recovered("operations"))update(".admin-grid.metrics");
+      if(recovered("daily")||recovered("dashboard"))update("[data-dashboard-daily]");
+      if(recovered("dashboard")||recovered("system")||recovered("operations"))update(".admin-health-list");
+      if(recovered("dashboard"))update("[data-dashboard-question-totals]");
+      if(recovered("operations"))update(".admin-result-status");
+    }else{
+      root.replaceChildren(template.content);
+    }
+
+    const retry=root.querySelector("[data-retry-dashboard]");
+    if(retry){
+      const status=retry.parentElement,message=status.querySelector("span");
+      message.textContent=unavailable.length?"Could not load "+unavailable.join(", ")+".":"All dashboard checks loaded.";
+      if(unavailable.length){
+        retry.removeAttribute("aria-disabled");
+        const admin=state.admin,session=state.authSession;
+        const current=()=>root.contains(retry)&&state.currentView==="dashboard"&&state.admin===admin&&state.authSession===session;
+        const dayChanged=()=>checkedDay!==new Date().toISOString().slice(0,10);
+        retry.onclick=async()=>{
+          if(!current()||retry.getAttribute("aria-disabled")==="true")return;
+          if(dayChanged()){navigate("dashboard",{replace:true});return;}
+          retry.setAttribute("aria-disabled","true");
+          message.textContent="Retrying "+unavailable.join(", ")+"…";
+          const updated=await BrainiAdminOperations.load(rpc,{previous:overview});
+          if(!current())return;
+          if(dayChanged()){navigate("dashboard",{replace:true});return;}
+          drawDashboard(updated,checkedDay,overview);
+        };
+      }else{
+        const focused=document.activeElement===retry;
+        status.classList.remove("warning");
+        retry.remove();
+        if(focused){status.tabIndex=-1;status.focus();}
+      }
+    }
     $("#adminContent").querySelectorAll('[data-result-diagnostic]').forEach(button=>button.onclick=safeAction(async()=>{
       button.disabled=true;
       try{
@@ -577,6 +630,7 @@ window.BrainiAdmin=(function(){
         openDrawer(`<span class="admin-eyebrow">Saved game check</span><h2>${esc(GAME_LABELS[result.game_id]||result.game_id)}</h2><p>${result.answers_verified?'This result is verified.':'This result has been saved, but its original answers have not been verified.'}</p><dl class="admin-kv"><dt>Saved</dt><dd>${when(result.completed_at)}</dd><dt>Answers</dt><dd>${num(result.correct)} / ${num(result.total)}</dd><dt>Verification</dt><dd>${result.answers_verified?'Verified':'Pending'}</dd></dl><p>Opening BrainiLab on the player’s original browser retries saved evidence automatically. If the original answers are missing, keep this result unverified; an admin check cannot invent them.</p>`);
       }finally{if(button.isConnected)button.disabled=false;}
     }));
+    if(previous)return;
     $("#adminContent [data-open-daily]").onclick=()=>navigate("daily");
     $("#adminContent [data-open-system]").onclick=()=>navigate("system");
     $("#adminContent [data-open-analytics]")?.addEventListener("click",()=>navigate("analytics"));
