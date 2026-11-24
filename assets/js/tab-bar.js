@@ -39,6 +39,19 @@
     nav.innerHTML=TABS.map(([id,href,label])=>`<a href="${href}"${id===active?' aria-current="page"':""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICONS[id]}</svg><span>${label}</span></a>`).join("");
     document.body.appendChild(nav);
     document.documentElement.classList.add("has-tabbar");
+    menuExtra();
+  }
+
+  // Nov 2026: with the tab bar on screen the phone header keeps only the logo, streak and menu (CSS). The header's
+  // "?" is hidden there, so the menu gains a Suggestions link; CSS shows it only in that phone layout.
+  function menuExtra(){
+    const links=document.getElementById("mainNav");
+    if(!links||links.querySelector("a.menu-extra"))return;
+    const a=document.createElement("a");
+    a.className="menu-extra";
+    a.href="/suggestions/";
+    a.innerHTML='<svg class="menu-extra-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.5"/><path d="M12 17h.01"/></svg><span>Suggestions</span>';
+    links.appendChild(a);
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});

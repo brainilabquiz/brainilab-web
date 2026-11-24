@@ -2168,3 +2168,14 @@ body.braini-visual .post-burst{position:absolute;top:50%;left:50%;width:10px;hei
 }
 @keyframes bl-page-out{to{opacity:0}}
 @keyframes bl-page-in{from{opacity:0;transform:translateY(12px)}}
+/* ===== Simpler phone header (24 Nov 2026): with the bottom tab bar on screen, the header keeps the logo, the streak and
+   the menu. "Me" in the tab bar replaces the header avatar, and the menu only lists what the tab bar does not:
+   Rankings, Groups, Breaking News and Suggestions. Pages without the tab bar (games, quizzes) keep the full header. ===== */
+body.braini-visual .topbar .links>a.menu-extra{display:none}
+body.braini-visual .topbar .links>a.menu-extra .menu-extra-icon{flex:none}
+@media(max-width:760px){
+  /* site.css and mobile.css force these visible with !important, so hiding them needs the same weight. */
+  html.has-tabbar body.braini-visual .topbar .nav-right>:is(.help-dot,.avatar){display:none!important}
+  html.has-tabbar body.braini-visual .topbar .links>a:is([href*="games/"],[href*="daily-quiz"],[href*="learn"]):not(.news-nav-link){display:none}
+  html.has-tabbar body.braini-visual .topbar .links>a.menu-extra{display:flex;align-items:center;gap:7px}
+}
