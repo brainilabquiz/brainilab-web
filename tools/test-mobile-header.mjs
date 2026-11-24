@@ -33,7 +33,8 @@ assert.equal(w.document.querySelector('#mainNav a.menu-extra'),null);
 
 // Styles: the extra entry only shows in the phone layout with the tab bar; the header "?" hides there, the avatar stays.
 const css=read('assets/css/visual-system.css').replace(/\r\n/g,'\n');
-const block=css.slice(css.indexOf('/* ===== Simpler phone header'));
+const headerStart=css.indexOf('/* ===== Simpler phone header'),headerEnd=css.indexOf('/* =====',headerStart+10);
+const block=css.slice(headerStart,headerEnd>0?headerEnd:undefined);
 assert.ok(block.length>300,'the phone header block exists');
 assert.match(block,/^body\.braini-visual \.topbar \.links>a\.menu-extra\{display:none\}/m,'hidden outside the phone layout');
 const phone=block.match(/@media\(max-width:760px\)\{\n([\s\S]*?)\n\}/);

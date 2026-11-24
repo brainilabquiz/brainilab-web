@@ -7,7 +7,7 @@ import {join} from 'node:path';
 const css=readFileSync('assets/css/visual-system.css','utf8').replace(/\r\n/g,'\n');
 const start=css.indexOf('/* ===== Page transitions');
 assert.ok(start>0,'the page transitions block exists');
-const block=css.slice(start);
+const next=css.indexOf('/* =====',start+10),block=css.slice(start,next>0?next:undefined);
 const allowed=block.match(/@media \(prefers-reduced-motion:no-preference\)\{\n([\s\S]*?)\n\}/);
 assert.ok(allowed,'the opt-in sits inside a no-preference media query');
 assert.match(allowed[1],/@view-transition\{navigation:auto\}/);
