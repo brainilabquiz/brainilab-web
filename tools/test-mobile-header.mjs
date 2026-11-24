@@ -31,14 +31,15 @@ w=await page('games/odd-one-out/index.html','https://brainilabgames.com/games/od
 assert.equal(w.document.documentElement.classList.contains('has-tabbar'),false);
 assert.equal(w.document.querySelector('#mainNav a.menu-extra'),null);
 
-// Styles: the extra entry only shows in the phone layout with the tab bar; the header avatar and "?" hide there.
+// Styles: the extra entry only shows in the phone layout with the tab bar; the header "?" hides there, the avatar stays.
 const css=read('assets/css/visual-system.css').replace(/\r\n/g,'\n');
 const block=css.slice(css.indexOf('/* ===== Simpler phone header'));
 assert.ok(block.length>300,'the phone header block exists');
 assert.match(block,/^body\.braini-visual \.topbar \.links>a\.menu-extra\{display:none\}/m,'hidden outside the phone layout');
 const phone=block.match(/@media\(max-width:760px\)\{\n([\s\S]*?)\n\}/);
 assert.ok(phone,'a 760 px phone block, the same breakpoint as the tab bar');
-assert.match(phone[1],/html\.has-tabbar body\.braini-visual \.topbar \.nav-right>:is\(\.help-dot,\.avatar\)\{display:none!important\}/);
+assert.match(phone[1],/html\.has-tabbar body\.braini-visual \.topbar \.nav-right>\.help-dot\{display:none!important\}/);
+assert.doesNotMatch(block,/\.avatar\)?\{display:none/,'the avatar stays: it opens the account menu');
 assert.match(phone[1],/html\.has-tabbar body\.braini-visual \.topbar \.links>a:is\(\[href\*="games\/"\],\[href\*="daily-quiz"\],\[href\*="learn"\]\):not\(\.news-nav-link\)\{display:none\}/);
 assert.match(phone[1],/html\.has-tabbar body\.braini-visual \.topbar \.links>a\.menu-extra\{display:flex/);
 assert.match(css,/\.braini-tabbar\{display:none\}\n@media\(max-width:760px\)\{/,'the tab bar uses the same breakpoint');
