@@ -116,6 +116,91 @@ test('a failed reviewed recovery stays paused across later slots, reads and depl
 });
 
 const rotatedAt=Date.parse('2026-10-23T09:00:00Z');
+const novemberSlot = Date.parse('2026-11-24T12:00:00Z');
+function pausedInNovember() {
+  const s = state();
+  const checkedAt = '2026-11-22T12:00:56.000Z';
+  s.data.set('bootstrapped', true);
+  s.data.set('status', {code:'invalid-key', checkedAt});
+  s.data.set('api-diagnostic', {httpStatus:401, checkedAt});
+  const store = new ProductionNewsStore(s, {OPENAI_API_KEY:'fixture-old-key'});
+  let generations = 0, lookups = 0;
+  let lookup = () => new Response(null, {status:401});
+  let generate = () => Response.json(result([story]));
+  const fetcher = async (url, init) => {
+    assert.equal(init.headers.Authorization, 'Bearer ' + store.env.OPENAI_API_KEY);
+    if (init.method === 'GET') {
+      lookups++;
+      assert.equal(url, 'https://api.openai.com/v1/models/gpt-4.1-mini-2025-04-14');
+      assert.equal(init.redirect, 'error');
+      return lookup();
+    }
+    generations++;
+    assert.equal(url, 'https://api.openai.com/v1/responses');
+    return generate();
+  };
+  return {s, store, setLookup(fn){lookup=fn;}, setGenerate(fn){generate=fn;},
+    counts:() => [lookups, generations],
+    refresh:(at, scheduled=true) => store.refresh(at, fetcher, async () => [{
+      id:1, sourceName:story.sourceName, sourceUrl:story.sourceUrl, reportedAt:new Date(at-3600000).toISOString(),
+      headline:story.title, description:story.summary, context:'Test fixture.'
+    }], {scheduled})};
+}
+test('only the scheduled refresh recovers a credential, once per incident in the normal slot and archive', async () => {
+  const f = pausedInNovember();
+  await f.store.fetch(new Request('https://news.internal/edition'), novemberSlot);
+  await f.store.fetch(new Request('https://news.internal/edition-status'), novemberSlot);
+  await f.refresh(novemberSlot, false);
+  assert.deepEqual(f.counts(), [0,0]);
+  await Promise.all([f.refresh(novemberSlot), f.refresh(novemberSlot)]);
+  assert.deepEqual(f.counts(), [1,0]);
+  assert.equal(f.s.data.has('budget:2026-11'), false);
+  assert.match(f.s.data.get('status').failedKeyFingerprint, /^[0-9a-f]{64}$/);
+  assert.equal(JSON.stringify(await (await f.store.fetch(new Request('https://news.internal/edition'), novemberSlot)).json()).includes('Fingerprint'), false);
+  await f.refresh(novemberSlot + REFRESH_MS);
+  assert.deepEqual(f.counts(), [1,0]);
+  f.store.env.OPENAI_API_KEY = 'fixture-new-key';
+  await Promise.all([f.refresh(novemberSlot + 2*REFRESH_MS), f.refresh(novemberSlot + 2*REFRESH_MS)]);
+  assert.deepEqual(f.counts(), [1,1]);
+  assert.equal(f.s.data.get('status').code, 'updated');
+  assert.deepEqual(f.s.data.get('budget:2026-11'), {cents:RESERVATION_CENTS, calls:1});
+  assert.ok(f.s.data.has('audit:' + Math.floor(novemberSlot / REFRESH_MS + 2)));
+});
+test('an already rotated legacy key needs exact model evidence; invalid, restricted, and transient reads stay paused', async () => {
+  for (const response of [() => new Response(null, {status:403}), () => new Response(null, {status:429}),
+                          () => Response.json({id:'other',object:'model'}), () => {throw Error('timeout');}]) {
+    const f = pausedInNovember();
+    f.setLookup(response);
+    await Promise.all([f.refresh(novemberSlot), f.refresh(novemberSlot)]);
+    assert.deepEqual(f.counts(), [1,0]);
+    assert.equal(f.s.data.get('status').failedKeyFingerprint, undefined);
+    f.setLookup(() => Response.json({id:'gpt-4.1-mini-2025-04-14',object:'model'}));
+    await Promise.all([f.refresh(novemberSlot+REFRESH_MS), f.refresh(novemberSlot+REFRESH_MS)]);
+    assert.deepEqual(f.counts(), [2,1]);
+    assert.equal(f.s.data.get('status').code, 'updated');
+  }
+});
+test('same slot, exhausted ledger, mismatched diagnostic, and non-401 failures cannot authorize another generation', async () => {
+  for (const guard of ['same-slot','budget','diagnostic','other-failure','already-consumed']) {
+    const f = pausedInNovember();
+    f.setLookup(() => Response.json({id:'gpt-4.1-mini-2025-04-14',object:'model'}));
+    if (guard === 'same-slot') f.s.data.set('last-slot', Math.floor(novemberSlot/REFRESH_MS));
+    if (guard === 'budget') f.s.data.set('budget:2026-11', {cents:MONTHLY_CENTS,calls:64});
+    if (guard === 'diagnostic') f.s.data.set('api-diagnostic', {httpStatus:401,checkedAt:'older'});
+    if (guard === 'other-failure') f.s.data.set('status', {code:'api-quota',checkedAt:new Date(novemberSlot-1).toISOString()});
+    if (guard === 'already-consumed') f.s.data.set('news-key-recovery', {failedAt:f.s.data.get('status').checkedAt});
+    await f.refresh(novemberSlot);
+    assert.equal(f.counts()[1], 0, guard);
+  }
+  const f = pausedInNovember();
+  f.setLookup(() => Response.json({id:'gpt-4.1-mini-2025-04-14',object:'model'}));
+  f.setGenerate(() => new Response(null,{status:401}));
+  await f.refresh(novemberSlot);
+  await f.refresh(novemberSlot + REFRESH_MS);
+  assert.deepEqual(f.counts(), [1,1]);
+  assert.equal(f.s.data.get('status').code, 'invalid-key');
+});
+
 function keyRotationStore(){const s=state();s.data.set('bootstrapped',true);s.data.set('status',{code:'invalid-key',checkedAt:'2026-10-20T00:00:31.000Z'});s.data.set('last-slot',Math.floor(Date.parse('2026-10-20T00:00:31Z')/REFRESH_MS));s.data.set('budget:2026-10',{cents:280,calls:20});return {s,store:new BreakingNewsStore(s,{OPENAI_API_KEY:'rotated'})};}
 
 test('after the key rotation one reviewed attempt runs, inside the unchanged ledger',async()=>{

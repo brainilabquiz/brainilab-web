@@ -38,6 +38,12 @@ One final reviewed trial publisher-sources-2026-10-11 applies only to the exact 
 
 Keep `OPENAI_API_KEY` as a Cloudflare secret. Never commit, print or export it. The user entered it in Cloudflare. Existing unrelated secrets and bindings must remain unchanged. Wrangler provisions the SQLite object and cron when the deployment succeeds. No Supabase migration or privileged database credential is required.
 
+### Recovering from a rejected API key
+
+When the news API reports `invalid-key`, review the provider's HTTP 401 and replace the **runtime secret** named `OPENAI_API_KEY` in the production Worker’s **Settings → Variables and Secrets**. The next regular refresh at 00:00 or 12:00 UTC can use the replacement once. It uses the normal slot and monthly allowance and archives a successful edition at its usual permanent URL.
+
+The news object retains a private fingerprint of the credential rejected by a 401. It compares that fingerprint only when the scheduled refresh sees the paused state. For an older 401 that predates fingerprinting, the refresh first checks the private diagnostic, then reads the configured model’s metadata. This legacy check needs permission to read that model. A matching model response permits recovery. A 401 records the fingerprint and keeps generation paused until the secret changes. An inconclusive metadata response leaves the paid workflow paused and can be checked again at the next scheduled slot. Page views and bootstrap alarms cannot open this recovery path.
+
 ## Editorial rules
 
 The current manually reviewed edition is in `lib/news-first-edition.js` (legacy filename). Current review notes and source dates are in `docs/news-variety-2026-10-11.md`; previous editions remain in Git history. It is an editorial selection, not an exhaustive ranking. It is available only while individually fresh, retains a fixed preparation time and never resets dates during deployment. A newer successful automated edition replaces it. The public API reports `manual-edition` and a separate `automationStatus`, so a manual publication cannot conceal an automatic failure. No paid research call or storage/budget reset is needed for manual publication.
