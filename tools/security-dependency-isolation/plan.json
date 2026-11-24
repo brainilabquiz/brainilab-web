@@ -256,13 +256,15 @@
   },
   "harnessFiles": {
     "toolchain.Dockerfile": "e69ca5a741cab10feff14c45e2dac021d23bc707bf58a83664d191dad3f99a48",
-    "runner.py": "51644696708c26a172a2b2cfdb07592eeb76890af5220a6624e5f8e9c43f18de",
+    "runner.py": "efe208a40d42f34f6b21e2f1c09410ed02ec0dc19d63201c0220a3ffa15d32a5",
     "bootstrap.py": "b1aa9f29b8458cafa4e302106a2ccb9fe48cba84443b7cda7fced96618e79568",
-    "dependency-smoke.mjs": "327a29edc5b9f6894e86cf01876513668d791869b6fbb0d1d99f552028a06716",
-    "game-challenge-smoke.mjs": "0a81c1495842efd0348b1274f4cc0aca00bb12e2b71bedd8e679836e7acece8f"
+    "dependency-smoke.mjs": "84b745e8c44c0515ca4204b856b05af20592c3a6b6236a1f09bfb6d1027a6195",
+    "game-challenge-smoke.mjs": "0a81c1495842efd0348b1274f4cc0aca00bb12e2b71bedd8e679836e7acece8f",
+    "metadata-patch.json": "ab17a5f7052c02931dd7031a22f8babc6b0b876f0b7d6a121b591f9174aec182"
   },
   "patchedCommit": "HEAD",
-  "baselineCommit": "37b5f85b3d78d1800d2cb28c31ed9993d533f216",
+  "baselineCommit": "310c2fd2980dff17d1d39d5ed1887e9f1a797772",
   "schemaVersion": 1,
-  "nodeImage": "docker.io/library/node@sha256:aca79828f8a4afc627f189387c965625bcc419233946210a3b9522d90a59b5c6"
+  "nodeImage": "docker.io/library/node@sha256:aca79828f8a4afc627f189387c965625bcc419233946210a3b9522d90a59b5c6",
+  "metadataPatch": "metadata-patch.json"
 }

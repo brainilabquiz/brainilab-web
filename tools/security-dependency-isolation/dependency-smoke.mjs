@@ -1,4 +1,4 @@
-// Private, bounded dependency check. NOT EXECUTED during source review.
+// Reviewed, bounded dependency checks; execution evidence is recorded separately.
 // Execute only in the approved offline OS container against the patched graph.
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
@@ -24,7 +24,7 @@ const fromSanitizer=createRequire(sanitizerEntry);
 const postcssEntry=fromSanitizer.resolve('postcss');
 const fromPostcss=createRequire(postcssEntry);
 const mapEntry=fromPostcss.resolve('source-map-js');
-assert.equal(packageInfo(sanitizerEntry,'sanitize-html').version,'2.18.0');
+assert.equal(packageInfo(sanitizerEntry,'sanitize-html').version,'2.18.2');
 assert.equal(packageInfo(fromSanitizer.resolve('launder'),'launder').version,'1.7.2');
 assert.equal(packageInfo(mapEntry,'source-map-js').version,'1.2.2');
 
@@ -35,6 +35,18 @@ for(const expected of ['<h3>Example</h3>','<strong>Keep</strong>','href="/learn/
 const unsafe=cleanHtml('<script>bad()</script><p onclick="bad()" style="color:red">Keep text</p><a href="jav&#x61;script:bad()">Unsafe URL</a><meta http-equiv="refresh" content="0;url=javascript:bad()"><svg><a:animate attributeName="href" values="javascript:bad()"></a:animate></svg>');
 assert.ok(unsafe.includes('Keep text'));
 assert.doesNotMatch(unsafe,/<script|onclick|style=|javascript:|<meta|<svg|<a:animate/i);
+
+// GHSA-c9rx-x947-fp3h: patched-version-only, tiny iframe fallback cases.
+// These contain at most three literal iframe openings; no exhaustion probe.
+const fallbackSanitizer=fromRoot('sanitize-html');
+const fewFallbacks='<iframe><p>First</p><iframe><p>Second</p><iframe><p>Third</p>';
+assert.ok(fewFallbacks.length<256);
+assert.equal(cleanHtml(fewFallbacks),'<p>First</p><p>Second</p><p>Third</p>');
+assert.equal(cleanHtml('<iframe><p onclick="bad()">Read safely</p>'),'<p>Read safely</p>');
+const limitedFallback='<iframe><b><b><iframe><b><b>x';
+assert.equal(fallbackSanitizer(limitedFallback,{allowedTags:['b'],allowedAttributes:{},
+  disallowedTagsMode:'discard',nestingLimit:3}),'<b><b>x</b></b>');
+console.log('PASS fixed sanitizer: safe tiny iframe fallbacks, attributes and global nesting limit.');
 
 // Upstream condition: cf7658058ceeaa8619d5ae0ec90be6905209d016.
 // Tiny maps only. Do not serialize/materialize a map with an enormous offset.

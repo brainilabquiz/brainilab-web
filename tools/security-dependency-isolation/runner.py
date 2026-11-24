@@ -6,6 +6,7 @@ application modules, run package hooks on the host, or promote target files.
 """
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -100,10 +101,13 @@ def assert_tree(root):
 
 
 def validate_plan(plan):
-    require(isinstance(plan, dict) and set(plan) == {
+    required_fields = {
         'schemaVersion', 'baselineCommit', 'patchedCommit', 'nodeImage',
         'harnessFiles', 'steps',
-    }, 'Unexpected validation plan fields')
+    }
+    require(isinstance(plan, dict) and required_fields <= set(plan)
+            and set(plan) <= required_fields | {'metadataPatch'},
+            'Unexpected validation plan fields')
     require(plan['schemaVersion'] == 1, 'Unsupported validation plan')
     require(re.fullmatch(r'[0-9a-f]{40}', plan['baselineCommit']) is not None,
             'Baseline must be a full reviewed commit SHA')
@@ -111,6 +115,10 @@ def validate_plan(plan):
     require(plan['nodeImage'] == NODE_IMAGE,
             'Node image must match the independently verified official Node 24 bookworm digest')
     require(isinstance(plan['harnessFiles'], dict), 'Harness hashes are required')
+    if 'metadataPatch' in plan:
+        require(plan['metadataPatch'] == 'metadata-patch.json'
+                and 'metadata-patch.json' in plan['harnessFiles'],
+                'Reviewed metadata patch must be a hashed fixed-name input')
     for required in ('runner.py', 'bootstrap.py', 'toolchain.Dockerfile'):
         require(required in plan['harnessFiles'], 'Missing trusted harness hash')
     require(len(plan['harnessFiles']) <= 12, 'Too many harness files')
@@ -293,6 +301,129 @@ class Controller:
             count += 1
         require(1 <= count <= MAX_FILES, 'Invalid source revision size')
         return self.git(source, 'rev-parse', revision + '^{tree}').decode('ascii').strip()
+
+    def construct_metadata_patch(self, source, raw_data, baseline, workflow_commit):
+        """Create the reviewed two-file commit as Git data, never target code.
+
+        The workflow checkout retains the previously validated application
+        graph. New dependency bytes are supplied only to this trusted parent,
+        then intentionally executed later inside the unchanged OS container.
+        """
+        require(len(raw_data) <= 256 * 1024, 'Metadata patch input exceeds bound')
+        data = json.loads(raw_data)
+        require(isinstance(data, dict) and set(data) == {
+            'schemaVersion', 'baseCommit', 'expectedCommit', 'expectedTree',
+            'commitObjectBase64', 'files',
+        }, 'Unexpected metadata patch fields')
+        require(data['schemaVersion'] == 1 and data['baseCommit'] == baseline,
+                'Metadata patch baseline differs from the reviewed plan')
+        for field in ('baseCommit', 'expectedCommit', 'expectedTree'):
+            require(isinstance(data[field], str)
+                    and re.fullmatch(r'[0-9a-f]{40}', data[field]) is not None,
+                    'Invalid metadata patch Git identity')
+        require(data['expectedCommit'] != baseline, 'Metadata patch has no distinct commit')
+        self.git(source, 'cat-file', '-e', baseline + '^{commit}')
+        self.validate_revision(source, baseline)
+
+        # A harness-only push must not introduce unvalidated application bytes
+        # into a connected Cloudflare build. The parent checks this before
+        # pushing as well; this is a second fixed-path assertion.
+        workflow_changes = self.git(source, 'diff', '--name-only', '-z',
+                                    baseline, workflow_commit).split(b'\0')
+        require(all(not name
+                    or name == b'.github/workflows/security-dependency-isolation.yml'
+                    or name.startswith(b'tools/security-dependency-isolation/')
+                    for name in workflow_changes),
+                'Workflow checkout changes application files beyond the reviewed baseline')
+
+        def decode(value, maximum, description):
+            require(isinstance(value, str) and len(value) <= 4 * maximum // 3 + 8,
+                    description + ' base64 input exceeds bound')
+            try:
+                content = base64.b64decode(value, validate=True)
+            except (ValueError, UnicodeError):
+                raise RuntimeError(description + ' is not valid base64') from None
+            require(len(content) <= maximum, description + ' exceeds decoded bound')
+            return content
+
+        def git_object_sha(kind, content):
+            header = kind.encode('ascii') + b' ' + str(len(content)).encode('ascii') + b'\0'
+            return hashlib.sha1(header + content).hexdigest()
+
+        raw_commit = decode(data['commitObjectBase64'], 8192, 'Reviewed commit')
+        require(b'\0' not in raw_commit and b'\n\n' in raw_commit,
+                'Invalid reviewed commit structure')
+        header, message = raw_commit.split(b'\n\n', 1)
+        header_lines = header.split(b'\n')
+        require(len(header_lines) == 4 and message
+                and header_lines[0] == ('tree ' + data['expectedTree']).encode('ascii')
+                and header_lines[1] == ('parent ' + baseline).encode('ascii')
+                and re.fullmatch(rb'author [^\n<>]{1,120} <[^\n<>]{1,160}> [0-9]{1,12} [+-][0-9]{4}',
+                                 header_lines[2]) is not None
+                and re.fullmatch(rb'committer [^\n<>]{1,120} <[^\n<>]{1,160}> [0-9]{1,12} [+-][0-9]{4}',
+                                 header_lines[3]) is not None,
+                'Reviewed commit must have exactly the declared tree and one baseline parent')
+        require(git_object_sha('commit', raw_commit) == data['expectedCommit'],
+                'Reviewed raw commit does not match its declared identity')
+
+        entries = data['files']
+        required_paths = {'package.json', 'pnpm-lock.yaml'}
+        require(isinstance(entries, list) and len(entries) == 2
+                and all(isinstance(entry, dict) and set(entry) == {
+                    'path', 'contentBase64', 'sha256', 'blobSha',
+                } for entry in entries)
+                and {entry['path'] for entry in entries} == required_paths,
+                'Metadata patch must contain exactly the two dependency files')
+        prepared = []
+        for entry in entries:
+            require(re.fullmatch(r'[0-9a-f]{64}', entry['sha256']) is not None
+                    and re.fullmatch(r'[0-9a-f]{40}', entry['blobSha']) is not None,
+                    'Invalid reviewed dependency checksum')
+            maximum = 65536 if entry['path'] == 'package.json' else 1024 * 1024
+            content = decode(entry['contentBase64'], maximum, 'Dependency metadata')
+            require(sha256(content) == entry['sha256']
+                    and git_object_sha('blob', content) == entry['blobSha'],
+                    'Dependency metadata differs from its reviewed hashes')
+            destination = source / entry['path']
+            metadata = destination.lstat()
+            require(stat.S_ISREG(metadata.st_mode) and not destination.is_symlink(),
+                    'Dependency destination must be an ordinary file')
+            prepared.append((entry, content, destination))
+
+        self.git(source, 'read-tree', baseline)
+        for entry, content, destination in prepared:
+            destination.write_bytes(content)
+            blob = self.git(source, 'hash-object', '--no-filters', '-w',
+                            str(destination)).decode('ascii').strip()
+            require(blob == entry['blobSha'], 'Written dependency blob differs')
+            self.git(source, 'update-index', '--add', '--cacheinfo',
+                     '100644,' + blob + ',' + entry['path'])
+        actual_tree = self.git(source, 'write-tree').decode('ascii').strip()
+        require(actual_tree == data['expectedTree'], 'Constructed dependency tree differs')
+        raw_commit_path = self.output / 'reviewed-metadata-commit'
+        with raw_commit_path.open('xb') as destination:
+            destination.write(raw_commit)
+        actual_commit = self.git(source, 'hash-object', '-t', 'commit', '-w',
+                                str(raw_commit_path)).decode('ascii').strip()
+        require(actual_commit == data['expectedCommit'], 'Constructed dependency commit differs')
+        changed = self.git(source, 'diff', '--name-only', '-z', baseline,
+                           actual_commit).split(b'\0')
+        require({name.decode('ascii') for name in changed if name} == required_paths,
+                'Constructed commit changes files outside dependency metadata')
+        self.validate_revision(source, actual_commit)
+        self.git(source, 'checkout', '--force', '--detach', actual_commit)
+        require(self.git(source, 'rev-parse', 'HEAD').decode('ascii').strip() == actual_commit,
+                'Prepared checkout does not match the reviewed commit')
+        for entry, content, destination in prepared:
+            require(destination.read_bytes() == content,
+                    'Checked-out dependency metadata differs from the reviewed bytes')
+        self.report['metadataPatch'] = {
+            'sha256': sha256(raw_data), 'baseCommit': baseline,
+            'expectedCommit': actual_commit, 'expectedTree': actual_tree,
+            'files': [{key: entry[key] for key in ('path', 'sha256', 'blobSha')}
+                      for entry in entries],
+        }
+        return actual_commit
 
     def build_image(self, source, revision, context, dockerfile, node_image, case):
         context.mkdir(mode=0o700)
@@ -496,9 +627,17 @@ def main():
             staging = Path(scratch_inputs)
             staged_source = staging / 'source'
             controller.report['sourceInput'] = controller.clean_source(source, staged_source)
-            patched = controller.git(staged_source, 'rev-parse', 'HEAD').decode('ascii').strip()
-            require(re.fullmatch(r'[0-9a-f]{40}', patched) is not None, 'Invalid checked-out SHA')
-            require(patched == os.environ.get('GITHUB_SHA'), 'Checkout and workflow identity differ')
+            workflow_commit = controller.git(staged_source, 'rev-parse', 'HEAD').decode('ascii').strip()
+            require(re.fullmatch(r'[0-9a-f]{40}', workflow_commit) is not None,
+                    'Invalid checked-out workflow SHA')
+            require(workflow_commit == os.environ.get('GITHUB_SHA'),
+                    'Checkout and workflow identity differ')
+            controller.report['workflowCommit'] = workflow_commit
+            patched = workflow_commit
+            if 'metadataPatch' in plan:
+                patched = controller.construct_metadata_patch(
+                    staged_source, bounded_file(harness / plan['metadataPatch'], 256 * 1024),
+                    plan['baselineCommit'], workflow_commit)
             require(patched != plan['baselineCommit'], 'Baseline and patch must be distinct commits')
             revisions = {'baseline': plan['baselineCommit'], 'patched': patched}
             trees = {case: controller.validate_revision(staged_source, revision)
