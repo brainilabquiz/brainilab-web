@@ -2168,3 +2168,75 @@ body.braini-visual .post-burst{position:absolute;top:50%;left:50%;width:10px;hei
 }
 @keyframes bl-page-out{to{opacity:0}}
 @keyframes bl-page-in{from{opacity:0;transform:translateY(12px)}}
+/* ===== Simpler phone header (24 Nov 2026): with the bottom tab bar on screen, the header keeps the logo, the streak,
+   the avatar (it opens the account menu) and the menu. The menu only lists what the tab bar does not:
+   Rankings, Groups, Breaking News and Suggestions. Pages without the tab bar (games, quizzes) keep the full header. ===== */
+body.braini-visual .topbar .links>a.menu-extra{display:none}
+body.braini-visual .topbar .links>a.menu-extra .menu-extra-icon{flex:none}
+@media(max-width:760px){
+  /* site.css forces the "?" visible with !important, so hiding it needs the same weight. */
+  html.has-tabbar body.braini-visual .topbar .nav-right>.help-dot{display:none!important}
+  html.has-tabbar body.braini-visual .topbar .links>a:is([href*="games/"],[href*="daily-quiz"],[href*="learn"]):not(.news-nav-link){display:none}
+  html.has-tabbar body.braini-visual .topbar .links>a.menu-extra{display:flex;align-items:center;gap:7px}
+}
+/* ===== Account menu (24 Nov 2026): a navy identity band with the level, the XP card lifted onto its edge, rows with
+   pictograms and a clear free-account invitation for guests. ===== */
+body.braini-visual .account-popover{width:min(352px,calc(100vw - 24px));padding:0 14px 12px;overflow:hidden;border:1px solid #e3dece;border-radius:24px;background:#fffefa;box-shadow:0 22px 60px #1f1a4a33}
+body.braini-visual .account-popover-head{position:relative;isolation:isolate;margin:0 -14px;padding:22px 22px 60px;gap:16px;border:0;background:radial-gradient(circle at 85% -10%,#ffffff26,transparent 55%) var(--navy,#2d296e);color:#fff}
+body.braini-visual .account-popover-head::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(#ffffff24 1.2px,transparent 1.7px) 0 0/18px 18px;pointer-events:none}
+body.braini-visual .account-popover-head strong{color:#fff;font:700 22px/1.15 Pally,Montserrat,system-ui,sans-serif}
+body.braini-visual .account-popover-head .account-level-label{color:#f1eefb}
+body.braini-visual .account-popover-head .account-level-label .account-tier{border-color:var(--yellow,#ffd813);background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-weight:800}
+body.braini-visual .account-popover-head .account-menu-avatar{width:64px!important;height:64px!important;box-shadow:0 8px 18px #00000040}
+body.braini-visual .account-popover>a.account-progress-link{position:relative;margin:-42px 0 10px;padding:14px 16px 12px;border:1px solid #e6e1f2;border-radius:18px;background:#fff;box-shadow:0 10px 24px #2d296e1f;color:var(--navy,#2d296e)}
+body.braini-visual .account-popover>a.account-progress-link:hover{border-color:#cfc8ec}
+body.braini-visual .account-progress-link strong{font:700 19px/1 Pally,Montserrat,system-ui,sans-serif}
+body.braini-visual .account-progress-link .account-xp-track{height:12px;margin:12px 0 12px;background:#ece9f6;box-shadow:inset 0 1px 2px #2d296e1f}
+body.braini-visual .account-progress-link .account-xp-track>i{border-top:0;background:#40ab34;box-shadow:inset 0 -3px #2c842866,inset 0 3px #ffffff40}
+body.braini-visual .account-progress-link .account-streak{padding-top:10px;border-top:1px solid #eeeaf6}
+body.braini-visual .account-progress-link .account-streak.is-secured small{color:#2f7d27;font-weight:700}
+body.braini-visual .account-progress-link .account-streak.is-secured small::before{content:"✓ "}
+body.braini-visual .account-popover a.account-popover-row,body.braini-visual .account-popover button.account-popover-row{display:flex;align-items:center;gap:12px;min-height:56px;margin:0;padding:9px 10px;border:0;border-radius:14px;text-align:left}
+body.braini-visual .account-popover .account-popover-row+.account-popover-row{margin-top:2px}
+body.braini-visual .account-popover .account-popover-row>div{flex:1;min-width:0}
+body.braini-visual .account-popover .account-popover-row::after{content:"";flex:none;width:8px;height:8px;margin:0 4px 0 auto;border:solid #b5b0ca;border-width:2px 2px 0 0;transform:rotate(45deg)}
+body.braini-visual .account-popover .account-popover-row:is(:hover,:focus-visible){background:#f4f2fb}
+body.braini-visual .account-popover .account-popover-row strong{font-size:15px}
+body.braini-visual .account-popover .account-popover-primary{background:transparent!important}
+body.braini-visual .account-row-icon{display:grid;flex:none;place-items:center;width:38px;height:38px;border-radius:12px;background:#efedf8;color:var(--navy,#2d296e)}
+body.braini-visual .account-popover-primary .account-row-icon{background:var(--navy,#2d296e);color:#fff}
+body.braini-visual .account-popover-plus .account-row-icon{background:#fff1bd;color:#9a6400}
+body.braini-visual .account-popover .account-popover-danger{margin-top:8px!important;padding-top:12px;border-top:1px solid #eeeaf6;border-radius:0 0 14px 14px;background:transparent}
+body.braini-visual .account-popover .account-popover-danger::after{display:none}
+body.braini-visual .account-popover-danger .account-row-icon{background:#fdeceb;color:#b8322a}
+body.braini-visual .account-popover-authbox{grid-template-columns:1fr;gap:8px;margin-top:4px}
+body.braini-visual .account-popover-pitch{margin:2px 4px 4px;color:#4a4566;font-size:13px;line-height:1.5}
+body.braini-visual .account-popover .account-popover-authbtn{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:16px}
+body.braini-visual .account-popover .account-popover-authbtn-primary{border-color:#e9c400;box-shadow:0 4px 0 #c9a700}
+body.braini-visual .account-popover-authbtn-primary .account-row-icon{background:#ffffffa8}
+@media(prefers-reduced-motion:no-preference){
+  body.braini-visual .account-popover{transform-origin:top right;animation:bl-menu-in .18s cubic-bezier(.2,.9,.3,1.2)}
+}
+@keyframes bl-menu-in{from{transform:translateY(-6px) scale(.97)}}
+
+/* ===== Home: free-account invitation under the hero figures (guests only, dismissible, sign-up only on click) ===== */
+body.home-page.braini-visual .home-account-invite{display:flex;align-items:center;gap:12px;max-width:600px;margin:20px 0 0;padding:10px 10px 10px 14px;border:1px solid #ffffff38;border-radius:20px;background:#ffffff17;color:#fff;box-sizing:border-box}
+body.home-page.braini-visual .home-account-invite[hidden]{display:none}
+body.home-page.braini-visual .home-account-faces{display:flex;flex:none}
+body.home-page.braini-visual .home-account-faces img{width:34px;height:34px;border:2px solid var(--navy,#2d296e);border-radius:50%;background:#fffefa}
+body.home-page.braini-visual .home-account-faces img+img{margin-left:-11px}
+body.home-page.braini-visual .home-account-invite p{flex:1;min-width:0;margin:0;color:#ece9fb;font-size:14px;line-height:1.4}
+body.home-page.braini-visual .home-account-invite p strong{display:block;color:#fff;font-size:15px}
+body.home-page.braini-visual .home-account-join{flex:none;min-height:44px;padding:0 18px;border:0;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e);font-family:inherit;font-size:15px;font-weight:800;line-height:1.2;cursor:pointer;box-shadow:0 3px 0 #c9a700}
+body.home-page.braini-visual .home-account-join:disabled{cursor:wait;opacity:.8}
+body.home-page.braini-visual .home-account-join:focus-visible,body.home-page.braini-visual .home-account-dismiss:focus-visible{outline:3px solid #fff;outline-offset:3px}
+body.home-page.braini-visual .home-account-dismiss{display:grid;flex:none;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:transparent;color:#d9d5f3;font-size:22px;line-height:1;cursor:pointer}
+body.home-page.braini-visual .home-account-dismiss:hover{background:#ffffff21;color:#fff}
+body.home-page.braini-visual .home-account-status{flex-basis:100%;color:#ffe68a;font-size:13px}
+body.home-page.braini-visual .home-account-status[hidden]{display:none}
+@media(max-width:600px){
+  body.home-page.braini-visual .home-account-invite{flex-wrap:wrap;gap:10px;margin-top:16px;padding:12px}
+  body.home-page.braini-visual .home-account-invite p{flex-basis:calc(100% - 140px)}
+  body.home-page.braini-visual .home-account-join{order:4;flex:1 1 100%}
+  body.home-page.braini-visual .home-account-dismiss{order:3}
+}
