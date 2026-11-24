@@ -17,7 +17,8 @@ export function observeQuizQuestions(fragment,url){
  const nodes=[];let bad=false;
  function walk(v,depth=0){if(depth>8||nodes.length>1000)throw Error('bounded graph');if(Array.isArray(v)){for(const n of v)walk(n,depth+1);}else if(v&&typeof v==='object'){nodes.push(v);if(v['@graph'])walk(v['@graph'],depth+1);}}
  for(const n of fragment.querySelectorAll('script[type="application/ld+json"]')){if(n.closest('noscript'))continue;try{walk(JSON.parse(n.textContent));}catch{bad=true;}}
- const quizzes=nodes.filter(n=>types(n).includes('Quiz'));if(bad||quizzes.length!==1)return unknown;
+ const quizzes=nodes.filter(n=>types(n).includes('Quiz')||(types(n).includes('Game')&&n['@id']===url+'#quiz'));
+ if(bad||quizzes.length!==1)return unknown;
  const q=quizzes[0];if(q.url&&q.url!==url||q['@id']&&q['@id']!==url+'#quiz')return unknown;
  if(!Object.hasOwn(q,'hasPart'))return {state:'not_declared',questions:[]};
  const parts=[q.hasPart].flat();if(parts.length>100)return unknown;

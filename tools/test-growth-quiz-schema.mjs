@@ -58,21 +58,33 @@ const parsed=parseCurrentPage(graph(declaration),url,at,d);assert.deepEqual(pars
 assert.equal(parseCurrentPage('<template>'+graph(declaration)+'</template>',url,at,d).quizQuestions.state,'unknown');
 assert.equal(parseCurrentPage(graph(declaration)+graph(declaration),url,at,d).quizQuestions.state,'unknown');
 assert.equal(parseCurrentPage(graph(null),url,at,d).quizQuestions.state,'not_declared');
+const gameGraph=graph(null).replace('"@type":"Quiz"','"@type":"Game"');
+assert.equal(parseCurrentPage(gameGraph,url,at,d).quizQuestions.state,'not_declared');
+assert.equal(parseCurrentPage(gameGraph.replace('#quiz','#other'),url,at,d).quizQuestions.state,'unknown');
+assert.equal(parseCurrentPage(gameGraph+graph(null),url,at,d).quizQuestions.state,'unknown');
 
-// All remaining real declarations have exact or reviewed counterparts in the local fallback.
-const packs=JSON.parse(readFileSync('assets/js/quiz-packs.js','utf8').match(/const PACKS=(.*);\r?\n/)[1]);
-let declared=0;
-for(const t of scope.topics){
- const u='https://brainilabgames.com'+t.path,html=readFileSync('.'+t.path+'index.html','utf8'),obs=parseCurrentPage(html,u,at,d),prompts=Object.values(packs[t.local]).flatMap(sets=>Object.values(sets).flatMap(qs=>qs.map(q=>q.q)));
- if(t.slug==='general-knowledge'){assert.equal(obs.quizQuestions.state,'not_declared');continue;}
- const s={quizSchema:{schemaVersion:1,domain:'brainilabgames.com',banks:[{...bank,topic:t.slug,providers:bank.providers.map(p=>({...p,prompts}))}],pages:[{url:u,checkedAt:at,sha256:'a'.repeat(64),...obs.quizQuestions}]}};
- const compared=compareQuiz(s,u,null,now);assert.equal(compared.reviewNeeded,0,t.slug);assert.equal(compared.unknown,false,t.slug);declared+=compared.rows.length;
+const topicPaths=scope.topics.map(t=>t.path);
+for(const path of [...topicPaths,'/games/brain-mix/','/geography/europe-flags-quiz/']){
+ const pageURL='https://brainilabgames.com'+path;
+ const html=readFileSync('.'+path+'index.html','utf8');
+ const scripts=JSDOM.fragment(html).querySelectorAll('script[type="application/ld+json"]');
+ const nodes=Array.from(scripts,s=>JSON.parse(s.textContent)).flatMap(data=>data['@graph']||[data]);
+ const games=nodes.filter(n=>n['@type']==='Game');
+ assert.equal(games.length,1,path);
+ assert.equal(games[0].url,pageURL,path);
+ assert.ok(games[0].name&&games[0].image,path);
+ assert.equal(games[0].genre,'Quiz game',path);
+ assert.ok(!nodes.some(n=>n['@type']==='Quiz')&&!Object.hasOwn(games[0],'hasPart'),path);
+ assert.ok(nodes.some(n=>n['@type']==='BreadcrumbList'),path);
+ assert.ok(nodes.some(n=>n['@type']==='FAQPage'&&n.mainEntity.length>0),path);
+ const webPage=nodes.find(n=>n['@type']==='WebPage');
+ if(webPage)assert.equal(webPage.mainEntity['@id'],games[0]['@id'],path);
+ if(topicPaths.includes(path))assert.equal(parseCurrentPage(html,pageURL,at,d).quizQuestions.state,'not_declared',path);
 }
-assert.equal(declared,20);
 const report={seoExplorer:{schemaVersion:1,domain:'brainilabgames.com',observedAt:at,pages:[],sources:[],backlinks:[],...snapshot}},workspace={opportunities:[]};
 const before=JSON.stringify({report,workspace});let calls=0;globalThis.fetch=()=>{calls++;throw Error('No automatic requests');};globalThis.document=d;
 const root=d.querySelector('main');root.innerHTML=seoHTML(report,now);bindSEO(root,report,workspace);root.querySelector('[data-seo-view="quiz"]').click();
 assert.equal(calls,0);assert.equal(root.querySelector('[data-seo-prev]').hidden,true);assert.equal(root.querySelectorAll('[data-seo-review-url]').length,6);
 root.querySelector('[data-seo-review-url]').click();assert.equal(d.activeElement.id,'growth-page-review-title');assert.match(root.textContent,/Dynamic quiz questions/);assert.equal(calls,0);
 assert.equal(JSON.stringify({report,workspace}),before);assert.ok(quizSchemaOverview(snapshot,now).exported.every(r=>r.length===13));
-dom.window.close();console.log('PASS dynamic quiz schema: 20 current declarations, archived and targeted evidence, reviewed wording, dated observations, safe exports and six-page navigation.');
+dom.window.close();console.log('PASS dynamic quiz schema: eight playable game pages, archived and targeted evidence, reviewed wording, dated observations, safe exports and six-page navigation.');

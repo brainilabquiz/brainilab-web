@@ -130,7 +130,22 @@ window.BrainiSiteAnalytics=(()=>{
     if(accountState==='included')activate();else revoke(accountState==='excluded');
     window.dispatchEvent(new Event('brainilab:analytics-account'));
   }
-  function setConsent(allowedChoice){choice=allowedChoice===true;try{localStorage.setItem(key,JSON.stringify({allowed:choice,at:Date.now()}));}catch{}if(choice)activate();else revoke();window.dispatchEvent(new Event('brainilab:statistics-consent'));}
+  function setConsent(allowedChoice){
+    choice=allowedChoice===true;
+    try{localStorage.setItem(key,JSON.stringify({allowed:choice,at:Date.now()}));}catch{}
+    if(choice)activate();
+    else{
+      revoke();
+      // Capture the owner when the choice is made, even before the cloud client is available.
+      if(window.BrainiGrowthWithdrawals&&['brainilabgames.com','www.brainilabgames.com'].includes(location.hostname)){
+        try{
+          const user=JSON.parse(localStorage.getItem(accountKey)||'null')?.user;
+          if(user?.id&&!user.is_anonymous)window.BrainiGrowthWithdrawals.pending(user.id,true).then(()=>window.BrainiGrowthConversions?.flush()).catch(()=>{});
+        }catch{}
+      }
+    }
+    window.dispatchEvent(new Event('brainilab:statistics-consent'));
+  }
   document.addEventListener('click',event=>{
     if(!allowed())return;const a=event.target.closest?.('a[href]');if(!a)return;
     let url;try{url=new URL(a.href);}catch{return;}
