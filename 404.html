@@ -8,17 +8,48 @@
 <link rel="icon" href="/assets/brand/iso-multicolor.png">
 <link rel="stylesheet" href="/assets/css/site.css?v=41.53.0">
 <link rel="stylesheet" href="/assets/css/mobile.css?v=41.8.3">
+<script defer src="/assets/js/consent.bundle.js?v=41.53.0"></script>
+<script defer src="/assets/js/shell.bundle.js?v=41.53.0"></script>
 <link rel="stylesheet" href="/assets/css/visual-system.css?v=1"/>
 </head>
 <body class="braini-visual error-page">
-<header class="topbar"><div class="wrap nav">
-<a class="brand" href="/" aria-label="BrainiLab home"><picture><source srcset="/assets/brand/brainilab-logo.webp" type="image/webp"><img src="/assets/brand/brainilab-logo.png" alt="BrainiLab" width="450" height="153"></picture></a>
-<nav class="links" aria-label="Main navigation"><a href="/games/">Games</a><a href="/daily-quiz/">Daily</a><a href="/rankings/">Rankings</a><a href="/groups/">Groups</a><a href="/about/">About</a></nav>
-</div></header>
-<main class="section"><div class="wrap" style="max-width:900px;text-align:center;padding-block:clamp(48px,10vw,120px)">
+<header class="topbar">
+<div class="wrap nav">
+<a aria-label="BrainiLab home" class="brand" href="/">
+<picture><source srcset="/assets/brand/brainilab-logo-200.webp 200w, /assets/brand/brainilab-logo.webp 450w" sizes="(max-width: 600px) 100px, 160px" type="image/webp"/><img alt="BrainiLab" decoding="async" fetchpriority="high" height="153" loading="eager" src="/assets/brand/brainilab-logo.png" width="450"/></picture>
+</a>
+<nav aria-label="Main navigation" class="links" id="mainNav"><a href="/games/">Games</a><a href="/daily-quiz/">Daily</a><a href="/learn/">Learn</a><a href="/rankings/">Rankings</a><a href="/groups/">Groups</a></nav>
+<div class="nav-right">
+<div class="streak">🔥 <span data-player-streak="">0</span></div>
+<a aria-label="Suggestions" class="help-dot" href="/suggestions/" title="Suggestions">?</a>
+<a aria-label="My BrainiLab" class="avatar" href="/profile/">B</a>
+<button aria-controls="mainNav" aria-expanded="false" aria-label="Open navigation menu" class="mobile-menu" data-mobile-menu="" type="button">Menu</button>
+</div>
+</div>
+</header>
+<main class="section" id="main-content" tabindex="-1"><div class="wrap" style="max-width:900px;text-align:center;padding-block:clamp(48px,10vw,120px)">
 <div class="auth-kicker">404</div><h1>That page is not here.</h1>
-<p class="sub" style="max-width:620px;margin:0 auto 28px">The link may be outdated, or the page may have moved. You can return to BrainiLab or jump straight into a game.</p>
-<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn" href="/">Back to BrainiLab</a><a class="btn-light" href="/games/">Browse games</a></div>
+<p class="sub" style="max-width:620px;margin:0 auto 28px">The link may be outdated, or the page may have moved. Pick up from one of these instead.</p>
+<nav aria-label="Ways back into BrainiLab" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn" href="/">Back to BrainiLab</a><a class="btn-light" href="/daily-quiz/">Today’s Daily</a><a class="btn-light" href="/games/">All games</a><a class="btn-light" href="/learn/">Curious reads</a></nav>
+<p class="sub" style="max-width:620px;margin:28px auto 0;font-size:15px">Followed a broken link on BrainiLab? <a href="/suggestions/" style="color:var(--navy,#2d296e);font-weight:700;text-decoration:underline;text-underline-offset:3px">Tell us</a> and we’ll fix it.</p>
 </div></main>
-<footer class="footer"><div class="wrap"><div class="footer-copy">Free quiz games, daily challenges and knowledge content from BrainiLab.</div></div><div class="wrap footer-contact"><a data-contact-link href="/suggestions/">Contact &amp; corrections</a> · <a href="/cookies/" data-manage-privacy>Manage privacy</a></div></footer>
+<footer class="footer">
+<div class="wrap footer-grid">
+<div>
+<picture><source srcset="/assets/brand/brainilab-logo-200.webp 200w, /assets/brand/brainilab-logo.webp 450w" sizes="(max-width: 600px) 100px, 160px" type="image/webp"/><img alt="BrainiLab" class="footer-logo" decoding="async" height="153" loading="lazy" src="/assets/brand/brainilab-logo.png" width="450"/></picture>
+<div class="footer-copy">Free quiz games, daily challenges and knowledge content from BrainiLab.</div>
+<div class="footer-links"><a href="/profile/?section=progress">My Progress</a><a href="/rankings/">Rankings</a>
+<a href="/games/">Games</a>
+<a href="/about/">About us</a>
+<a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a data-manage-privacy="" href="/cookies/#privacy-choices">Manage privacy</a></div>
+</div>
+<div>
+<div class="socials">
+<a class="social-link" href="https://www.youtube.com/@BrainiLab" rel="me noopener noreferrer" target="_blank"><span class="social-dot youtube">▶</span>YouTube</a>
+<a class="social-link" href="https://www.instagram.com/brainilab/" rel="me noopener noreferrer" target="_blank"><span class="social-dot instagram">◎</span>Instagram</a>
+</div>
+<div class="footer-copy" style="margin-top:12px">Follow BrainiLab across platforms.</div>
+</div>
+</div>
+<div class="wrap footer-contact"><a data-contact-link href="/suggestions/">Contact &amp; corrections</a> · <a href="/cookies/" data-manage-privacy>Manage privacy</a></div></footer>
 </body></html>
