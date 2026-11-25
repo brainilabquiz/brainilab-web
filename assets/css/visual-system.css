@@ -2240,3 +2240,33 @@ body.home-page.braini-visual .home-account-status[hidden]{display:none}
   body.home-page.braini-visual .home-account-join{order:4;flex:1 1 100%}
   body.home-page.braini-visual .home-account-dismiss{order:3}
 }
+/* ===== Game navigation (25 Nov 2026): back links that point back, a readable phone header on the anytime games, and a
+   "Play another game" row under every game and topic quiz (game-hop.js), since phones have no tab bar there. ===== */
+body.braini-visual.play-page :is(.labgame-back,.daily-mechanic-back){padding:0 16px;border:1.5px solid #ffffff66;border-radius:999px;background:#ffffff14;color:#fff;font-weight:800;text-decoration:none}
+body.braini-visual.play-page :is(.labgame-back,.daily-mechanic-back):hover{background:#ffffff2b}
+body.braini-visual.play-page :is(.labgame-back,.daily-mechanic-back):focus-visible{outline:3px solid var(--yellow,#ffd813);outline-offset:3px}
+@media(max-width:600px){
+  body.braini-visual[data-world] .labgame-top:has(.world-art):has(.labgame-back){display:grid;grid-template-columns:minmax(0,1fr) 88px;column-gap:12px;align-items:start}
+  body.braini-visual[data-world] .labgame-top:has(.world-art):has(.labgame-back)>div:first-child{grid-column:1/-1;grid-row:2}
+  body.braini-visual[data-world] .labgame-top:has(.world-art):has(.labgame-back) .world-art{grid-column:2;grid-row:1;align-self:center;margin:-6px 0 0}
+  body.braini-visual[data-world] .labgame-top:has(.world-art) .labgame-back{grid-column:1;grid-row:1;align-self:center;justify-self:start;margin:0}
+}
+body.braini-visual .game-hop{margin-top:28px;margin-bottom:8px}
+body.braini-visual .game-hop-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
+body.braini-visual .game-hop-head h2{margin:0;color:var(--navy,#2d296e);font:700 24px/1.2 Pally,Montserrat,system-ui,sans-serif}
+body.braini-visual .game-hop-all{display:inline-flex;align-items:center;gap:4px;min-height:44px;color:var(--navy,#2d296e);font-size:14px;font-weight:800;text-decoration:none;white-space:nowrap}
+body.braini-visual .game-hop-list{display:flex;gap:12px;margin:0;padding:4px 2px 14px;list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin}
+body.braini-visual .game-hop-list>li{flex:none;margin:0;scroll-snap-align:start}
+body.braini-visual .game-hop-list a{display:flex;flex-direction:column;align-items:center;gap:8px;box-sizing:border-box;width:118px;min-height:134px;padding:12px 8px;border:1px solid #e3dfee;border-radius:18px;background:#fff;color:var(--navy,#2d296e);text-align:center;text-decoration:none;box-shadow:0 4px 12px #2d296e12}
+body.braini-visual .game-hop-list a:hover{border-color:#c9c2ea;box-shadow:0 8px 18px #2d296e1f}
+body.braini-visual .game-hop-list a:focus-visible{outline:3px solid var(--yellow,#ffd813);outline-offset:2px}
+body.braini-visual .game-hop-list .game-hop-daily{border-color:#f1dc7a;background:#fff8d6}
+body.braini-visual .game-hop-art{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 6px 8px #00000024)}
+body.braini-visual .game-hop-icon,body.braini-visual .game-hop-letter{display:grid;place-items:center;border-radius:18px;filter:none}
+body.braini-visual .game-hop-icon{background:var(--navy,#2d296e);color:var(--yellow,#ffd813)}
+body.braini-visual .game-hop-letter{background:#efedf8;color:var(--navy,#2d296e);font:700 32px/1 Pally,Montserrat,system-ui,sans-serif}
+body.braini-visual .game-hop-name{font-size:13px;font-weight:800;line-height:1.2}
+@media(prefers-reduced-motion:no-preference){
+  body.braini-visual .game-hop-list a{transition:transform .15s ease,box-shadow .15s ease}
+  body.braini-visual .game-hop-list a:hover{transform:translateY(-2px)}
+}
