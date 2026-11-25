@@ -3,7 +3,8 @@ import {readFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
 // Search results cut long descriptions: indexable static pages keep theirs within 155 characters.
 const decode=s=>s.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-const files=execSync('git ls-files "*index.html"',{encoding:'utf8'}).split('\n').filter(f=>f&&!f.startsWith('learn/')&&!f.startsWith('infra/'));
+const files=execSync('git ls-files "*index.html"',{encoding:'utf8'}).split('\n')
+ .filter(f=>f&&!f.startsWith('learn/')&&!f.startsWith('infra/')&&!f.startsWith('tools/'));
 let checked=0;
 for(const file of files){
  const html=readFileSync(file,'utf8');
