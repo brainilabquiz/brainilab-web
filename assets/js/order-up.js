@@ -106,7 +106,7 @@ window.BrainiOrderUp=(function(){
       const back=root.querySelector(".daily-mechanic-back");
       if(back){
         back.href=localHref("../../games/index.html");
-        back.textContent="Games →";
+        back.textContent="← All games";
       }
       const label=root.querySelector(".order-up-label");
       if(label) label.textContent="Play anytime";

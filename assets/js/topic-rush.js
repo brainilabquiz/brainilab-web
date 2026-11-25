@@ -74,7 +74,7 @@ window.BrainiTopicRush=(function(){
       const back=root.querySelector(".daily-mechanic-back");
       if(back){
         back.href=localHref("../../games/index.html");
-        back.textContent="Games →";
+        back.textContent="← All games";
       }
       const introCopy=root.querySelector("[data-tr-intro] p");
       if(introCopy) introCopy.textContent="The topic appears only after you start. The timer begins at the same moment.";
