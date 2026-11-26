@@ -1266,12 +1266,12 @@ body.braini-visual .topic-index-header>a{display:inline-flex;align-items:center;
 
 /* Topic colours, in the same order as the jump links and the sections. */
 body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+1){--ti-accent:#2d296e}
-body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+2){--ti-accent:#23801c}
-body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+3){--ti-accent:#c4540a}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+2){--ti-accent:#1e7016}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+3){--ti-accent:#a8460a}
 body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+4){--ti-accent:#1a7593}
 body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+5){--ti-accent:#c62d27}
 body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+6){--ti-accent:#6a4fc9}
-body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+7){--ti-accent:#a8740b}
+body.braini-visual :is(.topic-index-nav a,.topic-index-section):nth-of-type(7n+7){--ti-accent:#8a5f08}
 
 /* Jump links: colour pills with the article count as a badge. */
 body.braini-visual .topic-index-nav{gap:10px;padding:0 0 30px;border-bottom:0}
@@ -2280,3 +2280,23 @@ body.braini-visual .game-hop-name{font-size:13px;font-weight:800;line-height:1.2
   body.home-page.braini-visual .home-jump-bar{padding-right:40px;scroll-padding-inline:12px}
   body.home-page.braini-visual .home-jump-bar::after{content:"";position:sticky;right:-40px;flex:none;align-self:stretch;width:40px;margin:-12px -40px -12px -40px;border-radius:0 22px 22px 0;background:linear-gradient(90deg,#fff0,#fff 80%);pointer-events:none}
 }
+
+/* ===== Readable contrast and comfortable targets (Nov 2026) ===== */
+/* Practice examples and the Number Route demo sit on light cards inside the coloured game worlds, so their text stays dark. */
+body.braini-visual[data-world] :is(.labgame-shell,.connections-shell,.daily-mechanic-shell) :is(.labgame-intro,.connections-intro) .entry-example :is(p,li){color:#514b5c}
+body.braini-visual[data-world] :is(.labgame-shell,.connections-shell,.daily-mechanic-shell) .labgame-intro .route-demo p{color:#2d296e}
+body.braini-visual[data-world] :is(.labgame-shell,.connections-shell,.daily-mechanic-shell) .labgame-intro .route-demo .route-demo-note{color:#56506e}
+/* Math Rush: its orange world takes a paler yellow for the small labels. */
+body.braini-visual[data-world=math-rush] .labgame-eyebrow{color:#ffe47a}
+/* A fold inside an example ("Show the connection") keeps the same inner padding as its card. */
+.braini-visual .entry-example details>summary{padding-left:14px}
+/* All topics: the yellow "Back to the illustrated library" button keeps navy text. */
+body.braini-visual .topic-index .topic-index-header>a{color:var(--navy,#2d296e)!important}
+/* Phone game stats: 19 px bold counts as large text, so the yellow numbers stay readable on every world colour. */
+@media(max-width:700px){body.braini-visual .labgame-stats strong{font-size:19px}}
+/* Standalone text links reach a 24 px target. Inline links grow with padding, which leaves the line height as it was. */
+body.braini-visual :is(.footer-contact a,.reason-header>a,.section-heading>a,a.path-continue){padding-block:4px}
+/* Links that are flex or grid items get the height directly, with the text centred. */
+body.braini-visual :is(.home-section-head>a,.daily-score-summary>a,.section-head>a,.breadcrumb a,a.geo-text-link),body.profile-page.braini-visual dt>a{min-height:24px;align-content:center}
+/* Avatar choices show a clear keyboard focus ring, also on the one already selected. */
+body.braini-visual .reward-choice:focus-visible{outline:3px solid #3fab34!important;outline-offset:3px!important}
