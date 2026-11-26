@@ -10,7 +10,9 @@ window.BrainiPerf=(function(){
 
   function loadScript(src,attrs={}){
     return new Promise((resolve,reject)=>{
-      const existing=[...document.scripts].find(s=>s.src===src);
+      // Page tags carry a ?v= build hash, so compare paths, not full URLs.
+      const path=u=>{try{return new URL(u,location.href).pathname;}catch{return u;}};
+      const existing=[...document.scripts].find(s=>s.src&&(s.src===src||path(s.src)===path(src)));
       if(existing){
         if(existing.dataset.loaded==="1" || existing.readyState==="complete"){
           resolve();
@@ -47,10 +49,8 @@ window.BrainiPerf=(function(){
     if(window.supabase?.createClient) return Promise.resolve();
     if(supabasePromise) return supabasePromise;
 
-    supabasePromise=loadScript(
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-      {crossorigin:"anonymous"}
-    ).catch(err=>{
+    // Served from our own origin, pinned to the version the pages were tested with.
+    supabasePromise=loadScript(new URL("vendor/supabase-js-2.119.2.js",jsBase).href).catch(err=>{
       supabasePromise=null;
       throw err;
     });

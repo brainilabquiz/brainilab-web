@@ -31,11 +31,11 @@
   Cache-Control: public, max-age=2592000, stale-while-revalidate=2592000
 
 /admin
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://wvgcdlxebbybthyuajgb.supabase.co wss://wvgcdlxebbybthyuajgb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self' https://wvgcdlxebbybthyuajgb.supabase.co; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://wvgcdlxebbybthyuajgb.supabase.co wss://wvgcdlxebbybthyuajgb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self' https://wvgcdlxebbybthyuajgb.supabase.co; frame-ancestors 'none'
   X-Robots-Tag: noindex, nofollow
 
 /admin/*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://wvgcdlxebbybthyuajgb.supabase.co wss://wvgcdlxebbybthyuajgb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self' https://wvgcdlxebbybthyuajgb.supabase.co; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://wvgcdlxebbybthyuajgb.supabase.co wss://wvgcdlxebbybthyuajgb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self' https://wvgcdlxebbybthyuajgb.supabase.co; frame-ancestors 'none'
   X-Robots-Tag: noindex, nofollow
 
 # Daily may be played inside the two exact Alldle origins only.

@@ -12,7 +12,7 @@ for(const path of execFileSync('git',['ls-files','*.html'],{encoding:'utf8'}).tr
  const html=readFileSync(path.trim(),'utf8');if(!html.includes('shell.bundle.js?'))continue;
  assert.equal((html.match(/consent\.bundle\.js\?/g)||[]).length,1,path);
  assert.ok(html.indexOf('consent.bundle.js?')<html.indexOf('shell.bundle.js?'),path);
- const account=html.indexOf('src="https://cdn.jsdelivr.net/npm/@supabase/');
+ const account=html.indexOf('src="/assets/js/vendor/supabase-js-');
  if(account>=0)assert.ok(html.indexOf('consent.bundle.js?')<account,path);
 }
 const storage='https://wvgcdlxebbybthyuajgb.supabase.co/storage/v1/object/public/learn-covers/';
