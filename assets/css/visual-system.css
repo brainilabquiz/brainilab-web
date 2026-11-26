@@ -2270,3 +2270,13 @@ body.braini-visual .game-hop-name{font-size:13px;font-weight:800;line-height:1.2
   body.braini-visual .game-hop-list a{transition:transform .15s ease,box-shadow .15s ease}
   body.braini-visual .game-hop-list a:hover{transform:translateY(-2px)}
 }
+/* ===== Home quick routes (26 Nov 2026): the six routes are never cut off. From 601 px the title takes its own line and the
+   routes wrap, centred; on phones the row still scrolls, with a fade on the right that shows there is more. ===== */
+@media(min-width:601px){
+  body.home-page.braini-visual .home-jump-bar{flex-wrap:wrap;justify-content:center;row-gap:10px;overflow:visible}
+  body.home-page.braini-visual .home-jump-title{flex-basis:100%;padding:2px 0 4px;text-align:center}
+}
+@media(max-width:600px){
+  body.home-page.braini-visual .home-jump-bar{padding-right:40px;scroll-padding-inline:12px}
+  body.home-page.braini-visual .home-jump-bar::after{content:"";position:sticky;right:-40px;flex:none;align-self:stretch;width:40px;margin:-12px -40px -12px -40px;border-radius:0 22px 22px 0;background:linear-gradient(90deg,#fff0,#fff 80%);pointer-events:none}
+}
