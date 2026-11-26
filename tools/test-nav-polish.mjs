@@ -14,7 +14,7 @@ for(const f of files){
   assert.deepEqual(hrefs,EXPECTED,f+' footer links');
   const at=s.indexOf('<footer class="footer">'),footer=s.slice(at,s.indexOf('</footer>',at)+9);
   assert.equal((footer.match(/>Manage privacy<\/a>/g)||[]).length,1,f+' shows "Manage privacy" once');
-  assert.match(footer,/class="wrap footer-contact"><a data-contact-link href="\/suggestions\/">Contact &amp; corrections<\/a> · <a href="\/cookies\/" data-manage-privacy>Manage privacy<\/a>/,f+' keeps the contact line');
+  assert.match(footer,/class="wrap footer-contact"><a data-contact-link href="\/suggestions\/">Contact &amp; corrections<\/a> · <a href="\/cookies\/#privacy-choices" data-manage-privacy>Manage privacy<\/a>/,f+' keeps the contact line, opening the privacy choices');
 }
 assert.ok(footers>=119,`checked ${footers} footers`);
 
@@ -29,4 +29,10 @@ for(const f of files.filter(f=>/^(geography|science|history|sports|general-knowl
   const nav=current(f);assert.equal((nav.match(/aria-current=/g)||[]).length,1,f);assert.match(nav,/<a aria-current="page" href="[^"]*games\/(?:index\.html)?">Games<\/a>/,f);
 }
 assert.match(current('reasoning/index.html'),/<a aria-current="page" href="\/learn\/">Learn<\/a>/);
+// Home quick routes: never cut off. From 601 px they wrap under their own title; phones scroll with a fade.
+const css=readFileSync('assets/css/visual-system.css','utf8').replace(/\r\n/g,'\n');
+const jump=css.slice(css.indexOf('/* ===== Home quick routes'));
+assert.match(jump,/@media\(min-width:601px\)\{\n\s*body\.home-page\.braini-visual \.home-jump-bar\{flex-wrap:wrap;[^}]*overflow:visible\}/);
+assert.match(jump,/\.home-jump-title\{flex-basis:100%/);
+assert.match(jump,/@media\(max-width:600px\)\{[\s\S]*?\.home-jump-bar::after\{content:"";position:sticky;[^}]*pointer-events:none\}/);
 console.log('Navigation polish checks passed');
