@@ -12,10 +12,12 @@ for(const html of [readFileSync('learn/index.html','utf8'),libraryBody(articles)
  const dom=new JSDOM(html,{url:'https://brainilabgames.com/learn/',runScripts:'outside-only'});
  const w=dom.window,d=w.document;
  assert.equal(d.querySelectorAll('.learn-card[data-format=article]').length,articles.length);
- assert.ok(d.querySelector('.learn-search').hidden);
+ // Script-only controls are in place from the first paint (no layout shift); the noscript style hides them.
+ assert.equal(d.querySelector('.learn-search').hidden,false);
  assert.ok(d.querySelector('noscript').textContent.includes('display:flex!important'));
+ assert.match(d.querySelector('noscript').textContent,/\.learn-surprise,div\.learn-format-filters,\.learn-search,\.learn-topic-select/);
  assert.equal(d.querySelector('.learn-resource-link'),null);
- assert.ok(d.querySelector('.learn-surprise').hidden);
+ assert.equal(d.querySelector('.learn-surprise').hidden,false);
  w.eval(readFileSync('assets/js/learn-library.js','utf8'));
  const surprise=d.querySelector('[data-random-article]');
  assert.equal(surprise.parentElement.hidden,false);

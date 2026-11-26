@@ -138,3 +138,11 @@
 @media(max-width:650px){.rankings-page .ranking-player-copy{grid-template-columns:minmax(0,1fr);gap:.25rem}.rankings-page .ranking-player-details{justify-content:flex-start;text-align:left;gap:.25rem .375rem}.rankings-page .ranking-player-details>small{font-size:.625rem}}
 
 .rankings-page .ranking-refresh-note{font-size:.8125rem;line-height:1.6;color:var(--rank-muted);margin:1rem 0}.rankings-page .ranking-refresh-note button{min-height:2.75rem;margin-left:.5rem;background:transparent;border:0;color:var(--navy);text-decoration:underline;font:inherit;font-weight:700;cursor:pointer}
+/* Readable minimum: ranking labels stay at 12px or more (the short "You" pill at 11px). */
+.ranking-board-period,.rankings-page .ranking-list-head,.rankings-page .ranking-identity small,.ranking-personal span,.ranking-level strong span,.ranking-level small,.ranking-rules summary span,.ranking-sidebar .continuity-main small,.ranking-player-count{font-size:12px}
+.ranking-you{font-size:11px}
+/* On phones the title always takes its own row, so the late web font cannot move "My groups" onto a new line. */
+@media(max-width:420px){.rankings-page .rankings-title{flex:1 1 100%}}
+/* Hold a screen of space while the board loads, so its arrival never moves the footer on screen. */
+#rankingsRoot:empty{min-height:100vh}
+#rankingsRoot:has(>.ranking-skeleton){min-height:100vh}
