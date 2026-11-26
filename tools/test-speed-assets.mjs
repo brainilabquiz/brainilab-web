@@ -25,6 +25,7 @@ assert.match(loader,/loadScript\(new URL\("vendor\/supabase-js-2\.119\.2\.js",js
 assert.match(loader,/path\(s\.src\)===path\(src\)/,'the lazy loader reuses a page tag that carries a ?v= hash');
 assert.doesNotMatch(loader,/jsdelivr/);
 assert.doesNotMatch(read('_headers'),/jsdelivr/,'the admin CSP no longer allows the CDN');
+assert.match(read('tools/build.mjs'),/if\(file\.startsWith\('assets\/js\/vendor\/'\)\)await copyFile\(source,target\);\s*else await build\(/,'the build publishes the reviewed bytes, not a re-minified copy');
 
 // 2. Every world illustration has a 256 px copy, and every place that shows one offers it.
 const dims=buf=>{const kind=buf.toString('ascii',12,16);
