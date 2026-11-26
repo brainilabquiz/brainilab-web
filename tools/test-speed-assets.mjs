@@ -10,7 +10,8 @@ const pages=execSync('git ls-files "*.html"').toString().split('\n').filter(f=>f
 
 // 1. One pinned, self-hosted copy of supabase-js 2.119.2 (byte-identical to the npm package's dist/umd/supabase.js).
 const SDK='assets/js/vendor/supabase-js-2.119.2.js';
-assert.equal(createHash('sha256').update(readFileSync(SDK)).digest('hex'),'8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263',SDK+' is the reviewed 2.119.2 build');
+// Git stores it with LF; a Windows checkout may turn those into CRLF, so hash the LF form.
+assert.equal(createHash('sha256').update(read(SDK).replace(/\r\n/g,'\n')).digest('hex'),'8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263',SDK+' is the reviewed 2.119.2 build');
 assert.ok(existsSync('assets/js/vendor/supabase-js-LICENSE.txt'),'the MIT licence travels with the copy');
 let tags=0;
 for(const f of pages){
