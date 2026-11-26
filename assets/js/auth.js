@@ -540,6 +540,24 @@ window.BrainiAuth = (function(){
       </section>`;
   }
 
+  function paintProfileAuthRoot(root,auth){
+    if(auth.status==="guest"){
+      root.innerHTML=guestProfileMarkup();
+      root.querySelector("[data-profile-save]").onclick=()=>open({source:"profile"});
+      const continueBtn=root.querySelector("[data-profile-continue]");
+      if(continueBtn) continueBtn.onclick=()=>window.scrollTo({top:document.body.scrollHeight*.35,behavior:"smooth"});
+    }else{
+      root.innerHTML="";
+    }
+  }
+
+  // The guest note sits above the avatar studio. Paint it from the saved state before the
+  // cloud session check, so it is in place before the studio draws and never pushes it down.
+  function paintGuestNoteEarly(){
+    const root=document.querySelector("[data-profile-auth-root]");
+    if(root && !root.childElementCount && window.BrainiData?.authState?.()?.status==="guest") paintProfileAuthRoot(root,{status:"guest"});
+  }
+
   async function hydrateProfilePage(){
     const root=document.querySelector("[data-profile-auth-root]");
     const account=document.querySelector("[data-profile-account-root]");
@@ -547,16 +565,7 @@ window.BrainiAuth = (function(){
 
     const auth=await BrainiData.api.getAuthState();
 
-    if(root){
-      if(auth.status==="guest"){
-        root.innerHTML=guestProfileMarkup();
-        root.querySelector("[data-profile-save]").onclick=()=>open({source:"profile"});
-        const continueBtn=root.querySelector("[data-profile-continue]");
-        if(continueBtn) continueBtn.onclick=()=>window.scrollTo({top:document.body.scrollHeight*.35,behavior:"smooth"});
-      }else{
-        root.innerHTML="";
-      }
-    }
+    if(root) paintProfileAuthRoot(root,auth);
 
     if(account){
       if(auth.status==="authenticated"){
@@ -897,6 +906,9 @@ window.BrainiAuth = (function(){
       el.addEventListener("click",()=>open({source:el.dataset.openAuth||"button"}));
     });
   }
+
+  // Now, while later scripts have not drawn the profile yet.
+  try{paintGuestNoteEarly();}catch{}
 
   if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded",boot,{once:true});

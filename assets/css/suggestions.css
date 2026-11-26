@@ -78,3 +78,4 @@
 .suggestions-main :is(a,button,input,textarea,select,summary):focus-visible{outline:3px solid #3fab34;outline-offset:3px}
 .suggestions-success-icon img{width:24px;height:24px}
 @media(max-width:420px){.suggestions-card{padding:18px}.suggestions-actions{align-items:stretch;flex-direction:column}.suggestions-actions>*{text-align:center}.suggestions-success{padding:16px}}
+.suggestions-main .auth-kicker{font-size:12px}
