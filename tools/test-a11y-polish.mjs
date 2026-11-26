@@ -42,7 +42,11 @@ assert.ok(ratio('#ffe47a','#a04a13')>=4.5,'Math Rush labels');
 assert.match(block,/@media\(max-width:700px\)\{body\.braini-visual \.labgame-stats strong\{font-size:19px\}\}/);
 
 // 24 px targets and the avatar focus ring.
-assert.match(block,/:is\(\.footer-contact a,\.reason-header>a,\.section-heading>a,a\.path-continue\)\{padding-block:4px\}/);
+assert.match(block,/:is\(\.footer-contact a,\.marketing-consent p a,\.reason-header>a,\.section-heading>a,a\.path-continue\)\{padding-block:4px\}/);
 assert.match(block,/:is\(\.home-section-head>a,\.daily-score-summary>a,\.section-head>a,\.breadcrumb a,a\.geo-text-link\),body\.profile-page\.braini-visual dt>a\{min-height:24px;align-content:center\}/);
 assert.match(block,/body\.braini-visual \.reward-choice:focus-visible\{outline:3px solid #3fab34!important;outline-offset:3px!important\}/);
+// The free-account faces on the home sit on the first screen, so they load straight away.
+const invite=read('index.html').match(/<aside class="home-account-invite"[\s\S]*?<\/aside>/)[0];
+assert.equal((invite.match(/<img /g)||[]).length,3);
+assert.doesNotMatch(invite,/loading="lazy"/);
 console.log('Accessibility polish checks passed');

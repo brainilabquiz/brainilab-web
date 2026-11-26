@@ -2295,7 +2295,7 @@ body.braini-visual .topic-index .topic-index-header>a{color:var(--navy,#2d296e)!
 /* Phone game stats: 19 px bold counts as large text, so the yellow numbers stay readable on every world colour. */
 @media(max-width:700px){body.braini-visual .labgame-stats strong{font-size:19px}}
 /* Standalone text links reach a 24 px target. Inline links grow with padding, which leaves the line height as it was. */
-body.braini-visual :is(.footer-contact a,.reason-header>a,.section-heading>a,a.path-continue){padding-block:4px}
+body.braini-visual :is(.footer-contact a,.marketing-consent p a,.reason-header>a,.section-heading>a,a.path-continue){padding-block:4px}
 /* Links that are flex or grid items get the height directly, with the text centred. */
 body.braini-visual :is(.home-section-head>a,.daily-score-summary>a,.section-head>a,.breadcrumb a,a.geo-text-link),body.profile-page.braini-visual dt>a{min-height:24px;align-content:center}
 /* Avatar choices show a clear keyboard focus ring, also on the one already selected. */
