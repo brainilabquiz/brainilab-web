@@ -3445,7 +3445,7 @@ button{cursor:pointer}
   font-weight:850
 }
 .anytime-played{color:var(--green)}
-.anytime-new{color:#9290a1}
+.anytime-new{color:#625f73}
 .difficulty-actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -5798,7 +5798,7 @@ main > section.section,
 .profile-continuity{grid-column:1/-1;width:100%}
 
 /* A grey flame means today's Daily has not been completed, even with an active streak. */
-.streak{filter:grayscale(1);color:#777985;background:#f6f5f2}.streak span{color:#6c6b76}
+.streak{filter:grayscale(1);color:#6c6b76;background:#f6f5f2}.streak span{color:#6c6b76}
 .streak.is-secured{filter:none;background:#fff6e6;border-color:#efcf98}.streak.is-secured span{color:#b44908}
 .continuity-card:not(.is-secured) .continuity-flame{filter:grayscale(1);opacity:.55}
 .account-popover{width:min(340px,calc(100vw - 24px));padding:14px;border-radius:22px;border-color:#e4ddd2;box-shadow:0 14px 46px #29234425}
