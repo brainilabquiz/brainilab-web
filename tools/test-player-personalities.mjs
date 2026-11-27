@@ -23,18 +23,26 @@ const second=dom();Object.entries(stored).forEach(([k,v])=>second.window.localSt
 assert.equal(second.window.BrainiData.player().displayName,first.displayName);assert.equal(second.window.BrainiData.player().defaultAvatarUrl,first.defaultAvatarUrl);
 await w.BrainiData.api.syncExternalGuestUser({id:'guest-fixture',is_anonymous:true});
 const old={user_id:'guest-fixture',display_name:'Guest 012345ABCD',leaderboard_display_name:'Guest 012345ABCD',leaderboard_enabled:true,avatar_url:null};
-let profile={...old},calls=[],mode='normal',anonymous=true;
-w.BrainiBackendAuth={isConfigured:()=>true,getSession:async()=>({user:{id:'guest-fixture',is_anonymous:anonymous}}),getClient:()=>({from:()=>{
- let payload=null,filters=[];const chain={select:()=>chain,eq:(k,v)=>{filters.push([k,v]);return chain;},update:value=>{payload=value;calls.push({value,filters});return chain;},single:async()=>({data:profile,error:null}),maybeSingle:async()=>{
+let profile={...old},calls=[],mode='normal',anonymous=true,updates=0;
+// Since Supabase step 28 the public name changes only through set_brainilab_guest_nickname, which compares the
+// generated alias on the server (a direct profiles PATCH answers 403).
+w.BrainiBackendAuth={isConfigured:()=>true,getSession:async()=>({user:{id:'guest-fixture',is_anonymous:anonymous}}),getClient:()=>({
+ rpc:async(name,args)=>{
+  calls.push({name,args});
+  if(mode==='missing')return {data:null,error:{code:'PGRST202',message:'Could not find the function public.set_brainilab_guest_nickname'}};
   if(mode==='error')return {data:null,error:Error('offline')};
   if(mode==='race'){profile={...old,display_name:'My chosen name',leaderboard_display_name:'My chosen name'};return {data:null,error:null};}
-  profile={...profile,...payload};return {data:profile,error:null};
- }};return chain;
-}})};
+  if(profile.display_name!==args.p_current||profile.leaderboard_display_name!==args.p_current)return {data:null,error:null};
+  profile={...profile,display_name:args.p_nickname,leaderboard_display_name:args.p_nickname};
+  return {data:{display_name:args.p_nickname,leaderboard_display_name:args.p_nickname},error:null};
+ },
+ from:()=>{const chain={select:()=>chain,eq:()=>chain,update:()=>{updates++;return chain;},single:async()=>({data:profile,error:null})};return chain;}
+})};
 load(w,['supabase-profile.js']);await w.BrainiProfiles.sync();
 assert.equal(profile.display_name,first.displayName,'first game carries browser nickname into anonymous account');
-assert.equal(profile.leaderboard_display_name,first.displayName);assert.deepEqual(Object.keys(calls[0].value).sort(),['display_name','leaderboard_display_name']);
-assert.equal(calls[0].filters.length,3,'owner and both original aliases guard concurrent edits');
+assert.equal(profile.leaderboard_display_name,first.displayName);
+assert.equal(calls[0].name,'set_brainilab_guest_nickname');assert.equal(JSON.stringify(calls[0].args),JSON.stringify({p_current:old.leaderboard_display_name,p_nickname:first.displayName}),'the server compares the generated alias');
+assert.equal(updates,0,'no direct profiles update');
 assert.equal(w.BrainiData.player().defaultAvatarUrl,first.defaultAvatarUrl);assert.equal(w.BrainiData.player().avatarUrl,null);
 calls=[];await w.BrainiProfiles.sync();assert.equal(calls.length,0,'return visits do not write again');
 for(const custom of [{display_name:'Custom me'},{leaderboard_display_name:'Public custom'},{leaderboard_enabled:false}]){
@@ -43,6 +51,12 @@ for(const custom of [{display_name:'Custom me'},{leaderboard_display_name:'Publi
 profile={...old};anonymous=false;calls=[];await w.BrainiProfiles.fetchMyProfile();assert.equal(calls.length,0,'never rewrite registered account');anonymous=true;
 profile={...old};mode='race';assert.equal((await w.BrainiProfiles.fetchMyProfile()).display_name,'My chosen name');
 profile={...old};mode='error';assert.equal((await w.BrainiProfiles.fetchMyProfile()).display_name,old.display_name,'cosmetic failure leaves readable profile');
+// Before the server function is installed: skip quietly, no warning, and do not ask again in this tab.
+const warnings=[];w.console.warn=(...a)=>warnings.push(a.join(' '));
+profile={...old};mode='missing';calls=[];assert.equal((await w.BrainiProfiles.fetchMyProfile()).display_name,old.display_name);
+assert.equal(calls.length,1);assert.equal(warnings.length,0,'a missing function is not reported as an error');
+calls=[];await w.BrainiProfiles.fetchMyProfile();assert.equal(calls.length,0,'the tab does not ask again');
+assert.equal(w.sessionStorage.getItem('brainilab:guest-nickname-unavailable'),'1');mode='normal';
 const bad=w.BrainiProgressUI.avatarImageMarkup({name:'Guest 012345ABCD',avatarUrl:'javascript:alert(1)'});assert.doesNotMatch(bad,/javascript:/);
 const container=w.document.querySelector('#avatars');container.innerHTML=w.BrainiProgressUI.avatarImageMarkup({name:'Curious Einstein',avatarUrl:'https://example.test/photo.jpg'});
 const img=container.querySelector('img');assert.match(img.src,/photo.jpg$/);img.dispatchEvent(new w.Event('error'));assert.match(img.src,/einstein.svg$/);assert.equal(img.dataset.fallbackAvatar,undefined);

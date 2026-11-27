@@ -47,6 +47,17 @@ window.BrainiProfiles = (function(){
     return currentProfile;
   }
 
+  const NICKNAME_UNAVAILABLE_KEY="brainilab:guest-nickname-unavailable";
+  let nicknameUnavailable=false;
+  function guestNicknameUnavailable(){
+    if(nicknameUnavailable) return true;
+    try{return sessionStorage.getItem(NICKNAME_UNAVAILABLE_KEY)==="1";}catch{return false;}
+  }
+  function markGuestNicknameUnavailable(){
+    nicknameUnavailable=true;
+    try{sessionStorage.setItem(NICKNAME_UNAVAILABLE_KEY,"1");}catch{}
+  }
+
   async function personaliseGuestDefault(profile){
     const people=window.BrainiPeople;
     if(!people || !profile?.leaderboard_enabled ||
@@ -57,18 +68,19 @@ window.BrainiProfiles = (function(){
 
     // Carry the browser's first nickname into its anonymous account. Only the
     // owner may replace an untouched generated alias; custom names stay intact.
+    if(guestNicknameUnavailable()) return profile;
     const local=window.BrainiData?.player?.()?.displayName;
     const nickname=people.isPreset(local)?local:people.resolve({name:profile.leaderboard_display_name}).displayName;
     try{
-      const {data,error}=await client().from('profiles')
-        .update({display_name:nickname,leaderboard_display_name:nickname})
-        .eq('user_id',profile.user_id)
-        .eq('display_name',profile.display_name)
-        .eq('leaderboard_display_name',profile.leaderboard_display_name)
-        .select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at')
-        .maybeSingle();
-      if(error) throw error;
-      if(data) return data;
+      // Public names change only through server functions (Supabase step 28). This one accepts nothing but a
+      // BrainiLab nickname replacing the generated alias, compare-and-swap on that alias.
+      const {data,error}=await client().rpc('set_brainilab_guest_nickname',{p_current:profile.leaderboard_display_name,p_nickname:nickname});
+      if(error){
+        // Before the function is installed, skip quietly and do not ask again in this tab.
+        if(error.code==='PGRST202'||error.status===404){markGuestNicknameUnavailable();return profile;}
+        throw error;
+      }
+      if(data?.display_name) return {...profile,display_name:data.display_name,leaderboard_display_name:data.leaderboard_display_name};
       // A second tab or a profile edit may have won the compare-and-swap.
       const fresh=await client().from('profiles').select('user_id,display_name,avatar_url,country_code,friend_code,leaderboard_enabled,leaderboard_display_name,created_at,updated_at').eq('user_id',profile.user_id).single();
       if(!fresh.error && fresh.data) return fresh.data;
