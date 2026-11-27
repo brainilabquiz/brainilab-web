@@ -465,7 +465,7 @@ window.BrainiAdmin=(function(){
       paths:()=>window.BrainiLearningAdmin.render({kind:'path',sb:state.sb,rpc,root:$('#adminContent'),toast}),
       people:()=>window.BrainiLearningAdmin.render({kind:'author',sb:state.sb,rpc,root:$('#adminContent'),toast}),
       articles:()=>window.BrainiArticles.render({sb:state.sb,rpc,root:$('#adminContent'),toast}),
-      growth:()=>window.BrainiGrowth.render({rpc,root:$('#adminContent')}),
+      growth:()=>window.BrainiGrowth.render({sb:state.sb,rpc,root:$('#adminContent')}),
       analytics:renderAnalytics,
       users:renderUsers,
       rankings:renderRankings,

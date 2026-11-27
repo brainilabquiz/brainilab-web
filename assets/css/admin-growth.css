@@ -81,3 +81,7 @@
 }
 .growth-source-dates dd { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 @media(max-width:650px){.growth-area-nav{padding:.75rem}.growth-area-nav>.admin-button{display:none}.growth-area-nav .growth-area-picker{display:grid}.growth-area-heading h2{font-size:1.2rem}}
+/* Own page counter (Visits & play). */
+.growth-own-visits-period{display:inline-flex;align-items:center;gap:.5rem;margin:.25rem 0 .5rem}
+.growth-own-visits-bar{display:block;height:.5rem;min-width:2px;border-radius:999px;background:#2d296e}
+.growth-own-visits td:nth-child(3){width:45%}
