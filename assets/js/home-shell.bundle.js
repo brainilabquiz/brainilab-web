@@ -3130,9 +3130,7 @@ window.BrainiPerf=(function(){
 
   function loadScript(src,attrs={}){
     return new Promise((resolve,reject)=>{
-      // Page tags carry a ?v= build hash, so compare paths, not full URLs.
-      const path=u=>{try{return new URL(u,location.href).pathname;}catch{return u;}};
-      const existing=[...document.scripts].find(s=>s.src&&(s.src===src||path(s.src)===path(src)));
+      const existing=[...document.scripts].find(s=>s.src===src);
       if(existing){
         if(existing.dataset.loaded==="1" || existing.readyState==="complete"){
           resolve();
@@ -3169,8 +3167,11 @@ window.BrainiPerf=(function(){
     if(window.supabase?.createClient) return Promise.resolve();
     if(supabasePromise) return supabasePromise;
 
-    // Served from our own origin, pinned to the version the pages were tested with.
-    supabasePromise=loadScript(new URL("vendor/supabase-js-2.119.2.js",jsBase).href).catch(err=>{
+    // Served from our own origin, pinned to the version the pages were tested with. Pages load the same file
+    // with a ?v= build hash: reuse that tag instead of fetching the SDK a second time.
+    const sdk=new URL("vendor/supabase-js-2.119.2.js",jsBase);
+    const tag=[...document.scripts].find(s=>{try{return s.src&&new URL(s.src).pathname===sdk.pathname;}catch{return false;}});
+    supabasePromise=loadScript(tag?.src||sdk.href).catch(err=>{
       supabasePromise=null;
       throw err;
     });

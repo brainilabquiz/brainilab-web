@@ -21,8 +21,10 @@ for(const f of pages){
 }
 assert.ok(tags>=29,`${tags} pages load the SDK from our origin`);
 const loader=read('assets/js/perf-loader.js');
-assert.match(loader,/loadScript\(new URL\("vendor\/supabase-js-2\.119\.2\.js",jsBase\)\.href\)/);
-assert.match(loader,/path\(s\.src\)===path\(src\)/,'the lazy loader reuses a page tag that carries a ?v= hash');
+assert.match(loader,/const sdk=new URL\("vendor\/supabase-js-2\.119\.2\.js",jsBase\);/);
+assert.match(loader,/new URL\(s\.src\)\.pathname===sdk\.pathname/,'the lazy loader reuses a page tag that carries a ?v= hash');
+assert.match(loader,/supabasePromise=loadScript\(tag\?\.src\|\|sdk\.href\)/);
+assert.match(loader,/const existing=\[\.\.\.document\.scripts\]\.find\(s=>s\.src===src\);/,'other features still reload when their URL changes');
 assert.doesNotMatch(loader,/jsdelivr/);
 assert.doesNotMatch(read('_headers'),/jsdelivr/,'the admin CSP no longer allows the CDN');
 assert.match(read('tools/build.mjs'),/if\(file\.startsWith\('assets\/js\/vendor\/'\)\)await copyFile\(source,target\);\s*else await build\(/,'the build publishes the reviewed bytes, not a re-minified copy');

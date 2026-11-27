@@ -22,7 +22,9 @@ assert.equal(el.querySelector('.post-ring-fill').getAttribute('stroke-dashoffset
 assert.equal(el.querySelector('.post-ring').getAttribute('aria-hidden'),'true');
 assert.equal(el.querySelector('.post-burst').getAttribute('aria-hidden'),'true');
 assert.ok(el.querySelector('.post-ring-wrap .post-score')&&el.querySelector('.post-ring-wrap .post-score-label'),'score and label sit inside the ring');
-assert.match(el.querySelector('.post-art img').getAttribute('src'),/\/assets\/illustrations\/worlds\/odd-one-out\.webp$/,'the game shows its clay art');
+assert.match(el.querySelector('.post-art img').getAttribute('src'),/\/assets\/illustrations\/worlds\/odd-one-out-256\.webp$/,'the game shows its clay art');
+assert.match(el.querySelector('.post-art img').getAttribute('srcset'),/odd-one-out\.webp 512w$/,'large screens still get the full art');
+assert.equal(el.querySelector('.post-art img').getAttribute('sizes'),'184px');
 assert.equal(el.querySelector('.post-art img').getAttribute('alt'),'');
 
 // A middling round: partial ring, no celebration.
@@ -45,7 +47,7 @@ assert.equal(panel().dataset.ringPercent,'67');assert.equal(el.querySelector('.p
 mount({correct:1,total:1,score:2100},{gameId:'brainiword',name:'BrainiWord',headline:'Solved in 3'});
 assert.equal(el.querySelector('.post-ring'),null);assert.ok(!panel().classList.contains('has-ring'));assert.equal(panel().dataset.ringPercent,undefined);
 assert.equal(el.querySelector('.post-score').textContent,'Solved in 3');
-assert.match(el.querySelector('.post-art img').getAttribute('src'),/brainiword\.webp$/);
+assert.match(el.querySelector('.post-art img').getAttribute('src'),/brainiword-256\.webp$/);
 
 // Unknown games keep the old icon path (here: none, since the icon mock has no art for it).
 mount({correct:3,total:5,score:300},{gameId:'mystery-game',name:'Mystery'});
