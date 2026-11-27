@@ -740,6 +740,12 @@ window.BrainiDailyChoiceGuard=(()=>{
    if(error)throw error;
    if(data?.rules_version!=='daily-choice-v1'||JSON.stringify(data.games)!==JSON.stringify(ids)||data.max_score!==3500||data.extra_max!==1000)throw new Error('Daily rules are updating');
    if(game!==ids[0]){
+    // The server can only accept an extra after a verified main Daily. Without a session, or as a guest who has not
+    // finished the main game in this browser, it would refuse: say so here instead of creating a guest and failing.
+    // Signed-in players may have finished on another device, so they still ask the server.
+    const existing=typeof BrainiBackendAuth?.getSession==='function'?await BrainiBackendAuth.getSession().catch(()=>undefined):undefined;
+    const mainDone=(window.BrainiData?.daily?.().completedGames||[]).includes(ids[0]);
+    if(!mainDone&&(existing===null||existing?.user?.is_anonymous))return {allowed:false,message:'Complete the main Daily first, then come back for your extra.'};
     let sessionTimer;
     try{await Promise.race([BrainiBackendAuth.ensurePlayerSession(),new Promise((_,reject)=>{sessionTimer=setTimeout(()=>reject(new Error('Connection timed out')),8000);})]);}finally{clearTimeout(sessionTimer);}
     const chosen=await rpc(client,'choose_brainilab_daily_extra',{p_game_id:game,p_challenge_date:day});
