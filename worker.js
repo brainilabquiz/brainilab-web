@@ -17,6 +17,7 @@ import {selectNewsEdition} from './lib/news-first-edition.js';
 export {BreakingNewsStore} from './lib/public-page-store.js';
 import {VIDEO_GAMES,cleanVideo} from './lib/video-card.js';
 import {adminVideoInfo} from './lib/video-admin.js';
+import {countVisit,adminVisits} from './lib/visit-counter.js';
 import {CHANNEL,PLAYLIST,PLAYLIST_URL,latestPlaylistVideo,videoRecord} from './lib/youtube-playlist.js';
 // Fixed public playlist only. No visitor data, credentials or user-supplied upstream URLs.
 // Retired public pages and their replacements. The static stubs stay as a fallback.
@@ -144,6 +145,14 @@ export default {
     ctx.waitUntil(store.fetch('https://news.internal/refresh',{method:'POST'}));
   },
   async fetch(request,env,ctx){
+    const response=await serveSite(request,env,ctx);
+    // Our own page counter: path + UTC day only, after the response, never blocking it (lib/visit-counter.js).
+    try{countVisit(productionRequest(request),response,env,ctx);}catch{}
+    return response;
+  }
+};
+
+async function serveSite(request,env,ctx){
     request=productionRequest(request);
     const url=new URL(request.url);
     if(url.pathname==='/api/cryptic')return crypticAPI(request);
@@ -240,6 +249,7 @@ export default {
         return latestVideo(request,ctx,caches.default,fetch,env.YOUTUBE_API_KEY||'');
       }
       if(url.pathname==='/api/admin/video-info')return adminVideoInfo(request,env.YOUTUBE_API_KEY||'');
+      if(url.pathname==='/api/admin/visits')return adminVisits(request,env);
       if(url.pathname==='/api/related-video'){
         const game=url.searchParams.get('game');
         if(!Object.hasOwn(VIDEO_GAMES,game))return json({error:'Unknown game'},400,0);
@@ -274,5 +284,4 @@ export default {
       return new Response(request.method==='HEAD'?null:decorateHalloween(await response.text(),holiday,url.pathname),{status:response.status,headers});
     }
     return response;
-  }
-};
+}

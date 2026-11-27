@@ -4,7 +4,7 @@ const areas=[
  ['overview','Next moves','Resume approved work and review results when matching evidence is ready.',['.growth-workbench']],
  ['seo','SEO Explorer','Review observed searches, known links and the evidence for a specific page.',['#growth-seo-explorer']],
  ['search','Search & indexing','Keep Search Console periods and Google’s saved index observations in view.',['.growth-metrics','.growth-period','.growth-caution','[data-growth-first-report]','#growth-search','#growth-indexing']],
- ['play','Visits & play','Inspect measured arrivals, recorded starts and confirmed accounts with their own dates.',['.growth-tools-grid > [aria-labelledby="growth-measurement-title"]','#growth-play-sessions','[data-growth-confirmations]']],
+ ['play','Visits & play','Inspect measured arrivals, recorded starts and confirmed accounts with their own dates.',['.growth-tools-grid > [aria-labelledby="growth-measurement-title"]','#growth-own-visits','#growth-play-sessions','[data-growth-confirmations]']],
  ['content','Content','Review articles, Academy lessons and courses using their recorded measurements.',['#growth-content']],
  ['distribution','Distribution','Prepare an invitation and review directory receipts separately from measured referrals.',['#growth-distribution']],
  ['decisions','Decisions','Read the proposal and publication history before recording a decision.',['.growth-toolbar','.growth-proposals','[data-growth-empty]']],

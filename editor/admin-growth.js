@@ -10,6 +10,7 @@ import {confirmationsHTML} from './growth-confirmations.js';
 import {comparison} from './growth-followup.js';
 import {workbenchHTML,bindWorkbench} from './growth-workbench.js';
 import {bindGrowthNavigation} from './growth-navigation.js';
+import {visitsHTML,bindVisits} from './growth-visits.js';
 export {comparison};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=value=>{try{const u=new URL(value);return u.protocol==='https:'&&['brainilabgames.com','github.com','developers.google.com'].includes(u.hostname)?u.href:null;}catch{return null;}};
@@ -58,6 +59,9 @@ function draw(decisionFilter='all'){
   detail.insertAdjacentHTML('beforeend',`<p>${esc(e.finding)}</p><ul>${(e.sources||[]).map(s=>`<li>${evidenceLink(s,s)}</li>`).join('')}</ul>`);
  });
  bindTools(root,workspace.report?.document); bindContent(root,workspace.report?.document);
+ // Our own page counter sits next to the GA4 measurement, in Visits & play.
+ const measured=root.querySelector('.growth-tools-grid > [aria-labelledby="growth-measurement-title"]');
+ if(measured){measured.insertAdjacentHTML('afterend',visitsHTML());if(context.sb)bindVisits(root,context.sb);}
  // Keep other edited forms mounted, including native selection and their
  // original revision-bound handlers. A refreshed record cannot rebase a draft.
  const retained=new Set(drafts.map(d=>d.form));
