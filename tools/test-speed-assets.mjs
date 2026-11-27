@@ -55,4 +55,8 @@ assert.ok(statics>=47,`${statics} static world images offer the 256 px copy`);
 
 // 3. The dash in the weekly dots passes 4.5:1 on white.
 assert.match(read('assets/css/visual-system.css'),/\.continuity-week b\{box-sizing:border-box;background:#fff;border:2px solid #f3d6a6;color:#946f2c\}/);
+// 4. Ranking detail labels are at least 12 px on every width (they were 11 px, 10 px under 650 px).
+const rankings=read('assets/css/rankings.css');
+assert.equal((rankings.match(/\.ranking-player-details>small\{[^}]*font-size:\.75rem\}/g)||[]).length,2);
+assert.doesNotMatch(rankings,/\.ranking-player-details>small\{[^}]*font-size:\.(?:6875|625)rem/);
 console.log(`Speed assets checks passed (${tags} SDK tags, ${worlds.length} world images, ${statics} static uses)`);
