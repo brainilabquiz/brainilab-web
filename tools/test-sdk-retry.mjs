@@ -6,7 +6,7 @@ import {pathToFileURL} from 'node:url';
 const {JSDOM}=await import(pathToFileURL(process.env.JSDOM_MODULE).href);
 const sourceRoot=resolve(process.env.SDK_SOURCE_ROOT||'.');
 const source=readFileSync(resolve(sourceRoot,'assets/js/perf-loader.js'),'utf8');
-const sdkUrl='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+const sdkUrl='https://brainilabgames.com/assets/js/vendor/supabase-js-2.119.2.js';
 const summary=[];
 
 function fixture(){
@@ -55,7 +55,7 @@ function fixture(){
     const first=Promise.allSettled(waiting);
     assert.equal(f.requests.length,1,'concurrent consumers request one SDK');
     assert.equal(f.requests[0].src,sdkUrl);
-    assert.equal(f.requests[0].getAttribute('crossorigin'),'anonymous');
+    assert.equal(f.requests[0].getAttribute('crossorigin'),null,'same-origin SDK needs no CORS mode');
     f.fail(f.requests[0]);
     const failed=await f.settle(first);
     assert.ok(failed.every(r=>r.status==='fulfilled'&&r.value===false),'all cloud consumers receive the same recoverable false result');

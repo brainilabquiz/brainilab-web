@@ -47,10 +47,11 @@ window.BrainiPerf=(function(){
     if(window.supabase?.createClient) return Promise.resolve();
     if(supabasePromise) return supabasePromise;
 
-    supabasePromise=loadScript(
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-      {crossorigin:"anonymous"}
-    ).catch(err=>{
+    // Served from our own origin, pinned to the version the pages were tested with. Pages load the same file
+    // with a ?v= build hash: reuse that tag instead of fetching the SDK a second time.
+    const sdk=new URL("vendor/supabase-js-2.119.2.js",jsBase);
+    const tag=[...document.scripts].find(s=>{try{return s.src&&new URL(s.src).pathname===sdk.pathname;}catch{return false;}});
+    supabasePromise=loadScript(tag?.src||sdk.href).catch(err=>{
       supabasePromise=null;
       throw err;
     });

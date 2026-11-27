@@ -119,7 +119,9 @@ for(const file of publicFiles){
   const source=path.join(root,file),target=path.join(output,file);
   await mkdir(path.dirname(target),{recursive:true});
   if(/\.(js|css)$/.test(file)){
-    await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
+    // Third-party copies keep the exact bytes that were reviewed (e.g. the pinned supabase-js).
+    if(file.startsWith('assets/js/vendor/'))await copyFile(source,target);
+    else await build({entryPoints:[source],outfile:target,bundle:false,minify:true,sourcemap:false,target:'es2020',legalComments:'none'});
     assetVersions.set(file,assetVersion(await readFile(target)));
     original+=(await stat(source)).size;compressed+=(await stat(target)).size;count++;
   }else if(!file.endsWith('.html')) await copyFile(source,target);

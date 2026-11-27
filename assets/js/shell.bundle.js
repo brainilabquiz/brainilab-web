@@ -155,9 +155,12 @@ window.BrainiIcons=(function(){
     return file?asset(`illustrations/worlds/${file}.webp`):"";
   }
 
-  function world(id,className="braini-world-art",alt=""){
+  // World art is drawn at 512 px but mostly shown at 38-108 px: offer the 256 px copy and let the browser pick.
+  function world(id,className="braini-world-art",alt="",sizes="112px"){
     const src=worldPath(id);
-    return src?img(src,className,alt):"";
+    if(!src)return "";
+    const small=src.replace(/\.webp$/,"-256.webp");
+    return `<img class="${esc(className)}" src="${esc(small)}" srcset="${esc(small)} 256w, ${esc(src)} 512w" sizes="${esc(sizes)}" alt="${esc(alt)}" aria-hidden="${alt?"false":"true"}">`;
   }
 
   function rankHalo(name,className="brain-rank-halo",alt=""){
@@ -4915,7 +4918,7 @@ window.BrainiPostGame=(()=>{
   const correct=number(result.correct),total=number(result.total),practice=result.practice||result.tryFirst;
   const scoring=scorePresentation(gameId,result),ring=ringPercent(result,headline,timed);
   const message=summary||(timed?(correct?'Time’s up. Here’s how your run went.':'Time’s up. Ready for another go?'):total&&correct===total?'Every answer right. Nicely done.':correct===0?'A fresh set of things to discover.':correct>=total*.8?'Nicely done. A few new discoveries, too.':'There’s always something new to learn.');
-  const art=window.BrainiIcons?.world?.(gameId,'post-game-art is-world-art')||window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
+  const art=window.BrainiIcons?.world?.(gameId,'post-game-art is-world-art','','184px')||window.BrainiIcons?.game?.(gameId,'mini','post-game-art')||'';
   const guide=options.guide||guides[gameId]||({numberroute:{href:'/learn/paths/mental-maths-foundations/',title:'Build your mental-maths toolkit',kind:'Academy · Start with the basics'},connections:{href:'/learn/connections-puzzles-find-the-hidden-link/',title:'Find a link that fits every clue'},brainiword:{href:'/learn/repeated-letters-in-five-letter-word-games/',title:'When the same letter appears twice'},sequence:{href:'/learn/paths/patterns-and-reasoning/',title:'Find the pattern, then test it',kind:'Academy · Short lessons'},oddoneout:{href:'/learn/sorting-with-two-rules/',title:'Try sorting with two rules'},science:{href:'/learn/paths/sun-moon-and-time/',title:'Make sense of the sky',kind:'Academy · Start with the basics'},history:{href:'/learn/paths/calendars-explained/',title:'Calendars have some curious rules',kind:'Academy · Start with the basics'},sports:{href:'/learn/how-to-read-a-tennis-score/',title:'Why does tennis count 15, 30, 40?'},worldcapitals:{href:'/learn/why-canberra-is-australias-capital/',title:'Why Canberra, not Sydney?'},brainmix:{href:'/learn/remember-quiz-answers-tomorrow/',title:'Make a quiz answer stick'},higherlower:{href:'/learn/why-greenland-looks-so-big/',title:'Why maps can fool your eyes'},orderup:{href:'/learn/which-century-is-that-year/',title:'The century dates that trip us up'},topicrush:{href:'/learn/chunking-memory-familiar-groups/',title:'Give your memory a useful starting point'},survival:{href:'/learn/confidence-is-not-a-memory-test/',title:'How well do you really know an answer?'}})[gameId],feedbackId=/^[a-z]{1,30}$/.test(gameId)?gameId:'';
   const stats=metrics.length?`<dl class="post-metrics">${metrics.slice(0,3).map(m=>`<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>`:'';
   container.innerHTML=`<section class="post-game ${practice?'is-practice':''}" aria-label="Game result"><header class="post-heading"><span class="post-art" aria-hidden="true">${art}</span><div><p class="post-kicker">${esc(name)}${difficulty?' · '+esc(difficulty):''}</p><span class="post-complete">${practice?'Practice complete':'Round complete'} <span aria-hidden="true">✓</span></span></div></header><div class="post-score-panel${ringClasses(ring)}"${ring==null?'':` data-ring-percent="${ring}"`}>${ring==null?'':`<div class="post-ring-wrap">${ringSvg(ring)}${ring>=80?'<span class="post-burst" aria-hidden="true"></span>':''}`}<h2 tabindex="-1" class="post-score ${headline?'is-word-result':''}">${headline?esc(headline):timed?correct:total?`${correct}<span> / ${total}</span>`:'Round complete'}</h2><p class="post-score-label">${esc(scoreLabel??((total||timed)?'correct answers':''))}</p>${ring==null?'':'</div>'}<p class="post-message">${esc(message)}</p><p class="post-points"><strong>${scoring.points.toLocaleString('en-GB')}</strong> <span data-points-label>${scoring.label}</span>${Number.isFinite(result.timeSec)?'<span> · '+Math.floor(result.timeSec/60)+':'+String(result.timeSec%60).padStart(2,'0')+'</span>':''}</p><p class="post-score-context" data-score-context ${scoring.context?'':'hidden'}>${esc(scoring.context)}</p></div>${stats}<div role="status" aria-live="polite" data-result-reward="${esc(practice?'':result.clientResultId||'')}" data-result-game="${esc(gameId)}" data-result-daily="${number(result.dailyNumber)}">${window.BrainiContinuity?.rewardMarkup?.({...result,gameId})||''}</div><div class="post-actions"></div><p class="post-next-note" hidden></p>${review(result.answerDetails)}${guide?`<a class="post-guide" data-post-action="guide" href="${esc(localHref(guide.href||'/learn/'+guide.slug+'/'))}"><span>${esc(guide.kind||'A little reading')}</span><strong>${esc(guide.title)} →</strong></a>`:''}<div class="post-footer"><a class="post-browse" data-post-action="browse" href="/games/">All games</a><a data-post-action="progress" href="/profile/?section=progress">My progress</a><a data-post-action="feedback" href="/suggestions/?context=post-game&amp;game=${feedbackId}">Give feedback</a></div>${ads?'<div class="brainilab-ad-slot brainilab-ad-slot-result" data-ad-slot="quiz_result" hidden></div>':''}</section>`;
@@ -5043,10 +5046,11 @@ window.BrainiPerf=(function(){
     if(window.supabase?.createClient) return Promise.resolve();
     if(supabasePromise) return supabasePromise;
 
-    supabasePromise=loadScript(
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-      {crossorigin:"anonymous"}
-    ).catch(err=>{
+    // Served from our own origin, pinned to the version the pages were tested with. Pages load the same file
+    // with a ?v= build hash: reuse that tag instead of fetching the SDK a second time.
+    const sdk=new URL("vendor/supabase-js-2.119.2.js",jsBase);
+    const tag=[...document.scripts].find(s=>{try{return s.src&&new URL(s.src).pathname===sdk.pathname;}catch{return false;}});
+    supabasePromise=loadScript(tag?.src||sdk.href).catch(err=>{
       supabasePromise=null;
       throw err;
     });

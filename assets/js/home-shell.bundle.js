@@ -238,9 +238,12 @@ window.BrainiIcons=(function(){
     return file?asset(`illustrations/worlds/${file}.webp`):"";
   }
 
-  function world(id,className="braini-world-art",alt=""){
+  // World art is drawn at 512 px but mostly shown at 38-108 px: offer the 256 px copy and let the browser pick.
+  function world(id,className="braini-world-art",alt="",sizes="112px"){
     const src=worldPath(id);
-    return src?img(src,className,alt):"";
+    if(!src)return "";
+    const small=src.replace(/\.webp$/,"-256.webp");
+    return `<img class="${esc(className)}" src="${esc(small)}" srcset="${esc(small)} 256w, ${esc(src)} 512w" sizes="${esc(sizes)}" alt="${esc(alt)}" aria-hidden="${alt?"false":"true"}">`;
   }
 
   function rankHalo(name,className="brain-rank-halo",alt=""){
@@ -3164,10 +3167,11 @@ window.BrainiPerf=(function(){
     if(window.supabase?.createClient) return Promise.resolve();
     if(supabasePromise) return supabasePromise;
 
-    supabasePromise=loadScript(
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-      {crossorigin:"anonymous"}
-    ).catch(err=>{
+    // Served from our own origin, pinned to the version the pages were tested with. Pages load the same file
+    // with a ?v= build hash: reuse that tag instead of fetching the SDK a second time.
+    const sdk=new URL("vendor/supabase-js-2.119.2.js",jsBase);
+    const tag=[...document.scripts].find(s=>{try{return s.src&&new URL(s.src).pathname===sdk.pathname;}catch{return false;}});
+    supabasePromise=loadScript(tag?.src||sdk.href).catch(err=>{
       supabasePromise=null;
       throw err;
     });

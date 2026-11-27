@@ -15,7 +15,7 @@ for(const file of files){
   assert.ok(size>2000&&size<80000,`${path} stays light (${size} bytes)`);
 }
 assert.equal(icons.worldPath('mathrush'),'/assets/illustrations/worlds/math-rush.webp');
-assert.match(icons.world('connections','x'),/<img class="x" src="\/assets\/illustrations\/worlds\/connections\.webp" alt="" aria-hidden="true">/);
+assert.match(icons.world('connections','x'),/<img class="x" src="\/assets\/illustrations\/worlds\/connections-256\.webp" srcset="\/assets\/illustrations\/worlds\/connections-256\.webp 256w, \/assets\/illustrations\/worlds\/connections\.webp 512w" sizes="112px" alt="" aria-hidden="true">/);
 assert.equal(icons.world('worldcapitals'),'','no world art means the caller keeps its old icon');
 
 const lf=s=>s.replace(/\r\n/g,'\n');

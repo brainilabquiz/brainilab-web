@@ -1211,7 +1211,7 @@ body.braini-visual .continuity-flame{width:30px;height:36px}
 body.braini-visual .continuity-main h2{font-weight:900}
 body.braini-visual .continuity-main :is(p,small){color:#6b5232}
 body.braini-visual .continuity-week li{color:#8a6a3c;font-weight:700}
-body.braini-visual .continuity-week b{box-sizing:border-box;background:#fff;border:2px solid #f3d6a6;color:#c9a46a}
+body.braini-visual .continuity-week b{box-sizing:border-box;background:#fff;border:2px solid #f3d6a6;color:#946f2c}
 body.braini-visual .continuity-week .complete b{background:#e6680c;border-color:#e6680c;color:#fff}
 body.braini-visual .continuity-week .today b{outline:3px solid var(--navy,#2d296e);outline-offset:2px}
 body.braini-visual .continuity-action{justify-self:start;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:10px 18px;border-radius:999px;background:var(--yellow,#ffd813);color:var(--navy,#2d296e)!important;font-weight:800;box-shadow:0 3px 0 #c9a700}
