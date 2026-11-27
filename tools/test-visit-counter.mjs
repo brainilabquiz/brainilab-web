@@ -112,6 +112,8 @@ assert.match(read('assets/js/admin.js'),/growth:\(\)=>window\.BrainiGrowth\.rend
 assert.match(visitsHTML(),/id="growth-own-visits"[\s\S]*data-visits-days[\s\S]*data-visits-body/);
 const body=visitsBody({from:'2026-11-21',to:'2026-11-27',total:1234,pages:2,days:[{day:'2026-11-26',count:0},{day:'2026-11-27',count:1234}],top:[{path:'/games/<x>',count:9}]});
 assert.match(body,/1,234 page requests/);assert.match(body,/&lt;x&gt;/,'paths are escaped');assert.match(body,/counting started 2026-11-27/);
+assert.match(body,/average 1,234 a day/,'the average only uses counted days');assert.doesNotMatch(body,/2026-11-26/,'days before the counter started are left out');
+assert.match(visitsBody({from:'2026-11-21',to:'2026-11-27',total:0,pages:0,days:[{day:'2026-11-27',count:0}],top:[]}),/No pages counted between 2026-11-21 and 2026-11-27/);
 for(const f of ['cookies/index.html','privacy/index.html']){
   const page=read(f);
   assert.match(page,/our own server counts page requests in aggregate\. It keeps only the page address and the day[^<]*counts every visit whatever you choose here\./,f);

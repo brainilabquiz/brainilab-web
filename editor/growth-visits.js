@@ -9,7 +9,7 @@ export function visitsHTML(){
 
 function bars(days){
  const max=Math.max(1,...days.map(d=>d.count));
- return `<div class="growth-table" tabindex="0" role="region" aria-label="Page requests per day"><table><caption>Page requests per day (UTC)</caption><thead><tr><th scope="col">Day</th><th scope="col">Requests</th><th scope="col"><span class="sr-only">Share of the busiest day</span></th></tr></thead><tbody>${days.slice().reverse().map(d=>`<tr><th scope="row">${esc(d.day)}</th><td>${count(d.count)}</td><td><span class="growth-own-visits-bar" style="width:${Math.round(d.count/max*100)}%"></span></td></tr>`).join('')}</tbody></table></div>`;
+ return `<div class="growth-table" tabindex="0" role="region" aria-label="Page requests per day"><table class="growth-own-visits-days"><caption>Page requests per day (UTC)</caption><thead><tr><th scope="col">Day</th><th scope="col">Requests</th><th scope="col"><span class="sr-only">Share of the busiest day</span></th></tr></thead><tbody>${days.slice().reverse().map(d=>`<tr><th scope="row">${esc(d.day)}</th><td>${count(d.count)}</td><td>${d.count?`<span class="growth-own-visits-bar" style="width:${Math.round(d.count/max*100)}%"></span>`:''}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
 function pages(top){
@@ -18,8 +18,11 @@ function pages(top){
 
 export function visitsBody(data){
  if(!data||!Array.isArray(data.days))return '<p class="growth-copy">The counter returned no data.</p>';
- const active=data.days.filter(d=>d.count>0).length;
- return `<p><strong>${count(data.total)} page requests</strong> · ${esc(data.from)} to ${esc(data.to)} (UTC) · ${count(data.pages)} different pages · average ${count(Math.round(data.total/Math.max(1,data.days.length)))} a day${active<data.days.length?` · counting started ${esc((data.days.find(d=>d.count>0)||{}).day||'today')}`:''}</p>${bars(data.days)}${pages(data.top||[])}`;
+ // Days before the first count are only "not counted yet": leave them out of the table and the average.
+ const first=data.days.findIndex(d=>d.count>0);
+ if(first<0)return `<p class="growth-copy">No pages counted between ${esc(data.from)} and ${esc(data.to)} (UTC) yet.</p>`;
+ const shown=data.days.slice(first);
+ return `<p><strong>${count(data.total)} page requests</strong> · ${esc(shown[0].day)} to ${esc(data.to)} (UTC) · ${count(data.pages)} different pages · average ${count(Math.round(data.total/shown.length))} a day${first>0?` · counting started ${esc(shown[0].day)}`:''}</p>${bars(shown)}${pages(data.top||[])}`;
 }
 
 export function bindVisits(root,sb,fetcher=fetch){

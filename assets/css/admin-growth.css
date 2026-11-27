@@ -85,3 +85,4 @@
 .growth-own-visits-period{display:inline-flex;align-items:center;gap:.5rem;margin:.25rem 0 .5rem}
 .growth-own-visits-bar{display:block;height:.5rem;min-width:2px;border-radius:999px;background:#2d296e}
 .growth-own-visits td:nth-child(3){width:45%}
+.growth-own-visits-days th{white-space:nowrap}
